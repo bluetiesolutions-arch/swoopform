@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwoopForm — Coming Soon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0F0E1A;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      text-align: center;
+      max-width: 600px;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+    .logo-mark {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #2D1B69, #D97706);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+    }
+    .logo-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: -0.03em;
+    }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+    .accent { color: #D97706; }
+    p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+    .form {
+      display: flex;
+      gap: 10px;
+      max-width: 420px;
+      margin: 0 auto 24px;
+      flex-wrap: wrap;
+    }
+    .form input {
+      flex: 1;
+      padding: 14px 18px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.07);
+      color: #fff;
+      font-size: 0.95rem;
+      font-family: 'DM Sans', sans-serif;
+      min-width: 200px;
+    }
+    .form input::placeholder { color: rgba(255,255,255,0.35); }
+    .form input:focus {
+      outline: none;
+      border-color: #D97706;
+    }
+    .form button {
+      padding: 14px 24px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(135deg, #2D1B69, #D97706);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 100px;
+      background: rgba(217,119,6,0.15);
+      border: 1px solid rgba(217,119,6,0.3);
+      color: #D97706;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: #D97706;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.4); }
+    }
+    .features {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 48px;
+    }
+    .feature {
+      padding: 8px 16px;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.6);
+    }
+    .success {
+      display: none;
+      color: #D97706;
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="logo">
+      <div class="logo-mark">S</div>
+      <div class="logo-name">SwoopForm</div>
+    </div>
+
+    <div class="badge">
+      <div class="dot"></div>
+      Launching soon — Built for India
+    </div>
+
+    <h1>Surveys that<br><span class="accent">work for you</span></h1>
+
+    <p>Create surveys in minutes. Responses land live in your Google Sheets. Free forever for students and NGOs.</p>
+
+    <div class="form">
+      <input type="email" id="email" placeholder="Enter your email">
+      <button onclick="notify()">Notify me</button>
+    </div>
+    <div class="success" id="success">
+      Thanks! We'll notify you when we launch.
+    </div>
+
+    <div class="features">
+      <div class="feature">Google Sheets sync</div>
+      <div class="feature">Free for students</div>
+      <div class="feature">Free for NGOs</div>
+      <div class="feature">16 question types</div>
+      <div class="feature">Public survey directory</div>
+    </div>
+
+  </div>
+  
+  <script>
+    function notify() {
+      const email = document.getElementById('email').value;
+      if (email && email.includes('@')) {
+        document.getElementById('success').style.display = 'block';
+        document.getElementById('email').value = '';
+      }
+    }
+  </script>
+</body>
+</html>          
