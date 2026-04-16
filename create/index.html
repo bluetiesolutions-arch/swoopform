@@ -57,13 +57,10 @@
     }
     .btn-primary:hover{opacity:0.9}
     .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
-
     .main{
       max-width:760px;margin:0 auto;
       padding:32px 20px;
     }
-
-    /* SURVEY TITLE */
     .title-section{
       background:#fff;border-radius:16px;
       border:1.5px solid #E2DAD0;
@@ -74,7 +71,6 @@
       font-family:'Syne',sans-serif;font-weight:800;
       font-size:1.8rem;letter-spacing:-0.03em;
       color:#0F0E1A;background:transparent;
-      placeholder-color:#C4B9AA;
     }
     .title-input::placeholder{color:#C4B9AA}
     .desc-input{
@@ -85,18 +81,14 @@
       resize:none;
     }
     .desc-input::placeholder{color:#C4B9AA}
-
-    /* QUESTIONS */
     .questions-list{margin-bottom:16px}
     .question-card{
       background:#fff;border-radius:14px;
       border:1.5px solid #E2DAD0;
       padding:22px;margin-bottom:12px;
-      transition:border-color 0.2s;
       position:relative;
     }
     .question-card:hover{border-color:rgba(45,27,105,0.3)}
-    .question-card.focused{border-color:#2D1B69}
     .q-header{
       display:flex;align-items:center;
       gap:12px;margin-bottom:14px;
@@ -116,7 +108,6 @@
       font-family:'DM Sans',sans-serif;
       cursor:pointer;outline:none;
     }
-    .q-type-select:focus{border-color:#2D1B69}
     .q-delete{
       margin-left:auto;width:28px;height:28px;
       border-radius:7px;border:none;
@@ -127,7 +118,8 @@
     }
     .q-delete:hover{background:#FEE2E2;color:#DC2626}
     .q-input{
-      width:100%;border:none;border-bottom:1.5px solid #E2DAD0;
+      width:100%;border:none;
+      border-bottom:1.5px solid #E2DAD0;
       outline:none;padding:8px 0;
       font-family:'DM Sans',sans-serif;
       font-size:0.95rem;font-weight:600;
@@ -136,21 +128,21 @@
     }
     .q-input::placeholder{color:#C4B9AA}
     .q-input:focus{border-bottom-color:#2D1B69}
-
-    /* OPTIONS */
     .options-list{margin-bottom:10px}
     .option-row{
-      display:flex;align-items:center;gap:8px;
-      margin-bottom:8px;
+      display:flex;align-items:center;
+      gap:8px;margin-bottom:8px;
     }
     .option-bullet{
       width:16px;height:16px;border-radius:50%;
       border:2px solid #E2DAD0;flex-shrink:0;
     }
     .option-input{
-      flex:1;border:none;border-bottom:1px solid #E2DAD0;
+      flex:1;border:none;
+      border-bottom:1px solid #E2DAD0;
       outline:none;padding:5px 0;
-      font-family:'DM Sans',sans-serif;font-size:0.88rem;
+      font-family:'DM Sans',sans-serif;
+      font-size:0.88rem;
       color:#0F0E1A;background:transparent;
     }
     .option-input::placeholder{color:#C4B9AA}
@@ -166,19 +158,13 @@
       color:#2D1B69;font-size:0.82rem;font-weight:600;
       font-family:'DM Sans',sans-serif;padding:4px 0;
     }
-
-    /* RATING */
-    .rating-preview{
-      display:flex;gap:8px;flex-wrap:wrap;
-    }
+    .rating-preview{display:flex;gap:8px;flex-wrap:wrap}
     .rating-dot{
       width:36px;height:36px;border-radius:8px;
       border:1.5px solid #E2DAD0;
       display:flex;align-items:center;justify-content:center;
       font-size:0.85rem;font-weight:600;color:#64748B;
     }
-
-    /* REQUIRED TOGGLE */
     .q-footer{
       display:flex;align-items:center;
       gap:8px;margin-top:12px;
@@ -199,11 +185,7 @@
       transition:transform 0.2s;
     }
     .toggle.on::after{transform:translateX(16px)}
-    .toggle-label{
-      font-size:0.8rem;color:#64748B;font-weight:500;
-    }
-
-    /* ADD QUESTION */
+    .toggle-label{font-size:0.8rem;color:#64748B;font-weight:500}
     .add-question-section{
       background:#fff;border-radius:14px;
       border:1.5px dashed #E2DAD0;
@@ -215,7 +197,8 @@
       color:#64748B;margin-bottom:14px;
     }
     .question-types{
-      display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
+      display:flex;gap:8px;flex-wrap:wrap;
+      justify-content:center;
     }
     .type-btn{
       padding:8px 14px;border-radius:8px;
@@ -230,8 +213,6 @@
       border-color:#2D1B69;
       background:#EDE9FF;color:#2D1B69;
     }
-
-    /* SETTINGS */
     .settings-section{
       background:#fff;border-radius:14px;
       border:1.5px solid #E2DAD0;
@@ -248,14 +229,8 @@
       border-bottom:1px solid #E2DAD0;
     }
     .setting-row:last-child{border-bottom:none}
-    .setting-info .setting-name{
-      font-size:0.88rem;font-weight:600;
-    }
-    .setting-info .setting-desc{
-      font-size:0.78rem;color:#64748B;margin-top:2px;
-    }
-
-    /* TOAST */
+    .setting-info .setting-name{font-size:0.88rem;font-weight:600}
+    .setting-info .setting-desc{font-size:0.78rem;color:#64748B;margin-top:2px}
     .toast{
       position:fixed;bottom:24px;left:50%;
       transform:translateX(-50%);
@@ -265,10 +240,9 @@
       display:none;z-index:999;
       box-shadow:0 4px 20px rgba(0,0,0,0.3);
     }
-
-    /* LOADING */
     .loading-screen{
-      display:flex;align-items:center;justify-content:center;
+      display:flex;align-items:center;
+      justify-content:center;
       min-height:100vh;background:#0F0E1A;
     }
     .spinner{
@@ -301,8 +275,6 @@
   </nav>
 
   <div class="main">
-
-    <!-- TITLE -->
     <div class="title-section">
       <input class="title-input" id="survey-title"
         placeholder="Your survey title..." maxlength="100">
@@ -310,32 +282,19 @@
         placeholder="Add a description (optional)" rows="2"></textarea>
     </div>
 
-    <!-- QUESTIONS -->
     <div class="questions-list" id="questions-list"></div>
 
-    <!-- ADD QUESTION -->
     <div class="add-question-section">
       <div class="add-question-title">Add a question</div>
       <div class="question-types">
-        <button class="type-btn" onclick="addQuestion('multiple')">
-          ◉ Multiple choice
-        </button>
-        <button class="type-btn" onclick="addQuestion('text')">
-          ✏️ Short text
-        </button>
-        <button class="type-btn" onclick="addQuestion('textarea')">
-          📝 Long text
-        </button>
-        <button class="type-btn" onclick="addQuestion('rating')">
-          ⭐ Rating
-        </button>
-        <button class="type-btn" onclick="addQuestion('yesno')">
-          ✓ Yes / No
-        </button>
+        <button class="type-btn" onclick="addQuestion('multiple')">◉ Multiple choice</button>
+        <button class="type-btn" onclick="addQuestion('text')">✏️ Short text</button>
+        <button class="type-btn" onclick="addQuestion('textarea')">📝 Long text</button>
+        <button class="type-btn" onclick="addQuestion('rating')">⭐ Rating</button>
+        <button class="type-btn" onclick="addQuestion('yesno')">✓ Yes / No</button>
       </div>
     </div>
 
-    <!-- SETTINGS -->
     <div class="settings-section">
       <div class="settings-title">Survey settings</div>
       <div class="setting-row">
@@ -360,7 +319,6 @@
         <button class="toggle" id="toggle-once" onclick="toggleSetting('once')"></button>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -389,12 +347,31 @@
   let settings = { public: false, email: false, once: false };
   let savedSurveyId = null;
 
+  // KEY FIX: Save all current DOM values back to questions array
+  function syncFromDOM() {
+    questions.forEach(q => {
+      // Save question text
+      const textEl = document.getElementById('q-text-' + q.id);
+      if (textEl) q.text = textEl.value;
+
+      // Save options
+      if (q.type === 'multiple') {
+        const optEls = document.querySelectorAll('.opt-' + q.id);
+        q.options = Array.from(optEls).map(el => el.value);
+      }
+    });
+
+    // Save title and description
+  }
+
   onAuthStateChanged(auth, (user) => {
     if (!user) { window.location.href = '/login'; return; }
     currentUser = user;
     document.getElementById('loading-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-    addQuestion('multiple');
+    // Start with one empty multiple choice question
+    questions = [{ id: Date.now(), type: 'multiple', text: '', options: ['', ''], required: false }];
+    renderQuestions();
   });
 
   function showToast(msg, duration=2500) {
@@ -406,54 +383,70 @@
 
   window.toggleSetting = function(key) {
     settings[key] = !settings[key];
-    const btn = document.getElementById('toggle-' + key);
-    btn.classList.toggle('on', settings[key]);
+    document.getElementById('toggle-' + key).classList.toggle('on', settings[key]);
   }
 
+  // Add question — sync DOM first so nothing is lost
   window.addQuestion = function(type) {
-    getQuestionData();
+    syncFromDOM();
     const id = Date.now();
-    questions.push({ id, type, text: '', options: ['', ''], required: false });
+    questions.push({
+      id,
+      type,
+      text: '',
+      options: ['', ''],
+      required: false
+    });
     renderQuestions();
+    // Focus the new question's text input
     setTimeout(() => {
-      const input = document.getElementById('q-text-' + id);
-      if (input) input.focus();
-    }, 50);
+      const el = document.getElementById('q-text-' + id);
+      if (el) { el.focus(); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    }, 60);
   }
-window.deleteQuestion = function(id) {
+
+  // Delete question — sync DOM first
+  window.deleteQuestion = function(id) {
     if (questions.length === 1) { showToast('Survey needs at least 1 question'); return; }
-    getQuestionData();
+    syncFromDOM();
     questions = questions.filter(q => q.id !== id);
     renderQuestions();
   }
 
- window.changeType = function(id, type) {
-    getQuestionData();
+  // Change type — sync DOM first
+  window.changeType = function(id, type) {
+    syncFromDOM();
     const q = questions.find(q => q.id === id);
-    if (q) { q.type = type; renderQuestions();  }
+    if (q) { q.type = type; renderQuestions(); }
   }
 
+  // Toggle required — no re-render needed
   window.toggleRequired = function(id) {
     const q = questions.find(q => q.id === id);
     if (q) {
       q.required = !q.required;
-      document.getElementById('req-toggle-' + id).classList.toggle('on', q.required);
+      document.getElementById('req-' + id).classList.toggle('on', q.required);
     }
   }
-window.addOption = function(qId) {
-    getQuestionData();
+
+  // Add option — sync DOM first
+  window.addOption = function(qId) {
+    syncFromDOM();
     const q = questions.find(q => q.id === qId);
     if (q) {
       q.options.push('');
       renderQuestions();
+      // Focus the new option
       setTimeout(() => {
-        const inputs = document.querySelectorAll('[data-q="' + qId + '"]');
-        if (inputs.length) inputs[inputs.length-1].focus();
-      }, 50);
+        const opts = document.querySelectorAll('.opt-' + qId);
+        if (opts.length) opts[opts.length - 1].focus();
+      }, 60);
     }
   }
 
+  // Remove option — sync DOM first
   window.removeOption = function(qId, idx) {
+    syncFromDOM();
     const q = questions.find(q => q.id === qId);
     if (q && q.options.length > 2) {
       q.options.splice(idx, 1);
@@ -463,23 +456,12 @@ window.addOption = function(qId) {
     }
   }
 
-  function getQuestionData() {
-    questions.forEach(q => {
-      const textEl = document.getElementById('q-text-' + q.id);
-      if (textEl) q.text = textEl.value;
-      if (q.type === 'multiple' || q.type === 'yesno') {
-        const optEls = document.querySelectorAll('[data-q="' + q.id + '"]');
-        q.options = Array.from(optEls).map(el => el.value).filter(v => v.trim());
-      }
-    });
-  }
-
   function renderQuestions() {
     const list = document.getElementById('questions-list');
     list.innerHTML = questions.map((q, i) => `
       <div class="question-card" id="qcard-${q.id}">
         <div class="q-header">
-          <div class="q-number">${i+1}</div>
+          <div class="q-number">${i + 1}</div>
           <select class="q-type-select" onchange="changeType(${q.id}, this.value)">
             <option value="multiple" ${q.type==='multiple'?'selected':''}>Multiple choice</option>
             <option value="text" ${q.type==='text'?'selected':''}>Short text</option>
@@ -490,20 +472,19 @@ window.addOption = function(qId) {
           <button class="q-delete" onclick="deleteQuestion(${q.id})">✕</button>
         </div>
 
-        <input class="q-input" id="q-text-${q.id}"
+        <input class="q-input"
+          id="q-text-${q.id}"
           placeholder="Type your question here..."
-          value="${q.text || ''}"
-          oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          value="${escHtml(q.text)}">
 
         ${q.type === 'multiple' ? `
           <div class="options-list">
             ${q.options.map((opt, oi) => `
               <div class="option-row">
                 <div class="option-bullet"></div>
-                <input class="option-input" data-q="${q.id}"
-                  value="${opt}"
-                  placeholder=""
-                  oninput="questions.find(x=>x.id===${q.id}).options[${oi}]=this.value">
+                <input class="option-input opt-${q.id}"
+                  value="${escHtml(opt)}"
+                  placeholder="Type option ${oi + 1}...">
                 <button class="option-remove" onclick="removeOption(${q.id},${oi})">✕</button>
               </div>
             `).join('')}
@@ -515,41 +496,41 @@ window.addOption = function(qId) {
           <div class="options-list">
             <div class="option-row">
               <div class="option-bullet"></div>
-              <span style="font-size:0.88rem;color:#0F0E1A;font-weight:600">Yes</span>
+              <span style="font-size:0.88rem;font-weight:600">Yes</span>
             </div>
             <div class="option-row">
               <div class="option-bullet"></div>
-              <span style="font-size:0.88rem;color:#0F0E1A;font-weight:600">No</span>
+              <span style="font-size:0.88rem;font-weight:600">No</span>
             </div>
           </div>
         ` : ''}
 
         ${q.type === 'rating' ? `
           <div class="rating-preview">
-            ${[1,2,3,4,5].map(n => `<div class="rating-dot">${n}</div>`).join('')}
+            ${[1,2,3,4,5].map(n=>`<div class="rating-dot">${n}</div>`).join('')}
           </div>
           <div style="font-size:0.75rem;color:#64748B;margin-top:8px">
-            Respondents pick a number from 1 to 5
+            Respondents pick 1 to 5
           </div>
         ` : ''}
 
         ${q.type === 'text' ? `
           <div style="background:#F5F0E8;border-radius:8px;padding:12px;
             font-size:0.85rem;color:#C4B9AA;">
-            Respondents type a short answer here...
+            Short answer field...
           </div>
         ` : ''}
 
         ${q.type === 'textarea' ? `
           <div style="background:#F5F0E8;border-radius:8px;padding:12px;
             font-size:0.85rem;color:#C4B9AA;min-height:60px;">
-            Respondents type a detailed answer here...
+            Long answer field...
           </div>
         ` : ''}
 
         <div class="q-footer">
           <button class="toggle ${q.required?'on':''}"
-            id="req-toggle-${q.id}"
+            id="req-${q.id}"
             onclick="toggleRequired(${q.id})">
           </button>
           <span class="toggle-label">Required question</span>
@@ -558,15 +539,20 @@ window.addOption = function(qId) {
     `).join('');
   }
 
+  // Escape HTML to prevent issues with special characters in inputs
+  function escHtml(str) {
+    return (str || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
   async function saveSurvey(status) {
+    // Sync DOM before saving
+    syncFromDOM();
+
     const title = document.getElementById('survey-title').value.trim();
     if (!title) { showToast('Please add a survey title'); return null; }
-    if (questions.length === 0) { showToast('Add at least one question'); return null; }
-
-    getQuestionData();
 
     const validQuestions = questions.filter(q => q.text.trim());
-    if (validQuestions.length === 0) { showToast('Please fill in your question text'); return null; }
+    if (validQuestions.length === 0) { showToast('Please fill in at least one question'); return null; }
 
     const surveyData = {
       title,
@@ -577,19 +563,15 @@ window.addOption = function(qId) {
       userId: currentUser.uid,
       responseCount: 0,
       questionCount: validQuestions.length,
-      createdAt: serverTimestamp(),
       updatedAt: serverTimestamp()
     };
 
     try {
       if (savedSurveyId) {
-        await updateDoc(doc(db, 'surveys', savedSurveyId), {
-          ...surveyData,
-          createdAt: undefined,
-          updatedAt: serverTimestamp()
-        });
+        await updateDoc(doc(db, 'surveys', savedSurveyId), surveyData);
         return savedSurveyId;
       } else {
+        surveyData.createdAt = serverTimestamp();
         const ref = await addDoc(collection(db, 'surveys'), surveyData);
         savedSurveyId = ref.id;
         return ref.id;
@@ -610,13 +592,10 @@ window.addOption = function(qId) {
     const btn = document.getElementById('publish-btn');
     btn.disabled = true;
     btn.textContent = 'Publishing...';
-
     const id = await saveSurvey('active');
     if (id) {
       showToast('🎉 Survey published!', 1500);
-      setTimeout(() => {
-        window.location.href = '/dashboard';
-      }, 1800);
+      setTimeout(() => window.location.href = '/dashboard', 1800);
     } else {
       btn.disabled = false;
       btn.textContent = 'Publish →';
