@@ -411,24 +411,26 @@
   }
 
   window.addQuestion = function(type) {
+    getQuestionData();
     const id = Date.now();
-    questions.push({ id, type, text: '', options: ['Option 1', 'Option 2'], required: false });
+    questions.push({ id, type, text: '', options: ['', ''], required: false });
     renderQuestions();
     setTimeout(() => {
       const input = document.getElementById('q-text-' + id);
       if (input) input.focus();
     }, 50);
   }
-
-  window.deleteQuestion = function(id) {
+window.deleteQuestion = function(id) {
     if (questions.length === 1) { showToast('Survey needs at least 1 question'); return; }
+    getQuestionData();
     questions = questions.filter(q => q.id !== id);
     renderQuestions();
   }
 
-  window.changeType = function(id, type) {
+ window.changeType = function(id, type) {
+    getQuestionData();
     const q = questions.find(q => q.id === id);
-    if (q) { q.type = type; renderQuestions(); }
+    if (q) { q.type = type; renderQuestions();  }
   }
 
   window.toggleRequired = function(id) {
@@ -438,11 +440,11 @@
       document.getElementById('req-toggle-' + id).classList.toggle('on', q.required);
     }
   }
-
-  window.addOption = function(qId) {
+window.addOption = function(qId) {
+    getQuestionData();
     const q = questions.find(q => q.id === qId);
     if (q) {
-      q.options.push('Option ' + (q.options.length + 1));
+      q.options.push('');
       renderQuestions();
       setTimeout(() => {
         const inputs = document.querySelectorAll('[data-q="' + qId + '"]');
@@ -500,7 +502,7 @@
                 <div class="option-bullet"></div>
                 <input class="option-input" data-q="${q.id}"
                   value="${opt}"
-                  placeholder="Option ${oi+1}"
+                  placeholder=""
                   oninput="questions.find(x=>x.id===${q.id}).options[${oi}]=this.value">
                 <button class="option-remove" onclick="removeOption(${q.id},${oi})">✕</button>
               </div>
