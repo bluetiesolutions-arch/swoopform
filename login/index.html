@@ -224,7 +224,10 @@
     </div>
     <div class="field">
       <label>Password</label>
-      <input type="password" id="login-password" placeholder="Your password">
+ <div style="position:relative">
+  <input type="password" id="login-password" placeholder="Your password" style="padding-right:44px">
+  <button onclick="togglePass('login-password')" type="button" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.4);font-size:1.1rem;">👁</button>
+</div>
     </div>
     <button class="btn-primary" id="login-btn" onclick="handleLogin()">Log in →</button>
     <div class="divider">or</div>
