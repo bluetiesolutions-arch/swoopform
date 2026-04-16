@@ -370,7 +370,7 @@
     document.getElementById('loading-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
     // Start with one empty multiple choice question
-    questions = [{ id: Date.now(), type: 'multiple', text: '', options: ['', ''], required: false }];
+    questions = [{ id: Date.now(), type: 'multiple', text: '', options: ['', ''], required: false, placeholders: ['Option 1', 'Option 2'] }];
     renderQuestions();
   });
 
@@ -484,7 +484,7 @@
                 <div class="option-bullet"></div>
                 <input class="option-input opt-${q.id}"
                   value="${escHtml(opt)}"
-                  placeholder="Type option ${oi + 1}...">
+                  placeholder="Option ${oi + 1}">
                 <button class="option-remove" onclick="removeOption(${q.id},${oi})">✕</button>
               </div>
             `).join('')}
