@@ -256,7 +256,10 @@
     </div>
     <div class="field">
       <label>Password</label>
-      <input type="password" id="signup-password" placeholder="Min 8 characters">
+      <div style="position:relative">
+  <input type="password" id="signup-password" placeholder="Min 8 characters" style="padding-right:44px">
+  <button onclick="togglePass('signup-password')" type="button" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.4);font-size:1.1rem;">👁</button>
+</div>
     </div>
     <button class="btn-primary" id="signup-btn" onclick="handleSignup()">Create account →</button>
     <div class="divider">or</div>
@@ -382,6 +385,10 @@
       showError('Google login failed. Please try again');
     }
   }
+  window.togglePass = function(id) {
+  const input = document.getElementById(id);
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
 </script>
 </body>
 </html>
