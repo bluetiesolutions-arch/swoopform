@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwoopForm — Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'DM Sans',sans-serif;
+      background:#F5F0E8;
+      color:#0F0E1A;
+      min-height:100vh;
+    }
+
+    /* NAV */
+    nav{
+      background:#fff;
+      border-bottom:1.5px solid #E2DAD0;
+      padding:0 24px;
+      height:60px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+    .nav-logo{
+      display:flex;align-items:center;gap:10px;
+      text-decoration:none;
+    }
+    .logo-mark{
+      width:32px;height:32px;
+      background:linear-gradient(135deg,#2D1B69,#D97706);
+      border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:0.9rem;color:#fff;
+    }
+    .logo-name{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1rem;color:#0F0E1A;
+    }
+    .nav-right{
+      display:flex;align-items:center;gap:12px;
+    }
+    .user-avatar{
+      width:34px;height:34px;border-radius:50%;
+      background:linear-gradient(135deg,#2D1B69,#D97706);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:700;color:#fff;font-size:0.85rem;
+      cursor:pointer;
+    }
+    .btn-logout{
+      padding:7px 16px;border-radius:8px;
+      border:1.5px solid #E2DAD0;
+      background:transparent;color:#64748B;
+      font-size:0.82rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;
+      cursor:pointer;transition:all 0.2s;
+    }
+    .btn-logout:hover{border-color:#0F0E1A;color:#0F0E1A}
+
+    /* MAIN */
+    .main{
+      max-width:1100px;
+      margin:0 auto;
+      padding:32px 20px;
+    }
+
+    /* WELCOME */
+    .welcome{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:16px;
+      margin-bottom:32px;
+    }
+    .welcome-text h1{
+      font-family:'Syne',sans-serif;
+      font-weight:800;
+      font-size:1.6rem;
+      letter-spacing:-0.03em;
+      margin-bottom:6px;
+    }
+    .welcome-text p{
+      color:#64748B;font-size:0.9rem;
+    }
+    .plan-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:5px 14px;border-radius:100px;
+      font-size:0.78rem;font-weight:700;
+      margin-left:10px;
+    }
+    .plan-free{background:#EDE9FF;color:#2D1B69}
+    .plan-student{background:#D1FAE5;color:#047857}
+    .plan-ngo{background:#D1FAE5;color:#047857}
+    .plan-business{background:#FEF3C7;color:#92400E}
+    .btn-new{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:12px 22px;border-radius:10px;border:none;
+      background:linear-gradient(135deg,#2D1B69,#D97706);
+      color:#fff;font-size:0.92rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;
+      text-decoration:none;transition:opacity 0.2s;
+      white-space:nowrap;
+    }
+    .btn-new:hover{opacity:0.9}
+
+    /* STATS */
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:14px;
+      margin-bottom:32px;
+    }
+    .stat-card{
+      background:#fff;border-radius:14px;
+      border:1.5px solid #E2DAD0;
+      padding:20px;
+    }
+    .stat-num{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:2rem;letter-spacing:-0.03em;
+      color:#0F0E1A;
+    }
+    .stat-label{
+      font-size:0.82rem;color:#64748B;margin-top:4px;
+    }
+
+    /* SURVEYS */
+    .section-header{
+      display:flex;align-items:center;
+      justify-content:space-between;
+      margin-bottom:16px;
+    }
+    .section-title{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1.1rem;
+    }
+    .empty-state{
+      background:#fff;border-radius:16px;
+      border:1.5px dashed #E2DAD0;
+      padding:60px 20px;text-align:center;
+    }
+    .empty-icon{font-size:2.5rem;margin-bottom:16px}
+    .empty-state h3{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1.1rem;margin-bottom:8px;
+    }
+    .empty-state p{
+      color:#64748B;font-size:0.88rem;
+      margin-bottom:24px;line-height:1.6;
+    }
+
+    /* SURVEY CARDS */
+    .surveys-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+      gap:16px;
+    }
+    .survey-card{
+      background:#fff;border-radius:14px;
+      border:1.5px solid #E2DAD0;
+      padding:22px;
+      transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;
+      cursor:pointer;
+    }
+    .survey-card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 8px 30px rgba(15,14,26,0.1);
+      border-color:rgba(45,27,105,0.3);
+    }
+    .survey-card-top{
+      display:flex;justify-content:space-between;
+      align-items:flex-start;margin-bottom:12px;
+    }
+    .survey-status{
+      padding:3px 10px;border-radius:100px;
+      font-size:0.72rem;font-weight:700;
+    }
+    .status-active{background:#D1FAE5;color:#047857}
+    .status-draft{background:#F5F0E8;color:#64748B}
+    .status-closed{background:#FEE2E2;color:#DC2626}
+    .survey-title{
+      font-family:'Syne',sans-serif;font-weight:700;
+      font-size:0.98rem;margin-bottom:8px;
+      line-height:1.35;
+    }
+    .survey-meta{
+      display:flex;gap:14px;
+      font-size:0.78rem;color:#64748B;
+      margin-bottom:16px;
+    }
+    .survey-footer{
+      display:flex;justify-content:space-between;
+      align-items:center;
+      padding-top:14px;
+      border-top:1px solid #E2DAD0;
+    }
+    .survey-responses{
+      font-size:0.82rem;font-weight:600;
+      color:#0F0E1A;
+    }
+    .survey-actions{
+      display:flex;gap:6px;
+    }
+    .btn-sm{
+      padding:5px 12px;border-radius:7px;
+      font-size:0.76rem;font-weight:600;
+      cursor:pointer;border:none;
+      font-family:'DM Sans',sans-serif;
+      transition:all 0.2s;
+    }
+    .btn-sm-primary{
+      background:linear-gradient(135deg,#2D1B69,#D97706);
+      color:#fff;
+    }
+    .btn-sm-ghost{
+      background:transparent;
+      border:1.5px solid #E2DAD0;
+      color:#64748B;
+    }
+    .btn-sm-ghost:hover{border-color:#0F0E1A;color:#0F0E1A}
+
+    /* LOADING */
+    .loading-screen{
+      display:flex;align-items:center;justify-content:center;
+      min-height:100vh;background:#0F0E1A;
+    }
+    .loading-logo{
+      text-align:center;
+    }
+    .spinner{
+      width:36px;height:36px;
+      border:3px solid rgba(217,119,6,0.2);
+      border-top-color:#D97706;
+      border-radius:50%;
+      animation:spin 0.8s linear infinite;
+      margin:0 auto 16px;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loading-text{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1.2rem;color:#fff;
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:600px){
+      .welcome{flex-direction:column;align-items:flex-start}
+      .stats{grid-template-columns:repeat(2,1fr)}
+    }
+  </style>
+</head>
+<body>
+
+<!-- Loading screen -->
+<div id="loading-screen" class="loading-screen">
+  <div class="loading-logo">
+    <div class="spinner"></div>
+    <div class="loading-text">SwoopForm</div>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard" style="display:none">
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <div class="logo-mark">S</div>
+      <div class="logo-name">SwoopForm</div>
+    </a>
+    <div class="nav-right">
+      <div class="user-avatar" id="user-avatar">?</div>
+      <button class="btn-logout" onclick="handleLogout()">Log out</button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- WELCOME -->
+    <div class="welcome">
+      <div class="welcome-text">
+        <h1 id="welcome-msg">Welcome! 👋
+          <span class="plan-badge plan-free" id="plan-badge">Free Plan</span>
+        </h1>
+        <p id="welcome-sub">Ready to create your first survey?</p>
+      </div>
+      <a href="/create" class="btn-new">
+        + New Survey
+      </a>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-num" id="stat-surveys">0</div>
+        <div class="stat-label">Surveys created</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-responses">0</div>
+        <div class="stat-label">Total responses</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-active">0</div>
+        <div class="stat-label">Active surveys</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-limit">100</div>
+        <div class="stat-label">Responses per survey</div>
+      </div>
+    </div>
+
+    <!-- SURVEYS -->
+    <div class="section-header">
+      <div class="section-title">Your Surveys</div>
+    </div>
+
+    <!-- Empty state -->
+    <div id="empty-state" class="empty-state">
+      <div class="empty-icon">📋</div>
+      <h3>No surveys yet</h3>
+      <p>Create your first survey and start<br>collecting responses in minutes.</p>
+      <a href="/create" class="btn-new">+ Create your first survey</a>
+    </div>
+
+    <!-- Surveys grid -->
+    <div id="surveys-grid" class="surveys-grid" style="display:none">
+    </div>
+
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+  import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+  import { getFirestore, doc, getDoc, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",
+    authDomain: "swoopform.firebaseapp.com",
+    projectId: "swoopform",
+    storageBucket: "swoopform.firebasestorage.app",
+    messagingSenderId: "378850092986",
+    appId: "1:378850092986:web:4fed92128136e048fa5f83"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // Check if user is logged in
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      // Not logged in — redirect to login
+      window.location.href = '/login';
+      return;
+    }
+
+    // Get user data from Firestore
+    const userDoc = await getDoc(doc(db, 'users', user.uid));
+    const userData = userDoc.exists() ? userDoc.data() : {};
+
+    const name = user.displayName || userData.name || 'there';
+    const role = userData.role || 'individual';
+    const plan = userData.plan || 'free';
+
+    // Set avatar initials
+    document.getElementById('user-avatar').textContent =
+      name.charAt(0).toUpperCase();
+
+    // Welcome message
+    const hour = new Date().getHours();
+    const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+    document.getElementById('welcome-msg').innerHTML =
+      `${greeting}, ${name.split(' ')[0]}! 👋 <span class="plan-badge plan-${plan}" id="plan-badge">${getPlanLabel(plan)}</span>`;
+
+    // Sub message based on role
+    const subs = {
+      student: '🎓 Student plan — Unlimited responses, free forever',
+      ngo: '🤝 NGO plan — Unlimited responses, free forever',
+      business: '🏢 Business plan — Professional features unlocked',
+      individual: 'Free plan — 100 responses per survey'
+    };
+    document.getElementById('welcome-sub').textContent = subs[role] || subs.individual;
+
+    // Response limit based on plan
+    const limits = {student:'Unlimited', ngo:'Unlimited', business:'Unlimited', free:'100'};
+    document.getElementById('stat-limit').textContent = limits[plan] || '100';
+
+    // Load surveys
+    await loadSurveys(user.uid);
+
+    // Show dashboard
+    document.getElementById('loading-screen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+  });
+
+  function getPlanLabel(plan) {
+    const labels = {
+      free: 'Free Plan',
+      student: '🎓 Student',
+      ngo: '🤝 NGO',
+      starter: 'Starter',
+      pro: 'Pro',
+      business: 'Business'
+    };
+    return labels[plan] || 'Free Plan';
+  }
+
+  async function loadSurveys(uid) {
+    try {
+      const q = query(collection(db, 'surveys'), where('userId', '==', uid));
+      const snapshot = await getDocs(q);
+
+      if (snapshot.empty) {
+        document.getElementById('empty-state').style.display = 'block';
+        document.getElementById('surveys-grid').style.display = 'none';
+        return;
+      }
+
+      const surveys = [];
+      snapshot.forEach(doc => surveys.push({ id: doc.id, ...doc.data() }));
+
+      // Update stats
+      document.getElementById('stat-surveys').textContent = surveys.length;
+      const totalResponses = surveys.reduce((sum, s) => sum + (s.responseCount || 0), 0);
+      const activeCount = surveys.filter(s => s.status === 'active').length;
+      document.getElementById('stat-responses').textContent = totalResponses;
+      document.getElementById('stat-active').textContent = activeCount;
+
+      // Render survey cards
+      const grid = document.getElementById('surveys-grid');
+      grid.innerHTML = surveys.map(survey => `
+        <div class="survey-card" onclick="window.location.href='/survey/${survey.id}'">
+          <div class="survey-card-top">
+            <span class="survey-status status-${survey.status || 'draft'}">
+              ${survey.status === 'active' ? '● Active' : survey.status === 'closed' ? '✕ Closed' : '○ Draft'}
+            </span>
+          </div>
+          <div class="survey-title">${survey.title || 'Untitled Survey'}</div>
+          <div class="survey-meta">
+            <span>📝 ${survey.questionCount || 0} questions</span>
+            <span>📅 ${formatDate(survey.createdAt)}</span>
+          </div>
+          <div class="survey-footer">
+            <div class="survey-responses">${survey.responseCount || 0} responses</div>
+            <div class="survey-actions">
+              <button class="btn-sm btn-sm-ghost" onclick="event.stopPropagation();window.location.href='/analytics/${survey.id}'">Analytics</button>
+              <button class="btn-sm btn-sm-primary" onclick="event.stopPropagation();window.location.href='/share/${survey.id}'">Share</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('empty-state').style.display = 'none';
+      document.getElementById('surveys-grid').style.display = 'grid';
+
+    } catch(e) {
+      console.error('Error loading surveys:', e);
+    }
+  }
+
+  function formatDate(timestamp) {
+    if (!timestamp) return 'Recently';
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    return date.toLocaleDateString('en-IN', { day:'numeric', month:'short' });
+  }
+
+  window.handleLogout = async function() {
+    await signOut(auth);
+    window.location.href = '/login';
+  }
+</script>
+</body>
+</html>
