@@ -26,18 +26,16 @@
       max-width:420px;
     }
     .logo{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin-bottom:32px;
-      text-decoration:none;
+      display:flex;align-items:center;gap:10px;
+      margin-bottom:32px;text-decoration:none;
     }
     .logo-mark{
       width:36px;height:36px;
       background:linear-gradient(135deg,#2D1B69,#D97706);
       border-radius:9px;
       display:flex;align-items:center;justify-content:center;
-      font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1rem;color:#fff;
     }
     .logo-name{
       font-family:'Syne',sans-serif;font-weight:800;
@@ -45,14 +43,22 @@
     }
     h1{
       font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1.6rem;letter-spacing:-0.03em;margin-bottom:6px;
+      font-size:1.6rem;letter-spacing:-0.03em;
+      margin-bottom:6px;
     }
-    .subtitle{color:rgba(255,255,255,0.5);font-size:0.9rem;margin-bottom:28px}
+    .subtitle{
+      color:rgba(255,255,255,0.5);
+      font-size:0.9rem;margin-bottom:28px;
+    }
     .field{margin-bottom:16px}
     label{
       display:block;font-size:0.82rem;font-weight:600;
       color:rgba(255,255,255,0.6);margin-bottom:6px;
       letter-spacing:0.04em;text-transform:uppercase;
+    }
+    .field-hint{
+      font-size:0.76rem;color:rgba(255,255,255,0.3);
+      margin-top:5px;
     }
     input{
       width:100%;padding:13px 16px;border-radius:10px;
@@ -70,10 +76,19 @@
       transform:translateY(-50%);
       background:none;border:none;cursor:pointer;
       color:rgba(255,255,255,0.4);font-size:1.1rem;
-      padding:4px;
+      padding:4px;transition:color 0.2s;
     }
+    .pass-toggle:hover{color:rgba(255,255,255,0.8)}
+    .forgot-link{
+      display:block;text-align:right;
+      margin-top:6px;
+      font-size:0.8rem;color:#D97706;
+      text-decoration:none;font-weight:600;
+    }
+    .forgot-link:hover{color:#F59E0B}
     .btn-primary{
-      width:100%;padding:14px;border-radius:10px;border:none;
+      width:100%;padding:14px;border-radius:10px;
+      border:none;
       background:linear-gradient(135deg,#2D1B69,#D97706);
       color:#fff;font-size:1rem;font-weight:600;
       font-family:'DM Sans',sans-serif;cursor:pointer;
@@ -83,7 +98,8 @@
     .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
     .divider{
       display:flex;align-items:center;gap:12px;
-      margin:20px 0;color:rgba(255,255,255,0.2);font-size:0.82rem;
+      margin:20px 0;color:rgba(255,255,255,0.2);
+      font-size:0.82rem;
     }
     .divider::before,.divider::after{
       content:'';flex:1;height:1px;
@@ -92,9 +108,10 @@
     .btn-google{
       width:100%;padding:13px;border-radius:10px;
       border:1.5px solid rgba(255,255,255,0.1);
-      background:transparent;color:#fff;font-size:0.95rem;
-      font-weight:500;font-family:'DM Sans',sans-serif;
-      cursor:pointer;display:flex;align-items:center;
+      background:transparent;color:#fff;
+      font-size:0.95rem;font-weight:500;
+      font-family:'DM Sans',sans-serif;cursor:pointer;
+      display:flex;align-items:center;
       justify-content:center;gap:10px;
       transition:border-color 0.2s,background 0.2s;
     }
@@ -102,32 +119,33 @@
       border-color:rgba(255,255,255,0.25);
       background:rgba(255,255,255,0.05);
     }
-    .footer-text{
-      text-align:center;margin-top:24px;
-      font-size:0.87rem;color:rgba(255,255,255,0.4);
-    }
-    .footer-text a{color:#D97706;text-decoration:none;font-weight:600}
     .error{
       background:rgba(239,68,68,0.1);
       border:1px solid rgba(239,68,68,0.3);
-      color:#FCA5A5;padding:10px 14px;border-radius:8px;
-      font-size:0.85rem;margin-bottom:16px;display:none;
+      color:#FCA5A5;padding:10px 14px;
+      border-radius:8px;font-size:0.85rem;
+      margin-bottom:16px;display:none;
     }
     .success{
       background:rgba(13,155,94,0.1);
       border:1px solid rgba(13,155,94,0.3);
-      color:#6EE7B7;padding:10px 14px;border-radius:8px;
-      font-size:0.85rem;margin-bottom:16px;display:none;
+      color:#6EE7B7;padding:10px 14px;
+      border-radius:8px;font-size:0.85rem;
+      margin-bottom:16px;display:none;
     }
     .tabs{
-      display:flex;background:rgba(255,255,255,0.05);
-      border-radius:10px;padding:4px;margin-bottom:28px;
+      display:flex;
+      background:rgba(255,255,255,0.05);
+      border-radius:10px;padding:4px;
+      margin-bottom:28px;
     }
     .tab{
-      flex:1;padding:8px;text-align:center;border-radius:7px;
-      font-size:0.88rem;font-weight:600;cursor:pointer;
-      color:rgba(255,255,255,0.4);transition:all 0.2s;
-      border:none;background:transparent;
+      flex:1;padding:8px;text-align:center;
+      border-radius:7px;font-size:0.88rem;
+      font-weight:600;cursor:pointer;
+      color:rgba(255,255,255,0.4);
+      transition:all 0.2s;border:none;
+      background:transparent;
       font-family:'DM Sans',sans-serif;
     }
     .tab.active{background:rgba(255,255,255,0.1);color:#fff}
@@ -139,16 +157,14 @@
       margin-right:8px;vertical-align:middle;
     }
     @keyframes spin{to{transform:rotate(360deg)}}
-
-    /* ROLE SELECTOR */
     .role-label{
       display:block;font-size:0.82rem;font-weight:600;
       color:rgba(255,255,255,0.6);margin-bottom:10px;
       letter-spacing:0.04em;text-transform:uppercase;
     }
     .roles{
-      display:grid;grid-template-columns:1fr 1fr;gap:8px;
-      margin-bottom:16px;
+      display:grid;grid-template-columns:1fr 1fr;
+      gap:8px;margin-bottom:16px;
     }
     .role-option{
       padding:12px;border-radius:10px;
@@ -181,6 +197,21 @@
       font-size:0.82rem;font-weight:600;
       margin-bottom:12px;text-align:center;
     }
+    .footer-text{
+      text-align:center;margin-top:24px;
+      font-size:0.82rem;color:rgba(255,255,255,0.3);
+      line-height:1.6;
+    }
+    .footer-text a{
+      color:#D97706;text-decoration:none;font-weight:600;
+    }
+    .footer-text a:hover{color:#F59E0B}
+
+    /* MOBILE */
+    @media(max-width:480px){
+      .card{padding:28px 20px}
+      h1{font-size:1.4rem}
+    }
   </style>
 </head>
 <body>
@@ -202,19 +233,30 @@
   <div id="login-form">
     <h1>Welcome back</h1>
     <p class="subtitle">Log in to your SwoopForm account</p>
+
     <div class="field">
-      <label>Email</label>
-<input type="email" id="login-email" placeholder="Enter your email address">
+      <label>Email address</label>
+      <input type="email" id="login-email"
+        placeholder="e.g. rahul@gmail.com">
+      <div class="field-hint">Enter the email you registered with</div>
     </div>
+
     <div class="field">
       <label>Password</label>
       <div class="pass-wrap">
-<input type="password" id="login-password" placeholder="Enter your password">
+        <input type="password" id="login-password"
+          placeholder="Enter your password">
         <button class="pass-toggle" onclick="togglePass('login-password')" type="button">👁</button>
       </div>
+      <a href="/forgot" class="forgot-link">Forgot password?</a>
     </div>
-    <button class="btn-primary" id="login-btn" onclick="handleLogin()">Log in →</button>
+
+    <button class="btn-primary" id="login-btn" onclick="handleLogin()">
+      Log in →
+    </button>
+
     <div class="divider">or</div>
+
     <button class="btn-google" onclick="handleGoogle()">
       <svg width="18" height="18" viewBox="0 0 24 24">
         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -232,12 +274,18 @@
     <p class="subtitle">Start building surveys for free</p>
 
     <div class="field">
-      <label>Full Name</label>
-     <input type="text" id="signup-name" placeholder="e.g. Rahul Sharma">
+      <label>Full name</label>
+      <input type="text" id="signup-name"
+        placeholder="e.g. Rahul Sharma">
+      <div class="field-hint">Your name as you'd like it to appear</div>
     </div>
+
     <div class="field">
-      <label>Email</label>
-      <input type="email" id="signup-email" placeholder="e.g. rahul@gmail.com or rahul@iitd.ac.in" oninput="detectStudent()">
+      <label>Email address</label>
+      <input type="email" id="signup-email"
+        placeholder="e.g. rahul@gmail.com or rahul@iitd.ac.in"
+        oninput="detectStudent()">
+      <div class="field-hint">Use your institutional email for student plan</div>
     </div>
 
     <div id="student-badge" class="student-badge">
@@ -247,30 +295,36 @@
     <div class="field">
       <label>Password</label>
       <div class="pass-wrap">
-        <input type="password" id="signup-password" placeholder="Min. 8 characters, e.g. MyPass@123">
+        <input type="password" id="signup-password"
+          placeholder="Min. 8 characters">
         <button class="pass-toggle" onclick="togglePass('signup-password')" type="button">👁</button>
       </div>
+      <div class="field-hint">Minimum 8 characters</div>
     </div>
 
     <div class="field">
       <span class="role-label">I am signing up as</span>
       <div class="roles">
-        <div class="role-option selected" id="role-individual" onclick="selectRole('individual')">
+        <div class="role-option selected" id="role-individual"
+          onclick="selectRole('individual')">
           <div class="role-icon">👤</div>
           <div class="role-name">Individual</div>
           <div class="role-desc">Researcher / Freelancer</div>
         </div>
-        <div class="role-option" id="role-student" onclick="selectRole('student')">
+        <div class="role-option" id="role-student"
+          onclick="selectRole('student')">
           <div class="role-icon">🎓</div>
           <div class="role-name">Student</div>
           <div class="role-desc">Free forever</div>
         </div>
-        <div class="role-option" id="role-ngo" onclick="selectRole('ngo')">
+        <div class="role-option" id="role-ngo"
+          onclick="selectRole('ngo')">
           <div class="role-icon">🤝</div>
           <div class="role-name">NGO</div>
           <div class="role-desc">Free forever</div>
         </div>
-        <div class="role-option" id="role-business" onclick="selectRole('business')">
+        <div class="role-option" id="role-business"
+          onclick="selectRole('business')">
           <div class="role-icon">🏢</div>
           <div class="role-name">Business</div>
           <div class="role-desc">Professional</div>
@@ -278,8 +332,12 @@
       </div>
     </div>
 
-    <button class="btn-primary" id="signup-btn" onclick="handleSignup()">Create account →</button>
+    <button class="btn-primary" id="signup-btn" onclick="handleSignup()">
+      Create account →
+    </button>
+
     <div class="divider">or</div>
+
     <button class="btn-google" onclick="handleGoogle()">
       <svg width="18" height="18" viewBox="0 0 24 24">
         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -292,13 +350,15 @@
   </div>
 
   <p class="footer-text">
-    By continuing you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>
+    By continuing you agree to our
+    <a href="/terms">Terms of Service</a> and
+    <a href="/privacy">Privacy Policy</a>
   </p>
 </div>
 
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
   import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
   const firebaseConfig = {
@@ -314,8 +374,9 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
   const provider = new GoogleAuthProvider();
-provider.addScope('https://www.googleapis.com/auth/spreadsheets');
-provider.addScope('https://www.googleapis.com/auth/drive.file');
+  provider.addScope('https://www.googleapis.com/auth/spreadsheets');
+  provider.addScope('https://www.googleapis.com/auth/drive.file');
+
   let selectedRole = 'individual';
 
   function showError(msg) {
@@ -348,16 +409,19 @@ provider.addScope('https://www.googleapis.com/auth/drive.file');
       ...data,
       createdAt: serverTimestamp(),
       surveysCreated: 0,
+      notificationPreference: 'none',
       plan: data.role === 'student' ? 'student' :
-            data.role === 'ngo' ? 'ngo' : 'free'
+            data.role === 'ngo' ? 'ngo' : 'free',
+      verified: data.role === 'individual' || data.role === 'business'
+        ? true : false
     });
   }
 
   window.showTab = function(tab) {
-    document.getElementById('tab-login').classList.toggle('active', tab === 'login');
-    document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
-    document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
-    document.getElementById('signup-form').style.display = tab === 'signup' ? 'block' : 'none';
+    document.getElementById('tab-login').classList.toggle('active', tab==='login');
+    document.getElementById('tab-signup').classList.toggle('active', tab==='signup');
+    document.getElementById('login-form').style.display = tab==='login' ? 'block' : 'none';
+    document.getElementById('signup-form').style.display = tab==='signup' ? 'block' : 'none';
     document.getElementById('error').style.display = 'none';
     document.getElementById('success').style.display = 'none';
   }
@@ -369,7 +433,8 @@ provider.addScope('https://www.googleapis.com/auth/drive.file');
 
   window.selectRole = function(role) {
     selectedRole = role;
-    document.querySelectorAll('.role-option').forEach(el => el.classList.remove('selected'));
+    document.querySelectorAll('.role-option').forEach(el =>
+      el.classList.remove('selected'));
     document.getElementById('role-' + role).classList.add('selected');
   }
 
@@ -387,7 +452,10 @@ provider.addScope('https://www.googleapis.com/auth/drive.file');
   window.handleLogin = async function() {
     const email = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value;
-    if (!email || !password) { showError('Please fill in all fields'); return; }
+    if (!email || !password) {
+      showError('Please fill in all fields');
+      return;
+    }
     setLoading('login-btn', true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -410,16 +478,20 @@ provider.addScope('https://www.googleapis.com/auth/drive.file');
     const name = document.getElementById('signup-name').value.trim();
     const email = document.getElementById('signup-email').value.trim();
     const password = document.getElementById('signup-password').value;
-    if (!name || !email || !password) { showError('Please fill in all fields'); return; }
-    if (password.length < 8) { showError('Password must be at least 8 characters'); return; }
+    if (!name || !email || !password) {
+      showError('Please fill in all fields');
+      return;
+    }
+    if (password.length < 8) {
+      showError('Password must be at least 8 characters');
+      return;
+    }
     setLoading('signup-btn', true);
     try {
       const result = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(result.user, { displayName: name });
       await saveUserToFirestore(result.user.uid, {
-        name: name,
-        email: email,
-        role: selectedRole
+        name, email, role: selectedRole
       });
       showSuccess('Account created! Redirecting...');
       setTimeout(() => window.location.href = '/dashboard', 1500);
@@ -441,11 +513,12 @@ provider.addScope('https://www.googleapis.com/auth/drive.file');
       const userDoc = await getDoc(doc(db, 'users', user.uid));
       if (!userDoc.exists()) {
         const email = user.email;
-        const role = (email.endsWith('.edu') || email.endsWith('.ac.in')) ? 'student' : 'individual';
+        const role = (email.endsWith('.edu') ||
+          email.endsWith('.ac.in')) ? 'student' : 'individual';
         await saveUserToFirestore(user.uid, {
           name: user.displayName,
-          email: email,
-          role: role
+          email,
+          role
         });
       }
       showSuccess('Login successful! Redirecting...');
@@ -454,6 +527,14 @@ provider.addScope('https://www.googleapis.com/auth/drive.file');
       showError('Google login failed. Please try again');
     }
   }
+
+  // Enter key support
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const loginVisible = document.getElementById('login-form').style.display !== 'none';
+    if (loginVisible) window.handleLogin();
+    else window.handleSignup();
+  });
 </script>
 </body>
 </html>
