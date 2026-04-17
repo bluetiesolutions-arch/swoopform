@@ -451,7 +451,7 @@
           <div class="survey-footer">
             <div class="survey-responses">${survey.responseCount || 0} responses</div>
             <div class="survey-actions">
-              <button class="btn-sm btn-sm-ghost" onclick="event.stopPropagation();window.location.href='/analytics/${survey.id}'">Analytics</button>
+             <button class="btn-sm btn-sm-ghost" onclick="event.stopPropagation();window.location.href='/responses/?id=${survey.id}'">Responses</button>
               <button class="btn-sm btn-sm-primary" onclick="event.stopPropagation();copyLink('${survey.id}',this)">🔗 Copy link</button>
             </div>
           </div>
