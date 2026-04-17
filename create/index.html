@@ -611,10 +611,12 @@
     messagingSenderId: "378850092986",
     appId: "1:378850092986:web:4fed92128136e048fa5f83"
   };
+  
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+const SHEETS_SCRIPT = 'https://script.google.com/macros/s/AKfycbx3evlOErDpdpR_TK_FvQaEEI5Kr6HvJYc46A_OG0SzIqJz8Gn0OKvUQxj7uoBLgyGH/exec';
 
   let currentUser = null;
   let questions = [];
