@@ -622,7 +622,8 @@ const SHEETS_SCRIPT = 'https://script.google.com/macros/s/AKfycbx3evlOErDpdpR_TK
   let questions = [];
   let settings = { public: false, email: false, once: false, share: false, prize: false };
   let savedSurveyId = null;
-  let selectedPrizeType = 'cash';
+let selectedPrizeType = 'cash';
+let questions_snapshot = [];
 
   function syncFromDOM() {
     questions.forEach(q => {
