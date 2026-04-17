@@ -13,8 +13,6 @@
       color:#0F0E1A;
       min-height:100vh;
     }
-
-    /* NAV */
     nav{
       background:#fff;
       border-bottom:1.5px solid #E2DAD0;
@@ -39,19 +37,7 @@
       font-family:'Syne',sans-serif;font-weight:800;
       font-size:1rem;color:#0F0E1A;
     }
-    .nav-right{
-      display:flex;align-items:center;gap:10px;
-    }
-    .nav-avatar{
-      width:34px;height:34px;border-radius:50%;
-      background:linear-gradient(135deg,#2D1B69,#D97706);
-      display:flex;align-items:center;justify-content:center;
-      font-weight:700;color:#fff;font-size:0.85rem;
-      cursor:pointer;flex-shrink:0;overflow:hidden;
-      border:2px solid #E2DAD0;transition:border-color 0.2s;
-    }
-    .nav-avatar:hover{border-color:#2D1B69}
-    .nav-avatar img{width:100%;height:100%;object-fit:cover}
+    .nav-right{display:flex;align-items:center;gap:10px}
     .btn-nav{
       padding:7px 14px;border-radius:8px;
       border:1.5px solid #E2DAD0;
@@ -62,8 +48,16 @@
       text-decoration:none;white-space:nowrap;
     }
     .btn-nav:hover{border-color:#0F0E1A;color:#0F0E1A}
-
-    /* HAMBURGER */
+    .nav-avatar{
+      width:34px;height:34px;border-radius:50%;
+      background:linear-gradient(135deg,#2D1B69,#D97706);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:700;color:#fff;font-size:0.85rem;
+      cursor:pointer;flex-shrink:0;overflow:hidden;
+      border:2px solid #E2DAD0;transition:border-color 0.2s;
+    }
+    .nav-avatar:hover{border-color:#2D1B69}
+    .nav-avatar img{width:100%;height:100%;object-fit:cover}
     .hamburger{
       display:none;flex-direction:column;
       gap:5px;cursor:pointer;padding:4px;
@@ -72,15 +66,12 @@
     .hamburger span{
       display:block;width:22px;height:2px;
       background:#0F0E1A;border-radius:2px;
-      transition:all 0.3s;
     }
-
-    /* MOBILE DRAWER */
     .drawer-overlay{
       position:fixed;inset:0;
       background:rgba(0,0,0,0.4);
-      z-index:200;display:none;
-      opacity:0;transition:opacity 0.3s;
+      z-index:200;display:none;opacity:0;
+      transition:opacity 0.3s;
     }
     .drawer-overlay.open{display:block;opacity:1}
     .drawer{
@@ -112,37 +103,22 @@
       padding:12px 16px;border-radius:10px;
       text-decoration:none;color:#0F0E1A;
       font-size:0.95rem;font-weight:500;
-      transition:background 0.2s;
-      display:block;
+      transition:background 0.2s;display:block;
     }
     .drawer-link:hover{background:#F5F0E8}
-    .drawer-divider{
-      height:1px;background:#E2DAD0;
-      margin:16px 0;
-    }
-    .drawer-link.accent{
-      color:#2D1B69;font-weight:600;
-    }
-
-    /* MAIN */
-    .main{
-      max-width:1100px;margin:0 auto;
-      padding:32px 20px;
-    }
-
-    /* WELCOME */
+    .drawer-divider{height:1px;background:#E2DAD0;margin:16px 0}
+    .drawer-link.accent{color:#2D1B69;font-weight:600}
+    .main{max-width:1100px;margin:0 auto;padding:32px 20px}
     .welcome{
       display:flex;align-items:center;
       justify-content:space-between;
-      flex-wrap:wrap;gap:16px;
-      margin-bottom:28px;
+      flex-wrap:wrap;gap:16px;margin-bottom:28px;
     }
     .welcome-left h1{
       font-family:'Syne',sans-serif;font-weight:800;
       font-size:1.6rem;letter-spacing:-0.03em;
       margin-bottom:6px;
-      display:flex;align-items:center;gap:10px;
-      flex-wrap:wrap;
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
     }
     .welcome-left p{color:#64748B;font-size:0.9rem}
     .plan-badge{
@@ -165,8 +141,6 @@
       white-space:nowrap;flex-shrink:0;
     }
     .btn-new:hover{opacity:0.9}
-
-    /* STATS */
     .stats{
       display:grid;
       grid-template-columns:repeat(4,1fr);
@@ -178,19 +152,15 @@
     }
     .stat-num{
       font-family:'Syne',sans-serif;font-weight:800;
-      font-size:2rem;letter-spacing:-0.03em;
-      color:#0F0E1A;
+      font-size:2rem;letter-spacing:-0.03em;color:#0F0E1A;
     }
     .stat-label{font-size:0.82rem;color:#64748B;margin-top:4px}
-
-    /* SURVEYS */
     .section-header{
       display:flex;align-items:center;
       justify-content:space-between;margin-bottom:16px;
     }
     .section-title{
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1.1rem;
+      font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;
     }
     .empty-state{
       background:#fff;border-radius:16px;
@@ -235,8 +205,7 @@
     .status-closed{background:#FEE2E2;color:#DC2626}
     .survey-title{
       font-family:'Syne',sans-serif;font-weight:700;
-      font-size:0.98rem;margin-bottom:8px;
-      line-height:1.35;
+      font-size:0.98rem;margin-bottom:8px;line-height:1.35;
     }
     .survey-meta{
       display:flex;gap:14px;
@@ -244,23 +213,19 @@
       margin-bottom:14px;flex-wrap:wrap;
     }
     .survey-footer{
-      padding-top:14px;
-      border-top:1px solid #E2DAD0;
+      padding-top:14px;border-top:1px solid #E2DAD0;
     }
     .survey-responses{
-      font-size:0.82rem;font-weight:600;
-      color:#0F0E1A;margin-bottom:10px;
-      display:flex;align-items:center;
-      gap:10px;flex-wrap:wrap;
+      font-size:0.82rem;font-weight:600;color:#0F0E1A;
+      margin-bottom:10px;
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
     }
     .sheet-link{
       font-size:0.75rem;color:#047857;
       font-weight:600;text-decoration:none;
     }
     .sheet-link:hover{text-decoration:underline}
-    .survey-actions{
-      display:flex;gap:6px;flex-wrap:wrap;
-    }
+    .survey-actions{display:flex;gap:6px;flex-wrap:wrap}
     .btn-sm{
       padding:6px 12px;border-radius:7px;
       font-size:0.76rem;font-weight:600;
@@ -270,22 +235,22 @@
     }
     .btn-sm-ghost{
       background:transparent;
-      border:1.5px solid #E2DAD0;
-      color:#64748B;
+      border:1.5px solid #E2DAD0;color:#64748B;
     }
     .btn-sm-ghost:hover{border-color:#0F0E1A;color:#0F0E1A}
     .btn-sm-primary{
-      background:linear-gradient(135deg,#2D1B69,#D97706);
-      color:#fff;
+      background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;
     }
     .btn-sm-danger{
       background:transparent;
-      border:1.5px solid #FEE2E2;
-      color:#DC2626;
+      border:1.5px solid #FEE2E2;color:#DC2626;
     }
     .btn-sm-danger:hover{background:#FEE2E2}
-
-    /* LOADING */
+    .btn-sm-success{
+      background:transparent;
+      border:1.5px solid #D1FAE5;color:#047857;
+    }
+    .btn-sm-success:hover{background:#D1FAE5}
     .loading-screen{
       display:flex;align-items:center;justify-content:center;
       min-height:100vh;background:#0F0E1A;
@@ -302,8 +267,6 @@
       font-size:1.2rem;color:#fff;
     }
     @keyframes spin{to{transform:rotate(360deg)}}
-
-    /* TOAST */
     .toast{
       position:fixed;bottom:24px;left:50%;
       transform:translateX(-50%);
@@ -312,19 +275,16 @@
       font-size:0.88rem;font-weight:600;
       display:none;z-index:999;
       box-shadow:0 4px 20px rgba(0,0,0,0.3);
+      white-space:nowrap;
     }
-
-    /* RESPONSIVE */
     @media(max-width:900px){
       .stats{grid-template-columns:repeat(2,1fr)}
     }
     @media(max-width:600px){
       .stats{grid-template-columns:repeat(2,1fr)}
       .welcome{flex-direction:column;align-items:flex-start}
-      .btn-nav.desktop-only{display:none}
+      .btn-nav{display:none}
       .hamburger{display:flex}
-      .nav-right .btn-nav{display:none}
-      .nav-right .nav-avatar{display:flex}
     }
   </style>
 </head>
@@ -335,7 +295,6 @@
   <div class="loading-text">SwoopForm</div>
 </div>
 
-<!-- MOBILE DRAWER -->
 <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
 <div class="drawer" id="drawer">
   <div class="drawer-header">
@@ -356,8 +315,8 @@
     <div class="drawer-divider"></div>
     <a href="/dashboard" class="drawer-link accent">Dashboard</a>
     <a href="/create" class="drawer-link accent">+ New Survey</a>
-    <a href="/settings" class="drawer-link">Settings</a>
-    <a href="#" class="drawer-link" onclick="handleLogout()">Log out</a>
+    <a href="/settings" class="drawer-link">⚙️ Settings</a>
+    <a href="#" class="drawer-link" onclick="handleLogout();return false;">Log out</a>
   </div>
 </div>
 
@@ -368,8 +327,8 @@
       <div class="logo-name">SwoopForm</div>
     </a>
     <div class="nav-right">
-      <a href="/settings" class="btn-nav desktop-only">⚙️ Settings</a>
-      <button class="btn-nav desktop-only" onclick="handleLogout()">Log out</button>
+      <a href="/settings" class="btn-nav">⚙️ Settings</a>
+      <button class="btn-nav" onclick="handleLogout()">Log out</button>
       <div class="nav-avatar" id="nav-avatar"
         onclick="window.location.href='/settings'"
         title="Account settings">?</div>
@@ -380,8 +339,6 @@
   </nav>
 
   <div class="main">
-
-    <!-- WELCOME -->
     <div class="welcome">
       <div class="welcome-left">
         <h1 id="welcome-msg">
@@ -393,7 +350,6 @@
       <a href="/create" class="btn-new">+ New Survey</a>
     </div>
 
-    <!-- STATS -->
     <div class="stats">
       <div class="stat-card">
         <div class="stat-num" id="stat-surveys">0</div>
@@ -413,7 +369,6 @@
       </div>
     </div>
 
-    <!-- SURVEYS -->
     <div class="section-header">
       <div class="section-title">Your Surveys</div>
     </div>
@@ -421,12 +376,11 @@
     <div id="empty-state" class="empty-state">
       <div class="empty-icon">📋</div>
       <h3>No surveys yet</h3>
-      <p>Create your first survey and start<br>collecting responses in minutes.</p>
+      <p>Create your first survey and start collecting responses in minutes.</p>
       <a href="/create" class="btn-new">+ Create your first survey</a>
     </div>
 
     <div id="surveys-grid" class="surveys-grid" style="display:none"></div>
-
   </div>
 </div>
 
@@ -457,22 +411,19 @@
     const userData = userDoc.exists() ? userDoc.data() : {};
     const name = user.displayName || userData.name || 'there';
     const plan = userData.plan || 'free';
-    const role = userData.role || 'individual';
 
-    // Avatar
     const avatar = document.getElementById('nav-avatar');
     if (userData.photoUrl) {
-      avatar.innerHTML = `<img src="${userData.photoUrl}" alt="${name}">`;
+      avatar.innerHTML = '<img src="' + userData.photoUrl + '" alt="' + name + '">';
     } else {
       avatar.textContent = name.charAt(0).toUpperCase();
     }
 
-    // Welcome
     const hour = new Date().getHours();
     const greeting = hour < 12 ? 'Good morning' :
       hour < 17 ? 'Good afternoon' : 'Good evening';
     document.getElementById('welcome-msg').innerHTML =
-      `${greeting}, ${name.split(' ')[0]}! 👋 <span class="plan-badge plan-${plan}">${getPlanLabel(plan)}</span>`;
+      greeting + ', ' + name.split(' ')[0] + '! 👋 <span class="plan-badge plan-' + plan + '">' + getPlanLabel(plan) + '</span>';
 
     const subs = {
       student: '🎓 Student plan — Unlimited responses, free forever',
@@ -481,13 +432,9 @@
       paid: '⭐ Paid plan — Unlimited everything',
       free: 'Free plan — 100 responses per survey'
     };
-    document.getElementById('welcome-sub').textContent =
-      subs[plan] || subs.free;
+    document.getElementById('welcome-sub').textContent = subs[plan] || subs.free;
 
-    const limits = {
-      student:'Unlimited', ngo:'Unlimited',
-      business:'Unlimited', paid:'Unlimited', free:'100'
-    };
+    const limits = { student:'Unlimited', ngo:'Unlimited', business:'Unlimited', paid:'Unlimited', free:'100' };
     document.getElementById('stat-limit').textContent = limits[plan] || '100';
 
     await loadSurveys(user.uid);
@@ -498,17 +445,17 @@
 
   function getPlanLabel(plan) {
     const labels = {
-      free:'Free Plan', student:'🎓 Student',
-      ngo:'🤝 NGO', business:'🏢 Business',
-      paid:'⭐ Paid', custom:'💎 Custom'
+      free:'Free Plan', student:'🎓 Student', ngo:'🤝 NGO',
+      business:'🏢 Business', paid:'⭐ Paid', custom:'💎 Custom'
     };
     return labels[plan] || 'Free Plan';
   }
 
   async function loadSurveys(uid) {
     try {
-      const q = query(collection(db,'surveys'), where('userId','==',uid));
+      const q = query(collection(db, 'surveys'), where('userId', '==', uid));
       const snap = await getDocs(q);
+
       if (snap.empty) {
         document.getElementById('empty-state').style.display = 'block';
         document.getElementById('surveys-grid').style.display = 'none';
@@ -516,76 +463,48 @@
       }
 
       const surveys = [];
-      snap.forEach(d => surveys.push({ id:d.id, ...d.data() }));
-      surveys.sort((a,b) => {
-        const ta = a.createdAt?.toMillis?.() || 0;
-        const tb = b.createdAt?.toMillis?.() || 0;
+      snap.forEach(d => surveys.push({ id: d.id, ...d.data() }));
+      surveys.sort((a, b) => {
+        const ta = a.createdAt && a.createdAt.toMillis ? a.createdAt.toMillis() : 0;
+        const tb = b.createdAt && b.createdAt.toMillis ? b.createdAt.toMillis() : 0;
         return tb - ta;
       });
 
-      const total = surveys.length;
-      const totalResponses = surveys.reduce((s,sv) => s + (sv.responseCount||0), 0);
-      const activeCount = surveys.filter(s => s.status==='active').length;
+      document.getElementById('stat-surveys').textContent = surveys.length;
+      document.getElementById('stat-responses').textContent =
+        surveys.reduce(function(s, sv) { return s + (sv.responseCount || 0); }, 0);
+      document.getElementById('stat-active').textContent =
+        surveys.filter(function(s) { return s.status === 'active'; }).length;
 
-      document.getElementById('stat-surveys').textContent = total;
-      document.getElementById('stat-responses').textContent = totalResponses;
-      document.getElementById('stat-active').textContent = activeCount;
+      var html = '';
+      surveys.forEach(function(survey) {
+        var statusClass = 'status-' + (survey.status || 'draft');
+        var statusText = survey.status === 'active' ? '● Active' :
+          survey.status === 'closed' ? '✕ Closed' : '○ Draft';
+        var sheetHtml = survey.sheetUrl
+          ? '<a href="' + survey.sheetUrl + '" target="_blank" class="sheet-link" onclick="event.stopPropagation()">📊 Open Sheet</a>'
+          : '';
+        var closeReopenBtn = '';
+        if (survey.status === 'active') {
+          closeReopenBtn = '<button class="btn-sm btn-sm-danger" onclick="event.stopPropagation();closeSurvey(\'' + survey.id + '\',this)">✕ Close</button>';
+        } else if (survey.status === 'closed') {
+          closeReopenBtn = '<button class="btn-sm btn-sm-success" onclick="event.stopPropagation();reopenSurvey(\'' + survey.id + '\',this)">↺ Reopen</button>';
+        }
+        html += '<div class="survey-card" onclick="window.location.href=\'/responses/?id=' + survey.id + '\'">';
+        html += '<div class="survey-card-top"><span class="survey-status ' + statusClass + '">' + statusText + '</span></div>';
+        html += '<div class="survey-title">' + (survey.title || 'Untitled Survey') + '</div>';
+        html += '<div class="survey-meta"><span>📝 ' + (survey.questionCount || 0) + ' questions</span><span>📅 ' + formatDate(survey.createdAt) + '</span></div>';
+        html += '<div class="survey-footer">';
+        html += '<div class="survey-responses"><span>' + (survey.responseCount || 0) + ' responses</span>' + sheetHtml + '</div>';
+        html += '<div class="survey-actions">';
+        html += '<button class="btn-sm btn-sm-ghost" onclick="event.stopPropagation();window.location.href=\'/responses/?id=' + survey.id + '\'">Responses</button>';
+        html += '<button class="btn-sm btn-sm-primary" onclick="event.stopPropagation();copyLink(\'' + survey.id + '\',this)">🔗 Copy link</button>';
+        html += '<button class="btn-sm btn-sm-ghost" onclick="event.stopPropagation();window.location.href=\'/edit/?id=' + survey.id + '\'">✏️ Edit</button>';
+        html += closeReopenBtn;
+        html += '</div></div></div>';
+      });
 
-      const grid = document.getElementById('surveys-grid');
-      grid.innerHTML = surveys.map(survey => `
-        <div class="survey-card" onclick="window.location.href='/responses/?id=${survey.id}'">
-          <div class="survey-card-top">
-            <span class="survey-status status-${survey.status||'draft'}">
-              ${survey.status==='active' ? '● Active' :
-                survey.status==='closed' ? '✕ Closed' : '○ Draft'}
-            </span>
-          </div>
-          <div class="survey-title">${survey.title || 'Untitled Survey'}</div>
-          <div class="survey-meta">
-            <span>📝 ${survey.questionCount||0} questions</span>
-            <span>📅 ${formatDate(survey.createdAt)}</span>
-          </div>
-          <div class="survey-footer">
-            <div class="survey-responses">
-              <span>${survey.responseCount||0} responses</span>
-              ${survey.sheetUrl
-                ? `<a href="${survey.sheetUrl}" target="_blank"
-                    class="sheet-link"
-                    onclick="event.stopPropagation()">
-                    📊 Open Sheet
-                  </a>`
-                : ''}
-            </div>
-            <div class="survey-actions">
-              <button class="btn-sm btn-sm-ghost"
-                onclick="event.stopPropagation();window.location.href='/responses/?id=${survey.id}'">
-                Responses
-              </button>
-              <button class="btn-sm btn-sm-primary"
-                onclick="event.stopPropagation();copyLink('${survey.id}',this)">
-                🔗 Copy link
-              </button>
-              <button class="btn-sm btn-sm-ghost"
-                onclick="event.stopPropagation();window.location.href='/edit/?id=${survey.id}'">
-                ✏️ Edit
-              </button>
-              ${survey.status === 'active'
-  ? `<button class="btn-sm btn-sm-danger"
-      onclick="event.stopPropagation();closeSurvey('${survey.id}',this)">
-      ✕ Close
-    </button>`
-  : survey.status === 'closed'
-  ? `<button class="btn-sm btn-sm-ghost"
-      style="border-color:#047857;color:#047857"
-      onclick="event.stopPropagation();reopenSurvey('${survey.id}',this)">
-      ↺ Reopen
-    </button>`
-  : ''}
-            </div>
-          </div>
-        </div>
-      `).join('');
-
+      document.getElementById('surveys-grid').innerHTML = html;
       document.getElementById('empty-state').style.display = 'none';
       document.getElementById('surveys-grid').style.display = 'grid';
 
@@ -596,13 +515,13 @@
 
   function formatDate(ts) {
     if (!ts) return 'Recently';
-    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    var d = ts.toDate ? ts.toDate() : new Date(ts);
     return d.toLocaleDateString('en-IN', { day:'numeric', month:'short' });
   }
 
   window.copyLink = function(surveyId, btn) {
-    const link = 'https://swoopform.com/s/?id=' + surveyId;
-    const el = document.createElement('textarea');
+    var link = 'https://swoopform.com/s/?id=' + surveyId;
+    var el = document.createElement('textarea');
     el.value = link;
     el.style.position = 'fixed';
     el.style.opacity = '0';
@@ -610,12 +529,12 @@
     el.focus(); el.select();
     try {
       document.execCommand('copy');
-      const orig = btn.textContent;
+      var orig = btn.textContent;
       btn.textContent = '✓ Copied!';
       btn.style.background = 'linear-gradient(135deg,#047857,#10B981)';
       btn.style.color = '#fff';
       btn.style.borderColor = 'transparent';
-      setTimeout(() => {
+      setTimeout(function() {
         btn.textContent = orig;
         btn.style.background = '';
         btn.style.color = '';
@@ -628,13 +547,13 @@
   }
 
   window.closeSurvey = async function(surveyId, btn) {
-    const confirmed = confirm(
-      '⚠️ Close this survey?\n\n' +
-      '• Respondents will no longer be able to submit answers\n' +
+    var confirmed = confirm(
+      'Close this survey?\n\n' +
+      '• Respondents can no longer submit answers\n' +
       '• All existing responses are kept safely\n' +
       '• Your Google Sheet stays intact\n' +
-      '• You can reopen it anytime using the Reopen button\n\n' +
-      'Are you sure you want to close it?'
+      '• Use the Reopen button to accept responses again\n\n' +
+      'Are you sure?'
     );
     if (!confirmed) return;
     btn.disabled = true;
@@ -644,8 +563,8 @@
         status: 'closed',
         updatedAt: serverTimestamp()
       });
-      showToast('✅ Survey closed. Use Reopen to accept responses again.');
-      setTimeout(() => window.location.reload(), 2000);
+      showToast('Survey closed. Click Reopen anytime to accept responses again.');
+      setTimeout(function() { window.location.reload(); }, 2000);
     } catch(e) {
       btn.disabled = false;
       btn.textContent = '✕ Close';
@@ -654,11 +573,11 @@
   }
 
   window.reopenSurvey = async function(surveyId, btn) {
-    const confirmed = confirm(
-      '↺ Reopen this survey?\n\n' +
+    var confirmed = confirm(
+      'Reopen this survey?\n\n' +
       '• Respondents will be able to submit answers again\n' +
       '• New responses will appear in your Google Sheet\n\n' +
-      'Are you sure you want to reopen it?'
+      'Are you sure?'
     );
     if (!confirmed) return;
     btn.disabled = true;
@@ -668,30 +587,12 @@
         status: 'active',
         updatedAt: serverTimestamp()
       });
-      showToast('✅ Survey reopened! Accepting responses again.');
-      setTimeout(() => window.location.reload(), 2000);
+      showToast('Survey reopened! Now accepting responses again.');
+      setTimeout(function() { window.location.reload(); }, 2000);
     } catch(e) {
       btn.disabled = false;
       btn.textContent = '↺ Reopen';
       showToast('Error reopening survey. Please try again.');
-    }
-  }
-    if (!confirmed) return;
-
-    btn.disabled = true;
-    btn.textContent = 'Closing...';
-
-    try {
-      await updateDoc(doc(db, 'surveys', surveyId), {
-        status: 'closed',
-        updatedAt: serverTimestamp()
-      });
-      showToast('Survey closed. Existing responses kept safely.');
-      setTimeout(() => window.location.reload(), 1500);
-    } catch(e) {
-      btn.disabled = false;
-      btn.textContent = '✕ Close';
-      showToast('Error closing survey. Please try again.');
     }
   }
 
@@ -701,18 +602,18 @@
   }
 
   function showToast(msg) {
-    const t = document.getElementById('toast');
+    var t = document.getElementById('toast');
     t.textContent = msg;
     t.style.display = 'block';
-    setTimeout(() => t.style.display = 'none', 3000);
+    setTimeout(function() { t.style.display = 'none'; }, 3000);
   }
 
-  // DRAWER
   window.openDrawer = function() {
     document.getElementById('drawer').classList.add('open');
     document.getElementById('drawer-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
+
   window.closeDrawer = function() {
     document.getElementById('drawer').classList.remove('open');
     document.getElementById('drawer-overlay').classList.remove('open');
