@@ -18,18 +18,14 @@
     nav{
       background:#fff;
       border-bottom:1.5px solid #E2DAD0;
-      padding:0 24px;
-      height:60px;
-      display:flex;
-      align-items:center;
+      padding:0 24px;height:60px;
+      display:flex;align-items:center;
       justify-content:space-between;
-      position:sticky;
-      top:0;
-      z-index:100;
+      position:sticky;top:0;z-index:100;
     }
     .nav-logo{
       display:flex;align-items:center;gap:10px;
-      text-decoration:none;
+      text-decoration:none;flex-shrink:0;
     }
     .logo-mark{
       width:32px;height:32px;
@@ -44,61 +40,121 @@
       font-size:1rem;color:#0F0E1A;
     }
     .nav-right{
-      display:flex;align-items:center;gap:12px;
+      display:flex;align-items:center;gap:10px;
     }
-    .user-avatar{
+    .nav-avatar{
       width:34px;height:34px;border-radius:50%;
       background:linear-gradient(135deg,#2D1B69,#D97706);
       display:flex;align-items:center;justify-content:center;
       font-weight:700;color:#fff;font-size:0.85rem;
-      cursor:pointer;
+      cursor:pointer;flex-shrink:0;overflow:hidden;
+      border:2px solid #E2DAD0;transition:border-color 0.2s;
     }
-    .btn-logout{
-      padding:7px 16px;border-radius:8px;
+    .nav-avatar:hover{border-color:#2D1B69}
+    .nav-avatar img{width:100%;height:100%;object-fit:cover}
+    .btn-nav{
+      padding:7px 14px;border-radius:8px;
       border:1.5px solid #E2DAD0;
       background:transparent;color:#64748B;
       font-size:0.82rem;font-weight:600;
       font-family:'DM Sans',sans-serif;
       cursor:pointer;transition:all 0.2s;
+      text-decoration:none;white-space:nowrap;
     }
-    .btn-logout:hover{border-color:#0F0E1A;color:#0F0E1A}
+    .btn-nav:hover{border-color:#0F0E1A;color:#0F0E1A}
+
+    /* HAMBURGER */
+    .hamburger{
+      display:none;flex-direction:column;
+      gap:5px;cursor:pointer;padding:4px;
+      background:none;border:none;
+    }
+    .hamburger span{
+      display:block;width:22px;height:2px;
+      background:#0F0E1A;border-radius:2px;
+      transition:all 0.3s;
+    }
+
+    /* MOBILE DRAWER */
+    .drawer-overlay{
+      position:fixed;inset:0;
+      background:rgba(0,0,0,0.4);
+      z-index:200;display:none;
+      opacity:0;transition:opacity 0.3s;
+    }
+    .drawer-overlay.open{display:block;opacity:1}
+    .drawer{
+      position:fixed;top:0;right:0;
+      width:280px;height:100vh;
+      background:#fff;z-index:201;
+      padding:24px;
+      transform:translateX(100%);
+      transition:transform 0.3s ease;
+      overflow-y:auto;
+    }
+    .drawer.open{transform:translateX(0)}
+    .drawer-header{
+      display:flex;align-items:center;
+      justify-content:space-between;
+      margin-bottom:32px;
+    }
+    .drawer-logo{
+      display:flex;align-items:center;gap:8px;
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1rem;text-decoration:none;color:#0F0E1A;
+    }
+    .drawer-close{
+      background:none;border:none;cursor:pointer;
+      font-size:1.4rem;color:#64748B;padding:4px;
+    }
+    .drawer-links{display:flex;flex-direction:column;gap:4px}
+    .drawer-link{
+      padding:12px 16px;border-radius:10px;
+      text-decoration:none;color:#0F0E1A;
+      font-size:0.95rem;font-weight:500;
+      transition:background 0.2s;
+      display:block;
+    }
+    .drawer-link:hover{background:#F5F0E8}
+    .drawer-divider{
+      height:1px;background:#E2DAD0;
+      margin:16px 0;
+    }
+    .drawer-link.accent{
+      color:#2D1B69;font-weight:600;
+    }
 
     /* MAIN */
     .main{
-      max-width:1100px;
-      margin:0 auto;
+      max-width:1100px;margin:0 auto;
       padding:32px 20px;
     }
 
     /* WELCOME */
     .welcome{
-      display:flex;
-      align-items:center;
+      display:flex;align-items:center;
       justify-content:space-between;
-      flex-wrap:wrap;
-      gap:16px;
-      margin-bottom:32px;
+      flex-wrap:wrap;gap:16px;
+      margin-bottom:28px;
     }
-    .welcome-text h1{
-      font-family:'Syne',sans-serif;
-      font-weight:800;
-      font-size:1.6rem;
-      letter-spacing:-0.03em;
+    .welcome-left h1{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1.6rem;letter-spacing:-0.03em;
       margin-bottom:6px;
+      display:flex;align-items:center;gap:10px;
+      flex-wrap:wrap;
     }
-    .welcome-text p{
-      color:#64748B;font-size:0.9rem;
-    }
+    .welcome-left p{color:#64748B;font-size:0.9rem}
     .plan-badge{
-      display:inline-flex;align-items:center;gap:6px;
-      padding:5px 14px;border-radius:100px;
-      font-size:0.78rem;font-weight:700;
-      margin-left:10px;
+      display:inline-flex;align-items:center;
+      padding:4px 12px;border-radius:100px;
+      font-size:0.75rem;font-weight:700;
     }
     .plan-free{background:#EDE9FF;color:#2D1B69}
     .plan-student{background:#D1FAE5;color:#047857}
     .plan-ngo{background:#D1FAE5;color:#047857}
     .plan-business{background:#FEF3C7;color:#92400E}
+    .plan-paid{background:#FEF3C7;color:#92400E}
     .btn-new{
       display:inline-flex;align-items:center;gap:8px;
       padding:12px 22px;border-radius:10px;border:none;
@@ -106,36 +162,31 @@
       color:#fff;font-size:0.92rem;font-weight:600;
       font-family:'DM Sans',sans-serif;cursor:pointer;
       text-decoration:none;transition:opacity 0.2s;
-      white-space:nowrap;
+      white-space:nowrap;flex-shrink:0;
     }
     .btn-new:hover{opacity:0.9}
 
     /* STATS */
     .stats{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-      gap:14px;
-      margin-bottom:32px;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;margin-bottom:28px;
     }
     .stat-card{
       background:#fff;border-radius:14px;
-      border:1.5px solid #E2DAD0;
-      padding:20px;
+      border:1.5px solid #E2DAD0;padding:20px;
     }
     .stat-num{
       font-family:'Syne',sans-serif;font-weight:800;
       font-size:2rem;letter-spacing:-0.03em;
       color:#0F0E1A;
     }
-    .stat-label{
-      font-size:0.82rem;color:#64748B;margin-top:4px;
-    }
+    .stat-label{font-size:0.82rem;color:#64748B;margin-top:4px}
 
     /* SURVEYS */
     .section-header{
       display:flex;align-items:center;
-      justify-content:space-between;
-      margin-bottom:16px;
+      justify-content:space-between;margin-bottom:16px;
     }
     .section-title{
       font-family:'Syne',sans-serif;font-weight:800;
@@ -155,24 +206,21 @@
       color:#64748B;font-size:0.88rem;
       margin-bottom:24px;line-height:1.6;
     }
-
-    /* SURVEY CARDS */
     .surveys-grid{
       display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+      grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
       gap:16px;
     }
     .survey-card{
       background:#fff;border-radius:14px;
-      border:1.5px solid #E2DAD0;
-      padding:22px;
+      border:1.5px solid #E2DAD0;padding:22px;
       transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;
       cursor:pointer;
     }
     .survey-card:hover{
       transform:translateY(-2px);
       box-shadow:0 8px 30px rgba(15,14,26,0.1);
-      border-color:rgba(45,27,105,0.3);
+      border-color:rgba(45,27,105,0.2);
     }
     .survey-card-top{
       display:flex;justify-content:space-between;
@@ -193,31 +241,32 @@
     .survey-meta{
       display:flex;gap:14px;
       font-size:0.78rem;color:#64748B;
-      margin-bottom:16px;
+      margin-bottom:14px;flex-wrap:wrap;
     }
     .survey-footer{
-      display:flex;justify-content:space-between;
-      align-items:center;
       padding-top:14px;
       border-top:1px solid #E2DAD0;
     }
     .survey-responses{
       font-size:0.82rem;font-weight:600;
-      color:#0F0E1A;
+      color:#0F0E1A;margin-bottom:10px;
+      display:flex;align-items:center;
+      gap:10px;flex-wrap:wrap;
     }
+    .sheet-link{
+      font-size:0.75rem;color:#047857;
+      font-weight:600;text-decoration:none;
+    }
+    .sheet-link:hover{text-decoration:underline}
     .survey-actions{
-      display:flex;gap:6px;
+      display:flex;gap:6px;flex-wrap:wrap;
     }
     .btn-sm{
-      padding:5px 12px;border-radius:7px;
+      padding:6px 12px;border-radius:7px;
       font-size:0.76rem;font-weight:600;
       cursor:pointer;border:none;
       font-family:'DM Sans',sans-serif;
-      transition:all 0.2s;
-    }
-    .btn-sm-primary{
-      background:linear-gradient(135deg,#2D1B69,#D97706);
-      color:#fff;
+      transition:all 0.2s;white-space:nowrap;
     }
     .btn-sm-ghost{
       background:transparent;
@@ -225,75 +274,123 @@
       color:#64748B;
     }
     .btn-sm-ghost:hover{border-color:#0F0E1A;color:#0F0E1A}
+    .btn-sm-primary{
+      background:linear-gradient(135deg,#2D1B69,#D97706);
+      color:#fff;
+    }
+    .btn-sm-danger{
+      background:transparent;
+      border:1.5px solid #FEE2E2;
+      color:#DC2626;
+    }
+    .btn-sm-danger:hover{background:#FEE2E2}
 
     /* LOADING */
     .loading-screen{
       display:flex;align-items:center;justify-content:center;
       min-height:100vh;background:#0F0E1A;
-    }
-    .loading-logo{
-      text-align:center;
+      flex-direction:column;gap:16px;
     }
     .spinner{
       width:36px;height:36px;
       border:3px solid rgba(217,119,6,0.2);
-      border-top-color:#D97706;
-      border-radius:50%;
+      border-top-color:#D97706;border-radius:50%;
       animation:spin 0.8s linear infinite;
-      margin:0 auto 16px;
     }
-    @keyframes spin{to{transform:rotate(360deg)}}
     .loading-text{
       font-family:'Syne',sans-serif;font-weight:800;
       font-size:1.2rem;color:#fff;
     }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* TOAST */
+    .toast{
+      position:fixed;bottom:24px;left:50%;
+      transform:translateX(-50%);
+      background:#0F0E1A;color:#fff;
+      padding:12px 24px;border-radius:10px;
+      font-size:0.88rem;font-weight:600;
+      display:none;z-index:999;
+      box-shadow:0 4px 20px rgba(0,0,0,0.3);
+    }
 
     /* RESPONSIVE */
-    @media(max-width:600px){
-      .welcome{flex-direction:column;align-items:flex-start}
+    @media(max-width:900px){
       .stats{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:600px){
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .welcome{flex-direction:column;align-items:flex-start}
+      .btn-nav.desktop-only{display:none}
+      .hamburger{display:flex}
+      .nav-right .btn-nav{display:none}
+      .nav-right .nav-avatar{display:flex}
     }
   </style>
 </head>
 <body>
 
-<!-- Loading screen -->
 <div id="loading-screen" class="loading-screen">
-  <div class="loading-logo">
-    <div class="spinner"></div>
-    <div class="loading-text">SwoopForm</div>
+  <div class="spinner"></div>
+  <div class="loading-text">SwoopForm</div>
+</div>
+
+<!-- MOBILE DRAWER -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <a href="/" class="drawer-logo">
+      <div class="logo-mark" style="width:28px;height:28px;font-size:0.8rem">S</div>
+      SwoopForm
+    </a>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-links">
+    <a href="/#how" class="drawer-link">How it works</a>
+    <a href="/#features" class="drawer-link">Features</a>
+    <a href="/#pricing" class="drawer-link">Pricing</a>
+    <a href="/#solutions" class="drawer-link">Solutions</a>
+    <a href="/#discover" class="drawer-link">Discover</a>
+    <a href="/#blog" class="drawer-link">Blog</a>
+    <a href="/#faq" class="drawer-link">FAQ</a>
+    <div class="drawer-divider"></div>
+    <a href="/dashboard" class="drawer-link accent">Dashboard</a>
+    <a href="/create" class="drawer-link accent">+ New Survey</a>
+    <a href="/settings" class="drawer-link">Settings</a>
+    <a href="#" class="drawer-link" onclick="handleLogout()">Log out</a>
   </div>
 </div>
 
-<!-- Dashboard -->
 <div id="dashboard" style="display:none">
-
-  <!-- NAV -->
   <nav>
     <a href="/" class="nav-logo">
       <div class="logo-mark">S</div>
       <div class="logo-name">SwoopForm</div>
     </a>
     <div class="nav-right">
-      <div class="user-avatar" id="user-avatar">?</div>
-      <button class="btn-logout" onclick="handleLogout()">Log out</button>
+      <a href="/settings" class="btn-nav desktop-only">⚙️ Settings</a>
+      <button class="btn-nav desktop-only" onclick="handleLogout()">Log out</button>
+      <div class="nav-avatar" id="nav-avatar"
+        onclick="window.location.href='/settings'"
+        title="Account settings">?</div>
+      <button class="hamburger" onclick="openDrawer()">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
-  <!-- MAIN -->
   <div class="main">
 
     <!-- WELCOME -->
     <div class="welcome">
-      <div class="welcome-text">
-        <h1 id="welcome-msg">Welcome! 👋
+      <div class="welcome-left">
+        <h1 id="welcome-msg">
+          Welcome! 👋
           <span class="plan-badge plan-free" id="plan-badge">Free Plan</span>
         </h1>
         <p id="welcome-sub">Ready to create your first survey?</p>
       </div>
-      <a href="/create" class="btn-new">
-        + New Survey
-      </a>
+      <a href="/create" class="btn-new">+ New Survey</a>
     </div>
 
     <!-- STATS -->
@@ -321,7 +418,6 @@
       <div class="section-title">Your Surveys</div>
     </div>
 
-    <!-- Empty state -->
     <div id="empty-state" class="empty-state">
       <div class="empty-icon">📋</div>
       <h3>No surveys yet</h3>
@@ -329,17 +425,17 @@
       <a href="/create" class="btn-new">+ Create your first survey</a>
     </div>
 
-    <!-- Surveys grid -->
-    <div id="surveys-grid" class="surveys-grid" style="display:none">
-    </div>
+    <div id="surveys-grid" class="surveys-grid" style="display:none"></div>
 
   </div>
 </div>
 
+<div class="toast" id="toast"></div>
+
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
   import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-  import { getFirestore, doc, getDoc, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+  import { getFirestore, doc, getDoc, collection, query, where, getDocs, updateDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
   const firebaseConfig = {
     apiKey: "AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",
@@ -354,110 +450,131 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  // Check if user is logged in
   onAuthStateChanged(auth, async (user) => {
-    if (!user) {
-      // Not logged in — redirect to login
-      window.location.href = '/login';
-      return;
-    }
+    if (!user) { window.location.href = '/login'; return; }
 
-    // Get user data from Firestore
     const userDoc = await getDoc(doc(db, 'users', user.uid));
     const userData = userDoc.exists() ? userDoc.data() : {};
-
     const name = user.displayName || userData.name || 'there';
-    const role = userData.role || 'individual';
     const plan = userData.plan || 'free';
+    const role = userData.role || 'individual';
 
-    // Set avatar initials
-    document.getElementById('user-avatar').textContent =
-      name.charAt(0).toUpperCase();
+    // Avatar
+    const avatar = document.getElementById('nav-avatar');
+    if (userData.photoUrl) {
+      avatar.innerHTML = `<img src="${userData.photoUrl}" alt="${name}">`;
+    } else {
+      avatar.textContent = name.charAt(0).toUpperCase();
+    }
 
-    // Welcome message
+    // Welcome
     const hour = new Date().getHours();
-    const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+    const greeting = hour < 12 ? 'Good morning' :
+      hour < 17 ? 'Good afternoon' : 'Good evening';
     document.getElementById('welcome-msg').innerHTML =
-      `${greeting}, ${name.split(' ')[0]}! 👋 <span class="plan-badge plan-${plan}" id="plan-badge">${getPlanLabel(plan)}</span>`;
+      `${greeting}, ${name.split(' ')[0]}! 👋 <span class="plan-badge plan-${plan}">${getPlanLabel(plan)}</span>`;
 
-    // Sub message based on role
     const subs = {
       student: '🎓 Student plan — Unlimited responses, free forever',
       ngo: '🤝 NGO plan — Unlimited responses, free forever',
-      business: '🏢 Business plan — Professional features unlocked',
-      individual: 'Free plan — 100 responses per survey'
+      business: '🏢 Business plan — Professional features',
+      paid: '⭐ Paid plan — Unlimited everything',
+      free: 'Free plan — 100 responses per survey'
     };
-    document.getElementById('welcome-sub').textContent = subs[role] || subs.individual;
+    document.getElementById('welcome-sub').textContent =
+      subs[plan] || subs.free;
 
-    // Response limit based on plan
-    const limits = {student:'Unlimited', ngo:'Unlimited', business:'Unlimited', free:'100'};
+    const limits = {
+      student:'Unlimited', ngo:'Unlimited',
+      business:'Unlimited', paid:'Unlimited', free:'100'
+    };
     document.getElementById('stat-limit').textContent = limits[plan] || '100';
 
-    // Load surveys
     await loadSurveys(user.uid);
 
-    // Show dashboard
     document.getElementById('loading-screen').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
   });
 
   function getPlanLabel(plan) {
     const labels = {
-      free: 'Free Plan',
-      student: '🎓 Student',
-      ngo: '🤝 NGO',
-      starter: 'Starter',
-      pro: 'Pro',
-      business: 'Business'
+      free:'Free Plan', student:'🎓 Student',
+      ngo:'🤝 NGO', business:'🏢 Business',
+      paid:'⭐ Paid', custom:'💎 Custom'
     };
     return labels[plan] || 'Free Plan';
   }
 
   async function loadSurveys(uid) {
     try {
-      const q = query(collection(db, 'surveys'), where('userId', '==', uid));
-      const snapshot = await getDocs(q);
-
-      if (snapshot.empty) {
+      const q = query(collection(db,'surveys'), where('userId','==',uid));
+      const snap = await getDocs(q);
+      if (snap.empty) {
         document.getElementById('empty-state').style.display = 'block';
         document.getElementById('surveys-grid').style.display = 'none';
         return;
       }
 
       const surveys = [];
-      snapshot.forEach(doc => surveys.push({ id: doc.id, ...doc.data() }));
+      snap.forEach(d => surveys.push({ id:d.id, ...d.data() }));
+      surveys.sort((a,b) => {
+        const ta = a.createdAt?.toMillis?.() || 0;
+        const tb = b.createdAt?.toMillis?.() || 0;
+        return tb - ta;
+      });
 
-      // Update stats
-      document.getElementById('stat-surveys').textContent = surveys.length;
-      const totalResponses = surveys.reduce((sum, s) => sum + (s.responseCount || 0), 0);
-      const activeCount = surveys.filter(s => s.status === 'active').length;
+      const total = surveys.length;
+      const totalResponses = surveys.reduce((s,sv) => s + (sv.responseCount||0), 0);
+      const activeCount = surveys.filter(s => s.status==='active').length;
+
+      document.getElementById('stat-surveys').textContent = total;
       document.getElementById('stat-responses').textContent = totalResponses;
       document.getElementById('stat-active').textContent = activeCount;
 
-      // Render survey cards
       const grid = document.getElementById('surveys-grid');
       grid.innerHTML = surveys.map(survey => `
-        <div class="survey-card" onclick="window.location.href='/survey/${survey.id}'">
+        <div class="survey-card" onclick="window.location.href='/responses/?id=${survey.id}'">
           <div class="survey-card-top">
-            <span class="survey-status status-${survey.status || 'draft'}">
-              ${survey.status === 'active' ? '● Active' : survey.status === 'closed' ? '✕ Closed' : '○ Draft'}
+            <span class="survey-status status-${survey.status||'draft'}">
+              ${survey.status==='active' ? '● Active' :
+                survey.status==='closed' ? '✕ Closed' : '○ Draft'}
             </span>
           </div>
           <div class="survey-title">${survey.title || 'Untitled Survey'}</div>
           <div class="survey-meta">
-            <span>📝 ${survey.questionCount || 0} questions</span>
+            <span>📝 ${survey.questionCount||0} questions</span>
             <span>📅 ${formatDate(survey.createdAt)}</span>
           </div>
           <div class="survey-footer">
             <div class="survey-responses">
-  ${survey.responseCount || 0} responses
-  ${survey.sheetUrl ? `<a href="${survey.sheetUrl}" target="_blank" style="margin-left:10px;font-size:0.75rem;color:#047857;font-weight:600;text-decoration:none">📊 Open Sheet</a>` : ''}
-</div>
-
+              <span>${survey.responseCount||0} responses</span>
+              ${survey.sheetUrl
+                ? `<a href="${survey.sheetUrl}" target="_blank"
+                    class="sheet-link"
+                    onclick="event.stopPropagation()">
+                    📊 Open Sheet
+                  </a>`
+                : ''}
+            </div>
             <div class="survey-actions">
-            <button class="btn-sm btn-sm-ghost" onclick="event.stopPropagation();window.location.href='/responses/?id=${survey.id}'">Responses</button>
-<button class="btn-sm btn-sm-ghost" onclick="event.stopPropagation();window.location.href='/edit/?id=${survey.id}'">✏️ Edit</button>
-              <button class="btn-sm btn-sm-primary" onclick="event.stopPropagation();copyLink('${survey.id}',this)">🔗 Copy link</button>
+              <button class="btn-sm btn-sm-ghost"
+                onclick="event.stopPropagation();window.location.href='/responses/?id=${survey.id}'">
+                Responses
+              </button>
+              <button class="btn-sm btn-sm-primary"
+                onclick="event.stopPropagation();copyLink('${survey.id}',this)">
+                🔗 Copy link
+              </button>
+              <button class="btn-sm btn-sm-ghost"
+                onclick="event.stopPropagation();window.location.href='/edit/?id=${survey.id}'">
+                ✏️ Edit
+              </button>
+              ${survey.status === 'active'
+                ? `<button class="btn-sm btn-sm-danger"
+                    onclick="event.stopPropagation();closeSurvey('${survey.id}',this)">
+                    ✕ Close
+                  </button>`
+                : ''}
             </div>
           </div>
         </div>
@@ -470,66 +587,88 @@
       console.error('Error loading surveys:', e);
     }
   }
-window.copyLink = function(surveyId, btn) {
-    const link = `https://swoopform.com/s/?id=${surveyId}`;
-    navigator.clipboard.writeText(link).then(() => {
-      const original = btn.textContent;
-      btn.textContent = '✓ Copied!';
-      btn.style.background = 'linear-gradient(135deg,#047857,#10B981)';
-      setTimeout(() => {
-        btn.textContent = original;
-        btn.style.background = '';
-      }, 2000);
-    });
-  }
-  function formatDate(timestamp) {
-    if (!timestamp) return 'Recently';
-    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-    return date.toLocaleDateString('en-IN', { day:'numeric', month:'short' });
-  }
-window.copyLink = function(surveyId, btn) {
-    const link = 'https://swoopform.com/s/?id=' + surveyId;
-    // Method 1: Modern clipboard API
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(link).then(() => {
-        showCopied(btn);
-      }).catch(() => fallbackCopy(link, btn));
-    } else {
-      fallbackCopy(link, btn);
-    }
+
+  function formatDate(ts) {
+    if (!ts) return 'Recently';
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    return d.toLocaleDateString('en-IN', { day:'numeric', month:'short' });
   }
 
-  function fallbackCopy(link, btn) {
-    // Method 2: Create temp textarea
+  window.copyLink = function(surveyId, btn) {
+    const link = 'https://swoopform.com/s/?id=' + surveyId;
     const el = document.createElement('textarea');
     el.value = link;
     el.style.position = 'fixed';
     el.style.opacity = '0';
     document.body.appendChild(el);
-    el.focus();
-    el.select();
+    el.focus(); el.select();
     try {
       document.execCommand('copy');
-      showCopied(btn);
+      const orig = btn.textContent;
+      btn.textContent = '✓ Copied!';
+      btn.style.background = 'linear-gradient(135deg,#047857,#10B981)';
+      btn.style.color = '#fff';
+      btn.style.borderColor = 'transparent';
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.style.borderColor = '';
+      }, 2000);
     } catch(e) {
-      // Method 3: Show the link in a simple alert
       alert('Copy this link:\n\n' + link);
     }
     document.body.removeChild(el);
   }
 
-  function showCopied(btn) {
-    const original = btn.textContent;
-    btn.textContent = '✓ Copied!';
-    btn.style.background = 'linear-gradient(135deg,#047857,#10B981)';
-    setTimeout(() => {
-      btn.textContent = original;
-      btn.style.background = '';
-    }, 2000);
+  window.closeSurvey = async function(surveyId, btn) {
+    const confirmed = confirm(
+      'Close this survey?\n\n' +
+      'It will stop accepting new responses.\n' +
+      'All existing responses will be kept.\n\n' +
+      'You can reopen it anytime from Edit.'
+    );
+    if (!confirmed) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Closing...';
+
+    try {
+      await updateDoc(doc(db, 'surveys', surveyId), {
+        status: 'closed',
+        updatedAt: serverTimestamp()
+      });
+      showToast('Survey closed. Existing responses kept safely.');
+      setTimeout(() => window.location.reload(), 1500);
+    } catch(e) {
+      btn.disabled = false;
+      btn.textContent = '✕ Close';
+      showToast('Error closing survey. Please try again.');
+    }
   }
+
   window.handleLogout = async function() {
     await signOut(auth);
     window.location.href = '/login';
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.display = 'block';
+    setTimeout(() => t.style.display = 'none', 3000);
+  }
+
+  // DRAWER
+  window.openDrawer = function() {
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('drawer-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  window.closeDrawer = function() {
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+    document.body.style.overflow = '';
   }
 </script>
 </body>
