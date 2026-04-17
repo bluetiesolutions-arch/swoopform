@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwoopForm — Reset Password</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'DM Sans',sans-serif;
+      background:#0F0E1A;
+      color:#fff;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+    .card{
+      background:#1A1828;
+      border:1.5px solid rgba(255,255,255,0.08);
+      border-radius:20px;
+      padding:40px;
+      width:100%;
+      max-width:420px;
+    }
+    .logo{
+      display:flex;align-items:center;gap:10px;
+      margin-bottom:32px;text-decoration:none;
+    }
+    .logo-mark{
+      width:36px;height:36px;
+      background:linear-gradient(135deg,#2D1B69,#D97706);
+      border-radius:9px;
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1rem;color:#fff;
+    }
+    .logo-name{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1.1rem;color:#fff;
+    }
+    h1{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1.6rem;letter-spacing:-0.03em;
+      margin-bottom:6px;
+    }
+    .subtitle{
+      color:rgba(255,255,255,0.5);
+      font-size:0.9rem;margin-bottom:28px;
+      line-height:1.5;
+    }
+    .field{margin-bottom:16px}
+    label{
+      display:block;font-size:0.82rem;font-weight:600;
+      color:rgba(255,255,255,0.6);margin-bottom:6px;
+      letter-spacing:0.04em;text-transform:uppercase;
+    }
+    .field-hint{
+      font-size:0.76rem;color:rgba(255,255,255,0.3);
+      margin-top:5px;
+    }
+    input{
+      width:100%;padding:13px 16px;border-radius:10px;
+      border:1.5px solid rgba(255,255,255,0.1);
+      background:rgba(255,255,255,0.05);color:#fff;
+      font-size:0.95rem;font-family:'DM Sans',sans-serif;
+      transition:border-color 0.2s;
+    }
+    input:focus{outline:none;border-color:#D97706}
+    input::placeholder{color:rgba(255,255,255,0.25)}
+    .btn-primary{
+      width:100%;padding:14px;border-radius:10px;
+      border:none;
+      background:linear-gradient(135deg,#2D1B69,#D97706);
+      color:#fff;font-size:1rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;
+      margin-top:8px;transition:opacity 0.2s;
+    }
+    .btn-primary:hover{opacity:0.9}
+    .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
+    .error{
+      background:rgba(239,68,68,0.1);
+      border:1px solid rgba(239,68,68,0.3);
+      color:#FCA5A5;padding:10px 14px;
+      border-radius:8px;font-size:0.85rem;
+      margin-bottom:16px;display:none;
+    }
+    .success-state{
+      text-align:center;display:none;
+    }
+    .success-icon{
+      font-size:3rem;margin-bottom:16px;
+      animation:bounce 0.6s ease both;
+    }
+    @keyframes bounce{
+      0%{transform:scale(0)}
+      60%{transform:scale(1.2)}
+      100%{transform:scale(1)}
+    }
+    .success-title{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1.4rem;margin-bottom:10px;
+    }
+    .success-msg{
+      color:rgba(255,255,255,0.5);
+      font-size:0.9rem;line-height:1.6;
+      margin-bottom:24px;
+    }
+    .footer-text{
+      text-align:center;margin-top:24px;
+      font-size:0.87rem;color:rgba(255,255,255,0.4);
+    }
+    .footer-text a{
+      color:#D97706;text-decoration:none;font-weight:600;
+    }
+    .loading{
+      display:inline-block;width:16px;height:16px;
+      border:2px solid rgba(255,255,255,0.3);
+      border-top-color:#fff;border-radius:50%;
+      animation:spin 0.8s linear infinite;
+      margin-right:8px;vertical-align:middle;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+<div class="card">
+  <a href="/" class="logo">
+    <div class="logo-mark">S</div>
+    <div class="logo-name">SwoopForm</div>
+  </a>
+
+  <!-- RESET FORM -->
+  <div id="reset-form">
+    <h1>Reset password</h1>
+    <p class="subtitle">
+      Enter the email address you registered with and we'll send you a link to reset your password.
+    </p>
+
+    <div id="error" class="error"></div>
+
+    <div class="field">
+      <label>Registered email</label>
+      <input type="email" id="reset-email"
+        placeholder="e.g. rahul@gmail.com">
+      <div class="field-hint">
+        Enter the exact email you used to sign up
+      </div>
+    </div>
+
+    <button class="btn-primary" id="reset-btn" onclick="handleReset()">
+      Send reset link →
+    </button>
+  </div>
+
+  <!-- SUCCESS STATE -->
+  <div class="success-state" id="success-state">
+    <div class="success-icon">📧</div>
+    <div class="success-title">Check your inbox!</div>
+    <p class="success-msg">
+      We've sent a password reset link to<br>
+      <strong id="sent-to" style="color:#fff"></strong><br><br>
+      Click the link in the email to set a new password.
+      The link expires in 1 hour.
+    </p>
+    <p style="font-size:0.8rem;color:rgba(255,255,255,0.3);margin-bottom:20px">
+      Didn't receive it? Check your spam folder or
+      <button onclick="showForm()" style="background:none;border:none;color:#D97706;cursor:pointer;font-size:0.8rem;font-weight:600;padding:0">try again</button>
+    </p>
+    <a href="/login" style="
+      display:inline-flex;align-items:center;gap:8px;
+      padding:12px 24px;border-radius:10px;
+      background:linear-gradient(135deg,#2D1B69,#D97706);
+      color:#fff;text-decoration:none;
+      font-size:0.9rem;font-weight:600;
+    ">← Back to login</a>
+  </div>
+
+  <p class="footer-text" id="footer-link">
+    Remember your password? <a href="/login">Log in</a>
+  </p>
+</div>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+  import { getAuth, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",
+    authDomain: "swoopform.firebaseapp.com",
+    projectId: "swoopform",
+    storageBucket: "swoopform.firebasestorage.app",
+    messagingSenderId: "378850092986",
+    appId: "1:378850092986:web:4fed92128136e048fa5f83"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  function showError(msg) {
+    const el = document.getElementById('error');
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+
+  window.showForm = function() {
+    document.getElementById('reset-form').style.display = 'block';
+    document.getElementById('success-state').style.display = 'none';
+    document.getElementById('footer-link').style.display = 'block';
+    document.getElementById('error').style.display = 'none';
+    document.getElementById('reset-email').value = '';
+  }
+
+  window.handleReset = async function() {
+    const email = document.getElementById('reset-email').value.trim();
+    const btn = document.getElementById('reset-btn');
+
+    if (!email) {
+      showError('Please enter your email address');
+      return;
+    }
+    if (!email.includes('@')) {
+      showError('Please enter a valid email address');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loading"></span>Sending...';
+    document.getElementById('error').style.display = 'none';
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      // Show success
+      document.getElementById('reset-form').style.display = 'none';
+      document.getElementById('footer-link').style.display = 'none';
+      document.getElementById('sent-to').textContent = email;
+      document.getElementById('success-state').style.display = 'block';
+    } catch(e) {
+      const msgs = {
+        'auth/user-not-found': 'No account found with this email address',
+        'auth/invalid-email': 'Please enter a valid email address',
+        'auth/too-many-requests': 'Too many attempts. Please try again later'
+      };
+      showError(msgs[e.code] || 'Something went wrong. Please try again');
+      btn.disabled = false;
+      btn.textContent = 'Send reset link →';
+    }
+  }
+
+  // Allow Enter key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') window.handleReset();
+  });
+</script>
+</body>
+</html>
