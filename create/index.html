@@ -253,6 +253,30 @@
       margin:0 auto;
     }
     @keyframes spin{to{transform:rotate(360deg)}}
+    .setting-input{
+  width:100%;padding:10px 14px;
+  border-radius:8px;
+  border:1.5px solid #E2DAD0;
+  background:#fff;color:#0F0E1A;
+  font-size:0.88rem;
+  font-family:'DM Sans',sans-serif;
+  outline:none;transition:border-color 0.2s;
+}
+.setting-input:focus{border-color:#2D1B69}
+.setting-input::placeholder{color:#C4B9AA}
+.prize-type-btn{
+  padding:8px 16px;border-radius:8px;
+  border:1.5px solid #E2DAD0;
+  background:#fff;color:#0F0E1A;
+  font-size:0.82rem;font-weight:600;
+  font-family:'DM Sans',sans-serif;
+  cursor:pointer;transition:all 0.2s;
+}
+.prize-type-btn:hover{border-color:#2D1B69;background:#EDE9FF}
+.prize-type-btn.active{
+  border-color:#D97706;
+  background:#FEF3C7;color:#92400E;
+}
   </style>
 </head>
 <body>
@@ -295,9 +319,228 @@
       </div>
     </div>
 
+    <!-- WELCOME PAGE -->
     <div class="settings-section">
-      <div class="settings-title">Survey settings</div>
+      <div class="settings-title">🎨 Welcome page</div>
 
+      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <div class="setting-info">
+          <div class="setting-name">Logo URL</div>
+          <div class="setting-desc">Paste a link to your logo image</div>
+        </div>
+        <input class="setting-input" id="welcome-logo"
+          placeholder="e.g. https://yoursite.com/logo.png">
+      </div>
+
+      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <div class="setting-info">
+          <div class="setting-name">Custom headline</div>
+          <div class="setting-desc">Leave blank to use survey title</div>
+        </div>
+        <input class="setting-input" id="welcome-headline"
+          placeholder="e.g. Share your feedback with us!">
+      </div>
+
+      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <div class="setting-info">
+          <div class="setting-name">Button text</div>
+          <div class="setting-desc">Text on the start button</div>
+        </div>
+        <input class="setting-input" id="welcome-btn-text"
+          placeholder="e.g. Start survey →">
+      </div>
+
+      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <div class="setting-info">
+          <div class="setting-name">Background color</div>
+          <div class="setting-desc">Hex color code</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;width:100%">
+          <input class="setting-input" id="welcome-bg-color"
+            placeholder="e.g. #0F0E1A" style="flex:1">
+          <input type="color" id="welcome-color-picker"
+            value="#0F0E1A"
+            oninput="document.getElementById('welcome-bg-color').value=this.value"
+            style="width:40px;height:40px;border-radius:8px;border:1.5px solid #E2DAD0;cursor:pointer;padding:2px">
+        </div>
+      </div>
+
+      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <div class="setting-info">
+          <div class="setting-name">Background image URL</div>
+          <div class="setting-desc">Overrides background color if set</div>
+        </div>
+        <input class="setting-input" id="welcome-bg-image"
+          placeholder="e.g. https://images.unsplash.com/...">
+      </div>
+
+      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px;border-bottom:none">
+        <div class="setting-info">
+          <div class="setting-name">Background video URL</div>
+          <div class="setting-desc">YouTube or Vimeo URL</div>
+        </div>
+        <input class="setting-input" id="welcome-bg-video"
+          placeholder="e.g. https://youtube.com/watch?v=...">
+      </div>
+    </div>
+
+    <!-- THANK YOU PAGE -->
+    <div class="settings-section">
+      <div class="settings-title">🙏 Thank you page</div>
+
+      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <div class="setting-info">
+          <div class="setting-name">Custom headline</div>
+          <div class="setting-desc">Leave blank to use default</div>
+        </div>
+        <input class="setting-input" id="thankyou-headline"
+          placeholder="e.g. Thank you so much!">
+      </div>
+
+      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <div class="setting-info">
+          <div class="setting-name">Custom message</div>
+          <div class="setting-desc">What to say after submission</div>
+        </div>
+        <input class="setting-input" id="thankyou-message"
+          placeholder="e.g. Your feedback helps us improve.">
+      </div>
+
+      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <div class="setting-info">
+          <div class="setting-name">Redirect URL</div>
+          <div class="setting-desc">Send respondents to your website after 3 seconds</div>
+        </div>
+        <input class="setting-input" id="thankyou-redirect"
+          placeholder="e.g. https://yourwebsite.com">
+      </div>
+
+      <div class="setting-row" style="border-bottom:none">
+        <div class="setting-info">
+          <div class="setting-name">Show social share buttons</div>
+          <div class="setting-desc">Let respondents share the survey</div>
+        </div>
+        <button class="toggle" id="toggle-share"
+          onclick="toggleSetting('share')"></button>
+      </div>
+    </div>
+
+    <!-- PRIZE / INCENTIVE -->
+    <div class="settings-section">
+      <div class="settings-title">🎁 Prize &amp; Incentive</div>
+
+      <div class="setting-row" style="border-bottom:none">
+        <div class="setting-info">
+          <div class="setting-name">Enable prize</div>
+          <div class="setting-desc">Show prize badge on welcome page</div>
+        </div>
+        <button class="toggle" id="toggle-prize"
+          onclick="togglePrize()"></button>
+      </div>
+
+      <div id="prize-fields" style="display:none">
+
+        <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+          <div class="setting-info">
+            <div class="setting-name">Prize type</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="prize-type-btn active" onclick="selectPrizeType('cash',this)">💵 Cash</button>
+            <button class="prize-type-btn" onclick="selectPrizeType('voucher',this)">🎟 Voucher</button>
+            <button class="prize-type-btn" onclick="selectPrizeType('gift',this)">🎁 Gift</button>
+            <button class="prize-type-btn" onclick="selectPrizeType('other',this)">✦ Other</button>
+          </div>
+        </div>
+
+        <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+          <div class="setting-info">
+            <div class="setting-name">Prize description</div>
+            <div class="setting-desc">What respondents will win</div>
+          </div>
+          <input class="setting-input" id="prize-description"
+            placeholder="e.g. ₹500 Amazon voucher">
+        </div>
+
+        <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+          <div class="setting-info">
+            <div class="setting-name">Number of winners</div>
+          </div>
+          <input class="setting-input" id="prize-winners"
+            type="number" min="1" placeholder="e.g. 3"
+            style="max-width:120px">
+        </div>
+
+        <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+          <div class="setting-info">
+            <div class="setting-name">Winner selection</div>
+          </div>
+          <select class="setting-input" id="prize-selection"
+            style="max-width:240px">
+            <option value="random">🎲 Random draw</option>
+            <option value="best">⭐ Best answer</option>
+            <option value="first">🏃 First N respondents</option>
+          </select>
+        </div>
+
+        <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px;border-bottom:none">
+          <div class="setting-info">
+            <div class="setting-name">Winner notification</div>
+          </div>
+          <select class="setting-input" id="prize-notification"
+            style="max-width:240px">
+            <option value="manual">📧 I will contact winners manually</option>
+            <option value="email">✉️ SwoopForm sends automatic email</option>
+            <option value="leaderboard">🏆 Show on public leaderboard</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SURVEY SETTINGS -->
+    <div class="settings-section">
+      <div class="settings-title">⚙️ Survey settings</div>
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Survey style</div>
+          <div class="setting-desc">How questions appear to respondents</div>
+        </div>
+        <select id="survey-style"
+          style="padding:6px 12px;border-radius:8px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none;">
+          <option value="conversational">✨ One at a time</option>
+          <option value="classic">📋 All on one page</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Public survey</div>
+          <div class="setting-desc">Show in SwoopForm discovery directory</div>
+        </div>
+        <button class="toggle" id="toggle-public"
+          onclick="toggleSetting('public')"></button>
+      </div>
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">Collect email addresses</div>
+          <div class="setting-desc">Ask respondents for their email</div>
+        </div>
+        <button class="toggle" id="toggle-email"
+          onclick="toggleSetting('email')"></button>
+      </div>
+      <div class="setting-row" style="border-bottom:none">
+        <div class="setting-info">
+          <div class="setting-name">One response per person</div>
+          <div class="setting-desc">Prevent duplicate submissions</div>
+        </div>
+        <button class="toggle" id="toggle-once"
+          onclick="toggleSetting('once')"></button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>     
 <div class="setting-row">
   <div class="setting-info">
     <div class="setting-name">Survey style</div>
@@ -391,7 +634,19 @@
     t.style.display = 'block';
     setTimeout(() => t.style.display = 'none', duration);
   }
+let selectedPrizeType = 'cash';
 
+window.togglePrize = function() {
+  settings.prize = !settings.prize;
+  document.getElementById('toggle-prize').classList.toggle('on', settings.prize);
+  document.getElementById('prize-fields').style.display = settings.prize ? 'block' : 'none';
+}
+
+window.selectPrizeType = function(type, el) {
+  selectedPrizeType = type;
+  document.querySelectorAll('.prize-type-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
   window.toggleSetting = function(key) {
     settings[key] = !settings[key];
     document.getElementById('toggle-' + key).classList.toggle('on', settings[key]);
@@ -571,6 +826,28 @@
       questions: validQuestions,
       settings,
 style: document.getElementById('survey-style').value,
+welcomePage: {
+  logo: document.getElementById('welcome-logo').value.trim(),
+  headline: document.getElementById('welcome-headline').value.trim(),
+  btnText: document.getElementById('welcome-btn-text').value.trim(),
+  bgColor: document.getElementById('welcome-bg-color').value.trim(),
+  bgImage: document.getElementById('welcome-bg-image').value.trim(),
+  bgVideo: document.getElementById('welcome-bg-video').value.trim(),
+},
+thankYouPage: {
+  headline: document.getElementById('thankyou-headline').value.trim(),
+  message: document.getElementById('thankyou-message').value.trim(),
+  redirect: document.getElementById('thankyou-redirect').value.trim(),
+  showShare: settings.share || false,
+},
+prize: settings.prize ? {
+  enabled: true,
+  type: selectedPrizeType,
+  description: document.getElementById('prize-description').value.trim(),
+  winners: document.getElementById('prize-winners').value || '1',
+  selection: document.getElementById('prize-selection').value,
+  notification: document.getElementById('prize-notification').value,
+} : { enabled: false },
       status,
       userId: currentUser.uid,
       responseCount: 0,
