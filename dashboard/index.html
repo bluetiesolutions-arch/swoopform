@@ -570,11 +570,17 @@
                 ✏️ Edit
               </button>
               ${survey.status === 'active'
-                ? `<button class="btn-sm btn-sm-danger"
-                    onclick="event.stopPropagation();closeSurvey('${survey.id}',this)">
-                    ✕ Close
-                  </button>`
-                : ''}
+  ? `<button class="btn-sm btn-sm-danger"
+      onclick="event.stopPropagation();closeSurvey('${survey.id}',this)">
+      ✕ Close
+    </button>`
+  : survey.status === 'closed'
+  ? `<button class="btn-sm btn-sm-ghost"
+      style="border-color:#047857;color:#047857"
+      onclick="event.stopPropagation();reopenSurvey('${survey.id}',this)">
+      ↺ Reopen
+    </button>`
+  : ''}
             </div>
           </div>
         </div>
@@ -623,11 +629,53 @@
 
   window.closeSurvey = async function(surveyId, btn) {
     const confirmed = confirm(
-      'Close this survey?\n\n' +
-      'It will stop accepting new responses.\n' +
-      'All existing responses will be kept.\n\n' +
-      'You can reopen it anytime from Edit.'
+      '⚠️ Close this survey?\n\n' +
+      '• Respondents will no longer be able to submit answers\n' +
+      '• All existing responses are kept safely\n' +
+      '• Your Google Sheet stays intact\n' +
+      '• You can reopen it anytime using the Reopen button\n\n' +
+      'Are you sure you want to close it?'
     );
+    if (!confirmed) return;
+    btn.disabled = true;
+    btn.textContent = 'Closing...';
+    try {
+      await updateDoc(doc(db, 'surveys', surveyId), {
+        status: 'closed',
+        updatedAt: serverTimestamp()
+      });
+      showToast('✅ Survey closed. Use Reopen to accept responses again.');
+      setTimeout(() => window.location.reload(), 2000);
+    } catch(e) {
+      btn.disabled = false;
+      btn.textContent = '✕ Close';
+      showToast('Error closing survey. Please try again.');
+    }
+  }
+
+  window.reopenSurvey = async function(surveyId, btn) {
+    const confirmed = confirm(
+      '↺ Reopen this survey?\n\n' +
+      '• Respondents will be able to submit answers again\n' +
+      '• New responses will appear in your Google Sheet\n\n' +
+      'Are you sure you want to reopen it?'
+    );
+    if (!confirmed) return;
+    btn.disabled = true;
+    btn.textContent = 'Reopening...';
+    try {
+      await updateDoc(doc(db, 'surveys', surveyId), {
+        status: 'active',
+        updatedAt: serverTimestamp()
+      });
+      showToast('✅ Survey reopened! Accepting responses again.');
+      setTimeout(() => window.location.reload(), 2000);
+    } catch(e) {
+      btn.disabled = false;
+      btn.textContent = '↺ Reopen';
+      showToast('Error reopening survey. Please try again.');
+    }
+  }
     if (!confirmed) return;
 
     btn.disabled = true;
