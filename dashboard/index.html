@@ -449,7 +449,11 @@
             <span>📅 ${formatDate(survey.createdAt)}</span>
           </div>
           <div class="survey-footer">
-            <div class="survey-responses">${survey.responseCount || 0} responses</div>
+            <div class="survey-responses">
+  ${survey.responseCount || 0} responses
+  ${survey.sheetUrl ? `<a href="${survey.sheetUrl}" target="_blank" style="margin-left:10px;font-size:0.75rem;color:#047857;font-weight:600;text-decoration:none">📊 Open Sheet</a>` : ''}
+</div>
+
             <div class="survey-actions">
              <button class="btn-sm btn-sm-ghost" onclick="event.stopPropagation();window.location.href='/responses/?id=${survey.id}'">Responses</button>
               <button class="btn-sm btn-sm-primary" onclick="event.stopPropagation();copyLink('${survey.id}',this)">🔗 Copy link</button>
