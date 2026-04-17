@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwoopForm Survey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    :root{
+      --bg:#0F0E1A;
+      --card:#1A1828;
+      --border:rgba(255,255,255,0.08);
+      --text:#fff;
+      --muted:rgba(255,255,255,0.5);
+      --accent:#D97706;
+      --accent2:#2D1B69;
+      --green:#10B981;
+    }
+
+    body{
+      font-family:'DM Sans',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      overflow:hidden;
+    }
+
+    /* PROGRESS BAR */
+    .progress-bar{
+      position:fixed;top:0;left:0;right:0;
+      height:3px;background:rgba(255,255,255,0.08);
+      z-index:100;
+    }
+    .progress-fill{
+      height:100%;
+      background:linear-gradient(90deg,#2D1B69,#D97706);
+      transition:width 0.5s ease;
+      border-radius:0 2px 2px 0;
+    }
+
+    /* TOP NAV */
+    .top-nav{
+      position:fixed;top:0;left:0;right:0;
+      padding:16px 24px;
+      display:flex;align-items:center;
+      justify-content:space-between;
+      z-index:99;
+    }
+    .nav-logo{
+      display:flex;align-items:center;gap:8px;
+      text-decoration:none;opacity:0.6;
+      transition:opacity 0.2s;
+    }
+    .nav-logo:hover{opacity:1}
+    .logo-mark{
+      width:28px;height:28px;
+      background:linear-gradient(135deg,#2D1B69,#D97706);
+      border-radius:7px;
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:0.8rem;color:#fff;
+    }
+    .logo-name{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:0.9rem;color:#fff;
+    }
+    .progress-text{
+      font-size:0.8rem;color:var(--muted);font-weight:600;
+    }
+
+    /* MAIN STAGE */
+    .stage{
+      min-height:100vh;
+      display:flex;align-items:center;
+      justify-content:center;
+      padding:80px 20px 120px;
+    }
+
+    /* QUESTION SLIDE */
+    .slide{
+      width:100%;max-width:680px;
+      animation:slideUp 0.4s ease both;
+    }
+    @keyframes slideUp{
+      from{opacity:0;transform:translateY(30px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    .slide.exit{
+      animation:slideDown 0.3s ease both;
+    }
+    @keyframes slideDown{
+      from{opacity:1;transform:translateY(0)}
+      to{opacity:0;transform:translateY(-30px)}
+    }
+
+    .q-number{
+      font-size:0.8rem;font-weight:700;
+      color:var(--accent);letter-spacing:0.08em;
+      text-transform:uppercase;margin-bottom:16px;
+      display:flex;align-items:center;gap:8px;
+    }
+    .q-number::after{
+      content:'→';color:var(--accent);
+    }
+
+    .q-text{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:clamp(1.6rem,4vw,2.4rem);
+      letter-spacing:-0.03em;line-height:1.2;
+      margin-bottom:8px;
+    }
+    .q-required{
+      display:inline-block;
+      color:var(--accent);font-size:0.8rem;
+      margin-bottom:28px;
+    }
+
+    /* MULTIPLE CHOICE */
+    .choices{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+    .choice{
+      padding:16px 20px;border-radius:12px;
+      border:1.5px solid var(--border);
+      background:rgba(255,255,255,0.03);
+      cursor:pointer;transition:all 0.2s;
+      display:flex;align-items:center;gap:14px;
+      font-size:1rem;font-weight:500;
+    }
+    .choice:hover{
+      border-color:var(--accent);
+      background:rgba(217,119,6,0.08);
+    }
+    .choice.selected{
+      border-color:var(--accent);
+      background:rgba(217,119,6,0.12);
+      color:#fff;
+    }
+    .choice-key{
+      width:28px;height:28px;border-radius:6px;
+      border:1.5px solid rgba(255,255,255,0.2);
+      display:flex;align-items:center;justify-content:center;
+      font-size:0.75rem;font-weight:700;
+      color:var(--muted);flex-shrink:0;
+      transition:all 0.2s;
+    }
+    .choice.selected .choice-key{
+      background:var(--accent);
+      border-color:var(--accent);
+      color:#fff;
+    }
+
+    /* TEXT INPUT */
+    .text-answer{
+      width:100%;background:transparent;
+      border:none;border-bottom:2px solid rgba(255,255,255,0.2);
+      color:#fff;font-size:1.3rem;
+      font-family:'DM Sans',sans-serif;
+      padding:12px 0;outline:none;
+      transition:border-color 0.2s;
+      margin-bottom:32px;
+    }
+    .text-answer:focus{border-bottom-color:var(--accent)}
+    .text-answer::placeholder{color:rgba(255,255,255,0.2)}
+
+    /* TEXTAREA */
+    .textarea-answer{
+      width:100%;background:rgba(255,255,255,0.04);
+      border:1.5px solid var(--border);
+      border-radius:12px;
+      color:#fff;font-size:1rem;
+      font-family:'DM Sans',sans-serif;
+      padding:16px;outline:none;
+      transition:border-color 0.2s;
+      margin-bottom:32px;
+      resize:none;min-height:120px;
+    }
+    .textarea-answer:focus{border-color:var(--accent)}
+    .textarea-answer::placeholder{color:rgba(255,255,255,0.2)}
+
+    /* RATING */
+    .rating-group{
+      display:flex;gap:10px;flex-wrap:wrap;
+      margin-bottom:32px;
+    }
+    .rating-btn{
+      width:56px;height:56px;border-radius:12px;
+      border:1.5px solid var(--border);
+      background:rgba(255,255,255,0.03);
+      color:#fff;font-size:1.1rem;font-weight:700;
+      cursor:pointer;transition:all 0.2s;
+      font-family:'DM Sans',sans-serif;
+    }
+    .rating-btn:hover{
+      border-color:var(--accent);
+      background:rgba(217,119,6,0.08);
+    }
+    .rating-btn.selected{
+      background:var(--accent);
+      border-color:var(--accent);
+      color:#fff;
+    }
+    .rating-labels{
+      display:flex;justify-content:space-between;
+      font-size:0.75rem;color:var(--muted);
+      margin-top:8px;margin-bottom:24px;
+    }
+
+    /* YES NO */
+    .yesno-group{display:flex;gap:12px;margin-bottom:32px}
+    .yesno-btn{
+      flex:1;padding:18px;border-radius:12px;
+      border:1.5px solid var(--border);
+      background:rgba(255,255,255,0.03);
+      color:#fff;font-size:1rem;font-weight:600;
+      cursor:pointer;transition:all 0.2s;
+      font-family:'DM Sans',sans-serif;
+      text-align:center;
+    }
+    .yesno-btn:hover{border-color:var(--accent);background:rgba(217,119,6,0.08)}
+    .yesno-btn.selected{background:var(--accent);border-color:var(--accent)}
+
+    /* NEXT BUTTON */
+    .next-btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:14px 28px;border-radius:10px;border:none;
+      background:var(--accent);color:#fff;
+      font-size:1rem;font-weight:700;
+      font-family:'DM Sans',sans-serif;cursor:pointer;
+      transition:all 0.2s;
+    }
+    .next-btn:hover{background:#B45309;transform:translateY(-1px)}
+    .next-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+    .next-hint{
+      font-size:0.78rem;color:var(--muted);
+      margin-left:14px;
+    }
+
+    /* BOTTOM NAV */
+    .bottom-nav{
+      position:fixed;bottom:0;left:0;right:0;
+      padding:20px 24px;
+      display:flex;align-items:center;gap:8px;
+      background:linear-gradient(to top,var(--bg) 60%,transparent);
+    }
+    .nav-up,.nav-down{
+      width:36px;height:36px;border-radius:8px;
+      border:1.5px solid var(--border);
+      background:transparent;color:var(--muted);
+      cursor:pointer;font-size:0.9rem;
+      display:flex;align-items:center;justify-content:center;
+      transition:all 0.2s;
+    }
+    .nav-up:hover,.nav-down:hover{
+      border-color:rgba(255,255,255,0.3);color:#fff;
+    }
+    .nav-up:disabled,.nav-down:disabled{opacity:0.2;cursor:not-allowed}
+
+    /* WELCOME SCREEN */
+    .welcome-screen{
+      width:100%;max-width:680px;
+      animation:slideUp 0.5s ease both;
+    }
+    .welcome-badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:5px 14px;border-radius:100px;
+      background:rgba(217,119,6,0.15);
+      border:1px solid rgba(217,119,6,0.3);
+      color:var(--accent);font-size:0.8rem;font-weight:600;
+      margin-bottom:24px;
+    }
+    .welcome-title{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:clamp(2rem,5vw,3.2rem);
+      letter-spacing:-0.04em;line-height:1.1;
+      margin-bottom:16px;
+    }
+    .welcome-desc{
+      font-size:1rem;color:var(--muted);
+      line-height:1.7;margin-bottom:36px;
+      max-width:520px;
+    }
+    .welcome-meta{
+      display:flex;gap:20px;flex-wrap:wrap;
+      margin-bottom:36px;
+    }
+    .welcome-meta-item{
+      display:flex;align-items:center;gap:6px;
+      font-size:0.85rem;color:var(--muted);
+    }
+    .start-btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:16px 32px;border-radius:12px;border:none;
+      background:linear-gradient(135deg,#2D1B69,#D97706);
+      color:#fff;font-size:1.05rem;font-weight:700;
+      font-family:'DM Sans',sans-serif;cursor:pointer;
+      transition:all 0.2s;
+    }
+    .start-btn:hover{opacity:0.9;transform:translateY(-1px)}
+
+    /* THANK YOU SCREEN */
+    .thankyou-screen{
+      text-align:center;
+      width:100%;max-width:560px;
+      animation:slideUp 0.5s ease both;
+    }
+    .thankyou-icon{
+      font-size:4rem;margin-bottom:24px;
+      animation:bounce 0.6s ease both;
+    }
+    @keyframes bounce{
+      0%{transform:scale(0)}
+      60%{transform:scale(1.2)}
+      100%{transform:scale(1)}
+    }
+    .thankyou-title{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:clamp(1.8rem,4vw,2.8rem);
+      letter-spacing:-0.03em;margin-bottom:14px;
+    }
+    .thankyou-sub{
+      color:var(--muted);font-size:1rem;
+      line-height:1.7;margin-bottom:36px;
+    }
+
+    /* LOADING */
+    .loading-screen{
+      display:flex;align-items:center;
+      justify-content:center;min-height:100vh;
+    }
+    .spinner{
+      width:32px;height:32px;
+      border:3px solid rgba(217,119,6,0.2);
+      border-top-color:#D97706;border-radius:50%;
+      animation:spin 0.8s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ERROR */
+    .error-screen{
+      text-align:center;
+      padding:40px 20px;
+    }
+    .error-screen h2{
+      font-family:'Syne',sans-serif;
+      font-size:1.4rem;margin-bottom:12px;
+    }
+    .error-screen p{color:var(--muted);font-size:0.9rem}
+
+    @media(max-width:600px){
+      .rating-btn{width:44px;height:44px;font-size:1rem}
+      .q-text{font-size:1.5rem}
+      .next-hint{display:none}
+    }
+  </style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div class="progress-bar">
+  <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+</div>
+
+<!-- Top nav -->
+<div class="top-nav">
+  <a href="/" class="nav-logo">
+    <div class="logo-mark">S</div>
+    <div class="logo-name">SwoopForm</div>
+  </a>
+  <div class="progress-text" id="progress-text"></div>
+</div>
+
+<!-- Main stage -->
+<div class="stage" id="stage">
+  <div class="loading-screen">
+    <div class="spinner"></div>
+  </div>
+</div>
+
+<!-- Bottom nav -->
+<div class="bottom-nav" id="bottom-nav" style="display:none">
+  <button class="nav-up" id="nav-up" onclick="prevQuestion()" title="Previous">▲</button>
+  <button class="nav-down" id="nav-down" onclick="nextQuestion()" title="Next">▼</button>
+</div>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+  import { getFirestore, doc, getDoc, collection, addDoc, serverTimestamp, updateDoc, increment } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",
+    authDomain: "swoopform.firebaseapp.com",
+    projectId: "swoopform",
+    storageBucket: "swoopform.firebasestorage.app",
+    messagingSenderId: "378850092986",
+    appId: "1:378850092986:web:4fed92128136e048fa5f83"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  let survey = null;
+  let questions = [];
+  let currentIndex = -1; // -1 = welcome screen
+  let answers = {};
+  let surveyId = null;
+  let isAnimating = false;
+
+  // Get survey ID from URL
+  // URL: swoopform.com/s/?id=SURVEY_ID
+  const params = new URLSearchParams(window.location.search);
+  surveyId = params.get('id');
+
+  async function init() {
+    if (!surveyId) {
+      showError('No survey found', 'The survey link is invalid or missing.');
+      return;
+    }
+
+    try {
+      const docRef = doc(db, 'surveys', surveyId);
+      const docSnap = await getDoc(docRef);
+
+      if (!docSnap.exists()) {
+        showError('Survey not found', 'This survey may have been deleted or the link is incorrect.');
+        return;
+      }
+
+      survey = { id: docSnap.id, ...docSnap.data() };
+
+      if (survey.status === 'closed') {
+        showError('Survey closed', 'This survey is no longer accepting responses.');
+        return;
+      }
+
+      if (survey.status === 'draft') {
+        showError('Survey not published', 'This survey is not yet published.');
+        return;
+      }
+
+      questions = survey.questions || [];
+      showWelcome();
+
+    } catch(e) {
+      console.error(e);
+      showError('Something went wrong', 'Please try again later.');
+    }
+  }
+
+  function showError(title, msg) {
+    document.getElementById('stage').innerHTML = `
+      <div class="error-screen">
+        <div style="font-size:3rem;margin-bottom:16px">😕</div>
+        <h2>${title}</h2>
+        <p>${msg}</p>
+        <br>
+        <a href="/" style="color:var(--accent);font-size:0.9rem;">← Back to SwoopForm</a>
+      </div>
+    `;
+  }
+
+  function showWelcome() {
+    currentIndex = -1;
+    updateProgress();
+    document.getElementById('bottom-nav').style.display = 'none';
+
+    const desc = survey.description || '';
+    const qCount = questions.length;
+    const estTime = Math.max(1, Math.ceil(qCount * 0.5));
+
+    document.getElementById('stage').innerHTML = `
+      <div class="welcome-screen">
+        <div class="welcome-badge">
+          ✦ ${survey.style === 'conversational' ? 'Interactive survey' : 'Quick survey'}
+        </div>
+        <h1 class="welcome-title">${survey.title}</h1>
+        ${desc ? `<p class="welcome-desc">${desc}</p>` : ''}
+        <div class="welcome-meta">
+          <div class="welcome-meta-item">
+            📝 <span>${qCount} question${qCount !== 1 ? 's' : ''}</span>
+          </div>
+          <div class="welcome-meta-item">
+            ⏱ <span>~${estTime} min</span>
+          </div>
+          <div class="welcome-meta-item">
+            🔒 <span>Anonymous</span>
+          </div>
+        </div>
+        <button class="start-btn" onclick="startSurvey()">
+          Let's go →
+        </button>
+        <div style="margin-top:20px;font-size:0.75rem;color:var(--muted)">
+          Press <strong>Enter</strong> to start
+        </div>
+      </div>
+    `;
+  }
+
+  window.startSurvey = function() {
+    currentIndex = 0;
+    document.getElementById('bottom-nav').style.display = 'flex';
+    renderQuestion();
+  }
+
+  function updateProgress() {
+    const total = questions.length;
+    const current = Math.max(0, currentIndex);
+    const pct = total > 0 ? (current / total) * 100 : 0;
+    document.getElementById('progress-fill').style.width = pct + '%';
+
+    if (currentIndex >= 0 && currentIndex < total) {
+      document.getElementById('progress-text').textContent =
+        `${currentIndex + 1} of ${total}`;
+    } else {
+      document.getElementById('progress-text').textContent = '';
+    }
+
+    // Update nav buttons
+    const upBtn = document.getElementById('nav-up');
+    const downBtn = document.getElementById('nav-down');
+    if (upBtn) upBtn.disabled = currentIndex <= 0;
+    if (downBtn) downBtn.disabled = false;
+  }
+
+  function renderQuestion() {
+    if (currentIndex >= questions.length) {
+      submitSurvey();
+      return;
+    }
+
+    const q = questions[currentIndex];
+    updateProgress();
+
+    const letters = ['A','B','C','D','E','F','G','H'];
+    const savedAnswer = answers[currentIndex];
+
+    let inputHtml = '';
+
+    if (q.type === 'multiple') {
+      const opts = q.options || [];
+      inputHtml = `
+        <div class="choices" id="choices">
+          ${opts.map((opt, i) => `
+            <div class="choice ${savedAnswer === opt ? 'selected' : ''}"
+              onclick="selectChoice('${escJs(opt)}', this)"
+              data-value="${escJs(opt)}">
+              <div class="choice-key">${letters[i] || i+1}</div>
+              <span>${opt}</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    } else if (q.type === 'text') {
+      inputHtml = `
+        <input class="text-answer" id="text-input"
+          placeholder="Type your answer here..."
+          value="${escHtml(savedAnswer || '')}"
+          onkeydown="if(event.key==='Enter')nextQuestion()">
+      `;
+    } else if (q.type === 'textarea') {
+      inputHtml = `
+        <textarea class="textarea-answer" id="textarea-input"
+          placeholder="Type your answer here...">${escHtml(savedAnswer || '')}</textarea>
+      `;
+    } else if (q.type === 'rating') {
+      const max = 5;
+      inputHtml = `
+        <div class="rating-group" id="rating-group">
+          ${Array.from({length:max},(_,i)=>i+1).map(n => `
+            <button class="rating-btn ${savedAnswer == n ? 'selected' : ''}"
+              onclick="selectRating(${n}, this)">${n}</button>
+          `).join('')}
+        </div>
+        <div class="rating-labels">
+          <span>Not at all</span>
+          <span>Extremely</span>
+        </div>
+      `;
+    } else if (q.type === 'yesno') {
+      inputHtml = `
+        <div class="yesno-group">
+          <button class="yesno-btn ${savedAnswer==='Yes'?'selected':''}"
+            onclick="selectYesNo('Yes', this)">👍 Yes</button>
+          <button class="yesno-btn ${savedAnswer==='No'?'selected':''}"
+            onclick="selectYesNo('No', this)">👎 No</button>
+        </div>
+      `;
+    }
+
+    const isRequired = q.required;
+    const hasAnswer = answers[currentIndex] !== undefined;
+
+    document.getElementById('stage').innerHTML = `
+      <div class="slide" id="current-slide">
+        <div class="q-number">
+          Question ${currentIndex + 1}
+        </div>
+        <div class="q-text">${q.text || 'Untitled question'}</div>
+        ${isRequired ? '<div class="q-required">* Required</div>' : '<div style="margin-bottom:28px"></div>'}
+        ${inputHtml}
+        <div style="display:flex;align-items:center">
+          <button class="next-btn" id="next-btn" onclick="nextQuestion()">
+            ${currentIndex === questions.length - 1 ? 'Submit ✓' : 'OK →'}
+          </button>
+          ${!isRequired ? '<span class="next-hint">or press <strong>Enter</strong></span>' : ''}
+        </div>
+      </div>
+    `;
+
+    // Focus text inputs
+    setTimeout(() => {
+      const ti = document.getElementById('text-input');
+      const ta = document.getElementById('textarea-input');
+      if (ti) ti.focus();
+      if (ta) ta.focus();
+    }, 100);
+  }
+
+  window.selectChoice = function(value, el) {
+    document.querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    answers[currentIndex] = value;
+    // Auto advance after short delay
+    setTimeout(() => nextQuestion(), 600);
+  }
+
+  window.selectRating = function(value, el) {
+    document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    answers[currentIndex] = value;
+  }
+
+  window.selectYesNo = function(value, el) {
+    document.querySelectorAll('.yesno-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    answers[currentIndex] = value;
+    setTimeout(() => nextQuestion(), 600);
+  }
+
+  function saveCurrentAnswer() {
+    const ti = document.getElementById('text-input');
+    const ta = document.getElementById('textarea-input');
+    if (ti) answers[currentIndex] = ti.value;
+    if (ta) answers[currentIndex] = ta.value;
+  }
+
+  window.nextQuestion = function() {
+    if (isAnimating) return;
+    saveCurrentAnswer();
+
+    const q = questions[currentIndex];
+    if (q && q.required && !answers[currentIndex]) {
+      // Shake the next button
+      const btn = document.getElementById('next-btn');
+      if (btn) {
+        btn.style.animation = 'none';
+        btn.style.background = '#DC2626';
+        btn.textContent = 'Required!';
+        setTimeout(() => {
+          btn.style.background = '';
+          btn.textContent = currentIndex === questions.length - 1 ? 'Submit ✓' : 'OK →';
+        }, 1000);
+      }
+      return;
+    }
+
+    currentIndex++;
+    if (currentIndex >= questions.length) {
+      submitSurvey();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  window.prevQuestion = function() {
+    if (isAnimating || currentIndex <= 0) return;
+    saveCurrentAnswer();
+    currentIndex--;
+    renderQuestion();
+  }
+
+  async function submitSurvey() {
+    document.getElementById('bottom-nav').style.display = 'none';
+    document.getElementById('progress-fill').style.width = '100%';
+    document.getElementById('progress-text').textContent = 'Complete!';
+
+    document.getElementById('stage').innerHTML = `
+      <div class="loading-screen">
+        <div class="spinner"></div>
+      </div>
+    `;
+
+    try {
+      // Build response object
+      const responseData = {
+        surveyId,
+        surveyTitle: survey.title,
+        answers: questions.map((q, i) => ({
+          question: q.text,
+          type: q.type,
+          answer: answers[i] || ''
+        })),
+        submittedAt: serverTimestamp(),
+        completionTime: Date.now()
+      };
+
+      // Save to Firestore
+      await addDoc(collection(db, 'responses'), responseData);
+
+      // Increment response count on survey
+      await updateDoc(doc(db, 'surveys', surveyId), {
+        responseCount: increment(1)
+      });
+
+      showThankYou();
+
+    } catch(e) {
+      console.error(e);
+      showThankYou(); // Show thank you anyway
+    }
+  }
+
+  function showThankYou() {
+    document.getElementById('stage').innerHTML = `
+      <div class="thankyou-screen">
+        <div class="thankyou-icon">🎉</div>
+        <h1 class="thankyou-title">Thank you!</h1>
+        <p class="thankyou-sub">
+          Your response has been recorded.<br>
+          We appreciate you taking the time.
+        </p>
+        <a href="/" style="
+          display:inline-flex;align-items:center;gap:8px;
+          padding:12px 24px;border-radius:10px;
+          background:rgba(255,255,255,0.08);
+          color:rgba(255,255,255,0.7);
+          text-decoration:none;font-size:0.9rem;font-weight:600;
+        ">← Back to SwoopForm</a>
+      </div>
+    `;
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (currentIndex < 0) {
+      if (e.key === 'Enter') window.startSurvey();
+      return;
+    }
+    if (e.key === 'Enter') {
+      const ti = document.getElementById('text-input');
+      if (document.activeElement === ti) {
+        nextQuestion();
+        return;
+      }
+      if (!document.getElementById('textarea-input')) {
+        nextQuestion();
+      }
+    }
+    if (e.key === 'ArrowUp') prevQuestion();
+    if (e.key === 'ArrowDown') nextQuestion();
+  });
+
+  function escHtml(str) {
+    return (str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+  function escJs(str) {
+    return (str||'').replace(/'/g,"\\'").replace(/"/g,'\\"');
+  }
+
+  init();
+</script>
+</body>
+</html>
