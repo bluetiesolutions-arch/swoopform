@@ -484,17 +484,43 @@ window.copyLink = function(surveyId, btn) {
   }
 window.copyLink = function(surveyId, btn) {
     const link = 'https://swoopform.com/s/?id=' + surveyId;
-    navigator.clipboard.writeText(link).then(() => {
-      const original = btn.textContent;
-      btn.textContent = '✓ Copied!';
-      btn.style.background = 'linear-gradient(135deg,#047857,#10B981)';
-      setTimeout(() => {
-        btn.textContent = original;
-        btn.style.background = '';
-      }, 2000);
-    }).catch(() => {
-      prompt('Copy this link:', link);
-    });
+    // Method 1: Modern clipboard API
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(link).then(() => {
+        showCopied(btn);
+      }).catch(() => fallbackCopy(link, btn));
+    } else {
+      fallbackCopy(link, btn);
+    }
+  }
+
+  function fallbackCopy(link, btn) {
+    // Method 2: Create temp textarea
+    const el = document.createElement('textarea');
+    el.value = link;
+    el.style.position = 'fixed';
+    el.style.opacity = '0';
+    document.body.appendChild(el);
+    el.focus();
+    el.select();
+    try {
+      document.execCommand('copy');
+      showCopied(btn);
+    } catch(e) {
+      // Method 3: Show the link in a simple alert
+      alert('Copy this link:\n\n' + link);
+    }
+    document.body.removeChild(el);
+  }
+
+  function showCopied(btn) {
+    const original = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    btn.style.background = 'linear-gradient(135deg,#047857,#10B981)';
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.style.background = '';
+    }, 2000);
   }
   window.handleLogout = async function() {
     await signOut(auth);
