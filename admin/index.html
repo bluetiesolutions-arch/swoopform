@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwoopForm — Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'DM Sans',sans-serif;
+      background:#0F0E1A;color:#fff;
+      min-height:100vh;
+    }
+    nav{
+      background:#1A1828;
+      border-bottom:1.5px solid rgba(255,255,255,0.08);
+      padding:0 24px;height:60px;
+      display:flex;align-items:center;
+      justify-content:space-between;
+      position:sticky;top:0;z-index:100;
+    }
+    .nav-logo{
+      display:flex;align-items:center;gap:10px;
+      text-decoration:none;
+    }
+    .logo-mark{
+      width:32px;height:32px;
+      background:linear-gradient(135deg,#2D1B69,#D97706);
+      border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:0.9rem;color:#fff;
+    }
+    .logo-name{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1rem;color:#fff;
+    }
+    .admin-badge{
+      padding:3px 10px;border-radius:100px;
+      background:rgba(217,119,6,0.2);
+      color:#D97706;font-size:0.72rem;font-weight:700;
+      border:1px solid rgba(217,119,6,0.3);
+    }
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .btn-nav{
+      padding:7px 14px;border-radius:8px;
+      border:1.5px solid rgba(255,255,255,0.1);
+      background:transparent;color:rgba(255,255,255,0.6);
+      font-size:0.82rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;
+      cursor:pointer;transition:all 0.2s;
+      text-decoration:none;
+    }
+    .btn-nav:hover{border-color:rgba(255,255,255,0.3);color:#fff}
+    .main{max-width:1200px;margin:0 auto;padding:32px 20px}
+    .page-title{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1.6rem;letter-spacing:-0.03em;
+      margin-bottom:6px;
+    }
+    .page-sub{color:rgba(255,255,255,0.4);font-size:0.9rem;margin-bottom:32px}
+
+    /* STATS */
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;margin-bottom:32px;
+    }
+    .stat-card{
+      background:#1A1828;border-radius:14px;
+      border:1.5px solid rgba(255,255,255,0.08);
+      padding:20px;
+    }
+    .stat-num{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:2rem;letter-spacing:-0.03em;color:#fff;
+    }
+    .stat-label{font-size:0.82rem;color:rgba(255,255,255,0.4);margin-top:4px}
+    .stat-sub{font-size:0.75rem;color:#D97706;margin-top:4px;font-weight:600}
+
+    /* TABS */
+    .tabs{
+      display:flex;gap:4px;
+      background:#1A1828;border-radius:12px;
+      padding:4px;border:1.5px solid rgba(255,255,255,0.08);
+      margin-bottom:24px;width:fit-content;
+      flex-wrap:wrap;
+    }
+    .tab{
+      padding:8px 18px;border-radius:8px;
+      font-size:0.85rem;font-weight:600;
+      cursor:pointer;border:none;
+      background:transparent;
+      color:rgba(255,255,255,0.4);
+      font-family:'DM Sans',sans-serif;
+      transition:all 0.2s;
+      display:flex;align-items:center;gap:6px;
+    }
+    .tab.active{background:rgba(255,255,255,0.1);color:#fff}
+    .tab-count{
+      background:rgba(217,119,6,0.3);
+      color:#D97706;padding:1px 7px;
+      border-radius:100px;font-size:0.72rem;
+    }
+
+    /* SECTIONS */
+    .section-header{
+      display:flex;align-items:center;
+      justify-content:space-between;
+      margin-bottom:16px;flex-wrap:wrap;gap:10px;
+    }
+    .section-title{
+      font-family:'Syne',sans-serif;font-weight:700;
+      font-size:1rem;
+    }
+    .search-input{
+      padding:8px 14px;border-radius:8px;
+      border:1.5px solid rgba(255,255,255,0.1);
+      background:rgba(255,255,255,0.05);
+      color:#fff;font-family:'DM Sans',sans-serif;
+      font-size:0.85rem;outline:none;width:240px;
+      transition:border-color 0.2s;
+    }
+    .search-input:focus{border-color:#D97706}
+    .search-input::placeholder{color:rgba(255,255,255,0.2)}
+
+    /* VERIFICATION CARDS */
+    .verif-grid{display:flex;flex-direction:column;gap:12px}
+    .verif-card{
+      background:#1A1828;border-radius:14px;
+      border:1.5px solid rgba(255,255,255,0.08);
+      padding:20px;
+      display:flex;align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;gap:16px;
+      transition:border-color 0.2s;
+    }
+    .verif-card:hover{border-color:rgba(255,255,255,0.15)}
+    .verif-card.approved{border-color:rgba(4,120,87,0.4);background:rgba(4,120,87,0.05)}
+    .verif-card.rejected{border-color:rgba(220,38,38,0.4);background:rgba(220,38,38,0.05)}
+    .verif-info{flex:1;min-width:200px}
+    .verif-name{
+      font-weight:700;font-size:0.95rem;margin-bottom:4px;
+      display:flex;align-items:center;gap:8px;
+    }
+    .verif-email{
+      font-size:0.82rem;color:rgba(255,255,255,0.5);
+      margin-bottom:8px;
+    }
+    .verif-details{
+      display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;
+    }
+    .verif-detail{
+      padding:3px 10px;border-radius:6px;
+      background:rgba(255,255,255,0.06);
+      font-size:0.76rem;color:rgba(255,255,255,0.7);
+    }
+    .verif-date{
+      font-size:0.75rem;color:rgba(255,255,255,0.3);
+    }
+    .verif-doc{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 14px;border-radius:8px;
+      border:1.5px solid rgba(255,255,255,0.1);
+      color:rgba(255,255,255,0.7);
+      text-decoration:none;font-size:0.82rem;font-weight:600;
+      transition:all 0.2s;margin-bottom:10px;
+    }
+    .verif-doc:hover{border-color:#D97706;color:#D97706}
+    .verif-actions{
+      display:flex;flex-direction:column;
+      gap:8px;align-items:flex-end;
+    }
+    .badge-pending{
+      padding:3px 10px;border-radius:100px;
+      background:rgba(245,158,11,0.2);color:#F59E0B;
+      font-size:0.72rem;font-weight:700;
+    }
+    .badge-approved{
+      padding:3px 10px;border-radius:100px;
+      background:rgba(4,120,87,0.2);color:#10B981;
+      font-size:0.72rem;font-weight:700;
+    }
+    .badge-rejected{
+      padding:3px 10px;border-radius:100px;
+      background:rgba(220,38,38,0.2);color:#EF4444;
+      font-size:0.72rem;font-weight:700;
+    }
+    .btn-approve{
+      padding:8px 16px;border-radius:8px;border:none;
+      background:rgba(4,120,87,0.2);color:#10B981;
+      font-size:0.82rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;
+      transition:all 0.2s;white-space:nowrap;
+    }
+    .btn-approve:hover{background:#047857;color:#fff}
+    .btn-approve:disabled{opacity:0.5;cursor:not-allowed}
+    .btn-reject{
+      padding:8px 16px;border-radius:8px;border:none;
+      background:rgba(220,38,38,0.1);color:#EF4444;
+      font-size:0.82rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;
+      transition:all 0.2s;white-space:nowrap;
+    }
+    .btn-reject:hover{background:#DC2626;color:#fff}
+    .btn-reject:disabled{opacity:0.5;cursor:not-allowed}
+
+    /* USERS TABLE */
+    .table-wrap{
+      background:#1A1828;border-radius:14px;
+      border:1.5px solid rgba(255,255,255,0.08);
+      overflow:hidden;
+    }
+    .table-scroll{overflow-x:auto}
+    table{width:100%;border-collapse:collapse}
+    thead tr{background:rgba(255,255,255,0.04)}
+    th{
+      padding:12px 16px;text-align:left;
+      font-size:0.72rem;font-weight:700;
+      color:rgba(255,255,255,0.4);
+      letter-spacing:0.06em;text-transform:uppercase;
+      white-space:nowrap;
+    }
+    td{
+      padding:14px 16px;
+      border-top:1px solid rgba(255,255,255,0.06);
+      font-size:0.84rem;
+      vertical-align:middle;
+    }
+    tr:hover td{background:rgba(255,255,255,0.03)}
+    .user-cell{display:flex;align-items:center;gap:10px}
+    .user-mini-avatar{
+      width:30px;height:30px;border-radius:50%;
+      background:linear-gradient(135deg,#2D1B69,#D97706);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:700;font-size:0.78rem;color:#fff;
+      flex-shrink:0;
+    }
+    .user-name{font-weight:600;font-size:0.85rem}
+    .user-email{font-size:0.76rem;color:rgba(255,255,255,0.4)}
+    .plan-tag{
+      padding:2px 8px;border-radius:6px;
+      font-size:0.72rem;font-weight:700;
+    }
+    .tag-free{background:#EDE9FF;color:#2D1B69}
+    .tag-student{background:#D1FAE5;color:#047857}
+    .tag-ngo{background:#D1FAE5;color:#047857}
+    .tag-business{background:#FEF3C7;color:#92400E}
+    .tag-paid{background:#FEF3C7;color:#92400E}
+    .date-cell{
+      font-size:0.78rem;color:rgba(255,255,255,0.4);
+      white-space:nowrap;
+    }
+
+    /* EMPTY */
+    .empty-state{
+      padding:48px 20px;text-align:center;
+    }
+    .empty-icon{font-size:2.5rem;margin-bottom:12px}
+    .empty-title{
+      font-family:'Syne',sans-serif;font-weight:700;
+      font-size:1rem;margin-bottom:6px;
+    }
+    .empty-sub{color:rgba(255,255,255,0.4);font-size:0.85rem}
+
+    /* TOAST */
+    .toast{
+      position:fixed;bottom:24px;left:50%;
+      transform:translateX(-50%);
+      color:#fff;padding:12px 24px;border-radius:10px;
+      font-size:0.88rem;font-weight:600;
+      display:none;z-index:999;
+      box-shadow:0 4px 20px rgba(0,0,0,0.5);
+    }
+    .toast-success{background:#047857}
+    .toast-error{background:#DC2626}
+    .toast-default{background:#1A1828;border:1px solid rgba(255,255,255,0.1)}
+
+    /* LOADING */
+    .loading-screen{
+      display:flex;align-items:center;justify-content:center;
+      min-height:100vh;background:#0F0E1A;
+      flex-direction:column;gap:16px;
+    }
+    .spinner{
+      width:36px;height:36px;
+      border:3px solid rgba(217,119,6,0.2);
+      border-top-color:#D97706;border-radius:50%;
+      animation:spin 0.8s linear infinite;
+    }
+    .loading-text{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1.1rem;color:rgba(255,255,255,0.6);
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loading-inline{
+      display:inline-block;width:12px;height:12px;
+      border:2px solid rgba(255,255,255,0.2);
+      border-top-color:#fff;border-radius:50%;
+      animation:spin 0.8s linear infinite;
+      margin-right:4px;vertical-align:middle;
+    }
+
+    @media(max-width:900px){
+      .stats{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:600px){
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .verif-actions{flex-direction:row;width:100%}
+    }
+  </style>
+</head>
+<body>
+
+<div id="loading-screen" class="loading-screen">
+  <div class="spinner"></div>
+  <div class="loading-text">Admin Panel</div>
+</div>
+
+<div id="app" style="display:none">
+  <nav>
+    <div style="display:flex;align-items:center;gap:12px">
+      <a href="/dashboard" class="nav-logo">
+        <div class="logo-mark">S</div>
+        <div class="logo-name">SwoopForm</div>
+      </a>
+      <span class="admin-badge">ADMIN</span>
+    </div>
+    <div class="nav-right">
+      <a href="/dashboard" class="btn-nav">← Dashboard</a>
+      <button class="btn-nav" onclick="handleLogout()">Log out</button>
+    </div>
+  </nav>
+
+  <div class="main">
+    <div class="page-title">Admin Dashboard</div>
+    <p class="page-sub">Manage users, verify accounts and monitor platform activity</p>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-num" id="stat-users">—</div>
+        <div class="stat-label">Total users</div>
+        <div class="stat-sub" id="stat-users-today"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-surveys">—</div>
+        <div class="stat-label">Total surveys</div>
+        <div class="stat-sub" id="stat-active-surveys"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-responses">—</div>
+        <div class="stat-label">Total responses</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-pending">—</div>
+        <div class="stat-label">Pending verifications</div>
+        <div class="stat-sub" id="stat-pending-sub"></div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" id="tab-verif"
+        onclick="showTab('verif')">
+        🔍 Verifications
+        <span class="tab-count" id="verif-count">0</span>
+      </button>
+      <button class="tab" id="tab-users"
+        onclick="showTab('users')">
+        👥 All Users
+      </button>
+      <button class="tab" id="tab-surveys"
+        onclick="showTab('surveys')">
+        📋 All Surveys
+      </button>
+    </div>
+
+    <!-- VERIFICATIONS TAB -->
+    <div id="view-verif">
+      <div class="section-header">
+        <div class="section-title">Verification Requests</div>
+        <div style="display:flex;gap:8px">
+          <select id="verif-filter"
+            onchange="filterVerifications()"
+            style="padding:7px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.1);background:#1A1828;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.82rem;outline:none;cursor:pointer">
+            <option value="all">All requests</option>
+            <option value="pending">Pending only</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+      </div>
+      <div class="verif-grid" id="verif-grid">
+        <div class="empty-state">
+          <div class="spinner" style="margin:0 auto 12px"></div>
+          <div class="empty-sub">Loading...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- USERS TAB -->
+    <div id="view-users" style="display:none">
+      <div class="section-header">
+        <div class="section-title">All Users</div>
+        <input class="search-input" id="user-search"
+          placeholder="Search name or email..."
+          oninput="filterUsers(this.value)">
+      </div>
+      <div class="table-wrap">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Role</th>
+                <th>Plan</th>
+                <th>Surveys</th>
+                <th>Joined</th>
+                <th>Verified</th>
+              </tr>
+            </thead>
+            <tbody id="users-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SURVEYS TAB -->
+    <div id="view-surveys" style="display:none">
+      <div class="section-header">
+        <div class="section-title">All Surveys</div>
+        <input class="search-input" id="survey-search"
+          placeholder="Search surveys..."
+          oninput="filterSurveys(this.value)">
+      </div>
+      <div class="table-wrap">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Survey</th>
+                <th>Host</th>
+                <th>Status</th>
+                <th>Responses</th>
+                <th>Questions</th>
+                <th>Created</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="surveys-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+  import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+  import { getFirestore, collection, getDocs, doc, updateDoc, query, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+  const ADMIN_UID = '7WPJK6ZuaEb3lgevyUbbU87umuH3';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",
+    authDomain: "swoopform.firebaseapp.com",
+    projectId: "swoopform",
+    storageBucket: "swoopform.firebasestorage.app",
+    messagingSenderId: "378850092986",
+    appId: "1:378850092986:web:4fed92128136e048fa5f83"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  let allVerifications = [];
+  let allUsers = [];
+  let allSurveys = [];
+
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = '/login'; return; }
+    if (user.uid !== ADMIN_UID) {
+      window.location.href = '/dashboard'; return;
+    }
+    await loadAllData();
+    document.getElementById('loading-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  });
+
+  async function loadAllData() {
+    await Promise.all([
+      loadVerifications(),
+      loadUsers(),
+      loadSurveys()
+    ]);
+    updateStats();
+  }
+
+  async function loadVerifications() {
+    const snap = await getDocs(collection(db, 'verificationRequests'));
+    allVerifications = [];
+    snap.forEach(d => allVerifications.push({ id: d.id, ...d.data() }));
+    allVerifications.sort((a, b) => {
+      const ta = a.submittedAt?.toMillis?.() || 0;
+      const tb = b.submittedAt?.toMillis?.() || 0;
+      return tb - ta;
+    });
+    renderVerifications(allVerifications);
+  }
+
+  async function loadUsers() {
+    const snap = await getDocs(collection(db, 'users'));
+    allUsers = [];
+    snap.forEach(d => allUsers.push({ id: d.id, ...d.data() }));
+    allUsers.sort((a, b) => {
+      const ta = a.createdAt?.toMillis?.() || 0;
+      const tb = b.createdAt?.toMillis?.() || 0;
+      return tb - ta;
+    });
+    renderUsers(allUsers);
+  }
+
+  async function loadSurveys() {
+    const snap = await getDocs(collection(db, 'surveys'));
+    allSurveys = [];
+    snap.forEach(d => allSurveys.push({ id: d.id, ...d.data() }));
+    allSurveys.sort((a, b) => {
+      const ta = a.createdAt?.toMillis?.() || 0;
+      const tb = b.createdAt?.toMillis?.() || 0;
+      return tb - ta;
+    });
+    renderSurveys(allSurveys);
+  }
+
+  function updateStats() {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const newToday = allUsers.filter(u => {
+      const d = u.createdAt?.toDate?.();
+      return d && d >= today;
+    }).length;
+    const pending = allVerifications.filter(v => v.status === 'pending').length;
+    const activeSurveys = allSurveys.filter(s => s.status === 'active').length;
+    const totalResponses = allSurveys.reduce((s, sv) => s + (sv.responseCount || 0), 0);
+
+    document.getElementById('stat-users').textContent = allUsers.length;
+    document.getElementById('stat-users-today').textContent =
+      newToday > 0 ? '+' + newToday + ' today' : '';
+    document.getElementById('stat-surveys').textContent = allSurveys.length;
+    document.getElementById('stat-active-surveys').textContent =
+      activeSurveys + ' active';
+    document.getElementById('stat-responses').textContent = totalResponses;
+    document.getElementById('stat-pending').textContent = pending;
+    document.getElementById('stat-pending-sub').textContent =
+      pending > 0 ? 'Needs review' : 'All clear ✓';
+    document.getElementById('verif-count').textContent = pending;
+  }
+
+  function renderVerifications(list) {
+    const grid = document.getElementById('verif-grid');
+    if (!list.length) {
+      grid.innerHTML = '<div class="empty-state"><div class="empty-icon">✅</div><div class="empty-title">No verification requests</div><div class="empty-sub">All clear!</div></div>';
+      return;
+    }
+
+    grid.innerHTML = list.map(v => {
+      const isStudent = v.type === 'student';
+      const badgeHtml = v.status === 'approved'
+        ? '<span class="badge-approved">✅ Approved</span>'
+        : v.status === 'rejected'
+        ? '<span class="badge-rejected">✕ Rejected</span>'
+        : '<span class="badge-pending">⏳ Pending</span>';
+
+      const actionsHtml = v.status === 'pending' ? `
+        <button class="btn-approve" id="approve-${v.id}"
+          onclick="approveVerification('${v.id}','${v.userId}','${v.type}')">
+          ✓ Approve
+        </button>
+        <button class="btn-reject" id="reject-${v.id}"
+          onclick="rejectVerification('${v.id}','${v.userId}')">
+          ✕ Reject
+        </button>
+      ` : '';
+
+      return `
+        <div class="verif-card ${v.status}" id="vcard-${v.id}">
+          <div class="verif-info">
+            <div class="verif-name">
+              ${v.userName || 'Unknown'}
+              ${badgeHtml}
+            </div>
+            <div class="verif-email">${v.userEmail || ''}</div>
+            <div class="verif-details">
+              <span class="verif-detail">${isStudent ? '🎓 Student' : '🤝 NGO'}</span>
+              ${isStudent && v.institution
+                ? '<span class="verif-detail">🏫 ' + v.institution + '</span>'
+                : ''}
+              ${!isStudent && v.ngoName
+                ? '<span class="verif-detail">🏢 ' + v.ngoName + '</span>'
+                : ''}
+              ${!isStudent && v.ngoEmail
+                ? '<span class="verif-detail">📧 ' + v.ngoEmail + '</span>'
+                : ''}
+            </div>
+            ${v.documentUrl ? `
+              <a href="${v.documentUrl}" target="_blank" class="verif-doc">
+                📄 View document →
+              </a>
+            ` : '<span style="font-size:0.78rem;color:rgba(255,255,255,0.3)">No document submitted</span>'}
+            <div class="verif-date">
+              Submitted: ${v.submittedAt ? formatDate(v.submittedAt) : 'Unknown'}
+            </div>
+          </div>
+          <div class="verif-actions">
+            ${actionsHtml}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function renderUsers(list) {
+    const tbody = document.getElementById('users-table');
+    if (!list.length) {
+      tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">👥</div><div class="empty-title">No users yet</div></div></td></tr>';
+      return;
+    }
+    tbody.innerHTML = list.map(u => `
+      <tr>
+        <td>
+          <div class="user-cell">
+            <div class="user-mini-avatar">
+              ${(u.name || u.email || '?').charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <div class="user-name">${u.name || 'No name'}</div>
+              <div class="user-email">${u.email || ''}</div>
+            </div>
+          </div>
+        </td>
+        <td style="text-transform:capitalize;color:rgba(255,255,255,0.7)">
+          ${u.role || 'individual'}
+        </td>
+        <td>
+          <span class="plan-tag tag-${u.plan || 'free'}">
+            ${getPlanLabel(u.plan || 'free')}
+          </span>
+        </td>
+        <td style="color:rgba(255,255,255,0.7)">${u.surveysCreated || 0}</td>
+        <td class="date-cell">${u.createdAt ? formatDate(u.createdAt) : '—'}</td>
+        <td>
+          ${u.studentVerified || u.ngoVerified
+            ? '<span style="color:#10B981;font-size:0.82rem;font-weight:600">✅ Verified</span>'
+            : (u.role === 'student' || u.role === 'ngo')
+            ? '<span style="color:#F59E0B;font-size:0.82rem;font-weight:600">⏳ Pending</span>'
+            : '<span style="color:rgba(255,255,255,0.3);font-size:0.82rem">—</span>'}
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function renderSurveys(list) {
+    const tbody = document.getElementById('surveys-table');
+    if (!list.length) {
+      tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No surveys yet</div></div></td></tr>';
+      return;
+    }
+    tbody.innerHTML = list.map(s => {
+      const statusColor = s.status === 'active' ? '#10B981' :
+        s.status === 'closed' ? '#EF4444' : '#94A3B8';
+      const hostUser = allUsers.find(u => u.id === s.userId);
+      return `
+        <tr>
+          <td>
+            <div style="font-weight:600;font-size:0.85rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
+              ${s.title || 'Untitled'}
+            </div>
+          </td>
+          <td>
+            <div style="font-size:0.78rem;color:rgba(255,255,255,0.5)">
+              ${hostUser ? hostUser.email : s.userId ? s.userId.substring(0,8) + '...' : '—'}
+            </div>
+          </td>
+          <td>
+            <span style="font-size:0.78rem;font-weight:600;color:${statusColor}">
+              ${s.status || 'draft'}
+            </span>
+          </td>
+          <td style="font-weight:600">${s.responseCount || 0}</td>
+          <td style="color:rgba(255,255,255,0.5)">${s.questionCount || 0}</td>
+          <td class="date-cell">${s.createdAt ? formatDate(s.createdAt) : '—'}</td>
+          <td>
+            <a href="/responses/?id=${s.id}"
+              style="font-size:0.78rem;color:#D97706;font-weight:600;text-decoration:none">
+              View →
+            </a>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  window.approveVerification = async function(verifId, userId, type) {
+    const approveBtn = document.getElementById('approve-' + verifId);
+    const rejectBtn = document.getElementById('reject-' + verifId);
+    approveBtn.disabled = true;
+    rejectBtn.disabled = true;
+    approveBtn.innerHTML = '<span class="loading-inline"></span>Approving...';
+
+    try {
+      // Update verification request
+      await updateDoc(doc(db, 'verificationRequests', verifId), {
+        status: 'approved',
+        approvedAt: serverTimestamp()
+      });
+
+      // Update user's verified status
+      const userUpdate = { updatedAt: serverTimestamp() };
+      if (type === 'student') {
+        userUpdate.studentVerified = true;
+        userUpdate.plan = 'student';
+      } else if (type === 'ngo') {
+        userUpdate.ngoVerified = true;
+        userUpdate.plan = 'ngo';
+      }
+      await updateDoc(doc(db, 'users', userId), userUpdate);
+
+      // Update UI
+      const card = document.getElementById('vcard-' + verifId);
+      if (card) {
+        card.classList.add('approved');
+        card.querySelector('.verif-actions').innerHTML =
+          '<span class="badge-approved">✅ Approved</span>';
+        card.querySelector('.verif-name .badge-pending') &&
+          (card.querySelector('.verif-name').lastChild.remove());
+        const badge = card.querySelector('.verif-name span');
+        if (badge) { badge.className = 'badge-approved'; badge.textContent = '✅ Approved'; }
+      }
+
+      showToast('✅ Verified and approved!', 'success');
+
+      // Update pending count
+      const pending = allVerifications.filter(v =>
+        v.status === 'pending' && v.id !== verifId).length;
+      document.getElementById('stat-pending').textContent = pending;
+      document.getElementById('verif-count').textContent = pending;
+
+    } catch(e) {
+      console.error(e);
+      showToast('Error approving. Please try again.', 'error');
+      approveBtn.disabled = false;
+      rejectBtn.disabled = false;
+      approveBtn.textContent = '✓ Approve';
+    }
+  }
+
+  window.rejectVerification = async function(verifId, userId) {
+    if (!confirm('Reject this verification request?\n\nThe user will remain on their current plan.')) return;
+
+    const approveBtn = document.getElementById('approve-' + verifId);
+    const rejectBtn = document.getElementById('reject-' + verifId);
+    approveBtn.disabled = true;
+    rejectBtn.disabled = true;
+    rejectBtn.innerHTML = '<span class="loading-inline"></span>Rejecting...';
+
+    try {
+      await updateDoc(doc(db, 'verificationRequests', verifId), {
+        status: 'rejected',
+        rejectedAt: serverTimestamp()
+      });
+
+      const card = document.getElementById('vcard-' + verifId);
+      if (card) {
+        card.classList.add('rejected');
+        card.querySelector('.verif-actions').innerHTML =
+          '<span class="badge-rejected">✕ Rejected</span>';
+        const badge = card.querySelector('.verif-name span');
+        if (badge) { badge.className = 'badge-rejected'; badge.textContent = '✕ Rejected'; }
+      }
+
+      showToast('Request rejected.', 'default');
+
+      const pending = allVerifications.filter(v =>
+        v.status === 'pending' && v.id !== verifId).length;
+      document.getElementById('stat-pending').textContent = pending;
+      document.getElementById('verif-count').textContent = pending;
+
+    } catch(e) {
+      console.error(e);
+      showToast('Error rejecting. Please try again.', 'error');
+      approveBtn.disabled = false;
+      rejectBtn.disabled = false;
+      rejectBtn.textContent = '✕ Reject';
+    }
+  }
+
+  window.showTab = function(tab) {
+    ['verif','users','surveys'].forEach(t => {
+      document.getElementById('tab-' + t).classList.toggle('active', t === tab);
+      document.getElementById('view-' + t).style.display = t === tab ? 'block' : 'none';
+    });
+  }
+
+  window.filterVerifications = function() {
+    const filter = document.getElementById('verif-filter').value;
+    const filtered = filter === 'all'
+      ? allVerifications
+      : allVerifications.filter(v => v.status === filter);
+    renderVerifications(filtered);
+  }
+
+  window.filterUsers = function(q) {
+    const filtered = allUsers.filter(u =>
+      (u.name || '').toLowerCase().includes(q.toLowerCase()) ||
+      (u.email || '').toLowerCase().includes(q.toLowerCase())
+    );
+    renderUsers(filtered);
+  }
+
+  window.filterSurveys = function(q) {
+    const filtered = allSurveys.filter(s =>
+      (s.title || '').toLowerCase().includes(q.toLowerCase())
+    );
+    renderSurveys(filtered);
+  }
+
+  function getPlanLabel(plan) {
+    const labels = {
+      free:'Free', student:'Student', ngo:'NGO',
+      business:'Business', paid:'Paid', custom:'Custom'
+    };
+    return labels[plan] || 'Free';
+  }
+
+  function formatDate(ts) {
+    if (!ts) return '—';
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    return d.toLocaleDateString('en-IN', {
+      day:'numeric', month:'short', year:'numeric'
+    });
+  }
+
+  window.handleLogout = async function() {
+    await signOut(auth);
+    window.location.href = '/login';
+  }
+
+  function showToast(msg, type='default') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast toast-' + type;
+    t.style.display = 'block';
+    setTimeout(() => t.style.display = 'none', 3000);
+  }
+</script>
+</body>
+</html>
