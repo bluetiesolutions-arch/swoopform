@@ -404,7 +404,8 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-
+  const SHEETS_SCRIPT = 'https://script.google.com/macros/s/AKfycbx3evlOErDpdpR_TK_FvQaEEI5Kr6HvJYc46A_OG0SzIqJz8Gn0OKvUQxj7uoBLgyGH/exec';
+  
   let survey = null;
   let questions = [];
   let currentIndex = -1;
@@ -648,19 +649,40 @@
     document.getElementById('stage').innerHTML = `<div class="loading-screen"><div class="spinner"></div></div>`;
 
     try {
+     const responseAnswers = questions.map((q,i) => ({
+        question: q.text,
+        type: q.type,
+        answer: answers[i] || ''
+      }));
+
       await addDoc(collection(db, 'responses'), {
         surveyId,
         surveyTitle: survey.title,
-        answers: questions.map((q,i) => ({
-          question: q.text,
-          type: q.type,
-          answer: answers[i] || ''
-        })),
+        answers: responseAnswers,
         submittedAt: serverTimestamp()
       });
+
       await updateDoc(doc(db, 'surveys', surveyId), {
         responseCount: increment(1)
       });
+
+      // Add to Google Sheet if connected
+      if (survey.sheetId) {
+        try {
+          const now = new Date().toLocaleString('en-IN');
+          await fetch(SHEETS_SCRIPT, {
+            method: 'POST',
+            body: JSON.stringify({
+              action: 'add_response',
+              sheetId: survey.sheetId,
+              submittedAt: now,
+              answers: responseAnswers.map(a => a.answer || '')
+            })
+          });
+        } catch(e) {
+          console.error('Sheet sync error:', e);
+        }
+      }
     } catch(e) {
       console.error(e);
     }
