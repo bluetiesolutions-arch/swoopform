@@ -452,7 +452,7 @@
             <div class="survey-responses">${survey.responseCount || 0} responses</div>
             <div class="survey-actions">
               <button class="btn-sm btn-sm-ghost" onclick="event.stopPropagation();window.location.href='/analytics/${survey.id}'">Analytics</button>
-              <button class="btn-sm btn-sm-primary" onclick="event.stopPropagation();window.location.href='/share/${survey.id}'">Share</button>
+              <button class="btn-sm btn-sm-primary" onclick="event.stopPropagation();copyLink('${survey.id}',this)">🔗 Copy link</button>
             </div>
           </div>
         </div>
@@ -465,7 +465,18 @@
       console.error('Error loading surveys:', e);
     }
   }
-
+window.copyLink = function(surveyId, btn) {
+    const link = `https://swoopform.com/s/?id=${surveyId}`;
+    navigator.clipboard.writeText(link).then(() => {
+      const original = btn.textContent;
+      btn.textContent = '✓ Copied!';
+      btn.style.background = 'linear-gradient(135deg,#047857,#10B981)';
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.style.background = '';
+      }, 2000);
+    });
+  }
   function formatDate(timestamp) {
     if (!timestamp) return 'Recently';
     const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
