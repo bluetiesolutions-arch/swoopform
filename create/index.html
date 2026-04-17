@@ -846,14 +846,41 @@ const SHEETS_SCRIPT = 'https://script.google.com/macros/s/AKfycbx3evlOErDpdpR_TK
     if (id) showToast('✓ Draft saved!');
   }
 
-  window.publishSurvey = async function() {
+ window.publishSurvey = async function() {
     const btn = document.getElementById('publish-btn');
     btn.disabled = true;
     btn.textContent = 'Publishing...';
     const id = await saveSurvey('active');
     if (id) {
-      showToast('🎉 Survey published!', 1500);
-      setTimeout(() => window.location.href = '/dashboard', 1800);
+      // Create Google Sheet automatically
+      btn.textContent = 'Creating Sheet...';
+      try {
+        const questions = questions_snapshot.map(q => q.text).filter(t => t.trim());
+        const response = await fetch(SHEETS_SCRIPT, {
+          method: 'POST',
+          body: JSON.stringify({
+            action: 'create_sheet',
+            surveyTitle: document.getElementById('survey-title').value.trim(),
+            questions: questions,
+            hostEmail: currentUser.email
+          })
+        });
+        const result = await response.json();
+        if (result.success) {
+          // Save sheet info to Firestore
+          await updateDoc(doc(db, 'surveys', id), {
+            sheetId: result.sheetId,
+            sheetUrl: result.sheetUrl
+          });
+          showToast('🎉 Survey published + Sheet created!', 2000);
+        } else {
+          showToast('🎉 Survey published!', 1500);
+        }
+      } catch(e) {
+        console.error('Sheet creation error:', e);
+        showToast('🎉 Survey published!', 1500);
+      }
+      setTimeout(() => window.location.href = '/dashboard', 2200);
     } else {
       btn.disabled = false;
       btn.textContent = 'Publish →';
