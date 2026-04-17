@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwoopForm — Responses</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'DM Sans',sans-serif;
+      background:#F5F0E8;
+      color:#0F0E1A;
+      min-height:100vh;
+    }
+    nav{
+      background:#fff;
+      border-bottom:1.5px solid #E2DAD0;
+      padding:0 24px;height:60px;
+      display:flex;align-items:center;
+      justify-content:space-between;
+      position:sticky;top:0;z-index:100;
+    }
+    .nav-logo{
+      display:flex;align-items:center;gap:10px;
+      text-decoration:none;
+    }
+    .logo-mark{
+      width:32px;height:32px;
+      background:linear-gradient(135deg,#2D1B69,#D97706);
+      border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:0.9rem;color:#fff;
+    }
+    .logo-name{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1rem;color:#0F0E1A;
+    }
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .btn-ghost{
+      padding:8px 16px;border-radius:8px;
+      border:1.5px solid #E2DAD0;
+      background:transparent;color:#64748B;
+      font-size:0.85rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;
+      cursor:pointer;transition:all 0.2s;
+      text-decoration:none;display:inline-flex;
+      align-items:center;gap:6px;
+    }
+    .btn-ghost:hover{border-color:#0F0E1A;color:#0F0E1A}
+    .btn-primary{
+      padding:8px 16px;border-radius:8px;border:none;
+      background:linear-gradient(135deg,#2D1B69,#D97706);
+      color:#fff;font-size:0.85rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;
+      transition:opacity 0.2s;display:inline-flex;
+      align-items:center;gap:6px;
+    }
+    .btn-primary:hover{opacity:0.9}
+    .main{max-width:1000px;margin:0 auto;padding:32px 20px}
+
+    /* HEADER */
+    .page-header{
+      display:flex;align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;gap:16px;
+      margin-bottom:28px;
+    }
+    .survey-title{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1.5rem;letter-spacing:-0.03em;
+      margin-bottom:4px;
+    }
+    .survey-meta{
+      font-size:0.85rem;color:#64748B;
+      display:flex;gap:14px;flex-wrap:wrap;
+    }
+    .status-badge{
+      display:inline-flex;align-items:center;gap:5px;
+      padding:3px 10px;border-radius:100px;
+      font-size:0.75rem;font-weight:700;
+    }
+    .status-active{background:#D1FAE5;color:#047857}
+    .status-draft{background:#F5F0E8;color:#64748B}
+    .status-closed{background:#FEE2E2;color:#DC2626}
+
+    /* STATS */
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+      gap:12px;margin-bottom:28px;
+    }
+    .stat-card{
+      background:#fff;border-radius:12px;
+      border:1.5px solid #E2DAD0;
+      padding:18px;
+    }
+    .stat-num{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1.8rem;letter-spacing:-0.03em;
+    }
+    .stat-label{font-size:0.78rem;color:#64748B;margin-top:4px}
+
+    /* TABS */
+    .tabs{
+      display:flex;gap:4px;
+      background:#fff;border-radius:10px;
+      padding:4px;border:1.5px solid #E2DAD0;
+      margin-bottom:24px;
+      width:fit-content;
+    }
+    .tab{
+      padding:8px 18px;border-radius:7px;
+      font-size:0.85rem;font-weight:600;
+      cursor:pointer;border:none;
+      background:transparent;color:#64748B;
+      font-family:'DM Sans',sans-serif;
+      transition:all 0.2s;
+    }
+    .tab.active{background:#0F0E1A;color:#fff}
+
+    /* RESPONSES TABLE */
+    .responses-wrap{
+      background:#fff;border-radius:14px;
+      border:1.5px solid #E2DAD0;
+      overflow:hidden;
+    }
+    .responses-header{
+      padding:16px 20px;
+      border-bottom:1.5px solid #E2DAD0;
+      display:flex;align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;gap:10px;
+    }
+    .responses-title{
+      font-family:'Syne',sans-serif;font-weight:700;
+      font-size:0.95rem;
+    }
+    .search-input{
+      padding:8px 14px;border-radius:8px;
+      border:1.5px solid #E2DAD0;
+      font-family:'DM Sans',sans-serif;
+      font-size:0.85rem;color:#0F0E1A;
+      outline:none;width:220px;
+      transition:border-color 0.2s;
+    }
+    .search-input:focus{border-color:#2D1B69}
+    .search-input::placeholder{color:#C4B9AA}
+    .table-wrap{overflow-x:auto}
+    table{width:100%;border-collapse:collapse}
+    thead tr{background:#F5F0E8}
+    th{
+      padding:12px 16px;text-align:left;
+      font-size:0.75rem;font-weight:700;
+      color:#64748B;letter-spacing:0.05em;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+    td{
+      padding:14px 16px;
+      border-top:1px solid #E2DAD0;
+      font-size:0.85rem;
+      vertical-align:top;
+    }
+    tr:hover td{background:#FAFAF7}
+    .response-num{
+      font-weight:700;color:#64748B;
+      font-size:0.78rem;
+    }
+    .response-date{
+      color:#64748B;font-size:0.78rem;
+      white-space:nowrap;
+    }
+    .answer-cell{
+      max-width:200px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .answer-tag{
+      display:inline-block;
+      padding:2px 8px;border-radius:6px;
+      background:#EDE9FF;color:#2D1B69;
+      font-size:0.78rem;font-weight:600;
+    }
+    .empty-state{
+      padding:60px 20px;text-align:center;
+    }
+    .empty-icon{font-size:2.5rem;margin-bottom:12px}
+    .empty-state h3{
+      font-family:'Syne',sans-serif;font-weight:700;
+      font-size:1rem;margin-bottom:8px;
+    }
+    .empty-state p{color:#64748B;font-size:0.85rem}
+
+    /* SUMMARY TAB */
+    .summary-grid{display:flex;flex-direction:column;gap:16px}
+    .question-summary{
+      background:#fff;border-radius:14px;
+      border:1.5px solid #E2DAD0;
+      padding:22px;
+    }
+    .qs-header{
+      display:flex;align-items:center;gap:10px;
+      margin-bottom:16px;
+    }
+    .qs-num{
+      width:26px;height:26px;border-radius:50%;
+      background:#EDE9FF;color:#2D1B69;
+      font-size:0.75rem;font-weight:700;
+      display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;
+    }
+    .qs-text{
+      fon
