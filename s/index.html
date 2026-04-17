@@ -7,27 +7,55 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-
     :root{
       --bg:#0F0E1A;
-      --card:#1A1828;
-      --border:rgba(255,255,255,0.08);
-      --text:#fff;
-      --muted:rgba(255,255,255,0.5);
       --accent:#D97706;
       --accent2:#2D1B69;
-      --green:#10B981;
+      --text:#fff;
+      --muted:rgba(255,255,255,0.5);
+      --border:rgba(255,255,255,0.08);
     }
-
     body{
       font-family:'DM Sans',sans-serif;
       background:var(--bg);
       color:var(--text);
       min-height:100vh;
-      overflow:hidden;
+      overflow-x:hidden;
     }
 
-    /* PROGRESS BAR */
+    /* VIDEO BACKGROUND */
+    .video-bg{
+      position:fixed;top:0;left:0;
+      width:100%;height:100%;
+      z-index:0;overflow:hidden;
+      display:none;
+    }
+    .video-bg iframe{
+      position:absolute;
+      top:50%;left:50%;
+      width:100vw;height:56.25vw;
+      min-height:100vh;min-width:177.77vh;
+      transform:translate(-50%,-50%);
+      pointer-events:none;
+    }
+    .video-overlay{
+      position:absolute;inset:0;
+      background:rgba(0,0,0,0.55);
+    }
+
+    /* IMAGE BACKGROUND */
+    .image-bg{
+      position:fixed;inset:0;z-index:0;
+      background-size:cover;
+      background-position:center;
+      display:none;
+    }
+    .image-overlay{
+      position:absolute;inset:0;
+      background:rgba(0,0,0,0.5);
+    }
+
+    /* PROGRESS */
     .progress-bar{
       position:fixed;top:0;left:0;right:0;
       height:3px;background:rgba(255,255,255,0.08);
@@ -37,7 +65,6 @@
       height:100%;
       background:linear-gradient(90deg,#2D1B69,#D97706);
       transition:width 0.5s ease;
-      border-radius:0 2px 2px 0;
     }
 
     /* TOP NAV */
@@ -70,15 +97,16 @@
       font-size:0.8rem;color:var(--muted);font-weight:600;
     }
 
-    /* MAIN STAGE */
+    /* STAGE */
     .stage{
+      position:relative;z-index:10;
       min-height:100vh;
       display:flex;align-items:center;
       justify-content:center;
       padding:80px 20px 120px;
     }
 
-    /* QUESTION SLIDE */
+    /* SLIDE ANIMATIONS */
     .slide{
       width:100%;max-width:680px;
       animation:slideUp 0.4s ease both;
@@ -87,179 +115,21 @@
       from{opacity:0;transform:translateY(30px)}
       to{opacity:1;transform:translateY(0)}
     }
-    .slide.exit{
-      animation:slideDown 0.3s ease both;
-    }
-    @keyframes slideDown{
-      from{opacity:1;transform:translateY(0)}
-      to{opacity:0;transform:translateY(-30px)}
-    }
 
-    .q-number{
-      font-size:0.8rem;font-weight:700;
-      color:var(--accent);letter-spacing:0.08em;
-      text-transform:uppercase;margin-bottom:16px;
-      display:flex;align-items:center;gap:8px;
+    /* WELCOME */
+    .welcome-screen{width:100%;max-width:680px;animation:slideUp 0.5s ease both}
+    .custom-logo{
+      max-height:56px;max-width:200px;
+      object-fit:contain;margin-bottom:24px;
+      display:block;
     }
-    .q-number::after{
-      content:'→';color:var(--accent);
-    }
-
-    .q-text{
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:clamp(1.6rem,4vw,2.4rem);
-      letter-spacing:-0.03em;line-height:1.2;
-      margin-bottom:8px;
-    }
-    .q-required{
-      display:inline-block;
-      color:var(--accent);font-size:0.8rem;
-      margin-bottom:28px;
-    }
-
-    /* MULTIPLE CHOICE */
-    .choices{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
-    .choice{
-      padding:16px 20px;border-radius:12px;
-      border:1.5px solid var(--border);
-      background:rgba(255,255,255,0.03);
-      cursor:pointer;transition:all 0.2s;
-      display:flex;align-items:center;gap:14px;
-      font-size:1rem;font-weight:500;
-    }
-    .choice:hover{
-      border-color:var(--accent);
-      background:rgba(217,119,6,0.08);
-    }
-    .choice.selected{
-      border-color:var(--accent);
-      background:rgba(217,119,6,0.12);
-      color:#fff;
-    }
-    .choice-key{
-      width:28px;height:28px;border-radius:6px;
-      border:1.5px solid rgba(255,255,255,0.2);
-      display:flex;align-items:center;justify-content:center;
-      font-size:0.75rem;font-weight:700;
-      color:var(--muted);flex-shrink:0;
-      transition:all 0.2s;
-    }
-    .choice.selected .choice-key{
-      background:var(--accent);
-      border-color:var(--accent);
-      color:#fff;
-    }
-
-    /* TEXT INPUT */
-    .text-answer{
-      width:100%;background:transparent;
-      border:none;border-bottom:2px solid rgba(255,255,255,0.2);
-      color:#fff;font-size:1.3rem;
-      font-family:'DM Sans',sans-serif;
-      padding:12px 0;outline:none;
-      transition:border-color 0.2s;
-      margin-bottom:32px;
-    }
-    .text-answer:focus{border-bottom-color:var(--accent)}
-    .text-answer::placeholder{color:rgba(255,255,255,0.2)}
-
-    /* TEXTAREA */
-    .textarea-answer{
-      width:100%;background:rgba(255,255,255,0.04);
-      border:1.5px solid var(--border);
-      border-radius:12px;
-      color:#fff;font-size:1rem;
-      font-family:'DM Sans',sans-serif;
-      padding:16px;outline:none;
-      transition:border-color 0.2s;
-      margin-bottom:32px;
-      resize:none;min-height:120px;
-    }
-    .textarea-answer:focus{border-color:var(--accent)}
-    .textarea-answer::placeholder{color:rgba(255,255,255,0.2)}
-
-    /* RATING */
-    .rating-group{
-      display:flex;gap:10px;flex-wrap:wrap;
-      margin-bottom:32px;
-    }
-    .rating-btn{
-      width:56px;height:56px;border-radius:12px;
-      border:1.5px solid var(--border);
-      background:rgba(255,255,255,0.03);
-      color:#fff;font-size:1.1rem;font-weight:700;
-      cursor:pointer;transition:all 0.2s;
-      font-family:'DM Sans',sans-serif;
-    }
-    .rating-btn:hover{
-      border-color:var(--accent);
-      background:rgba(217,119,6,0.08);
-    }
-    .rating-btn.selected{
-      background:var(--accent);
-      border-color:var(--accent);
-      color:#fff;
-    }
-    .rating-labels{
-      display:flex;justify-content:space-between;
-      font-size:0.75rem;color:var(--muted);
-      margin-top:8px;margin-bottom:24px;
-    }
-
-    /* YES NO */
-    .yesno-group{display:flex;gap:12px;margin-bottom:32px}
-    .yesno-btn{
-      flex:1;padding:18px;border-radius:12px;
-      border:1.5px solid var(--border);
-      background:rgba(255,255,255,0.03);
-      color:#fff;font-size:1rem;font-weight:600;
-      cursor:pointer;transition:all 0.2s;
-      font-family:'DM Sans',sans-serif;
-      text-align:center;
-    }
-    .yesno-btn:hover{border-color:var(--accent);background:rgba(217,119,6,0.08)}
-    .yesno-btn.selected{background:var(--accent);border-color:var(--accent)}
-
-    /* NEXT BUTTON */
-    .next-btn{
-      display:inline-flex;align-items:center;gap:10px;
-      padding:14px 28px;border-radius:10px;border:none;
-      background:var(--accent);color:#fff;
-      font-size:1rem;font-weight:700;
-      font-family:'DM Sans',sans-serif;cursor:pointer;
-      transition:all 0.2s;
-    }
-    .next-btn:hover{background:#B45309;transform:translateY(-1px)}
-    .next-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none}
-    .next-hint{
-      font-size:0.78rem;color:var(--muted);
-      margin-left:14px;
-    }
-
-    /* BOTTOM NAV */
-    .bottom-nav{
-      position:fixed;bottom:0;left:0;right:0;
-      padding:20px 24px;
-      display:flex;align-items:center;gap:8px;
-      background:linear-gradient(to top,var(--bg) 60%,transparent);
-    }
-    .nav-up,.nav-down{
-      width:36px;height:36px;border-radius:8px;
-      border:1.5px solid var(--border);
-      background:transparent;color:var(--muted);
-      cursor:pointer;font-size:0.9rem;
-      display:flex;align-items:center;justify-content:center;
-      transition:all 0.2s;
-    }
-    .nav-up:hover,.nav-down:hover{
-      border-color:rgba(255,255,255,0.3);color:#fff;
-    }
-    .nav-up:disabled,.nav-down:disabled{opacity:0.2;cursor:not-allowed}
-
-    /* WELCOME SCREEN */
-    .welcome-screen{
-      width:100%;max-width:680px;
-      animation:slideUp 0.5s ease both;
+    .prize-badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 16px;border-radius:100px;
+      background:rgba(217,119,6,0.2);
+      border:1px solid rgba(217,119,6,0.4);
+      color:#FCD34D;font-size:0.82rem;font-weight:700;
+      margin-bottom:20px;
     }
     .welcome-badge{
       display:inline-flex;align-items:center;gap:8px;
@@ -267,7 +137,7 @@
       background:rgba(217,119,6,0.15);
       border:1px solid rgba(217,119,6,0.3);
       color:var(--accent);font-size:0.8rem;font-weight:600;
-      margin-bottom:24px;
+      margin-bottom:20px;
     }
     .welcome-title{
       font-family:'Syne',sans-serif;font-weight:800;
@@ -277,7 +147,7 @@
     }
     .welcome-desc{
       font-size:1rem;color:var(--muted);
-      line-height:1.7;margin-bottom:36px;
+      line-height:1.7;margin-bottom:32px;
       max-width:520px;
     }
     .welcome-meta{
@@ -297,36 +167,171 @@
       transition:all 0.2s;
     }
     .start-btn:hover{opacity:0.9;transform:translateY(-1px)}
+    .enter-hint{
+      margin-top:16px;font-size:0.75rem;
+      color:var(--muted);
+    }
 
-    /* THANK YOU SCREEN */
+    /* QUESTION */
+    .q-number{
+      font-size:0.8rem;font-weight:700;
+      color:var(--accent);letter-spacing:0.08em;
+      text-transform:uppercase;margin-bottom:16px;
+      display:flex;align-items:center;gap:8px;
+    }
+    .q-number::after{content:'→';color:var(--accent)}
+    .q-text{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:clamp(1.6rem,4vw,2.4rem);
+      letter-spacing:-0.03em;line-height:1.2;
+      margin-bottom:8px;
+    }
+    .q-required{
+      color:var(--accent);font-size:0.8rem;
+      margin-bottom:28px;display:inline-block;
+    }
+
+    /* CHOICES */
+    .choices{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+    .choice{
+      padding:16px 20px;border-radius:12px;
+      border:1.5px solid var(--border);
+      background:rgba(255,255,255,0.03);
+      cursor:pointer;transition:all 0.2s;
+      display:flex;align-items:center;gap:14px;
+      font-size:1rem;font-weight:500;
+    }
+    .choice:hover{border-color:var(--accent);background:rgba(217,119,6,0.08)}
+    .choice.selected{border-color:var(--accent);background:rgba(217,119,6,0.12)}
+    .choice-key{
+      width:28px;height:28px;border-radius:6px;
+      border:1.5px solid rgba(255,255,255,0.2);
+      display:flex;align-items:center;justify-content:center;
+      font-size:0.75rem;font-weight:700;
+      color:var(--muted);flex-shrink:0;transition:all 0.2s;
+    }
+    .choice.selected .choice-key{
+      background:var(--accent);border-color:var(--accent);color:#fff;
+    }
+
+    /* TEXT */
+    .text-answer{
+      width:100%;background:transparent;
+      border:none;border-bottom:2px solid rgba(255,255,255,0.2);
+      color:#fff;font-size:1.3rem;
+      font-family:'DM Sans',sans-serif;
+      padding:12px 0;outline:none;
+      transition:border-color 0.2s;margin-bottom:32px;
+    }
+    .text-answer:focus{border-bottom-color:var(--accent)}
+    .text-answer::placeholder{color:rgba(255,255,255,0.2)}
+    .textarea-answer{
+      width:100%;background:rgba(255,255,255,0.04);
+      border:1.5px solid var(--border);border-radius:12px;
+      color:#fff;font-size:1rem;
+      font-family:'DM Sans',sans-serif;
+      padding:16px;outline:none;
+      transition:border-color 0.2s;
+      margin-bottom:32px;resize:none;min-height:120px;
+    }
+    .textarea-answer:focus{border-color:var(--accent)}
+    .textarea-answer::placeholder{color:rgba(255,255,255,0.2)}
+
+    /* RATING */
+    .rating-group{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+    .rating-btn{
+      width:56px;height:56px;border-radius:12px;
+      border:1.5px solid var(--border);
+      background:rgba(255,255,255,0.03);
+      color:#fff;font-size:1.1rem;font-weight:700;
+      cursor:pointer;transition:all 0.2s;
+      font-family:'DM Sans',sans-serif;
+    }
+    .rating-btn:hover{border-color:var(--accent);background:rgba(217,119,6,0.08)}
+    .rating-btn.selected{background:var(--accent);border-color:var(--accent)}
+    .rating-labels{
+      display:flex;justify-content:space-between;
+      font-size:0.75rem;color:var(--muted);
+      margin-bottom:24px;
+    }
+
+    /* YES NO */
+    .yesno-group{display:flex;gap:12px;margin-bottom:32px}
+    .yesno-btn{
+      flex:1;padding:18px;border-radius:12px;
+      border:1.5px solid var(--border);
+      background:rgba(255,255,255,0.03);
+      color:#fff;font-size:1rem;font-weight:600;
+      cursor:pointer;transition:all 0.2s;
+      font-family:'DM Sans',sans-serif;text-align:center;
+    }
+    .yesno-btn:hover{border-color:var(--accent);background:rgba(217,119,6,0.08)}
+    .yesno-btn.selected{background:var(--accent);border-color:var(--accent)}
+
+    /* NEXT BUTTON */
+    .next-btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:14px 28px;border-radius:10px;border:none;
+      background:var(--accent);color:#fff;
+      font-size:1rem;font-weight:700;
+      font-family:'DM Sans',sans-serif;cursor:pointer;
+      transition:all 0.2s;
+    }
+    .next-btn:hover{background:#B45309;transform:translateY(-1px)}
+    .next-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+    .next-hint{font-size:0.78rem;color:var(--muted);margin-left:14px}
+
+    /* BOTTOM NAV */
+    .bottom-nav{
+      position:fixed;bottom:0;left:0;right:0;
+      padding:20px 24px;
+      display:flex;align-items:center;gap:8px;
+      background:linear-gradient(to top,var(--bg) 60%,transparent);
+      z-index:99;
+    }
+    .nav-up,.nav-down{
+      width:36px;height:36px;border-radius:8px;
+      border:1.5px solid var(--border);
+      background:transparent;color:var(--muted);
+      cursor:pointer;font-size:0.9rem;
+      display:flex;align-items:center;justify-content:center;
+      transition:all 0.2s;
+    }
+    .nav-up:hover,.nav-down:hover{border-color:rgba(255,255,255,0.3);color:#fff}
+    .nav-up:disabled,.nav-down:disabled{opacity:0.2;cursor:not-allowed}
+
+    /* THANK YOU */
     .thankyou-screen{
-      text-align:center;
-      width:100%;max-width:560px;
+      text-align:center;width:100%;max-width:560px;
       animation:slideUp 0.5s ease both;
     }
-    .thankyou-icon{
-      font-size:4rem;margin-bottom:24px;
-      animation:bounce 0.6s ease both;
-    }
+    .thankyou-icon{font-size:4rem;margin-bottom:24px;animation:bounce 0.6s ease both}
     @keyframes bounce{
-      0%{transform:scale(0)}
-      60%{transform:scale(1.2)}
-      100%{transform:scale(1)}
+      0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}
     }
     .thankyou-title{
       font-family:'Syne',sans-serif;font-weight:800;
       font-size:clamp(1.8rem,4vw,2.8rem);
       letter-spacing:-0.03em;margin-bottom:14px;
     }
-    .thankyou-sub{
-      color:var(--muted);font-size:1rem;
-      line-height:1.7;margin-bottom:36px;
+    .thankyou-sub{color:var(--muted);font-size:1rem;line-height:1.7;margin-bottom:32px}
+    .share-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+    .share-btn{
+      padding:10px 20px;border-radius:8px;
+      border:1.5px solid var(--border);
+      background:transparent;color:#fff;
+      font-size:0.85rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;
+      transition:all 0.2s;text-decoration:none;
+      display:inline-flex;align-items:center;gap:6px;
     }
+    .share-btn:hover{border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.06)}
 
-    /* LOADING */
-    .loading-screen{
+    /* LOADING / ERROR */
+    .loading-screen,.error-screen{
       display:flex;align-items:center;
       justify-content:center;min-height:100vh;
+      flex-direction:column;gap:16px;
     }
     .spinner{
       width:32px;height:32px;
@@ -335,16 +340,8 @@
       animation:spin 0.8s linear infinite;
     }
     @keyframes spin{to{transform:rotate(360deg)}}
-
-    /* ERROR */
-    .error-screen{
-      text-align:center;
-      padding:40px 20px;
-    }
-    .error-screen h2{
-      font-family:'Syne',sans-serif;
-      font-size:1.4rem;margin-bottom:12px;
-    }
+    .error-screen{text-align:center;padding:40px 20px}
+    .error-screen h2{font-family:'Syne',sans-serif;font-size:1.4rem;margin-bottom:10px}
     .error-screen p{color:var(--muted);font-size:0.9rem}
 
     @media(max-width:600px){
@@ -356,7 +353,18 @@
 </head>
 <body>
 
-<!-- Progress bar -->
+<!-- Video background -->
+<div class="video-bg" id="video-bg">
+  <iframe id="yt-iframe" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+  <div class="video-overlay"></div>
+</div>
+
+<!-- Image background -->
+<div class="image-bg" id="image-bg">
+  <div class="image-overlay"></div>
+</div>
+
+<!-- Progress -->
 <div class="progress-bar">
   <div class="progress-fill" id="progress-fill" style="width:0%"></div>
 </div>
@@ -370,22 +378,20 @@
   <div class="progress-text" id="progress-text"></div>
 </div>
 
-<!-- Main stage -->
+<!-- Stage -->
 <div class="stage" id="stage">
-  <div class="loading-screen">
-    <div class="spinner"></div>
-  </div>
+  <div class="loading-screen"><div class="spinner"></div></div>
 </div>
 
 <!-- Bottom nav -->
 <div class="bottom-nav" id="bottom-nav" style="display:none">
-  <button class="nav-up" id="nav-up" onclick="prevQuestion()" title="Previous">▲</button>
-  <button class="nav-down" id="nav-down" onclick="nextQuestion()" title="Next">▼</button>
+  <button class="nav-up" id="nav-up" onclick="prevQuestion()">▲</button>
+  <button class="nav-down" id="nav-down" onclick="nextQuestion()">▼</button>
 </div>
 
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-  import { getFirestore, doc, getDoc, collection, addDoc, serverTimestamp, updateDoc, increment } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+  import { getFirestore, doc, getDoc, collection, addDoc, updateDoc, increment, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
   const firebaseConfig = {
     apiKey: "AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",
@@ -401,62 +407,66 @@
 
   let survey = null;
   let questions = [];
-  let currentIndex = -1; // -1 = welcome screen
+  let currentIndex = -1;
   let answers = {};
   let surveyId = null;
-  let isAnimating = false;
 
-  // Get survey ID from URL
-  // URL: swoopform.com/s/?id=SURVEY_ID
   const params = new URLSearchParams(window.location.search);
   surveyId = params.get('id');
 
-  async function init() {
-    if (!surveyId) {
-      showError('No survey found', 'The survey link is invalid or missing.');
+  // ── Apply background ─────────────────────────────────
+  function applyBackground(wp) {
+    if (!wp) return;
+
+    // Priority: video > image > color
+    if (wp.bgVideo && wp.bgVideo.includes('youtube')) {
+      // Extract YouTube video ID
+      const match = wp.bgVideo.match(/(?:v=|youtu\.be\/)([^&\s]+)/);
+      if (match) {
+        const videoId = match[1];
+        const iframe = document.getElementById('yt-iframe');
+        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1`;
+        document.getElementById('video-bg').style.display = 'block';
+        return;
+      }
+    }
+    if (wp.bgImage) {
+      const el = document.getElementById('image-bg');
+      el.style.backgroundImage = `url(${wp.bgImage})`;
+      el.style.display = 'block';
       return;
     }
+    if (wp.bgColor) {
+      document.body.style.background = wp.bgColor;
+    }
+  }
 
+  async function init() {
+    if (!surveyId) { showError('Invalid link','No survey ID found.'); return; }
     try {
-      const docRef = doc(db, 'surveys', surveyId);
-      const docSnap = await getDoc(docRef);
-
-      if (!docSnap.exists()) {
-        showError('Survey not found', 'This survey may have been deleted or the link is incorrect.');
-        return;
-      }
-
-      survey = { id: docSnap.id, ...docSnap.data() };
-
-      if (survey.status === 'closed') {
-        showError('Survey closed', 'This survey is no longer accepting responses.');
-        return;
-      }
-
-      if (survey.status === 'draft') {
-        showError('Survey not published', 'This survey is not yet published.');
-        return;
-      }
-
+      const snap = await getDoc(doc(db, 'surveys', surveyId));
+      if (!snap.exists()) { showError('Not found','This survey does not exist.'); return; }
+      survey = { id: snap.id, ...snap.data() };
+      if (survey.status === 'draft') { showError('Not published','This survey is still a draft.'); return; }
+      if (survey.status === 'closed') { showError('Survey closed','This survey is no longer accepting responses.'); return; }
       questions = survey.questions || [];
+      applyBackground(survey.welcomePage);
       showWelcome();
-
     } catch(e) {
       console.error(e);
-      showError('Something went wrong', 'Please try again later.');
+      showError('Error','Something went wrong. Please try again.');
     }
   }
 
   function showError(title, msg) {
     document.getElementById('stage').innerHTML = `
       <div class="error-screen">
-        <div style="font-size:3rem;margin-bottom:16px">😕</div>
+        <div style="font-size:3rem">😕</div>
         <h2>${title}</h2>
         <p>${msg}</p>
         <br>
-        <a href="/" style="color:var(--accent);font-size:0.9rem;">← Back to SwoopForm</a>
-      </div>
-    `;
+        <a href="/" style="color:var(--accent);font-size:0.9rem">← Back to SwoopForm</a>
+      </div>`;
   }
 
   function showWelcome() {
@@ -464,36 +474,38 @@
     updateProgress();
     document.getElementById('bottom-nav').style.display = 'none';
 
-    const desc = survey.description || '';
+    const wp = survey.welcomePage || {};
+    const prize = survey.prize || {};
     const qCount = questions.length;
     const estTime = Math.max(1, Math.ceil(qCount * 0.5));
 
+    const logoHtml = wp.logo
+      ? `<img src="${wp.logo}" class="custom-logo" alt="Logo">`
+      : '';
+
+    const prizeHtml = prize.enabled && prize.description
+      ? `<div class="prize-badge">🎁 Win ${prize.description} — ${prize.winners || 1} winner${prize.winners > 1 ? 's' : ''}</div><br>`
+      : '';
+
+    const headline = wp.headline || survey.title;
+    const desc = survey.description || '';
+    const btnText = wp.btnText || "Let's go →";
+
     document.getElementById('stage').innerHTML = `
       <div class="welcome-screen">
-        <div class="welcome-badge">
-          ✦ ${survey.style === 'conversational' ? 'Interactive survey' : 'Quick survey'}
-        </div>
-        <h1 class="welcome-title">${survey.title}</h1>
+        ${logoHtml}
+        ${prizeHtml}
+        <div class="welcome-badge">✦ ${survey.style === 'conversational' ? 'Interactive survey' : 'Quick survey'}</div>
+        <h1 class="welcome-title">${headline}</h1>
         ${desc ? `<p class="welcome-desc">${desc}</p>` : ''}
         <div class="welcome-meta">
-          <div class="welcome-meta-item">
-            📝 <span>${qCount} question${qCount !== 1 ? 's' : ''}</span>
-          </div>
-          <div class="welcome-meta-item">
-            ⏱ <span>~${estTime} min</span>
-          </div>
-          <div class="welcome-meta-item">
-            🔒 <span>Anonymous</span>
-          </div>
+          <div class="welcome-meta-item">📝 <span>${qCount} question${qCount !== 1 ? 's' : ''}</span></div>
+          <div class="welcome-meta-item">⏱ <span>~${estTime} min</span></div>
+          <div class="welcome-meta-item">🔒 <span>Anonymous</span></div>
         </div>
-        <button class="start-btn" onclick="startSurvey()">
-          Let's go →
-        </button>
-        <div style="margin-top:20px;font-size:0.75rem;color:var(--muted)">
-          Press <strong>Enter</strong> to start
-        </div>
-      </div>
-    `;
+        <button class="start-btn" onclick="startSurvey()">${btnText}</button>
+        <div class="enter-hint">Press <strong>Enter</strong> to start</div>
+      </div>`;
   }
 
   window.startSurvey = function() {
@@ -503,111 +515,72 @@
   }
 
   function updateProgress() {
-    const total = questions.length;
-    const current = Math.max(0, currentIndex);
-    const pct = total > 0 ? (current / total) * 100 : 0;
+    const pct = questions.length > 0 ? (Math.max(0,currentIndex) / questions.length) * 100 : 0;
     document.getElementById('progress-fill').style.width = pct + '%';
-
-    if (currentIndex >= 0 && currentIndex < total) {
-      document.getElementById('progress-text').textContent =
-        `${currentIndex + 1} of ${total}`;
-    } else {
-      document.getElementById('progress-text').textContent = '';
-    }
-
-    // Update nav buttons
-    const upBtn = document.getElementById('nav-up');
-    const downBtn = document.getElementById('nav-down');
-    if (upBtn) upBtn.disabled = currentIndex <= 0;
-    if (downBtn) downBtn.disabled = false;
+    document.getElementById('progress-text').textContent =
+      currentIndex >= 0 && currentIndex < questions.length
+        ? `${currentIndex + 1} of ${questions.length}` : '';
+    const up = document.getElementById('nav-up');
+    const dn = document.getElementById('nav-down');
+    if (up) up.disabled = currentIndex <= 0;
+    if (dn) dn.disabled = false;
   }
 
   function renderQuestion() {
-    if (currentIndex >= questions.length) {
-      submitSurvey();
-      return;
-    }
-
+    if (currentIndex >= questions.length) { submitSurvey(); return; }
     const q = questions[currentIndex];
     updateProgress();
-
     const letters = ['A','B','C','D','E','F','G','H'];
-    const savedAnswer = answers[currentIndex];
-
+    const saved = answers[currentIndex];
     let inputHtml = '';
 
     if (q.type === 'multiple') {
-      const opts = q.options || [];
-      inputHtml = `
-        <div class="choices" id="choices">
-          ${opts.map((opt, i) => `
-            <div class="choice ${savedAnswer === opt ? 'selected' : ''}"
-              onclick="selectChoice('${escJs(opt)}', this)"
-              data-value="${escJs(opt)}">
-              <div class="choice-key">${letters[i] || i+1}</div>
-              <span>${opt}</span>
-            </div>
-          `).join('')}
-        </div>
-      `;
+      inputHtml = `<div class="choices">
+        ${(q.options||[]).map((opt,i) => `
+          <div class="choice ${saved===opt?'selected':''}"
+            onclick="selectChoice('${esc(opt)}',this)"
+            data-value="${esc(opt)}">
+            <div class="choice-key">${letters[i]||i+1}</div>
+            <span>${opt}</span>
+          </div>`).join('')}
+      </div>`;
     } else if (q.type === 'text') {
-      inputHtml = `
-        <input class="text-answer" id="text-input"
-          placeholder="Type your answer here..."
-          value="${escHtml(savedAnswer || '')}"
-          onkeydown="if(event.key==='Enter')nextQuestion()">
-      `;
+      inputHtml = `<input class="text-answer" id="text-input"
+        placeholder="Type your answer..."
+        value="${escH(saved||'')}"
+        onkeydown="if(event.key==='Enter')nextQuestion()">`;
     } else if (q.type === 'textarea') {
-      inputHtml = `
-        <textarea class="textarea-answer" id="textarea-input"
-          placeholder="Type your answer here...">${escHtml(savedAnswer || '')}</textarea>
-      `;
+      inputHtml = `<textarea class="textarea-answer" id="textarea-input"
+        placeholder="Type your answer...">${escH(saved||'')}</textarea>`;
     } else if (q.type === 'rating') {
-      const max = 5;
       inputHtml = `
-        <div class="rating-group" id="rating-group">
-          ${Array.from({length:max},(_,i)=>i+1).map(n => `
-            <button class="rating-btn ${savedAnswer == n ? 'selected' : ''}"
-              onclick="selectRating(${n}, this)">${n}</button>
-          `).join('')}
+        <div class="rating-group">
+          ${[1,2,3,4,5].map(n=>`
+            <button class="rating-btn ${saved==n?'selected':''}"
+              onclick="selectRating(${n},this)">${n}</button>`).join('')}
         </div>
-        <div class="rating-labels">
-          <span>Not at all</span>
-          <span>Extremely</span>
-        </div>
-      `;
+        <div class="rating-labels"><span>Not at all</span><span>Extremely</span></div>`;
     } else if (q.type === 'yesno') {
-      inputHtml = `
-        <div class="yesno-group">
-          <button class="yesno-btn ${savedAnswer==='Yes'?'selected':''}"
-            onclick="selectYesNo('Yes', this)">👍 Yes</button>
-          <button class="yesno-btn ${savedAnswer==='No'?'selected':''}"
-            onclick="selectYesNo('No', this)">👎 No</button>
-        </div>
-      `;
+      inputHtml = `<div class="yesno-group">
+        <button class="yesno-btn ${saved==='Yes'?'selected':''}" onclick="selectYesNo('Yes',this)">👍 Yes</button>
+        <button class="yesno-btn ${saved==='No'?'selected':''}" onclick="selectYesNo('No',this)">👎 No</button>
+      </div>`;
     }
 
-    const isRequired = q.required;
-    const hasAnswer = answers[currentIndex] !== undefined;
-
     document.getElementById('stage').innerHTML = `
-      <div class="slide" id="current-slide">
-        <div class="q-number">
-          Question ${currentIndex + 1}
-        </div>
-        <div class="q-text">${q.text || 'Untitled question'}</div>
-        ${isRequired ? '<div class="q-required">* Required</div>' : '<div style="margin-bottom:28px"></div>'}
+      <div class="slide">
+        <div class="q-number">Question ${currentIndex+1}</div>
+        <div class="q-text">${q.text||'Untitled question'}</div>
+        ${q.required ? '<div class="q-required">* Required</div>' : '<div style="margin-bottom:28px"></div>'}
         ${inputHtml}
         <div style="display:flex;align-items:center">
           <button class="next-btn" id="next-btn" onclick="nextQuestion()">
-            ${currentIndex === questions.length - 1 ? 'Submit ✓' : 'OK →'}
+            ${currentIndex===questions.length-1 ? 'Submit ✓' : 'OK →'}
           </button>
-          ${!isRequired ? '<span class="next-hint">or press <strong>Enter</strong></span>' : ''}
+          ${!q.required ? '<span class="next-hint">or press <strong>Enter</strong></span>' : ''}
         </div>
-      </div>
-    `;
+      </div>`;
 
-    // Focus text inputs
     setTimeout(() => {
       const ti = document.getElementById('text-input');
       const ta = document.getElementById('textarea-input');
@@ -616,24 +589,21 @@
     }, 100);
   }
 
-  window.selectChoice = function(value, el) {
+  window.selectChoice = function(val, el) {
     document.querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
     el.classList.add('selected');
-    answers[currentIndex] = value;
-    // Auto advance after short delay
+    answers[currentIndex] = val;
     setTimeout(() => nextQuestion(), 600);
   }
-
-  window.selectRating = function(value, el) {
+  window.selectRating = function(val, el) {
     document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('selected'));
     el.classList.add('selected');
-    answers[currentIndex] = value;
+    answers[currentIndex] = val;
   }
-
-  window.selectYesNo = function(value, el) {
+  window.selectYesNo = function(val, el) {
     document.querySelectorAll('.yesno-btn').forEach(b => b.classList.remove('selected'));
     el.classList.add('selected');
-    answers[currentIndex] = value;
+    answers[currentIndex] = val;
     setTimeout(() => nextQuestion(), 600);
   }
 
@@ -645,35 +615,27 @@
   }
 
   window.nextQuestion = function() {
-    if (isAnimating) return;
     saveCurrentAnswer();
-
     const q = questions[currentIndex];
     if (q && q.required && !answers[currentIndex]) {
-      // Shake the next button
       const btn = document.getElementById('next-btn');
       if (btn) {
-        btn.style.animation = 'none';
         btn.style.background = '#DC2626';
         btn.textContent = 'Required!';
         setTimeout(() => {
           btn.style.background = '';
-          btn.textContent = currentIndex === questions.length - 1 ? 'Submit ✓' : 'OK →';
+          btn.textContent = currentIndex===questions.length-1 ? 'Submit ✓' : 'OK →';
         }, 1000);
       }
       return;
     }
-
     currentIndex++;
-    if (currentIndex >= questions.length) {
-      submitSurvey();
-    } else {
-      renderQuestion();
-    }
+    if (currentIndex >= questions.length) submitSurvey();
+    else renderQuestion();
   }
 
   window.prevQuestion = function() {
-    if (isAnimating || currentIndex <= 0) return;
+    if (currentIndex <= 0) return;
     saveCurrentAnswer();
     currentIndex--;
     renderQuestion();
@@ -683,89 +645,72 @@
     document.getElementById('bottom-nav').style.display = 'none';
     document.getElementById('progress-fill').style.width = '100%';
     document.getElementById('progress-text').textContent = 'Complete!';
-
-    document.getElementById('stage').innerHTML = `
-      <div class="loading-screen">
-        <div class="spinner"></div>
-      </div>
-    `;
+    document.getElementById('stage').innerHTML = `<div class="loading-screen"><div class="spinner"></div></div>`;
 
     try {
-      // Build response object
-      const responseData = {
+      await addDoc(collection(db, 'responses'), {
         surveyId,
         surveyTitle: survey.title,
-        answers: questions.map((q, i) => ({
+        answers: questions.map((q,i) => ({
           question: q.text,
           type: q.type,
           answer: answers[i] || ''
         })),
-        submittedAt: serverTimestamp(),
-        completionTime: Date.now()
-      };
-
-      // Save to Firestore
-      await addDoc(collection(db, 'responses'), responseData);
-
-      // Increment response count on survey
+        submittedAt: serverTimestamp()
+      });
       await updateDoc(doc(db, 'surveys', surveyId), {
         responseCount: increment(1)
       });
-
-      showThankYou();
-
     } catch(e) {
       console.error(e);
-      showThankYou(); // Show thank you anyway
     }
+    showThankYou();
   }
 
   function showThankYou() {
+    const ty = survey.thankYouPage || {};
+    const headline = ty.headline || 'Thank you!';
+    const message = ty.message || 'Your response has been recorded. We appreciate you taking the time.';
+    const redirect = ty.redirect || '';
+    const showShare = ty.showShare || false;
+
+    const shareHtml = showShare ? `
+      <div class="share-buttons">
+        <a class="share-btn" href="https://wa.me/?text=Take this survey: ${encodeURIComponent(window.location.href)}" target="_blank">
+          💬 Share on WhatsApp
+        </a>
+        <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href);this.textContent='✓ Copied!'">
+          🔗 Copy link
+        </button>
+      </div>` : '';
+
     document.getElementById('stage').innerHTML = `
       <div class="thankyou-screen">
         <div class="thankyou-icon">🎉</div>
-        <h1 class="thankyou-title">Thank you!</h1>
-        <p class="thankyou-sub">
-          Your response has been recorded.<br>
-          We appreciate you taking the time.
-        </p>
-        <a href="/" style="
-          display:inline-flex;align-items:center;gap:8px;
-          padding:12px 24px;border-radius:10px;
-          background:rgba(255,255,255,0.08);
-          color:rgba(255,255,255,0.7);
-          text-decoration:none;font-size:0.9rem;font-weight:600;
-        ">← Back to SwoopForm</a>
-      </div>
-    `;
+        <h1 class="thankyou-title">${headline}</h1>
+        <p class="thankyou-sub">${message}</p>
+        ${shareHtml}
+        <a href="/" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.9rem;font-weight:600">
+          ← Back to SwoopForm
+        </a>
+      </div>`;
+
+    // Redirect if set
+    if (redirect) {
+      setTimeout(() => window.location.href = redirect, 3000);
+    }
   }
 
-  // Keyboard navigation
-  document.addEventListener('keydown', (e) => {
-    if (currentIndex < 0) {
-      if (e.key === 'Enter') window.startSurvey();
-      return;
-    }
-    if (e.key === 'Enter') {
-      const ti = document.getElementById('text-input');
-      if (document.activeElement === ti) {
-        nextQuestion();
-        return;
-      }
-      if (!document.getElementById('textarea-input')) {
-        nextQuestion();
-      }
-    }
-    if (e.key === 'ArrowUp') prevQuestion();
-    if (e.key === 'ArrowDown') nextQuestion();
+  // Keyboard nav
+  document.addEventListener('keydown', e => {
+    if (currentIndex < 0) { if (e.key==='Enter') window.startSurvey(); return; }
+    if (e.key==='Enter' && !document.getElementById('textarea-input')) nextQuestion();
+    if (e.key==='ArrowUp') prevQuestion();
+    if (e.key==='ArrowDown') nextQuestion();
   });
 
-  function escHtml(str) {
-    return (str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  }
-  function escJs(str) {
-    return (str||'').replace(/'/g,"\\'").replace(/"/g,'\\"');
-  }
+  function esc(s){ return (s||'').replace(/'/g,"\\'").replace(/"/g,'\\"') }
+  function escH(s){ return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
 
   init();
 </script>
