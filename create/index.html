@@ -213,10 +213,11 @@
       border-color:#2D1B69;
       background:#EDE9FF;color:#2D1B69;
     }
+    /* SETTINGS SECTIONS */
     .settings-section{
       background:#fff;border-radius:14px;
       border:1.5px solid #E2DAD0;
-      padding:22px;margin-bottom:24px;
+      padding:22px;margin-bottom:16px;
     }
     .settings-title{
       font-family:'Syne',sans-serif;font-weight:700;
@@ -229,8 +230,50 @@
       border-bottom:1px solid #E2DAD0;
     }
     .setting-row:last-child{border-bottom:none}
+    .setting-row.col{
+      flex-direction:column;
+      align-items:flex-start;
+      gap:8px;
+    }
     .setting-info .setting-name{font-size:0.88rem;font-weight:600}
-    .setting-info .setting-desc{font-size:0.78rem;color:#64748B;margin-top:2px}
+    .setting-info .setting-desc{font-size:0.76rem;color:#64748B;margin-top:2px}
+    .setting-hint{
+      font-size:0.72rem;color:#94A3B8;
+      margin-top:4px;font-style:italic;
+    }
+    .setting-input{
+      width:100%;padding:10px 14px;
+      border-radius:8px;
+      border:1.5px solid #E2DAD0;
+      background:#fff;color:#0F0E1A;
+      font-size:0.88rem;
+      font-family:'DM Sans',sans-serif;
+      outline:none;transition:border-color 0.2s;
+    }
+    .setting-input:focus{border-color:#2D1B69}
+    .setting-input::placeholder{color:#C4B9AA}
+    .prize-type-btn{
+      padding:8px 14px;border-radius:8px;
+      border:1.5px solid #E2DAD0;
+      background:#fff;color:#0F0E1A;
+      font-size:0.82rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;
+      cursor:pointer;transition:all 0.2s;
+    }
+    .prize-type-btn:hover{border-color:#2D1B69;background:#EDE9FF}
+    .prize-type-btn.active{
+      border-color:#D97706;
+      background:#FEF3C7;color:#92400E;
+    }
+    .format-tag{
+      display:inline-block;
+      padding:2px 8px;border-radius:4px;
+      background:#F5F0E8;color:#64748B;
+      font-size:0.7rem;font-weight:600;
+      margin-right:4px;margin-top:4px;
+      border:1px solid #E2DAD0;
+    }
+    /* TOAST */
     .toast{
       position:fixed;bottom:24px;left:50%;
       transform:translateX(-50%);
@@ -253,30 +296,6 @@
       margin:0 auto;
     }
     @keyframes spin{to{transform:rotate(360deg)}}
-    .setting-input{
-  width:100%;padding:10px 14px;
-  border-radius:8px;
-  border:1.5px solid #E2DAD0;
-  background:#fff;color:#0F0E1A;
-  font-size:0.88rem;
-  font-family:'DM Sans',sans-serif;
-  outline:none;transition:border-color 0.2s;
-}
-.setting-input:focus{border-color:#2D1B69}
-.setting-input::placeholder{color:#C4B9AA}
-.prize-type-btn{
-  padding:8px 16px;border-radius:8px;
-  border:1.5px solid #E2DAD0;
-  background:#fff;color:#0F0E1A;
-  font-size:0.82rem;font-weight:600;
-  font-family:'DM Sans',sans-serif;
-  cursor:pointer;transition:all 0.2s;
-}
-.prize-type-btn:hover{border-color:#2D1B69;background:#EDE9FF}
-.prize-type-btn.active{
-  border-color:#D97706;
-  background:#FEF3C7;color:#92400E;
-}
   </style>
 </head>
 <body>
@@ -299,15 +318,19 @@
   </nav>
 
   <div class="main">
+
+    <!-- TITLE -->
     <div class="title-section">
       <input class="title-input" id="survey-title"
-        placeholder="Your survey title..." maxlength="100">
+        placeholder="e.g. Customer Satisfaction Survey" maxlength="100">
       <textarea class="desc-input" id="survey-desc"
-        placeholder="Add a description (optional)" rows="2"></textarea>
+        placeholder="e.g. This takes 2 minutes. Help us improve." rows="2"></textarea>
     </div>
 
+    <!-- QUESTIONS -->
     <div class="questions-list" id="questions-list"></div>
 
+    <!-- ADD QUESTION -->
     <div class="add-question-section">
       <div class="add-question-title">Add a question</div>
       <div class="question-types">
@@ -323,64 +346,86 @@
     <div class="settings-section">
       <div class="settings-title">🎨 Welcome page</div>
 
-      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+      <div class="setting-row col">
         <div class="setting-info">
-          <div class="setting-name">Logo URL</div>
-          <div class="setting-desc">Paste a link to your logo image</div>
+          <div class="setting-name">Your logo</div>
+          <div class="setting-desc">Shown above the survey title</div>
+          <div class="setting-hint">
+            <span class="format-tag">PNG</span>
+            <span class="format-tag">JPG</span>
+            <span class="format-tag">SVG</span>
+            Paste a direct image URL · Max recommended size: 200×60px
+          </div>
         </div>
         <input class="setting-input" id="welcome-logo"
           placeholder="e.g. https://yoursite.com/logo.png">
       </div>
 
-      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+      <div class="setting-row col">
         <div class="setting-info">
           <div class="setting-name">Custom headline</div>
-          <div class="setting-desc">Leave blank to use survey title</div>
+          <div class="setting-desc">Replaces the survey title on welcome screen</div>
+          <div class="setting-hint">Leave blank to use survey title</div>
         </div>
         <input class="setting-input" id="welcome-headline"
-          placeholder="e.g. Share your feedback with us!">
+          placeholder="e.g. We'd love your feedback!">
       </div>
 
-      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+      <div class="setting-row col">
         <div class="setting-info">
-          <div class="setting-name">Button text</div>
-          <div class="setting-desc">Text on the start button</div>
+          <div class="setting-name">Start button text</div>
+          <div class="setting-desc">Text on the button respondents click to begin</div>
+          <div class="setting-hint">Default: "Let's go →"</div>
         </div>
         <input class="setting-input" id="welcome-btn-text"
           placeholder="e.g. Start survey →">
       </div>
 
-      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+      <div class="setting-row col">
         <div class="setting-info">
           <div class="setting-name">Background color</div>
-          <div class="setting-desc">Hex color code</div>
+          <div class="setting-desc">Pick a color or enter hex code</div>
+          <div class="setting-hint">Default: #0F0E1A (dark)</div>
         </div>
         <div style="display:flex;gap:10px;align-items:center;width:100%">
           <input class="setting-input" id="welcome-bg-color"
-            placeholder="e.g. #0F0E1A" style="flex:1">
+            placeholder="#0F0E1A" style="flex:1">
           <input type="color" id="welcome-color-picker"
             value="#0F0E1A"
             oninput="document.getElementById('welcome-bg-color').value=this.value"
-            style="width:40px;height:40px;border-radius:8px;border:1.5px solid #E2DAD0;cursor:pointer;padding:2px">
+            style="width:44px;height:44px;border-radius:8px;border:1.5px solid #E2DAD0;cursor:pointer;padding:2px;flex-shrink:0">
         </div>
       </div>
 
-      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+      <div class="setting-row col">
         <div class="setting-info">
-          <div class="setting-name">Background image URL</div>
-          <div class="setting-desc">Overrides background color if set</div>
+          <div class="setting-name">Background image</div>
+          <div class="setting-desc">Full-screen image behind the welcome text</div>
+          <div class="setting-hint">
+            <span class="format-tag">JPG</span>
+            <span class="format-tag">PNG</span>
+            <span class="format-tag">WEBP</span>
+            Paste a direct image URL · Recommended: 1920×1080px
+            · Overrides background color
+          </div>
         </div>
         <input class="setting-input" id="welcome-bg-image"
-          placeholder="e.g. https://images.unsplash.com/...">
+          placeholder="e.g. https://images.unsplash.com/photo-...">
       </div>
 
-      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px;border-bottom:none">
+      <div class="setting-row col" style="border-bottom:none">
         <div class="setting-info">
-          <div class="setting-name">Background video URL</div>
-          <div class="setting-desc">YouTube or Vimeo URL</div>
+          <div class="setting-name">Background video</div>
+          <div class="setting-desc">Looping video plays behind the welcome screen</div>
+          <div class="setting-hint">
+            <span class="format-tag">YouTube</span>
+            <span class="format-tag">Vimeo</span>
+            Paste the full video URL · e.g. https://youtube.com/watch?v=VIDEOID
+            · Video plays muted and looped · Overrides image and color
+          </div>
         </div>
         <input class="setting-input" id="welcome-bg-video"
-          placeholder="e.g. https://youtube.com/watch?v=...">
+          placeholder="e.g. https://youtube.com/watch?v=dQw4w9WgXcQ">
       </div>
     </div>
 
@@ -388,59 +433,64 @@
     <div class="settings-section">
       <div class="settings-title">🙏 Thank you page</div>
 
-      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+      <div class="setting-row col">
         <div class="setting-info">
           <div class="setting-name">Custom headline</div>
-          <div class="setting-desc">Leave blank to use default</div>
+          <div class="setting-desc">Main message after submission</div>
+          <div class="setting-hint">Default: "Thank you!"</div>
         </div>
         <input class="setting-input" id="thankyou-headline"
-          placeholder="e.g. Thank you so much!">
+          placeholder="e.g. You're amazing, thank you!">
       </div>
 
-      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+      <div class="setting-row col">
         <div class="setting-info">
           <div class="setting-name">Custom message</div>
-          <div class="setting-desc">What to say after submission</div>
+          <div class="setting-desc">Supporting text below the headline</div>
+          <div class="setting-hint">Default: "Your response has been recorded."</div>
         </div>
         <input class="setting-input" id="thankyou-message"
-          placeholder="e.g. Your feedback helps us improve.">
+          placeholder="e.g. We'll use your feedback to improve our service.">
       </div>
 
-      <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+      <div class="setting-row col">
         <div class="setting-info">
           <div class="setting-name">Redirect URL</div>
           <div class="setting-desc">Send respondents to your website after 3 seconds</div>
+          <div class="setting-hint">
+            <span class="format-tag">https://</span>
+            Must start with https:// · Leave blank to stay on thank you page
+          </div>
         </div>
         <input class="setting-input" id="thankyou-redirect"
-          placeholder="e.g. https://yourwebsite.com">
+          placeholder="e.g. https://yourwebsite.com/thank-you">
       </div>
 
       <div class="setting-row" style="border-bottom:none">
         <div class="setting-info">
           <div class="setting-name">Show social share buttons</div>
-          <div class="setting-desc">Let respondents share the survey</div>
+          <div class="setting-desc">Let respondents share the survey link</div>
         </div>
         <button class="toggle" id="toggle-share"
           onclick="toggleSetting('share')"></button>
       </div>
     </div>
 
-    <!-- PRIZE / INCENTIVE -->
+    <!-- PRIZE -->
     <div class="settings-section">
       <div class="settings-title">🎁 Prize &amp; Incentive</div>
 
-      <div class="setting-row" style="border-bottom:none">
+      <div class="setting-row">
         <div class="setting-info">
           <div class="setting-name">Enable prize</div>
-          <div class="setting-desc">Show prize badge on welcome page</div>
+          <div class="setting-desc">Show a prize badge on the welcome page</div>
         </div>
         <button class="toggle" id="toggle-prize"
           onclick="togglePrize()"></button>
       </div>
 
       <div id="prize-fields" style="display:none">
-
-        <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <div class="setting-row col">
           <div class="setting-info">
             <div class="setting-name">Prize type</div>
           </div>
@@ -452,54 +502,57 @@
           </div>
         </div>
 
-        <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <div class="setting-row col">
           <div class="setting-info">
             <div class="setting-name">Prize description</div>
-            <div class="setting-desc">What respondents will win</div>
+            <div class="setting-desc">Shown as a badge on welcome page</div>
+            <div class="setting-hint">Be specific — e.g. "₹500 Amazon voucher" not just "voucher"</div>
           </div>
           <input class="setting-input" id="prize-description"
             placeholder="e.g. ₹500 Amazon voucher">
         </div>
 
-        <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <div class="setting-row col">
           <div class="setting-info">
             <div class="setting-name">Number of winners</div>
+            <div class="setting-desc">How many people will win</div>
+            <div class="setting-hint">e.g. 1 = one lucky winner, 3 = three winners</div>
           </div>
           <input class="setting-input" id="prize-winners"
             type="number" min="1" placeholder="e.g. 3"
-            style="max-width:120px">
+            style="max-width:140px">
         </div>
 
-        <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <div class="setting-row col">
           <div class="setting-info">
-            <div class="setting-name">Winner selection</div>
+            <div class="setting-name">How winners are selected</div>
           </div>
           <select class="setting-input" id="prize-selection"
-            style="max-width:240px">
+            style="max-width:260px">
             <option value="random">🎲 Random draw</option>
             <option value="best">⭐ Best answer</option>
             <option value="first">🏃 First N respondents</option>
           </select>
         </div>
 
-        <div class="setting-row" style="flex-direction:column;align-items:flex-start;gap:8px;border-bottom:none">
+        <div class="setting-row col" style="border-bottom:none">
           <div class="setting-info">
-            <div class="setting-name">Winner notification</div>
+            <div class="setting-name">How winners are notified</div>
           </div>
           <select class="setting-input" id="prize-notification"
-            style="max-width:240px">
+            style="max-width:260px">
             <option value="manual">📧 I will contact winners manually</option>
             <option value="email">✉️ SwoopForm sends automatic email</option>
             <option value="leaderboard">🏆 Show on public leaderboard</option>
           </select>
         </div>
-
       </div>
     </div>
 
     <!-- SURVEY SETTINGS -->
     <div class="settings-section">
       <div class="settings-title">⚙️ Survey settings</div>
+
       <div class="setting-row">
         <div class="setting-info">
           <div class="setting-name">Survey style</div>
@@ -511,6 +564,7 @@
           <option value="classic">📋 All on one page</option>
         </select>
       </div>
+
       <div class="setting-row">
         <div class="setting-info">
           <div class="setting-name">Public survey</div>
@@ -519,6 +573,7 @@
         <button class="toggle" id="toggle-public"
           onclick="toggleSetting('public')"></button>
       </div>
+
       <div class="setting-row">
         <div class="setting-info">
           <div class="setting-name">Collect email addresses</div>
@@ -527,6 +582,7 @@
         <button class="toggle" id="toggle-email"
           onclick="toggleSetting('email')"></button>
       </div>
+
       <div class="setting-row" style="border-bottom:none">
         <div class="setting-info">
           <div class="setting-name">One response per person</div>
@@ -537,42 +593,6 @@
       </div>
     </div>
 
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>     
-<div class="setting-row">
-  <div class="setting-info">
-    <div class="setting-name">Survey style</div>
-    <div class="setting-desc">How questions are shown to respondents</div>
-  </div>
-  <select id="survey-style" style="padding:6px 12px;border-radius:8px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none;">
-    <option value="conversational">✨ One at a time</option>
-    <option value="classic">📋 All on one page</option>
-  </select>
-</div>
-      <div class="setting-row">
-        <div class="setting-info">
-          <div class="setting-name">Public survey</div>
-          <div class="setting-desc">Show in SwoopForm discovery directory</div>
-        </div>
-        <button class="toggle" id="toggle-public" onclick="toggleSetting('public')"></button>
-      </div>
-      <div class="setting-row">
-        <div class="setting-info">
-          <div class="setting-name">Collect email addresses</div>
-          <div class="setting-desc">Ask respondents for their email</div>
-        </div>
-        <button class="toggle" id="toggle-email" onclick="toggleSetting('email')"></button>
-      </div>
-      <div class="setting-row">
-        <div class="setting-info">
-          <div class="setting-name">One response per person</div>
-          <div class="setting-desc">Prevent duplicate submissions</div>
-        </div>
-        <button class="toggle" id="toggle-once" onclick="toggleSetting('once')"></button>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -598,24 +618,19 @@
 
   let currentUser = null;
   let questions = [];
-  let settings = { public: false, email: false, once: false };
+  let settings = { public: false, email: false, once: false, share: false, prize: false };
   let savedSurveyId = null;
+  let selectedPrizeType = 'cash';
 
-  // KEY FIX: Save all current DOM values back to questions array
   function syncFromDOM() {
     questions.forEach(q => {
-      // Save question text
       const textEl = document.getElementById('q-text-' + q.id);
       if (textEl) q.text = textEl.value;
-
-      // Save options
       if (q.type === 'multiple') {
         const optEls = document.querySelectorAll('.opt-' + q.id);
         q.options = Array.from(optEls).map(el => el.value);
       }
     });
-
-    // Save title and description
   }
 
   onAuthStateChanged(auth, (user) => {
@@ -623,8 +638,7 @@
     currentUser = user;
     document.getElementById('loading-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-    // Start with one empty multiple choice question
-    questions = [{ id: Date.now(), type: 'multiple', text: '', options: ['', ''], required: false, placeholders: ['Option 1', 'Option 2'] }];
+    questions = [{ id: Date.now(), type: 'multiple', text: '', options: ['',''], required: false }];
     renderQuestions();
   });
 
@@ -634,59 +648,48 @@
     t.style.display = 'block';
     setTimeout(() => t.style.display = 'none', duration);
   }
-let selectedPrizeType = 'cash';
 
-window.togglePrize = function() {
-  settings.prize = !settings.prize;
-  document.getElementById('toggle-prize').classList.toggle('on', settings.prize);
-  document.getElementById('prize-fields').style.display = settings.prize ? 'block' : 'none';
-}
-
-window.selectPrizeType = function(type, el) {
-  selectedPrizeType = type;
-  document.querySelectorAll('.prize-type-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-}
   window.toggleSetting = function(key) {
     settings[key] = !settings[key];
     document.getElementById('toggle-' + key).classList.toggle('on', settings[key]);
   }
 
-  // Add question — sync DOM first so nothing is lost
+  window.togglePrize = function() {
+    settings.prize = !settings.prize;
+    document.getElementById('toggle-prize').classList.toggle('on', settings.prize);
+    document.getElementById('prize-fields').style.display = settings.prize ? 'block' : 'none';
+  }
+
+  window.selectPrizeType = function(type, el) {
+    selectedPrizeType = type;
+    document.querySelectorAll('.prize-type-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+  }
+
   window.addQuestion = function(type) {
     syncFromDOM();
     const id = Date.now();
-    questions.push({
-      id,
-      type,
-      text: '',
-      options: ['', ''],
-      required: false
-    });
+    questions.push({ id, type, text: '', options: ['',''], required: false });
     renderQuestions();
-    // Focus the new question's text input
     setTimeout(() => {
       const el = document.getElementById('q-text-' + id);
-      if (el) { el.focus(); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+      if (el) { el.focus(); el.scrollIntoView({ behavior:'smooth', block:'center' }); }
     }, 60);
   }
 
-  // Delete question — sync DOM first
   window.deleteQuestion = function(id) {
-    if (questions.length === 1) { showToast('Survey needs at least 1 question'); return; }
+    if (questions.length === 1) { showToast('Need at least 1 question'); return; }
     syncFromDOM();
     questions = questions.filter(q => q.id !== id);
     renderQuestions();
   }
 
-  // Change type — sync DOM first
   window.changeType = function(id, type) {
     syncFromDOM();
     const q = questions.find(q => q.id === id);
     if (q) { q.type = type; renderQuestions(); }
   }
 
-  // Toggle required — no re-render needed
   window.toggleRequired = function(id) {
     const q = questions.find(q => q.id === id);
     if (q) {
@@ -695,22 +698,19 @@ window.selectPrizeType = function(type, el) {
     }
   }
 
-  // Add option — sync DOM first
   window.addOption = function(qId) {
     syncFromDOM();
     const q = questions.find(q => q.id === qId);
     if (q) {
       q.options.push('');
       renderQuestions();
-      // Focus the new option
       setTimeout(() => {
         const opts = document.querySelectorAll('.opt-' + qId);
-        if (opts.length) opts[opts.length - 1].focus();
+        if (opts.length) opts[opts.length-1].focus();
       }, 60);
     }
   }
 
-  // Remove option — sync DOM first
   window.removeOption = function(qId, idx) {
     syncFromDOM();
     const q = questions.find(q => q.id === qId);
@@ -722,13 +722,17 @@ window.selectPrizeType = function(type, el) {
     }
   }
 
+  function escHtml(str) {
+    return (str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
   function renderQuestions() {
     const list = document.getElementById('questions-list');
     list.innerHTML = questions.map((q, i) => `
       <div class="question-card" id="qcard-${q.id}">
         <div class="q-header">
-          <div class="q-number">${i + 1}</div>
-          <select class="q-type-select" onchange="changeType(${q.id}, this.value)">
+          <div class="q-number">${i+1}</div>
+          <select class="q-type-select" onchange="changeType(${q.id},this.value)">
             <option value="multiple" ${q.type==='multiple'?'selected':''}>Multiple choice</option>
             <option value="text" ${q.type==='text'?'selected':''}>Short text</option>
             <option value="textarea" ${q.type==='textarea'?'selected':''}>Long text</option>
@@ -737,117 +741,80 @@ window.selectPrizeType = function(type, el) {
           </select>
           <button class="q-delete" onclick="deleteQuestion(${q.id})">✕</button>
         </div>
-
-        <input class="q-input"
-          id="q-text-${q.id}"
-          placeholder="Type your question here..."
+        <input class="q-input" id="q-text-${q.id}"
+          placeholder="e.g. How satisfied are you with our service?"
           value="${escHtml(q.text)}">
-
-        ${q.type === 'multiple' ? `
+        ${q.type==='multiple' ? `
           <div class="options-list">
-            ${q.options.map((opt, oi) => `
+            ${q.options.map((opt,oi) => `
               <div class="option-row">
                 <div class="option-bullet"></div>
                 <input class="option-input opt-${q.id}"
                   value="${escHtml(opt)}"
-                  placeholder="Option ${oi + 1}">
+                  placeholder="Option ${oi+1}">
                 <button class="option-remove" onclick="removeOption(${q.id},${oi})">✕</button>
               </div>
             `).join('')}
           </div>
           <button class="add-option-btn" onclick="addOption(${q.id})">+ Add option</button>
         ` : ''}
-
-        ${q.type === 'yesno' ? `
+        ${q.type==='yesno' ? `
           <div class="options-list">
-            <div class="option-row">
-              <div class="option-bullet"></div>
-              <span style="font-size:0.88rem;font-weight:600">Yes</span>
-            </div>
-            <div class="option-row">
-              <div class="option-bullet"></div>
-              <span style="font-size:0.88rem;font-weight:600">No</span>
-            </div>
+            <div class="option-row"><div class="option-bullet"></div><span style="font-size:0.88rem;font-weight:600">Yes</span></div>
+            <div class="option-row"><div class="option-bullet"></div><span style="font-size:0.88rem;font-weight:600">No</span></div>
           </div>
         ` : ''}
-
-        ${q.type === 'rating' ? `
+        ${q.type==='rating' ? `
           <div class="rating-preview">
             ${[1,2,3,4,5].map(n=>`<div class="rating-dot">${n}</div>`).join('')}
           </div>
-          <div style="font-size:0.75rem;color:#64748B;margin-top:8px">
-            Respondents pick 1 to 5
-          </div>
+          <div style="font-size:0.75rem;color:#64748B;margin-top:8px">Respondents pick 1 to 5</div>
         ` : ''}
-
-        ${q.type === 'text' ? `
-          <div style="background:#F5F0E8;border-radius:8px;padding:12px;
-            font-size:0.85rem;color:#C4B9AA;">
-            Short answer field...
-          </div>
-        ` : ''}
-
-        ${q.type === 'textarea' ? `
-          <div style="background:#F5F0E8;border-radius:8px;padding:12px;
-            font-size:0.85rem;color:#C4B9AA;min-height:60px;">
-            Long answer field...
-          </div>
-        ` : ''}
-
+        ${q.type==='text' ? `<div style="background:#F5F0E8;border-radius:8px;padding:12px;font-size:0.85rem;color:#C4B9AA">Short answer field...</div>` : ''}
+        ${q.type==='textarea' ? `<div style="background:#F5F0E8;border-radius:8px;padding:12px;font-size:0.85rem;color:#C4B9AA;min-height:60px">Long answer field...</div>` : ''}
         <div class="q-footer">
-          <button class="toggle ${q.required?'on':''}"
-            id="req-${q.id}"
-            onclick="toggleRequired(${q.id})">
-          </button>
+          <button class="toggle ${q.required?'on':''}" id="req-${q.id}" onclick="toggleRequired(${q.id})"></button>
           <span class="toggle-label">Required question</span>
         </div>
       </div>
     `).join('');
   }
 
-  // Escape HTML to prevent issues with special characters in inputs
-  function escHtml(str) {
-    return (str || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  }
-
   async function saveSurvey(status) {
-    // Sync DOM before saving
     syncFromDOM();
-
     const title = document.getElementById('survey-title').value.trim();
     if (!title) { showToast('Please add a survey title'); return null; }
-
     const validQuestions = questions.filter(q => q.text.trim());
-    if (validQuestions.length === 0) { showToast('Please fill in at least one question'); return null; }
+    if (!validQuestions.length) { showToast('Please fill in at least one question'); return null; }
 
     const surveyData = {
       title,
       description: document.getElementById('survey-desc').value.trim(),
       questions: validQuestions,
       settings,
-style: document.getElementById('survey-style').value,
-welcomePage: {
-  logo: document.getElementById('welcome-logo').value.trim(),
-  headline: document.getElementById('welcome-headline').value.trim(),
-  btnText: document.getElementById('welcome-btn-text').value.trim(),
-  bgColor: document.getElementById('welcome-bg-color').value.trim(),
-  bgImage: document.getElementById('welcome-bg-image').value.trim(),
-  bgVideo: document.getElementById('welcome-bg-video').value.trim(),
-},
-thankYouPage: {
-  headline: document.getElementById('thankyou-headline').value.trim(),
-  message: document.getElementById('thankyou-message').value.trim(),
-  redirect: document.getElementById('thankyou-redirect').value.trim(),
-  showShare: settings.share || false,
-},
-prize: settings.prize ? {
-  enabled: true,
-  type: selectedPrizeType,
-  description: document.getElementById('prize-description').value.trim(),
-  winners: document.getElementById('prize-winners').value || '1',
-  selection: document.getElementById('prize-selection').value,
-  notification: document.getElementById('prize-notification').value,
-} : { enabled: false },
+      style: document.getElementById('survey-style').value,
+      welcomePage: {
+        logo: document.getElementById('welcome-logo').value.trim(),
+        headline: document.getElementById('welcome-headline').value.trim(),
+        btnText: document.getElementById('welcome-btn-text').value.trim(),
+        bgColor: document.getElementById('welcome-bg-color').value.trim(),
+        bgImage: document.getElementById('welcome-bg-image').value.trim(),
+        bgVideo: document.getElementById('welcome-bg-video').value.trim(),
+      },
+      thankYouPage: {
+        headline: document.getElementById('thankyou-headline').value.trim(),
+        message: document.getElementById('thankyou-message').value.trim(),
+        redirect: document.getElementById('thankyou-redirect').value.trim(),
+        showShare: settings.share || false,
+      },
+      prize: settings.prize ? {
+        enabled: true,
+        type: selectedPrizeType,
+        description: document.getElementById('prize-description').value.trim(),
+        winners: document.getElementById('prize-winners').value || '1',
+        selection: document.getElementById('prize-selection').value,
+        notification: document.getElementById('prize-notification').value,
+      } : { enabled: false },
       status,
       userId: currentUser.uid,
       responseCount: 0,
