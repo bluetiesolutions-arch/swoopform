@@ -625,7 +625,7 @@ const SHEETS_SCRIPT = 'https://script.google.com/macros/s/AKfycbx3evlOErDpdpR_TK
 let selectedPrizeType = 'cash';
 let questions_snapshot = [];
 
-  function syncFromDOM() {
+ function syncFromDOM() {
     questions.forEach(q => {
       const textEl = document.getElementById('q-text-' + q.id);
       if (textEl) q.text = textEl.value;
@@ -634,6 +634,7 @@ let questions_snapshot = [];
         q.options = Array.from(optEls).map(el => el.value);
       }
     });
+    questions_snapshot = [...questions]; // ADD THIS LINE
   }
 
   onAuthStateChanged(auth, (user) => {
