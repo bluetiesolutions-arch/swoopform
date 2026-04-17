@@ -213,4 +213,486 @@
       flex-shrink:0;
     }
     .qs-text{
-      fon
+      font-family:'Syne',sans-serif;font-weight:700;
+      font-size:0.95rem;
+    }
+    .qs-type{
+      margin-left:auto;
+      padding:2px 8px;border-radius:6px;
+      background:#F5F0E8;color:#64748B;
+      font-size:0.72rem;font-weight:600;
+    }
+
+    /* BAR CHART */
+    .bar-chart{display:flex;flex-direction:column;gap:8px}
+    .bar-row{display:flex;align-items:center;gap:10px}
+    .bar-label{
+      font-size:0.82rem;font-weight:500;
+      min-width:120px;max-width:160px;
+      overflow:hidden;text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .bar-track{
+      flex:1;height:24px;background:#F5F0E8;
+      border-radius:6px;overflow:hidden;
+    }
+    .bar-fill{
+      height:100%;
+      background:linear-gradient(90deg,#2D1B69,#D97706);
+      border-radius:6px;transition:width 0.6s ease;
+      min-width:4px;
+    }
+    .bar-count{
+      font-size:0.78rem;font-weight:700;
+      color:#64748B;min-width:40px;text-align:right;
+    }
+
+    /* RATING CHART */
+    .rating-chart{display:flex;gap:8px;flex-wrap:wrap}
+    .rating-bar{text-align:center}
+    .rating-bar-track{
+      width:40px;background:#F5F0E8;
+      border-radius:6px;overflow:hidden;
+      display:flex;align-items:flex-end;
+      height:80px;margin-bottom:6px;
+    }
+    .rating-bar-fill{
+      width:100%;
+      background:linear-gradient(180deg,#2D1B69,#D97706);
+      border-radius:6px;transition:height 0.6s ease;
+    }
+    .rating-bar-label{font-size:0.78rem;font-weight:700;color:#64748B}
+    .rating-bar-count{font-size:0.7rem;color:#94A3B8}
+
+    /* TEXT RESPONSES */
+    .text-responses{display:flex;flex-direction:column;gap:8px}
+    .text-response-item{
+      padding:10px 14px;background:#F5F0E8;
+      border-radius:8px;font-size:0.85rem;
+      line-height:1.5;
+    }
+
+    /* LOADING */
+    .loading-screen{
+      display:flex;align-items:center;
+      justify-content:center;min-height:100vh;
+      background:#F5F0E8;
+    }
+    .spinner{
+      width:32px;height:32px;
+      border:3px solid rgba(45,27,105,0.2);
+      border-top-color:#2D1B69;border-radius:50%;
+      animation:spin 0.8s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    @media(max-width:600px){
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .search-input{width:100%}
+    }
+  </style>
+</head>
+<body>
+
+<div id="loading-screen" class="loading-screen">
+  <div class="spinner"></div>
+</div>
+
+<div id="app" style="display:none">
+  <nav>
+    <a href="/dashboard" class="nav-logo">
+      <div class="logo-mark">S</div>
+      <div class="logo-name">SwoopForm</div>
+    </a>
+    <div class="nav-right">
+      <a href="/dashboard" class="btn-ghost">← Dashboard</a>
+      <button class="btn-primary" id="export-btn" onclick="exportCSV()">
+        ⬇ Export CSV
+      </button>
+    </div>
+  </nav>
+
+  <div class="main">
+
+    <!-- HEADER -->
+    <div class="page-header">
+      <div>
+        <div class="survey-title" id="survey-title">Loading...</div>
+        <div class="survey-meta">
+          <span id="survey-status"></span>
+          <span id="survey-questions"></span>
+          <span id="survey-created"></span>
+        </div>
+      </div>
+      <button class="btn-ghost" onclick="copyShareLink()">
+        🔗 Copy survey link
+      </button>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-num" id="stat-total">0</div>
+        <div class="stat-label">Total responses</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-today">0</div>
+        <div class="stat-label">Today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-completion">0%</div>
+        <div class="stat-label">Completion rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-questions">0</div>
+        <div class="stat-label">Questions</div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" id="tab-summary" onclick="showTab('summary')">📊 Summary</button>
+      <button class="tab" id="tab-responses" onclick="showTab('responses')">📋 All responses</button>
+    </div>
+
+    <!-- SUMMARY VIEW -->
+    <div id="view-summary">
+      <div class="summary-grid" id="summary-grid">
+        <div class="empty-state">
+          <div class="empty-icon">📊</div>
+          <h3>No responses yet</h3>
+          <p>Share your survey link to start collecting responses</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESPONSES VIEW -->
+    <div id="view-responses" style="display:none">
+      <div class="responses-wrap">
+        <div class="responses-header">
+          <div class="responses-title" id="responses-count">0 responses</div>
+          <input class="search-input" id="search-input"
+            placeholder="Search responses..."
+            oninput="filterResponses(this.value)">
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr id="table-head"></tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+  import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+  import { getFirestore, doc, getDoc, collection, query, where, getDocs, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",
+    authDomain: "swoopform.firebaseapp.com",
+    projectId: "swoopform",
+    storageBucket: "swoopform.firebasestorage.app",
+    messagingSenderId: "378850092986",
+    appId: "1:378850092986:web:4fed92128136e048fa5f83"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  let survey = null;
+  let allResponses = [];
+  let filteredResponses = [];
+  let surveyId = null;
+
+  const params = new URLSearchParams(window.location.search);
+  surveyId = params.get('id');
+
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = '/login'; return; }
+    if (!surveyId) { window.location.href = '/dashboard'; return; }
+    await loadData(user.uid);
+    document.getElementById('loading-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  });
+
+  async function loadData(uid) {
+    // Load survey
+    const surveySnap = await getDoc(doc(db, 'surveys', surveyId));
+    if (!surveySnap.exists()) { window.location.href = '/dashboard'; return; }
+    survey = { id: surveySnap.id, ...surveySnap.data() };
+
+    // Security check
+    if (survey.userId !== uid) { window.location.href = '/dashboard'; return; }
+
+    // Update header
+    document.getElementById('survey-title').textContent = survey.title;
+    document.getElementById('survey-status').innerHTML =
+      `<span class="status-badge status-${survey.status}">● ${survey.status}</span>`;
+    document.getElementById('survey-questions').textContent =
+      `${survey.questionCount || 0} questions`;
+    document.getElementById('stat-questions').textContent =
+      survey.questionCount || 0;
+    document.getElementById('survey-created').textContent =
+      survey.createdAt ? formatDate(survey.createdAt) : '';
+
+    // Load responses
+    try {
+      const q = query(
+        collection(db, 'responses'),
+        where('surveyId', '==', surveyId)
+      );
+      const snap = await getDocs(q);
+      allResponses = [];
+      snap.forEach(d => allResponses.push({ id: d.id, ...d.data() }));
+
+      // Sort by date newest first
+      allResponses.sort((a, b) => {
+        const ta = a.submittedAt?.toMillis?.() || 0;
+        const tb = b.submittedAt?.toMillis?.() || 0;
+        return tb - ta;
+      });
+
+      filteredResponses = [...allResponses];
+
+      // Update stats
+      const total = allResponses.length;
+      document.getElementById('stat-total').textContent = total;
+      document.getElementById('responses-count').textContent =
+        `${total} response${total !== 1 ? 's' : ''}`;
+
+      // Today count
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const todayCount = allResponses.filter(r => {
+        const d = r.submittedAt?.toDate?.();
+        return d && d >= today;
+      }).length;
+      document.getElementById('stat-today').textContent = todayCount;
+
+      // Completion rate (100% if they submitted)
+      document.getElementById('stat-completion').textContent =
+        total > 0 ? '100%' : '0%';
+
+      renderSummary();
+      renderTable();
+
+    } catch(e) {
+      console.error(e);
+    }
+  }
+
+  function renderSummary() {
+    const questions = survey.questions || [];
+    if (allResponses.length === 0) return;
+
+    const grid = document.getElementById('summary-grid');
+    grid.innerHTML = questions.map((q, qi) => {
+      const answers = allResponses
+        .map(r => r.answers?.[qi]?.answer)
+        .filter(a => a !== undefined && a !== '');
+
+      let chartHtml = '';
+
+      if (q.type === 'multiple' || q.type === 'yesno') {
+        // Count each option
+        const counts = {};
+        answers.forEach(a => { counts[a] = (counts[a] || 0) + 1; });
+        const total = answers.length;
+        const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]);
+
+        chartHtml = `
+          <div class="bar-chart">
+            ${sorted.map(([opt, count]) => `
+              <div class="bar-row">
+                <div class="bar-label" title="${opt}">${opt}</div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:${total>0?(count/total*100):0}%"></div>
+                </div>
+                <div class="bar-count">${count} <span style="color:#C4B9AA;font-weight:400">(${total>0?Math.round(count/total*100):0}%)</span></div>
+              </div>
+            `).join('')}
+          </div>`;
+
+      } else if (q.type === 'rating') {
+        const counts = {1:0,2:0,3:0,4:0,5:0};
+        answers.forEach(a => { if (counts[a] !== undefined) counts[a]++; });
+        const max = Math.max(...Object.values(counts), 1);
+        const avg = answers.length > 0
+          ? (answers.reduce((s,a) => s + Number(a), 0) / answers.length).toFixed(1)
+          : '—';
+
+        chartHtml = `
+          <div style="margin-bottom:12px">
+            <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:2rem">${avg}</span>
+            <span style="color:#64748B;font-size:0.85rem"> / 5 average</span>
+          </div>
+          <div class="rating-chart">
+            ${[1,2,3,4,5].map(n => `
+              <div class="rating-bar">
+                <div class="rating-bar-track">
+                  <div class="rating-bar-fill" style="height:${counts[n]/max*100}%"></div>
+                </div>
+                <div class="rating-bar-label">${n}</div>
+                <div class="rating-bar-count">${counts[n]}</div>
+              </div>
+            `).join('')}
+          </div>`;
+
+      } else {
+        // Text responses
+        chartHtml = `
+          <div class="text-responses">
+            ${answers.slice(0,10).map(a => `
+              <div class="text-response-item">${a}</div>
+            `).join('')}
+            ${answers.length > 10 ? `<div style="font-size:0.78rem;color:#64748B;padding:4px 0">+${answers.length-10} more responses</div>` : ''}
+          </div>`;
+      }
+
+      return `
+        <div class="question-summary">
+          <div class="qs-header">
+            <div class="qs-num">${qi+1}</div>
+            <div class="qs-text">${q.text || 'Untitled'}</div>
+            <div class="qs-type">${q.type}</div>
+          </div>
+          <div style="font-size:0.78rem;color:#64748B;margin-bottom:14px">
+            ${answers.length} answer${answers.length!==1?'s':''}
+          </div>
+          ${chartHtml}
+        </div>`;
+    }).join('');
+  }
+
+  function renderTable() {
+    const questions = survey.questions || [];
+    const head = document.getElementById('table-head');
+    const body = document.getElementById('table-body');
+
+    // Build headers
+    head.innerHTML = `
+      <th>#</th>
+      <th>Date</th>
+      ${questions.map(q => `<th>${q.text || 'Q'}</th>`).join('')}
+    `;
+
+    if (filteredResponses.length === 0) {
+      body.innerHTML = `
+        <tr>
+          <td colspan="${questions.length + 2}">
+            <div class="empty-state">
+              <div class="empty-icon">📋</div>
+              <h3>No responses yet</h3>
+              <p>Share your survey to start collecting responses</p>
+            </div>
+          </td>
+        </tr>`;
+      return;
+    }
+
+    body.innerHTML = filteredResponses.map((r, i) => `
+      <tr>
+        <td class="response-num">#${filteredResponses.length - i}</td>
+        <td class="response-date">${r.submittedAt ? formatDate(r.submittedAt) : '—'}</td>
+        ${questions.map((q, qi) => {
+          const ans = r.answers?.[qi]?.answer || '—';
+          return `<td class="answer-cell">
+            ${q.type === 'multiple' || q.type === 'yesno'
+              ? `<span class="answer-tag">${ans}</span>`
+              : `<span title="${ans}">${ans}</span>`}
+          </td>`;
+        }).join('')}
+      </tr>
+    `).join('');
+  }
+
+  window.showTab = function(tab) {
+    document.getElementById('tab-summary').classList.toggle('active', tab==='summary');
+    document.getElementById('tab-responses').classList.toggle('active', tab==='responses');
+    document.getElementById('view-summary').style.display = tab==='summary' ? 'block' : 'none';
+    document.getElementById('view-responses').style.display = tab==='responses' ? 'block' : 'none';
+  }
+
+  window.filterResponses = function(query) {
+    const q = query.toLowerCase();
+    filteredResponses = allResponses.filter(r =>
+      JSON.stringify(r.answers).toLowerCase().includes(q)
+    );
+    renderTable();
+    document.getElementById('responses-count').textContent =
+      `${filteredResponses.length} response${filteredResponses.length!==1?'s':''}`;
+  }
+
+  window.copyShareLink = function() {
+    const link = 'https://swoopform.com/s/?id=' + surveyId;
+    const el = document.createElement('textarea');
+    el.value = link;
+    el.style.position = 'fixed';
+    el.style.opacity = '0';
+    document.body.appendChild(el);
+    el.focus(); el.select();
+    try {
+      document.execCommand('copy');
+      const btn = document.querySelector('[onclick="copyShareLink()"]');
+      if (btn) {
+        btn.textContent = '✓ Copied!';
+        setTimeout(() => btn.textContent = '🔗 Copy survey link', 2000);
+      }
+    } catch(e) {
+      alert('Copy this link:\n\n' + link);
+    }
+    document.body.removeChild(el);
+  }
+
+  window.exportCSV = function() {
+    if (allResponses.length === 0) {
+      alert('No responses to export yet');
+      return;
+    }
+    const questions = survey.questions || [];
+    const headers = ['#', 'Date', ...questions.map(q => q.text || 'Question')];
+    const rows = allResponses.map((r, i) => [
+      i + 1,
+      r.submittedAt ? formatDateSimple(r.submittedAt) : '',
+      ...questions.map((q, qi) => r.answers?.[qi]?.answer || '')
+    ]);
+    const csv = [headers, ...rows]
+      .map(row => row.map(cell =>
+        `"${String(cell).replace(/"/g, '""')}"`
+      ).join(','))
+      .join('\n');
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${survey.title || 'responses'}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function formatDate(ts) {
+    if (!ts) return '';
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    return d.toLocaleDateString('en-IN', {
+      day:'numeric', month:'short', year:'numeric',
+      hour:'2-digit', minute:'2-digit'
+    });
+  }
+
+  function formatDateSimple(ts) {
+    if (!ts) return '';
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    return d.toLocaleDateString('en-IN');
+  }
+</script>
+</body>
+</html>
