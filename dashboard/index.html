@@ -482,7 +482,20 @@ window.copyLink = function(surveyId, btn) {
     const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
     return date.toLocaleDateString('en-IN', { day:'numeric', month:'short' });
   }
-
+window.copyLink = function(surveyId, btn) {
+    const link = 'https://swoopform.com/s/?id=' + surveyId;
+    navigator.clipboard.writeText(link).then(() => {
+      const original = btn.textContent;
+      btn.textContent = '✓ Copied!';
+      btn.style.background = 'linear-gradient(135deg,#047857,#10B981)';
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.style.background = '';
+      }, 2000);
+    }).catch(() => {
+      prompt('Copy this link:', link);
+    });
+  }
   window.handleLogout = async function() {
     await signOut(auth);
     window.location.href = '/login';
