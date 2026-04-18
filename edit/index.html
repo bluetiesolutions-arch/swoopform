@@ -7,313 +7,201 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{
-      font-family:'DM Sans',sans-serif;
-      background:#F5F0E8;
-      color:#0F0E1A;
-      min-height:100vh;
-    }
+    body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
     nav{
-      background:#fff;
-      border-bottom:1.5px solid #E2DAD0;
+      background:#fff;border-bottom:1.5px solid #E2DAD0;
       padding:0 24px;height:60px;
-      display:flex;align-items:center;
-      justify-content:space-between;
+      display:flex;align-items:center;justify-content:space-between;
       position:sticky;top:0;z-index:100;
     }
-    .nav-logo{
-      display:flex;align-items:center;gap:10px;
-      text-decoration:none;
-    }
+    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
     .logo-mark{
-      width:32px;height:32px;
-      background:linear-gradient(135deg,#2D1B69,#D97706);
-      border-radius:8px;
-      display:flex;align-items:center;justify-content:center;
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:0.9rem;color:#fff;
+      width:32px;height:32px;background:linear-gradient(135deg,#2D1B69,#D97706);
+      border-radius:8px;display:flex;align-items:center;justify-content:center;
+      font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:#fff;
     }
-    .logo-name{
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1rem;color:#0F0E1A;
-    }
-    .nav-actions{display:flex;gap:10px;align-items:center}
+    .logo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#0F0E1A}
+    .nav-actions{display:flex;gap:8px;align-items:center}
     .btn-ghost{
-      padding:8px 18px;border-radius:8px;
-      border:1.5px solid #E2DAD0;
-      background:transparent;color:#64748B;
-      font-size:0.85rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;
-      cursor:pointer;transition:all 0.2s;
-      text-decoration:none;
+      padding:8px 16px;border-radius:8px;border:1.5px solid #E2DAD0;
+      background:transparent;color:#64748B;font-size:0.85rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-decoration:none;
     }
     .btn-ghost:hover{border-color:#0F0E1A;color:#0F0E1A}
     .btn-primary{
-      padding:8px 18px;border-radius:8px;border:none;
+      padding:8px 16px;border-radius:8px;border:none;
       background:linear-gradient(135deg,#2D1B69,#D97706);
       color:#fff;font-size:0.85rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;
-      transition:opacity 0.2s;
+      font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s;
     }
     .btn-primary:hover{opacity:0.9}
     .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
-    .btn-danger{
-      padding:8px 18px;border-radius:8px;border:none;
-      background:#FEE2E2;color:#DC2626;
-      font-size:0.85rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;
-      transition:all 0.2s;
+    .btn-preview{
+      padding:8px 16px;border-radius:8px;border:1.5px solid #2D1B69;
+      background:transparent;color:#2D1B69;font-size:0.85rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;
     }
-    .btn-danger:hover{background:#DC2626;color:#fff}
-    .main{
-      max-width:760px;margin:0 auto;
-      padding:32px 20px;
+    .btn-preview:hover{background:#EDE9FF}
+    .btn-danger-sm{
+      padding:8px 16px;border-radius:8px;border:none;
+      background:#FEE2E2;color:#DC2626;font-size:0.85rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;
     }
-
-    /* WARNING BANNER */
+    .btn-danger-sm:hover{background:#DC2626;color:#fff}
+    .main{max-width:760px;margin:0 auto;padding:32px 20px}
     .warning-banner{
-      background:#FEF3C7;
-      border:1.5px solid #F59E0B;
-      border-radius:12px;
-      padding:16px 20px;
-      margin-bottom:24px;
+      background:#FEF3C7;border:1.5px solid #F59E0B;border-radius:12px;
+      padding:16px 20px;margin-bottom:24px;
       display:flex;align-items:flex-start;gap:12px;
     }
     .warning-icon{font-size:1.3rem;flex-shrink:0}
-    .warning-text h4{
-      font-family:'Syne',sans-serif;font-weight:700;
-      font-size:0.9rem;color:#92400E;margin-bottom:4px;
-    }
-    .warning-text p{
-      font-size:0.82rem;color:#B45309;line-height:1.5;
-    }
-
-    /* TITLE SECTION */
-    .title-section{
-      background:#fff;border-radius:16px;
-      border:1.5px solid #E2DAD0;
-      padding:28px;margin-bottom:16px;
-    }
+    .warning-text h4{font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;color:#92400E;margin-bottom:4px}
+    .warning-text p{font-size:0.82rem;color:#B45309;line-height:1.5}
+    .title-section{background:#fff;border-radius:16px;border:1.5px solid #E2DAD0;padding:28px;margin-bottom:16px}
     .title-input{
-      width:100%;border:none;outline:none;
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1.8rem;letter-spacing:-0.03em;
-      color:#0F0E1A;background:transparent;
+      width:100%;border:none;outline:none;font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1.8rem;letter-spacing:-0.03em;color:#0F0E1A;background:transparent;
     }
     .title-input::placeholder{color:#C4B9AA}
     .desc-input{
-      width:100%;border:none;outline:none;
-      font-family:'DM Sans',sans-serif;
-      font-size:0.95rem;color:#64748B;
-      background:transparent;margin-top:8px;
-      resize:none;
+      width:100%;border:none;outline:none;font-family:'DM Sans',sans-serif;
+      font-size:0.95rem;color:#64748B;background:transparent;margin-top:8px;resize:none;
     }
     .desc-input::placeholder{color:#C4B9AA}
-
-    /* QUESTIONS */
     .questions-list{margin-bottom:16px}
     .question-card{
-      background:#fff;border-radius:14px;
-      border:1.5px solid #E2DAD0;
+      background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;
       padding:22px;margin-bottom:12px;
-      position:relative;
     }
     .question-card:hover{border-color:rgba(45,27,105,0.3)}
-    .q-header{
-      display:flex;align-items:center;
-      gap:12px;margin-bottom:14px;
+    .question-card.type-heading{
+      background:linear-gradient(135deg,rgba(45,27,105,0.05),rgba(217,119,6,0.05));
+      border-color:rgba(45,27,105,0.2);
     }
+    .q-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
     .q-number{
-      width:26px;height:26px;border-radius:50%;
-      background:#EDE9FF;color:#2D1B69;
+      width:26px;height:26px;border-radius:50%;background:#EDE9FF;color:#2D1B69;
       font-size:0.75rem;font-weight:700;
-      display:flex;align-items:center;justify-content:center;
-      flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;flex-shrink:0;
     }
     .q-type-select{
-      padding:5px 10px;border-radius:7px;
-      border:1.5px solid #E2DAD0;
-      background:#fff;color:#0F0E1A;
-      font-size:0.8rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;
-      cursor:pointer;outline:none;
+      padding:5px 8px;border-radius:7px;border:1.5px solid #E2DAD0;
+      background:#fff;color:#0F0E1A;font-size:0.78rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;outline:none;
     }
     .q-delete{
-      margin-left:auto;width:28px;height:28px;
-      border-radius:7px;border:none;
-      background:transparent;cursor:pointer;
-      color:#64748B;font-size:1rem;
-      display:flex;align-items:center;justify-content:center;
-      transition:all 0.2s;
+      margin-left:auto;width:28px;height:28px;border-radius:7px;border:none;
+      background:transparent;cursor:pointer;color:#64748B;font-size:1rem;
+      display:flex;align-items:center;justify-content:center;transition:all 0.2s;
     }
     .q-delete:hover{background:#FEE2E2;color:#DC2626}
     .q-input{
-      width:100%;border:none;
-      border-bottom:1.5px solid #E2DAD0;
-      outline:none;padding:8px 0;
-      font-family:'DM Sans',sans-serif;
-      font-size:0.95rem;font-weight:600;
-      color:#0F0E1A;background:transparent;
-      margin-bottom:14px;
+      width:100%;border:none;border-bottom:1.5px solid #E2DAD0;outline:none;
+      padding:8px 0;font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:600;
+      color:#0F0E1A;background:transparent;margin-bottom:14px;
     }
     .q-input::placeholder{color:#C4B9AA}
     .q-input:focus{border-bottom-color:#2D1B69}
+    .heading-input{
+      width:100%;border:none;outline:none;font-family:'Syne',sans-serif;font-weight:700;
+      font-size:1.1rem;color:#0F0E1A;background:transparent;
+      border-bottom:1.5px solid #E2DAD0;padding:4px 0 8px;margin-bottom:8px;
+    }
+    .heading-input::placeholder{color:#C4B9AA}
+    .subheading-input{
+      width:100%;border:none;outline:none;font-family:'DM Sans',sans-serif;
+      font-size:0.88rem;color:#64748B;background:transparent;resize:none;
+    }
+    .subheading-input::placeholder{color:#C4B9AA}
     .options-list{margin-bottom:10px}
-    .option-row{
-      display:flex;align-items:center;
-      gap:8px;margin-bottom:8px;
-    }
-    .option-bullet{
-      width:16px;height:16px;border-radius:50%;
-      border:2px solid #E2DAD0;flex-shrink:0;
-    }
+    .option-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+    .option-bullet{width:16px;height:16px;border-radius:50%;border:2px solid #E2DAD0;flex-shrink:0}
+    .option-bullet.square{border-radius:3px}
     .option-input{
-      flex:1;border:none;
-      border-bottom:1px solid #E2DAD0;
-      outline:none;padding:5px 0;
-      font-family:'DM Sans',sans-serif;
-      font-size:0.88rem;color:#0F0E1A;
-      background:transparent;
+      flex:1;border:none;border-bottom:1px solid #E2DAD0;outline:none;
+      padding:5px 0;font-family:'DM Sans',sans-serif;font-size:0.88rem;
+      color:#0F0E1A;background:transparent;
     }
     .option-input::placeholder{color:#C4B9AA}
     .option-input:focus{border-bottom-color:#2D1B69}
-    .option-remove{
-      background:none;border:none;cursor:pointer;
-      color:#C4B9AA;font-size:1rem;
-      transition:color 0.2s;padding:2px;
-    }
+    .option-remove{background:none;border:none;cursor:pointer;color:#C4B9AA;font-size:1rem;transition:color 0.2s;padding:2px}
     .option-remove:hover{color:#DC2626}
+    .correct-mark{
+      width:22px;height:22px;border-radius:50%;border:2px solid #E2DAD0;
+      background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;
+      font-size:0.7rem;transition:all 0.2s;flex-shrink:0;color:transparent;
+    }
+    .correct-mark.correct{background:#10B981;border-color:#10B981;color:#fff}
+    .correct-hint{font-size:0.72rem;color:#64748B;margin-bottom:8px}
     .add-option-btn{
-      background:none;border:none;cursor:pointer;
-      color:#2D1B69;font-size:0.82rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;padding:4px 0;
+      background:none;border:none;cursor:pointer;color:#2D1B69;
+      font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:4px 0;
     }
     .rating-preview{display:flex;gap:8px;flex-wrap:wrap}
     .rating-dot{
-      width:36px;height:36px;border-radius:8px;
-      border:1.5px solid #E2DAD0;
+      width:36px;height:36px;border-radius:8px;border:1.5px solid #E2DAD0;
       display:flex;align-items:center;justify-content:center;
       font-size:0.85rem;font-weight:600;color:#64748B;
     }
-    .q-footer{
-      display:flex;align-items:center;
-      gap:8px;margin-top:12px;
-      padding-top:12px;
-      border-top:1px solid #E2DAD0;
+    .scale-preview{display:flex;gap:6px;flex-wrap:wrap}
+    .scale-dot{
+      width:30px;height:30px;border-radius:6px;border:1.5px solid #E2DAD0;
+      display:flex;align-items:center;justify-content:center;
+      font-size:0.75rem;font-weight:600;color:#64748B;
     }
+    .preview-field{background:#F5F0E8;border-radius:8px;padding:12px;font-size:0.85rem;color:#C4B9AA}
+    .pledge-preview{background:#EDE9FF;border-radius:8px;padding:14px;border:1.5px solid rgba(45,27,105,0.2)}
+    .pledge-preview-text{font-size:0.88rem;color:#2D1B69;line-height:1.6;margin-bottom:10px}
+    .pledge-checkbox-preview{display:flex;align-items:center;gap:8px;font-size:0.82rem;color:#64748B}
+    .pledge-box{width:16px;height:16px;border-radius:3px;border:2px solid #C4B9AA;flex-shrink:0}
+    .q-footer{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #E2DAD0}
     .toggle{
-      width:36px;height:20px;border-radius:100px;
-      background:#E2DAD0;cursor:pointer;
-      position:relative;transition:background 0.2s;
-      border:none;flex-shrink:0;
+      width:36px;height:20px;border-radius:100px;background:#E2DAD0;cursor:pointer;
+      position:relative;transition:background 0.2s;border:none;flex-shrink:0;
     }
     .toggle.on{background:#2D1B69}
-    .toggle::after{
-      content:'';position:absolute;
-      width:14px;height:14px;border-radius:50%;
-      background:#fff;top:3px;left:3px;
-      transition:transform 0.2s;
-    }
+    .toggle::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 0.2s}
     .toggle.on::after{transform:translateX(16px)}
     .toggle-label{font-size:0.8rem;color:#64748B;font-weight:500}
     .add-question-section{
-      background:#fff;border-radius:14px;
-      border:1.5px dashed #E2DAD0;
-      padding:20px;text-align:center;
-      margin-bottom:24px;
+      background:#fff;border-radius:14px;border:1.5px dashed #E2DAD0;
+      padding:20px;text-align:center;margin-bottom:24px;
     }
-    .add-question-title{
-      font-size:0.85rem;font-weight:600;
-      color:#64748B;margin-bottom:14px;
-    }
-    .question-types{
-      display:flex;gap:8px;flex-wrap:wrap;
-      justify-content:center;
-    }
+    .add-question-title{font-size:0.85rem;font-weight:600;color:#64748B;margin-bottom:14px}
+    .question-types{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
     .type-btn{
-      padding:8px 14px;border-radius:8px;
-      border:1.5px solid #E2DAD0;
-      background:#fff;color:#0F0E1A;
-      font-size:0.8rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;
-      cursor:pointer;transition:all 0.2s;
+      padding:7px 12px;border-radius:8px;border:1.5px solid #E2DAD0;
+      background:#fff;color:#0F0E1A;font-size:0.78rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;
     }
     .type-btn:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
-
-    /* SETTINGS */
-    .settings-section{
-      background:#fff;border-radius:14px;
-      border:1.5px solid #E2DAD0;
-      padding:22px;margin-bottom:16px;
-    }
-    .settings-title{
-      font-family:'Syne',sans-serif;font-weight:700;
-      font-size:0.95rem;margin-bottom:16px;
-    }
-    .setting-row{
-      display:flex;align-items:center;
-      justify-content:space-between;
-      padding:10px 0;
-      border-bottom:1px solid #E2DAD0;
-    }
+    .type-group{margin-bottom:12px;width:100%}
+    .type-group-label{font-size:0.72rem;font-weight:700;color:#94A3B8;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;text-align:left}
+    .settings-section{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:22px;margin-bottom:16px}
+    .settings-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:16px}
+    .setting-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #E2DAD0}
     .setting-row:last-child{border-bottom:none}
     .setting-info .setting-name{font-size:0.88rem;font-weight:600}
     .setting-info .setting-desc{font-size:0.76rem;color:#64748B;margin-top:2px}
-
-    /* DANGER ZONE */
-    .danger-zone{
-      background:#fff;border-radius:14px;
-      border:1.5px solid #FEE2E2;
-      padding:22px;margin-bottom:24px;
-    }
-    .danger-title{
-      font-family:'Syne',sans-serif;font-weight:700;
-      font-size:0.95rem;color:#DC2626;
-      margin-bottom:16px;
-    }
-    .danger-row{
-      display:flex;align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;gap:12px;
-      padding:10px 0;
-      border-bottom:1px solid #FEE2E2;
-    }
+    .danger-section{background:#fff;border-radius:14px;border:1.5px solid #FEE2E2;padding:22px;margin-bottom:24px}
+    .danger-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#DC2626;margin-bottom:16px}
+    .danger-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:10px 0;border-bottom:1px solid #FEE2E2}
     .danger-row:last-child{border-bottom:none}
-    .danger-info .danger-name{font-size:0.88rem;font-weight:600}
-    .danger-info .danger-desc{font-size:0.76rem;color:#64748B;margin-top:2px}
-
-    /* TOAST */
+    .danger-name{font-size:0.88rem;font-weight:600}
+    .danger-desc{font-size:0.76rem;color:#64748B;margin-top:2px}
     .toast{
-      position:fixed;bottom:24px;left:50%;
-      transform:translateX(-50%);
-      background:#0F0E1A;color:#fff;
-      padding:12px 24px;border-radius:10px;
-      font-size:0.88rem;font-weight:600;
-      display:none;z-index:999;
+      position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+      background:#0F0E1A;color:#fff;padding:12px 24px;border-radius:10px;
+      font-size:0.88rem;font-weight:600;display:none;z-index:999;
       box-shadow:0 4px 20px rgba(0,0,0,0.3);
     }
-
-    /* LOADING */
-    .loading-screen{
-      display:flex;align-items:center;
-      justify-content:center;
-      min-height:100vh;background:#0F0E1A;
-    }
-    .spinner{
-      width:32px;height:32px;
-      border:3px solid rgba(217,119,6,0.2);
-      border-top-color:#D97706;border-radius:50%;
-      animation:spin 0.8s linear infinite;
-    }
+    .loading-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#0F0E1A}
+    .spinner{width:32px;height:32px;border:3px solid rgba(217,119,6,0.2);border-top-color:#D97706;border-radius:50%;animation:spin 0.8s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
   </style>
 </head>
 <body>
-
-<div id="loading-screen" class="loading-screen">
-  <div class="spinner"></div>
-</div>
-
+<div id="loading-screen" class="loading-screen"><div class="spinner"></div></div>
 <div id="app" style="display:none">
   <nav>
     <a href="/dashboard" class="nav-logo">
@@ -322,107 +210,94 @@
     </a>
     <div class="nav-actions">
       <a href="/dashboard" class="btn-ghost">← Back</a>
+      <button class="btn-preview" onclick="previewSurvey()">👁 Preview</button>
       <button class="btn-ghost" onclick="saveDraft()">Save draft</button>
       <button class="btn-primary" id="save-btn" onclick="saveChanges()">Save changes →</button>
     </div>
   </nav>
-
   <div class="main">
-
-    <!-- WARNING BANNER (shown if has responses) -->
     <div class="warning-banner" id="warning-banner" style="display:none">
       <div class="warning-icon">⚠️</div>
       <div class="warning-text">
         <h4>This survey already has responses</h4>
-        <p>Editing questions may make existing response data inconsistent. All existing responses will be kept as-is — but changed questions won't match older answers. Consider closing this survey and creating a new one instead.</p>
+        <p>Editing questions may make existing response data inconsistent. All existing responses will be kept as-is. Consider closing this survey and creating a new one instead.</p>
       </div>
     </div>
-
-    <!-- TITLE -->
     <div class="title-section">
-      <input class="title-input" id="survey-title"
-        placeholder="e.g. Customer Satisfaction Survey" maxlength="100">
-      <textarea class="desc-input" id="survey-desc"
-        placeholder="e.g. This takes 2 minutes. Help us improve." rows="2"></textarea>
+      <input class="title-input" id="survey-title" placeholder="e.g. Customer Satisfaction Survey" maxlength="100">
+      <textarea class="desc-input" id="survey-desc" placeholder="e.g. This takes 2 minutes. Help us improve." rows="2"></textarea>
     </div>
-
-    <!-- QUESTIONS -->
     <div class="questions-list" id="questions-list"></div>
-
-    <!-- ADD QUESTION -->
     <div class="add-question-section">
       <div class="add-question-title">Add a question</div>
       <div class="question-types">
-        <button class="type-btn" onclick="addQuestion('multiple')">◉ Multiple choice</button>
-        <button class="type-btn" onclick="addQuestion('text')">✏️ Short text</button>
-        <button class="type-btn" onclick="addQuestion('textarea')">📝 Long text</button>
-        <button class="type-btn" onclick="addQuestion('rating')">⭐ Rating</button>
-        <button class="type-btn" onclick="addQuestion('yesno')">✓ Yes / No</button>
+        <div class="type-group">
+          <div class="type-group-label">Choice</div>
+          <button class="type-btn" onclick="addQuestion('multiple')">◉ Multiple choice</button>
+          <button class="type-btn" onclick="addQuestion('checkbox')">☑ Checkboxes</button>
+          <button class="type-btn" onclick="addQuestion('dropdown')">▾ Dropdown</button>
+          <button class="type-btn" onclick="addQuestion('yesno')">✓ Yes / No</button>
+        </div>
+        <div class="type-group">
+          <div class="type-group-label">Text</div>
+          <button class="type-btn" onclick="addQuestion('text')">✏️ Short text</button>
+          <button class="type-btn" onclick="addQuestion('textarea')">📝 Long text</button>
+          <button class="type-btn" onclick="addQuestion('email')">📧 Email</button>
+          <button class="type-btn" onclick="addQuestion('phone')">📱 Phone</button>
+          <button class="type-btn" onclick="addQuestion('number')">🔢 Number</button>
+        </div>
+        <div class="type-group">
+          <div class="type-group-label">Scale & Date</div>
+          <button class="type-btn" onclick="addQuestion('rating')">⭐ Rating 1-5</button>
+          <button class="type-btn" onclick="addQuestion('scale')">📊 Scale 1-10</button>
+          <button class="type-btn" onclick="addQuestion('date')">📅 Date</button>
+        </div>
+        <div class="type-group">
+          <div class="type-group-label">Special</div>
+          <button class="type-btn" onclick="addQuestion('file')">📎 File URL</button>
+          <button class="type-btn" onclick="addQuestion('heading')">📌 Section heading</button>
+          <button class="type-btn" onclick="addQuestion('pledge')">🤝 Pledge</button>
+          <button class="type-btn" onclick="addQuestion('quiz')">🎓 Quiz MCQ</button>
+        </div>
       </div>
     </div>
-
-    <!-- SETTINGS -->
     <div class="settings-section">
       <div class="settings-title">⚙️ Survey settings</div>
       <div class="setting-row">
-        <div class="setting-info">
-          <div class="setting-name">Survey status</div>
-          <div class="setting-desc">Active surveys accept responses</div>
-        </div>
-        <select id="survey-status"
-          style="padding:6px 12px;border-radius:8px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none;">
+        <div class="setting-info"><div class="setting-name">Survey status</div><div class="setting-desc">Active surveys accept responses</div></div>
+        <select id="survey-status" style="padding:6px 12px;border-radius:8px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none">
           <option value="active">● Active</option>
           <option value="draft">○ Draft</option>
           <option value="closed">✕ Closed</option>
         </select>
       </div>
       <div class="setting-row">
-        <div class="setting-info">
-          <div class="setting-name">Public survey</div>
-          <div class="setting-desc">Show in SwoopForm discovery directory</div>
-        </div>
+        <div class="setting-info"><div class="setting-name">Public survey</div></div>
         <button class="toggle" id="toggle-public" onclick="toggleSetting('public')"></button>
       </div>
       <div class="setting-row">
-        <div class="setting-info">
-          <div class="setting-name">Collect email addresses</div>
-          <div class="setting-desc">Ask respondents for their email</div>
-        </div>
+        <div class="setting-info"><div class="setting-name">Collect email addresses</div></div>
         <button class="toggle" id="toggle-email" onclick="toggleSetting('email')"></button>
       </div>
       <div class="setting-row" style="border-bottom:none">
-        <div class="setting-info">
-          <div class="setting-name">One response per person</div>
-          <div class="setting-desc">Prevent duplicate submissions</div>
-        </div>
+        <div class="setting-info"><div class="setting-name">One response per person</div></div>
         <button class="toggle" id="toggle-once" onclick="toggleSetting('once')"></button>
       </div>
     </div>
-
-    <!-- DANGER ZONE -->
-    <div class="danger-zone">
+    <div class="danger-section">
       <div class="danger-title">⚠️ Danger zone</div>
       <div class="danger-row">
-        <div class="danger-info">
-          <div class="danger-name">Close survey</div>
-          <div class="danger-desc">Stop accepting new responses. Existing responses are kept.</div>
-        </div>
-        <button class="btn-danger" onclick="closeSurvey()">Close survey</button>
+        <div><div class="danger-name">Close survey</div><div class="danger-desc">Stop accepting new responses. Existing responses are kept.</div></div>
+        <button class="btn-danger-sm" onclick="closeSurvey()">Close survey</button>
       </div>
       <div class="danger-row">
-        <div class="danger-info">
-          <div class="danger-name">Delete survey</div>
-          <div class="danger-desc">Permanently delete this survey and all its responses.</div>
-        </div>
-        <button class="btn-danger" onclick="deleteSurvey()">Delete survey</button>
+        <div><div class="danger-name">Delete survey</div><div class="danger-desc">Permanently delete this survey and all its responses.</div></div>
+        <button class="btn-danger-sm" onclick="deleteSurvey()">Delete survey</button>
       </div>
     </div>
-
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
-
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
   import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
@@ -444,7 +319,7 @@
   let currentUser = null;
   let survey = null;
   let questions = [];
-  let settings = { public: false, email: false, once: false };
+  let settings = { public:false, email:false, once:false };
   let surveyId = null;
 
   const params = new URLSearchParams(window.location.search);
@@ -463,42 +338,22 @@
     const snap = await getDoc(doc(db, 'surveys', surveyId));
     if (!snap.exists()) { window.location.href = '/dashboard'; return; }
     survey = { id: snap.id, ...snap.data() };
-
-    // Security check
-    if (survey.userId !== currentUser.uid) {
-      window.location.href = '/dashboard'; return;
-    }
-
-    // Show warning if has responses
-    if (survey.responseCount > 0) {
-      document.getElementById('warning-banner').style.display = 'flex';
-    }
-
-    // Fill in title and description
+    if (survey.userId !== currentUser.uid) { window.location.href = '/dashboard'; return; }
+    if (survey.responseCount > 0) document.getElementById('warning-banner').style.display = 'flex';
     document.getElementById('survey-title').value = survey.title || '';
     document.getElementById('survey-desc').value = survey.description || '';
-
-    // Load questions
-    questions = (survey.questions || []).map(q => ({
-      ...q,
-      id: q.id || Date.now() + Math.random()
-    }));
+    questions = (survey.questions || []).map(q => ({ ...q, id: q.id || Date.now() + Math.random() }));
     renderQuestions();
-
-    // Load settings
-    settings = survey.settings || { public: false, email: false, once: false };
+    settings = survey.settings || { public:false, email:false, once:false };
     document.getElementById('toggle-public').classList.toggle('on', settings.public);
     document.getElementById('toggle-email').classList.toggle('on', settings.email);
     document.getElementById('toggle-once').classList.toggle('on', settings.once);
-
-    // Load status
     document.getElementById('survey-status').value = survey.status || 'active';
   }
 
   function showToast(msg, duration=2500) {
     const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.style.display = 'block';
+    t.textContent = msg; t.style.display = 'block';
     setTimeout(() => t.style.display = 'none', duration);
   }
 
@@ -509,9 +364,11 @@
 
   function syncFromDOM() {
     questions.forEach(q => {
-      const textEl = document.getElementById('q-text-' + q.id);
+      const textEl = document.getElementById('q-text-' + q.id) || document.getElementById('q-heading-' + q.id);
       if (textEl) q.text = textEl.value;
-      if (q.type === 'multiple') {
+      const subEl = document.getElementById('q-sub-' + q.id);
+      if (subEl) q.subtext = subEl.value;
+      if (['multiple','checkbox','dropdown','quiz'].includes(q.type)) {
         const optEls = document.querySelectorAll('.opt-' + q.id);
         q.options = Array.from(optEls).map(el => el.value);
       }
@@ -521,10 +378,10 @@
   window.addQuestion = function(type) {
     syncFromDOM();
     const id = Date.now();
-    questions.push({ id, type, text: '', options: ['',''], required: false });
+    questions.push({ id, type, text:'', subtext:'', options:['',''], required:false, correctIndex:-1 });
     renderQuestions();
     setTimeout(() => {
-      const el = document.getElementById('q-text-' + id);
+      const el = document.getElementById('q-text-' + id) || document.getElementById('q-heading-' + id);
       if (el) { el.focus(); el.scrollIntoView({ behavior:'smooth', block:'center' }); }
     }, 60);
   }
@@ -568,9 +425,18 @@
     const q = questions.find(q => q.id === qId);
     if (q && q.options.length > 2) {
       q.options.splice(idx, 1);
+      if (q.correctIndex === idx) q.correctIndex = -1;
+      else if (q.correctIndex > idx) q.correctIndex--;
       renderQuestions();
-    } else {
-      showToast('Need at least 2 options');
+    } else { showToast('Need at least 2 options'); }
+  }
+
+  window.markCorrect = function(qId, idx) {
+    syncFromDOM();
+    const q = questions.find(q => q.id === qId);
+    if (q) {
+      q.correctIndex = q.correctIndex === idx ? -1 : idx;
+      renderQuestions();
     }
   }
 
@@ -580,71 +446,153 @@
 
   function renderQuestions() {
     const list = document.getElementById('questions-list');
-    list.innerHTML = questions.map((q, i) => `
-      <div class="question-card" id="qcard-${q.id}">
-        <div class="q-header">
-          <div class="q-number">${i+1}</div>
-          <select class="q-type-select" onchange="changeType(${q.id},this.value)">
-            <option value="multiple" ${q.type==='multiple'?'selected':''}>Multiple choice</option>
-            <option value="text" ${q.type==='text'?'selected':''}>Short text</option>
-            <option value="textarea" ${q.type==='textarea'?'selected':''}>Long text</option>
-            <option value="rating" ${q.type==='rating'?'selected':''}>Rating (1-5)</option>
-            <option value="yesno" ${q.type==='yesno'?'selected':''}>Yes / No</option>
-          </select>
-          <button class="q-delete" onclick="deleteQuestion(${q.id})">✕</button>
-        </div>
-        <input class="q-input" id="q-text-${q.id}"
-          placeholder="e.g. How satisfied are you?"
-          value="${escHtml(q.text)}">
-        ${q.type==='multiple' ? `
+    list.innerHTML = questions.map((q, i) => {
+      const isHeading = q.type === 'heading';
+      const isPledge = q.type === 'pledge';
+      const isQuiz = q.type === 'quiz';
+      const hasOptions = ['multiple','checkbox','dropdown','quiz'].includes(q.type);
+      let inputHtml = '';
+      if (isHeading) {
+        inputHtml = `
+          <input class="heading-input" id="q-heading-${q.id}"
+            placeholder="Section title" value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <textarea class="subheading-input" id="q-sub-${q.id}"
+            placeholder="Optional description" rows="2"
+            oninput="questions.find(x=>x.id===${q.id}).subtext=this.value">${escHtml(q.subtext||'')}</textarea>`;
+      } else if (isPledge) {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="e.g. I pledge to reduce my carbon footprint by 20% this year"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div class="pledge-preview">
+            <div class="pledge-preview-text">${q.text || 'Your pledge statement will appear here...'}</div>
+            <div class="pledge-checkbox-preview">
+              <div class="pledge-box"></div>
+              <span>I agree and commit to this pledge</span>
+            </div>
+          </div>`;
+      } else if (isQuiz) {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="e.g. What is the capital of India?"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div class="correct-hint">Click ✓ to mark the correct answer</div>
           <div class="options-list">
-            ${q.options.map((opt,oi) => `
+            ${(q.options||[]).map((opt, oi) => `
               <div class="option-row">
                 <div class="option-bullet"></div>
-                <input class="option-input opt-${q.id}"
-                  value="${escHtml(opt)}"
-                  placeholder="Option ${oi+1}">
+                <input class="option-input opt-${q.id}" value="${escHtml(opt)}" placeholder="Option ${oi+1}">
+                <button class="correct-mark ${q.correctIndex===oi?'correct':''}"
+                  onclick="markCorrect(${q.id},${oi})" title="Mark as correct">✓</button>
                 <button class="option-remove" onclick="removeOption(${q.id},${oi})">✕</button>
-              </div>
-            `).join('')}
+              </div>`).join('')}
           </div>
-          <button class="add-option-btn" onclick="addOption(${q.id})">+ Add option</button>
-        ` : ''}
-        ${q.type==='yesno' ? `
+          <button class="add-option-btn" onclick="addOption(${q.id})">+ Add option</button>`;
+      } else if (hasOptions) {
+        const bulletClass = q.type === 'checkbox' ? 'option-bullet square' : 'option-bullet';
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="e.g. How satisfied are you?"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
           <div class="options-list">
-            <div class="option-row"><div class="option-bullet"></div><span style="font-size:0.88rem;font-weight:600">Yes</span></div>
-            <div class="option-row"><div class="option-bullet"></div><span style="font-size:0.88rem;font-weight:600">No</span></div>
+            ${(q.options||[]).map((opt, oi) => `
+              <div class="option-row">
+                <div class="${bulletClass}"></div>
+                <input class="option-input opt-${q.id}" value="${escHtml(opt)}" placeholder="Option ${oi+1}">
+                <button class="option-remove" onclick="removeOption(${q.id},${oi})">✕</button>
+              </div>`).join('')}
           </div>
-        ` : ''}
-        ${q.type==='rating' ? `
-          <div class="rating-preview">
-            ${[1,2,3,4,5].map(n=>`<div class="rating-dot">${n}</div>`).join('')}
+          <button class="add-option-btn" onclick="addOption(${q.id})">+ Add option</button>`;
+      } else if (q.type === 'rating') {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}" placeholder="e.g. How would you rate our service?" value="${escHtml(q.text)}" oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div class="rating-preview">${[1,2,3,4,5].map(n=>`<div class="rating-dot">${n}</div>`).join('')}</div>`;
+      } else if (q.type === 'scale') {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}" placeholder="e.g. How likely are you to recommend us?" value="${escHtml(q.text)}" oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div class="scale-preview">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="scale-dot">${n}</div>`).join('')}</div>`;
+      } else if (q.type === 'yesno') {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}" placeholder="e.g. Would you recommend us?" value="${escHtml(q.text)}" oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div style="display:flex;gap:8px"><div style="padding:8px 20px;border-radius:8px;border:1.5px solid #E2DAD0;font-size:0.88rem;font-weight:600">Yes</div><div style="padding:8px 20px;border-radius:8px;border:1.5px solid #E2DAD0;font-size:0.88rem;font-weight:600">No</div></div>`;
+      } else {
+        const placeholders = {
+          text:'e.g. What is your full name?', textarea:'e.g. Please describe your experience',
+          email:'e.g. What is your email address?', phone:'e.g. What is your phone number?',
+          number:'e.g. How many employees?', date:'e.g. What is your date of birth?',
+          file:'e.g. Please share a link to your portfolio'
+        };
+        const previews = {
+          text:'Short answer field...', textarea:'Long answer field...',
+          email:'📧 Validates email format', phone:'📱 Phone number input',
+          number:'🔢 Number only input', date:'📅 Date picker',
+          file:'📎 Respondents paste a file/document URL'
+        };
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="${placeholders[q.type]||'Type your question...'}"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div class="preview-field" ${q.type==='textarea'?'style="min-height:60px"':''}>${previews[q.type]||''}</div>`;
+      }
+      return `
+        <div class="question-card ${isHeading?'type-heading':''}" id="qcard-${q.id}">
+          <div class="q-header">
+            <div class="q-number">${isHeading?'—':i+1}</div>
+            <select class="q-type-select" onchange="changeType(${q.id},this.value)">
+              <optgroup label="Choice">
+                <option value="multiple" ${q.type==='multiple'?'selected':''}>◉ Multiple choice</option>
+                <option value="checkbox" ${q.type==='checkbox'?'selected':''}>☑ Checkboxes</option>
+                <option value="dropdown" ${q.type==='dropdown'?'selected':''}>▾ Dropdown</option>
+                <option value="yesno" ${q.type==='yesno'?'selected':''}>✓ Yes / No</option>
+              </optgroup>
+              <optgroup label="Text">
+                <option value="text" ${q.type==='text'?'selected':''}>✏️ Short text</option>
+                <option value="textarea" ${q.type==='textarea'?'selected':''}>📝 Long text</option>
+                <option value="email" ${q.type==='email'?'selected':''}>📧 Email</option>
+                <option value="phone" ${q.type==='phone'?'selected':''}>📱 Phone</option>
+                <option value="number" ${q.type==='number'?'selected':''}>🔢 Number</option>
+              </optgroup>
+              <optgroup label="Scale & Date">
+                <option value="rating" ${q.type==='rating'?'selected':''}>⭐ Rating 1-5</option>
+                <option value="scale" ${q.type==='scale'?'selected':''}>📊 Scale 1-10</option>
+                <option value="date" ${q.type==='date'?'selected':''}>📅 Date</option>
+              </optgroup>
+              <optgroup label="Special">
+                <option value="file" ${q.type==='file'?'selected':''}>📎 File URL</option>
+                <option value="heading" ${q.type==='heading'?'selected':''}>📌 Section heading</option>
+                <option value="pledge" ${q.type==='pledge'?'selected':''}>🤝 Pledge</option>
+                <option value="quiz" ${q.type==='quiz'?'selected':''}>🎓 Quiz MCQ</option>
+              </optgroup>
+            </select>
+            <button class="q-delete" onclick="deleteQuestion(${q.id})">✕</button>
           </div>
-          <div style="font-size:0.75rem;color:#64748B;margin-top:8px">Respondents pick 1 to 5</div>
-        ` : ''}
-        ${q.type==='text' ? `<div style="background:#F5F0E8;border-radius:8px;padding:12px;font-size:0.85rem;color:#C4B9AA">Short answer field...</div>` : ''}
-        ${q.type==='textarea' ? `<div style="background:#F5F0E8;border-radius:8px;padding:12px;font-size:0.85rem;color:#C4B9AA;min-height:60px">Long answer field...</div>` : ''}
-        <div class="q-footer">
-          <button class="toggle ${q.required?'on':''}" id="req-${q.id}" onclick="toggleRequired(${q.id})"></button>
-          <span class="toggle-label">Required question</span>
-        </div>
-      </div>
-    `).join('');
+          ${inputHtml}
+          ${!isHeading ? `
+            <div class="q-footer">
+              <button class="toggle ${q.required?'on':''}" id="req-${q.id}" onclick="toggleRequired(${q.id})"></button>
+              <span class="toggle-label">${isPledge?'Must agree to proceed':'Required question'}</span>
+            </div>` : ''}
+        </div>`;
+    }).join('');
   }
 
   async function saveToFirestore(status) {
     syncFromDOM();
     const title = document.getElementById('survey-title').value.trim();
     if (!title) { showToast('Please add a survey title'); return false; }
-    const validQuestions = questions.filter(q => q.text.trim());
-    if (!validQuestions.length) { showToast('Please fill in at least one question'); return false; }
-
+    const validQuestions = questions.filter(q => q.type === 'heading' || q.text.trim());
+    if (!validQuestions.length) { showToast('Please add at least one question'); return false; }
     try {
       await updateDoc(doc(db, 'surveys', surveyId), {
         title,
         description: document.getElementById('survey-desc').value.trim(),
         questions: validQuestions,
-        questionCount: validQuestions.length,
+        questionCount: validQuestions.filter(q => q.type !== 'heading').length,
         settings,
         status: status || document.getElementById('survey-status').value,
         updatedAt: serverTimestamp()
@@ -657,6 +605,11 @@
     }
   }
 
+  window.previewSurvey = async function() {
+    const ok = await saveToFirestore();
+    if (ok) window.open('/s/?id=' + surveyId + '&preview=1', '_blank');
+  }
+
   window.saveDraft = async function() {
     const ok = await saveToFirestore('draft');
     if (ok) showToast('✓ Saved as draft');
@@ -664,27 +617,25 @@
 
   window.saveChanges = async function() {
     const btn = document.getElementById('save-btn');
-    btn.disabled = true;
-    btn.textContent = 'Saving...';
+    btn.disabled = true; btn.textContent = 'Saving...';
     const ok = await saveToFirestore();
     if (ok) {
       showToast('✅ Changes saved!', 2000);
       setTimeout(() => window.location.href = '/dashboard', 2200);
     }
-    btn.disabled = false;
-    btn.textContent = 'Save changes →';
+    btn.disabled = false; btn.textContent = 'Save changes →';
   }
 
   window.closeSurvey = async function() {
-    if (!confirm('Close this survey? It will stop accepting new responses.')) return;
-    await updateDoc(doc(db, 'surveys', surveyId), { status: 'closed' });
+    if (!confirm('Close this survey?\n\n• Stops accepting new responses\n• All existing responses kept safely\n• Can reopen anytime from dashboard')) return;
+    await updateDoc(doc(db, 'surveys', surveyId), { status:'closed' });
     showToast('Survey closed');
     setTimeout(() => window.location.href = '/dashboard', 1500);
   }
 
   window.deleteSurvey = async function() {
     if (!confirm('DELETE this survey permanently? This cannot be undone.')) return;
-    if (!confirm('Are you sure? All responses will also be deleted.')) return;
+    if (!confirm('Are you absolutely sure? All responses will also be deleted.')) return;
     await deleteDoc(doc(db, 'surveys', surveyId));
     showToast('Survey deleted');
     setTimeout(() => window.location.href = '/dashboard', 1500);
