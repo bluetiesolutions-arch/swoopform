@@ -7,152 +7,145 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{
-      font-family:'DM Sans',sans-serif;
-      background:#F5F0E8;
-      color:#0F0E1A;
-      min-height:100vh;
-    }
+    body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
     nav{
-      background:#fff;
-      border-bottom:1.5px solid #E2DAD0;
+      background:#fff;border-bottom:1.5px solid #E2DAD0;
       padding:0 24px;height:60px;
-      display:flex;align-items:center;
-      justify-content:space-between;
+      display:flex;align-items:center;justify-content:space-between;
       position:sticky;top:0;z-index:100;
     }
-    .nav-logo{
-      display:flex;align-items:center;gap:10px;
-      text-decoration:none;
-    }
+    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
     .logo-mark{
       width:32px;height:32px;
       background:linear-gradient(135deg,#2D1B69,#D97706);
-      border-radius:8px;
-      display:flex;align-items:center;justify-content:center;
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:0.9rem;color:#fff;
+      border-radius:8px;display:flex;align-items:center;justify-content:center;
+      font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:#fff;
     }
-    .logo-name{
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1rem;color:#0F0E1A;
-    }
-    .nav-actions{display:flex;gap:10px;align-items:center}
+    .logo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#0F0E1A}
+    .nav-actions{display:flex;gap:8px;align-items:center}
     .btn-ghost{
-      padding:8px 18px;border-radius:8px;
-      border:1.5px solid #E2DAD0;
-      background:transparent;color:#64748B;
-      font-size:0.85rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;
-      cursor:pointer;transition:all 0.2s;
-      text-decoration:none;
+      padding:8px 16px;border-radius:8px;border:1.5px solid #E2DAD0;
+      background:transparent;color:#64748B;font-size:0.85rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-decoration:none;
     }
     .btn-ghost:hover{border-color:#0F0E1A;color:#0F0E1A}
     .btn-primary{
-      padding:8px 18px;border-radius:8px;border:none;
+      padding:8px 16px;border-radius:8px;border:none;
       background:linear-gradient(135deg,#2D1B69,#D97706);
       color:#fff;font-size:0.85rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;
-      transition:opacity 0.2s;
+      font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s;
     }
     .btn-primary:hover{opacity:0.9}
     .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
-    .main{
-      max-width:760px;margin:0 auto;
-      padding:32px 20px;
+    .btn-preview{
+      padding:8px 16px;border-radius:8px;
+      border:1.5px solid #2D1B69;
+      background:transparent;color:#2D1B69;
+      font-size:0.85rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;
     }
+    .btn-preview:hover{background:#EDE9FF}
+    .main{max-width:760px;margin:0 auto;padding:32px 20px}
     .title-section{
       background:#fff;border-radius:16px;
-      border:1.5px solid #E2DAD0;
-      padding:28px;margin-bottom:16px;
+      border:1.5px solid #E2DAD0;padding:28px;margin-bottom:16px;
     }
     .title-input{
       width:100%;border:none;outline:none;
       font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1.8rem;letter-spacing:-0.03em;
-      color:#0F0E1A;background:transparent;
+      font-size:1.8rem;letter-spacing:-0.03em;color:#0F0E1A;background:transparent;
     }
     .title-input::placeholder{color:#C4B9AA}
     .desc-input{
-      width:100%;border:none;outline:none;
-      font-family:'DM Sans',sans-serif;
-      font-size:0.95rem;color:#64748B;
-      background:transparent;margin-top:8px;
-      resize:none;
+      width:100%;border:none;outline:none;font-family:'DM Sans',sans-serif;
+      font-size:0.95rem;color:#64748B;background:transparent;margin-top:8px;resize:none;
     }
     .desc-input::placeholder{color:#C4B9AA}
     .questions-list{margin-bottom:16px}
     .question-card{
       background:#fff;border-radius:14px;
-      border:1.5px solid #E2DAD0;
-      padding:22px;margin-bottom:12px;
-      position:relative;
+      border:1.5px solid #E2DAD0;padding:22px;margin-bottom:12px;
     }
     .question-card:hover{border-color:rgba(45,27,105,0.3)}
-    .q-header{
-      display:flex;align-items:center;
-      gap:12px;margin-bottom:14px;
+
+    /* SECTION HEADING CARD */
+    .question-card.type-heading{
+      background:linear-gradient(135deg,rgba(45,27,105,0.05),rgba(217,119,6,0.05));
+      border-color:rgba(45,27,105,0.2);
     }
+
+    .q-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
     .q-number{
       width:26px;height:26px;border-radius:50%;
       background:#EDE9FF;color:#2D1B69;
       font-size:0.75rem;font-weight:700;
-      display:flex;align-items:center;justify-content:center;
-      flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;flex-shrink:0;
     }
     .q-type-select{
-      padding:5px 10px;border-radius:7px;
-      border:1.5px solid #E2DAD0;
-      background:#fff;color:#0F0E1A;
-      font-size:0.8rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;
-      cursor:pointer;outline:none;
+      padding:5px 8px;border-radius:7px;border:1.5px solid #E2DAD0;
+      background:#fff;color:#0F0E1A;font-size:0.78rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;outline:none;
     }
     .q-delete{
-      margin-left:auto;width:28px;height:28px;
-      border-radius:7px;border:none;
-      background:transparent;cursor:pointer;
+      margin-left:auto;width:28px;height:28px;border-radius:7px;
+      border:none;background:transparent;cursor:pointer;
       color:#64748B;font-size:1rem;
-      display:flex;align-items:center;justify-content:center;
-      transition:all 0.2s;
+      display:flex;align-items:center;justify-content:center;transition:all 0.2s;
     }
     .q-delete:hover{background:#FEE2E2;color:#DC2626}
     .q-input{
-      width:100%;border:none;
-      border-bottom:1.5px solid #E2DAD0;
-      outline:none;padding:8px 0;
-      font-family:'DM Sans',sans-serif;
-      font-size:0.95rem;font-weight:600;
-      color:#0F0E1A;background:transparent;
-      margin-bottom:14px;
+      width:100%;border:none;border-bottom:1.5px solid #E2DAD0;
+      outline:none;padding:8px 0;font-family:'DM Sans',sans-serif;
+      font-size:0.95rem;font-weight:600;color:#0F0E1A;background:transparent;margin-bottom:14px;
     }
     .q-input::placeholder{color:#C4B9AA}
     .q-input:focus{border-bottom-color:#2D1B69}
+    .heading-input{
+      width:100%;border:none;outline:none;
+      font-family:'Syne',sans-serif;font-weight:700;
+      font-size:1.1rem;color:#0F0E1A;background:transparent;
+      border-bottom:1.5px solid #E2DAD0;padding:4px 0 8px;margin-bottom:8px;
+    }
+    .heading-input::placeholder{color:#C4B9AA}
+    .subheading-input{
+      width:100%;border:none;outline:none;
+      font-family:'DM Sans',sans-serif;font-size:0.88rem;
+      color:#64748B;background:transparent;resize:none;
+    }
+    .subheading-input::placeholder{color:#C4B9AA}
     .options-list{margin-bottom:10px}
-    .option-row{
-      display:flex;align-items:center;
-      gap:8px;margin-bottom:8px;
-    }
-    .option-bullet{
-      width:16px;height:16px;border-radius:50%;
-      border:2px solid #E2DAD0;flex-shrink:0;
-    }
+    .option-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+    .option-bullet{width:16px;height:16px;border-radius:50%;border:2px solid #E2DAD0;flex-shrink:0}
+    .option-bullet.square{border-radius:3px}
     .option-input{
-      flex:1;border:none;
-      border-bottom:1px solid #E2DAD0;
-      outline:none;padding:5px 0;
-      font-family:'DM Sans',sans-serif;
-      font-size:0.88rem;
-      color:#0F0E1A;background:transparent;
+      flex:1;border:none;border-bottom:1px solid #E2DAD0;
+      outline:none;padding:5px 0;font-family:'DM Sans',sans-serif;
+      font-size:0.88rem;color:#0F0E1A;background:transparent;
     }
     .option-input::placeholder{color:#C4B9AA}
     .option-input:focus{border-bottom-color:#2D1B69}
     .option-remove{
       background:none;border:none;cursor:pointer;
-      color:#C4B9AA;font-size:1rem;
-      transition:color 0.2s;padding:2px;
+      color:#C4B9AA;font-size:1rem;transition:color 0.2s;padding:2px;
     }
     .option-remove:hover{color:#DC2626}
+
+    /* CORRECT ANSWER MARK */
+    .correct-mark{
+      width:22px;height:22px;border-radius:50%;
+      border:2px solid #E2DAD0;
+      background:transparent;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      font-size:0.7rem;transition:all 0.2s;flex-shrink:0;
+      color:transparent;
+    }
+    .correct-mark.correct{
+      background:#10B981;border-color:#10B981;color:#fff;
+    }
+    .correct-hint{
+      font-size:0.72rem;color:#64748B;margin-bottom:8px;
+    }
+
     .add-option-btn{
       background:none;border:none;cursor:pointer;
       color:#2D1B69;font-size:0.82rem;font-weight:600;
@@ -160,150 +153,123 @@
     }
     .rating-preview{display:flex;gap:8px;flex-wrap:wrap}
     .rating-dot{
-      width:36px;height:36px;border-radius:8px;
-      border:1.5px solid #E2DAD0;
+      width:36px;height:36px;border-radius:8px;border:1.5px solid #E2DAD0;
       display:flex;align-items:center;justify-content:center;
       font-size:0.85rem;font-weight:600;color:#64748B;
     }
+    .scale-preview{display:flex;gap:6px;flex-wrap:wrap}
+    .scale-dot{
+      width:30px;height:30px;border-radius:6px;border:1.5px solid #E2DAD0;
+      display:flex;align-items:center;justify-content:center;
+      font-size:0.75rem;font-weight:600;color:#64748B;
+    }
+    .preview-field{
+      background:#F5F0E8;border-radius:8px;padding:12px;
+      font-size:0.85rem;color:#C4B9AA;
+    }
+    .pledge-preview{
+      background:#EDE9FF;border-radius:8px;padding:14px;
+      border:1.5px solid rgba(45,27,105,0.2);
+    }
+    .pledge-preview-text{
+      font-size:0.88rem;color:#2D1B69;
+      line-height:1.6;margin-bottom:10px;
+    }
+    .pledge-checkbox-preview{
+      display:flex;align-items:center;gap:8px;
+      font-size:0.82rem;color:#64748B;
+    }
+    .pledge-box{
+      width:16px;height:16px;border-radius:3px;
+      border:2px solid #C4B9AA;flex-shrink:0;
+    }
     .q-footer{
-      display:flex;align-items:center;
-      gap:8px;margin-top:12px;
-      padding-top:12px;
-      border-top:1px solid #E2DAD0;
+      display:flex;align-items:center;gap:8px;
+      margin-top:12px;padding-top:12px;border-top:1px solid #E2DAD0;
     }
     .toggle{
       width:36px;height:20px;border-radius:100px;
       background:#E2DAD0;cursor:pointer;
-      position:relative;transition:background 0.2s;
-      border:none;flex-shrink:0;
+      position:relative;transition:background 0.2s;border:none;flex-shrink:0;
     }
     .toggle.on{background:#2D1B69}
     .toggle::after{
-      content:'';position:absolute;
-      width:14px;height:14px;border-radius:50%;
-      background:#fff;top:3px;left:3px;
-      transition:transform 0.2s;
+      content:'';position:absolute;width:14px;height:14px;
+      border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 0.2s;
     }
     .toggle.on::after{transform:translateX(16px)}
     .toggle-label{font-size:0.8rem;color:#64748B;font-weight:500}
     .add-question-section{
-      background:#fff;border-radius:14px;
-      border:1.5px dashed #E2DAD0;
-      padding:20px;text-align:center;
-      margin-bottom:24px;
+      background:#fff;border-radius:14px;border:1.5px dashed #E2DAD0;
+      padding:20px;text-align:center;margin-bottom:24px;
     }
-    .add-question-title{
-      font-size:0.85rem;font-weight:600;
-      color:#64748B;margin-bottom:14px;
-    }
-    .question-types{
-      display:flex;gap:8px;flex-wrap:wrap;
-      justify-content:center;
-    }
+    .add-question-title{font-size:0.85rem;font-weight:600;color:#64748B;margin-bottom:14px}
+    .question-types{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
     .type-btn{
-      padding:8px 14px;border-radius:8px;
-      border:1.5px solid #E2DAD0;
-      background:#fff;color:#0F0E1A;
-      font-size:0.8rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;
-      cursor:pointer;transition:all 0.2s;
-      display:flex;align-items:center;gap:6px;
+      padding:7px 12px;border-radius:8px;border:1.5px solid #E2DAD0;
+      background:#fff;color:#0F0E1A;font-size:0.78rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;
     }
-    .type-btn:hover{
-      border-color:#2D1B69;
-      background:#EDE9FF;color:#2D1B69;
+    .type-btn:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
+    .type-group{margin-bottom:12px;width:100%}
+    .type-group-label{
+      font-size:0.72rem;font-weight:700;color:#94A3B8;
+      letter-spacing:0.06em;text-transform:uppercase;
+      margin-bottom:8px;text-align:left;
     }
-    /* SETTINGS SECTIONS */
     .settings-section{
       background:#fff;border-radius:14px;
-      border:1.5px solid #E2DAD0;
-      padding:22px;margin-bottom:16px;
+      border:1.5px solid #E2DAD0;padding:22px;margin-bottom:16px;
     }
-    .settings-title{
-      font-family:'Syne',sans-serif;font-weight:700;
-      font-size:0.95rem;margin-bottom:16px;
-    }
+    .settings-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:16px}
     .setting-row{
-      display:flex;align-items:center;
-      justify-content:space-between;
-      padding:10px 0;
-      border-bottom:1px solid #E2DAD0;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:10px 0;border-bottom:1px solid #E2DAD0;
     }
     .setting-row:last-child{border-bottom:none}
-    .setting-row.col{
-      flex-direction:column;
-      align-items:flex-start;
-      gap:8px;
-    }
+    .setting-row.col{flex-direction:column;align-items:flex-start;gap:8px}
     .setting-info .setting-name{font-size:0.88rem;font-weight:600}
     .setting-info .setting-desc{font-size:0.76rem;color:#64748B;margin-top:2px}
-    .setting-hint{
-      font-size:0.72rem;color:#94A3B8;
-      margin-top:4px;font-style:italic;
-    }
+    .setting-hint{font-size:0.72rem;color:#94A3B8;margin-top:4px;font-style:italic}
     .setting-input{
-      width:100%;padding:10px 14px;
-      border-radius:8px;
-      border:1.5px solid #E2DAD0;
-      background:#fff;color:#0F0E1A;
-      font-size:0.88rem;
-      font-family:'DM Sans',sans-serif;
-      outline:none;transition:border-color 0.2s;
+      width:100%;padding:10px 14px;border-radius:8px;border:1.5px solid #E2DAD0;
+      background:#fff;color:#0F0E1A;font-size:0.88rem;
+      font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;
     }
     .setting-input:focus{border-color:#2D1B69}
     .setting-input::placeholder{color:#C4B9AA}
     .prize-type-btn{
-      padding:8px 14px;border-radius:8px;
-      border:1.5px solid #E2DAD0;
-      background:#fff;color:#0F0E1A;
-      font-size:0.82rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;
-      cursor:pointer;transition:all 0.2s;
+      padding:8px 14px;border-radius:8px;border:1.5px solid #E2DAD0;
+      background:#fff;color:#0F0E1A;font-size:0.82rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;
     }
     .prize-type-btn:hover{border-color:#2D1B69;background:#EDE9FF}
-    .prize-type-btn.active{
-      border-color:#D97706;
-      background:#FEF3C7;color:#92400E;
-    }
+    .prize-type-btn.active{border-color:#D97706;background:#FEF3C7;color:#92400E}
     .format-tag{
-      display:inline-block;
-      padding:2px 8px;border-radius:4px;
-      background:#F5F0E8;color:#64748B;
-      font-size:0.7rem;font-weight:600;
-      margin-right:4px;margin-top:4px;
-      border:1px solid #E2DAD0;
+      display:inline-block;padding:2px 8px;border-radius:4px;
+      background:#F5F0E8;color:#64748B;font-size:0.7rem;font-weight:600;
+      margin-right:4px;margin-top:4px;border:1px solid #E2DAD0;
     }
-    /* TOAST */
     .toast{
-      position:fixed;bottom:24px;left:50%;
-      transform:translateX(-50%);
-      background:#0F0E1A;color:#fff;
-      padding:12px 24px;border-radius:10px;
-      font-size:0.88rem;font-weight:600;
-      display:none;z-index:999;
+      position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+      background:#0F0E1A;color:#fff;padding:12px 24px;border-radius:10px;
+      font-size:0.88rem;font-weight:600;display:none;z-index:999;
       box-shadow:0 4px 20px rgba(0,0,0,0.3);
     }
     .loading-screen{
-      display:flex;align-items:center;
-      justify-content:center;
+      display:flex;align-items:center;justify-content:center;
       min-height:100vh;background:#0F0E1A;
     }
     .spinner{
-      width:32px;height:32px;
-      border:3px solid rgba(217,119,6,0.2);
+      width:32px;height:32px;border:3px solid rgba(217,119,6,0.2);
       border-top-color:#D97706;border-radius:50%;
       animation:spin 0.8s linear infinite;
-      margin:0 auto;
     }
     @keyframes spin{to{transform:rotate(360deg)}}
   </style>
 </head>
 <body>
-
-<div id="loading-screen" class="loading-screen">
-  <div class="spinner"></div>
-</div>
-
+<div id="loading-screen" class="loading-screen"><div class="spinner"></div></div>
 <div id="app" style="display:none">
   <nav>
     <a href="/dashboard" class="nav-logo">
@@ -312,188 +278,119 @@
     </a>
     <div class="nav-actions">
       <a href="/dashboard" class="btn-ghost">← Back</a>
+      <button class="btn-preview" onclick="previewSurvey()">👁 Preview</button>
       <button class="btn-ghost" onclick="saveDraft()">Save draft</button>
       <button class="btn-primary" id="publish-btn" onclick="publishSurvey()">Publish →</button>
     </div>
   </nav>
-
   <div class="main">
-
-    <!-- TITLE -->
     <div class="title-section">
-      <input class="title-input" id="survey-title"
-        placeholder="e.g. Customer Satisfaction Survey" maxlength="100">
-      <textarea class="desc-input" id="survey-desc"
-        placeholder="e.g. This takes 2 minutes. Help us improve." rows="2"></textarea>
+      <input class="title-input" id="survey-title" placeholder="e.g. Customer Satisfaction Survey" maxlength="100">
+      <textarea class="desc-input" id="survey-desc" placeholder="e.g. This takes 2 minutes. Help us improve." rows="2"></textarea>
     </div>
-
-    <!-- QUESTIONS -->
     <div class="questions-list" id="questions-list"></div>
-
-    <!-- ADD QUESTION -->
     <div class="add-question-section">
       <div class="add-question-title">Add a question</div>
       <div class="question-types">
-        <button class="type-btn" onclick="addQuestion('multiple')">◉ Multiple choice</button>
-        <button class="type-btn" onclick="addQuestion('text')">✏️ Short text</button>
-        <button class="type-btn" onclick="addQuestion('textarea')">📝 Long text</button>
-        <button class="type-btn" onclick="addQuestion('rating')">⭐ Rating</button>
-        <button class="type-btn" onclick="addQuestion('yesno')">✓ Yes / No</button>
+        <div class="type-group">
+          <div class="type-group-label">Choice</div>
+          <button class="type-btn" onclick="addQuestion('multiple')">◉ Multiple choice</button>
+          <button class="type-btn" onclick="addQuestion('checkbox')">☑ Checkboxes</button>
+          <button class="type-btn" onclick="addQuestion('dropdown')">▾ Dropdown</button>
+          <button class="type-btn" onclick="addQuestion('yesno')">✓ Yes / No</button>
+        </div>
+        <div class="type-group">
+          <div class="type-group-label">Text</div>
+          <button class="type-btn" onclick="addQuestion('text')">✏️ Short text</button>
+          <button class="type-btn" onclick="addQuestion('textarea')">📝 Long text</button>
+          <button class="type-btn" onclick="addQuestion('email')">📧 Email</button>
+          <button class="type-btn" onclick="addQuestion('phone')">📱 Phone</button>
+          <button class="type-btn" onclick="addQuestion('number')">🔢 Number</button>
+        </div>
+        <div class="type-group">
+          <div class="type-group-label">Scale & Date</div>
+          <button class="type-btn" onclick="addQuestion('rating')">⭐ Rating 1-5</button>
+          <button class="type-btn" onclick="addQuestion('scale')">📊 Scale 1-10</button>
+          <button class="type-btn" onclick="addQuestion('date')">📅 Date</button>
+        </div>
+        <div class="type-group">
+          <div class="type-group-label">Special</div>
+          <button class="type-btn" onclick="addQuestion('file')">📎 File URL</button>
+          <button class="type-btn" onclick="addQuestion('heading')">📌 Section heading</button>
+          <button class="type-btn" onclick="addQuestion('pledge')">🤝 Pledge / Statement</button>
+          <button class="type-btn" onclick="addQuestion('quiz')">🎓 Quiz MCQ</button>
+        </div>
       </div>
     </div>
 
     <!-- WELCOME PAGE -->
     <div class="settings-section">
       <div class="settings-title">🎨 Welcome page</div>
-
       <div class="setting-row col">
-        <div class="setting-info">
-          <div class="setting-name">Your logo</div>
-          <div class="setting-desc">Shown above the survey title</div>
-          <div class="setting-hint">
-            <span class="format-tag">PNG</span>
-            <span class="format-tag">JPG</span>
-            <span class="format-tag">SVG</span>
-            Paste a direct image URL · Max recommended size: 200×60px
-          </div>
-        </div>
-        <input class="setting-input" id="welcome-logo"
-          placeholder="e.g. https://yoursite.com/logo.png">
+        <div class="setting-info"><div class="setting-name">Your logo</div><div class="setting-desc">Shown above the survey title</div>
+        <div class="setting-hint"><span class="format-tag">PNG</span><span class="format-tag">JPG</span><span class="format-tag">SVG</span> Direct image URL · Max 200×60px</div></div>
+        <input class="setting-input" id="welcome-logo" placeholder="e.g. https://yoursite.com/logo.png">
       </div>
-
       <div class="setting-row col">
-        <div class="setting-info">
-          <div class="setting-name">Custom headline</div>
-          <div class="setting-desc">Replaces the survey title on welcome screen</div>
-          <div class="setting-hint">Leave blank to use survey title</div>
-        </div>
-        <input class="setting-input" id="welcome-headline"
-          placeholder="e.g. We'd love your feedback!">
+        <div class="setting-info"><div class="setting-name">Custom headline</div><div class="setting-hint">Leave blank to use survey title</div></div>
+        <input class="setting-input" id="welcome-headline" placeholder="e.g. We'd love your feedback!">
       </div>
-
       <div class="setting-row col">
-        <div class="setting-info">
-          <div class="setting-name">Start button text</div>
-          <div class="setting-desc">Text on the button respondents click to begin</div>
-          <div class="setting-hint">Default: "Let's go →"</div>
-        </div>
-        <input class="setting-input" id="welcome-btn-text"
-          placeholder="e.g. Start survey →">
+        <div class="setting-info"><div class="setting-name">Start button text</div><div class="setting-hint">Default: "Let's go →"</div></div>
+        <input class="setting-input" id="welcome-btn-text" placeholder="e.g. Start survey →">
       </div>
-
       <div class="setting-row col">
-        <div class="setting-info">
-          <div class="setting-name">Background color</div>
-          <div class="setting-desc">Pick a color or enter hex code</div>
-          <div class="setting-hint">Default: #0F0E1A (dark)</div>
-        </div>
+        <div class="setting-info"><div class="setting-name">Background color</div></div>
         <div style="display:flex;gap:10px;align-items:center;width:100%">
-          <input class="setting-input" id="welcome-bg-color"
-            placeholder="#0F0E1A" style="flex:1">
-          <input type="color" id="welcome-color-picker"
-            value="#0F0E1A"
+          <input class="setting-input" id="welcome-bg-color" placeholder="#0F0E1A" style="flex:1">
+          <input type="color" id="welcome-color-picker" value="#0F0E1A"
             oninput="document.getElementById('welcome-bg-color').value=this.value"
             style="width:44px;height:44px;border-radius:8px;border:1.5px solid #E2DAD0;cursor:pointer;padding:2px;flex-shrink:0">
         </div>
       </div>
-
       <div class="setting-row col">
-        <div class="setting-info">
-          <div class="setting-name">Background image</div>
-          <div class="setting-desc">Full-screen image behind the welcome text</div>
-          <div class="setting-hint">
-            <span class="format-tag">JPG</span>
-            <span class="format-tag">PNG</span>
-            <span class="format-tag">WEBP</span>
-            Paste a direct image URL · Recommended: 1920×1080px
-            · Overrides background color
-          </div>
-        </div>
-        <input class="setting-input" id="welcome-bg-image"
-          placeholder="e.g. https://images.unsplash.com/photo-...">
+        <div class="setting-info"><div class="setting-name">Background image URL</div>
+        <div class="setting-hint"><span class="format-tag">JPG</span><span class="format-tag">PNG</span><span class="format-tag">WEBP</span> 1920×1080px recommended · Overrides color</div></div>
+        <input class="setting-input" id="welcome-bg-image" placeholder="e.g. https://images.unsplash.com/...">
       </div>
-
       <div class="setting-row col" style="border-bottom:none">
-        <div class="setting-info">
-          <div class="setting-name">Background video</div>
-          <div class="setting-desc">Looping video plays behind the welcome screen</div>
-          <div class="setting-hint">
-            <span class="format-tag">YouTube</span>
-            <span class="format-tag">Vimeo</span>
-            Paste the full video URL · e.g. https://youtube.com/watch?v=VIDEOID
-            · Video plays muted and looped · Overrides image and color
-          </div>
-        </div>
-        <input class="setting-input" id="welcome-bg-video"
-          placeholder="e.g. https://youtube.com/watch?v=dQw4w9WgXcQ">
+        <div class="setting-info"><div class="setting-name">Background video URL</div>
+        <div class="setting-hint"><span class="format-tag">YouTube</span><span class="format-tag">Vimeo</span> e.g. https://youtube.com/watch?v=VIDEOID · Overrides image</div></div>
+        <input class="setting-input" id="welcome-bg-video" placeholder="e.g. https://youtube.com/watch?v=...">
       </div>
     </div>
 
     <!-- THANK YOU PAGE -->
     <div class="settings-section">
       <div class="settings-title">🙏 Thank you page</div>
-
       <div class="setting-row col">
-        <div class="setting-info">
-          <div class="setting-name">Custom headline</div>
-          <div class="setting-desc">Main message after submission</div>
-          <div class="setting-hint">Default: "Thank you!"</div>
-        </div>
-        <input class="setting-input" id="thankyou-headline"
-          placeholder="e.g. You're amazing, thank you!">
+        <div class="setting-info"><div class="setting-name">Custom headline</div><div class="setting-hint">Default: "Thank you!"</div></div>
+        <input class="setting-input" id="thankyou-headline" placeholder="e.g. Thank you so much!">
       </div>
-
       <div class="setting-row col">
-        <div class="setting-info">
-          <div class="setting-name">Custom message</div>
-          <div class="setting-desc">Supporting text below the headline</div>
-          <div class="setting-hint">Default: "Your response has been recorded."</div>
-        </div>
-        <input class="setting-input" id="thankyou-message"
-          placeholder="e.g. We'll use your feedback to improve our service.">
+        <div class="setting-info"><div class="setting-name">Custom message</div><div class="setting-hint">Default: "Your response has been recorded."</div></div>
+        <input class="setting-input" id="thankyou-message" placeholder="e.g. We'll use your feedback to improve.">
       </div>
-
       <div class="setting-row col">
-        <div class="setting-info">
-          <div class="setting-name">Redirect URL</div>
-          <div class="setting-desc">Send respondents to your website after 3 seconds</div>
-          <div class="setting-hint">
-            <span class="format-tag">https://</span>
-            Must start with https:// · Leave blank to stay on thank you page
-          </div>
-        </div>
-        <input class="setting-input" id="thankyou-redirect"
-          placeholder="e.g. https://yourwebsite.com/thank-you">
+        <div class="setting-info"><div class="setting-name">Redirect URL</div><div class="setting-hint">Send respondents to your website after 3 seconds</div></div>
+        <input class="setting-input" id="thankyou-redirect" placeholder="e.g. https://yourwebsite.com">
       </div>
-
       <div class="setting-row" style="border-bottom:none">
-        <div class="setting-info">
-          <div class="setting-name">Show social share buttons</div>
-          <div class="setting-desc">Let respondents share the survey link</div>
-        </div>
-        <button class="toggle" id="toggle-share"
-          onclick="toggleSetting('share')"></button>
+        <div class="setting-info"><div class="setting-name">Show social share buttons</div></div>
+        <button class="toggle" id="toggle-share" onclick="toggleSetting('share')"></button>
       </div>
     </div>
 
     <!-- PRIZE -->
     <div class="settings-section">
       <div class="settings-title">🎁 Prize &amp; Incentive</div>
-
       <div class="setting-row">
-        <div class="setting-info">
-          <div class="setting-name">Enable prize</div>
-          <div class="setting-desc">Show a prize badge on the welcome page</div>
-        </div>
-        <button class="toggle" id="toggle-prize"
-          onclick="togglePrize()"></button>
+        <div class="setting-info"><div class="setting-name">Enable prize</div><div class="setting-desc">Show prize badge on welcome page</div></div>
+        <button class="toggle" id="toggle-prize" onclick="togglePrize()"></button>
       </div>
-
       <div id="prize-fields" style="display:none">
         <div class="setting-row col">
-          <div class="setting-info">
-            <div class="setting-name">Prize type</div>
-          </div>
+          <div class="setting-info"><div class="setting-name">Prize type</div></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
             <button class="prize-type-btn active" onclick="selectPrizeType('cash',this)">💵 Cash</button>
             <button class="prize-type-btn" onclick="selectPrizeType('voucher',this)">🎟 Voucher</button>
@@ -501,46 +398,25 @@
             <button class="prize-type-btn" onclick="selectPrizeType('other',this)">✦ Other</button>
           </div>
         </div>
-
         <div class="setting-row col">
-          <div class="setting-info">
-            <div class="setting-name">Prize description</div>
-            <div class="setting-desc">Shown as a badge on welcome page</div>
-            <div class="setting-hint">Be specific — e.g. "₹500 Amazon voucher" not just "voucher"</div>
-          </div>
-          <input class="setting-input" id="prize-description"
-            placeholder="e.g. ₹500 Amazon voucher">
+          <div class="setting-info"><div class="setting-name">Prize description</div><div class="setting-hint">e.g. ₹500 Amazon voucher</div></div>
+          <input class="setting-input" id="prize-description" placeholder="e.g. ₹500 Amazon voucher">
         </div>
-
         <div class="setting-row col">
-          <div class="setting-info">
-            <div class="setting-name">Number of winners</div>
-            <div class="setting-desc">How many people will win</div>
-            <div class="setting-hint">e.g. 1 = one lucky winner, 3 = three winners</div>
-          </div>
-          <input class="setting-input" id="prize-winners"
-            type="number" min="1" placeholder="e.g. 3"
-            style="max-width:140px">
+          <div class="setting-info"><div class="setting-name">Number of winners</div></div>
+          <input class="setting-input" id="prize-winners" type="number" min="1" placeholder="e.g. 3" style="max-width:140px">
         </div>
-
         <div class="setting-row col">
-          <div class="setting-info">
-            <div class="setting-name">How winners are selected</div>
-          </div>
-          <select class="setting-input" id="prize-selection"
-            style="max-width:260px">
+          <div class="setting-info"><div class="setting-name">Winner selection</div></div>
+          <select class="setting-input" id="prize-selection" style="max-width:260px">
             <option value="random">🎲 Random draw</option>
             <option value="best">⭐ Best answer</option>
             <option value="first">🏃 First N respondents</option>
           </select>
         </div>
-
         <div class="setting-row col" style="border-bottom:none">
-          <div class="setting-info">
-            <div class="setting-name">How winners are notified</div>
-          </div>
-          <select class="setting-input" id="prize-notification"
-            style="max-width:260px">
+          <div class="setting-info"><div class="setting-name">Winner notification</div></div>
+          <select class="setting-input" id="prize-notification" style="max-width:260px">
             <option value="manual">📧 I will contact winners manually</option>
             <option value="email">✉️ SwoopForm sends automatic email</option>
             <option value="leaderboard">🏆 Show on public leaderboard</option>
@@ -549,59 +425,39 @@
       </div>
     </div>
 
-    <!-- SURVEY SETTINGS -->
+    <!-- SETTINGS -->
     <div class="settings-section">
       <div class="settings-title">⚙️ Survey settings</div>
-
       <div class="setting-row">
-        <div class="setting-info">
-          <div class="setting-name">Survey style</div>
-          <div class="setting-desc">How questions appear to respondents</div>
-        </div>
-        <select id="survey-style"
-          style="padding:6px 12px;border-radius:8px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none;">
+        <div class="setting-info"><div class="setting-name">Survey style</div><div class="setting-desc">How questions appear to respondents</div></div>
+        <select id="survey-style" style="padding:6px 12px;border-radius:8px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none">
           <option value="conversational">✨ One at a time</option>
           <option value="classic">📋 All on one page</option>
         </select>
       </div>
-
       <div class="setting-row">
-        <div class="setting-info">
-          <div class="setting-name">Public survey</div>
-          <div class="setting-desc">Show in SwoopForm discovery directory</div>
-        </div>
-        <button class="toggle" id="toggle-public"
-          onclick="toggleSetting('public')"></button>
+        <div class="setting-info"><div class="setting-name">Public survey</div><div class="setting-desc">Show in SwoopForm discovery directory</div></div>
+        <button class="toggle" id="toggle-public" onclick="toggleSetting('public')"></button>
       </div>
-
       <div class="setting-row">
-        <div class="setting-info">
-          <div class="setting-name">Collect email addresses</div>
-          <div class="setting-desc">Ask respondents for their email</div>
-        </div>
-        <button class="toggle" id="toggle-email"
-          onclick="toggleSetting('email')"></button>
+        <div class="setting-info"><div class="setting-name">Collect email addresses</div><div class="setting-desc">Ask respondents for their email</div></div>
+        <button class="toggle" id="toggle-email" onclick="toggleSetting('email')"></button>
       </div>
-
       <div class="setting-row" style="border-bottom:none">
-        <div class="setting-info">
-          <div class="setting-name">One response per person</div>
-          <div class="setting-desc">Prevent duplicate submissions</div>
-        </div>
-        <button class="toggle" id="toggle-once"
-          onclick="toggleSetting('once')"></button>
+        <div class="setting-info"><div class="setting-name">One response per person</div><div class="setting-desc">Prevent duplicate submissions</div></div>
+        <button class="toggle" id="toggle-once" onclick="toggleSetting('once')"></button>
       </div>
     </div>
-
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
   import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
   import { getFirestore, collection, addDoc, doc, updateDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+  const SHEETS_SCRIPT = 'https://script.google.com/macros/s/AKfycbx3evlOErDpdpR_TK_FvQaEEI5Kr6HvJYc46A_OG0SzIqJz8Gn0OKvUQxj7uoBLgyGH/exec';
 
   const firebaseConfig = {
     apiKey: "AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",
@@ -611,30 +467,30 @@
     messagingSenderId: "378850092986",
     appId: "1:378850092986:web:4fed92128136e048fa5f83"
   };
-  
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
 
-const SHEETS_SCRIPT = 'https://script.google.com/macros/s/AKfycbx3evlOErDpdpR_TK_FvQaEEI5Kr6HvJYc46A_OG0SzIqJz8Gn0OKvUQxj7uoBLgyGH/exec';
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
   let currentUser = null;
   let questions = [];
-  let settings = { public: false, email: false, once: false, share: false, prize: false };
+  let settings = { public:false, email:false, once:false, share:false, prize:false };
   let savedSurveyId = null;
-let selectedPrizeType = 'cash';
-let questions_snapshot = [];
+  let selectedPrizeType = 'cash';
+  let questionsSnapshot = [];
 
- function syncFromDOM() {
+  function syncFromDOM() {
     questions.forEach(q => {
       const textEl = document.getElementById('q-text-' + q.id);
       if (textEl) q.text = textEl.value;
-      if (q.type === 'multiple') {
+      const subEl = document.getElementById('q-sub-' + q.id);
+      if (subEl) q.subtext = subEl.value;
+      if (['multiple','checkbox','dropdown','quiz'].includes(q.type)) {
         const optEls = document.querySelectorAll('.opt-' + q.id);
         q.options = Array.from(optEls).map(el => el.value);
       }
     });
-    questions_snapshot = [...questions]; // ADD THIS LINE
+    questionsSnapshot = [...questions];
   }
 
   onAuthStateChanged(auth, (user) => {
@@ -642,14 +498,13 @@ let questions_snapshot = [];
     currentUser = user;
     document.getElementById('loading-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-    questions = [{ id: Date.now(), type: 'multiple', text: '', options: ['',''], required: false }];
+    questions = [{ id: Date.now(), type:'multiple', text:'', options:['',''], required:false }];
     renderQuestions();
   });
 
   function showToast(msg, duration=2500) {
     const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.style.display = 'block';
+    t.textContent = msg; t.style.display = 'block';
     setTimeout(() => t.style.display = 'none', duration);
   }
 
@@ -657,13 +512,11 @@ let questions_snapshot = [];
     settings[key] = !settings[key];
     document.getElementById('toggle-' + key).classList.toggle('on', settings[key]);
   }
-
   window.togglePrize = function() {
     settings.prize = !settings.prize;
     document.getElementById('toggle-prize').classList.toggle('on', settings.prize);
     document.getElementById('prize-fields').style.display = settings.prize ? 'block' : 'none';
   }
-
   window.selectPrizeType = function(type, el) {
     selectedPrizeType = type;
     document.querySelectorAll('.prize-type-btn').forEach(b => b.classList.remove('active'));
@@ -673,10 +526,10 @@ let questions_snapshot = [];
   window.addQuestion = function(type) {
     syncFromDOM();
     const id = Date.now();
-    questions.push({ id, type, text: '', options: ['',''], required: false });
+    questions.push({ id, type, text:'', subtext:'', options:['',''], required:false, correctIndex:-1 });
     renderQuestions();
     setTimeout(() => {
-      const el = document.getElementById('q-text-' + id);
+      const el = document.getElementById('q-text-' + id) || document.getElementById('q-heading-' + id);
       if (el) { el.focus(); el.scrollIntoView({ behavior:'smooth', block:'center' }); }
     }, 60);
   }
@@ -720,9 +573,18 @@ let questions_snapshot = [];
     const q = questions.find(q => q.id === qId);
     if (q && q.options.length > 2) {
       q.options.splice(idx, 1);
+      if (q.correctIndex === idx) q.correctIndex = -1;
+      else if (q.correctIndex > idx) q.correctIndex--;
       renderQuestions();
-    } else {
-      showToast('Need at least 2 options');
+    } else { showToast('Need at least 2 options'); }
+  }
+
+  window.markCorrect = function(qId, idx) {
+    syncFromDOM();
+    const q = questions.find(q => q.id === qId);
+    if (q) {
+      q.correctIndex = q.correctIndex === idx ? -1 : idx;
+      renderQuestions();
     }
   }
 
@@ -732,64 +594,222 @@ let questions_snapshot = [];
 
   function renderQuestions() {
     const list = document.getElementById('questions-list');
-    list.innerHTML = questions.map((q, i) => `
-      <div class="question-card" id="qcard-${q.id}">
-        <div class="q-header">
-          <div class="q-number">${i+1}</div>
-          <select class="q-type-select" onchange="changeType(${q.id},this.value)">
-            <option value="multiple" ${q.type==='multiple'?'selected':''}>Multiple choice</option>
-            <option value="text" ${q.type==='text'?'selected':''}>Short text</option>
-            <option value="textarea" ${q.type==='textarea'?'selected':''}>Long text</option>
-            <option value="rating" ${q.type==='rating'?'selected':''}>Rating (1-5)</option>
-            <option value="yesno" ${q.type==='yesno'?'selected':''}>Yes / No</option>
-          </select>
-          <button class="q-delete" onclick="deleteQuestion(${q.id})">✕</button>
-        </div>
-        <input class="q-input" id="q-text-${q.id}"
-          placeholder="e.g. How satisfied are you with our service?"
-          value="${escHtml(q.text)}">
-        ${q.type==='multiple' ? `
+    list.innerHTML = questions.map((q, i) => {
+      const isHeading = q.type === 'heading';
+      const isPledge = q.type === 'pledge';
+      const isQuiz = q.type === 'quiz';
+      const hasOptions = ['multiple','checkbox','dropdown','quiz'].includes(q.type);
+
+      let inputHtml = '';
+
+      if (isHeading) {
+        inputHtml = `
+          <input class="heading-input" id="q-heading-${q.id}"
+            placeholder="Section title e.g. Personal Information"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <textarea class="subheading-input" id="q-sub-${q.id}"
+            placeholder="Optional description for this section" rows="2"
+            oninput="questions.find(x=>x.id===${q.id}).subtext=this.value">${escHtml(q.subtext||'')}</textarea>
+        `;
+      } else if (isPledge) {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="e.g. I pledge to reduce my carbon footprint by 20% this year"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div class="pledge-preview">
+            <div class="pledge-preview-text">${q.text || 'Your pledge statement will appear here...'}</div>
+            <div class="pledge-checkbox-preview">
+              <div class="pledge-box"></div>
+              <span>I agree and commit to this pledge</span>
+            </div>
+          </div>
+        `;
+      } else if (isQuiz) {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="e.g. What is the capital of India?"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div class="correct-hint">Click ✓ to mark the correct answer</div>
           <div class="options-list">
-            ${q.options.map((opt,oi) => `
+            ${(q.options||[]).map((opt, oi) => `
               <div class="option-row">
                 <div class="option-bullet"></div>
                 <input class="option-input opt-${q.id}"
-                  value="${escHtml(opt)}"
-                  placeholder="Option ${oi+1}">
+                  value="${escHtml(opt)}" placeholder="Option ${oi+1}">
+                <button class="correct-mark ${q.correctIndex===oi?'correct':''}"
+                  onclick="markCorrect(${q.id},${oi})" title="Mark as correct">✓</button>
                 <button class="option-remove" onclick="removeOption(${q.id},${oi})">✕</button>
               </div>
             `).join('')}
           </div>
           <button class="add-option-btn" onclick="addOption(${q.id})">+ Add option</button>
-        ` : ''}
-        ${q.type==='yesno' ? `
+        `;
+      } else if (hasOptions) {
+        const bulletClass = q.type === 'checkbox' ? 'option-bullet square' : 'option-bullet';
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="e.g. How satisfied are you with our service?"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
           <div class="options-list">
-            <div class="option-row"><div class="option-bullet"></div><span style="font-size:0.88rem;font-weight:600">Yes</span></div>
-            <div class="option-row"><div class="option-bullet"></div><span style="font-size:0.88rem;font-weight:600">No</span></div>
+            ${(q.options||[]).map((opt, oi) => `
+              <div class="option-row">
+                <div class="${bulletClass}"></div>
+                <input class="option-input opt-${q.id}"
+                  value="${escHtml(opt)}" placeholder="Option ${oi+1}">
+                <button class="option-remove" onclick="removeOption(${q.id},${oi})">✕</button>
+              </div>
+            `).join('')}
           </div>
-        ` : ''}
-        ${q.type==='rating' ? `
+          <button class="add-option-btn" onclick="addOption(${q.id})">+ Add option</button>
+        `;
+      } else if (q.type === 'rating') {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="e.g. How would you rate our service?"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
           <div class="rating-preview">
             ${[1,2,3,4,5].map(n=>`<div class="rating-dot">${n}</div>`).join('')}
           </div>
           <div style="font-size:0.75rem;color:#64748B;margin-top:8px">Respondents pick 1 to 5</div>
-        ` : ''}
-        ${q.type==='text' ? `<div style="background:#F5F0E8;border-radius:8px;padding:12px;font-size:0.85rem;color:#C4B9AA">Short answer field...</div>` : ''}
-        ${q.type==='textarea' ? `<div style="background:#F5F0E8;border-radius:8px;padding:12px;font-size:0.85rem;color:#C4B9AA;min-height:60px">Long answer field...</div>` : ''}
-        <div class="q-footer">
-          <button class="toggle ${q.required?'on':''}" id="req-${q.id}" onclick="toggleRequired(${q.id})"></button>
-          <span class="toggle-label">Required question</span>
+        `;
+      } else if (q.type === 'scale') {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="e.g. How likely are you to recommend us? (1-10)"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div class="scale-preview">
+            ${[1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="scale-dot">${n}</div>`).join('')}
+          </div>
+          <div style="font-size:0.75rem;color:#64748B;margin-top:8px">Respondents pick 1 to 10</div>
+        `;
+      } else if (q.type === 'yesno') {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="e.g. Would you recommend us to a friend?"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div class="options-list">
+            <div class="option-row"><div class="option-bullet"></div><span style="font-size:0.88rem;font-weight:600">Yes</span></div>
+            <div class="option-row"><div class="option-bullet"></div><span style="font-size:0.88rem;font-weight:600">No</span></div>
+          </div>
+        `;
+      } else if (q.type === 'date') {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="e.g. What is your date of birth?"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div class="preview-field">📅 Date picker — respondents select a date</div>
+        `;
+      } else if (q.type === 'number') {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="e.g. How many employees does your company have?"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div class="preview-field">🔢 Number input — respondents enter a number</div>
+        `;
+      } else if (q.type === 'email') {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="e.g. What is your email address?"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div class="preview-field">📧 Email input — validates email format</div>
+        `;
+      } else if (q.type === 'phone') {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="e.g. What is your phone number?"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div class="preview-field">📱 Phone input — respondents enter phone number</div>
+        `;
+      } else if (q.type === 'text') {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="e.g. What is your full name?"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div class="preview-field">Short answer field...</div>
+        `;
+      } else if (q.type === 'textarea') {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="e.g. Please describe your experience in detail"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div class="preview-field" style="min-height:60px">Long answer field...</div>
+        `;
+      } else if (q.type === 'file') {
+        inputHtml = `
+          <input class="q-input" id="q-text-${q.id}"
+            placeholder="e.g. Please share a link to your portfolio"
+            value="${escHtml(q.text)}"
+            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
+          <div class="preview-field">📎 Respondents paste a file/document URL</div>
+        `;
+      }
+
+      const showFooter = !isHeading;
+      const qLabel = isHeading ? '—' : i + 1;
+
+      return `
+        <div class="question-card ${isHeading?'type-heading':''}" id="qcard-${q.id}">
+          <div class="q-header">
+            <div class="q-number">${qLabel}</div>
+            <select class="q-type-select" onchange="changeType(${q.id},this.value)">
+              <optgroup label="Choice">
+                <option value="multiple" ${q.type==='multiple'?'selected':''}>◉ Multiple choice</option>
+                <option value="checkbox" ${q.type==='checkbox'?'selected':''}>☑ Checkboxes</option>
+                <option value="dropdown" ${q.type==='dropdown'?'selected':''}>▾ Dropdown</option>
+                <option value="yesno" ${q.type==='yesno'?'selected':''}>✓ Yes / No</option>
+              </optgroup>
+              <optgroup label="Text">
+                <option value="text" ${q.type==='text'?'selected':''}>✏️ Short text</option>
+                <option value="textarea" ${q.type==='textarea'?'selected':''}>📝 Long text</option>
+                <option value="email" ${q.type==='email'?'selected':''}>📧 Email</option>
+                <option value="phone" ${q.type==='phone'?'selected':''}>📱 Phone</option>
+                <option value="number" ${q.type==='number'?'selected':''}>🔢 Number</option>
+              </optgroup>
+              <optgroup label="Scale & Date">
+                <option value="rating" ${q.type==='rating'?'selected':''}>⭐ Rating 1-5</option>
+                <option value="scale" ${q.type==='scale'?'selected':''}>📊 Scale 1-10</option>
+                <option value="date" ${q.type==='date'?'selected':''}>📅 Date</option>
+              </optgroup>
+              <optgroup label="Special">
+                <option value="file" ${q.type==='file'?'selected':''}>📎 File URL</option>
+                <option value="heading" ${q.type==='heading'?'selected':''}>📌 Section heading</option>
+                <option value="pledge" ${q.type==='pledge'?'selected':''}>🤝 Pledge</option>
+                <option value="quiz" ${q.type==='quiz'?'selected':''}>🎓 Quiz MCQ</option>
+              </optgroup>
+            </select>
+            <button class="q-delete" onclick="deleteQuestion(${q.id})">✕</button>
+          </div>
+          ${inputHtml}
+          ${showFooter ? `
+            <div class="q-footer">
+              <button class="toggle ${q.required?'on':''}" id="req-${q.id}" onclick="toggleRequired(${q.id})"></button>
+              <span class="toggle-label">${isPledge ? 'Must agree to proceed' : 'Required question'}</span>
+            </div>
+          ` : ''}
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   async function saveSurvey(status) {
     syncFromDOM();
     const title = document.getElementById('survey-title').value.trim();
     if (!title) { showToast('Please add a survey title'); return null; }
-    const validQuestions = questions.filter(q => q.text.trim());
-    if (!validQuestions.length) { showToast('Please fill in at least one question'); return null; }
+    const validQuestions = questions.filter(q => q.type === 'heading' || q.text.trim());
+    if (!validQuestions.length) { showToast('Please add at least one question'); return null; }
 
     const surveyData = {
       title,
@@ -812,8 +832,7 @@ let questions_snapshot = [];
         showShare: settings.share || false,
       },
       prize: settings.prize ? {
-        enabled: true,
-        type: selectedPrizeType,
+        enabled: true, type: selectedPrizeType,
         description: document.getElementById('prize-description').value.trim(),
         winners: document.getElementById('prize-winners').value || '1',
         selection: document.getElementById('prize-selection').value,
@@ -822,7 +841,7 @@ let questions_snapshot = [];
       status,
       userId: currentUser.uid,
       responseCount: 0,
-      questionCount: validQuestions.length,
+      questionCount: validQuestions.filter(q => q.type !== 'heading').length,
       updatedAt: serverTimestamp()
     };
 
@@ -843,33 +862,39 @@ let questions_snapshot = [];
     }
   }
 
+  window.previewSurvey = async function() {
+    const title = document.getElementById('survey-title').value.trim();
+    if (!title) { showToast('Please add a survey title first'); return; }
+    const id = await saveSurvey('draft');
+    if (id) {
+      window.open('/s/?id=' + id + '&preview=1', '_blank');
+    }
+  }
+
   window.saveDraft = async function() {
     const id = await saveSurvey('draft');
     if (id) showToast('✓ Draft saved!');
   }
 
- window.publishSurvey = async function() {
+  window.publishSurvey = async function() {
     const btn = document.getElementById('publish-btn');
-    btn.disabled = true;
-    btn.textContent = 'Publishing...';
+    btn.disabled = true; btn.textContent = 'Publishing...';
     const id = await saveSurvey('active');
     if (id) {
-      // Create Google Sheet automatically
       btn.textContent = 'Creating Sheet...';
       try {
-        const questions = questions_snapshot.map(q => q.text).filter(t => t.trim());
+        const qs = questionsSnapshot.map(q => q.text).filter(t => t && t.trim());
         const response = await fetch(SHEETS_SCRIPT, {
-          method: 'POST',
+          method:'POST',
           body: JSON.stringify({
-            action: 'create_sheet',
+            action:'create_sheet',
             surveyTitle: document.getElementById('survey-title').value.trim(),
-            questions: questions,
+            questions: qs,
             hostEmail: currentUser.email
           })
         });
         const result = await response.json();
         if (result.success) {
-          // Save sheet info to Firestore
           await updateDoc(doc(db, 'surveys', id), {
             sheetId: result.sheetId,
             sheetUrl: result.sheetUrl
@@ -879,13 +904,12 @@ let questions_snapshot = [];
           showToast('🎉 Survey published!', 1500);
         }
       } catch(e) {
-        console.error('Sheet creation error:', e);
+        console.error(e);
         showToast('🎉 Survey published!', 1500);
       }
       setTimeout(() => window.location.href = '/dashboard', 2200);
     } else {
-      btn.disabled = false;
-      btn.textContent = 'Publish →';
+      btn.disabled = false; btn.textContent = 'Publish →';
     }
   }
 </script>
