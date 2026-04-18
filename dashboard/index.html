@@ -418,6 +418,10 @@
       avatar.innerHTML = '<img src="' + userData.photoUrl + '" alt="' + name + '">';
     } else {
       avatar.textContent = name.charAt(0).toUpperCase();
+      if (user.uid === '7WPJK6ZuaEb3lgevyUbbU87umuH3') {
+      var adminLink = document.getElementById('admin-link');
+      if (adminLink) adminLink.style.display = 'inline-flex';
+    }
     }
 
     const hour = new Date().getHours();
