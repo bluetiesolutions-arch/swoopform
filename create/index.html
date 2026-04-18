@@ -8,448 +8,720 @@
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
+
+    /* NAV */
     nav{
       background:#fff;border-bottom:1.5px solid #E2DAD0;
-      padding:0 24px;height:60px;
+      padding:0 20px;height:56px;
       display:flex;align-items:center;justify-content:space-between;
-      position:sticky;top:0;z-index:100;
+      position:sticky;top:0;z-index:200;
     }
-    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .nav-left{display:flex;align-items:center;gap:10px}
     .logo-mark{
-      width:32px;height:32px;
-      background:linear-gradient(135deg,#2D1B69,#D97706);
-      border-radius:8px;display:flex;align-items:center;justify-content:center;
-      font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:#fff;
+      width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);
+      border-radius:7px;display:flex;align-items:center;justify-content:center;
+      font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;
+      text-decoration:none;flex-shrink:0;
     }
-    .logo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#0F0E1A}
+    .nav-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#0F0E1A}
     .nav-actions{display:flex;gap:8px;align-items:center}
     .btn-ghost{
-      padding:8px 16px;border-radius:8px;border:1.5px solid #E2DAD0;
-      background:transparent;color:#64748B;font-size:0.85rem;font-weight:600;
+      padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;
+      background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;
       font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-decoration:none;
+      white-space:nowrap;
     }
     .btn-ghost:hover{border-color:#0F0E1A;color:#0F0E1A}
+    .btn-preview{
+      padding:7px 14px;border-radius:8px;border:1.5px solid #2D1B69;
+      background:transparent;color:#2D1B69;font-size:0.82rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;white-space:nowrap;
+    }
+    .btn-preview:hover{background:#EDE9FF}
     .btn-primary{
-      padding:8px 16px;border-radius:8px;border:none;
+      padding:7px 14px;border-radius:8px;border:none;
       background:linear-gradient(135deg,#2D1B69,#D97706);
-      color:#fff;font-size:0.85rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s;
+      color:#fff;font-size:0.82rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s;white-space:nowrap;
     }
     .btn-primary:hover{opacity:0.9}
     .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
-    .btn-preview{
-      padding:8px 16px;border-radius:8px;
-      border:1.5px solid #2D1B69;
-      background:transparent;color:#2D1B69;
-      font-size:0.85rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;
+    .hamburger-btn{
+      display:none;background:none;border:none;cursor:pointer;
+      padding:6px;flex-direction:column;gap:4px;
     }
-    .btn-preview:hover{background:#EDE9FF}
-    .main{max-width:760px;margin:0 auto;padding:32px 20px}
-    .title-section{
-      background:#fff;border-radius:16px;
-      border:1.5px solid #E2DAD0;padding:28px;margin-bottom:16px;
-    }
-    .title-input{
-      width:100%;border:none;outline:none;
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1.8rem;letter-spacing:-0.03em;color:#0F0E1A;background:transparent;
-    }
-    .title-input::placeholder{color:#C4B9AA}
-    .desc-input{
-      width:100%;border:none;outline:none;font-family:'DM Sans',sans-serif;
-      font-size:0.95rem;color:#64748B;background:transparent;margin-top:8px;resize:none;
-    }
-    .desc-input::placeholder{color:#C4B9AA}
-    .questions-list{margin-bottom:16px}
-    .question-card{
-      background:#fff;border-radius:14px;
-      border:1.5px solid #E2DAD0;padding:22px;margin-bottom:12px;
-    }
-    .question-card:hover{border-color:rgba(45,27,105,0.3)}
+    .hamburger-btn span{display:block;width:20px;height:2px;background:#0F0E1A;border-radius:2px}
 
-    /* SECTION HEADING CARD */
-    .question-card.type-heading{
-      background:linear-gradient(135deg,rgba(45,27,105,0.05),rgba(217,119,6,0.05));
-      border-color:rgba(45,27,105,0.2);
+    /* LAYOUT */
+    .builder-layout{
+      display:flex;height:calc(100vh - 56px);overflow:hidden;
     }
 
-    .q-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
-    .q-number{
-      width:26px;height:26px;border-radius:50%;
-      background:#EDE9FF;color:#2D1B69;
-      font-size:0.75rem;font-weight:700;
+    /* SIDEBAR */
+    .sidebar{
+      width:220px;flex-shrink:0;
+      background:#fff;border-right:1.5px solid #E2DAD0;
+      display:flex;flex-direction:column;
+      overflow-y:auto;z-index:100;
+    }
+    .sidebar-section{padding:16px 12px 8px;border-bottom:1px solid #E2DAD0}
+    .sidebar-label{
+      font-size:0.68rem;font-weight:700;color:#94A3B8;
+      letter-spacing:0.08em;text-transform:uppercase;
+      padding:0 8px;margin-bottom:6px;
+    }
+    .sidebar-item{
+      display:flex;align-items:center;gap:10px;
+      padding:9px 10px;border-radius:9px;cursor:pointer;
+      transition:all 0.2s;border:none;background:transparent;
+      width:100%;text-align:left;font-family:'DM Sans',sans-serif;
+    }
+    .sidebar-item:hover{background:#F5F0E8}
+    .sidebar-item.active{background:#EDE9FF;color:#2D1B69}
+    .sidebar-item .si-icon{font-size:1rem;flex-shrink:0;width:20px;text-align:center}
+    .sidebar-item .si-label{font-size:0.82rem;font-weight:600;color:#0F0E1A}
+    .sidebar-item.active .si-label{color:#2D1B69}
+    .sidebar-item .si-count{
+      margin-left:auto;font-size:0.7rem;font-weight:700;
+      background:#E2DAD0;color:#64748B;padding:1px 6px;border-radius:100px;
+    }
+    .sidebar-item.active .si-count{background:#C4B5FD;color:#2D1B69}
+
+    /* Q LIST IN SIDEBAR */
+    .q-list-sidebar{padding:8px 12px}
+    .q-item-sidebar{
+      display:flex;align-items:center;gap:8px;
+      padding:7px 8px;border-radius:7px;cursor:pointer;
+      transition:all 0.2s;margin-bottom:2px;
+    }
+    .q-item-sidebar:hover{background:#F5F0E8}
+    .q-item-sidebar.active{background:#EDE9FF}
+    .q-item-num{
+      width:20px;height:20px;border-radius:50%;
+      background:#E2DAD0;color:#64748B;
+      font-size:0.65rem;font-weight:700;
       display:flex;align-items:center;justify-content:center;flex-shrink:0;
     }
+    .q-item-sidebar.active .q-item-num{background:#2D1B69;color:#fff}
+    .q-item-text{
+      font-size:0.75rem;font-weight:500;color:#64748B;
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;
+    }
+    .q-item-type{
+      font-size:0.65rem;color:#94A3B8;flex-shrink:0;
+    }
+
+    /* ADD BUTTONS IN SIDEBAR */
+    .sidebar-add-section{padding:12px;border-top:1px solid #E2DAD0;margin-top:auto}
+    .btn-add-q{
+      width:100%;padding:9px;border-radius:9px;
+      border:1.5px dashed #E2DAD0;
+      background:transparent;color:#64748B;
+      font-size:0.82rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;
+      transition:all 0.2s;text-align:center;margin-bottom:8px;
+    }
+    .btn-add-q:hover{border-color:#2D1B69;color:#2D1B69;background:#EDE9FF}
+    .btn-template{
+      width:100%;padding:9px;border-radius:9px;
+      border:1.5px solid #E2DAD0;
+      background:transparent;color:#64748B;
+      font-size:0.82rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;
+      transition:all 0.2s;text-align:center;
+    }
+    .btn-template:hover{border-color:#D97706;color:#D97706;background:#FEF3C7}
+
+    /* CONTENT AREA */
+    .content-area{
+      flex:1;overflow-y:auto;padding:28px 24px;
+    }
+
+    /* PANELS */
+    .panel{display:none}
+    .panel.active{display:block}
+
+    /* QUESTION BUILDER PANEL */
+    .questions-header{
+      display:flex;align-items:center;justify-content:space-between;
+      margin-bottom:20px;flex-wrap:wrap;gap:10px;
+    }
+    .questions-header h2{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1.2rem;letter-spacing:-0.02em;
+    }
+
+    /* TYPE PICKER DROPDOWN */
+    .type-picker-wrap{position:relative;margin-bottom:20px}
+    .type-picker-btn{
+      display:flex;align-items:center;gap:8px;
+      padding:10px 16px;border-radius:10px;
+      border:1.5px dashed #E2DAD0;background:#fff;
+      color:#64748B;font-size:0.85rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;
+      transition:all 0.2s;width:100%;
+    }
+    .type-picker-btn:hover{border-color:#2D1B69;color:#2D1B69;background:#EDE9FF}
+    .type-picker-dropdown{
+      position:absolute;top:calc(100% + 8px);left:0;right:0;
+      background:#fff;border-radius:12px;
+      border:1.5px solid #E2DAD0;
+      box-shadow:0 8px 32px rgba(15,14,26,0.12);
+      z-index:50;display:none;padding:12px;
+    }
+    .type-picker-dropdown.open{display:block}
+    .type-group{margin-bottom:14px}
+    .type-group:last-child{margin-bottom:0}
+    .type-group-label{
+      font-size:0.68rem;font-weight:700;color:#94A3B8;
+      letter-spacing:0.08em;text-transform:uppercase;
+      margin-bottom:6px;padding-left:4px;
+    }
+    .type-grid{display:flex;gap:6px;flex-wrap:wrap}
+    .type-chip{
+      padding:6px 12px;border-radius:8px;
+      border:1.5px solid #E2DAD0;background:#fff;
+      color:#0F0E1A;font-size:0.78rem;font-weight:600;
+      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;
+    }
+    .type-chip:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
+
+    /* QUESTION CARD */
+    .question-card{
+      background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;
+      padding:20px;margin-bottom:12px;transition:border-color 0.2s;
+      cursor:pointer;
+    }
+    .question-card:hover{border-color:rgba(45,27,105,0.2)}
+    .question-card.focused{border-color:#2D1B69;box-shadow:0 0 0 3px rgba(45,27,105,0.08)}
+    .question-card.type-heading{
+      background:linear-gradient(135deg,rgba(45,27,105,0.04),rgba(217,119,6,0.04));
+      border-color:rgba(45,27,105,0.15);
+    }
+    .q-card-header{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+    .q-num-badge{
+      width:24px;height:24px;border-radius:50%;background:#EDE9FF;color:#2D1B69;
+      font-size:0.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    }
     .q-type-select{
-      padding:5px 8px;border-radius:7px;border:1.5px solid #E2DAD0;
-      background:#fff;color:#0F0E1A;font-size:0.78rem;font-weight:600;
+      padding:4px 8px;border-radius:6px;border:1.5px solid #E2DAD0;
+      background:#fff;color:#0F0E1A;font-size:0.75rem;font-weight:600;
       font-family:'DM Sans',sans-serif;cursor:pointer;outline:none;
     }
     .q-delete{
-      margin-left:auto;width:28px;height:28px;border-radius:7px;
-      border:none;background:transparent;cursor:pointer;
-      color:#64748B;font-size:1rem;
+      margin-left:auto;width:26px;height:26px;border-radius:6px;border:none;
+      background:transparent;cursor:pointer;color:#94A3B8;font-size:0.9rem;
       display:flex;align-items:center;justify-content:center;transition:all 0.2s;
     }
     .q-delete:hover{background:#FEE2E2;color:#DC2626}
     .q-input{
-      width:100%;border:none;border-bottom:1.5px solid #E2DAD0;
-      outline:none;padding:8px 0;font-family:'DM Sans',sans-serif;
-      font-size:0.95rem;font-weight:600;color:#0F0E1A;background:transparent;margin-bottom:14px;
+      width:100%;border:none;border-bottom:1.5px solid #E2DAD0;outline:none;
+      padding:7px 0;font-family:'DM Sans',sans-serif;font-size:0.92rem;font-weight:600;
+      color:#0F0E1A;background:transparent;margin-bottom:12px;
     }
     .q-input::placeholder{color:#C4B9AA}
     .q-input:focus{border-bottom-color:#2D1B69}
     .heading-input{
-      width:100%;border:none;outline:none;
-      font-family:'Syne',sans-serif;font-weight:700;
-      font-size:1.1rem;color:#0F0E1A;background:transparent;
-      border-bottom:1.5px solid #E2DAD0;padding:4px 0 8px;margin-bottom:8px;
+      width:100%;border:none;outline:none;font-family:'Syne',sans-serif;font-weight:700;
+      font-size:1.05rem;color:#0F0E1A;background:transparent;
+      border-bottom:1.5px solid #E2DAD0;padding:4px 0 7px;margin-bottom:7px;
     }
     .heading-input::placeholder{color:#C4B9AA}
     .subheading-input{
-      width:100%;border:none;outline:none;
-      font-family:'DM Sans',sans-serif;font-size:0.88rem;
-      color:#64748B;background:transparent;resize:none;
+      width:100%;border:none;outline:none;font-family:'DM Sans',sans-serif;
+      font-size:0.85rem;color:#64748B;background:transparent;resize:none;
     }
     .subheading-input::placeholder{color:#C4B9AA}
-    .options-list{margin-bottom:10px}
-    .option-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-    .option-bullet{width:16px;height:16px;border-radius:50%;border:2px solid #E2DAD0;flex-shrink:0}
-    .option-bullet.square{border-radius:3px}
+    .options-list{margin-bottom:8px}
+    .option-row{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+    .opt-bullet{width:14px;height:14px;border-radius:50%;border:2px solid #E2DAD0;flex-shrink:0}
+    .opt-bullet.sq{border-radius:3px}
     .option-input{
-      flex:1;border:none;border-bottom:1px solid #E2DAD0;
-      outline:none;padding:5px 0;font-family:'DM Sans',sans-serif;
-      font-size:0.88rem;color:#0F0E1A;background:transparent;
+      flex:1;border:none;border-bottom:1px solid #E2DAD0;outline:none;
+      padding:4px 0;font-family:'DM Sans',sans-serif;font-size:0.85rem;
+      color:#0F0E1A;background:transparent;
     }
     .option-input::placeholder{color:#C4B9AA}
     .option-input:focus{border-bottom-color:#2D1B69}
-    .option-remove{
-      background:none;border:none;cursor:pointer;
-      color:#C4B9AA;font-size:1rem;transition:color 0.2s;padding:2px;
+    .opt-remove{
+      background:none;border:none;cursor:pointer;color:#C4B9AA;
+      font-size:0.9rem;transition:color 0.2s;padding:2px;
     }
-    .option-remove:hover{color:#DC2626}
-
-    /* CORRECT ANSWER MARK */
+    .opt-remove:hover{color:#DC2626}
     .correct-mark{
-      width:22px;height:22px;border-radius:50%;
-      border:2px solid #E2DAD0;
-      background:transparent;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;
-      font-size:0.7rem;transition:all 0.2s;flex-shrink:0;
-      color:transparent;
+      width:20px;height:20px;border-radius:50%;border:2px solid #E2DAD0;
+      background:transparent;cursor:pointer;display:flex;align-items:center;
+      justify-content:center;font-size:0.65rem;transition:all 0.2s;
+      flex-shrink:0;color:transparent;
     }
-    .correct-mark.correct{
-      background:#10B981;border-color:#10B981;color:#fff;
+    .correct-mark.correct{background:#10B981;border-color:#10B981;color:#fff}
+    .add-opt-btn{
+      background:none;border:none;cursor:pointer;color:#2D1B69;
+      font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:3px 0;
     }
-    .correct-hint{
-      font-size:0.72rem;color:#64748B;margin-bottom:8px;
+    .preview-chip{
+      background:#F5F0E8;border-radius:7px;padding:10px 12px;
+      font-size:0.8rem;color:#94A3B8;
     }
-
-    .add-option-btn{
-      background:none;border:none;cursor:pointer;
-      color:#2D1B69;font-size:0.82rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;padding:4px 0;
+    .pledge-preview-box{
+      background:#EDE9FF;border-radius:10px;padding:14px;
+      border:1.5px solid rgba(45,27,105,0.15);
     }
-    .rating-preview{display:flex;gap:8px;flex-wrap:wrap}
+    .pledge-preview-text{font-size:0.85rem;color:#2D1B69;line-height:1.6;margin-bottom:10px}
+    .pledge-preview-check{display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#64748B}
+    .pledge-box{width:14px;height:14px;border-radius:3px;border:2px solid #C4B9AA;flex-shrink:0}
+    .rating-dots{display:flex;gap:6px;flex-wrap:wrap}
     .rating-dot{
-      width:36px;height:36px;border-radius:8px;border:1.5px solid #E2DAD0;
+      width:32px;height:32px;border-radius:7px;border:1.5px solid #E2DAD0;
       display:flex;align-items:center;justify-content:center;
-      font-size:0.85rem;font-weight:600;color:#64748B;
+      font-size:0.8rem;font-weight:600;color:#64748B;
     }
-    .scale-preview{display:flex;gap:6px;flex-wrap:wrap}
+    .scale-dots{display:flex;gap:5px;flex-wrap:wrap}
     .scale-dot{
-      width:30px;height:30px;border-radius:6px;border:1.5px solid #E2DAD0;
+      width:26px;height:26px;border-radius:5px;border:1.5px solid #E2DAD0;
       display:flex;align-items:center;justify-content:center;
-      font-size:0.75rem;font-weight:600;color:#64748B;
-    }
-    .preview-field{
-      background:#F5F0E8;border-radius:8px;padding:12px;
-      font-size:0.85rem;color:#C4B9AA;
-    }
-    .pledge-preview{
-      background:#EDE9FF;border-radius:8px;padding:14px;
-      border:1.5px solid rgba(45,27,105,0.2);
-    }
-    .pledge-preview-text{
-      font-size:0.88rem;color:#2D1B69;
-      line-height:1.6;margin-bottom:10px;
-    }
-    .pledge-checkbox-preview{
-      display:flex;align-items:center;gap:8px;
-      font-size:0.82rem;color:#64748B;
-    }
-    .pledge-box{
-      width:16px;height:16px;border-radius:3px;
-      border:2px solid #C4B9AA;flex-shrink:0;
+      font-size:0.7rem;font-weight:600;color:#64748B;
     }
     .q-footer{
       display:flex;align-items:center;gap:8px;
-      margin-top:12px;padding-top:12px;border-top:1px solid #E2DAD0;
+      margin-top:10px;padding-top:10px;border-top:1px solid #F5F0E8;
     }
     .toggle{
-      width:36px;height:20px;border-radius:100px;
-      background:#E2DAD0;cursor:pointer;
+      width:34px;height:18px;border-radius:100px;background:#E2DAD0;cursor:pointer;
       position:relative;transition:background 0.2s;border:none;flex-shrink:0;
     }
     .toggle.on{background:#2D1B69}
     .toggle::after{
-      content:'';position:absolute;width:14px;height:14px;
-      border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 0.2s;
+      content:'';position:absolute;width:12px;height:12px;border-radius:50%;
+      background:#fff;top:3px;left:3px;transition:transform 0.2s;
     }
     .toggle.on::after{transform:translateX(16px)}
-    .toggle-label{font-size:0.8rem;color:#64748B;font-weight:500}
-    .add-question-section{
-      background:#fff;border-radius:14px;border:1.5px dashed #E2DAD0;
-      padding:20px;text-align:center;margin-bottom:24px;
+    .toggle-label{font-size:0.75rem;color:#64748B;font-weight:500}
+
+    /* SETTINGS PANELS */
+    .panel-title{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1.2rem;letter-spacing:-0.02em;margin-bottom:6px;
     }
-    .add-question-title{font-size:0.85rem;font-weight:600;color:#64748B;margin-bottom:14px}
-    .question-types{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
-    .type-btn{
-      padding:7px 12px;border-radius:8px;border:1.5px solid #E2DAD0;
-      background:#fff;color:#0F0E1A;font-size:0.78rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;
+    .panel-sub{color:#64748B;font-size:0.85rem;margin-bottom:24px;line-height:1.5}
+    .settings-card{
+      background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;
+      padding:20px;margin-bottom:14px;
     }
-    .type-btn:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
-    .type-group{margin-bottom:12px;width:100%}
-    .type-group-label{
-      font-size:0.72rem;font-weight:700;color:#94A3B8;
-      letter-spacing:0.06em;text-transform:uppercase;
-      margin-bottom:8px;text-align:left;
+    .settings-card-title{
+      font-family:'Syne',sans-serif;font-weight:700;
+      font-size:0.9rem;margin-bottom:16px;
+      display:flex;align-items:center;gap:8px;
     }
-    .settings-section{
-      background:#fff;border-radius:14px;
-      border:1.5px solid #E2DAD0;padding:22px;margin-bottom:16px;
+    .field{margin-bottom:16px}
+    .field:last-child{margin-bottom:0}
+    .field-label{
+      display:block;font-size:0.75rem;font-weight:700;color:#64748B;
+      margin-bottom:5px;letter-spacing:0.04em;text-transform:uppercase;
     }
-    .settings-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:16px}
+    .field-hint{font-size:0.72rem;color:#94A3B8;margin-top:4px;line-height:1.4}
+    .hint-box{
+      background:#EDE9FF;border-radius:8px;padding:11px 13px;margin-top:7px;
+      font-size:0.75rem;color:#2D1B69;line-height:1.6;
+    }
+    .hint-box ol{padding-left:14px;margin-top:4px}
+    .dim-tag{
+      display:inline-block;padding:2px 7px;border-radius:4px;
+      background:#fff;border:1px solid #C4B5FD;
+      font-size:0.68rem;font-weight:600;color:#2D1B69;
+      margin-right:3px;margin-top:3px;
+    }
+    .setting-input{
+      width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid #E2DAD0;
+      background:#fff;color:#0F0E1A;font-size:0.85rem;
+      font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;
+    }
+    .setting-input:focus{border-color:#2D1B69}
+    .setting-input::placeholder{color:#C4B9AA}
     .setting-row{
       display:flex;align-items:center;justify-content:space-between;
       padding:10px 0;border-bottom:1px solid #E2DAD0;
     }
     .setting-row:last-child{border-bottom:none}
-    .setting-row.col{flex-direction:column;align-items:flex-start;gap:8px}
-    .setting-info .setting-name{font-size:0.88rem;font-weight:600}
-    .setting-info .setting-desc{font-size:0.76rem;color:#64748B;margin-top:2px}
-    .setting-hint{font-size:0.72rem;color:#94A3B8;margin-top:4px;font-style:italic}
-    .setting-input{
-      width:100%;padding:10px 14px;border-radius:8px;border:1.5px solid #E2DAD0;
-      background:#fff;color:#0F0E1A;font-size:0.88rem;
-      font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;
-    }
-    .setting-input:focus{border-color:#2D1B69}
-    .setting-input::placeholder{color:#C4B9AA}
+    .setting-name{font-size:0.85rem;font-weight:600}
+    .setting-desc{font-size:0.75rem;color:#64748B;margin-top:2px}
+    .color-row{display:flex;gap:8px;align-items:center}
+    .prize-types{display:flex;gap:7px;flex-wrap:wrap}
     .prize-type-btn{
-      padding:8px 14px;border-radius:8px;border:1.5px solid #E2DAD0;
-      background:#fff;color:#0F0E1A;font-size:0.82rem;font-weight:600;
+      padding:7px 13px;border-radius:8px;border:1.5px solid #E2DAD0;
+      background:#fff;color:#0F0E1A;font-size:0.78rem;font-weight:600;
       font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;
     }
     .prize-type-btn:hover{border-color:#2D1B69;background:#EDE9FF}
     .prize-type-btn.active{border-color:#D97706;background:#FEF3C7;color:#92400E}
-    .format-tag{
-      display:inline-block;padding:2px 8px;border-radius:4px;
-      background:#F5F0E8;color:#64748B;font-size:0.7rem;font-weight:600;
-      margin-right:4px;margin-top:4px;border:1px solid #E2DAD0;
+
+    /* TEMPLATE MODAL */
+    .modal-overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,0.4);
+      z-index:300;display:none;align-items:center;justify-content:center;
     }
+    .modal-overlay.open{display:flex}
+    .modal{
+      background:#fff;border-radius:16px;padding:28px;
+      width:100%;max-width:480px;margin:20px;
+    }
+    .modal-title{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:1.1rem;margin-bottom:6px;
+    }
+    .modal-sub{color:#64748B;font-size:0.85rem;margin-bottom:20px}
+    .template-fields{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+    .template-field-row{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px 14px;border-radius:10px;border:1.5px solid #E2DAD0;
+      background:#F5F0E8;
+    }
+    .template-field-info{display:flex;align-items:center;gap:10px}
+    .template-field-icon{font-size:1.1rem}
+    .template-field-name{font-size:0.88rem;font-weight:600}
+    .template-field-type{font-size:0.72rem;color:#64748B;margin-top:2px}
+    .template-field-toggle{display:flex;align-items:center;gap:8px}
+    .template-req-label{font-size:0.72rem;color:#64748B}
+    .modal-actions{display:flex;gap:8px;justify-content:flex-end}
+
+    /* MOBILE SIDEBAR OVERLAY */
+    .sidebar-overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,0.4);
+      z-index:150;display:none;
+    }
+    .sidebar-overlay.open{display:block}
+
+    /* TOAST */
     .toast{
       position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
-      background:#0F0E1A;color:#fff;padding:12px 24px;border-radius:10px;
-      font-size:0.88rem;font-weight:600;display:none;z-index:999;
-      box-shadow:0 4px 20px rgba(0,0,0,0.3);
+      background:#0F0E1A;color:#fff;padding:11px 22px;border-radius:10px;
+      font-size:0.85rem;font-weight:600;display:none;z-index:999;
+      box-shadow:0 4px 20px rgba(0,0,0,0.3);white-space:nowrap;
     }
+
+    /* LOADING */
     .loading-screen{
       display:flex;align-items:center;justify-content:center;
       min-height:100vh;background:#0F0E1A;
     }
     .spinner{
       width:32px;height:32px;border:3px solid rgba(217,119,6,0.2);
-      border-top-color:#D97706;border-radius:50%;
-      animation:spin 0.8s linear infinite;
+      border-top-color:#D97706;border-radius:50%;animation:spin 0.8s linear infinite;
     }
     @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* RESPONSIVE */
+    @media(max-width:768px){
+      .sidebar{
+        position:fixed;top:56px;left:0;bottom:0;
+        transform:translateX(-100%);transition:transform 0.3s ease;
+        z-index:160;
+      }
+      .sidebar.mobile-open{transform:translateX(0)}
+      .hamburger-btn{display:flex}
+      .content-area{padding:20px 16px}
+    }
   </style>
 </head>
 <body>
+
 <div id="loading-screen" class="loading-screen"><div class="spinner"></div></div>
+
+<!-- TEMPLATE MODAL -->
+<div class="modal-overlay" id="template-modal">
+  <div class="modal">
+    <div class="modal-title">🧩 Contact Info Template</div>
+    <p class="modal-sub">Choose which fields to include. Toggle required on/off for each.</p>
+    <div class="template-fields" id="template-fields"></div>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeTemplateModal()">Cancel</button>
+      <button class="btn-primary" onclick="insertTemplate()">Insert fields →</button>
+    </div>
+  </div>
+</div>
+
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeMobileSidebar()"></div>
+
 <div id="app" style="display:none">
   <nav>
-    <a href="/dashboard" class="nav-logo">
-      <div class="logo-mark">S</div>
-      <div class="logo-name">SwoopForm</div>
-    </a>
+    <div class="nav-left">
+      <button class="hamburger-btn" id="hamburger-btn" onclick="openMobileSidebar()">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="/dashboard" class="logo-mark">S</a>
+      <div class="nav-title" id="nav-survey-title">New Survey</div>
+    </div>
     <div class="nav-actions">
-      <a href="/dashboard" class="btn-ghost">← Back</a>
       <button class="btn-preview" onclick="previewSurvey()">👁 Preview</button>
       <button class="btn-ghost" onclick="saveDraft()">Save draft</button>
       <button class="btn-primary" id="publish-btn" onclick="publishSurvey()">Publish →</button>
     </div>
   </nav>
-  <div class="main">
-    <div class="title-section">
-      <input class="title-input" id="survey-title" placeholder="e.g. Customer Satisfaction Survey" maxlength="100">
-      <textarea class="desc-input" id="survey-desc" placeholder="e.g. This takes 2 minutes. Help us improve." rows="2"></textarea>
-    </div>
-    <div class="questions-list" id="questions-list"></div>
-    <div class="add-question-section">
-      <div class="add-question-title">Add a question</div>
-      <div class="question-types">
-        <div class="type-group">
-          <div class="type-group-label">Choice</div>
-          <button class="type-btn" onclick="addQuestion('multiple')">◉ Multiple choice</button>
-          <button class="type-btn" onclick="addQuestion('checkbox')">☑ Checkboxes</button>
-          <button class="type-btn" onclick="addQuestion('dropdown')">▾ Dropdown</button>
-          <button class="type-btn" onclick="addQuestion('yesno')">✓ Yes / No</button>
-        </div>
-        <div class="type-group">
-          <div class="type-group-label">Text</div>
-          <button class="type-btn" onclick="addQuestion('text')">✏️ Short text</button>
-          <button class="type-btn" onclick="addQuestion('textarea')">📝 Long text</button>
-          <button class="type-btn" onclick="addQuestion('email')">📧 Email</button>
-          <button class="type-btn" onclick="addQuestion('phone')">📱 Phone</button>
-          <button class="type-btn" onclick="addQuestion('number')">🔢 Number</button>
-        </div>
-        <div class="type-group">
-          <div class="type-group-label">Scale & Date</div>
-          <button class="type-btn" onclick="addQuestion('rating')">⭐ Rating 1-5</button>
-          <button class="type-btn" onclick="addQuestion('scale')">📊 Scale 1-10</button>
-          <button class="type-btn" onclick="addQuestion('date')">📅 Date</button>
-        </div>
-        <div class="type-group">
-          <div class="type-group-label">Special</div>
-          <button class="type-btn" onclick="addQuestion('file')">📎 File URL</button>
-          <button class="type-btn" onclick="addQuestion('heading')">📌 Section heading</button>
-          <button class="type-btn" onclick="addQuestion('pledge')">🤝 Pledge / Statement</button>
-          <button class="type-btn" onclick="addQuestion('quiz')">🎓 Quiz MCQ</button>
-        </div>
+
+  <div class="builder-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Survey sections</div>
+        <button class="sidebar-item active" id="nav-questions" onclick="showPanel('questions')">
+          <span class="si-icon">📋</span>
+          <span class="si-label">Questions</span>
+          <span class="si-count" id="q-count">0</span>
+        </button>
+        <button class="sidebar-item" id="nav-welcome" onclick="showPanel('welcome')">
+          <span class="si-icon">🎨</span>
+          <span class="si-label">Welcome page</span>
+        </button>
+        <button class="sidebar-item" id="nav-thankyou" onclick="showPanel('thankyou')">
+          <span class="si-icon">🙏</span>
+          <span class="si-label">Thank you page</span>
+        </button>
+        <button class="sidebar-item" id="nav-prize" onclick="showPanel('prize')">
+          <span class="si-icon">🎁</span>
+          <span class="si-label">Prize & Incentive</span>
+        </button>
+        <button class="sidebar-item" id="nav-settings" onclick="showPanel('settings')">
+          <span class="si-icon">⚙️</span>
+          <span class="si-label">Survey settings</span>
+        </button>
+      </div>
+
+      <!-- Q LIST -->
+      <div class="q-list-sidebar" id="q-list-sidebar"></div>
+
+      <!-- ADD BUTTONS -->
+      <div class="sidebar-add-section">
+        <button class="btn-add-q" onclick="showTypePicker()">+ Add question</button>
+        <button class="btn-template" onclick="openTemplateModal()">🧩 Contact template</button>
       </div>
     </div>
 
-    <!-- WELCOME PAGE -->
-    <div class="settings-section">
-      <div class="settings-title">🎨 Welcome page</div>
-      <div class="setting-row col">
-        <div class="setting-info"><div class="setting-name">Your logo</div><div class="setting-desc">Shown above the survey title</div>
-        <div class="setting-hint"><span class="format-tag">PNG</span><span class="format-tag">JPG</span><span class="format-tag">SVG</span> Direct image URL · Max 200×60px</div></div>
-        <input class="setting-input" id="welcome-logo" placeholder="e.g. https://yoursite.com/logo.png">
-      </div>
-      <div class="setting-row col">
-        <div class="setting-info"><div class="setting-name">Custom headline</div><div class="setting-hint">Leave blank to use survey title</div></div>
-        <input class="setting-input" id="welcome-headline" placeholder="e.g. We'd love your feedback!">
-      </div>
-      <div class="setting-row col">
-        <div class="setting-info"><div class="setting-name">Start button text</div><div class="setting-hint">Default: "Let's go →"</div></div>
-        <input class="setting-input" id="welcome-btn-text" placeholder="e.g. Start survey →">
-      </div>
-      <div class="setting-row col">
-        <div class="setting-info"><div class="setting-name">Background color</div></div>
-        <div style="display:flex;gap:10px;align-items:center;width:100%">
-          <input class="setting-input" id="welcome-bg-color" placeholder="#0F0E1A" style="flex:1">
-          <input type="color" id="welcome-color-picker" value="#0F0E1A"
-            oninput="document.getElementById('welcome-bg-color').value=this.value"
-            style="width:44px;height:44px;border-radius:8px;border:1.5px solid #E2DAD0;cursor:pointer;padding:2px;flex-shrink:0">
-        </div>
-      </div>
-      <div class="setting-row col">
-        <div class="setting-info"><div class="setting-name">Background image URL</div>
-        <div class="setting-hint"><span class="format-tag">JPG</span><span class="format-tag">PNG</span><span class="format-tag">WEBP</span> 1920×1080px recommended · Overrides color</div></div>
-        <input class="setting-input" id="welcome-bg-image" placeholder="e.g. https://images.unsplash.com/...">
-      </div>
-      <div class="setting-row col" style="border-bottom:none">
-        <div class="setting-info"><div class="setting-name">Background video URL</div>
-        <div class="setting-hint"><span class="format-tag">YouTube</span><span class="format-tag">Vimeo</span> e.g. https://youtube.com/watch?v=VIDEOID · Overrides image</div></div>
-        <input class="setting-input" id="welcome-bg-video" placeholder="e.g. https://youtube.com/watch?v=...">
-      </div>
-    </div>
+    <!-- CONTENT -->
+    <div class="content-area" id="content-area">
 
-    <!-- THANK YOU PAGE -->
-    <div class="settings-section">
-      <div class="settings-title">🙏 Thank you page</div>
-      <div class="setting-row col">
-        <div class="setting-info"><div class="setting-name">Custom headline</div><div class="setting-hint">Default: "Thank you!"</div></div>
-        <input class="setting-input" id="thankyou-headline" placeholder="e.g. Thank you so much!">
-      </div>
-      <div class="setting-row col">
-        <div class="setting-info"><div class="setting-name">Custom message</div><div class="setting-hint">Default: "Your response has been recorded."</div></div>
-        <input class="setting-input" id="thankyou-message" placeholder="e.g. We'll use your feedback to improve.">
-      </div>
-      <div class="setting-row col">
-        <div class="setting-info"><div class="setting-name">Redirect URL</div><div class="setting-hint">Send respondents to your website after 3 seconds</div></div>
-        <input class="setting-input" id="thankyou-redirect" placeholder="e.g. https://yourwebsite.com">
-      </div>
-      <div class="setting-row" style="border-bottom:none">
-        <div class="setting-info"><div class="setting-name">Show social share buttons</div></div>
-        <button class="toggle" id="toggle-share" onclick="toggleSetting('share')"></button>
-      </div>
-    </div>
-
-    <!-- PRIZE -->
-    <div class="settings-section">
-      <div class="settings-title">🎁 Prize &amp; Incentive</div>
-      <div class="setting-row">
-        <div class="setting-info"><div class="setting-name">Enable prize</div><div class="setting-desc">Show prize badge on welcome page</div></div>
-        <button class="toggle" id="toggle-prize" onclick="togglePrize()"></button>
-      </div>
-      <div id="prize-fields" style="display:none">
-        <div class="setting-row col">
-          <div class="setting-info"><div class="setting-name">Prize type</div></div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="prize-type-btn active" onclick="selectPrizeType('cash',this)">💵 Cash</button>
-            <button class="prize-type-btn" onclick="selectPrizeType('voucher',this)">🎟 Voucher</button>
-            <button class="prize-type-btn" onclick="selectPrizeType('gift',this)">🎁 Gift</button>
-            <button class="prize-type-btn" onclick="selectPrizeType('other',this)">✦ Other</button>
+      <!-- QUESTIONS PANEL -->
+      <div class="panel active" id="panel-questions">
+        <div class="questions-header">
+          <div>
+            <input id="survey-title" placeholder="Survey title..." style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-0.03em;border:none;outline:none;background:transparent;color:#0F0E1A;width:100%" oninput="document.getElementById('nav-survey-title').textContent=this.value||'New Survey'">
+            <textarea id="survey-desc" placeholder="Description (optional)" rows="1" style="width:100%;border:none;outline:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:#64748B;resize:none;margin-top:4px"></textarea>
           </div>
         </div>
-        <div class="setting-row col">
-          <div class="setting-info"><div class="setting-name">Prize description</div><div class="setting-hint">e.g. ₹500 Amazon voucher</div></div>
-          <input class="setting-input" id="prize-description" placeholder="e.g. ₹500 Amazon voucher">
-        </div>
-        <div class="setting-row col">
-          <div class="setting-info"><div class="setting-name">Number of winners</div></div>
-          <input class="setting-input" id="prize-winners" type="number" min="1" placeholder="e.g. 3" style="max-width:140px">
-        </div>
-        <div class="setting-row col">
-          <div class="setting-info"><div class="setting-name">Winner selection</div></div>
-          <select class="setting-input" id="prize-selection" style="max-width:260px">
-            <option value="random">🎲 Random draw</option>
-            <option value="best">⭐ Best answer</option>
-            <option value="first">🏃 First N respondents</option>
-          </select>
-        </div>
-        <div class="setting-row col" style="border-bottom:none">
-          <div class="setting-info"><div class="setting-name">Winner notification</div></div>
-          <select class="setting-input" id="prize-notification" style="max-width:260px">
-            <option value="manual">📧 I will contact winners manually</option>
-            <option value="email">✉️ SwoopForm sends automatic email</option>
-            <option value="leaderboard">🏆 Show on public leaderboard</option>
-          </select>
-        </div>
-      </div>
-    </div>
 
-    <!-- SETTINGS -->
-    <div class="settings-section">
-      <div class="settings-title">⚙️ Survey settings</div>
-      <div class="setting-row">
-        <div class="setting-info"><div class="setting-name">Survey style</div><div class="setting-desc">How questions appear to respondents</div></div>
-        <select id="survey-style" style="padding:6px 12px;border-radius:8px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none">
-          <option value="conversational">✨ One at a time</option>
-          <option value="classic">📋 All on one page</option>
-        </select>
+        <!-- TYPE PICKER -->
+        <div class="type-picker-wrap" id="type-picker-wrap" style="display:none">
+          <div class="type-picker-dropdown open" id="type-picker-dropdown">
+            <div class="type-group">
+              <div class="type-group-label">Choice</div>
+              <div class="type-grid">
+                <button class="type-chip" onclick="addQuestion('multiple')">◉ Multiple choice</button>
+                <button class="type-chip" onclick="addQuestion('checkbox')">☑ Checkboxes</button>
+                <button class="type-chip" onclick="addQuestion('dropdown')">▾ Dropdown</button>
+                <button class="type-chip" onclick="addQuestion('yesno')">✓ Yes / No</button>
+              </div>
+            </div>
+            <div class="type-group">
+              <div class="type-group-label">Text</div>
+              <div class="type-grid">
+                <button class="type-chip" onclick="addQuestion('text')">✏️ Short text</button>
+                <button class="type-chip" onclick="addQuestion('textarea')">📝 Long text</button>
+                <button class="type-chip" onclick="addQuestion('email')">📧 Email</button>
+                <button class="type-chip" onclick="addQuestion('phone')">📱 Phone</button>
+                <button class="type-chip" onclick="addQuestion('number')">🔢 Number</button>
+              </div>
+            </div>
+            <div class="type-group">
+              <div class="type-group-label">Scale & Date</div>
+              <div class="type-grid">
+                <button class="type-chip" onclick="addQuestion('rating')">⭐ Rating 1-5</button>
+                <button class="type-chip" onclick="addQuestion('scale')">📊 Scale 1-10</button>
+                <button class="type-chip" onclick="addQuestion('date')">📅 Date (DD-MM-YYYY)</button>
+              </div>
+            </div>
+            <div class="type-group">
+              <div class="type-group-label">Special</div>
+              <div class="type-grid">
+                <button class="type-chip" onclick="addQuestion('file')">📎 File URL</button>
+                <button class="type-chip" onclick="addQuestion('heading')">📌 Section heading</button>
+                <button class="type-chip" onclick="addQuestion('pledge')">🤝 Pledge</button>
+                <button class="type-chip" onclick="addQuestion('quiz')">🎓 Quiz MCQ</button>
+              </div>
+            </div>
+            <div style="text-align:right;margin-top:8px">
+              <button class="btn-ghost" onclick="hideTypePicker()" style="font-size:0.78rem;padding:5px 12px">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="questions-list"></div>
+
+        <div style="text-align:center;padding:20px 0">
+          <button class="btn-add-q" onclick="showTypePicker()" style="display:inline-block;width:auto;padding:9px 20px">+ Add question</button>
+        </div>
       </div>
-      <div class="setting-row">
-        <div class="setting-info"><div class="setting-name">Public survey</div><div class="setting-desc">Show in SwoopForm discovery directory</div></div>
-        <button class="toggle" id="toggle-public" onclick="toggleSetting('public')"></button>
+
+      <!-- WELCOME PANEL -->
+      <div class="panel" id="panel-welcome">
+        <div class="panel-title">🎨 Welcome page</div>
+        <p class="panel-sub">Customise what respondents see before starting the survey.</p>
+
+        <div class="settings-card">
+          <div class="settings-card-title">Branding</div>
+          <div class="field">
+            <label class="field-label">Logo URL</label>
+            <input class="setting-input" id="welcome-logo" placeholder="e.g. https://yoursite.com/logo.png">
+            <div class="hint-box">
+              <strong>📁 Google Drive:</strong>
+              <ol><li>Upload logo → Right click → Share → "Anyone with link"</li><li>Copy link → paste above</li></ol>
+              <div style="margin-top:6px"><strong>📐 Dimensions:</strong> <span class="dim-tag">Max 200×60px</span><span class="dim-tag">PNG / SVG / JPG</span><span class="dim-tag">Transparent bg recommended</span></div>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">Custom headline</label>
+            <input class="setting-input" id="welcome-headline" placeholder="Leave blank to use survey title">
+          </div>
+          <div class="field">
+            <label class="field-label">Start button text</label>
+            <input class="setting-input" id="welcome-btn-text" placeholder="Default: Let's go →">
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <div class="settings-card-title">Background</div>
+          <div class="field">
+            <label class="field-label">Background color</label>
+            <div class="color-row">
+              <input class="setting-input" id="welcome-bg-color" placeholder="#0F0E1A" style="flex:1">
+              <input type="color" id="welcome-color-picker" value="#0F0E1A"
+                oninput="document.getElementById('welcome-bg-color').value=this.value"
+                style="width:40px;height:40px;border-radius:8px;border:1.5px solid #E2DAD0;cursor:pointer;padding:2px;flex-shrink:0">
+            </div>
+            <div class="field-hint">Default: #0F0E1A (dark)</div>
+          </div>
+          <div class="field">
+            <label class="field-label">Background image URL</label>
+            <input class="setting-input" id="welcome-bg-image" placeholder="e.g. https://images.unsplash.com/...">
+            <div class="hint-box">
+              <strong>📐 Recommended:</strong> <span class="dim-tag">1920×1080px</span><span class="dim-tag">JPG / PNG / WEBP</span>
+              <br>Overrides background color
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">Background video URL</label>
+            <input class="setting-input" id="welcome-bg-video" placeholder="e.g. https://youtube.com/watch?v=...">
+            <div class="hint-box">
+              <strong>Supported:</strong> <span class="dim-tag">YouTube</span><span class="dim-tag">Vimeo</span>
+              <br>Plays muted and looped. Overrides image and color.
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="setting-row">
-        <div class="setting-info"><div class="setting-name">Collect email addresses</div><div class="setting-desc">Ask respondents for their email</div></div>
-        <button class="toggle" id="toggle-email" onclick="toggleSetting('email')"></button>
+
+      <!-- THANK YOU PANEL -->
+      <div class="panel" id="panel-thankyou">
+        <div class="panel-title">🙏 Thank you page</div>
+        <p class="panel-sub">What respondents see after submitting the survey.</p>
+        <div class="settings-card">
+          <div class="field">
+            <label class="field-label">Custom headline</label>
+            <input class="setting-input" id="thankyou-headline" placeholder="Default: Thank you!">
+          </div>
+          <div class="field">
+            <label class="field-label">Custom message</label>
+            <input class="setting-input" id="thankyou-message" placeholder="Default: Your response has been recorded.">
+          </div>
+          <div class="field">
+            <label class="field-label">Redirect URL</label>
+            <input class="setting-input" id="thankyou-redirect" placeholder="e.g. https://yourwebsite.com">
+            <div class="field-hint">Redirects respondents after 3 seconds. Leave blank to stay on thank you page.</div>
+          </div>
+          <div class="setting-row" style="border-bottom:none">
+            <div><div class="setting-name">Show social share buttons</div><div class="setting-desc">Let respondents share the survey link</div></div>
+            <button class="toggle" id="toggle-share" onclick="toggleSetting('share')"></button>
+          </div>
+        </div>
       </div>
-      <div class="setting-row" style="border-bottom:none">
-        <div class="setting-info"><div class="setting-name">One response per person</div><div class="setting-desc">Prevent duplicate submissions</div></div>
-        <button class="toggle" id="toggle-once" onclick="toggleSetting('once')"></button>
+
+      <!-- PRIZE PANEL -->
+      <div class="panel" id="panel-prize">
+        <div class="panel-title">🎁 Prize & Incentive</div>
+        <p class="panel-sub">Add a prize to boost response rates. Shows as a badge on the welcome page.</p>
+        <div class="settings-card">
+          <div class="setting-row">
+            <div><div class="setting-name">Enable prize</div><div class="setting-desc">Show prize badge on welcome page</div></div>
+            <button class="toggle" id="toggle-prize" onclick="togglePrize()"></button>
+          </div>
+          <div id="prize-fields" style="display:none;margin-top:14px">
+            <div class="field">
+              <label class="field-label">Prize type</label>
+              <div class="prize-types">
+                <button class="prize-type-btn active" onclick="selectPrizeType('cash',this)">💵 Cash</button>
+                <button class="prize-type-btn" onclick="selectPrizeType('voucher',this)">🎟 Voucher</button>
+                <button class="prize-type-btn" onclick="selectPrizeType('gift',this)">🎁 Gift</button>
+                <button class="prize-type-btn" onclick="selectPrizeType('other',this)">✦ Other</button>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label">Prize description</label>
+              <input class="setting-input" id="prize-description" placeholder="e.g. ₹500 Amazon voucher">
+              <div class="field-hint">Be specific — shown as a badge to respondents</div>
+            </div>
+            <div class="field">
+              <label class="field-label">Number of winners</label>
+              <input class="setting-input" id="prize-winners" type="number" min="1" placeholder="e.g. 3" style="max-width:120px">
+            </div>
+            <div class="field">
+              <label class="field-label">Winner selection</label>
+              <select class="setting-input" id="prize-selection" style="max-width:240px">
+                <option value="random">🎲 Random draw</option>
+                <option value="best">⭐ Best answer</option>
+                <option value="first">🏃 First N respondents</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label">Winner notification</label>
+              <select class="setting-input" id="prize-notification" style="max-width:280px">
+                <option value="manual">📧 I will contact winners manually</option>
+                <option value="email">✉️ SwoopForm sends automatic email</option>
+                <option value="leaderboard">🏆 Show on public leaderboard</option>
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+
+      <!-- SETTINGS PANEL -->
+      <div class="panel" id="panel-settings">
+        <div class="panel-title">⚙️ Survey settings</div>
+        <p class="panel-sub">Configure how your survey behaves.</p>
+        <div class="settings-card">
+          <div class="setting-row">
+            <div><div class="setting-name">Survey style</div><div class="setting-desc">How questions appear to respondents</div></div>
+            <select id="survey-style" style="padding:6px 10px;border-radius:7px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.8rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none">
+              <option value="conversational">✨ One at a time</option>
+              <option value="classic">📋 All on one page</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <div><div class="setting-name">Public survey</div><div class="setting-desc">Show in SwoopForm discovery directory</div></div>
+            <button class="toggle" id="toggle-public" onclick="toggleSetting('public')"></button>
+          </div>
+          <div class="setting-row">
+            <div><div class="setting-name">Collect email addresses</div><div class="setting-desc">Ask respondents for their email</div></div>
+            <button class="toggle" id="toggle-email" onclick="toggleSetting('email')"></button>
+          </div>
+          <div class="setting-row" style="border-bottom:none">
+            <div><div class="setting-name">One response per person</div><div class="setting-desc">Prevent duplicate submissions</div></div>
+            <button class="toggle" id="toggle-once" onclick="toggleSetting('once')"></button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end content -->
+  </div><!-- end layout -->
 </div>
+
 <div class="toast" id="toast"></div>
 
 <script type="module">
@@ -460,12 +732,12 @@
   const SHEETS_SCRIPT = 'https://script.google.com/macros/s/AKfycbx3evlOErDpdpR_TK_FvQaEEI5Kr6HvJYc46A_OG0SzIqJz8Gn0OKvUQxj7uoBLgyGH/exec';
 
   const firebaseConfig = {
-    apiKey: "AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",
-    authDomain: "swoopform.firebaseapp.com",
-    projectId: "swoopform",
-    storageBucket: "swoopform.firebasestorage.app",
-    messagingSenderId: "378850092986",
-    appId: "1:378850092986:web:4fed92128136e048fa5f83"
+    apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",
+    authDomain:"swoopform.firebaseapp.com",
+    projectId:"swoopform",
+    storageBucket:"swoopform.firebasestorage.app",
+    messagingSenderId:"378850092986",
+    appId:"1:378850092986:web:4fed92128136e048fa5f83"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -477,11 +749,21 @@
   let settings = { public:false, email:false, once:false, share:false, prize:false };
   let savedSurveyId = null;
   let selectedPrizeType = 'cash';
-  let questionsSnapshot = [];
+  let activePanel = 'questions';
+
+  // TEMPLATE CONFIG
+  const templateFields = [
+    { id:'first_name', icon:'👤', label:'First name', type:'text', required:true, enabled:true },
+    { id:'last_name', icon:'👤', label:'Last name', type:'text', required:false, enabled:true },
+    { id:'email', icon:'📧', label:'Email address', type:'email', required:true, enabled:true },
+    { id:'mobile', icon:'📱', label:'Mobile number', type:'phone', required:false, enabled:true },
+    { id:'company', icon:'🏢', label:'Company name', type:'text', required:false, enabled:false },
+  ];
+  let templateConfig = JSON.parse(JSON.stringify(templateFields));
 
   function syncFromDOM() {
     questions.forEach(q => {
-      const textEl = document.getElementById('q-text-' + q.id);
+      const textEl = document.getElementById('q-text-' + q.id) || document.getElementById('q-heading-' + q.id);
       if (textEl) q.text = textEl.value;
       const subEl = document.getElementById('q-sub-' + q.id);
       if (subEl) q.subtext = subEl.value;
@@ -490,7 +772,6 @@
         q.options = Array.from(optEls).map(el => el.value);
       }
     });
-    questionsSnapshot = [...questions];
   }
 
   onAuthStateChanged(auth, (user) => {
@@ -498,16 +779,47 @@
     currentUser = user;
     document.getElementById('loading-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-    questions = [{ id: Date.now(), type:'multiple', text:'', options:['',''], required:false }];
+    questions = [{ id:Date.now(), type:'multiple', text:'', options:['',''], required:false, correctIndex:-1 }];
     renderQuestions();
   });
 
-  function showToast(msg, duration=2500) {
+  function showToast(msg, d=2500) {
     const t = document.getElementById('toast');
     t.textContent = msg; t.style.display = 'block';
-    setTimeout(() => t.style.display = 'none', duration);
+    setTimeout(() => t.style.display = 'none', d);
   }
 
+  // PANEL SWITCHING
+  window.showPanel = function(panel) {
+    syncFromDOM();
+    activePanel = panel;
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+    document.getElementById('panel-' + panel).classList.add('active');
+    document.getElementById('nav-' + panel).classList.add('active');
+    closeMobileSidebar();
+  }
+
+  // TYPE PICKER
+  window.showTypePicker = function() {
+    document.getElementById('type-picker-wrap').style.display = 'block';
+    document.getElementById('type-picker-wrap').scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+  window.hideTypePicker = function() {
+    document.getElementById('type-picker-wrap').style.display = 'none';
+  }
+
+  // MOBILE SIDEBAR
+  window.openMobileSidebar = function() {
+    document.getElementById('sidebar').classList.add('mobile-open');
+    document.getElementById('sidebar-overlay').classList.add('open');
+  }
+  window.closeMobileSidebar = function() {
+    document.getElementById('sidebar').classList.remove('mobile-open');
+    document.getElementById('sidebar-overlay').classList.remove('open');
+  }
+
+  // SETTINGS
   window.toggleSetting = function(key) {
     settings[key] = !settings[key];
     document.getElementById('toggle-' + key).classList.toggle('on', settings[key]);
@@ -523,8 +835,76 @@
     el.classList.add('active');
   }
 
+  // TEMPLATE MODAL
+  window.openTemplateModal = function() {
+    renderTemplateModal();
+    document.getElementById('template-modal').classList.add('open');
+  }
+  window.closeTemplateModal = function() {
+    document.getElementById('template-modal').classList.remove('open');
+  }
+
+  function renderTemplateModal() {
+    const container = document.getElementById('template-fields');
+    container.innerHTML = templateConfig.map((f, i) => `
+      <div class="template-field-row" style="${!f.enabled?'opacity:0.5':''}">
+        <div class="template-field-info">
+          <span class="template-field-icon">${f.icon}</span>
+          <div>
+            <div class="template-field-name">${f.label}</div>
+            <div class="template-field-type">${f.type} field</div>
+          </div>
+        </div>
+        <div class="template-field-toggle">
+          <span class="template-req-label">Required</span>
+          <button class="toggle ${f.required?'on':''}" style="width:30px;height:16px"
+            onclick="toggleTemplateRequired(${i})"></button>
+          <button class="toggle ${f.enabled?'on':''}" style="background:${f.enabled?'#10B981':'#E2DAD0'}"
+            onclick="toggleTemplateEnabled(${i})"></button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  window.toggleTemplateRequired = function(i) {
+    templateConfig[i].required = !templateConfig[i].required;
+    renderTemplateModal();
+  }
+  window.toggleTemplateEnabled = function(i) {
+    templateConfig[i].enabled = !templateConfig[i].enabled;
+    renderTemplateModal();
+  }
+
+  window.insertTemplate = function() {
+    syncFromDOM();
+    // Add section heading first
+    const headingId = Date.now();
+    questions.push({
+      id: headingId, type:'heading',
+      text:'Contact Information', subtext:'Please fill in your details below.',
+      required:false, correctIndex:-1
+    });
+    // Add enabled fields
+    templateConfig.filter(f => f.enabled).forEach((f, i) => {
+      questions.push({
+        id: Date.now() + i + 1,
+        type: f.type,
+        text: f.label,
+        options:['',''],
+        required: f.required,
+        correctIndex: -1
+      });
+    });
+    closeTemplateModal();
+    renderQuestions();
+    showPanel('questions');
+    showToast('✅ Contact info template inserted!');
+  }
+
+  // QUESTIONS
   window.addQuestion = function(type) {
     syncFromDOM();
+    hideTypePicker();
     const id = Date.now();
     questions.push({ id, type, text:'', subtext:'', options:['',''], required:false, correctIndex:-1 });
     renderQuestions();
@@ -588,236 +968,107 @@
     }
   }
 
-  function escHtml(str) {
-    return (str||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  function escHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+
+  function getTypeLabel(type) {
+    const labels = {
+      multiple:'MCQ', checkbox:'Check', dropdown:'Drop', yesno:'Yes/No',
+      text:'Text', textarea:'Long', email:'Email', phone:'Phone', number:'Num',
+      rating:'Rate', scale:'Scale', date:'Date', file:'File',
+      heading:'Heading', pledge:'Pledge', quiz:'Quiz'
+    };
+    return labels[type] || type;
   }
 
   function renderQuestions() {
+    // Update sidebar q list
+    const qList = document.getElementById('q-list-sidebar');
+    let qNum = 0;
+    qList.innerHTML = questions.map((q, i) => {
+      if (q.type !== 'heading') qNum++;
+      return '<div class="q-item-sidebar" onclick="scrollToQuestion(' + q.id + ')">' +
+        '<div class="q-item-num">' + (q.type === 'heading' ? '§' : qNum) + '</div>' +
+        '<div class="q-item-text">' + (q.text || 'Untitled') + '</div>' +
+        '<div class="q-item-type">' + getTypeLabel(q.type) + '</div></div>';
+    }).join('');
+    document.getElementById('q-count').textContent = questions.filter(q => q.type !== 'heading').length;
+
+    // Render question cards
     const list = document.getElementById('questions-list');
+    let qNumber = 0;
     list.innerHTML = questions.map((q, i) => {
       const isHeading = q.type === 'heading';
       const isPledge = q.type === 'pledge';
       const isQuiz = q.type === 'quiz';
-      const hasOptions = ['multiple','checkbox','dropdown','quiz'].includes(q.type);
+      const hasOpts = ['multiple','checkbox','dropdown','quiz'].includes(q.type);
+      if (!isHeading) qNumber++;
 
       let inputHtml = '';
-
       if (isHeading) {
-        inputHtml = `
-          <input class="heading-input" id="q-heading-${q.id}"
-            placeholder="Section title e.g. Personal Information"
-            value="${escHtml(q.text)}"
-            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
-          <textarea class="subheading-input" id="q-sub-${q.id}"
-            placeholder="Optional description for this section" rows="2"
-            oninput="questions.find(x=>x.id===${q.id}).subtext=this.value">${escHtml(q.subtext||'')}</textarea>
-        `;
+        inputHtml = '<input class="heading-input" id="q-heading-' + q.id + '" placeholder="Section title e.g. Personal Information" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><textarea class="subheading-input" id="q-sub-' + q.id + '" placeholder="Optional section description" rows="2" oninput="questions.find(x=>x.id===' + q.id + ').subtext=this.value">' + escHtml(q.subtext||'') + '</textarea>';
       } else if (isPledge) {
-        inputHtml = `
-          <input class="q-input" id="q-text-${q.id}"
-            placeholder="e.g. I pledge to reduce my carbon footprint by 20% this year"
-            value="${escHtml(q.text)}"
-            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
-          <div class="pledge-preview">
-            <div class="pledge-preview-text">${q.text || 'Your pledge statement will appear here...'}</div>
-            <div class="pledge-checkbox-preview">
-              <div class="pledge-box"></div>
-              <span>I agree and commit to this pledge</span>
-            </div>
-          </div>
-        `;
+        inputHtml = '<input class="q-input" id="q-text-' + q.id + '" placeholder="e.g. I pledge to reduce my carbon footprint by 20% this year" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><div class="pledge-preview-box"><div class="pledge-preview-text">' + (q.text||'Your pledge statement...') + '</div><div class="pledge-preview-check"><div class="pledge-box"></div><span>I agree and commit to this pledge</span></div></div>';
       } else if (isQuiz) {
-        inputHtml = `
-          <input class="q-input" id="q-text-${q.id}"
-            placeholder="e.g. What is the capital of India?"
-            value="${escHtml(q.text)}"
-            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
-          <div class="correct-hint">Click ✓ to mark the correct answer</div>
-          <div class="options-list">
-            ${(q.options||[]).map((opt, oi) => `
-              <div class="option-row">
-                <div class="option-bullet"></div>
-                <input class="option-input opt-${q.id}"
-                  value="${escHtml(opt)}" placeholder="Option ${oi+1}">
-                <button class="correct-mark ${q.correctIndex===oi?'correct':''}"
-                  onclick="markCorrect(${q.id},${oi})" title="Mark as correct">✓</button>
-                <button class="option-remove" onclick="removeOption(${q.id},${oi})">✕</button>
-              </div>
-            `).join('')}
-          </div>
-          <button class="add-option-btn" onclick="addOption(${q.id})">+ Add option</button>
-        `;
-      } else if (hasOptions) {
-        const bulletClass = q.type === 'checkbox' ? 'option-bullet square' : 'option-bullet';
-        inputHtml = `
-          <input class="q-input" id="q-text-${q.id}"
-            placeholder="e.g. How satisfied are you with our service?"
-            value="${escHtml(q.text)}"
-            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
-          <div class="options-list">
-            ${(q.options||[]).map((opt, oi) => `
-              <div class="option-row">
-                <div class="${bulletClass}"></div>
-                <input class="option-input opt-${q.id}"
-                  value="${escHtml(opt)}" placeholder="Option ${oi+1}">
-                <button class="option-remove" onclick="removeOption(${q.id},${oi})">✕</button>
-              </div>
-            `).join('')}
-          </div>
-          <button class="add-option-btn" onclick="addOption(${q.id})">+ Add option</button>
-        `;
+        inputHtml = '<input class="q-input" id="q-text-' + q.id + '" placeholder="e.g. What is the capital of India?" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><div style="font-size:0.72rem;color:#64748B;margin-bottom:7px">Click ✓ to mark correct answer</div><div class="options-list">' +
+          (q.options||[]).map((opt, oi) => '<div class="option-row"><div class="opt-bullet"></div><input class="option-input opt-' + q.id + '" value="' + escHtml(opt) + '" placeholder="Option ' + (oi+1) + '"><button class="correct-mark ' + (q.correctIndex===oi?'correct':'') + '" onclick="markCorrect(' + q.id + ',' + oi + ')" title="Mark correct">✓</button><button class="opt-remove" onclick="removeOption(' + q.id + ',' + oi + ')">✕</button></div>').join('') +
+          '</div><button class="add-opt-btn" onclick="addOption(' + q.id + ')">+ Add option</button>';
+      } else if (hasOpts) {
+        const bc = q.type === 'checkbox' ? 'opt-bullet sq' : 'opt-bullet';
+        inputHtml = '<input class="q-input" id="q-text-' + q.id + '" placeholder="e.g. How satisfied are you?" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><div class="options-list">' +
+          (q.options||[]).map((opt, oi) => '<div class="option-row"><div class="' + bc + '"></div><input class="option-input opt-' + q.id + '" value="' + escHtml(opt) + '" placeholder="Option ' + (oi+1) + '"><button class="opt-remove" onclick="removeOption(' + q.id + ',' + oi + ')">✕</button></div>').join('') +
+          '</div><button class="add-opt-btn" onclick="addOption(' + q.id + ')">+ Add option</button>';
       } else if (q.type === 'rating') {
-        inputHtml = `
-          <input class="q-input" id="q-text-${q.id}"
-            placeholder="e.g. How would you rate our service?"
-            value="${escHtml(q.text)}"
-            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
-          <div class="rating-preview">
-            ${[1,2,3,4,5].map(n=>`<div class="rating-dot">${n}</div>`).join('')}
-          </div>
-          <div style="font-size:0.75rem;color:#64748B;margin-top:8px">Respondents pick 1 to 5</div>
-        `;
+        inputHtml = '<input class="q-input" id="q-text-' + q.id + '" placeholder="e.g. How would you rate our service?" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><div class="rating-dots">' + [1,2,3,4,5].map(n=>'<div class="rating-dot">'+n+'</div>').join('') + '</div>';
       } else if (q.type === 'scale') {
-        inputHtml = `
-          <input class="q-input" id="q-text-${q.id}"
-            placeholder="e.g. How likely are you to recommend us? (1-10)"
-            value="${escHtml(q.text)}"
-            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
-          <div class="scale-preview">
-            ${[1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="scale-dot">${n}</div>`).join('')}
-          </div>
-          <div style="font-size:0.75rem;color:#64748B;margin-top:8px">Respondents pick 1 to 10</div>
-        `;
+        inputHtml = '<input class="q-input" id="q-text-' + q.id + '" placeholder="e.g. How likely to recommend us? (1-10)" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><div class="scale-dots">' + [1,2,3,4,5,6,7,8,9,10].map(n=>'<div class="scale-dot">'+n+'</div>').join('') + '</div>';
       } else if (q.type === 'yesno') {
-        inputHtml = `
-          <input class="q-input" id="q-text-${q.id}"
-            placeholder="e.g. Would you recommend us to a friend?"
-            value="${escHtml(q.text)}"
-            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
-          <div class="options-list">
-            <div class="option-row"><div class="option-bullet"></div><span style="font-size:0.88rem;font-weight:600">Yes</span></div>
-            <div class="option-row"><div class="option-bullet"></div><span style="font-size:0.88rem;font-weight:600">No</span></div>
-          </div>
-        `;
+        inputHtml = '<input class="q-input" id="q-text-' + q.id + '" placeholder="e.g. Would you recommend us?" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><div style="display:flex;gap:8px"><div style="padding:7px 18px;border-radius:8px;border:1.5px solid #E2DAD0;font-size:0.85rem;font-weight:600">Yes</div><div style="padding:7px 18px;border-radius:8px;border:1.5px solid #E2DAD0;font-size:0.85rem;font-weight:600">No</div></div>';
       } else if (q.type === 'date') {
-        inputHtml = `
-          <input class="q-input" id="q-text-${q.id}"
-            placeholder="e.g. What is your date of birth?"
-            value="${escHtml(q.text)}"
-            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
-          <div class="preview-field">📅 Date picker — respondents select a date</div>
-        `;
-      } else if (q.type === 'number') {
-        inputHtml = `
-          <input class="q-input" id="q-text-${q.id}"
-            placeholder="e.g. How many employees does your company have?"
-            value="${escHtml(q.text)}"
-            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
-          <div class="preview-field">🔢 Number input — respondents enter a number</div>
-        `;
-      } else if (q.type === 'email') {
-        inputHtml = `
-          <input class="q-input" id="q-text-${q.id}"
-            placeholder="e.g. What is your email address?"
-            value="${escHtml(q.text)}"
-            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
-          <div class="preview-field">📧 Email input — validates email format</div>
-        `;
-      } else if (q.type === 'phone') {
-        inputHtml = `
-          <input class="q-input" id="q-text-${q.id}"
-            placeholder="e.g. What is your phone number?"
-            value="${escHtml(q.text)}"
-            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
-          <div class="preview-field">📱 Phone input — respondents enter phone number</div>
-        `;
-      } else if (q.type === 'text') {
-        inputHtml = `
-          <input class="q-input" id="q-text-${q.id}"
-            placeholder="e.g. What is your full name?"
-            value="${escHtml(q.text)}"
-            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
-          <div class="preview-field">Short answer field...</div>
-        `;
-      } else if (q.type === 'textarea') {
-        inputHtml = `
-          <input class="q-input" id="q-text-${q.id}"
-            placeholder="e.g. Please describe your experience in detail"
-            value="${escHtml(q.text)}"
-            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
-          <div class="preview-field" style="min-height:60px">Long answer field...</div>
-        `;
-      } else if (q.type === 'file') {
-        inputHtml = `
-          <input class="q-input" id="q-text-${q.id}"
-            placeholder="e.g. Please share a link to your portfolio"
-            value="${escHtml(q.text)}"
-            oninput="questions.find(x=>x.id===${q.id}).text=this.value">
-          <div class="preview-field">📎 Respondents paste a file/document URL</div>
-        `;
+        inputHtml = '<input class="q-input" id="q-text-' + q.id + '" placeholder="e.g. What is your date of birth?" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><div class="preview-chip">📅 Date picker — format DD-MM-YYYY</div>';
+      } else {
+        const ph = { text:'e.g. What is your full name?', textarea:'e.g. Please describe your experience', email:'e.g. What is your email?', phone:'e.g. What is your phone number?', number:'e.g. How many employees?', file:'e.g. Link to your portfolio' };
+        const pv = { text:'Short answer...', textarea:'Long answer...', email:'📧 Validates email format', phone:'📱 Phone number input', number:'🔢 Numbers only', file:'📎 Paste a URL' };
+        inputHtml = '<input class="q-input" id="q-text-' + q.id + '" placeholder="' + (ph[q.type]||'Type question...') + '" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><div class="preview-chip" ' + (q.type==='textarea'?'style="min-height:50px"':'') + '>' + (pv[q.type]||'') + '</div>';
       }
 
-      const showFooter = !isHeading;
-      const qLabel = isHeading ? '—' : i + 1;
-
-      return `
-        <div class="question-card ${isHeading?'type-heading':''}" id="qcard-${q.id}">
-          <div class="q-header">
-            <div class="q-number">${qLabel}</div>
-            <select class="q-type-select" onchange="changeType(${q.id},this.value)">
-              <optgroup label="Choice">
-                <option value="multiple" ${q.type==='multiple'?'selected':''}>◉ Multiple choice</option>
-                <option value="checkbox" ${q.type==='checkbox'?'selected':''}>☑ Checkboxes</option>
-                <option value="dropdown" ${q.type==='dropdown'?'selected':''}>▾ Dropdown</option>
-                <option value="yesno" ${q.type==='yesno'?'selected':''}>✓ Yes / No</option>
-              </optgroup>
-              <optgroup label="Text">
-                <option value="text" ${q.type==='text'?'selected':''}>✏️ Short text</option>
-                <option value="textarea" ${q.type==='textarea'?'selected':''}>📝 Long text</option>
-                <option value="email" ${q.type==='email'?'selected':''}>📧 Email</option>
-                <option value="phone" ${q.type==='phone'?'selected':''}>📱 Phone</option>
-                <option value="number" ${q.type==='number'?'selected':''}>🔢 Number</option>
-              </optgroup>
-              <optgroup label="Scale & Date">
-                <option value="rating" ${q.type==='rating'?'selected':''}>⭐ Rating 1-5</option>
-                <option value="scale" ${q.type==='scale'?'selected':''}>📊 Scale 1-10</option>
-                <option value="date" ${q.type==='date'?'selected':''}>📅 Date</option>
-              </optgroup>
-              <optgroup label="Special">
-                <option value="file" ${q.type==='file'?'selected':''}>📎 File URL</option>
-                <option value="heading" ${q.type==='heading'?'selected':''}>📌 Section heading</option>
-                <option value="pledge" ${q.type==='pledge'?'selected':''}>🤝 Pledge</option>
-                <option value="quiz" ${q.type==='quiz'?'selected':''}>🎓 Quiz MCQ</option>
-              </optgroup>
-            </select>
-            <button class="q-delete" onclick="deleteQuestion(${q.id})">✕</button>
-          </div>
-          ${inputHtml}
-          ${showFooter ? `
-            <div class="q-footer">
-              <button class="toggle ${q.required?'on':''}" id="req-${q.id}" onclick="toggleRequired(${q.id})"></button>
-              <span class="toggle-label">${isPledge ? 'Must agree to proceed' : 'Required question'}</span>
-            </div>
-          ` : ''}
-        </div>
-      `;
+      return '<div class="question-card ' + (isHeading?'type-heading':'') + '" id="qcard-' + q.id + '">' +
+        '<div class="q-card-header">' +
+        '<div class="q-num-badge">' + (isHeading?'§':qNumber) + '</div>' +
+        '<select class="q-type-select" onchange="changeType(' + q.id + ',this.value)">' +
+        '<optgroup label="Choice"><option value="multiple" ' + (q.type==='multiple'?'selected':'') + '>◉ Multiple choice</option><option value="checkbox" ' + (q.type==='checkbox'?'selected':'') + '>☑ Checkboxes</option><option value="dropdown" ' + (q.type==='dropdown'?'selected':'') + '>▾ Dropdown</option><option value="yesno" ' + (q.type==='yesno'?'selected':'') + '>✓ Yes / No</option></optgroup>' +
+        '<optgroup label="Text"><option value="text" ' + (q.type==='text'?'selected':'') + '>✏️ Short text</option><option value="textarea" ' + (q.type==='textarea'?'selected':'') + '>📝 Long text</option><option value="email" ' + (q.type==='email'?'selected':'') + '>📧 Email</option><option value="phone" ' + (q.type==='phone'?'selected':'') + '>📱 Phone</option><option value="number" ' + (q.type==='number'?'selected':'') + '>🔢 Number</option></optgroup>' +
+        '<optgroup label="Scale & Date"><option value="rating" ' + (q.type==='rating'?'selected':'') + '>⭐ Rating 1-5</option><option value="scale" ' + (q.type==='scale'?'selected':'') + '>📊 Scale 1-10</option><option value="date" ' + (q.type==='date'?'selected':'') + '>📅 Date</option></optgroup>' +
+        '<optgroup label="Special"><option value="file" ' + (q.type==='file'?'selected':'') + '>📎 File URL</option><option value="heading" ' + (q.type==='heading'?'selected':'') + '>📌 Section heading</option><option value="pledge" ' + (q.type==='pledge'?'selected':'') + '>🤝 Pledge</option><option value="quiz" ' + (q.type==='quiz'?'selected':'') + '>🎓 Quiz MCQ</option></optgroup>' +
+        '</select>' +
+        '<button class="q-delete" onclick="deleteQuestion(' + q.id + ')">✕</button></div>' +
+        inputHtml +
+        (!isHeading ? '<div class="q-footer"><button class="toggle ' + (q.required?'on':'') + '" id="req-' + q.id + '" onclick="toggleRequired(' + q.id + ')"></button><span class="toggle-label">' + (isPledge?'Must agree to proceed':'Required question') + '</span></div>' : '') +
+        '</div>';
     }).join('');
+  }
+
+  window.scrollToQuestion = function(id) {
+    showPanel('questions');
+    setTimeout(() => {
+      const el = document.getElementById('qcard-' + id);
+      if (el) el.scrollIntoView({ behavior:'smooth', block:'center' });
+    }, 100);
   }
 
   async function saveSurvey(status) {
     syncFromDOM();
     const title = document.getElementById('survey-title').value.trim();
     if (!title) { showToast('Please add a survey title'); return null; }
-    const validQuestions = questions.filter(q => q.type === 'heading' || q.text.trim());
-    if (!validQuestions.length) { showToast('Please add at least one question'); return null; }
+    const validQs = questions.filter(q => q.type === 'heading' || q.text.trim());
+    if (!validQs.length) { showToast('Please add at least one question'); return null; }
 
     const surveyData = {
       title,
       description: document.getElementById('survey-desc').value.trim(),
-      questions: validQuestions,
+      questions: validQs,
       settings,
       style: document.getElementById('survey-style').value,
-      welcomePage: {
+      welcomePage:{
         logo: document.getElementById('welcome-logo').value.trim(),
         headline: document.getElementById('welcome-headline').value.trim(),
         btnText: document.getElementById('welcome-btn-text').value.trim(),
@@ -825,33 +1076,33 @@
         bgImage: document.getElementById('welcome-bg-image').value.trim(),
         bgVideo: document.getElementById('welcome-bg-video').value.trim(),
       },
-      thankYouPage: {
+      thankYouPage:{
         headline: document.getElementById('thankyou-headline').value.trim(),
         message: document.getElementById('thankyou-message').value.trim(),
         redirect: document.getElementById('thankyou-redirect').value.trim(),
-        showShare: settings.share || false,
+        showShare: settings.share||false,
       },
       prize: settings.prize ? {
-        enabled: true, type: selectedPrizeType,
+        enabled:true, type:selectedPrizeType,
         description: document.getElementById('prize-description').value.trim(),
-        winners: document.getElementById('prize-winners').value || '1',
+        winners: document.getElementById('prize-winners').value||'1',
         selection: document.getElementById('prize-selection').value,
         notification: document.getElementById('prize-notification').value,
-      } : { enabled: false },
+      } : { enabled:false },
       status,
       userId: currentUser.uid,
       responseCount: 0,
-      questionCount: validQuestions.filter(q => q.type !== 'heading').length,
+      questionCount: validQs.filter(q => q.type !== 'heading').length,
       updatedAt: serverTimestamp()
     };
 
     try {
       if (savedSurveyId) {
-        await updateDoc(doc(db, 'surveys', savedSurveyId), surveyData);
+        await updateDoc(doc(db,'surveys',savedSurveyId), surveyData);
         return savedSurveyId;
       } else {
         surveyData.createdAt = serverTimestamp();
-        const ref = await addDoc(collection(db, 'surveys'), surveyData);
+        const ref = await addDoc(collection(db,'surveys'), surveyData);
         savedSurveyId = ref.id;
         return ref.id;
       }
@@ -866,9 +1117,7 @@
     const title = document.getElementById('survey-title').value.trim();
     if (!title) { showToast('Please add a survey title first'); return; }
     const id = await saveSurvey('draft');
-    if (id) {
-      window.open('/s/?id=' + id + '&preview=1', '_blank');
-    }
+    if (id) window.open('/s/?id=' + id + '&preview=1', '_blank');
   }
 
   window.saveDraft = async function() {
@@ -883,8 +1132,8 @@
     if (id) {
       btn.textContent = 'Creating Sheet...';
       try {
-        const qs = questionsSnapshot.map(q => q.text).filter(t => t && t.trim());
-        const response = await fetch(SHEETS_SCRIPT, {
+        const qs = questions.map(q => q.text).filter(t => t && t.trim());
+        const res = await fetch(SHEETS_SCRIPT, {
           method:'POST',
           body: JSON.stringify({
             action:'create_sheet',
@@ -893,25 +1142,28 @@
             hostEmail: currentUser.email
           })
         });
-        const result = await response.json();
+        const result = await res.json();
         if (result.success) {
-          await updateDoc(doc(db, 'surveys', id), {
-            sheetId: result.sheetId,
-            sheetUrl: result.sheetUrl
-          });
+          await updateDoc(doc(db,'surveys',id), { sheetId:result.sheetId, sheetUrl:result.sheetUrl });
           showToast('🎉 Survey published + Sheet created!', 2000);
-        } else {
-          showToast('🎉 Survey published!', 1500);
-        }
-      } catch(e) {
-        console.error(e);
-        showToast('🎉 Survey published!', 1500);
-      }
+        } else { showToast('🎉 Survey published!', 1500); }
+      } catch(e) { showToast('🎉 Survey published!', 1500); }
       setTimeout(() => window.location.href = '/dashboard', 2200);
     } else {
       btn.disabled = false; btn.textContent = 'Publish →';
     }
   }
+
+  // Close type picker when clicking outside
+  document.addEventListener('click', function(e) {
+    const wrap = document.getElementById('type-picker-wrap');
+    if (wrap && wrap.style.display !== 'none' && !wrap.contains(e.target)) {
+      const btns = document.querySelectorAll('[onclick="showTypePicker()"]');
+      let isBtn = false;
+      btns.forEach(b => { if (b.contains(e.target)) isBtn = true; });
+      if (!isBtn) hideTypePicker();
+    }
+  });
 </script>
 </body>
 </html>
