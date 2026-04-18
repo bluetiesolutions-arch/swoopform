@@ -8,6 +8,8 @@
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh;overflow:hidden}
+
+    /* NAV */
     nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
     .nav-left{display:flex;align-items:center;gap:10px}
     .logo-mark{width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none;flex-shrink:0}
@@ -22,213 +24,202 @@
     .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
     .hamburger-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:4px}
     .hamburger-btn span{display:block;width:20px;height:2px;background:#0F0E1A;border-radius:2px}
+
+    /* LAYOUT */
     .builder-layout{display:flex;height:calc(100vh - 56px);overflow:hidden}
 
     /* SIDEBAR */
     .sidebar{width:260px;flex-shrink:0;background:#fff;border-right:1.5px solid #E2DAD0;display:flex;flex-direction:column;overflow:hidden;z-index:100;transition:transform 0.3s ease}
-    .sidebar-header{padding:14px 12px 10px;border-bottom:1px solid #E2DAD0;flex-shrink:0}
-    .sidebar-label{font-size:0.68rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
-    .sidebar-nav{display:flex;flex-direction:column;gap:2px}
-    .sidebar-nav-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:all 0.2s;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;color:#64748B}
-    .sidebar-nav-item:hover{background:#F5F0E8;color:#0F0E1A}
-    .sidebar-nav-item.active{background:#EDE9FF;color:#2D1B69}
-    .sidebar-nav-item .sni-icon{width:18px;text-align:center;font-size:0.9rem}
-    .sidebar-divider{height:1px;background:#E2DAD0;margin:8px 0}
+    .sidebar-top{padding:14px 12px 10px;border-bottom:1px solid #E2DAD0;flex-shrink:0}
+    .sidebar-section-label{font-size:0.68rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;padding:0 4px}
+    .sidebar-nav{display:flex;flex-direction:column;gap:2px;margin-bottom:10px}
+    .snav-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;color:#64748B;transition:all 0.2s}
+    .snav-item:hover{background:#F5F0E8;color:#0F0E1A}
+    .snav-item.active{background:#EDE9FF;color:#2D1B69}
+    .snav-item .sni{width:18px;text-align:center}
+    .sidebar-divider{height:1px;background:#E2DAD0;margin:4px 0 10px}
+    .sidebar-q-label{font-size:0.68rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase;padding:0 4px;margin-bottom:6px}
 
-    /* QUESTION LIST IN SIDEBAR */
-    .q-sidebar-list{flex:1;overflow-y:auto;padding:8px}
-    .section-group{margin-bottom:4px}
-    .section-group-header{
-      display:flex;align-items:center;gap:6px;
-      padding:7px 8px;border-radius:8px;
-      cursor:pointer;user-select:none;
-      transition:background 0.2s;
-    }
-    .section-group-header:hover{background:#F5F0E8}
-    .section-group-header.active-section{background:#EDE9FF}
-    .drag-handle{
-      font-size:0.8rem;color:#C4B9AA;cursor:grab;
-      padding:2px;flex-shrink:0;
-      touch-action:none;
-    }
-    .drag-handle:active{cursor:grabbing}
-    .section-color-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-    .section-title-sidebar{font-size:0.8rem;font-weight:700;color:#0F0E1A;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .section-collapse-btn{background:none;border:none;cursor:pointer;color:#94A3B8;font-size:0.7rem;padding:2px;transition:transform 0.2s;flex-shrink:0}
-    .section-collapse-btn.collapsed{transform:rotate(-90deg)}
-    .section-q-count{font-size:0.68rem;font-weight:700;color:#94A3B8;background:#F5F0E8;padding:1px 6px;border-radius:100px;flex-shrink:0}
+    /* Q LIST */
+    .q-list{flex:1;overflow-y:auto;padding:6px 8px}
+    .sec-group{margin-bottom:4px}
+    .sec-group-hdr{display:flex;align-items:center;gap:6px;padding:7px 8px;border-radius:8px;cursor:pointer;user-select:none;transition:background 0.2s;position:relative}
+    .sec-group-hdr:hover{background:#F5F0E8}
+    .sec-group-hdr.active-sec{background:#EDE9FF}
+    .sec-group-hdr.drop-target{border:2px dashed #D97706;background:#FEF3C7}
+    .dh{font-size:0.85rem;color:#C4B9AA;cursor:grab;padding:1px 3px;flex-shrink:0;line-height:1;touch-action:none;-webkit-user-select:none}
+    .dh:active{cursor:grabbing;color:#2D1B69}
+    .sec-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+    .sec-name{font-size:0.8rem;font-weight:700;color:#0F0E1A;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .sec-collapse{background:none;border:none;cursor:pointer;color:#94A3B8;font-size:0.68rem;padding:2px;transition:transform 0.2s;flex-shrink:0}
+    .sec-collapse.coll{transform:rotate(-90deg)}
+    .sec-qcount{font-size:0.65rem;font-weight:700;color:#94A3B8;background:#F5F0E8;padding:1px 5px;border-radius:100px;flex-shrink:0}
+    .sec-qs{padding-left:12px;overflow:hidden;transition:max-height 0.3s ease}
+    .sec-qs.coll{max-height:0!important}
+    .q-item{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:7px;cursor:pointer;transition:all 0.15s;margin-bottom:1px;user-select:none;-webkit-user-select:none}
+    .q-item:hover{background:#F5F0E8}
+    .q-item.active-q{background:#EDE9FF}
+    .q-item.drag-over-q{border-top:2px solid #2D1B69}
+    .q-item.dragging-item{opacity:0.35}
+    .q-num{width:18px;height:18px;border-radius:50%;font-size:0.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
+    .q-itext{font-size:0.73rem;color:#64748B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+    .q-itype{font-size:0.6rem;color:#94A3B8;flex-shrink:0}
+    .unsec-qs{padding:0 0 4px}
+    .unsec-label{font-size:0.62rem;font-weight:700;color:#C4B9AA;letter-spacing:0.06em;text-transform:uppercase;padding:4px 8px 3px}
 
-    .section-questions{padding-left:14px;overflow:hidden;transition:max-height 0.3s ease}
-    .section-questions.collapsed{max-height:0!important}
+    /* SIDEBAR BOTTOM — FIXED */
+    .sidebar-bottom{flex-shrink:0;border-top:1.5px solid #E2DAD0;padding:10px;background:#fff;display:flex;flex-direction:column;gap:6px}
+    .btn-add-q{width:100%;padding:9px;border-radius:9px;border:1.5px dashed #2D1B69;background:#EDE9FF;color:#2D1B69;font-size:0.8rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center}
+    .btn-add-q:hover{background:#DDD6FE}
+    .btn-add-sec{width:100%;padding:9px;border-radius:9px;border:1.5px dashed #D97706;background:#FEF3C7;color:#92400E;font-size:0.8rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center}
+    .btn-add-sec:hover{background:#FDE68A}
+    .btn-add-tmpl{width:100%;padding:8px;border-radius:9px;border:1.5px solid #E2DAD0;background:#F5F0E8;color:#64748B;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center}
+    .btn-add-tmpl:hover{border-color:#D97706;color:#D97706}
 
-    .q-sidebar-item{
-      display:flex;align-items:center;gap:6px;
-      padding:6px 8px;border-radius:7px;
-      cursor:pointer;transition:all 0.2s;
-      margin-bottom:2px;
-      user-select:none;
-    }
-    .q-sidebar-item:hover{background:#F5F0E8}
-    .q-sidebar-item.active{background:#EDE9FF}
-    .q-sidebar-item.dragging{opacity:0.4;background:#EDE9FF}
-    .q-sidebar-item.drag-over{border-top:2px solid #2D1B69}
-    .section-group-header.drag-over-section{background:#FEF3C7;border:1.5px dashed #D97706}
-    .q-num{width:18px;height:18px;border-radius:50%;font-size:0.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
-    .q-item-text{font-size:0.75rem;color:#64748B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
-    .q-item-type{font-size:0.62rem;color:#94A3B8;flex-shrink:0}
-    .unsectioned-group{margin-bottom:4px}
-    .unsectioned-label{font-size:0.68rem;font-weight:700;color:#C4B9AA;letter-spacing:0.06em;text-transform:uppercase;padding:4px 8px}
-
-    /* SIDEBAR BOTTOM */
-    .sidebar-bottom{padding:10px;border-top:1px solid #E2DAD0;flex-shrink:0;display:flex;flex-direction:column;gap:6px}
-    .btn-sidebar-add{width:100%;padding:8px;border-radius:8px;border:1.5px dashed #E2DAD0;background:transparent;color:#64748B;font-size:0.8rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px}
-    .btn-sidebar-add:hover{border-color:#2D1B69;color:#2D1B69;background:#EDE9FF}
-    .btn-sidebar-add.section{border-color:#E2DAD0}
-    .btn-sidebar-add.section:hover{border-color:#D97706;color:#D97706;background:#FEF3C7}
-    .btn-sidebar-template{width:100%;padding:8px;border-radius:8px;border:1.5px solid #E2DAD0;background:#F5F0E8;color:#64748B;font-size:0.8rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center}
-    .btn-sidebar-template:hover{border-color:#D97706;color:#D97706}
-
-    /* CONTENT AREA */
+    /* CONTENT */
     .content-area{flex:1;overflow-y:auto;padding:24px}
     .panel{display:none}
     .panel.active{display:block}
 
-    /* SURVEY TITLE */
-    .survey-title-wrap{margin-bottom:20px;padding:20px;background:#fff;border-radius:14px;border:1.5px solid #E2DAD0}
-    .survey-title-input{width:100%;border:none;outline:none;font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-0.03em;color:#0F0E1A;background:transparent}
-    .survey-title-input::placeholder{color:#C4B9AA}
-    .survey-desc-input{width:100%;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:#64748B;background:transparent;resize:none;margin-top:6px}
-    .survey-desc-input::placeholder{color:#C4B9AA}
+    /* TITLE */
+    .title-wrap{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:20px;margin-bottom:16px}
+    .title-input{width:100%;border:none;outline:none;font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-0.03em;color:#0F0E1A;background:transparent}
+    .title-input::placeholder{color:#C4B9AA}
+    .desc-input{width:100%;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:#64748B;background:transparent;resize:none;margin-top:6px}
+    .desc-input::placeholder{color:#C4B9AA}
 
     /* SECTION CARD */
-    .section-card{border-radius:14px;border:2px solid;padding:20px;margin-bottom:12px;position:relative}
-    .section-card-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
-    .section-card-icon{font-size:1.1rem}
-    .section-card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;flex:1}
-    .section-delete-btn{background:none;border:none;cursor:pointer;color:#94A3B8;font-size:1rem;padding:4px;border-radius:6px;transition:all 0.2s}
-    .section-delete-btn:hover{background:#FEE2E2;color:#DC2626}
-    .section-field{margin-bottom:12px}
-    .section-field-label{font-size:0.72rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px;display:block}
-    .section-input{width:100%;padding:9px 12px;border-radius:8px;border:1.5px solid rgba(0,0,0,0.1);background:rgba(255,255,255,0.7);color:#0F0E1A;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
-    .section-input:focus{border-color:rgba(0,0,0,0.3)}
-    .section-mode-toggle{display:flex;gap:8px}
-    .section-mode-btn{flex:1;padding:8px;border-radius:8px;border:1.5px solid rgba(0,0,0,0.1);background:transparent;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center}
-    .section-mode-btn.active{background:rgba(0,0,0,0.08);border-color:rgba(0,0,0,0.2)}
-    .section-mode-hint{font-size:0.7rem;color:#64748B;margin-top:4px;opacity:0.8}
+    .sec-card{border-radius:14px;border:2px solid;padding:18px;margin-bottom:10px}
+    .sec-card-top{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+    .sec-card-icon{font-size:1rem}
+    .sec-card-title-text{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;flex:1}
+    .sec-del{background:none;border:none;cursor:pointer;color:#94A3B8;font-size:1rem;padding:4px;border-radius:6px;transition:all 0.2s}
+    .sec-del:hover{background:#FEE2E2;color:#DC2626}
+    .sec-field{margin-bottom:10px}
+    .sec-field-lbl{display:block;font-size:0.7rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:4px}
+    .sec-inp{width:100%;padding:8px 11px;border-radius:8px;border:1.5px solid rgba(0,0,0,0.1);background:rgba(255,255,255,0.7);color:#0F0E1A;font-size:0.85rem;font-family:'DM Sans',sans-serif;outline:none}
+    .sec-inp:focus{border-color:rgba(0,0,0,0.25)}
+    .sec-modes{display:flex;gap:6px;flex-wrap:wrap}
+    .sec-mode-btn{flex:1;min-width:0;padding:7px 6px;border-radius:8px;border:1.5px solid rgba(0,0,0,0.1);background:rgba(255,255,255,0.6);font-size:0.72rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center;white-space:nowrap}
+    .sec-mode-btn.active{background:rgba(0,0,0,0.1);border-color:rgba(0,0,0,0.25)}
+    .sec-mode-hint{font-size:0.68rem;color:#64748B;margin-top:5px;opacity:0.85;line-height:1.4}
 
     /* QUESTION CARD */
-    .question-card{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;margin-bottom:10px;overflow:hidden;transition:box-shadow 0.2s}
-    .question-card:hover{box-shadow:0 4px 20px rgba(15,14,26,0.08)}
-    .question-card.in-section{border-left-width:4px}
-    .question-card-tabs{display:flex;border-bottom:1px solid #E2DAD0;background:#FAFAF7}
-    .q-tab{padding:10px 16px;font-size:0.78rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:#64748B;font-family:'DM Sans',sans-serif;transition:all 0.2s;border-bottom:2px solid transparent}
+    .q-card{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;margin-bottom:10px;overflow:hidden;transition:box-shadow 0.2s}
+    .q-card:hover{box-shadow:0 4px 16px rgba(15,14,26,0.07)}
+    .q-card.in-sec{border-left-width:4px}
+    .q-card-tabs{display:flex;border-bottom:1px solid #E2DAD0;background:#FAFAF7}
+    .q-tab{padding:9px 14px;font-size:0.76rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:#64748B;font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;transition:all 0.2s}
     .q-tab.active{color:#2D1B69;border-bottom-color:#2D1B69;background:#fff}
-    .q-tab-badge{background:#EF4444;color:#fff;font-size:0.6rem;font-weight:700;padding:1px 5px;border-radius:100px;margin-left:4px}
-    .question-card-body{padding:18px}
-    .q-card-header{display:flex;align-items:center;gap:8px;margin-bottom:14px}
-    .q-num-badge{width:24px;height:24px;border-radius:50%;font-size:0.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
-    .q-type-select{padding:5px 8px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none}
-    .q-delete{margin-left:auto;width:28px;height:28px;border-radius:7px;border:none;background:transparent;cursor:pointer;color:#94A3B8;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
-    .q-delete:hover{background:#FEE2E2;color:#DC2626}
-    .q-input{width:100%;border:none;border-bottom:1.5px solid #E2DAD0;outline:none;padding:7px 0;font-family:'DM Sans',sans-serif;font-size:0.92rem;font-weight:600;color:#0F0E1A;background:transparent;margin-bottom:12px}
-    .q-input::placeholder{color:#C4B9AA}
-    .q-input:focus{border-bottom-color:#2D1B69}
-    .options-list{margin-bottom:8px}
-    .option-row{display:flex;align-items:center;gap:7px;margin-bottom:7px}
-    .opt-bullet{width:14px;height:14px;border-radius:50%;border:2px solid #E2DAD0;flex-shrink:0}
-    .opt-bullet.sq{border-radius:3px}
-    .option-input{flex:1;border:none;border-bottom:1px solid #E2DAD0;outline:none;padding:5px 0;font-family:'DM Sans',sans-serif;font-size:0.85rem;color:#0F0E1A;background:transparent}
-    .option-input::placeholder{color:#C4B9AA}
-    .option-input:focus{border-bottom-color:#2D1B69}
-    .opt-remove{background:none;border:none;cursor:pointer;color:#C4B9AA;font-size:0.9rem;transition:color 0.2s;padding:2px}
-    .opt-remove:hover{color:#DC2626}
-    .correct-mark{width:20px;height:20px;border-radius:50%;border:2px solid #E2DAD0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.65rem;transition:all 0.2s;flex-shrink:0;color:transparent}
-    .correct-mark.correct{background:#10B981;border-color:#10B981;color:#fff}
-    .add-opt-btn{background:none;border:none;cursor:pointer;color:#2D1B69;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:3px 0}
-    .preview-chip{background:#F5F0E8;border-radius:7px;padding:10px 12px;font-size:0.8rem;color:#94A3B8}
-    .pledge-preview-box{background:#EDE9FF;border-radius:10px;padding:14px;border:1.5px solid rgba(45,27,105,0.15)}
-    .pledge-preview-text{font-size:0.85rem;color:#2D1B69;line-height:1.6;margin-bottom:10px}
-    .pledge-preview-check{display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#64748B}
-    .pledge-box-preview{width:14px;height:14px;border-radius:3px;border:2px solid #C4B9AA;flex-shrink:0}
-    .rating-dots{display:flex;gap:6px;flex-wrap:wrap}
-    .rating-dot{width:32px;height:32px;border-radius:7px;border:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:600;color:#64748B}
-    .scale-dots{display:flex;gap:5px;flex-wrap:wrap}
-    .scale-dot{width:26px;height:26px;border-radius:5px;border:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:600;color:#64748B}
-    .q-footer{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #F5F0E8}
-    .toggle{width:34px;height:18px;border-radius:100px;background:#E2DAD0;cursor:pointer;position:relative;transition:background 0.2s;border:none;flex-shrink:0}
-    .toggle.on{background:#2D1B69}
-    .toggle::after{content:'';position:absolute;width:12px;height:12px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 0.2s}
-    .toggle.on::after{transform:translateX(16px)}
-    .toggle-label{font-size:0.75rem;color:#64748B;font-weight:500}
+    .q-tab-badge{background:#EF4444;color:#fff;font-size:0.58rem;font-weight:700;padding:1px 5px;border-radius:100px;margin-left:3px}
+    .q-body{padding:16px}
+    .q-hdr{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+    .q-nbadge{width:22px;height:22px;border-radius:50%;font-size:0.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
+    .q-type-sel{padding:4px 8px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.73rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none}
+    .q-del{margin-left:auto;width:26px;height:26px;border-radius:6px;border:none;background:transparent;cursor:pointer;color:#94A3B8;font-size:0.88rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+    .q-del:hover{background:#FEE2E2;color:#DC2626}
+    .q-inp{width:100%;border:none;border-bottom:1.5px solid #E2DAD0;outline:none;padding:6px 0;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;color:#0F0E1A;background:transparent;margin-bottom:11px}
+    .q-inp::placeholder{color:#C4B9AA}
+    .q-inp:focus{border-bottom-color:#2D1B69}
+    .opts-list{margin-bottom:7px}
+    .opt-row{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+    .opt-bul{width:13px;height:13px;border-radius:50%;border:2px solid #E2DAD0;flex-shrink:0}
+    .opt-bul.sq{border-radius:3px}
+    .opt-inp{flex:1;border:none;border-bottom:1px solid #E2DAD0;outline:none;padding:4px 0;font-family:'DM Sans',sans-serif;font-size:0.83rem;color:#0F0E1A;background:transparent}
+    .opt-inp::placeholder{color:#C4B9AA}
+    .opt-inp:focus{border-bottom-color:#2D1B69}
+    .opt-rm{background:none;border:none;cursor:pointer;color:#C4B9AA;font-size:0.85rem;transition:color 0.2s;padding:2px}
+    .opt-rm:hover{color:#DC2626}
+    .ok-mark{width:18px;height:18px;border-radius:50%;border:2px solid #E2DAD0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.6rem;transition:all 0.2s;flex-shrink:0;color:transparent}
+    .ok-mark.ok{background:#10B981;border-color:#10B981;color:#fff}
+    .add-opt{background:none;border:none;cursor:pointer;color:#2D1B69;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:2px 0}
+    .pchip{background:#F5F0E8;border-radius:7px;padding:9px 11px;font-size:0.78rem;color:#94A3B8}
+    .pledge-box{background:#EDE9FF;border-radius:9px;padding:12px;border:1.5px solid rgba(45,27,105,0.15)}
+    .pledge-txt{font-size:0.83rem;color:#2D1B69;line-height:1.6;margin-bottom:9px}
+    .pledge-chk{display:flex;align-items:center;gap:7px;font-size:0.78rem;color:#64748B}
+    .pledge-chk-box{width:13px;height:13px;border-radius:3px;border:2px solid #C4B9AA;flex-shrink:0}
+    .rdots{display:flex;gap:5px;flex-wrap:wrap}
+    .rdot{width:30px;height:30px;border-radius:7px;border:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:600;color:#64748B}
+    .sdots{display:flex;gap:4px;flex-wrap:wrap}
+    .sdot{width:24px;height:24px;border-radius:5px;border:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:600;color:#64748B}
+    .q-footer{display:flex;align-items:center;gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid #F5F0E8;flex-wrap:wrap}
+    .tgl{width:32px;height:17px;border-radius:100px;background:#E2DAD0;cursor:pointer;position:relative;transition:background 0.2s;border:none;flex-shrink:0}
+    .tgl.on{background:#2D1B69}
+    .tgl::after{content:'';position:absolute;width:11px;height:11px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 0.2s}
+    .tgl.on::after{transform:translateX(15px)}
+    .tgl-lbl{font-size:0.73rem;color:#64748B;font-weight:500}
+    .disp-sel{padding:5px 8px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.73rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none;margin-left:auto}
+    .disp-sel:focus{border-color:#2D1B69}
 
-    /* LOGIC BUILDER */
-    .logic-panel{padding:4px 0}
-    .logic-empty{text-align:center;padding:20px;color:#94A3B8;font-size:0.82rem}
-    .logic-rule{background:#F5F0E8;border-radius:10px;padding:14px;margin-bottom:10px;position:relative}
-    .logic-rule-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-    .logic-rule-title{font-size:0.78rem;font-weight:700;color:#64748B}
-    .logic-rule-delete{background:none;border:none;cursor:pointer;color:#94A3B8;font-size:0.9rem;padding:2px;transition:color 0.2s}
-    .logic-rule-delete:hover{color:#DC2626}
-    .logic-condition{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
-    .logic-select{padding:6px 8px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer}
-    .logic-select:focus{border-color:#2D1B69}
-    .logic-condition-type{display:flex;gap:6px;margin-bottom:8px}
-    .cond-type-btn{padding:4px 10px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.72rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;color:#64748B}
-    .cond-type-btn.active{background:#2D1B69;border-color:#2D1B69;color:#fff}
-    .add-condition-btn{background:none;border:none;cursor:pointer;color:#2D1B69;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:2px 0;margin-bottom:8px}
-    .logic-action-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding-top:8px;border-top:1px solid #E2DAD0}
-    .logic-action-label{font-size:0.75rem;font-weight:700;color:#0F0E1A}
-    .btn-add-rule{width:100%;padding:8px;border-radius:8px;border:1.5px dashed #C4B5FD;background:transparent;color:#2D1B69;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center;margin-top:4px}
+    /* LOGIC */
+    .logic-wrap{padding:4px 0}
+    .logic-empty{text-align:center;padding:18px;color:#94A3B8;font-size:0.8rem;line-height:1.6}
+    .logic-rule{background:#F5F0E8;border-radius:9px;padding:12px;margin-bottom:8px}
+    .logic-rule-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .logic-rule-lbl{font-size:0.75rem;font-weight:700;color:#64748B}
+    .logic-del{background:none;border:none;cursor:pointer;color:#94A3B8;font-size:0.82rem;padding:2px;transition:color 0.2s}
+    .logic-del:hover{color:#DC2626}
+    .logic-cond{display:flex;align-items:center;gap:5px;margin-bottom:6px;flex-wrap:wrap}
+    .lsel{padding:5px 7px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.73rem;font-weight:600;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer}
+    .lsel:focus{border-color:#2D1B69}
+    .ctype-row{display:flex;gap:5px;margin-bottom:6px}
+    .ctype-btn{padding:3px 9px;border-radius:5px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.68rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;color:#64748B;transition:all 0.2s}
+    .ctype-btn.active{background:#2D1B69;border-color:#2D1B69;color:#fff}
+    .add-cond-btn{background:none;border:none;cursor:pointer;color:#2D1B69;font-size:0.72rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:1px 0;margin-bottom:6px}
+    .logic-action-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding-top:7px;border-top:1px solid #E2DAD0}
+    .logic-action-lbl{font-size:0.72rem;font-weight:700;color:#0F0E1A}
+    .btn-add-rule{width:100%;padding:7px;border-radius:8px;border:1.5px dashed #C4B5FD;background:transparent;color:#2D1B69;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center;margin-top:4px}
     .btn-add-rule:hover{background:#EDE9FF}
-    .logic-default-row{display:flex;align-items:center;gap:8px;margin-top:10px;padding:10px;background:#fff;border-radius:8px;border:1px solid #E2DAD0}
-    .logic-default-label{font-size:0.75rem;font-weight:700;color:#64748B}
+    .logic-default{display:flex;align-items:center;gap:8px;margin-top:8px;padding:9px 11px;background:#fff;border-radius:7px;border:1px solid #E2DAD0;font-size:0.73rem;color:#64748B}
+    .logic-default strong{color:#0F0E1A}
 
     /* SETTINGS PANELS */
     .panel-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;letter-spacing:-0.02em;margin-bottom:6px}
     .panel-sub{color:#64748B;font-size:0.85rem;margin-bottom:20px}
-    .settings-card{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:20px;margin-bottom:14px}
-    .settings-card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:16px}
-    .field{margin-bottom:16px}
-    .field:last-child{margin-bottom:0}
-    .field-label{display:block;font-size:0.75rem;font-weight:700;color:#64748B;margin-bottom:5px;letter-spacing:0.04em;text-transform:uppercase}
-    .field-hint{font-size:0.72rem;color:#94A3B8;margin-top:4px;line-height:1.4}
-    .hint-box{background:#EDE9FF;border-radius:8px;padding:11px 13px;margin-top:7px;font-size:0.75rem;color:#2D1B69;line-height:1.6}
-    .hint-box ol{padding-left:14px;margin-top:4px}
-    .dim-tag{display:inline-block;padding:2px 7px;border-radius:4px;background:#fff;border:1px solid #C4B5FD;font-size:0.68rem;font-weight:600;color:#2D1B69;margin-right:3px;margin-top:3px}
-    .setting-input{width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.85rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
-    .setting-input:focus{border-color:#2D1B69}
-    .setting-input::placeholder{color:#C4B9AA}
-    .setting-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #E2DAD0}
-    .setting-row:last-child{border-bottom:none}
-    .setting-name{font-size:0.85rem;font-weight:600}
-    .setting-desc{font-size:0.75rem;color:#64748B;margin-top:2px}
+    .scard{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:20px;margin-bottom:14px}
+    .scard-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:14px}
+    .sf{margin-bottom:14px}
+    .sf:last-child{margin-bottom:0}
+    .sf-lbl{display:block;font-size:0.73rem;font-weight:700;color:#64748B;margin-bottom:5px;letter-spacing:0.04em;text-transform:uppercase}
+    .sf-hint{font-size:0.7rem;color:#94A3B8;margin-top:4px;line-height:1.4}
+    .hbox{background:#EDE9FF;border-radius:8px;padding:10px 12px;margin-top:6px;font-size:0.73rem;color:#2D1B69;line-height:1.6}
+    .hbox ol{padding-left:13px;margin-top:3px}
+    .dtag{display:inline-block;padding:2px 6px;border-radius:4px;background:#fff;border:1px solid #C4B5FD;font-size:0.65rem;font-weight:600;color:#2D1B69;margin-right:3px;margin-top:3px}
+    .sinp{width:100%;padding:8px 11px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.83rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
+    .sinp:focus{border-color:#2D1B69}
+    .sinp::placeholder{color:#C4B9AA}
+    .srow{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #E2DAD0}
+    .srow:last-child{border-bottom:none}
+    .srow-name{font-size:0.83rem;font-weight:600}
+    .srow-desc{font-size:0.72rem;color:#64748B;margin-top:2px}
     .color-row{display:flex;gap:8px;align-items:center}
-    .prize-types{display:flex;gap:7px;flex-wrap:wrap}
-    .prize-type-btn{padding:7px 13px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
-    .prize-type-btn:hover{border-color:#2D1B69;background:#EDE9FF}
-    .prize-type-btn.active{border-color:#D97706;background:#FEF3C7;color:#92400E}
+    .prize-types{display:flex;gap:6px;flex-wrap:wrap}
+    .pt-btn{padding:6px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.76rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
+    .pt-btn:hover{border-color:#2D1B69;background:#EDE9FF}
+    .pt-btn.active{border-color:#D97706;background:#FEF3C7;color:#92400E}
 
     /* MODAL */
-    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:300;display:none;align-items:center;justify-content:center}
-    .modal-overlay.open{display:flex}
-    .modal{background:#fff;border-radius:16px;padding:28px;width:100%;max-width:480px;margin:20px}
-    .modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:6px}
-    .modal-sub{color:#64748B;font-size:0.85rem;margin-bottom:20px}
-    .template-fields{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
-    .template-field-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:10px;border:1.5px solid #E2DAD0;background:#F5F0E8}
-    .template-field-info{display:flex;align-items:center;gap:10px}
-    .template-field-icon{font-size:1.1rem}
-    .template-field-name{font-size:0.88rem;font-weight:600}
-    .template-field-type{font-size:0.72rem;color:#64748B;margin-top:2px}
-    .template-field-controls{display:flex;align-items:center;gap:8px}
-    .modal-actions{display:flex;gap:8px;justify-content:flex-end}
+    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:300;display:none;align-items:center;justify-content:center}
+    .modal-bg.open{display:flex}
+    .modal{background:#fff;border-radius:16px;padding:26px;width:100%;max-width:460px;margin:20px}
+    .modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:5px}
+    .modal-sub{color:#64748B;font-size:0.83rem;margin-bottom:18px}
+    .tmpl-list{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+    .tmpl-row{display:flex;align-items:center;justify-content:space-between;padding:11px 13px;border-radius:9px;border:1.5px solid #E2DAD0;background:#F5F0E8}
+    .tmpl-info{display:flex;align-items:center;gap:9px}
+    .tmpl-icon{font-size:1rem}
+    .tmpl-name{font-size:0.85rem;font-weight:600}
+    .tmpl-type{font-size:0.7rem;color:#64748B;margin-top:1px}
+    .tmpl-ctrls{display:flex;align-items:center;gap:7px}
+    .tmpl-req-lbl{font-size:0.68rem;color:#64748B}
+    .modal-footer{display:flex;gap:8px;justify-content:flex-end}
 
     /* MOBILE */
-    .sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:150;display:none}
-    .sidebar-overlay.open{display:block}
+    .sb-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:150;display:none}
+    .sb-overlay.open{display:block}
 
     /* TOAST */
-    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:11px 22px;border-radius:10px;font-size:0.85rem;font-weight:600;display:none;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,0.3);white-space:nowrap}
+    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.83rem;font-weight:600;display:none;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,0.3);white-space:nowrap}
 
     /* LOADING */
     .loading-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#0F0E1A}
@@ -237,10 +228,9 @@
 
     @media(max-width:768px){
       .sidebar{position:fixed;top:56px;left:0;bottom:0;transform:translateX(-100%);z-index:160}
-      .sidebar.mobile-open{transform:translateX(0)}
+      .sidebar.mob-open{transform:translateX(0)}
       .hamburger-btn{display:flex}
       .content-area{padding:16px}
-      .btn-ghost.hide-mobile{display:none}
     }
   </style>
 </head>
@@ -248,90 +238,88 @@
 <div id="loading-screen" class="loading-screen"><div class="spinner"></div></div>
 
 <!-- TEMPLATE MODAL -->
-<div class="modal-overlay" id="template-modal">
+<div class="modal-bg" id="tmpl-modal">
   <div class="modal">
     <div class="modal-title">🧩 Contact Info Template</div>
     <p class="modal-sub">Pick fields to include. Toggle required for each.</p>
-    <div class="template-fields" id="template-fields-list"></div>
-    <div class="modal-actions">
-      <button class="btn-ghost" onclick="closeTemplateModal()">Cancel</button>
-      <button class="btn-primary" onclick="insertTemplate()">Insert →</button>
+    <div class="tmpl-list" id="tmpl-list"></div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeTmpl()">Cancel</button>
+      <button class="btn-primary" onclick="insertTmpl()">Insert fields →</button>
     </div>
   </div>
 </div>
 
-<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeMobileSidebar()"></div>
+<div class="sb-overlay" id="sb-overlay" onclick="closeSb()"></div>
 
 <div id="app" style="display:none">
   <nav>
     <div class="nav-left">
-      <button class="hamburger-btn" onclick="openMobileSidebar()"><span></span><span></span><span></span></button>
+      <button class="hamburger-btn" onclick="openSb()"><span></span><span></span><span></span></button>
       <a href="/dashboard" class="logo-mark">S</a>
       <div class="nav-title" id="nav-title">New Survey</div>
     </div>
     <div class="nav-actions">
       <button class="btn-preview" onclick="previewSurvey()">👁 Preview</button>
-      <button class="btn-ghost hide-mobile" onclick="saveDraft()">Save draft</button>
-      <button class="btn-primary" id="publish-btn" onclick="publishSurvey()">Publish →</button>
+      <button class="btn-ghost" onclick="saveDraft()">Save draft</button>
+      <button class="btn-primary" id="pub-btn" onclick="publishSurvey()">Publish →</button>
     </div>
   </nav>
 
   <div class="builder-layout">
+
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <div class="sidebar-label">Sections</div>
+      <div class="sidebar-top">
+        <div class="sidebar-section-label">Survey sections</div>
         <div class="sidebar-nav">
-          <button class="sidebar-nav-item active" id="snav-questions" onclick="showMainPanel('questions')"><span class="sni-icon">📋</span> Questions</button>
-          <button class="sidebar-nav-item" id="snav-welcome" onclick="showMainPanel('welcome')"><span class="sni-icon">🎨</span> Welcome page</button>
-          <button class="sidebar-nav-item" id="snav-thankyou" onclick="showMainPanel('thankyou')"><span class="sni-icon">🙏</span> Thank you page</button>
-          <button class="sidebar-nav-item" id="snav-prize" onclick="showMainPanel('prize')"><span class="sni-icon">🎁</span> Prize & Incentive</button>
-          <button class="sidebar-nav-item" id="snav-settings" onclick="showMainPanel('settings')"><span class="sni-icon">⚙️</span> Survey settings</button>
+          <button class="snav-item active" id="sn-questions" onclick="showPanel('questions')"><span class="sni">📋</span> Questions</button>
+          <button class="snav-item" id="sn-welcome" onclick="showPanel('welcome')"><span class="sni">🎨</span> Welcome page</button>
+          <button class="snav-item" id="sn-thankyou" onclick="showPanel('thankyou')"><span class="sni">🙏</span> Thank you page</button>
+          <button class="snav-item" id="sn-prize" onclick="showPanel('prize')"><span class="sni">🎁</span> Prize & Incentive</button>
+          <button class="snav-item" id="sn-settings" onclick="showPanel('settings')"><span class="sni">⚙️</span> Survey settings</button>
         </div>
         <div class="sidebar-divider"></div>
-        <div class="sidebar-label">Questions</div>
+        <div class="sidebar-q-label">Questions <span id="q-total-badge" style="font-size:0.65rem;background:#EDE9FF;color:#2D1B69;padding:1px 6px;border-radius:100px;font-weight:700;margin-left:4px">0</span></div>
       </div>
 
-      <div class="q-sidebar-list" id="q-sidebar-list"></div>
+      <div class="q-list" id="q-list"></div>
 
+      <!-- SIDEBAR BOTTOM — always visible -->
       <div class="sidebar-bottom">
-        <button class="btn-sidebar-add" onclick="addQuestion()">+ Add question</button>
-        <button class="btn-sidebar-add section" onclick="addSection()">📌 Add section</button>
-        <button class="btn-sidebar-template" onclick="openTemplateModal()">🧩 Contact template</button>
+        <button class="btn-add-q" onclick="addQuestion()">+ Add question</button>
+        <button class="btn-add-sec" onclick="addSection()">📌 Add section</button>
+        <button class="btn-add-tmpl" onclick="openTmpl()">🧩 Contact template</button>
       </div>
     </div>
 
-    <!-- CONTENT -->
-    <div class="content-area" id="content-area">
+    <!-- CONTENT AREA -->
+    <div class="content-area">
 
       <!-- QUESTIONS PANEL -->
       <div class="panel active" id="panel-questions">
-        <div class="survey-title-wrap">
-          <input class="survey-title-input" id="survey-title" placeholder="Survey title e.g. Customer Satisfaction Survey" maxlength="100" oninput="document.getElementById('nav-title').textContent=this.value||'New Survey'">
-          <textarea class="survey-desc-input" id="survey-desc" placeholder="Description (optional)" rows="2"></textarea>
+        <div class="title-wrap">
+          <input class="title-input" id="survey-title" placeholder="Survey title e.g. Customer Satisfaction Survey" maxlength="100" oninput="document.getElementById('nav-title').textContent=this.value||'New Survey'">
+          <textarea class="desc-input" id="survey-desc" placeholder="Description (optional)" rows="2"></textarea>
         </div>
-        <div id="questions-render-area"></div>
+        <div id="q-render"></div>
       </div>
 
       <!-- WELCOME PANEL -->
       <div class="panel" id="panel-welcome">
         <div class="panel-title">🎨 Welcome page</div>
         <p class="panel-sub">Customise what respondents see before starting.</p>
-        <div class="settings-card">
-          <div class="settings-card-title">Branding</div>
-          <div class="field">
-            <label class="field-label">Logo URL</label>
-            <input class="setting-input" id="welcome-logo" placeholder="e.g. https://yoursite.com/logo.png">
-            <div class="hint-box"><strong>📁 Google Drive:</strong><ol><li>Upload → Right click → Share → "Anyone with link"</li><li>Copy link → paste above</li></ol><div style="margin-top:6px"><span class="dim-tag">Max 200×60px</span><span class="dim-tag">PNG/SVG/JPG</span></div></div>
-          </div>
-          <div class="field"><label class="field-label">Custom headline</label><input class="setting-input" id="welcome-headline" placeholder="Leave blank to use survey title"></div>
-          <div class="field"><label class="field-label">Start button text</label><input class="setting-input" id="welcome-btn-text" placeholder="Default: Let's go →"></div>
+        <div class="scard">
+          <div class="scard-title">Branding</div>
+          <div class="sf"><label class="sf-lbl">Logo URL</label><input class="sinp" id="welcome-logo" placeholder="e.g. https://yoursite.com/logo.png"><div class="hbox"><strong>📁 Google Drive:</strong><ol><li>Upload → Right click → Share → "Anyone with link"</li><li>Copy link → paste above</li></ol><div style="margin-top:5px"><span class="dtag">Max 200×60px</span><span class="dtag">PNG/SVG/JPG</span></div></div></div>
+          <div class="sf"><label class="sf-lbl">Custom headline</label><input class="sinp" id="welcome-headline" placeholder="Leave blank to use survey title"></div>
+          <div class="sf"><label class="sf-lbl">Start button text</label><input class="sinp" id="welcome-btn-text" placeholder="Default: Let's go →"></div>
         </div>
-        <div class="settings-card">
-          <div class="settings-card-title">Background</div>
-          <div class="field"><label class="field-label">Background color</label><div class="color-row"><input class="setting-input" id="welcome-bg-color" placeholder="#0F0E1A" style="flex:1"><input type="color" id="welcome-color-picker" value="#0F0E1A" oninput="document.getElementById('welcome-bg-color').value=this.value" style="width:40px;height:40px;border-radius:8px;border:1.5px solid #E2DAD0;cursor:pointer;padding:2px;flex-shrink:0"></div></div>
-          <div class="field"><label class="field-label">Background image URL</label><input class="setting-input" id="welcome-bg-image" placeholder="e.g. https://images.unsplash.com/..."><div class="hint-box"><span class="dim-tag">1920×1080px recommended</span><span class="dim-tag">JPG/PNG/WEBP</span><br>Overrides background color</div></div>
-          <div class="field"><label class="field-label">Background video URL</label><input class="setting-input" id="welcome-bg-video" placeholder="e.g. https://youtube.com/watch?v=..."><div class="hint-box"><span class="dim-tag">YouTube</span><span class="dim-tag">Vimeo</span> — Plays muted and looped. Overrides image.</div></div>
+        <div class="scard">
+          <div class="scard-title">Background</div>
+          <div class="sf"><label class="sf-lbl">Background color</label><div class="color-row"><input class="sinp" id="welcome-bg-color" placeholder="#0F0E1A" style="flex:1"><input type="color" id="welcome-color-picker" value="#0F0E1A" oninput="document.getElementById('welcome-bg-color').value=this.value" style="width:40px;height:40px;border-radius:8px;border:1.5px solid #E2DAD0;cursor:pointer;padding:2px;flex-shrink:0"></div></div>
+          <div class="sf"><label class="sf-lbl">Background image URL</label><input class="sinp" id="welcome-bg-image" placeholder="e.g. https://images.unsplash.com/..."><div class="hbox"><span class="dtag">1920×1080px recommended</span><span class="dtag">JPG/PNG/WEBP</span><br>Overrides background color</div></div>
+          <div class="sf"><label class="sf-lbl">Background video URL</label><input class="sinp" id="welcome-bg-video" placeholder="e.g. https://youtube.com/watch?v=..."><div class="hbox"><span class="dtag">YouTube</span><span class="dtag">Vimeo</span> Plays muted and looped. Overrides image.</div></div>
         </div>
       </div>
 
@@ -339,11 +327,11 @@
       <div class="panel" id="panel-thankyou">
         <div class="panel-title">🙏 Thank you page</div>
         <p class="panel-sub">What respondents see after submitting.</p>
-        <div class="settings-card">
-          <div class="field"><label class="field-label">Custom headline</label><input class="setting-input" id="thankyou-headline" placeholder="Default: Thank you!"></div>
-          <div class="field"><label class="field-label">Custom message</label><input class="setting-input" id="thankyou-message" placeholder="Default: Your response has been recorded."></div>
-          <div class="field"><label class="field-label">Redirect URL</label><input class="setting-input" id="thankyou-redirect" placeholder="e.g. https://yourwebsite.com"><div class="field-hint">Redirects after 3 seconds. Leave blank to stay on thank you page.</div></div>
-          <div class="setting-row" style="border-bottom:none"><div><div class="setting-name">Show social share buttons</div></div><button class="toggle" id="toggle-share" onclick="toggleSetting('share')"></button></div>
+        <div class="scard">
+          <div class="sf"><label class="sf-lbl">Custom headline</label><input class="sinp" id="ty-headline" placeholder="Default: Thank you!"></div>
+          <div class="sf"><label class="sf-lbl">Custom message</label><input class="sinp" id="ty-message" placeholder="Default: Your response has been recorded."></div>
+          <div class="sf"><label class="sf-lbl">Redirect URL</label><input class="sinp" id="ty-redirect" placeholder="e.g. https://yourwebsite.com"><div class="sf-hint">Redirects after 3 seconds. Leave blank to stay on thank you page.</div></div>
+          <div class="srow" style="border-bottom:none"><div><div class="srow-name">Show social share buttons</div></div><button class="tgl" id="tgl-share" onclick="togSetting('share')"></button></div>
         </div>
       </div>
 
@@ -351,14 +339,14 @@
       <div class="panel" id="panel-prize">
         <div class="panel-title">🎁 Prize & Incentive</div>
         <p class="panel-sub">Add a prize to boost response rates.</p>
-        <div class="settings-card">
-          <div class="setting-row"><div><div class="setting-name">Enable prize</div><div class="setting-desc">Show prize badge on welcome page</div></div><button class="toggle" id="toggle-prize" onclick="togglePrize()"></button></div>
-          <div id="prize-fields" style="display:none;margin-top:14px">
-            <div class="field"><label class="field-label">Prize type</label><div class="prize-types"><button class="prize-type-btn active" onclick="selectPrizeType('cash',this)">💵 Cash</button><button class="prize-type-btn" onclick="selectPrizeType('voucher',this)">🎟 Voucher</button><button class="prize-type-btn" onclick="selectPrizeType('gift',this)">🎁 Gift</button><button class="prize-type-btn" onclick="selectPrizeType('other',this)">✦ Other</button></div></div>
-            <div class="field"><label class="field-label">Prize description</label><input class="setting-input" id="prize-description" placeholder="e.g. ₹500 Amazon voucher"></div>
-            <div class="field"><label class="field-label">Number of winners</label><input class="setting-input" id="prize-winners" type="number" min="1" placeholder="e.g. 3" style="max-width:120px"></div>
-            <div class="field"><label class="field-label">Winner selection</label><select class="setting-input" id="prize-selection" style="max-width:240px"><option value="random">🎲 Random draw</option><option value="best">⭐ Best answer</option><option value="first">🏃 First N respondents</option></select></div>
-            <div class="field"><label class="field-label">Winner notification</label><select class="setting-input" id="prize-notification" style="max-width:280px"><option value="manual">📧 I will contact winners manually</option><option value="email">✉️ SwoopForm sends automatic email</option><option value="leaderboard">🏆 Show on public leaderboard</option></select></div>
+        <div class="scard">
+          <div class="srow"><div><div class="srow-name">Enable prize</div><div class="srow-desc">Show prize badge on welcome page</div></div><button class="tgl" id="tgl-prize" onclick="togPrize()"></button></div>
+          <div id="prize-fields" style="display:none;margin-top:12px">
+            <div class="sf"><label class="sf-lbl">Prize type</label><div class="prize-types"><button class="pt-btn active" onclick="selPrize('cash',this)">💵 Cash</button><button class="pt-btn" onclick="selPrize('voucher',this)">🎟 Voucher</button><button class="pt-btn" onclick="selPrize('gift',this)">🎁 Gift</button><button class="pt-btn" onclick="selPrize('other',this)">✦ Other</button></div></div>
+            <div class="sf"><label class="sf-lbl">Prize description</label><input class="sinp" id="prize-desc" placeholder="e.g. ₹500 Amazon voucher"></div>
+            <div class="sf"><label class="sf-lbl">Number of winners</label><input class="sinp" id="prize-winners" type="number" min="1" placeholder="e.g. 3" style="max-width:120px"></div>
+            <div class="sf"><label class="sf-lbl">Winner selection</label><select class="sinp" id="prize-sel" style="max-width:240px"><option value="random">🎲 Random draw</option><option value="best">⭐ Best answer</option><option value="first">🏃 First N respondents</option></select></div>
+            <div class="sf"><label class="sf-lbl">Winner notification</label><select class="sinp" id="prize-notif" style="max-width:280px"><option value="manual">📧 I will contact winners manually</option><option value="email">✉️ SwoopForm sends automatic email</option><option value="leaderboard">🏆 Show on public leaderboard</option></select></div>
           </div>
         </div>
       </div>
@@ -367,906 +355,713 @@
       <div class="panel" id="panel-settings">
         <div class="panel-title">⚙️ Survey settings</div>
         <p class="panel-sub">Configure how your survey behaves.</p>
-        <div class="settings-card">
-          <div class="setting-row"><div><div class="setting-name">Survey style</div><div class="setting-desc">How questions appear to respondents</div></div><select id="survey-style" style="padding:6px 10px;border-radius:7px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.8rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none"><option value="conversational">✨ One at a time</option><option value="classic">📋 All on one page</option></select></div>
-          <div class="setting-row"><div><div class="setting-name">Public survey</div><div class="setting-desc">Show in SwoopForm discovery directory</div></div><button class="toggle" id="toggle-public" onclick="toggleSetting('public')"></button></div>
-          <div class="setting-row"><div><div class="setting-name">Collect email addresses</div></div><button class="toggle" id="toggle-email" onclick="toggleSetting('email')"></button></div>
-          <div class="setting-row" style="border-bottom:none"><div><div class="setting-name">One response per person</div></div><button class="toggle" id="toggle-once" onclick="toggleSetting('once')"></button></div>
+        <div class="scard">
+          <div class="srow"><div><div class="srow-name">Survey style</div><div class="srow-desc">Default display — sections override per section</div></div><select id="survey-style" style="padding:5px 9px;border-radius:7px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none"><option value="conversational">✨ One at a time</option><option value="classic">📋 All on one page</option></select></div>
+          <div class="srow"><div><div class="srow-name">Public survey</div><div class="srow-desc">Show in SwoopForm discovery directory</div></div><button class="tgl" id="tgl-public" onclick="togSetting('public')"></button></div>
+          <div class="srow"><div><div class="srow-name">Collect email addresses</div></div><button class="tgl" id="tgl-email" onclick="togSetting('email')"></button></div>
+          <div class="srow" style="border-bottom:none"><div><div class="srow-name">One response per person</div></div><button class="tgl" id="tgl-once" onclick="togSetting('once')"></button></div>
         </div>
       </div>
 
     </div><!-- end content -->
   </div><!-- end layout -->
 </div>
-
-  <script type="module">
+<div class="toast" id="toast"></div>
+<script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
   import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
   import { getFirestore, collection, addDoc, doc, updateDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-  const SHEETS_SCRIPT = 'https://script.google.com/macros/s/AKfycbx3evlOErDpdpR_TK_FvQaEEI5Kr6HvJYc46A_OG0SzIqJz8Gn0OKvUQxj7uoBLgyGH/exec';
-  const firebaseConfig = {
-    apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",
-    authDomain:"swoopform.firebaseapp.com",
-    projectId:"swoopform",
-    storageBucket:"swoopform.firebasestorage.app",
-    messagingSenderId:"378850092986",
-    appId:"1:378850092986:web:4fed92128136e048fa5f83"
-  };
-
-  const app = initializeApp(firebaseConfig);
+  const SHEETS = 'https://script.google.com/macros/s/AKfycbx3evlOErDpdpR_TK_FvQaEEI5Kr6HvJYc46A_OG0SzIqJz8Gn0OKvUQxj7uoBLgyGH/exec';
+  const FB = {apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+  const app = initializeApp(FB);
   const auth = getAuth(app);
   const db = getFirestore(app);
 
+  // ── CONSTANTS ────────────────────────────────────────
+  const SEC_COLORS = ['#2D1B69','#D97706','#0D9B8A','#DC2626','#2563EB','#7C3AED','#047857'];
+  let colorIdx = 0;
+
   // ── STATE ────────────────────────────────────────────
-  let currentUser = null;
-  let savedSurveyId = null;
-  let activeMainPanel = 'questions';
-  let activeSectionId = null; // which section new questions go into
+  let user = null;
+  let savedId = null;
+  let sections = [];   // {id,title,subtitle,displayMode,color,collapsed}
+  let questions = [];  // {id,sectionId,type,text,options,required,hidden,displayMode,order,correctIndex,logic[]}
+  let settings = {public:false,email:false,once:false,share:false,prize:false};
+  let prizeType = 'cash';
+  let activeSecId = null;
+  let dragState = null; // {type,id,el}
+  let longPressT = null;
 
-  // Section colors (auto-assigned)
-  const SECTION_COLORS = ['#2D1B69','#D97706','#0D9B8A','#DC2626','#2563EB','#7C3AED','#047857'];
-  let sectionColorIndex = 0;
-
-  // Data model
-  let sections = []; // { id, title, subtitle, displayMode, color, collapsed }
-  let questions = []; // { id, sectionId, type, text, options, required, hidden, order, correctIndex, logic[] }
-  let settings = { public:false, email:false, once:false, share:false, prize:false };
-  let selectedPrizeType = 'cash';
-
-  // Template config
-  const TEMPLATE_FIELDS = [
-    { id:'fn', icon:'👤', label:'First name', type:'text', required:true, enabled:true },
-    { id:'ln', icon:'👤', label:'Last name', type:'text', required:false, enabled:true },
-    { id:'em', icon:'📧', label:'Email address', type:'email', required:true, enabled:true },
-    { id:'ph', icon:'📱', label:'Mobile number', type:'phone', required:false, enabled:true },
-    { id:'co', icon:'🏢', label:'Company name', type:'text', required:false, enabled:false },
+  // Template fields config
+  const TMPL = [
+    {id:'fn',icon:'👤',label:'First name',type:'text',req:true,on:true},
+    {id:'ln',icon:'👤',label:'Last name',type:'text',req:false,on:true},
+    {id:'em',icon:'📧',label:'Email address',type:'email',req:true,on:true},
+    {id:'ph',icon:'📱',label:'Mobile number',type:'phone',req:false,on:true},
+    {id:'co',icon:'🏢',label:'Company name',type:'text',req:false,on:false},
   ];
-  let templateConfig = JSON.parse(JSON.stringify(TEMPLATE_FIELDS));
+  let tmplCfg = JSON.parse(JSON.stringify(TMPL));
 
   // ── INIT ─────────────────────────────────────────────
-  onAuthStateChanged(auth, user => {
-    if (!user) { window.location.href='/login'; return; }
-    currentUser = user;
-    document.getElementById('loading-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    // Start with one question, no section
-    questions = [makeQuestion('multiple', null)];
+  onAuthStateChanged(auth, u => {
+    if (!u) { window.location.href='/login'; return; }
+    user = u;
+    document.getElementById('loading-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+    questions = [mkQ('multiple',null)];
     renderAll();
   });
 
-  function makeQuestion(type, sectionId) {
+  // ── FACTORIES ────────────────────────────────────────
+  function mkQ(type,secId) {
     return {
-      id: 'q' + Date.now() + Math.random().toString(36).slice(2,6),
-      sectionId: sectionId || null,
-      type, text:'', subtext:'', options:['',''],
-      required:false, hidden:false, correctIndex:-1,
-      order: questions.length,
-      logic:[]
+      id:'q'+Date.now()+Math.random().toString(36).slice(2,5),
+      sectionId:secId||null,type,text:'',subtext:'',
+      options:['',''],required:false,hidden:false,
+      displayMode:'auto', // auto|solo|group-prev|group-next
+      order:questions.length,correctIndex:-1,logic:[]
+    };
+  }
+  function mkSec(title) {
+    const c = SEC_COLORS[colorIdx%SEC_COLORS.length]; colorIdx++;
+    return {
+      id:'s'+Date.now()+Math.random().toString(36).slice(2,5),
+      title:title||'New Section',subtitle:'',
+      displayMode:'one', // one|all|fullscreen
+      color:c,collapsed:false
     };
   }
 
-  function makeSection(title) {
-    const color = SECTION_COLORS[sectionColorIndex % SECTION_COLORS.length];
-    sectionColorIndex++;
-    return {
-      id: 's' + Date.now() + Math.random().toString(36).slice(2,6),
-      title: title || 'New Section',
-      subtitle: '',
-      displayMode: 'inline', // inline | fullscreen
-      color,
-      collapsed: false
-    };
+  // ── UTILS ────────────────────────────────────────────
+  function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+  function typeLabel(t){const m={multiple:'MCQ',checkbox:'Check',dropdown:'Drop',yesno:'Yes/No',text:'Text',textarea:'Long',email:'Email',phone:'Phone',number:'Num',rating:'Rate',scale:'Scale',date:'Date',file:'File',pledge:'Pledge',quiz:'Quiz'};return m[t]||t}
+  function showToast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
+  function hex2rgba(h,a){const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return`rgba(${r},${g},${b},${a})`}
+
+  function orderedQs() {
+    const res=[];
+    sections.forEach(s=>questions.filter(q=>q.sectionId===s.id).sort((a,b)=>a.order-b.order).forEach(q=>res.push(q)));
+    questions.filter(q=>!q.sectionId).sort((a,b)=>a.order-b.order).forEach(q=>res.push(q));
+    return res;
   }
 
-  // ── HELPERS ──────────────────────────────────────────
-  function escHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
-  function getTypeLabel(t){ const m={multiple:'MCQ',checkbox:'Check',dropdown:'Drop',yesno:'Yes/No',text:'Text',textarea:'Long',email:'Email',phone:'Phone',number:'Num',rating:'Rate',scale:'Scale',date:'Date',file:'File',pledge:'Pledge',quiz:'Quiz'}; return m[t]||t }
-  function getQNumber(qid){ let n=0; for(const q of getOrderedQuestions()){ if(q.type!=='heading') n++; if(q.id===qid) return n; } return '?'; }
-
-  function getOrderedQuestions() {
-    // Returns questions in display order:
-    // For each section (in section order), show section questions
-    // Then unsectioned questions at end
-    const result = [];
-    sections.forEach(s => {
-      questions.filter(q => q.sectionId === s.id)
-        .sort((a,b) => a.order - b.order)
-        .forEach(q => result.push(q));
-    });
-    questions.filter(q => !q.sectionId)
-      .sort((a,b) => a.order - b.order)
-      .forEach(q => result.push(q));
-    return result;
+  // ── PANEL / NAV ──────────────────────────────────────
+  window.showPanel = function(p) {
+    syncDOM();
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.snav-item').forEach(x=>x.classList.remove('active'));
+    document.getElementById('panel-'+p).classList.add('active');
+    const n=document.getElementById('sn-'+p); if(n) n.classList.add('active');
+    closeSb();
   }
-
-  function showToast(msg, d=2500) {
-    const t = document.getElementById('toast');
-    t.textContent = msg; t.style.display='block';
-    setTimeout(()=>t.style.display='none', d);
-  }
-
-  // ── PANEL SWITCHING ──────────────────────────────────
-  window.showMainPanel = function(panel) {
-    syncFromDOM();
-    activeMainPanel = panel;
-    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-    document.querySelectorAll('.sidebar-nav-item').forEach(s=>s.classList.remove('active'));
-    document.getElementById('panel-'+panel).classList.add('active');
-    const navEl = document.getElementById('snav-'+panel);
-    if (navEl) navEl.classList.add('active');
-    closeMobileSidebar();
-  }
-
-  window.openMobileSidebar = function() {
-    document.getElementById('sidebar').classList.add('mobile-open');
-    document.getElementById('sidebar-overlay').classList.add('open');
-  }
-  window.closeMobileSidebar = function() {
-    document.getElementById('sidebar').classList.remove('mobile-open');
-    document.getElementById('sidebar-overlay').classList.remove('open');
-  }
+  window.openSb=()=>{document.getElementById('sidebar').classList.add('mob-open');document.getElementById('sb-overlay').classList.add('open')}
+  window.closeSb=()=>{document.getElementById('sidebar').classList.remove('mob-open');document.getElementById('sb-overlay').classList.remove('open')}
 
   // ── SETTINGS ─────────────────────────────────────────
-  window.toggleSetting = function(key) {
-    settings[key]=!settings[key];
-    document.getElementById('toggle-'+key).classList.toggle('on',settings[key]);
-  }
-  window.togglePrize = function() {
-    settings.prize=!settings.prize;
-    document.getElementById('toggle-prize').classList.toggle('on',settings.prize);
-    document.getElementById('prize-fields').style.display=settings.prize?'block':'none';
-  }
-  window.selectPrizeType = function(type,el) {
-    selectedPrizeType=type;
-    document.querySelectorAll('.prize-type-btn').forEach(b=>b.classList.remove('active'));
-    el.classList.add('active');
-  }
+  window.togSetting=function(k){settings[k]=!settings[k];document.getElementById('tgl-'+k).classList.toggle('on',settings[k])}
+  window.togPrize=function(){settings.prize=!settings.prize;document.getElementById('tgl-prize').classList.toggle('on',settings.prize);document.getElementById('prize-fields').style.display=settings.prize?'block':'none'}
+  window.selPrize=function(t,el){prizeType=t;document.querySelectorAll('.pt-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active')}
 
   // ── SECTIONS ─────────────────────────────────────────
   window.addSection = function() {
-    syncFromDOM();
-    const s = makeSection('New Section');
+    syncDOM();
+    const s=mkSec('New Section');
     sections.push(s);
-    activeSectionId = s.id;
+    activeSecId=s.id;
     renderAll();
-    showMainPanel('questions');
-    // Focus section title
-    setTimeout(()=>{
-      const el = document.getElementById('sec-title-'+s.id);
-      if(el){ el.focus(); el.select(); }
-    },100);
+    showPanel('questions');
+    setTimeout(()=>{const el=document.getElementById('sec-title-'+s.id);if(el){el.focus();el.select()}},100);
   }
 
-  window.deleteSection = function(sid) {
+  window.delSection = function(sid) {
     if(!confirm('Delete this section?\n\nQuestions inside will become unsectioned.')) return;
-    syncFromDOM();
-    // Unsection questions
-    questions.forEach(q=>{ if(q.sectionId===sid) q.sectionId=null; });
-    sections = sections.filter(s=>s.id!==sid);
-    if(activeSectionId===sid) activeSectionId=null;
+    syncDOM();
+    questions.forEach(q=>{if(q.sectionId===sid)q.sectionId=null});
+    sections=sections.filter(s=>s.id!==sid);
+    if(activeSecId===sid)activeSecId=null;
     renderAll();
   }
 
-  window.toggleSectionCollapse = function(sid) {
-    const s = sections.find(s=>s.id===sid);
-    if(s){ s.collapsed=!s.collapsed; renderSidebar(); }
+  window.togSecCollapse = function(sid) {
+    const s=sections.find(s=>s.id===sid);
+    if(s){s.collapsed=!s.collapsed;renderSidebar()}
   }
 
-  window.setSectionMode = function(sid, mode) {
-    const s = sections.find(s=>s.id===sid);
-    if(s){
-      s.displayMode=mode;
-      // Update button states
-      const card = document.getElementById('sec-card-'+sid);
-      if(card){
-        card.querySelectorAll('.section-mode-btn').forEach(b=>b.classList.remove('active'));
-        const btn = card.querySelector('[data-mode="'+mode+'"]');
-        if(btn) btn.classList.add('active');
-        // Update hint
-        const hint = card.querySelector('.section-mode-hint');
-        if(hint) hint.textContent = mode==='inline' ? 'Section title shows above first question' : 'Respondent sees a full screen with section info before questions';
-      }
+  window.setSecMode = function(sid,mode) {
+    const s=sections.find(s=>s.id===sid);
+    if(!s)return;
+    s.displayMode=mode;
+    const card=document.getElementById('sc-'+sid);
+    if(card){
+      card.querySelectorAll('.sec-mode-btn').forEach(b=>b.classList.remove('active'));
+      const b=card.querySelector('[data-mode="'+mode+'"]');if(b)b.classList.add('active');
+      const hint=card.querySelector('.sec-mode-hint');
+      if(hint)hint.textContent=mode==='one'?'Each question shows on its own screen':mode==='all'?'All questions in this section show together on one page':'A full-screen intro screen shows before questions begin';
     }
   }
 
-  window.setActiveSectionId = function(sid) {
-    activeSectionId = sid;
+  window.setActiveSection = function(sid) {
+    activeSecId=sid;
     renderSidebar();
   }
 
   // ── QUESTIONS ─────────────────────────────────────────
   window.addQuestion = function(type) {
-    syncFromDOM();
-    const q = makeQuestion(type||'multiple', activeSectionId);
-    // Find insertion point
-    if(activeSectionId){
-      const sectionQs = questions.filter(x=>x.sectionId===activeSectionId);
-      q.order = sectionQs.length > 0 ? Math.max(...sectionQs.map(x=>x.order))+1 : 0;
+    syncDOM();
+    const q=mkQ(type||'multiple',activeSecId);
+    if(activeSecId){
+      const sq=questions.filter(x=>x.sectionId===activeSecId);
+      q.order=sq.length?Math.max(...sq.map(x=>x.order))+1:0;
     } else {
-      const unsectionedQs = questions.filter(x=>!x.sectionId);
-      q.order = unsectionedQs.length > 0 ? Math.max(...unsectionedQs.map(x=>x.order))+1 : 0;
+      const uq=questions.filter(x=>!x.sectionId);
+      q.order=uq.length?Math.max(...uq.map(x=>x.order))+1:0;
     }
     questions.push(q);
     renderAll();
-    showMainPanel('questions');
-    setTimeout(()=>{
-      const el = document.getElementById('q-text-'+q.id);
-      if(el){ el.focus(); el.scrollIntoView({behavior:'smooth',block:'center'}); }
-    },80);
+    showPanel('questions');
+    setTimeout(()=>{const el=document.getElementById('qt-'+q.id);if(el){el.focus();el.scrollIntoView({behavior:'smooth',block:'center'})}},80);
   }
 
-  window.deleteQuestion = function(qid) {
-    syncFromDOM();
-    if(questions.length===1){ showToast('Need at least 1 question'); return; }
-    questions = questions.filter(q=>q.id!==qid);
+  window.delQ = function(qid) {
+    syncDOM();
+    if(questions.length===1){showToast('Need at least 1 question');return}
+    questions=questions.filter(q=>q.id!==qid);
     renderAll();
   }
 
-  window.changeType = function(qid, type) {
-    syncFromDOM();
-    const q = questions.find(q=>q.id===qid);
-    if(q){ q.type=type; renderAll(); }
-  }
-
-  window.toggleRequired = function(qid) {
-    const q = questions.find(q=>q.id===qid);
-    if(q){
-      q.required=!q.required;
-      document.getElementById('req-'+qid).classList.toggle('on',q.required);
-    }
-  }
-
-  window.addOption = function(qid) {
-    syncFromDOM();
-    const q = questions.find(q=>q.id===qid);
-    if(q){ q.options.push(''); renderAll();
-      setTimeout(()=>{ const opts=document.querySelectorAll('.opt-'+qid); if(opts.length) opts[opts.length-1].focus(); },60);
-    }
-  }
-
-  window.removeOption = function(qid,idx) {
-    syncFromDOM();
+  window.chType = function(qid,type) {
+    syncDOM();
     const q=questions.find(q=>q.id===qid);
-    if(q&&q.options.length>2){ q.options.splice(idx,1); if(q.correctIndex===idx) q.correctIndex=-1; else if(q.correctIndex>idx) q.correctIndex--; renderAll(); }
+    if(q){q.type=type;renderAll()}
+  }
+
+  window.togReq = function(qid) {
+    const q=questions.find(q=>q.id===qid);
+    if(q){q.required=!q.required;document.getElementById('req-'+qid).classList.toggle('on',q.required)}
+  }
+
+  window.setDispMode = function(qid,val) {
+    const q=questions.find(q=>q.id===qid);
+    if(q)q.displayMode=val;
+  }
+
+  window.addOpt = function(qid) {
+    syncDOM();
+    const q=questions.find(q=>q.id===qid);
+    if(q){q.options.push('');renderAll();setTimeout(()=>{const o=document.querySelectorAll('.oi-'+qid);if(o.length)o[o.length-1].focus()},60)}
+  }
+
+  window.rmOpt = function(qid,i) {
+    syncDOM();
+    const q=questions.find(q=>q.id===qid);
+    if(q&&q.options.length>2){q.options.splice(i,1);if(q.correctIndex===i)q.correctIndex=-1;else if(q.correctIndex>i)q.correctIndex--;renderAll()}
     else showToast('Need at least 2 options');
   }
 
-  window.markCorrect = function(qid,idx) {
-    syncFromDOM();
+  window.mkCorrect = function(qid,i) {
+    syncDOM();
     const q=questions.find(q=>q.id===qid);
-    if(q){ q.correctIndex=q.correctIndex===idx?-1:idx; renderAll(); }
+    if(q){q.correctIndex=q.correctIndex===i?-1:i;renderAll()}
   }
 
-  // ── LOGIC BUILDER ────────────────────────────────────
-  window.showQTab = function(qid, tab) {
-    const card = document.getElementById('qcard-'+qid);
-    if(!card) return;
-    card.querySelectorAll('.q-tab').forEach(t=>t.classList.remove('active'));
-    card.querySelectorAll('.q-tab-panel').forEach(p=>p.style.display='none');
-    card.querySelector('.q-tab[data-tab="'+tab+'"]').classList.add('active');
-    card.querySelector('.q-tab-panel[data-tab="'+tab+'"]').style.display='block';
+  // ── LOGIC ─────────────────────────────────────────────
+  window.showQTab = function(qid,tab) {
+    const c=document.getElementById('qc-'+qid);if(!c)return;
+    c.querySelectorAll('.q-tab').forEach(t=>t.classList.remove('active'));
+    c.querySelectorAll('.qtab-panel').forEach(p=>p.style.display='none');
+    c.querySelector('.q-tab[data-tab="'+tab+'"]').classList.add('active');
+    c.querySelector('.qtab-panel[data-tab="'+tab+'"]').style.display='block';
   }
 
-  window.addLogicRule = function(qid) {
-    syncFromDOM();
-    const q=questions.find(q=>q.id===qid);
-    if(!q) return;
-    q.logic.push({
-      id:'r'+Date.now(),
-      conditionType:'ALL',
-      conditions:[{ questionId:qid, operator:'is', value:'' }],
-      action:'skip',
-      target:''
-    });
-    renderAll();
-    // Re-show logic tab
-    setTimeout(()=>showQTab(qid,'logic'),60);
+  window.addRule = function(qid) {
+    syncDOM();
+    const q=questions.find(q=>q.id===qid);if(!q)return;
+    q.logic.push({id:'r'+Date.now(),condType:'ALL',conditions:[{qid:qid,op:'is',val:''}],action:'skip',target:''});
+    renderAll();setTimeout(()=>showQTab(qid,'logic'),60);
   }
 
-  window.deleteLogicRule = function(qid,rid) {
-    syncFromDOM();
+  window.delRule = function(qid,rid) {
+    syncDOM();
     const q=questions.find(q=>q.id===qid);
-    if(q){ q.logic=q.logic.filter(r=>r.id!==rid); renderAll(); setTimeout(()=>showQTab(qid,'logic'),60); }
+    if(q){q.logic=q.logic.filter(r=>r.id!==rid);renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}
   }
 
-  window.setConditionType = function(qid,rid,type) {
-    const q=questions.find(q=>q.id===qid);
-    const r=q&&q.logic.find(r=>r.id===rid);
-    if(r){ r.conditionType=type; renderAll(); setTimeout(()=>showQTab(qid,'logic'),60); }
+  window.setCondType = function(qid,rid,ct) {
+    const q=questions.find(q=>q.id===qid);const r=q&&q.logic.find(r=>r.id===rid);
+    if(r){r.condType=ct;renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}
   }
 
-  window.addCondition = function(qid,rid) {
-    syncFromDOM();
-    const q=questions.find(q=>q.id===qid);
-    const r=q&&q.logic.find(r=>r.id===rid);
-    if(r){ r.conditions.push({questionId:qid,operator:'is',value:''}); renderAll(); setTimeout(()=>showQTab(qid,'logic'),60); }
+  window.addCond = function(qid,rid) {
+    syncDOM();
+    const q=questions.find(q=>q.id===qid);const r=q&&q.logic.find(r=>r.id===rid);
+    if(r){r.conditions.push({qid:qid,op:'is',val:''});renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}
   }
 
-  window.removeCondition = function(qid,rid,cidx) {
-    syncFromDOM();
-    const q=questions.find(q=>q.id===qid);
-    const r=q&&q.logic.find(r=>r.id===rid);
-    if(r&&r.conditions.length>1){ r.conditions.splice(cidx,1); renderAll(); setTimeout(()=>showQTab(qid,'logic'),60); }
+  window.rmCond = function(qid,rid,ci) {
+    syncDOM();
+    const q=questions.find(q=>q.id===qid);const r=q&&q.logic.find(r=>r.id===rid);
+    if(r&&r.conditions.length>1){r.conditions.splice(ci,1);renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}
     else showToast('Need at least 1 condition');
   }
 
-  // Sync logic values from DOM before re-render
-  function syncLogicFromDOM() {
+  window.chAction = function(qid,rid) {
+    syncLogic();
+    const q=questions.find(q=>q.id===qid);const r=q&&q.logic.find(r=>r.id===rid);
+    if(r){r.action=document.getElementById('act-'+rid).value;renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}
+  }
+
+  function syncLogic() {
     questions.forEach(q=>{
       q.logic.forEach(rule=>{
-        rule.conditions.forEach((cond,ci)=>{
-          const qSel=document.getElementById('cond-q-'+rule.id+'-'+ci);
-          const opSel=document.getElementById('cond-op-'+rule.id+'-'+ci);
-          const valEl=document.getElementById('cond-val-'+rule.id+'-'+ci);
-          if(qSel) cond.questionId=qSel.value;
-          if(opSel) cond.operator=opSel.value;
-          if(valEl) cond.value=valEl.value;
+        rule.conditions.forEach((c,ci)=>{
+          const qs=document.getElementById('cq-'+rule.id+'-'+ci);
+          const os=document.getElementById('co-'+rule.id+'-'+ci);
+          const vi=document.getElementById('cv-'+rule.id+'-'+ci);
+          if(qs)c.qid=qs.value;if(os)c.op=os.value;if(vi)c.val=vi.value;
         });
-        const actSel=document.getElementById('action-'+rule.id);
-        const tgtSel=document.getElementById('target-'+rule.id);
-        if(actSel) rule.action=actSel.value;
-        if(tgtSel) rule.target=tgtSel.value;
+        const as=document.getElementById('act-'+rule.id);const ts=document.getElementById('tgt-'+rule.id);
+        if(as)rule.action=as.value;if(ts)rule.target=ts.value;
       });
     });
   }
 
-  // ── SYNC FROM DOM ────────────────────────────────────
-  function syncFromDOM() {
-    // Sync question text + options
+  // ── SYNC DOM → STATE ─────────────────────────────────
+  function syncDOM() {
     questions.forEach(q=>{
-      const textEl=document.getElementById('q-text-'+q.id);
-      if(textEl) q.text=textEl.value;
-      const subEl=document.getElementById('q-sub-'+q.id);
-      if(subEl) q.subtext=subEl.value;
+      const te=document.getElementById('qt-'+q.id);if(te)q.text=te.value;
+      const su=document.getElementById('qs-'+q.id);if(su)q.subtext=su.value;
       if(['multiple','checkbox','dropdown','quiz'].includes(q.type)){
-        const optEls=document.querySelectorAll('.opt-'+q.id);
-        if(optEls.length) q.options=Array.from(optEls).map(e=>e.value);
+        const oe=document.querySelectorAll('.oi-'+q.id);
+        if(oe.length)q.options=Array.from(oe).map(e=>e.value);
       }
+      const dm=document.getElementById('dm-'+q.id);if(dm)q.displayMode=dm.value;
     });
-    // Sync section titles
     sections.forEach(s=>{
-      const titleEl=document.getElementById('sec-title-'+s.id);
-      if(titleEl) s.title=titleEl.value;
-      const subEl=document.getElementById('sec-sub-'+s.id);
-      if(subEl) s.subtitle=subEl.value;
+      const te=document.getElementById('sec-title-'+s.id);if(te)s.title=te.value;
+      const su=document.getElementById('sec-sub-'+s.id);if(su)s.subtitle=su.value;
     });
-    // Sync logic
-    syncLogicFromDOM();
+    syncLogic();
   }
 
   // ── TEMPLATE ─────────────────────────────────────────
-  window.openTemplateModal = function() {
-    renderTemplateModal();
-    document.getElementById('template-modal').classList.add('open');
-  }
-  window.closeTemplateModal = function() {
-    document.getElementById('template-modal').classList.remove('open');
-  }
-  function renderTemplateModal() {
-    document.getElementById('template-fields-list').innerHTML = templateConfig.map((f,i)=>
-      '<div class="template-field-row" style="'+(f.enabled?'':'opacity:0.5')+'">' +
-      '<div class="template-field-info"><span class="template-field-icon">'+f.icon+'</span><div><div class="template-field-name">'+f.label+'</div><div class="template-field-type">'+f.type+' field</div></div></div>' +
-      '<div class="template-field-controls"><span style="font-size:0.72rem;color:#64748B">Req</span><button class="toggle '+(f.required?'on':'')+'" style="width:30px;height:16px" onclick="templateToggleReq('+i+')"></button>' +
-      '<button class="toggle '+(f.enabled?'on':'')+'" style="background:'+(f.enabled?'#10B981':'#E2DAD0')+'" onclick="templateToggleEnabled('+i+')"></button></div></div>'
+  window.openTmpl = function() { renderTmpl(); document.getElementById('tmpl-modal').classList.add('open') }
+  window.closeTmpl = function() { document.getElementById('tmpl-modal').classList.remove('open') }
+
+  function renderTmpl() {
+    document.getElementById('tmpl-list').innerHTML = tmplCfg.map((f,i)=>
+      `<div class="tmpl-row" style="${f.on?'':'opacity:0.5'}">
+        <div class="tmpl-info"><span class="tmpl-icon">${f.icon}</span><div><div class="tmpl-name">${f.label}</div><div class="tmpl-type">${f.type}</div></div></div>
+        <div class="tmpl-ctrls">
+          <span class="tmpl-req-lbl">Req</span>
+          <button class="tgl ${f.req?'on':''}" style="width:28px;height:15px" onclick="tmplReq(${i})"></button>
+          <button class="tgl ${f.on?'on':''}" style="background:${f.on?'#10B981':'#E2DAD0'}" onclick="tmplOn(${i})"></button>
+        </div>
+      </div>`
     ).join('');
   }
-  window.templateToggleReq=function(i){ templateConfig[i].required=!templateConfig[i].required; renderTemplateModal(); }
-  window.templateToggleEnabled=function(i){ templateConfig[i].enabled=!templateConfig[i].enabled; renderTemplateModal(); }
-  window.insertTemplate = function() {
-    syncFromDOM();
-    // Create a section for contact info
-    const s = makeSection('Contact Information');
-    s.subtitle = 'Please fill in your details below.';
+  window.tmplReq=function(i){tmplCfg[i].req=!tmplCfg[i].req;renderTmpl()}
+  window.tmplOn=function(i){tmplCfg[i].on=!tmplCfg[i].on;renderTmpl()}
+
+  window.insertTmpl = function() {
+    syncDOM();
+    const s=mkSec('Contact Information');
+    s.subtitle='Please fill in your details below.';
+    s.displayMode='all';
     sections.push(s);
-    activeSectionId = s.id;
-    // Add enabled fields into that section
-    templateConfig.filter(f=>f.enabled).forEach((f,i)=>{
+    activeSecId=s.id;
+    tmplCfg.filter(f=>f.on).forEach((f,i)=>{
       questions.push({
-        id:'q'+Date.now()+i,
-        sectionId:s.id,
-        type:f.type, text:f.label, subtext:'',
-        options:['',''], required:f.required, hidden:false,
-        correctIndex:-1, order:i, logic:[]
+        id:'q'+Date.now()+i,sectionId:s.id,type:f.type,
+        text:f.label,subtext:'',options:['',''],
+        required:f.req,hidden:false,displayMode:'auto',
+        order:i,correctIndex:-1,logic:[]
       });
     });
-    closeTemplateModal();
-    renderAll();
-    showMainPanel('questions');
+    closeTmpl();renderAll();showPanel('questions');
     showToast('✅ Contact Info template inserted!');
   }
 
   // ── DRAG & DROP ──────────────────────────────────────
-  let dragItem = null; // { type:'question'|'section', id }
-  let longPressTimer = null;
-  let isDragging = false;
+  function initDrag() {
+    const list = document.getElementById('q-list');
+    if(!list) return;
 
-  function initDragDrop() {
-    const list = document.getElementById('q-sidebar-list');
-    if (!list) return;
-
-    // Desktop drag for questions
-    list.querySelectorAll('.q-sidebar-item').forEach(item=>{
-      const handle = item.querySelector('.drag-handle');
-      if(!handle) return;
-      handle.addEventListener('mousedown', e=>{
-        e.preventDefault();
-        startDrag('question', item.dataset.qid, item, e);
+    // Q items
+    list.querySelectorAll('.q-item[data-qid]').forEach(item=>{
+      const dh=item.querySelector('.dh');
+      if(!dh) return;
+      // Desktop mousedown on handle
+      dh.addEventListener('mousedown',e=>{
+        e.preventDefault();e.stopPropagation();
+        beginDrag('q',item.dataset.qid,item,e.clientX,e.clientY);
       });
-      // Long press for mobile
-      item.addEventListener('touchstart', e=>{
-        longPressTimer = setTimeout(()=>{
-          startDrag('question', item.dataset.qid, item, e.touches[0]);
-          navigator.vibrate&&navigator.vibrate(50);
-        }, 500);
+      // Mobile long-press
+      item.addEventListener('touchstart',e=>{
+        longPressT=setTimeout(()=>{
+          const t=e.touches[0];
+          beginDrag('q',item.dataset.qid,item,t.clientX,t.clientY);
+          navigator.vibrate&&navigator.vibrate(40);
+        },500);
       },{passive:true});
-      item.addEventListener('touchend', ()=>clearTimeout(longPressTimer));
-      item.addEventListener('touchmove', ()=>clearTimeout(longPressTimer),{passive:true});
+      item.addEventListener('touchend',()=>clearTimeout(longPressT));
+      item.addEventListener('touchmove',()=>clearTimeout(longPressT),{passive:true});
     });
 
-    // Desktop drag for sections
-    list.querySelectorAll('.section-group-header').forEach(header=>{
-      const handle = header.querySelector('.drag-handle');
-      if(!handle) return;
-      handle.addEventListener('mousedown', e=>{
-        e.preventDefault();
-        startDrag('section', header.dataset.sid, header, e);
+    // Section headers
+    list.querySelectorAll('.sec-group-hdr[data-sid]').forEach(hdr=>{
+      const dh=hdr.querySelector('.dh');
+      if(!dh) return;
+      dh.addEventListener('mousedown',e=>{
+        e.preventDefault();e.stopPropagation();
+        beginDrag('s',hdr.dataset.sid,hdr,e.clientX,e.clientY);
       });
-      // Long press
-      header.addEventListener('touchstart', e=>{
-        longPressTimer = setTimeout(()=>{
-          startDrag('section', header.dataset.sid, header, e.touches[0]);
-          navigator.vibrate&&navigator.vibrate(50);
-        }, 500);
+      hdr.addEventListener('touchstart',e=>{
+        longPressT=setTimeout(()=>{
+          const t=e.touches[0];
+          beginDrag('s',hdr.dataset.sid,hdr,t.clientX,t.clientY);
+          navigator.vibrate&&navigator.vibrate(40);
+        },500);
       },{passive:true});
-      header.addEventListener('touchend', ()=>clearTimeout(longPressTimer));
-      header.addEventListener('touchmove', ()=>clearTimeout(longPressTimer),{passive:true});
-    });
-
-    // Drop zones — questions
-    list.querySelectorAll('.q-sidebar-item').forEach(item=>{
-      item.addEventListener('dragover', e=>{ e.preventDefault(); item.classList.add('drag-over'); });
-      item.addEventListener('dragleave', ()=>item.classList.remove('drag-over'));
-      item.addEventListener('drop', e=>{ e.preventDefault(); item.classList.remove('drag-over'); dropOnQuestion(item.dataset.qid); });
-    });
-
-    // Drop zones — section headers
-    list.querySelectorAll('.section-group-header').forEach(header=>{
-      header.addEventListener('dragover', e=>{ e.preventDefault(); header.classList.add('drag-over-section'); });
-      header.addEventListener('dragleave', ()=>header.classList.remove('drag-over-section'));
-      header.addEventListener('drop', e=>{ e.preventDefault(); header.classList.remove('drag-over-section'); dropOnSection(header.dataset.sid); });
+      hdr.addEventListener('touchend',()=>clearTimeout(longPressT));
+      hdr.addEventListener('touchmove',()=>clearTimeout(longPressT),{passive:true});
     });
   }
 
-  function startDrag(type, id, el, e) {
-    isDragging = true;
-    dragItem = { type, id };
-    el.classList.add('dragging');
-    el.setAttribute('draggable','true');
+  function beginDrag(type,id,el,cx,cy) {
+    dragState={type,id,el};
+    el.classList.add('dragging-item');
 
-    const onMouseMove = ev => {
-      if(!isDragging) return;
-      const target = document.elementFromPoint(ev.clientX, ev.clientY);
-      if(!target) return;
-      const qItem = target.closest('.q-sidebar-item');
-      const sHeader = target.closest('.section-group-header');
-      document.querySelectorAll('.q-sidebar-item.drag-over').forEach(x=>x.classList.remove('drag-over'));
-      document.querySelectorAll('.section-group-header.drag-over-section').forEach(x=>x.classList.remove('drag-over-section'));
-      if(qItem) qItem.classList.add('drag-over');
-      if(sHeader) sHeader.classList.add('drag-over-section');
+    const clearDropTargets=()=>{
+      document.querySelectorAll('.drag-over-q').forEach(x=>x.classList.remove('drag-over-q'));
+      document.querySelectorAll('.drop-target').forEach(x=>x.classList.remove('drop-target'));
     };
 
-    const onMouseUp = ev => {
-      isDragging = false;
-      el.classList.remove('dragging');
-      el.removeAttribute('draggable');
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
-      document.removeEventListener('touchmove', onTouchMove);
-      document.removeEventListener('touchend', onTouchEnd);
-
-      const target = document.elementFromPoint(ev.clientX||ev.changedTouches?.[0]?.clientX, ev.clientY||ev.changedTouches?.[0]?.clientY);
-      if(!target) { dragItem=null; return; }
-      document.querySelectorAll('.q-sidebar-item.drag-over').forEach(x=>x.classList.remove('drag-over'));
-      document.querySelectorAll('.section-group-header.drag-over-section').forEach(x=>x.classList.remove('drag-over-section'));
-
-      const qItem = target.closest('.q-sidebar-item');
-      const sHeader = target.closest('.section-group-header');
-
-      if(qItem && qItem.dataset.qid !== id) dropOnQuestion(qItem.dataset.qid);
-      else if(sHeader && (type==='question' || sHeader.dataset.sid !== id)) dropOnSection(sHeader.dataset.sid);
-
-      dragItem = null;
+    const getDropEl=(x,y)=>{
+      const els=document.elementsFromPoint(x,y);
+      for(const e of els){
+        const qi=e.closest('.q-item[data-qid]');
+        if(qi&&qi.dataset.qid!==id) return {type:'q',id:qi.dataset.qid,el:qi};
+        const si=e.closest('.sec-group-hdr[data-sid]');
+        if(si&&si.dataset.sid!==id) return {type:'s',id:si.dataset.sid,el:si};
+      }
+      return null;
     };
 
-    const onTouchMove = ev => {
-      if(!isDragging) return;
-      const t = ev.touches[0];
-      const target = document.elementFromPoint(t.clientX, t.clientY);
-      if(!target) return;
-      document.querySelectorAll('.q-sidebar-item.drag-over').forEach(x=>x.classList.remove('drag-over'));
-      document.querySelectorAll('.section-group-header.drag-over-section').forEach(x=>x.classList.remove('drag-over-section'));
-      const qItem=target.closest('.q-sidebar-item');
-      const sHeader=target.closest('.section-group-header');
-      if(qItem) qItem.classList.add('drag-over');
-      if(sHeader) sHeader.classList.add('drag-over-section');
+    const onMove=e=>{
+      const x=e.clientX||e.touches?.[0]?.clientX;
+      const y=e.clientY||e.touches?.[0]?.clientY;
+      if(!x||!y) return;
+      clearDropTargets();
+      const drop=getDropEl(x,y);
+      if(drop){
+        if(drop.type==='q') drop.el.classList.add('drag-over-q');
+        else drop.el.classList.add('drop-target');
+      }
     };
 
-    const onTouchEnd = ev => onMouseUp(ev);
+    const onEnd=e=>{
+      const x=e.clientX||e.changedTouches?.[0]?.clientX;
+      const y=e.clientY||e.changedTouches?.[0]?.clientY;
+      el.classList.remove('dragging-item');
+      clearDropTargets();
+      document.removeEventListener('mousemove',onMove);
+      document.removeEventListener('mouseup',onEnd);
+      document.removeEventListener('touchmove',onMove);
+      document.removeEventListener('touchend',onEnd);
 
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
-    document.addEventListener('touchmove', onTouchMove, {passive:true});
-    document.addEventListener('touchend', onTouchEnd);
+      if(x&&y){
+        const drop=getDropEl(x,y);
+        if(drop) executeDrop(dragState,drop);
+      }
+      dragState=null;
+    };
+
+    document.addEventListener('mousemove',onMove);
+    document.addEventListener('mouseup',onEnd);
+    document.addEventListener('touchmove',onMove,{passive:true});
+    document.addEventListener('touchend',onEnd);
   }
 
-  function dropOnQuestion(targetQid) {
-    if(!dragItem) return;
-    syncFromDOM();
-    if(dragItem.type==='question') {
-      const dragged=questions.find(q=>q.id===dragItem.id);
-      const target=questions.find(q=>q.id===targetQid);
-      if(!dragged||!target||dragged.id===target.id) return;
-      // Move dragged question to target's section and position
-      dragged.sectionId = target.sectionId;
-      const targetOrder = target.order;
-      // Shift other questions
-      questions.filter(q=>q.sectionId===target.sectionId&&q.id!==dragged.id&&q.order>=targetOrder)
-        .forEach(q=>q.order++);
-      dragged.order = targetOrder;
-      renderAll();
-      showToast('Question moved ✓');
-    } else if(dragItem.type==='section') {
-      // Moving section near a question — put it before that question's section
-      const targetQ=questions.find(q=>q.id===targetQid);
-      if(!targetQ) return;
-      const targetSid=targetQ.sectionId;
-      if(!targetSid) return;
-      const draggedSec=sections.find(s=>s.id===dragItem.id);
-      const targetSec=sections.find(s=>s.id===targetSid);
-      if(!draggedSec||!targetSec||draggedSec.id===targetSec.id) return;
-      // Reorder sections array
-      sections=sections.filter(s=>s.id!==draggedSec.id);
-      const idx=sections.findIndex(s=>s.id===targetSid);
-      sections.splice(idx,0,draggedSec);
-      renderAll();
-      showToast('Section moved ✓');
-    }
-  }
-
-  function dropOnSection(targetSid) {
-    if(!dragItem) return;
-    syncFromDOM();
-    if(dragItem.type==='question') {
-      const dragged=questions.find(q=>q.id===dragItem.id);
-      if(!dragged) return;
-      dragged.sectionId=targetSid;
-      const sectionQs=questions.filter(q=>q.sectionId===targetSid&&q.id!==dragged.id);
-      dragged.order=sectionQs.length;
-      renderAll();
-      showToast('Question moved to section ✓');
-    } else if(dragItem.type==='section') {
-      if(dragItem.id===targetSid) return;
-      const draggedSec=sections.find(s=>s.id===dragItem.id);
-      const targetSec=sections.find(s=>s.id===targetSid);
-      if(!draggedSec||!targetSec) return;
-      sections=sections.filter(s=>s.id!==draggedSec.id);
-      const idx=sections.findIndex(s=>s.id===targetSid);
-      sections.splice(idx,0,draggedSec);
-      renderAll();
-      showToast('Section moved ✓');
+  function executeDrop(drag,drop) {
+    syncDOM();
+    if(drag.type==='q' && drop.type==='q') {
+      // Move question before target question
+      const dq=questions.find(q=>q.id===drag.id);
+      const tq=questions.find(q=>q.id===drop.id);
+      if(!dq||!tq) return;
+      dq.sectionId=tq.sectionId;
+      // Reorder within same group
+      const grp=questions.filter(q=>q.sectionId===tq.sectionId&&q.id!==dq.id).sort((a,b)=>a.order-b.order);
+      const ti=grp.findIndex(q=>q.id===tq.id);
+      grp.splice(ti,0,dq);
+      grp.forEach((q,i)=>q.order=i);
+      renderAll();showToast('Question moved ✓');
+    } else if(drag.type==='q' && drop.type==='s') {
+      // Move question into section
+      const dq=questions.find(q=>q.id===drag.id);if(!dq)return;
+      dq.sectionId=drop.id;
+      const sq=questions.filter(q=>q.sectionId===drop.id&&q.id!==dq.id);
+      dq.order=sq.length;
+      renderAll();showToast('Question moved to section ✓');
+    } else if(drag.type==='s' && drop.type==='s') {
+      // Reorder sections
+      const di=sections.findIndex(s=>s.id===drag.id);
+      const ti=sections.findIndex(s=>s.id===drop.id);
+      if(di<0||ti<0) return;
+      const [ds]=sections.splice(di,1);
+      sections.splice(ti,0,ds);
+      renderAll();showToast('Section moved ✓');
+    } else if(drag.type==='s' && drop.type==='q') {
+      // Move section before section of target question
+      const tq=questions.find(q=>q.id===drop.id);if(!tq||!tq.sectionId)return;
+      const di=sections.findIndex(s=>s.id===drag.id);
+      const ti=sections.findIndex(s=>s.id===tq.sectionId);
+      if(di<0||ti<0)return;
+      const [ds]=sections.splice(di,1);
+      sections.splice(ti,0,ds);
+      renderAll();showToast('Section moved ✓');
     }
   }
 
   // ── RENDER SIDEBAR ───────────────────────────────────
   function renderSidebar() {
-    const list = document.getElementById('q-sidebar-list');
-    let html = '';
-    let qNum = 0;
+    const list=document.getElementById('q-list');
+    let html='';
+    let qn=0;
 
     sections.forEach(s=>{
-      const sectionQs = questions.filter(q=>q.sectionId===s.id).sort((a,b)=>a.order-b.order);
-      const isActive = activeSectionId===s.id;
-      html += '<div class="section-group">';
-      html += '<div class="section-group-header'+(isActive?' active-section':'')+'" data-sid="'+s.id+'" onclick="setActiveSectionId(\''+s.id+'\')">';
-      html += '<span class="drag-handle" title="Drag to reorder">⠿</span>';
-      html += '<span class="section-color-dot" style="background:'+s.color+'"></span>';
-      html += '<span class="section-title-sidebar">'+escHtml(s.title||'Untitled Section')+'</span>';
-      html += '<span class="section-q-count">'+sectionQs.length+'</span>';
-      html += '<button class="section-collapse-btn'+(s.collapsed?' collapsed':'')+'" onclick="event.stopPropagation();toggleSectionCollapse(\''+s.id+'\')">'+(s.collapsed?'▶':'▼')+'</button>';
-      html += '</div>';
-      html += '<div class="section-questions'+(s.collapsed?' collapsed':'')+'" style="max-height:'+(s.collapsed?'0':'500px')+'">';
-      sectionQs.forEach(q=>{
-        if(q.type!=='heading') qNum++;
-        const hasLogic = q.logic&&q.logic.length>0;
-        html += '<div class="q-sidebar-item" data-qid="'+q.id+'" onclick="scrollToQ(\''+q.id+'\')">';
-        html += '<span class="drag-handle" title="Drag to reorder">⠿</span>';
-        html += '<div class="q-num" style="background:'+s.color+'">'+qNum+'</div>';
-        html += '<div class="q-item-text">'+(q.text||'Untitled')+'</div>';
-        html += '<div class="q-item-type">'+getTypeLabel(q.type)+(hasLogic?' 🔀':'')+'</div>';
-        html += '</div>';
+      const sq=questions.filter(q=>q.sectionId===s.id).sort((a,b)=>a.order-b.order);
+      const isAct=activeSecId===s.id;
+      html+=`<div class="sec-group">
+        <div class="sec-group-hdr${isAct?' active-sec':''}" data-sid="${s.id}" onclick="setActiveSection('${s.id}')">
+          <span class="dh" title="Drag to reorder">⠿</span>
+          <span class="sec-dot" style="background:${s.color}"></span>
+          <span class="sec-name">${eh(s.title||'Untitled')}</span>
+          <span class="sec-qcount">${sq.length}</span>
+          <button class="sec-collapse${s.collapsed?' coll':''}" onclick="event.stopPropagation();togSecCollapse('${s.id}')">${s.collapsed?'▶':'▼'}</button>
+        </div>
+        <div class="sec-qs${s.collapsed?' coll':''}" style="max-height:${s.collapsed?'0':'600px'}">`;
+      sq.forEach(q=>{
+        if(q.type!=='heading')qn++;
+        const hl=q.logic&&q.logic.length>0;
+        html+=`<div class="q-item" data-qid="${q.id}" onclick="scrollToQ('${q.id}')">
+          <span class="dh" title="Drag to reorder">⠿</span>
+          <div class="q-num" style="background:${s.color}">${qn}</div>
+          <div class="q-itext">${eh(q.text)||'Untitled'}</div>
+          <div class="q-itype">${typeLabel(q.type)}${hl?' 🔀':''}</div>
+        </div>`;
       });
-      html += '</div></div>';
+      html+=`</div></div>`;
     });
 
     // Unsectioned
-    const unsectioned = questions.filter(q=>!q.sectionId).sort((a,b)=>a.order-b.order);
-    if(unsectioned.length>0){
-      html += '<div class="unsectioned-group">';
-      if(sections.length>0) html += '<div class="unsectioned-label">No section</div>';
-      unsectioned.forEach(q=>{
-        if(q.type!=='heading') qNum++;
-        const hasLogic = q.logic&&q.logic.length>0;
-        html += '<div class="q-sidebar-item" data-qid="'+q.id+'" onclick="scrollToQ(\''+q.id+'\')">';
-        html += '<span class="drag-handle" title="Drag to reorder">⠿</span>';
-        html += '<div class="q-num" style="background:#64748B">'+qNum+'</div>';
-        html += '<div class="q-item-text">'+(q.text||'Untitled')+'</div>';
-        html += '<div class="q-item-type">'+getTypeLabel(q.type)+(hasLogic?' 🔀':'')+'</div>';
-        html += '</div>';
+    const uq=questions.filter(q=>!q.sectionId).sort((a,b)=>a.order-b.order);
+    if(uq.length){
+      html+='<div class="unsec-qs">';
+      if(sections.length) html+='<div class="unsec-label">No section</div>';
+      uq.forEach(q=>{
+        if(q.type!=='heading')qn++;
+        const hl=q.logic&&q.logic.length>0;
+        html+=`<div class="q-item" data-qid="${q.id}" onclick="scrollToQ('${q.id}')">
+          <span class="dh" title="Drag to reorder">⠿</span>
+          <div class="q-num" style="background:#64748B">${qn}</div>
+          <div class="q-itext">${eh(q.text)||'Untitled'}</div>
+          <div class="q-itype">${typeLabel(q.type)}${hl?' 🔀':''}</div>
+        </div>`;
       });
-      html += '</div>';
+      html+='</div>';
     }
 
-    list.innerHTML = html;
-    initDragDrop();
+    list.innerHTML=html;
+    document.getElementById('q-total-badge').textContent=qn;
+    initDrag();
   }
 
-  window.scrollToQ = function(qid) {
-    showMainPanel('questions');
-    setTimeout(()=>{
-      const el=document.getElementById('qcard-'+qid);
-      if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
-    },100);
-    closeMobileSidebar();
+  window.scrollToQ=function(qid){
+    showPanel('questions');
+    setTimeout(()=>{const el=document.getElementById('qc-'+qid);if(el)el.scrollIntoView({behavior:'smooth',block:'center'})},100);
+    closeSb();
   }
 
   // ── RENDER QUESTIONS AREA ─────────────────────────────
-  function renderQuestionsArea() {
-    const area = document.getElementById('questions-render-area');
-    let html = '';
-    let qNum = 0;
+  function renderQArea() {
+    const area=document.getElementById('q-render');
+    let html='';let qn=0;
 
-    // Render sections with their questions
     sections.forEach(s=>{
-      const sectionQs = questions.filter(q=>q.sectionId===s.id).sort((a,b)=>a.order-b.order);
-
+      const sq=questions.filter(q=>q.sectionId===s.id).sort((a,b)=>a.order-b.order);
       // Section card
-      html += '<div class="section-card" id="sec-card-'+s.id+'" style="border-color:'+s.color+';background:'+hexToRgba(s.color,0.04)+'">';
-      html += '<div class="section-card-header">';
-      html += '<span class="section-card-icon">📌</span>';
-      html += '<div class="section-card-title" style="color:'+s.color+'">'+escHtml(s.title||'New Section')+'</div>';
-      html += '<button class="section-delete-btn" onclick="deleteSection(\''+s.id+'\')">✕</button>';
-      html += '</div>';
-      html += '<div class="section-field"><label class="section-field-label">Section title</label>';
-      html += '<input class="section-input" id="sec-title-'+s.id+'" value="'+escHtml(s.title)+'" placeholder="e.g. Personal Information" style="border-color:'+hexToRgba(s.color,0.3)+'"></div>';
-      html += '<div class="section-field"><label class="section-field-label">Subtitle (optional)</label>';
-      html += '<input class="section-input" id="sec-sub-'+s.id+'" value="'+escHtml(s.subtitle||'')+'" placeholder="e.g. Please fill in your details" style="border-color:'+hexToRgba(s.color,0.3)+'"></div>';
-      html += '<div class="section-field"><label class="section-field-label">Display mode</label>';
-      html += '<div class="section-mode-toggle">';
-      html += '<button class="section-mode-btn'+(s.displayMode==='inline'?' active':'')+'" data-mode="inline" onclick="setSectionMode(\''+s.id+'\',\'inline\')">📋 Inline heading</button>';
-      html += '<button class="section-mode-btn'+(s.displayMode==='fullscreen'?' active':'')+'" data-mode="fullscreen" onclick="setSectionMode(\''+s.id+'\',\'fullscreen\')">🖥 Full screen</button>';
-      html += '</div>';
-      html += '<div class="section-mode-hint">'+(s.displayMode==='inline'?'Section title shows above first question':'Respondent sees a full screen with section info before questions')+'</div>';
-      html += '</div></div>';
-
-      // Questions in this section
-      sectionQs.forEach(q=>{
-        if(q.type!=='heading') qNum++;
-        html += renderQuestionCard(q, qNum, s.color);
-      });
+      html+=`<div class="sec-card" id="sc-${s.id}" style="border-color:${s.color};background:${hex2rgba(s.color,0.04)}">
+        <div class="sec-card-top">
+          <span class="sec-card-icon">📌</span>
+          <div class="sec-card-title-text" style="color:${s.color}">${eh(s.title||'New Section')}</div>
+          <button class="sec-del" onclick="delSection('${s.id}')">✕</button>
+        </div>
+        <div class="sec-field">
+          <label class="sec-field-lbl">Section title</label>
+          <input class="sec-inp" id="sec-title-${s.id}" value="${eh(s.title)}" placeholder="e.g. Personal Information" style="border-color:${hex2rgba(s.color,0.3)}" oninput="sections.find(x=>x.id==='${s.id}').title=this.value;document.querySelectorAll('.sec-card-title-text').forEach(()=>{})">
+        </div>
+        <div class="sec-field">
+          <label class="sec-field-lbl">Subtitle (optional)</label>
+          <input class="sec-inp" id="sec-sub-${s.id}" value="${eh(s.subtitle||'')}" placeholder="e.g. Please fill in your details" style="border-color:${hex2rgba(s.color,0.3)}">
+        </div>
+        <div class="sec-field">
+          <label class="sec-field-lbl">Display mode</label>
+          <div class="sec-modes">
+            <button class="sec-mode-btn${s.displayMode==='one'?' active':''}" data-mode="one" onclick="setSecMode('${s.id}','one')">✨ One at a time</button>
+            <button class="sec-mode-btn${s.displayMode==='all'?' active':''}" data-mode="all" onclick="setSecMode('${s.id}','all')">📋 All on one page</button>
+            <button class="sec-mode-btn${s.displayMode==='fullscreen'?' active':''}" data-mode="fullscreen" onclick="setSecMode('${s.id}','fullscreen')">🖥 Full screen intro</button>
+          </div>
+          <div class="sec-mode-hint">${s.displayMode==='one'?'Each question shows on its own screen':s.displayMode==='all'?'All questions in this section show together on one page':'A full-screen intro screen shows before questions begin'}</div>
+        </div>
+      </div>`;
+      // Questions in section
+      sq.forEach(q=>{ if(q.type!=='heading')qn++; html+=renderQCard(q,qn,s.color); });
     });
 
-    // Unsectioned questions
-    const unsectioned = questions.filter(q=>!q.sectionId).sort((a,b)=>a.order-b.order);
-    unsectioned.forEach(q=>{
-      if(q.type!=='heading') qNum++;
-      html += renderQuestionCard(q, qNum, null);
+    // Unsectioned
+    questions.filter(q=>!q.sectionId).sort((a,b)=>a.order-b.order).forEach(q=>{
+      if(q.type!=='heading')qn++;
+      html+=renderQCard(q,qn,null);
     });
 
-    area.innerHTML = html;
+    area.innerHTML=html;
   }
 
-  function hexToRgba(hex, alpha) {
-    const r=parseInt(hex.slice(1,3),16);
-    const g=parseInt(hex.slice(3,5),16);
-    const b=parseInt(hex.slice(5,7),16);
-    return 'rgba('+r+','+g+','+b+','+alpha+')';
-  }
+  function renderQCard(q,qn,secColor) {
+    const bc=secColor?`border-left:4px solid ${secColor};`:'';
+    const hl=q.logic&&q.logic.length>0;
+    const nb=secColor||'#64748B';
+    const hasOpts=['multiple','checkbox','dropdown','quiz'].includes(q.type);
 
-  function renderQuestionCard(q, qNum, sectionColor) {
-    const borderStyle = sectionColor ? 'border-left:4px solid '+sectionColor+';' : '';
-    const hasLogic = q.logic&&q.logic.length>0;
-    let html = '<div class="question-card'+(sectionColor?' in-section':'')+'" id="qcard-'+q.id+'" style="'+borderStyle+'">';
+    // Question input HTML
+    const ph={multiple:'e.g. How satisfied are you?',checkbox:'e.g. Which features do you use?',dropdown:'e.g. Which country are you from?',yesno:'e.g. Would you recommend us?',text:'e.g. What is your full name?',textarea:'e.g. Describe your experience',email:'e.g. Your email address?',phone:'e.g. Your phone number?',number:'e.g. How many employees?',rating:'e.g. Rate our service (1-5)',scale:'e.g. Likelihood to recommend (1-10)',date:'e.g. What is your date of birth?',file:'e.g. Link to your portfolio',pledge:'e.g. I pledge to reduce my carbon footprint by 20%',quiz:'e.g. What is the capital of India?'};
+    const pv={text:'Short answer...',textarea:'Long answer...',email:'📧 Validates email format',phone:'📱 Phone number input',number:'🔢 Numbers only',date:'📅 Date picker — DD-MM-YYYY format',file:'📎 Respondents paste a URL'};
 
-    // TABS
-    html += '<div class="question-card-tabs">';
-    html += '<button class="q-tab active" data-tab="question" onclick="showQTab(\''+q.id+'\',\'question\')">Question</button>';
-    html += '<button class="q-tab" data-tab="logic" onclick="showQTab(\''+q.id+'\',\'logic\')">Logic'+(hasLogic?'<span class="q-tab-badge">'+q.logic.length+'</span>':'')+'</button>';
-    html += '</div>';
-
-    // QUESTION TAB
-    html += '<div class="q-tab-panel" data-tab="question">';
-    html += '<div class="question-card-body">';
-    html += '<div class="q-card-header">';
-    html += '<div class="q-num-badge" style="background:'+(sectionColor||'#64748B')+'">'+qNum+'</div>';
-    html += '<select class="q-type-select" onchange="changeType(\''+q.id+'\',this.value)">';
-    html += '<optgroup label="Choice"><option value="multiple"'+(q.type==='multiple'?' selected':'')+'>◉ Multiple choice</option><option value="checkbox"'+(q.type==='checkbox'?' selected':'')+'>☑ Checkboxes</option><option value="dropdown"'+(q.type==='dropdown'?' selected':'')+'>▾ Dropdown</option><option value="yesno"'+(q.type==='yesno'?' selected':'')+'>✓ Yes / No</option></optgroup>';
-    html += '<optgroup label="Text"><option value="text"'+(q.type==='text'?' selected':'')+'>✏️ Short text</option><option value="textarea"'+(q.type==='textarea'?' selected':'')+'>📝 Long text</option><option value="email"'+(q.type==='email'?' selected':'')+'>📧 Email</option><option value="phone"'+(q.type==='phone'?' selected':'')+'>📱 Phone</option><option value="number"'+(q.type==='number'?' selected':'')+'>🔢 Number</option></optgroup>';
-    html += '<optgroup label="Scale & Date"><option value="rating"'+(q.type==='rating'?' selected':'')+'>⭐ Rating 1-5</option><option value="scale"'+(q.type==='scale'?' selected':'')+'>📊 Scale 1-10</option><option value="date"'+(q.type==='date'?' selected':'')+'>📅 Date</option></optgroup>';
-    html += '<optgroup label="Special"><option value="file"'+(q.type==='file'?' selected':'')+'>📎 File URL</option><option value="pledge"'+(q.type==='pledge'?' selected':'')+'>🤝 Pledge</option><option value="quiz"'+(q.type==='quiz'?' selected':'')+'>🎓 Quiz MCQ</option></optgroup>';
-    html += '</select>';
-    html += '<button class="q-delete" onclick="deleteQuestion(\''+q.id+'\')">✕</button>';
-    html += '</div>';
-
-    // Input area
-    html += renderQuestionInput(q);
-
-    html += '<div class="q-footer"><button class="toggle'+(q.required?' on':'')+'" id="req-'+q.id+'" onclick="toggleRequired(\''+q.id+'\')"></button><span class="toggle-label">'+(q.type==='pledge'?'Must agree to proceed':'Required question')+'</span></div>';
-    html += '</div></div>'; // end body + question tab panel
-
-    // LOGIC TAB
-    html += '<div class="q-tab-panel" data-tab="logic" style="display:none">';
-    html += '<div class="question-card-body">';
-    html += renderLogicPanel(q);
-    html += '</div></div>';
-
-    html += '</div>'; // end card
-    return html;
-  }
-
-  function renderQuestionInput(q) {
-    let html = '';
-    const ph = { text:'e.g. What is your full name?', textarea:'e.g. Describe your experience', email:'e.g. Your email address?', phone:'e.g. Your phone number?', number:'e.g. How many employees?', file:'e.g. Link to your portfolio', rating:'e.g. How would you rate our service?', scale:'e.g. How likely to recommend us? (1-10)', yesno:'e.g. Would you recommend us?', date:'e.g. What is your date of birth?', multiple:'e.g. How satisfied are you?', checkbox:'e.g. Which features do you use?', dropdown:'e.g. Which country are you from?', pledge:'e.g. I pledge to reduce my carbon footprint by 20%', quiz:'e.g. What is the capital of India?' };
-
+    let inp='';
     if(q.type==='pledge'){
-      html += '<input class="q-input" id="q-text-'+q.id+'" placeholder="'+escHtml(ph[q.type]||'')+'" value="'+escHtml(q.text)+'" oninput="questions.find(x=>x.id===\''+q.id+'\').text=this.value">';
-      html += '<div class="pledge-preview-box"><div class="pledge-preview-text">'+(q.text||'Your pledge statement will appear here...')+'</div><div class="pledge-preview-check"><div class="pledge-box-preview"></div><span>I agree and commit to this pledge</span></div></div>';
+      inp=`<input class="q-inp" id="qt-${q.id}" placeholder="${eh(ph.pledge)}" value="${eh(q.text)}" oninput="questions.find(x=>x.id==='${q.id}').text=this.value">
+      <div class="pledge-box"><div class="pledge-txt">${q.text||'Your pledge statement will appear here...'}</div><div class="pledge-chk"><div class="pledge-chk-box"></div><span>I agree and commit to this pledge</span></div></div>`;
     } else if(q.type==='quiz'){
-      html += '<input class="q-input" id="q-text-'+q.id+'" placeholder="'+escHtml(ph[q.type]||'')+'" value="'+escHtml(q.text)+'" oninput="questions.find(x=>x.id===\''+q.id+'\').text=this.value">';
-      html += '<div style="font-size:0.72rem;color:#64748B;margin-bottom:7px">✓ Click to mark correct answer</div>';
-      html += '<div class="options-list">';
-      (q.options||[]).forEach((opt,oi)=>{
-        html += '<div class="option-row"><div class="opt-bullet"></div><input class="option-input opt-'+q.id+'" value="'+escHtml(opt)+'" placeholder="Option '+(oi+1)+'"><button class="correct-mark'+(q.correctIndex===oi?' correct':'')+'" onclick="markCorrect(\''+q.id+'\','+oi+')" title="Mark correct">✓</button><button class="opt-remove" onclick="removeOption(\''+q.id+'\','+oi+')">✕</button></div>';
-      });
-      html += '</div><button class="add-opt-btn" onclick="addOption(\''+q.id+'\')">+ Add option</button>';
-    } else if(['multiple','checkbox','dropdown'].includes(q.type)){
-      const bc = q.type==='checkbox'?'opt-bullet sq':'opt-bullet';
-      html += '<input class="q-input" id="q-text-'+q.id+'" placeholder="'+escHtml(ph[q.type]||'')+'" value="'+escHtml(q.text)+'" oninput="questions.find(x=>x.id===\''+q.id+'\').text=this.value">';
-      html += '<div class="options-list">';
-      (q.options||[]).forEach((opt,oi)=>{
-        html += '<div class="option-row"><div class="'+bc+'"></div><input class="option-input opt-'+q.id+'" value="'+escHtml(opt)+'" placeholder="Option '+(oi+1)+'"><button class="opt-remove" onclick="removeOption(\''+q.id+'\','+oi+')">✕</button></div>';
-      });
-      html += '</div><button class="add-opt-btn" onclick="addOption(\''+q.id+'\')">+ Add option</button>';
+      inp=`<input class="q-inp" id="qt-${q.id}" placeholder="${eh(ph.quiz)}" value="${eh(q.text)}" oninput="questions.find(x=>x.id==='${q.id}').text=this.value">
+      <div style="font-size:0.7rem;color:#64748B;margin-bottom:6px">✓ Click to mark correct answer</div>
+      <div class="opts-list">${(q.options||[]).map((o,oi)=>`<div class="opt-row"><div class="opt-bul"></div><input class="opt-inp oi-${q.id}" value="${eh(o)}" placeholder="Option ${oi+1}"><button class="ok-mark${q.correctIndex===oi?' ok':''}" onclick="mkCorrect('${q.id}',${oi})">✓</button><button class="opt-rm" onclick="rmOpt('${q.id}',${oi})">✕</button></div>`).join('')}</div>
+      <button class="add-opt" onclick="addOpt('${q.id}')">+ Add option</button>`;
+    } else if(hasOpts){
+      const bc2=q.type==='checkbox'?'opt-bul sq':'opt-bul';
+      inp=`<input class="q-inp" id="qt-${q.id}" placeholder="${eh(ph[q.type]||'')}" value="${eh(q.text)}" oninput="questions.find(x=>x.id==='${q.id}').text=this.value">
+      <div class="opts-list">${(q.options||[]).map((o,oi)=>`<div class="opt-row"><div class="${bc2}"></div><input class="opt-inp oi-${q.id}" value="${eh(o)}" placeholder="Option ${oi+1}"><button class="opt-rm" onclick="rmOpt('${q.id}',${oi})">✕</button></div>`).join('')}</div>
+      <button class="add-opt" onclick="addOpt('${q.id}')">+ Add option</button>`;
     } else if(q.type==='yesno'){
-      html += '<input class="q-input" id="q-text-'+q.id+'" placeholder="'+escHtml(ph.yesno)+'" value="'+escHtml(q.text)+'" oninput="questions.find(x=>x.id===\''+q.id+'\').text=this.value">';
-      html += '<div style="display:flex;gap:8px"><div style="padding:7px 18px;border-radius:8px;border:1.5px solid #E2DAD0;font-size:0.85rem;font-weight:600">Yes</div><div style="padding:7px 18px;border-radius:8px;border:1.5px solid #E2DAD0;font-size:0.85rem;font-weight:600">No</div></div>';
+      inp=`<input class="q-inp" id="qt-${q.id}" placeholder="${eh(ph.yesno)}" value="${eh(q.text)}" oninput="questions.find(x=>x.id==='${q.id}').text=this.value">
+      <div style="display:flex;gap:8px"><div style="padding:6px 16px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.82rem;font-weight:600">Yes</div><div style="padding:6px 16px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.82rem;font-weight:600">No</div></div>`;
     } else if(q.type==='rating'){
-      html += '<input class="q-input" id="q-text-'+q.id+'" placeholder="'+escHtml(ph.rating)+'" value="'+escHtml(q.text)+'" oninput="questions.find(x=>x.id===\''+q.id+'\').text=this.value">';
-      html += '<div class="rating-dots">'+[1,2,3,4,5].map(n=>'<div class="rating-dot">'+n+'</div>').join('')+'</div>';
+      inp=`<input class="q-inp" id="qt-${q.id}" placeholder="${eh(ph.rating)}" value="${eh(q.text)}" oninput="questions.find(x=>x.id==='${q.id}').text=this.value">
+      <div class="rdots">${[1,2,3,4,5].map(n=>`<div class="rdot">${n}</div>`).join('')}</div>`;
     } else if(q.type==='scale'){
-      html += '<input class="q-input" id="q-text-'+q.id+'" placeholder="'+escHtml(ph.scale)+'" value="'+escHtml(q.text)+'" oninput="questions.find(x=>x.id===\''+q.id+'\').text=this.value">';
-      html += '<div class="scale-dots">'+[1,2,3,4,5,6,7,8,9,10].map(n=>'<div class="scale-dot">'+n+'</div>').join('')+'</div>';
-    } else if(q.type==='date'){
-      html += '<input class="q-input" id="q-text-'+q.id+'" placeholder="'+escHtml(ph.date)+'" value="'+escHtml(q.text)+'" oninput="questions.find(x=>x.id===\''+q.id+'\').text=this.value">';
-      html += '<div class="preview-chip">📅 Date picker — DD-MM-YYYY format</div>';
+      inp=`<input class="q-inp" id="qt-${q.id}" placeholder="${eh(ph.scale)}" value="${eh(q.text)}" oninput="questions.find(x=>x.id==='${q.id}').text=this.value">
+      <div class="sdots">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="sdot">${n}</div>`).join('')}</div>`;
     } else {
-      const pv = { text:'Short answer...', textarea:'Long answer...', email:'📧 Validates email format', phone:'📱 Phone number input', number:'🔢 Numbers only', file:'📎 Paste a URL' };
-      html += '<input class="q-input" id="q-text-'+q.id+'" placeholder="'+escHtml(ph[q.type]||'Type question...')+'" value="'+escHtml(q.text)+'" oninput="questions.find(x=>x.id===\''+q.id+'\').text=this.value">';
-      html += '<div class="preview-chip">'+(pv[q.type]||'')+'</div>';
-    }
-    return html;
-  }
-
-  function renderLogicPanel(q) {
-    const allQuestions = getOrderedQuestions().filter(x=>x.id!==q.id);
-    const allSections = sections;
-    let html = '<div class="logic-panel">';
-
-    if(!q.logic||q.logic.length===0){
-      html += '<div class="logic-empty">No logic rules yet.<br>Add a rule to skip, show or hide questions based on answers.</div>';
+      inp=`<input class="q-inp" id="qt-${q.id}" placeholder="${eh(ph[q.type]||'Type question...')}" value="${eh(q.text)}" oninput="questions.find(x=>x.id==='${q.id}').text=this.value">
+      <div class="pchip">${pv[q.type]||''}</div>`;
     }
 
-    q.logic.forEach((rule,ri)=>{
-      html += '<div class="logic-rule">';
-      html += '<div class="logic-rule-header"><span class="logic-rule-title">Rule '+(ri+1)+'</span><button class="logic-rule-delete" onclick="deleteLogicRule(\''+q.id+'\',\''+rule.id+'\')">✕ Delete</button></div>';
-
-      // Conditions
+    // Logic panel
+    const allQ=orderedQs().filter(x=>x.id!==q.id);
+    let lhtml=`<div class="logic-wrap">`;
+    if(!q.logic||!q.logic.length) lhtml+=`<div class="logic-empty">No logic rules yet.<br>Add a rule to skip, show or hide questions based on answers.</div>`;
+    (q.logic||[]).forEach((rule,ri)=>{
+      lhtml+=`<div class="logic-rule"><div class="logic-rule-hdr"><span class="logic-rule-lbl">Rule ${ri+1}</span><button class="logic-del" onclick="delRule('${q.id}','${rule.id}')">✕ Delete</button></div>`;
       if(rule.conditions.length>1){
-        html += '<div class="logic-condition-type">';
-        html += '<button class="cond-type-btn'+(rule.conditionType==='ALL'?' active':'')+'" onclick="setConditionType(\''+q.id+'\',\''+rule.id+'\',\'ALL\')">ALL (AND)</button>';
-        html += '<button class="cond-type-btn'+(rule.conditionType==='ANY'?' active':'')+'" onclick="setConditionType(\''+q.id+'\',\''+rule.id+'\',\'ANY\')">ANY (OR)</button>';
-        html += '</div>';
+        lhtml+=`<div class="ctype-row"><button class="ctype-btn${rule.condType==='ALL'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ALL')">ALL (AND)</button><button class="ctype-btn${rule.condType==='ANY'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ANY')">ANY (OR)</button></div>`;
       }
-
-      rule.conditions.forEach((cond,ci)=>{
-        html += '<div class="logic-condition">';
-        // Which question
-        html += '<select class="logic-select" id="cond-q-'+rule.id+'-'+ci+'">';
-        html += '<option value="'+q.id+'"'+(cond.questionId===q.id?' selected':'')+'>This question</option>';
-        allQuestions.forEach(aq=>{
-          html += '<option value="'+aq.id+'"'+(cond.questionId===aq.id?' selected':'')+'>Q: '+(aq.text||'Untitled').slice(0,30)+'</option>';
-        });
-        html += '</select>';
-        // Operator
-        html += '<select class="logic-select" id="cond-op-'+rule.id+'-'+ci+'">';
-        html += '<option value="is"'+(cond.operator==='is'?' selected':'')+'>is</option>';
-        html += '<option value="is_not"'+(cond.operator==='is_not'?' selected':'')+'>is not</option>';
-        html += '<option value="contains"'+(cond.operator==='contains'?' selected':'')+'>contains</option>';
-        html += '<option value="not_contains"'+(cond.operator==='not_contains'?' selected':'')+'>does not contain</option>';
-        html += '<option value="filled"'+(cond.operator==='filled'?' selected':'')+'>is filled</option>';
-        html += '<option value="empty"'+(cond.operator==='empty'?' selected':'')+'>is empty</option>';
-        html += '</select>';
-        // Value
-        html += '<input class="logic-select" id="cond-val-'+rule.id+'-'+ci+'" value="'+escHtml(cond.value)+'" placeholder="value" style="min-width:80px">';
-        if(ci>0) html += '<button class="logic-rule-delete" onclick="removeCondition(\''+q.id+'\',\''+rule.id+'\','+ci+')">✕</button>';
-        html += '</div>';
+      rule.conditions.forEach((c,ci)=>{
+        lhtml+=`<div class="logic-cond">
+          <select class="lsel" id="cq-${rule.id}-${ci}"><option value="${q.id}"${c.qid===q.id?' selected':''}>This question</option>${allQ.map(aq=>`<option value="${aq.id}"${c.qid===aq.id?' selected':''}>${(aq.text||'Untitled').slice(0,28)}</option>`).join('')}</select>
+          <select class="lsel" id="co-${rule.id}-${ci}"><option value="is"${c.op==='is'?' selected':''}>is</option><option value="is_not"${c.op==='is_not'?' selected':''}>is not</option><option value="contains"${c.op==='contains'?' selected':''}>contains</option><option value="not_contains"${c.op==='not_contains'?' selected':''}>not contain</option><option value="filled"${c.op==='filled'?' selected':''}>is filled</option><option value="empty"${c.op==='empty'?' selected':''}>is empty</option></select>
+          <input class="lsel" id="cv-${rule.id}-${ci}" value="${eh(c.val)}" placeholder="value" style="min-width:70px">
+          ${ci>0?`<button class="logic-del" onclick="rmCond('${q.id}','${rule.id}',${ci})">✕</button>`:''}
+        </div>`;
       });
-
-      html += '<button class="add-condition-btn" onclick="addCondition(\''+q.id+'\',\''+rule.id+'\')">+ Add condition</button>';
-
-      // Action
-      html += '<div class="logic-action-row">';
-      html += '<span class="logic-action-label">THEN</span>';
-      html += '<select class="logic-select" id="action-'+rule.id+'" onchange="renderActionTarget(\''+q.id+'\',\''+rule.id+'\')">';
-      html += '<option value="skip"'+(rule.action==='skip'?' selected':'')+'>Skip to</option>';
-      html += '<option value="skip_section"'+(rule.action==='skip_section'?' selected':'')+'>Skip to section</option>';
-      html += '<option value="show"'+(rule.action==='show'?' selected':'')+'>Show question</option>';
-      html += '<option value="hide"'+(rule.action==='hide'?' selected':'')+'>Hide question</option>';
-      html += '<option value="end"'+(rule.action==='end'?' selected':'')+'>End survey</option>';
-      html += '</select>';
-
-      if(rule.action==='skip'||rule.action==='show'||rule.action==='hide'){
-        html += '<select class="logic-select" id="target-'+rule.id+'">';
-        allQuestions.forEach(aq=>{
-          html += '<option value="'+aq.id+'"'+(rule.target===aq.id?' selected':'')+'>Q: '+(aq.text||'Untitled').slice(0,25)+'</option>';
-        });
-        html += '</select>';
-      } else if(rule.action==='skip_section'){
-        html += '<select class="logic-select" id="target-'+rule.id+'">';
-        allSections.forEach(s=>{
-          html += '<option value="'+s.id+'"'+(rule.target===s.id?' selected':'')+'>§ '+(s.title||'Untitled').slice(0,25)+'</option>';
-        });
-        html += '</select>';
+      lhtml+=`<button class="add-cond-btn" onclick="addCond('${q.id}','${rule.id}')">+ Add condition</button>`;
+      lhtml+=`<div class="logic-action-row"><span class="logic-action-lbl">THEN</span>
+        <select class="lsel" id="act-${rule.id}" onchange="chAction('${q.id}','${rule.id}')">
+          <option value="skip"${rule.action==='skip'?' selected':''}>Skip to question</option>
+          <option value="skip_sec"${rule.action==='skip_sec'?' selected':''}>Skip to section</option>
+          <option value="show"${rule.action==='show'?' selected':''}>Show question</option>
+          <option value="hide"${rule.action==='hide'?' selected':''}>Hide question</option>
+          <option value="end"${rule.action==='end'?' selected':''}>End survey</option>
+        </select>`;
+      if(['skip','show','hide'].includes(rule.action)){
+        lhtml+=`<select class="lsel" id="tgt-${rule.id}">${allQ.map(aq=>`<option value="${aq.id}"${rule.target===aq.id?' selected':''}>${(aq.text||'Untitled').slice(0,22)}</option>`).join('')}</select>`;
+      } else if(rule.action==='skip_sec'){
+        lhtml+=`<select class="lsel" id="tgt-${rule.id}">${sections.map(s=>`<option value="${s.id}"${rule.target===s.id?' selected':''}>${(s.title||'Untitled').slice(0,22)}</option>`).join('')}</select>`;
       } else {
-        // end survey — no target needed
-        html += '<span id="target-'+rule.id+'" style="display:none"></span>';
+        lhtml+=`<span id="tgt-${rule.id}" style="display:none"></span>`;
       }
-
-      html += '</div>';
-      html += '</div>'; // end rule
+      lhtml+=`</div></div>`;
     });
+    lhtml+=`<button class="btn-add-rule" onclick="addRule('${q.id}')">+ Add logic rule</button>`;
+    lhtml+=`<div class="logic-default"><strong>OTHERWISE:</strong> Continue to next question</div>`;
+    lhtml+=`</div>`;
 
-    html += '<button class="btn-add-rule" onclick="addLogicRule(\''+q.id+'\')">+ Add logic rule</button>';
-
-    // Default action
-    html += '<div class="logic-default-row"><span class="logic-default-label">OTHERWISE:</span><span style="font-size:0.82rem;color:#64748B">Continue to next question</span></div>';
-
-    html += '</div>';
-    return html;
+    return `<div class="q-card${secColor?' in-sec':''}" id="qc-${q.id}" style="${bc}">
+      <div class="q-card-tabs">
+        <button class="q-tab active" data-tab="question" onclick="showQTab('${q.id}','question')">Question</button>
+        <button class="q-tab" data-tab="logic" onclick="showQTab('${q.id}','logic')">Logic${hl?`<span class="q-tab-badge">${q.logic.length}</span>`:''}</button>
+      </div>
+      <div class="qtab-panel" data-tab="question">
+        <div class="q-body">
+          <div class="q-hdr">
+            <div class="q-nbadge" style="background:${nb}">${qn}</div>
+            <select class="q-type-sel" onchange="chType('${q.id}',this.value)">
+              <optgroup label="Choice"><option value="multiple"${q.type==='multiple'?' selected':''}>◉ Multiple choice</option><option value="checkbox"${q.type==='checkbox'?' selected':''}>☑ Checkboxes</option><option value="dropdown"${q.type==='dropdown'?' selected':''}>▾ Dropdown</option><option value="yesno"${q.type==='yesno'?' selected':''}>✓ Yes/No</option></optgroup>
+              <optgroup label="Text"><option value="text"${q.type==='text'?' selected':''}>✏️ Short text</option><option value="textarea"${q.type==='textarea'?' selected':''}>📝 Long text</option><option value="email"${q.type==='email'?' selected':''}>📧 Email</option><option value="phone"${q.type==='phone'?' selected':''}>📱 Phone</option><option value="number"${q.type==='number'?' selected':''}>🔢 Number</option></optgroup>
+              <optgroup label="Scale & Date"><option value="rating"${q.type==='rating'?' selected':''}>⭐ Rating 1-5</option><option value="scale"${q.type==='scale'?' selected':''}>📊 Scale 1-10</option><option value="date"${q.type==='date'?' selected':''}>📅 Date</option></optgroup>
+              <optgroup label="Special"><option value="file"${q.type==='file'?' selected':''}>📎 File URL</option><option value="pledge"${q.type==='pledge'?' selected':''}>🤝 Pledge</option><option value="quiz"${q.type==='quiz'?' selected':''}>🎓 Quiz MCQ</option></optgroup>
+            </select>
+            <button class="q-del" onclick="delQ('${q.id}')">✕</button>
+          </div>
+          ${inp}
+          <div class="q-footer">
+            <button class="tgl${q.required?' on':''}" id="req-${q.id}" onclick="togReq('${q.id}')"></button>
+            <span class="tgl-lbl">${q.type==='pledge'?'Must agree to proceed':'Required'}</span>
+            <select class="disp-sel" id="dm-${q.id}" onchange="setDispMode('${q.id}',this.value)" title="Display mode for this question">
+              <option value="auto"${q.displayMode==='auto'?' selected':''}>📐 Follow section</option>
+              <option value="solo"${q.displayMode==='solo'?' selected':''}>🖥 Own screen</option>
+              <option value="group-prev"${q.displayMode==='group-prev'?' selected':''}>⬆ Group with previous</option>
+              <option value="group-next"${q.displayMode==='group-next'?' selected':''}>⬇ Group with next</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="qtab-panel" data-tab="logic" style="display:none">
+        <div class="q-body">${lhtml}</div>
+      </div>
+    </div>`;
   }
 
-  window.renderActionTarget = function(qid,rid) {
-    syncLogicFromDOM();
-    const q=questions.find(q=>q.id===qid);
-    const rule=q&&q.logic.find(r=>r.id===rid);
-    if(rule){ rule.action=document.getElementById('action-'+rid).value; renderAll(); setTimeout(()=>showQTab(qid,'logic'),60); }
-  }
+  // ── RENDER ALL ────────────────────────────────────────
+  function renderAll() { renderSidebar(); renderQArea(); }
+// ── EXPOSE GLOBALS (called by save module) ───────────
+  window.syncDOMGlobal = syncDOM;
+  window.getQuestionsGlobal = ()=>questions;
+  window.getSectionsGlobal = ()=>sections;
+  window.getSettingsGlobal = ()=>settings;
+  window.getPrizeTypeGlobal = ()=>prizeType;
+  window.getSavedIdGlobal = ()=>savedId;
+  window.setSavedIdGlobal = (id)=>{ savedId=id; };
 
-  // ── RENDER ALL ───────────────────────────────────────
-  function renderAll() {
-    renderSidebar();
-    renderQuestionsArea();
-  }<div class="toast" id="toast"></div>
-
-    // ── SAVE SURVEY ──────────────────────────────────────
+  // ── SAVE SURVEY ──────────────────────────────────────
   async function saveSurvey(status) {
-    syncFromDOM();
+    syncDOM();
     const title = document.getElementById('survey-title').value.trim();
     if(!title){ showToast('Please add a survey title'); return null; }
     const validQs = questions.filter(q=>q.text.trim()||q.type==='pledge');
     if(!validQs.length){ showToast('Please add at least one question'); return null; }
 
-    const surveyData = {
+    const data = {
       title,
       description: document.getElementById('survey-desc').value.trim(),
       sections,
@@ -1282,33 +1077,33 @@
         bgVideo: document.getElementById('welcome-bg-video').value.trim(),
       },
       thankYouPage:{
-        headline: document.getElementById('thankyou-headline').value.trim(),
-        message: document.getElementById('thankyou-message').value.trim(),
-        redirect: document.getElementById('thankyou-redirect').value.trim(),
+        headline: document.getElementById('ty-headline').value.trim(),
+        message: document.getElementById('ty-message').value.trim(),
+        redirect: document.getElementById('ty-redirect').value.trim(),
         showShare: settings.share||false,
       },
       prize: settings.prize ? {
-        enabled:true, type:selectedPrizeType,
-        description: document.getElementById('prize-description').value.trim(),
+        enabled:true, type:prizeType,
+        description: document.getElementById('prize-desc').value.trim(),
         winners: document.getElementById('prize-winners').value||'1',
-        selection: document.getElementById('prize-selection').value,
-        notification: document.getElementById('prize-notification').value,
-      } : { enabled:false },
+        selection: document.getElementById('prize-sel').value,
+        notification: document.getElementById('prize-notif').value,
+      } : {enabled:false},
       status,
-      userId: currentUser.uid,
-      responseCount: 0,
+      userId: user.uid,
+      responseCount:0,
       questionCount: validQs.length,
       updatedAt: serverTimestamp()
     };
 
     try {
-      if(savedSurveyId){
-        await updateDoc(doc(db,'surveys',savedSurveyId), surveyData);
-        return savedSurveyId;
+      if(savedId){
+        await updateDoc(doc(db,'surveys',savedId), data);
+        return savedId;
       } else {
-        surveyData.createdAt = serverTimestamp();
-        const ref = await addDoc(collection(db,'surveys'), surveyData);
-        savedSurveyId = ref.id;
+        data.createdAt = serverTimestamp();
+        const ref = await addDoc(collection(db,'surveys'), data);
+        savedId = ref.id;
         return ref.id;
       }
     } catch(e){
@@ -1334,36 +1129,41 @@
 
   // ── PUBLISH ───────────────────────────────────────────
   window.publishSurvey = async function() {
-    const btn = document.getElementById('publish-btn');
+    const btn = document.getElementById('pub-btn');
     btn.disabled=true; btn.textContent='Publishing...';
     const id = await saveSurvey('active');
     if(id){
       btn.textContent='Creating Sheet...';
       try {
-        const qs = questions.map(q=>q.text).filter(t=>t&&t.trim());
-        const res = await fetch(SHEETS_SCRIPT,{
+        const qTexts = questions.map(q=>q.text).filter(t=>t&&t.trim());
+        const res = await fetch(SHEETS,{
           method:'POST',
           body:JSON.stringify({
             action:'create_sheet',
             surveyTitle: document.getElementById('survey-title').value.trim(),
-            questions: qs,
-            hostEmail: currentUser.email
+            questions: qTexts,
+            hostEmail: user.email
           })
         });
         const result = await res.json();
         if(result.success){
-          await updateDoc(doc(db,'surveys',id),{ sheetId:result.sheetId, sheetUrl:result.sheetUrl });
+          await updateDoc(doc(db,'surveys',id),{sheetId:result.sheetId,sheetUrl:result.sheetUrl});
           showToast('🎉 Survey published + Sheet created!',2000);
         } else {
           showToast('🎉 Survey published!',1500);
         }
-      } catch(e){ showToast('🎉 Survey published!',1500); }
+      } catch(e){
+        showToast('🎉 Survey published!',1500);
+      }
       setTimeout(()=>window.location.href='/dashboard',2200);
     } else {
-      btn.disabled=false; btn.textContent='Publish →';
+      btn.disabled=false;
+      btn.textContent='Publish →';
     }
   }
 
 </script>
 </body>
 </html>
+
+  
