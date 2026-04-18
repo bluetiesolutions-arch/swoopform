@@ -7,435 +7,255 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
-
-    /* NAV */
-    nav{
-      background:#fff;border-bottom:1.5px solid #E2DAD0;
-      padding:0 20px;height:56px;
-      display:flex;align-items:center;justify-content:space-between;
-      position:sticky;top:0;z-index:200;
-    }
+    body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh;overflow:hidden}
+    nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
     .nav-left{display:flex;align-items:center;gap:10px}
-    .logo-mark{
-      width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);
-      border-radius:7px;display:flex;align-items:center;justify-content:center;
-      font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;
-      text-decoration:none;flex-shrink:0;
-    }
-    .nav-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#0F0E1A}
+    .logo-mark{width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none;flex-shrink:0}
+    .nav-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#0F0E1A;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .nav-actions{display:flex;gap:8px;align-items:center}
-    .btn-ghost{
-      padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;
-      background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-decoration:none;
-      white-space:nowrap;
-    }
+    .btn-ghost{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-decoration:none;white-space:nowrap}
     .btn-ghost:hover{border-color:#0F0E1A;color:#0F0E1A}
-    .btn-preview{
-      padding:7px 14px;border-radius:8px;border:1.5px solid #2D1B69;
-      background:transparent;color:#2D1B69;font-size:0.82rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;white-space:nowrap;
-    }
+    .btn-preview{padding:7px 14px;border-radius:8px;border:1.5px solid #2D1B69;background:transparent;color:#2D1B69;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;white-space:nowrap}
     .btn-preview:hover{background:#EDE9FF}
-    .btn-primary{
-      padding:7px 14px;border-radius:8px;border:none;
-      background:linear-gradient(135deg,#2D1B69,#D97706);
-      color:#fff;font-size:0.82rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s;white-space:nowrap;
-    }
+    .btn-primary{padding:7px 14px;border-radius:8px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s;white-space:nowrap}
     .btn-primary:hover{opacity:0.9}
     .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
-    .hamburger-btn{
-      display:none;background:none;border:none;cursor:pointer;
-      padding:6px;flex-direction:column;gap:4px;
-    }
+    .hamburger-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:4px}
     .hamburger-btn span{display:block;width:20px;height:2px;background:#0F0E1A;border-radius:2px}
-
-    /* LAYOUT */
-    .builder-layout{
-      display:flex;height:calc(100vh - 56px);overflow:hidden;
-    }
+    .builder-layout{display:flex;height:calc(100vh - 56px);overflow:hidden}
 
     /* SIDEBAR */
-    .sidebar{
-      width:220px;flex-shrink:0;
-      background:#fff;border-right:1.5px solid #E2DAD0;
-      display:flex;flex-direction:column;
-      overflow-y:auto;z-index:100;
-    }
-    .sidebar-section{padding:16px 12px 8px;border-bottom:1px solid #E2DAD0}
-    .sidebar-label{
-      font-size:0.68rem;font-weight:700;color:#94A3B8;
-      letter-spacing:0.08em;text-transform:uppercase;
-      padding:0 8px;margin-bottom:6px;
-    }
-    .sidebar-item{
-      display:flex;align-items:center;gap:10px;
-      padding:9px 10px;border-radius:9px;cursor:pointer;
-      transition:all 0.2s;border:none;background:transparent;
-      width:100%;text-align:left;font-family:'DM Sans',sans-serif;
-    }
-    .sidebar-item:hover{background:#F5F0E8}
-    .sidebar-item.active{background:#EDE9FF;color:#2D1B69}
-    .sidebar-item .si-icon{font-size:1rem;flex-shrink:0;width:20px;text-align:center}
-    .sidebar-item .si-label{font-size:0.82rem;font-weight:600;color:#0F0E1A}
-    .sidebar-item.active .si-label{color:#2D1B69}
-    .sidebar-item .si-count{
-      margin-left:auto;font-size:0.7rem;font-weight:700;
-      background:#E2DAD0;color:#64748B;padding:1px 6px;border-radius:100px;
-    }
-    .sidebar-item.active .si-count{background:#C4B5FD;color:#2D1B69}
+    .sidebar{width:260px;flex-shrink:0;background:#fff;border-right:1.5px solid #E2DAD0;display:flex;flex-direction:column;overflow:hidden;z-index:100;transition:transform 0.3s ease}
+    .sidebar-header{padding:14px 12px 10px;border-bottom:1px solid #E2DAD0;flex-shrink:0}
+    .sidebar-label{font-size:0.68rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
+    .sidebar-nav{display:flex;flex-direction:column;gap:2px}
+    .sidebar-nav-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:all 0.2s;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;color:#64748B}
+    .sidebar-nav-item:hover{background:#F5F0E8;color:#0F0E1A}
+    .sidebar-nav-item.active{background:#EDE9FF;color:#2D1B69}
+    .sidebar-nav-item .sni-icon{width:18px;text-align:center;font-size:0.9rem}
+    .sidebar-divider{height:1px;background:#E2DAD0;margin:8px 0}
 
-    /* Q LIST IN SIDEBAR */
-    .q-list-sidebar{padding:8px 12px}
-    .q-item-sidebar{
-      display:flex;align-items:center;gap:8px;
-      padding:7px 8px;border-radius:7px;cursor:pointer;
-      transition:all 0.2s;margin-bottom:2px;
+    /* QUESTION LIST IN SIDEBAR */
+    .q-sidebar-list{flex:1;overflow-y:auto;padding:8px}
+    .section-group{margin-bottom:4px}
+    .section-group-header{
+      display:flex;align-items:center;gap:6px;
+      padding:7px 8px;border-radius:8px;
+      cursor:pointer;user-select:none;
+      transition:background 0.2s;
     }
-    .q-item-sidebar:hover{background:#F5F0E8}
-    .q-item-sidebar.active{background:#EDE9FF}
-    .q-item-num{
-      width:20px;height:20px;border-radius:50%;
-      background:#E2DAD0;color:#64748B;
-      font-size:0.65rem;font-weight:700;
-      display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    .section-group-header:hover{background:#F5F0E8}
+    .section-group-header.active-section{background:#EDE9FF}
+    .drag-handle{
+      font-size:0.8rem;color:#C4B9AA;cursor:grab;
+      padding:2px;flex-shrink:0;
+      touch-action:none;
     }
-    .q-item-sidebar.active .q-item-num{background:#2D1B69;color:#fff}
-    .q-item-text{
-      font-size:0.75rem;font-weight:500;color:#64748B;
-      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;
-    }
-    .q-item-type{
-      font-size:0.65rem;color:#94A3B8;flex-shrink:0;
-    }
+    .drag-handle:active{cursor:grabbing}
+    .section-color-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+    .section-title-sidebar{font-size:0.8rem;font-weight:700;color:#0F0E1A;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .section-collapse-btn{background:none;border:none;cursor:pointer;color:#94A3B8;font-size:0.7rem;padding:2px;transition:transform 0.2s;flex-shrink:0}
+    .section-collapse-btn.collapsed{transform:rotate(-90deg)}
+    .section-q-count{font-size:0.68rem;font-weight:700;color:#94A3B8;background:#F5F0E8;padding:1px 6px;border-radius:100px;flex-shrink:0}
 
-    /* ADD BUTTONS IN SIDEBAR */
-    .sidebar-add-section{padding:12px;border-top:1px solid #E2DAD0;margin-top:auto}
-    .btn-add-q{
-      width:100%;padding:9px;border-radius:9px;
-      border:1.5px dashed #E2DAD0;
-      background:transparent;color:#64748B;
-      font-size:0.82rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;
-      transition:all 0.2s;text-align:center;margin-bottom:8px;
+    .section-questions{padding-left:14px;overflow:hidden;transition:max-height 0.3s ease}
+    .section-questions.collapsed{max-height:0!important}
+
+    .q-sidebar-item{
+      display:flex;align-items:center;gap:6px;
+      padding:6px 8px;border-radius:7px;
+      cursor:pointer;transition:all 0.2s;
+      margin-bottom:2px;
+      user-select:none;
     }
-    .btn-add-q:hover{border-color:#2D1B69;color:#2D1B69;background:#EDE9FF}
-    .btn-template{
-      width:100%;padding:9px;border-radius:9px;
-      border:1.5px solid #E2DAD0;
-      background:transparent;color:#64748B;
-      font-size:0.82rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;
-      transition:all 0.2s;text-align:center;
-    }
-    .btn-template:hover{border-color:#D97706;color:#D97706;background:#FEF3C7}
+    .q-sidebar-item:hover{background:#F5F0E8}
+    .q-sidebar-item.active{background:#EDE9FF}
+    .q-sidebar-item.dragging{opacity:0.4;background:#EDE9FF}
+    .q-sidebar-item.drag-over{border-top:2px solid #2D1B69}
+    .section-group-header.drag-over-section{background:#FEF3C7;border:1.5px dashed #D97706}
+    .q-num{width:18px;height:18px;border-radius:50%;font-size:0.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
+    .q-item-text{font-size:0.75rem;color:#64748B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+    .q-item-type{font-size:0.62rem;color:#94A3B8;flex-shrink:0}
+    .unsectioned-group{margin-bottom:4px}
+    .unsectioned-label{font-size:0.68rem;font-weight:700;color:#C4B9AA;letter-spacing:0.06em;text-transform:uppercase;padding:4px 8px}
+
+    /* SIDEBAR BOTTOM */
+    .sidebar-bottom{padding:10px;border-top:1px solid #E2DAD0;flex-shrink:0;display:flex;flex-direction:column;gap:6px}
+    .btn-sidebar-add{width:100%;padding:8px;border-radius:8px;border:1.5px dashed #E2DAD0;background:transparent;color:#64748B;font-size:0.8rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px}
+    .btn-sidebar-add:hover{border-color:#2D1B69;color:#2D1B69;background:#EDE9FF}
+    .btn-sidebar-add.section{border-color:#E2DAD0}
+    .btn-sidebar-add.section:hover{border-color:#D97706;color:#D97706;background:#FEF3C7}
+    .btn-sidebar-template{width:100%;padding:8px;border-radius:8px;border:1.5px solid #E2DAD0;background:#F5F0E8;color:#64748B;font-size:0.8rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center}
+    .btn-sidebar-template:hover{border-color:#D97706;color:#D97706}
 
     /* CONTENT AREA */
-    .content-area{
-      flex:1;overflow-y:auto;padding:28px 24px;
-    }
-
-    /* PANELS */
+    .content-area{flex:1;overflow-y:auto;padding:24px}
     .panel{display:none}
     .panel.active{display:block}
 
-    /* QUESTION BUILDER PANEL */
-    .questions-header{
-      display:flex;align-items:center;justify-content:space-between;
-      margin-bottom:20px;flex-wrap:wrap;gap:10px;
-    }
-    .questions-header h2{
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1.2rem;letter-spacing:-0.02em;
-    }
+    /* SURVEY TITLE */
+    .survey-title-wrap{margin-bottom:20px;padding:20px;background:#fff;border-radius:14px;border:1.5px solid #E2DAD0}
+    .survey-title-input{width:100%;border:none;outline:none;font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-0.03em;color:#0F0E1A;background:transparent}
+    .survey-title-input::placeholder{color:#C4B9AA}
+    .survey-desc-input{width:100%;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:#64748B;background:transparent;resize:none;margin-top:6px}
+    .survey-desc-input::placeholder{color:#C4B9AA}
 
-    /* TYPE PICKER DROPDOWN */
-    .type-picker-wrap{position:relative;margin-bottom:20px}
-    .type-picker-btn{
-      display:flex;align-items:center;gap:8px;
-      padding:10px 16px;border-radius:10px;
-      border:1.5px dashed #E2DAD0;background:#fff;
-      color:#64748B;font-size:0.85rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;
-      transition:all 0.2s;width:100%;
-    }
-    .type-picker-btn:hover{border-color:#2D1B69;color:#2D1B69;background:#EDE9FF}
-    .type-picker-dropdown{
-      position:absolute;top:calc(100% + 8px);left:0;right:0;
-      background:#fff;border-radius:12px;
-      border:1.5px solid #E2DAD0;
-      box-shadow:0 8px 32px rgba(15,14,26,0.12);
-      z-index:50;display:none;padding:12px;
-    }
-    .type-picker-dropdown.open{display:block}
-    .type-group{margin-bottom:14px}
-    .type-group:last-child{margin-bottom:0}
-    .type-group-label{
-      font-size:0.68rem;font-weight:700;color:#94A3B8;
-      letter-spacing:0.08em;text-transform:uppercase;
-      margin-bottom:6px;padding-left:4px;
-    }
-    .type-grid{display:flex;gap:6px;flex-wrap:wrap}
-    .type-chip{
-      padding:6px 12px;border-radius:8px;
-      border:1.5px solid #E2DAD0;background:#fff;
-      color:#0F0E1A;font-size:0.78rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;
-    }
-    .type-chip:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
+    /* SECTION CARD */
+    .section-card{border-radius:14px;border:2px solid;padding:20px;margin-bottom:12px;position:relative}
+    .section-card-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+    .section-card-icon{font-size:1.1rem}
+    .section-card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;flex:1}
+    .section-delete-btn{background:none;border:none;cursor:pointer;color:#94A3B8;font-size:1rem;padding:4px;border-radius:6px;transition:all 0.2s}
+    .section-delete-btn:hover{background:#FEE2E2;color:#DC2626}
+    .section-field{margin-bottom:12px}
+    .section-field-label{font-size:0.72rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px;display:block}
+    .section-input{width:100%;padding:9px 12px;border-radius:8px;border:1.5px solid rgba(0,0,0,0.1);background:rgba(255,255,255,0.7);color:#0F0E1A;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
+    .section-input:focus{border-color:rgba(0,0,0,0.3)}
+    .section-mode-toggle{display:flex;gap:8px}
+    .section-mode-btn{flex:1;padding:8px;border-radius:8px;border:1.5px solid rgba(0,0,0,0.1);background:transparent;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center}
+    .section-mode-btn.active{background:rgba(0,0,0,0.08);border-color:rgba(0,0,0,0.2)}
+    .section-mode-hint{font-size:0.7rem;color:#64748B;margin-top:4px;opacity:0.8}
 
     /* QUESTION CARD */
-    .question-card{
-      background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;
-      padding:20px;margin-bottom:12px;transition:border-color 0.2s;
-      cursor:pointer;
-    }
-    .question-card:hover{border-color:rgba(45,27,105,0.2)}
-    .question-card.focused{border-color:#2D1B69;box-shadow:0 0 0 3px rgba(45,27,105,0.08)}
-    .question-card.type-heading{
-      background:linear-gradient(135deg,rgba(45,27,105,0.04),rgba(217,119,6,0.04));
-      border-color:rgba(45,27,105,0.15);
-    }
-    .q-card-header{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
-    .q-num-badge{
-      width:24px;height:24px;border-radius:50%;background:#EDE9FF;color:#2D1B69;
-      font-size:0.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;
-    }
-    .q-type-select{
-      padding:4px 8px;border-radius:6px;border:1.5px solid #E2DAD0;
-      background:#fff;color:#0F0E1A;font-size:0.75rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;outline:none;
-    }
-    .q-delete{
-      margin-left:auto;width:26px;height:26px;border-radius:6px;border:none;
-      background:transparent;cursor:pointer;color:#94A3B8;font-size:0.9rem;
-      display:flex;align-items:center;justify-content:center;transition:all 0.2s;
-    }
+    .question-card{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;margin-bottom:10px;overflow:hidden;transition:box-shadow 0.2s}
+    .question-card:hover{box-shadow:0 4px 20px rgba(15,14,26,0.08)}
+    .question-card.in-section{border-left-width:4px}
+    .question-card-tabs{display:flex;border-bottom:1px solid #E2DAD0;background:#FAFAF7}
+    .q-tab{padding:10px 16px;font-size:0.78rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:#64748B;font-family:'DM Sans',sans-serif;transition:all 0.2s;border-bottom:2px solid transparent}
+    .q-tab.active{color:#2D1B69;border-bottom-color:#2D1B69;background:#fff}
+    .q-tab-badge{background:#EF4444;color:#fff;font-size:0.6rem;font-weight:700;padding:1px 5px;border-radius:100px;margin-left:4px}
+    .question-card-body{padding:18px}
+    .q-card-header{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+    .q-num-badge{width:24px;height:24px;border-radius:50%;font-size:0.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
+    .q-type-select{padding:5px 8px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none}
+    .q-delete{margin-left:auto;width:28px;height:28px;border-radius:7px;border:none;background:transparent;cursor:pointer;color:#94A3B8;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
     .q-delete:hover{background:#FEE2E2;color:#DC2626}
-    .q-input{
-      width:100%;border:none;border-bottom:1.5px solid #E2DAD0;outline:none;
-      padding:7px 0;font-family:'DM Sans',sans-serif;font-size:0.92rem;font-weight:600;
-      color:#0F0E1A;background:transparent;margin-bottom:12px;
-    }
+    .q-input{width:100%;border:none;border-bottom:1.5px solid #E2DAD0;outline:none;padding:7px 0;font-family:'DM Sans',sans-serif;font-size:0.92rem;font-weight:600;color:#0F0E1A;background:transparent;margin-bottom:12px}
     .q-input::placeholder{color:#C4B9AA}
     .q-input:focus{border-bottom-color:#2D1B69}
-    .heading-input{
-      width:100%;border:none;outline:none;font-family:'Syne',sans-serif;font-weight:700;
-      font-size:1.05rem;color:#0F0E1A;background:transparent;
-      border-bottom:1.5px solid #E2DAD0;padding:4px 0 7px;margin-bottom:7px;
-    }
-    .heading-input::placeholder{color:#C4B9AA}
-    .subheading-input{
-      width:100%;border:none;outline:none;font-family:'DM Sans',sans-serif;
-      font-size:0.85rem;color:#64748B;background:transparent;resize:none;
-    }
-    .subheading-input::placeholder{color:#C4B9AA}
     .options-list{margin-bottom:8px}
     .option-row{display:flex;align-items:center;gap:7px;margin-bottom:7px}
     .opt-bullet{width:14px;height:14px;border-radius:50%;border:2px solid #E2DAD0;flex-shrink:0}
     .opt-bullet.sq{border-radius:3px}
-    .option-input{
-      flex:1;border:none;border-bottom:1px solid #E2DAD0;outline:none;
-      padding:4px 0;font-family:'DM Sans',sans-serif;font-size:0.85rem;
-      color:#0F0E1A;background:transparent;
-    }
+    .option-input{flex:1;border:none;border-bottom:1px solid #E2DAD0;outline:none;padding:5px 0;font-family:'DM Sans',sans-serif;font-size:0.85rem;color:#0F0E1A;background:transparent}
     .option-input::placeholder{color:#C4B9AA}
     .option-input:focus{border-bottom-color:#2D1B69}
-    .opt-remove{
-      background:none;border:none;cursor:pointer;color:#C4B9AA;
-      font-size:0.9rem;transition:color 0.2s;padding:2px;
-    }
+    .opt-remove{background:none;border:none;cursor:pointer;color:#C4B9AA;font-size:0.9rem;transition:color 0.2s;padding:2px}
     .opt-remove:hover{color:#DC2626}
-    .correct-mark{
-      width:20px;height:20px;border-radius:50%;border:2px solid #E2DAD0;
-      background:transparent;cursor:pointer;display:flex;align-items:center;
-      justify-content:center;font-size:0.65rem;transition:all 0.2s;
-      flex-shrink:0;color:transparent;
-    }
+    .correct-mark{width:20px;height:20px;border-radius:50%;border:2px solid #E2DAD0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.65rem;transition:all 0.2s;flex-shrink:0;color:transparent}
     .correct-mark.correct{background:#10B981;border-color:#10B981;color:#fff}
-    .add-opt-btn{
-      background:none;border:none;cursor:pointer;color:#2D1B69;
-      font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:3px 0;
-    }
-    .preview-chip{
-      background:#F5F0E8;border-radius:7px;padding:10px 12px;
-      font-size:0.8rem;color:#94A3B8;
-    }
-    .pledge-preview-box{
-      background:#EDE9FF;border-radius:10px;padding:14px;
-      border:1.5px solid rgba(45,27,105,0.15);
-    }
+    .add-opt-btn{background:none;border:none;cursor:pointer;color:#2D1B69;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:3px 0}
+    .preview-chip{background:#F5F0E8;border-radius:7px;padding:10px 12px;font-size:0.8rem;color:#94A3B8}
+    .pledge-preview-box{background:#EDE9FF;border-radius:10px;padding:14px;border:1.5px solid rgba(45,27,105,0.15)}
     .pledge-preview-text{font-size:0.85rem;color:#2D1B69;line-height:1.6;margin-bottom:10px}
     .pledge-preview-check{display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#64748B}
-    .pledge-box{width:14px;height:14px;border-radius:3px;border:2px solid #C4B9AA;flex-shrink:0}
+    .pledge-box-preview{width:14px;height:14px;border-radius:3px;border:2px solid #C4B9AA;flex-shrink:0}
     .rating-dots{display:flex;gap:6px;flex-wrap:wrap}
-    .rating-dot{
-      width:32px;height:32px;border-radius:7px;border:1.5px solid #E2DAD0;
-      display:flex;align-items:center;justify-content:center;
-      font-size:0.8rem;font-weight:600;color:#64748B;
-    }
+    .rating-dot{width:32px;height:32px;border-radius:7px;border:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:600;color:#64748B}
     .scale-dots{display:flex;gap:5px;flex-wrap:wrap}
-    .scale-dot{
-      width:26px;height:26px;border-radius:5px;border:1.5px solid #E2DAD0;
-      display:flex;align-items:center;justify-content:center;
-      font-size:0.7rem;font-weight:600;color:#64748B;
-    }
-    .q-footer{
-      display:flex;align-items:center;gap:8px;
-      margin-top:10px;padding-top:10px;border-top:1px solid #F5F0E8;
-    }
-    .toggle{
-      width:34px;height:18px;border-radius:100px;background:#E2DAD0;cursor:pointer;
-      position:relative;transition:background 0.2s;border:none;flex-shrink:0;
-    }
+    .scale-dot{width:26px;height:26px;border-radius:5px;border:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:600;color:#64748B}
+    .q-footer{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #F5F0E8}
+    .toggle{width:34px;height:18px;border-radius:100px;background:#E2DAD0;cursor:pointer;position:relative;transition:background 0.2s;border:none;flex-shrink:0}
     .toggle.on{background:#2D1B69}
-    .toggle::after{
-      content:'';position:absolute;width:12px;height:12px;border-radius:50%;
-      background:#fff;top:3px;left:3px;transition:transform 0.2s;
-    }
+    .toggle::after{content:'';position:absolute;width:12px;height:12px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 0.2s}
     .toggle.on::after{transform:translateX(16px)}
     .toggle-label{font-size:0.75rem;color:#64748B;font-weight:500}
 
+    /* LOGIC BUILDER */
+    .logic-panel{padding:4px 0}
+    .logic-empty{text-align:center;padding:20px;color:#94A3B8;font-size:0.82rem}
+    .logic-rule{background:#F5F0E8;border-radius:10px;padding:14px;margin-bottom:10px;position:relative}
+    .logic-rule-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .logic-rule-title{font-size:0.78rem;font-weight:700;color:#64748B}
+    .logic-rule-delete{background:none;border:none;cursor:pointer;color:#94A3B8;font-size:0.9rem;padding:2px;transition:color 0.2s}
+    .logic-rule-delete:hover{color:#DC2626}
+    .logic-condition{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+    .logic-select{padding:6px 8px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer}
+    .logic-select:focus{border-color:#2D1B69}
+    .logic-condition-type{display:flex;gap:6px;margin-bottom:8px}
+    .cond-type-btn{padding:4px 10px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.72rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;color:#64748B}
+    .cond-type-btn.active{background:#2D1B69;border-color:#2D1B69;color:#fff}
+    .add-condition-btn{background:none;border:none;cursor:pointer;color:#2D1B69;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:2px 0;margin-bottom:8px}
+    .logic-action-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding-top:8px;border-top:1px solid #E2DAD0}
+    .logic-action-label{font-size:0.75rem;font-weight:700;color:#0F0E1A}
+    .btn-add-rule{width:100%;padding:8px;border-radius:8px;border:1.5px dashed #C4B5FD;background:transparent;color:#2D1B69;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center;margin-top:4px}
+    .btn-add-rule:hover{background:#EDE9FF}
+    .logic-default-row{display:flex;align-items:center;gap:8px;margin-top:10px;padding:10px;background:#fff;border-radius:8px;border:1px solid #E2DAD0}
+    .logic-default-label{font-size:0.75rem;font-weight:700;color:#64748B}
+
     /* SETTINGS PANELS */
-    .panel-title{
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1.2rem;letter-spacing:-0.02em;margin-bottom:6px;
-    }
-    .panel-sub{color:#64748B;font-size:0.85rem;margin-bottom:24px;line-height:1.5}
-    .settings-card{
-      background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;
-      padding:20px;margin-bottom:14px;
-    }
-    .settings-card-title{
-      font-family:'Syne',sans-serif;font-weight:700;
-      font-size:0.9rem;margin-bottom:16px;
-      display:flex;align-items:center;gap:8px;
-    }
+    .panel-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;letter-spacing:-0.02em;margin-bottom:6px}
+    .panel-sub{color:#64748B;font-size:0.85rem;margin-bottom:20px}
+    .settings-card{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:20px;margin-bottom:14px}
+    .settings-card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:16px}
     .field{margin-bottom:16px}
     .field:last-child{margin-bottom:0}
-    .field-label{
-      display:block;font-size:0.75rem;font-weight:700;color:#64748B;
-      margin-bottom:5px;letter-spacing:0.04em;text-transform:uppercase;
-    }
+    .field-label{display:block;font-size:0.75rem;font-weight:700;color:#64748B;margin-bottom:5px;letter-spacing:0.04em;text-transform:uppercase}
     .field-hint{font-size:0.72rem;color:#94A3B8;margin-top:4px;line-height:1.4}
-    .hint-box{
-      background:#EDE9FF;border-radius:8px;padding:11px 13px;margin-top:7px;
-      font-size:0.75rem;color:#2D1B69;line-height:1.6;
-    }
+    .hint-box{background:#EDE9FF;border-radius:8px;padding:11px 13px;margin-top:7px;font-size:0.75rem;color:#2D1B69;line-height:1.6}
     .hint-box ol{padding-left:14px;margin-top:4px}
-    .dim-tag{
-      display:inline-block;padding:2px 7px;border-radius:4px;
-      background:#fff;border:1px solid #C4B5FD;
-      font-size:0.68rem;font-weight:600;color:#2D1B69;
-      margin-right:3px;margin-top:3px;
-    }
-    .setting-input{
-      width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid #E2DAD0;
-      background:#fff;color:#0F0E1A;font-size:0.85rem;
-      font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;
-    }
+    .dim-tag{display:inline-block;padding:2px 7px;border-radius:4px;background:#fff;border:1px solid #C4B5FD;font-size:0.68rem;font-weight:600;color:#2D1B69;margin-right:3px;margin-top:3px}
+    .setting-input{width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.85rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
     .setting-input:focus{border-color:#2D1B69}
     .setting-input::placeholder{color:#C4B9AA}
-    .setting-row{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:10px 0;border-bottom:1px solid #E2DAD0;
-    }
+    .setting-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #E2DAD0}
     .setting-row:last-child{border-bottom:none}
     .setting-name{font-size:0.85rem;font-weight:600}
     .setting-desc{font-size:0.75rem;color:#64748B;margin-top:2px}
     .color-row{display:flex;gap:8px;align-items:center}
     .prize-types{display:flex;gap:7px;flex-wrap:wrap}
-    .prize-type-btn{
-      padding:7px 13px;border-radius:8px;border:1.5px solid #E2DAD0;
-      background:#fff;color:#0F0E1A;font-size:0.78rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;
-    }
+    .prize-type-btn{padding:7px 13px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
     .prize-type-btn:hover{border-color:#2D1B69;background:#EDE9FF}
     .prize-type-btn.active{border-color:#D97706;background:#FEF3C7;color:#92400E}
 
-    /* TEMPLATE MODAL */
-    .modal-overlay{
-      position:fixed;inset:0;background:rgba(0,0,0,0.4);
-      z-index:300;display:none;align-items:center;justify-content:center;
-    }
+    /* MODAL */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:300;display:none;align-items:center;justify-content:center}
     .modal-overlay.open{display:flex}
-    .modal{
-      background:#fff;border-radius:16px;padding:28px;
-      width:100%;max-width:480px;margin:20px;
-    }
-    .modal-title{
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1.1rem;margin-bottom:6px;
-    }
+    .modal{background:#fff;border-radius:16px;padding:28px;width:100%;max-width:480px;margin:20px}
+    .modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:6px}
     .modal-sub{color:#64748B;font-size:0.85rem;margin-bottom:20px}
     .template-fields{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
-    .template-field-row{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:12px 14px;border-radius:10px;border:1.5px solid #E2DAD0;
-      background:#F5F0E8;
-    }
+    .template-field-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:10px;border:1.5px solid #E2DAD0;background:#F5F0E8}
     .template-field-info{display:flex;align-items:center;gap:10px}
     .template-field-icon{font-size:1.1rem}
     .template-field-name{font-size:0.88rem;font-weight:600}
     .template-field-type{font-size:0.72rem;color:#64748B;margin-top:2px}
-    .template-field-toggle{display:flex;align-items:center;gap:8px}
-    .template-req-label{font-size:0.72rem;color:#64748B}
+    .template-field-controls{display:flex;align-items:center;gap:8px}
     .modal-actions{display:flex;gap:8px;justify-content:flex-end}
 
-    /* MOBILE SIDEBAR OVERLAY */
-    .sidebar-overlay{
-      position:fixed;inset:0;background:rgba(0,0,0,0.4);
-      z-index:150;display:none;
-    }
+    /* MOBILE */
+    .sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:150;display:none}
     .sidebar-overlay.open{display:block}
 
     /* TOAST */
-    .toast{
-      position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
-      background:#0F0E1A;color:#fff;padding:11px 22px;border-radius:10px;
-      font-size:0.85rem;font-weight:600;display:none;z-index:999;
-      box-shadow:0 4px 20px rgba(0,0,0,0.3);white-space:nowrap;
-    }
+    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:11px 22px;border-radius:10px;font-size:0.85rem;font-weight:600;display:none;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,0.3);white-space:nowrap}
 
     /* LOADING */
-    .loading-screen{
-      display:flex;align-items:center;justify-content:center;
-      min-height:100vh;background:#0F0E1A;
-    }
-    .spinner{
-      width:32px;height:32px;border:3px solid rgba(217,119,6,0.2);
-      border-top-color:#D97706;border-radius:50%;animation:spin 0.8s linear infinite;
-    }
+    .loading-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#0F0E1A}
+    .spinner{width:32px;height:32px;border:3px solid rgba(217,119,6,0.2);border-top-color:#D97706;border-radius:50%;animation:spin 0.8s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
 
-    /* RESPONSIVE */
     @media(max-width:768px){
-      .sidebar{
-        position:fixed;top:56px;left:0;bottom:0;
-        transform:translateX(-100%);transition:transform 0.3s ease;
-        z-index:160;
-      }
+      .sidebar{position:fixed;top:56px;left:0;bottom:0;transform:translateX(-100%);z-index:160}
       .sidebar.mobile-open{transform:translateX(0)}
       .hamburger-btn{display:flex}
-      .content-area{padding:20px 16px}
+      .content-area{padding:16px}
+      .btn-ghost.hide-mobile{display:none}
     }
   </style>
 </head>
 <body>
-
 <div id="loading-screen" class="loading-screen"><div class="spinner"></div></div>
 
 <!-- TEMPLATE MODAL -->
 <div class="modal-overlay" id="template-modal">
   <div class="modal">
     <div class="modal-title">🧩 Contact Info Template</div>
-    <p class="modal-sub">Choose which fields to include. Toggle required on/off for each.</p>
-    <div class="template-fields" id="template-fields"></div>
+    <p class="modal-sub">Pick fields to include. Toggle required for each.</p>
+    <div class="template-fields" id="template-fields-list"></div>
     <div class="modal-actions">
       <button class="btn-ghost" onclick="closeTemplateModal()">Cancel</button>
-      <button class="btn-primary" onclick="insertTemplate()">Insert fields →</button>
+      <button class="btn-primary" onclick="insertTemplate()">Insert →</button>
     </div>
   </div>
 </div>
@@ -445,55 +265,39 @@
 <div id="app" style="display:none">
   <nav>
     <div class="nav-left">
-      <button class="hamburger-btn" id="hamburger-btn" onclick="openMobileSidebar()">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="hamburger-btn" onclick="openMobileSidebar()"><span></span><span></span><span></span></button>
       <a href="/dashboard" class="logo-mark">S</a>
-      <div class="nav-title" id="nav-survey-title">New Survey</div>
+      <div class="nav-title" id="nav-title">New Survey</div>
     </div>
     <div class="nav-actions">
       <button class="btn-preview" onclick="previewSurvey()">👁 Preview</button>
-      <button class="btn-ghost" onclick="saveDraft()">Save draft</button>
+      <button class="btn-ghost hide-mobile" onclick="saveDraft()">Save draft</button>
       <button class="btn-primary" id="publish-btn" onclick="publishSurvey()">Publish →</button>
     </div>
   </nav>
 
   <div class="builder-layout">
-
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
-      <div class="sidebar-section">
-        <div class="sidebar-label">Survey sections</div>
-        <button class="sidebar-item active" id="nav-questions" onclick="showPanel('questions')">
-          <span class="si-icon">📋</span>
-          <span class="si-label">Questions</span>
-          <span class="si-count" id="q-count">0</span>
-        </button>
-        <button class="sidebar-item" id="nav-welcome" onclick="showPanel('welcome')">
-          <span class="si-icon">🎨</span>
-          <span class="si-label">Welcome page</span>
-        </button>
-        <button class="sidebar-item" id="nav-thankyou" onclick="showPanel('thankyou')">
-          <span class="si-icon">🙏</span>
-          <span class="si-label">Thank you page</span>
-        </button>
-        <button class="sidebar-item" id="nav-prize" onclick="showPanel('prize')">
-          <span class="si-icon">🎁</span>
-          <span class="si-label">Prize & Incentive</span>
-        </button>
-        <button class="sidebar-item" id="nav-settings" onclick="showPanel('settings')">
-          <span class="si-icon">⚙️</span>
-          <span class="si-label">Survey settings</span>
-        </button>
+      <div class="sidebar-header">
+        <div class="sidebar-label">Sections</div>
+        <div class="sidebar-nav">
+          <button class="sidebar-nav-item active" id="snav-questions" onclick="showMainPanel('questions')"><span class="sni-icon">📋</span> Questions</button>
+          <button class="sidebar-nav-item" id="snav-welcome" onclick="showMainPanel('welcome')"><span class="sni-icon">🎨</span> Welcome page</button>
+          <button class="sidebar-nav-item" id="snav-thankyou" onclick="showMainPanel('thankyou')"><span class="sni-icon">🙏</span> Thank you page</button>
+          <button class="sidebar-nav-item" id="snav-prize" onclick="showMainPanel('prize')"><span class="sni-icon">🎁</span> Prize & Incentive</button>
+          <button class="sidebar-nav-item" id="snav-settings" onclick="showMainPanel('settings')"><span class="sni-icon">⚙️</span> Survey settings</button>
+        </div>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-label">Questions</div>
       </div>
 
-      <!-- Q LIST -->
-      <div class="q-list-sidebar" id="q-list-sidebar"></div>
+      <div class="q-sidebar-list" id="q-sidebar-list"></div>
 
-      <!-- ADD BUTTONS -->
-      <div class="sidebar-add-section">
-        <button class="btn-add-q" onclick="showTypePicker()">+ Add question</button>
-        <button class="btn-template" onclick="openTemplateModal()">🧩 Contact template</button>
+      <div class="sidebar-bottom">
+        <button class="btn-sidebar-add" onclick="addQuestion()">+ Add question</button>
+        <button class="btn-sidebar-add section" onclick="addSection()">📌 Add section</button>
+        <button class="btn-sidebar-template" onclick="openTemplateModal()">🧩 Contact template</button>
       </div>
     </div>
 
@@ -502,191 +306,59 @@
 
       <!-- QUESTIONS PANEL -->
       <div class="panel active" id="panel-questions">
-        <div class="questions-header">
-          <div>
-            <input id="survey-title" placeholder="Survey title..." style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-0.03em;border:none;outline:none;background:transparent;color:#0F0E1A;width:100%" oninput="document.getElementById('nav-survey-title').textContent=this.value||'New Survey'">
-            <textarea id="survey-desc" placeholder="Description (optional)" rows="1" style="width:100%;border:none;outline:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:#64748B;resize:none;margin-top:4px"></textarea>
-          </div>
+        <div class="survey-title-wrap">
+          <input class="survey-title-input" id="survey-title" placeholder="Survey title e.g. Customer Satisfaction Survey" maxlength="100" oninput="document.getElementById('nav-title').textContent=this.value||'New Survey'">
+          <textarea class="survey-desc-input" id="survey-desc" placeholder="Description (optional)" rows="2"></textarea>
         </div>
-
-        <!-- TYPE PICKER -->
-        <div class="type-picker-wrap" id="type-picker-wrap" style="display:none">
-          <div class="type-picker-dropdown open" id="type-picker-dropdown">
-            <div class="type-group">
-              <div class="type-group-label">Choice</div>
-              <div class="type-grid">
-                <button class="type-chip" onclick="addQuestion('multiple')">◉ Multiple choice</button>
-                <button class="type-chip" onclick="addQuestion('checkbox')">☑ Checkboxes</button>
-                <button class="type-chip" onclick="addQuestion('dropdown')">▾ Dropdown</button>
-                <button class="type-chip" onclick="addQuestion('yesno')">✓ Yes / No</button>
-              </div>
-            </div>
-            <div class="type-group">
-              <div class="type-group-label">Text</div>
-              <div class="type-grid">
-                <button class="type-chip" onclick="addQuestion('text')">✏️ Short text</button>
-                <button class="type-chip" onclick="addQuestion('textarea')">📝 Long text</button>
-                <button class="type-chip" onclick="addQuestion('email')">📧 Email</button>
-                <button class="type-chip" onclick="addQuestion('phone')">📱 Phone</button>
-                <button class="type-chip" onclick="addQuestion('number')">🔢 Number</button>
-              </div>
-            </div>
-            <div class="type-group">
-              <div class="type-group-label">Scale & Date</div>
-              <div class="type-grid">
-                <button class="type-chip" onclick="addQuestion('rating')">⭐ Rating 1-5</button>
-                <button class="type-chip" onclick="addQuestion('scale')">📊 Scale 1-10</button>
-                <button class="type-chip" onclick="addQuestion('date')">📅 Date (DD-MM-YYYY)</button>
-              </div>
-            </div>
-            <div class="type-group">
-              <div class="type-group-label">Special</div>
-              <div class="type-grid">
-                <button class="type-chip" onclick="addQuestion('file')">📎 File URL</button>
-                <button class="type-chip" onclick="addQuestion('heading')">📌 Section heading</button>
-                <button class="type-chip" onclick="addQuestion('pledge')">🤝 Pledge</button>
-                <button class="type-chip" onclick="addQuestion('quiz')">🎓 Quiz MCQ</button>
-              </div>
-            </div>
-            <div style="text-align:right;margin-top:8px">
-              <button class="btn-ghost" onclick="hideTypePicker()" style="font-size:0.78rem;padding:5px 12px">Cancel</button>
-            </div>
-          </div>
-        </div>
-
-        <div id="questions-list"></div>
-
-        <div style="text-align:center;padding:20px 0">
-          <button class="btn-add-q" onclick="showTypePicker()" style="display:inline-block;width:auto;padding:9px 20px">+ Add question</button>
-        </div>
+        <div id="questions-render-area"></div>
       </div>
 
       <!-- WELCOME PANEL -->
       <div class="panel" id="panel-welcome">
         <div class="panel-title">🎨 Welcome page</div>
-        <p class="panel-sub">Customise what respondents see before starting the survey.</p>
-
+        <p class="panel-sub">Customise what respondents see before starting.</p>
         <div class="settings-card">
           <div class="settings-card-title">Branding</div>
           <div class="field">
             <label class="field-label">Logo URL</label>
             <input class="setting-input" id="welcome-logo" placeholder="e.g. https://yoursite.com/logo.png">
-            <div class="hint-box">
-              <strong>📁 Google Drive:</strong>
-              <ol><li>Upload logo → Right click → Share → "Anyone with link"</li><li>Copy link → paste above</li></ol>
-              <div style="margin-top:6px"><strong>📐 Dimensions:</strong> <span class="dim-tag">Max 200×60px</span><span class="dim-tag">PNG / SVG / JPG</span><span class="dim-tag">Transparent bg recommended</span></div>
-            </div>
+            <div class="hint-box"><strong>📁 Google Drive:</strong><ol><li>Upload → Right click → Share → "Anyone with link"</li><li>Copy link → paste above</li></ol><div style="margin-top:6px"><span class="dim-tag">Max 200×60px</span><span class="dim-tag">PNG/SVG/JPG</span></div></div>
           </div>
-          <div class="field">
-            <label class="field-label">Custom headline</label>
-            <input class="setting-input" id="welcome-headline" placeholder="Leave blank to use survey title">
-          </div>
-          <div class="field">
-            <label class="field-label">Start button text</label>
-            <input class="setting-input" id="welcome-btn-text" placeholder="Default: Let's go →">
-          </div>
+          <div class="field"><label class="field-label">Custom headline</label><input class="setting-input" id="welcome-headline" placeholder="Leave blank to use survey title"></div>
+          <div class="field"><label class="field-label">Start button text</label><input class="setting-input" id="welcome-btn-text" placeholder="Default: Let's go →"></div>
         </div>
-
         <div class="settings-card">
           <div class="settings-card-title">Background</div>
-          <div class="field">
-            <label class="field-label">Background color</label>
-            <div class="color-row">
-              <input class="setting-input" id="welcome-bg-color" placeholder="#0F0E1A" style="flex:1">
-              <input type="color" id="welcome-color-picker" value="#0F0E1A"
-                oninput="document.getElementById('welcome-bg-color').value=this.value"
-                style="width:40px;height:40px;border-radius:8px;border:1.5px solid #E2DAD0;cursor:pointer;padding:2px;flex-shrink:0">
-            </div>
-            <div class="field-hint">Default: #0F0E1A (dark)</div>
-          </div>
-          <div class="field">
-            <label class="field-label">Background image URL</label>
-            <input class="setting-input" id="welcome-bg-image" placeholder="e.g. https://images.unsplash.com/...">
-            <div class="hint-box">
-              <strong>📐 Recommended:</strong> <span class="dim-tag">1920×1080px</span><span class="dim-tag">JPG / PNG / WEBP</span>
-              <br>Overrides background color
-            </div>
-          </div>
-          <div class="field">
-            <label class="field-label">Background video URL</label>
-            <input class="setting-input" id="welcome-bg-video" placeholder="e.g. https://youtube.com/watch?v=...">
-            <div class="hint-box">
-              <strong>Supported:</strong> <span class="dim-tag">YouTube</span><span class="dim-tag">Vimeo</span>
-              <br>Plays muted and looped. Overrides image and color.
-            </div>
-          </div>
+          <div class="field"><label class="field-label">Background color</label><div class="color-row"><input class="setting-input" id="welcome-bg-color" placeholder="#0F0E1A" style="flex:1"><input type="color" id="welcome-color-picker" value="#0F0E1A" oninput="document.getElementById('welcome-bg-color').value=this.value" style="width:40px;height:40px;border-radius:8px;border:1.5px solid #E2DAD0;cursor:pointer;padding:2px;flex-shrink:0"></div></div>
+          <div class="field"><label class="field-label">Background image URL</label><input class="setting-input" id="welcome-bg-image" placeholder="e.g. https://images.unsplash.com/..."><div class="hint-box"><span class="dim-tag">1920×1080px recommended</span><span class="dim-tag">JPG/PNG/WEBP</span><br>Overrides background color</div></div>
+          <div class="field"><label class="field-label">Background video URL</label><input class="setting-input" id="welcome-bg-video" placeholder="e.g. https://youtube.com/watch?v=..."><div class="hint-box"><span class="dim-tag">YouTube</span><span class="dim-tag">Vimeo</span> — Plays muted and looped. Overrides image.</div></div>
         </div>
       </div>
 
       <!-- THANK YOU PANEL -->
       <div class="panel" id="panel-thankyou">
         <div class="panel-title">🙏 Thank you page</div>
-        <p class="panel-sub">What respondents see after submitting the survey.</p>
+        <p class="panel-sub">What respondents see after submitting.</p>
         <div class="settings-card">
-          <div class="field">
-            <label class="field-label">Custom headline</label>
-            <input class="setting-input" id="thankyou-headline" placeholder="Default: Thank you!">
-          </div>
-          <div class="field">
-            <label class="field-label">Custom message</label>
-            <input class="setting-input" id="thankyou-message" placeholder="Default: Your response has been recorded.">
-          </div>
-          <div class="field">
-            <label class="field-label">Redirect URL</label>
-            <input class="setting-input" id="thankyou-redirect" placeholder="e.g. https://yourwebsite.com">
-            <div class="field-hint">Redirects respondents after 3 seconds. Leave blank to stay on thank you page.</div>
-          </div>
-          <div class="setting-row" style="border-bottom:none">
-            <div><div class="setting-name">Show social share buttons</div><div class="setting-desc">Let respondents share the survey link</div></div>
-            <button class="toggle" id="toggle-share" onclick="toggleSetting('share')"></button>
-          </div>
+          <div class="field"><label class="field-label">Custom headline</label><input class="setting-input" id="thankyou-headline" placeholder="Default: Thank you!"></div>
+          <div class="field"><label class="field-label">Custom message</label><input class="setting-input" id="thankyou-message" placeholder="Default: Your response has been recorded."></div>
+          <div class="field"><label class="field-label">Redirect URL</label><input class="setting-input" id="thankyou-redirect" placeholder="e.g. https://yourwebsite.com"><div class="field-hint">Redirects after 3 seconds. Leave blank to stay on thank you page.</div></div>
+          <div class="setting-row" style="border-bottom:none"><div><div class="setting-name">Show social share buttons</div></div><button class="toggle" id="toggle-share" onclick="toggleSetting('share')"></button></div>
         </div>
       </div>
 
       <!-- PRIZE PANEL -->
       <div class="panel" id="panel-prize">
         <div class="panel-title">🎁 Prize & Incentive</div>
-        <p class="panel-sub">Add a prize to boost response rates. Shows as a badge on the welcome page.</p>
+        <p class="panel-sub">Add a prize to boost response rates.</p>
         <div class="settings-card">
-          <div class="setting-row">
-            <div><div class="setting-name">Enable prize</div><div class="setting-desc">Show prize badge on welcome page</div></div>
-            <button class="toggle" id="toggle-prize" onclick="togglePrize()"></button>
-          </div>
+          <div class="setting-row"><div><div class="setting-name">Enable prize</div><div class="setting-desc">Show prize badge on welcome page</div></div><button class="toggle" id="toggle-prize" onclick="togglePrize()"></button></div>
           <div id="prize-fields" style="display:none;margin-top:14px">
-            <div class="field">
-              <label class="field-label">Prize type</label>
-              <div class="prize-types">
-                <button class="prize-type-btn active" onclick="selectPrizeType('cash',this)">💵 Cash</button>
-                <button class="prize-type-btn" onclick="selectPrizeType('voucher',this)">🎟 Voucher</button>
-                <button class="prize-type-btn" onclick="selectPrizeType('gift',this)">🎁 Gift</button>
-                <button class="prize-type-btn" onclick="selectPrizeType('other',this)">✦ Other</button>
-              </div>
-            </div>
-            <div class="field">
-              <label class="field-label">Prize description</label>
-              <input class="setting-input" id="prize-description" placeholder="e.g. ₹500 Amazon voucher">
-              <div class="field-hint">Be specific — shown as a badge to respondents</div>
-            </div>
-            <div class="field">
-              <label class="field-label">Number of winners</label>
-              <input class="setting-input" id="prize-winners" type="number" min="1" placeholder="e.g. 3" style="max-width:120px">
-            </div>
-            <div class="field">
-              <label class="field-label">Winner selection</label>
-              <select class="setting-input" id="prize-selection" style="max-width:240px">
-                <option value="random">🎲 Random draw</option>
-                <option value="best">⭐ Best answer</option>
-                <option value="first">🏃 First N respondents</option>
-              </select>
-            </div>
-            <div class="field">
-              <label class="field-label">Winner notification</label>
-              <select class="setting-input" id="prize-notification" style="max-width:280px">
-                <option value="manual">📧 I will contact winners manually</option>
-                <option value="email">✉️ SwoopForm sends automatic email</option>
-                <option value="leaderboard">🏆 Show on public leaderboard</option>
-              </select>
-            </div>
+            <div class="field"><label class="field-label">Prize type</label><div class="prize-types"><button class="prize-type-btn active" onclick="selectPrizeType('cash',this)">💵 Cash</button><button class="prize-type-btn" onclick="selectPrizeType('voucher',this)">🎟 Voucher</button><button class="prize-type-btn" onclick="selectPrizeType('gift',this)">🎁 Gift</button><button class="prize-type-btn" onclick="selectPrizeType('other',this)">✦ Other</button></div></div>
+            <div class="field"><label class="field-label">Prize description</label><input class="setting-input" id="prize-description" placeholder="e.g. ₹500 Amazon voucher"></div>
+            <div class="field"><label class="field-label">Number of winners</label><input class="setting-input" id="prize-winners" type="number" min="1" placeholder="e.g. 3" style="max-width:120px"></div>
+            <div class="field"><label class="field-label">Winner selection</label><select class="setting-input" id="prize-selection" style="max-width:240px"><option value="random">🎲 Random draw</option><option value="best">⭐ Best answer</option><option value="first">🏃 First N respondents</option></select></div>
+            <div class="field"><label class="field-label">Winner notification</label><select class="setting-input" id="prize-notification" style="max-width:280px"><option value="manual">📧 I will contact winners manually</option><option value="email">✉️ SwoopForm sends automatic email</option><option value="leaderboard">🏆 Show on public leaderboard</option></select></div>
           </div>
         </div>
       </div>
@@ -696,25 +368,10 @@
         <div class="panel-title">⚙️ Survey settings</div>
         <p class="panel-sub">Configure how your survey behaves.</p>
         <div class="settings-card">
-          <div class="setting-row">
-            <div><div class="setting-name">Survey style</div><div class="setting-desc">How questions appear to respondents</div></div>
-            <select id="survey-style" style="padding:6px 10px;border-radius:7px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.8rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none">
-              <option value="conversational">✨ One at a time</option>
-              <option value="classic">📋 All on one page</option>
-            </select>
-          </div>
-          <div class="setting-row">
-            <div><div class="setting-name">Public survey</div><div class="setting-desc">Show in SwoopForm discovery directory</div></div>
-            <button class="toggle" id="toggle-public" onclick="toggleSetting('public')"></button>
-          </div>
-          <div class="setting-row">
-            <div><div class="setting-name">Collect email addresses</div><div class="setting-desc">Ask respondents for their email</div></div>
-            <button class="toggle" id="toggle-email" onclick="toggleSetting('email')"></button>
-          </div>
-          <div class="setting-row" style="border-bottom:none">
-            <div><div class="setting-name">One response per person</div><div class="setting-desc">Prevent duplicate submissions</div></div>
-            <button class="toggle" id="toggle-once" onclick="toggleSetting('once')"></button>
-          </div>
+          <div class="setting-row"><div><div class="setting-name">Survey style</div><div class="setting-desc">How questions appear to respondents</div></div><select id="survey-style" style="padding:6px 10px;border-radius:7px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.8rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none"><option value="conversational">✨ One at a time</option><option value="classic">📋 All on one page</option></select></div>
+          <div class="setting-row"><div><div class="setting-name">Public survey</div><div class="setting-desc">Show in SwoopForm discovery directory</div></div><button class="toggle" id="toggle-public" onclick="toggleSetting('public')"></button></div>
+          <div class="setting-row"><div><div class="setting-name">Collect email addresses</div></div><button class="toggle" id="toggle-email" onclick="toggleSetting('email')"></button></div>
+          <div class="setting-row" style="border-bottom:none"><div><div class="setting-name">One response per person</div></div><button class="toggle" id="toggle-once" onclick="toggleSetting('once')"></button></div>
         </div>
       </div>
 
@@ -722,15 +379,12 @@
   </div><!-- end layout -->
 </div>
 
-<div class="toast" id="toast"></div>
-
-<script type="module">
+  <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
   import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
   import { getFirestore, collection, addDoc, doc, updateDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
   const SHEETS_SCRIPT = 'https://script.google.com/macros/s/AKfycbx3evlOErDpdpR_TK_FvQaEEI5Kr6HvJYc46A_OG0SzIqJz8Gn0OKvUQxj7uoBLgyGH/exec';
-
   const firebaseConfig = {
     apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",
     authDomain:"swoopform.firebaseapp.com",
@@ -744,72 +398,106 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
 
+  // ── STATE ────────────────────────────────────────────
   let currentUser = null;
-  let questions = [];
-  let settings = { public:false, email:false, once:false, share:false, prize:false };
   let savedSurveyId = null;
+  let activeMainPanel = 'questions';
+  let activeSectionId = null; // which section new questions go into
+
+  // Section colors (auto-assigned)
+  const SECTION_COLORS = ['#2D1B69','#D97706','#0D9B8A','#DC2626','#2563EB','#7C3AED','#047857'];
+  let sectionColorIndex = 0;
+
+  // Data model
+  let sections = []; // { id, title, subtitle, displayMode, color, collapsed }
+  let questions = []; // { id, sectionId, type, text, options, required, hidden, order, correctIndex, logic[] }
+  let settings = { public:false, email:false, once:false, share:false, prize:false };
   let selectedPrizeType = 'cash';
-  let activePanel = 'questions';
 
-  // TEMPLATE CONFIG
-  const templateFields = [
-    { id:'first_name', icon:'👤', label:'First name', type:'text', required:true, enabled:true },
-    { id:'last_name', icon:'👤', label:'Last name', type:'text', required:false, enabled:true },
-    { id:'email', icon:'📧', label:'Email address', type:'email', required:true, enabled:true },
-    { id:'mobile', icon:'📱', label:'Mobile number', type:'phone', required:false, enabled:true },
-    { id:'company', icon:'🏢', label:'Company name', type:'text', required:false, enabled:false },
+  // Template config
+  const TEMPLATE_FIELDS = [
+    { id:'fn', icon:'👤', label:'First name', type:'text', required:true, enabled:true },
+    { id:'ln', icon:'👤', label:'Last name', type:'text', required:false, enabled:true },
+    { id:'em', icon:'📧', label:'Email address', type:'email', required:true, enabled:true },
+    { id:'ph', icon:'📱', label:'Mobile number', type:'phone', required:false, enabled:true },
+    { id:'co', icon:'🏢', label:'Company name', type:'text', required:false, enabled:false },
   ];
-  let templateConfig = JSON.parse(JSON.stringify(templateFields));
+  let templateConfig = JSON.parse(JSON.stringify(TEMPLATE_FIELDS));
 
-  function syncFromDOM() {
-    questions.forEach(q => {
-      const textEl = document.getElementById('q-text-' + q.id) || document.getElementById('q-heading-' + q.id);
-      if (textEl) q.text = textEl.value;
-      const subEl = document.getElementById('q-sub-' + q.id);
-      if (subEl) q.subtext = subEl.value;
-      if (['multiple','checkbox','dropdown','quiz'].includes(q.type)) {
-        const optEls = document.querySelectorAll('.opt-' + q.id);
-        q.options = Array.from(optEls).map(el => el.value);
-      }
-    });
-  }
-
-  onAuthStateChanged(auth, (user) => {
-    if (!user) { window.location.href = '/login'; return; }
+  // ── INIT ─────────────────────────────────────────────
+  onAuthStateChanged(auth, user => {
+    if (!user) { window.location.href='/login'; return; }
     currentUser = user;
     document.getElementById('loading-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-    questions = [{ id:Date.now(), type:'multiple', text:'', options:['',''], required:false, correctIndex:-1 }];
-    renderQuestions();
+    // Start with one question, no section
+    questions = [makeQuestion('multiple', null)];
+    renderAll();
   });
+
+  function makeQuestion(type, sectionId) {
+    return {
+      id: 'q' + Date.now() + Math.random().toString(36).slice(2,6),
+      sectionId: sectionId || null,
+      type, text:'', subtext:'', options:['',''],
+      required:false, hidden:false, correctIndex:-1,
+      order: questions.length,
+      logic:[]
+    };
+  }
+
+  function makeSection(title) {
+    const color = SECTION_COLORS[sectionColorIndex % SECTION_COLORS.length];
+    sectionColorIndex++;
+    return {
+      id: 's' + Date.now() + Math.random().toString(36).slice(2,6),
+      title: title || 'New Section',
+      subtitle: '',
+      displayMode: 'inline', // inline | fullscreen
+      color,
+      collapsed: false
+    };
+  }
+
+  // ── HELPERS ──────────────────────────────────────────
+  function escHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+  function getTypeLabel(t){ const m={multiple:'MCQ',checkbox:'Check',dropdown:'Drop',yesno:'Yes/No',text:'Text',textarea:'Long',email:'Email',phone:'Phone',number:'Num',rating:'Rate',scale:'Scale',date:'Date',file:'File',pledge:'Pledge',quiz:'Quiz'}; return m[t]||t }
+  function getQNumber(qid){ let n=0; for(const q of getOrderedQuestions()){ if(q.type!=='heading') n++; if(q.id===qid) return n; } return '?'; }
+
+  function getOrderedQuestions() {
+    // Returns questions in display order:
+    // For each section (in section order), show section questions
+    // Then unsectioned questions at end
+    const result = [];
+    sections.forEach(s => {
+      questions.filter(q => q.sectionId === s.id)
+        .sort((a,b) => a.order - b.order)
+        .forEach(q => result.push(q));
+    });
+    questions.filter(q => !q.sectionId)
+      .sort((a,b) => a.order - b.order)
+      .forEach(q => result.push(q));
+    return result;
+  }
 
   function showToast(msg, d=2500) {
     const t = document.getElementById('toast');
-    t.textContent = msg; t.style.display = 'block';
-    setTimeout(() => t.style.display = 'none', d);
+    t.textContent = msg; t.style.display='block';
+    setTimeout(()=>t.style.display='none', d);
   }
 
-  // PANEL SWITCHING
-  window.showPanel = function(panel) {
+  // ── PANEL SWITCHING ──────────────────────────────────
+  window.showMainPanel = function(panel) {
     syncFromDOM();
-    activePanel = panel;
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
-    document.getElementById('panel-' + panel).classList.add('active');
-    document.getElementById('nav-' + panel).classList.add('active');
+    activeMainPanel = panel;
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.sidebar-nav-item').forEach(s=>s.classList.remove('active'));
+    document.getElementById('panel-'+panel).classList.add('active');
+    const navEl = document.getElementById('snav-'+panel);
+    if (navEl) navEl.classList.add('active');
     closeMobileSidebar();
   }
 
-  // TYPE PICKER
-  window.showTypePicker = function() {
-    document.getElementById('type-picker-wrap').style.display = 'block';
-    document.getElementById('type-picker-wrap').scrollIntoView({ behavior:'smooth', block:'nearest' });
-  }
-  window.hideTypePicker = function() {
-    document.getElementById('type-picker-wrap').style.display = 'none';
-  }
-
-  // MOBILE SIDEBAR
   window.openMobileSidebar = function() {
     document.getElementById('sidebar').classList.add('mobile-open');
     document.getElementById('sidebar-overlay').classList.add('open');
@@ -819,23 +507,235 @@
     document.getElementById('sidebar-overlay').classList.remove('open');
   }
 
-  // SETTINGS
+  // ── SETTINGS ─────────────────────────────────────────
   window.toggleSetting = function(key) {
-    settings[key] = !settings[key];
-    document.getElementById('toggle-' + key).classList.toggle('on', settings[key]);
+    settings[key]=!settings[key];
+    document.getElementById('toggle-'+key).classList.toggle('on',settings[key]);
   }
   window.togglePrize = function() {
-    settings.prize = !settings.prize;
-    document.getElementById('toggle-prize').classList.toggle('on', settings.prize);
-    document.getElementById('prize-fields').style.display = settings.prize ? 'block' : 'none';
+    settings.prize=!settings.prize;
+    document.getElementById('toggle-prize').classList.toggle('on',settings.prize);
+    document.getElementById('prize-fields').style.display=settings.prize?'block':'none';
   }
-  window.selectPrizeType = function(type, el) {
-    selectedPrizeType = type;
-    document.querySelectorAll('.prize-type-btn').forEach(b => b.classList.remove('active'));
+  window.selectPrizeType = function(type,el) {
+    selectedPrizeType=type;
+    document.querySelectorAll('.prize-type-btn').forEach(b=>b.classList.remove('active'));
     el.classList.add('active');
   }
 
-  // TEMPLATE MODAL
+  // ── SECTIONS ─────────────────────────────────────────
+  window.addSection = function() {
+    syncFromDOM();
+    const s = makeSection('New Section');
+    sections.push(s);
+    activeSectionId = s.id;
+    renderAll();
+    showMainPanel('questions');
+    // Focus section title
+    setTimeout(()=>{
+      const el = document.getElementById('sec-title-'+s.id);
+      if(el){ el.focus(); el.select(); }
+    },100);
+  }
+
+  window.deleteSection = function(sid) {
+    if(!confirm('Delete this section?\n\nQuestions inside will become unsectioned.')) return;
+    syncFromDOM();
+    // Unsection questions
+    questions.forEach(q=>{ if(q.sectionId===sid) q.sectionId=null; });
+    sections = sections.filter(s=>s.id!==sid);
+    if(activeSectionId===sid) activeSectionId=null;
+    renderAll();
+  }
+
+  window.toggleSectionCollapse = function(sid) {
+    const s = sections.find(s=>s.id===sid);
+    if(s){ s.collapsed=!s.collapsed; renderSidebar(); }
+  }
+
+  window.setSectionMode = function(sid, mode) {
+    const s = sections.find(s=>s.id===sid);
+    if(s){
+      s.displayMode=mode;
+      // Update button states
+      const card = document.getElementById('sec-card-'+sid);
+      if(card){
+        card.querySelectorAll('.section-mode-btn').forEach(b=>b.classList.remove('active'));
+        const btn = card.querySelector('[data-mode="'+mode+'"]');
+        if(btn) btn.classList.add('active');
+        // Update hint
+        const hint = card.querySelector('.section-mode-hint');
+        if(hint) hint.textContent = mode==='inline' ? 'Section title shows above first question' : 'Respondent sees a full screen with section info before questions';
+      }
+    }
+  }
+
+  window.setActiveSectionId = function(sid) {
+    activeSectionId = sid;
+    renderSidebar();
+  }
+
+  // ── QUESTIONS ─────────────────────────────────────────
+  window.addQuestion = function(type) {
+    syncFromDOM();
+    const q = makeQuestion(type||'multiple', activeSectionId);
+    // Find insertion point
+    if(activeSectionId){
+      const sectionQs = questions.filter(x=>x.sectionId===activeSectionId);
+      q.order = sectionQs.length > 0 ? Math.max(...sectionQs.map(x=>x.order))+1 : 0;
+    } else {
+      const unsectionedQs = questions.filter(x=>!x.sectionId);
+      q.order = unsectionedQs.length > 0 ? Math.max(...unsectionedQs.map(x=>x.order))+1 : 0;
+    }
+    questions.push(q);
+    renderAll();
+    showMainPanel('questions');
+    setTimeout(()=>{
+      const el = document.getElementById('q-text-'+q.id);
+      if(el){ el.focus(); el.scrollIntoView({behavior:'smooth',block:'center'}); }
+    },80);
+  }
+
+  window.deleteQuestion = function(qid) {
+    syncFromDOM();
+    if(questions.length===1){ showToast('Need at least 1 question'); return; }
+    questions = questions.filter(q=>q.id!==qid);
+    renderAll();
+  }
+
+  window.changeType = function(qid, type) {
+    syncFromDOM();
+    const q = questions.find(q=>q.id===qid);
+    if(q){ q.type=type; renderAll(); }
+  }
+
+  window.toggleRequired = function(qid) {
+    const q = questions.find(q=>q.id===qid);
+    if(q){
+      q.required=!q.required;
+      document.getElementById('req-'+qid).classList.toggle('on',q.required);
+    }
+  }
+
+  window.addOption = function(qid) {
+    syncFromDOM();
+    const q = questions.find(q=>q.id===qid);
+    if(q){ q.options.push(''); renderAll();
+      setTimeout(()=>{ const opts=document.querySelectorAll('.opt-'+qid); if(opts.length) opts[opts.length-1].focus(); },60);
+    }
+  }
+
+  window.removeOption = function(qid,idx) {
+    syncFromDOM();
+    const q=questions.find(q=>q.id===qid);
+    if(q&&q.options.length>2){ q.options.splice(idx,1); if(q.correctIndex===idx) q.correctIndex=-1; else if(q.correctIndex>idx) q.correctIndex--; renderAll(); }
+    else showToast('Need at least 2 options');
+  }
+
+  window.markCorrect = function(qid,idx) {
+    syncFromDOM();
+    const q=questions.find(q=>q.id===qid);
+    if(q){ q.correctIndex=q.correctIndex===idx?-1:idx; renderAll(); }
+  }
+
+  // ── LOGIC BUILDER ────────────────────────────────────
+  window.showQTab = function(qid, tab) {
+    const card = document.getElementById('qcard-'+qid);
+    if(!card) return;
+    card.querySelectorAll('.q-tab').forEach(t=>t.classList.remove('active'));
+    card.querySelectorAll('.q-tab-panel').forEach(p=>p.style.display='none');
+    card.querySelector('.q-tab[data-tab="'+tab+'"]').classList.add('active');
+    card.querySelector('.q-tab-panel[data-tab="'+tab+'"]').style.display='block';
+  }
+
+  window.addLogicRule = function(qid) {
+    syncFromDOM();
+    const q=questions.find(q=>q.id===qid);
+    if(!q) return;
+    q.logic.push({
+      id:'r'+Date.now(),
+      conditionType:'ALL',
+      conditions:[{ questionId:qid, operator:'is', value:'' }],
+      action:'skip',
+      target:''
+    });
+    renderAll();
+    // Re-show logic tab
+    setTimeout(()=>showQTab(qid,'logic'),60);
+  }
+
+  window.deleteLogicRule = function(qid,rid) {
+    syncFromDOM();
+    const q=questions.find(q=>q.id===qid);
+    if(q){ q.logic=q.logic.filter(r=>r.id!==rid); renderAll(); setTimeout(()=>showQTab(qid,'logic'),60); }
+  }
+
+  window.setConditionType = function(qid,rid,type) {
+    const q=questions.find(q=>q.id===qid);
+    const r=q&&q.logic.find(r=>r.id===rid);
+    if(r){ r.conditionType=type; renderAll(); setTimeout(()=>showQTab(qid,'logic'),60); }
+  }
+
+  window.addCondition = function(qid,rid) {
+    syncFromDOM();
+    const q=questions.find(q=>q.id===qid);
+    const r=q&&q.logic.find(r=>r.id===rid);
+    if(r){ r.conditions.push({questionId:qid,operator:'is',value:''}); renderAll(); setTimeout(()=>showQTab(qid,'logic'),60); }
+  }
+
+  window.removeCondition = function(qid,rid,cidx) {
+    syncFromDOM();
+    const q=questions.find(q=>q.id===qid);
+    const r=q&&q.logic.find(r=>r.id===rid);
+    if(r&&r.conditions.length>1){ r.conditions.splice(cidx,1); renderAll(); setTimeout(()=>showQTab(qid,'logic'),60); }
+    else showToast('Need at least 1 condition');
+  }
+
+  // Sync logic values from DOM before re-render
+  function syncLogicFromDOM() {
+    questions.forEach(q=>{
+      q.logic.forEach(rule=>{
+        rule.conditions.forEach((cond,ci)=>{
+          const qSel=document.getElementById('cond-q-'+rule.id+'-'+ci);
+          const opSel=document.getElementById('cond-op-'+rule.id+'-'+ci);
+          const valEl=document.getElementById('cond-val-'+rule.id+'-'+ci);
+          if(qSel) cond.questionId=qSel.value;
+          if(opSel) cond.operator=opSel.value;
+          if(valEl) cond.value=valEl.value;
+        });
+        const actSel=document.getElementById('action-'+rule.id);
+        const tgtSel=document.getElementById('target-'+rule.id);
+        if(actSel) rule.action=actSel.value;
+        if(tgtSel) rule.target=tgtSel.value;
+      });
+    });
+  }
+
+  // ── SYNC FROM DOM ────────────────────────────────────
+  function syncFromDOM() {
+    // Sync question text + options
+    questions.forEach(q=>{
+      const textEl=document.getElementById('q-text-'+q.id);
+      if(textEl) q.text=textEl.value;
+      const subEl=document.getElementById('q-sub-'+q.id);
+      if(subEl) q.subtext=subEl.value;
+      if(['multiple','checkbox','dropdown','quiz'].includes(q.type)){
+        const optEls=document.querySelectorAll('.opt-'+q.id);
+        if(optEls.length) q.options=Array.from(optEls).map(e=>e.value);
+      }
+    });
+    // Sync section titles
+    sections.forEach(s=>{
+      const titleEl=document.getElementById('sec-title-'+s.id);
+      if(titleEl) s.title=titleEl.value;
+      const subEl=document.getElementById('sec-sub-'+s.id);
+      if(subEl) s.subtitle=subEl.value;
+    });
+    // Sync logic
+    syncLogicFromDOM();
+  }
+
+  // ── TEMPLATE ─────────────────────────────────────────
   window.openTemplateModal = function() {
     renderTemplateModal();
     document.getElementById('template-modal').classList.add('open');
@@ -843,228 +743,533 @@
   window.closeTemplateModal = function() {
     document.getElementById('template-modal').classList.remove('open');
   }
-
   function renderTemplateModal() {
-    const container = document.getElementById('template-fields');
-    container.innerHTML = templateConfig.map((f, i) => `
-      <div class="template-field-row" style="${!f.enabled?'opacity:0.5':''}">
-        <div class="template-field-info">
-          <span class="template-field-icon">${f.icon}</span>
-          <div>
-            <div class="template-field-name">${f.label}</div>
-            <div class="template-field-type">${f.type} field</div>
-          </div>
-        </div>
-        <div class="template-field-toggle">
-          <span class="template-req-label">Required</span>
-          <button class="toggle ${f.required?'on':''}" style="width:30px;height:16px"
-            onclick="toggleTemplateRequired(${i})"></button>
-          <button class="toggle ${f.enabled?'on':''}" style="background:${f.enabled?'#10B981':'#E2DAD0'}"
-            onclick="toggleTemplateEnabled(${i})"></button>
-        </div>
-      </div>
-    `).join('');
+    document.getElementById('template-fields-list').innerHTML = templateConfig.map((f,i)=>
+      '<div class="template-field-row" style="'+(f.enabled?'':'opacity:0.5')+'">' +
+      '<div class="template-field-info"><span class="template-field-icon">'+f.icon+'</span><div><div class="template-field-name">'+f.label+'</div><div class="template-field-type">'+f.type+' field</div></div></div>' +
+      '<div class="template-field-controls"><span style="font-size:0.72rem;color:#64748B">Req</span><button class="toggle '+(f.required?'on':'')+'" style="width:30px;height:16px" onclick="templateToggleReq('+i+')"></button>' +
+      '<button class="toggle '+(f.enabled?'on':'')+'" style="background:'+(f.enabled?'#10B981':'#E2DAD0')+'" onclick="templateToggleEnabled('+i+')"></button></div></div>'
+    ).join('');
   }
-
-  window.toggleTemplateRequired = function(i) {
-    templateConfig[i].required = !templateConfig[i].required;
-    renderTemplateModal();
-  }
-  window.toggleTemplateEnabled = function(i) {
-    templateConfig[i].enabled = !templateConfig[i].enabled;
-    renderTemplateModal();
-  }
-
+  window.templateToggleReq=function(i){ templateConfig[i].required=!templateConfig[i].required; renderTemplateModal(); }
+  window.templateToggleEnabled=function(i){ templateConfig[i].enabled=!templateConfig[i].enabled; renderTemplateModal(); }
   window.insertTemplate = function() {
     syncFromDOM();
-    // Add section heading first
-    const headingId = Date.now();
-    questions.push({
-      id: headingId, type:'heading',
-      text:'Contact Information', subtext:'Please fill in your details below.',
-      required:false, correctIndex:-1
-    });
-    // Add enabled fields
-    templateConfig.filter(f => f.enabled).forEach((f, i) => {
+    // Create a section for contact info
+    const s = makeSection('Contact Information');
+    s.subtitle = 'Please fill in your details below.';
+    sections.push(s);
+    activeSectionId = s.id;
+    // Add enabled fields into that section
+    templateConfig.filter(f=>f.enabled).forEach((f,i)=>{
       questions.push({
-        id: Date.now() + i + 1,
-        type: f.type,
-        text: f.label,
-        options:['',''],
-        required: f.required,
-        correctIndex: -1
+        id:'q'+Date.now()+i,
+        sectionId:s.id,
+        type:f.type, text:f.label, subtext:'',
+        options:['',''], required:f.required, hidden:false,
+        correctIndex:-1, order:i, logic:[]
       });
     });
     closeTemplateModal();
-    renderQuestions();
-    showPanel('questions');
-    showToast('✅ Contact info template inserted!');
+    renderAll();
+    showMainPanel('questions');
+    showToast('✅ Contact Info template inserted!');
   }
 
-  // QUESTIONS
-  window.addQuestion = function(type) {
-    syncFromDOM();
-    hideTypePicker();
-    const id = Date.now();
-    questions.push({ id, type, text:'', subtext:'', options:['',''], required:false, correctIndex:-1 });
-    renderQuestions();
-    setTimeout(() => {
-      const el = document.getElementById('q-text-' + id) || document.getElementById('q-heading-' + id);
-      if (el) { el.focus(); el.scrollIntoView({ behavior:'smooth', block:'center' }); }
-    }, 60);
+  // ── DRAG & DROP ──────────────────────────────────────
+  let dragItem = null; // { type:'question'|'section', id }
+  let longPressTimer = null;
+  let isDragging = false;
+
+  function initDragDrop() {
+    const list = document.getElementById('q-sidebar-list');
+    if (!list) return;
+
+    // Desktop drag for questions
+    list.querySelectorAll('.q-sidebar-item').forEach(item=>{
+      const handle = item.querySelector('.drag-handle');
+      if(!handle) return;
+      handle.addEventListener('mousedown', e=>{
+        e.preventDefault();
+        startDrag('question', item.dataset.qid, item, e);
+      });
+      // Long press for mobile
+      item.addEventListener('touchstart', e=>{
+        longPressTimer = setTimeout(()=>{
+          startDrag('question', item.dataset.qid, item, e.touches[0]);
+          navigator.vibrate&&navigator.vibrate(50);
+        }, 500);
+      },{passive:true});
+      item.addEventListener('touchend', ()=>clearTimeout(longPressTimer));
+      item.addEventListener('touchmove', ()=>clearTimeout(longPressTimer),{passive:true});
+    });
+
+    // Desktop drag for sections
+    list.querySelectorAll('.section-group-header').forEach(header=>{
+      const handle = header.querySelector('.drag-handle');
+      if(!handle) return;
+      handle.addEventListener('mousedown', e=>{
+        e.preventDefault();
+        startDrag('section', header.dataset.sid, header, e);
+      });
+      // Long press
+      header.addEventListener('touchstart', e=>{
+        longPressTimer = setTimeout(()=>{
+          startDrag('section', header.dataset.sid, header, e.touches[0]);
+          navigator.vibrate&&navigator.vibrate(50);
+        }, 500);
+      },{passive:true});
+      header.addEventListener('touchend', ()=>clearTimeout(longPressTimer));
+      header.addEventListener('touchmove', ()=>clearTimeout(longPressTimer),{passive:true});
+    });
+
+    // Drop zones — questions
+    list.querySelectorAll('.q-sidebar-item').forEach(item=>{
+      item.addEventListener('dragover', e=>{ e.preventDefault(); item.classList.add('drag-over'); });
+      item.addEventListener('dragleave', ()=>item.classList.remove('drag-over'));
+      item.addEventListener('drop', e=>{ e.preventDefault(); item.classList.remove('drag-over'); dropOnQuestion(item.dataset.qid); });
+    });
+
+    // Drop zones — section headers
+    list.querySelectorAll('.section-group-header').forEach(header=>{
+      header.addEventListener('dragover', e=>{ e.preventDefault(); header.classList.add('drag-over-section'); });
+      header.addEventListener('dragleave', ()=>header.classList.remove('drag-over-section'));
+      header.addEventListener('drop', e=>{ e.preventDefault(); header.classList.remove('drag-over-section'); dropOnSection(header.dataset.sid); });
+    });
   }
 
-  window.deleteQuestion = function(id) {
-    if (questions.length === 1) { showToast('Need at least 1 question'); return; }
-    syncFromDOM();
-    questions = questions.filter(q => q.id !== id);
-    renderQuestions();
-  }
+  function startDrag(type, id, el, e) {
+    isDragging = true;
+    dragItem = { type, id };
+    el.classList.add('dragging');
+    el.setAttribute('draggable','true');
 
-  window.changeType = function(id, type) {
-    syncFromDOM();
-    const q = questions.find(q => q.id === id);
-    if (q) { q.type = type; renderQuestions(); }
-  }
-
-  window.toggleRequired = function(id) {
-    const q = questions.find(q => q.id === id);
-    if (q) {
-      q.required = !q.required;
-      document.getElementById('req-' + id).classList.toggle('on', q.required);
-    }
-  }
-
-  window.addOption = function(qId) {
-    syncFromDOM();
-    const q = questions.find(q => q.id === qId);
-    if (q) {
-      q.options.push('');
-      renderQuestions();
-      setTimeout(() => {
-        const opts = document.querySelectorAll('.opt-' + qId);
-        if (opts.length) opts[opts.length-1].focus();
-      }, 60);
-    }
-  }
-
-  window.removeOption = function(qId, idx) {
-    syncFromDOM();
-    const q = questions.find(q => q.id === qId);
-    if (q && q.options.length > 2) {
-      q.options.splice(idx, 1);
-      if (q.correctIndex === idx) q.correctIndex = -1;
-      else if (q.correctIndex > idx) q.correctIndex--;
-      renderQuestions();
-    } else { showToast('Need at least 2 options'); }
-  }
-
-  window.markCorrect = function(qId, idx) {
-    syncFromDOM();
-    const q = questions.find(q => q.id === qId);
-    if (q) {
-      q.correctIndex = q.correctIndex === idx ? -1 : idx;
-      renderQuestions();
-    }
-  }
-
-  function escHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
-
-  function getTypeLabel(type) {
-    const labels = {
-      multiple:'MCQ', checkbox:'Check', dropdown:'Drop', yesno:'Yes/No',
-      text:'Text', textarea:'Long', email:'Email', phone:'Phone', number:'Num',
-      rating:'Rate', scale:'Scale', date:'Date', file:'File',
-      heading:'Heading', pledge:'Pledge', quiz:'Quiz'
+    const onMouseMove = ev => {
+      if(!isDragging) return;
+      const target = document.elementFromPoint(ev.clientX, ev.clientY);
+      if(!target) return;
+      const qItem = target.closest('.q-sidebar-item');
+      const sHeader = target.closest('.section-group-header');
+      document.querySelectorAll('.q-sidebar-item.drag-over').forEach(x=>x.classList.remove('drag-over'));
+      document.querySelectorAll('.section-group-header.drag-over-section').forEach(x=>x.classList.remove('drag-over-section'));
+      if(qItem) qItem.classList.add('drag-over');
+      if(sHeader) sHeader.classList.add('drag-over-section');
     };
-    return labels[type] || type;
+
+    const onMouseUp = ev => {
+      isDragging = false;
+      el.classList.remove('dragging');
+      el.removeAttribute('draggable');
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('touchmove', onTouchMove);
+      document.removeEventListener('touchend', onTouchEnd);
+
+      const target = document.elementFromPoint(ev.clientX||ev.changedTouches?.[0]?.clientX, ev.clientY||ev.changedTouches?.[0]?.clientY);
+      if(!target) { dragItem=null; return; }
+      document.querySelectorAll('.q-sidebar-item.drag-over').forEach(x=>x.classList.remove('drag-over'));
+      document.querySelectorAll('.section-group-header.drag-over-section').forEach(x=>x.classList.remove('drag-over-section'));
+
+      const qItem = target.closest('.q-sidebar-item');
+      const sHeader = target.closest('.section-group-header');
+
+      if(qItem && qItem.dataset.qid !== id) dropOnQuestion(qItem.dataset.qid);
+      else if(sHeader && (type==='question' || sHeader.dataset.sid !== id)) dropOnSection(sHeader.dataset.sid);
+
+      dragItem = null;
+    };
+
+    const onTouchMove = ev => {
+      if(!isDragging) return;
+      const t = ev.touches[0];
+      const target = document.elementFromPoint(t.clientX, t.clientY);
+      if(!target) return;
+      document.querySelectorAll('.q-sidebar-item.drag-over').forEach(x=>x.classList.remove('drag-over'));
+      document.querySelectorAll('.section-group-header.drag-over-section').forEach(x=>x.classList.remove('drag-over-section'));
+      const qItem=target.closest('.q-sidebar-item');
+      const sHeader=target.closest('.section-group-header');
+      if(qItem) qItem.classList.add('drag-over');
+      if(sHeader) sHeader.classList.add('drag-over-section');
+    };
+
+    const onTouchEnd = ev => onMouseUp(ev);
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('touchmove', onTouchMove, {passive:true});
+    document.addEventListener('touchend', onTouchEnd);
   }
 
-  function renderQuestions() {
-    // Update sidebar q list
-    const qList = document.getElementById('q-list-sidebar');
+  function dropOnQuestion(targetQid) {
+    if(!dragItem) return;
+    syncFromDOM();
+    if(dragItem.type==='question') {
+      const dragged=questions.find(q=>q.id===dragItem.id);
+      const target=questions.find(q=>q.id===targetQid);
+      if(!dragged||!target||dragged.id===target.id) return;
+      // Move dragged question to target's section and position
+      dragged.sectionId = target.sectionId;
+      const targetOrder = target.order;
+      // Shift other questions
+      questions.filter(q=>q.sectionId===target.sectionId&&q.id!==dragged.id&&q.order>=targetOrder)
+        .forEach(q=>q.order++);
+      dragged.order = targetOrder;
+      renderAll();
+      showToast('Question moved ✓');
+    } else if(dragItem.type==='section') {
+      // Moving section near a question — put it before that question's section
+      const targetQ=questions.find(q=>q.id===targetQid);
+      if(!targetQ) return;
+      const targetSid=targetQ.sectionId;
+      if(!targetSid) return;
+      const draggedSec=sections.find(s=>s.id===dragItem.id);
+      const targetSec=sections.find(s=>s.id===targetSid);
+      if(!draggedSec||!targetSec||draggedSec.id===targetSec.id) return;
+      // Reorder sections array
+      sections=sections.filter(s=>s.id!==draggedSec.id);
+      const idx=sections.findIndex(s=>s.id===targetSid);
+      sections.splice(idx,0,draggedSec);
+      renderAll();
+      showToast('Section moved ✓');
+    }
+  }
+
+  function dropOnSection(targetSid) {
+    if(!dragItem) return;
+    syncFromDOM();
+    if(dragItem.type==='question') {
+      const dragged=questions.find(q=>q.id===dragItem.id);
+      if(!dragged) return;
+      dragged.sectionId=targetSid;
+      const sectionQs=questions.filter(q=>q.sectionId===targetSid&&q.id!==dragged.id);
+      dragged.order=sectionQs.length;
+      renderAll();
+      showToast('Question moved to section ✓');
+    } else if(dragItem.type==='section') {
+      if(dragItem.id===targetSid) return;
+      const draggedSec=sections.find(s=>s.id===dragItem.id);
+      const targetSec=sections.find(s=>s.id===targetSid);
+      if(!draggedSec||!targetSec) return;
+      sections=sections.filter(s=>s.id!==draggedSec.id);
+      const idx=sections.findIndex(s=>s.id===targetSid);
+      sections.splice(idx,0,draggedSec);
+      renderAll();
+      showToast('Section moved ✓');
+    }
+  }
+
+  // ── RENDER SIDEBAR ───────────────────────────────────
+  function renderSidebar() {
+    const list = document.getElementById('q-sidebar-list');
+    let html = '';
     let qNum = 0;
-    qList.innerHTML = questions.map((q, i) => {
-      if (q.type !== 'heading') qNum++;
-      return '<div class="q-item-sidebar" onclick="scrollToQuestion(' + q.id + ')">' +
-        '<div class="q-item-num">' + (q.type === 'heading' ? '§' : qNum) + '</div>' +
-        '<div class="q-item-text">' + (q.text || 'Untitled') + '</div>' +
-        '<div class="q-item-type">' + getTypeLabel(q.type) + '</div></div>';
-    }).join('');
-    document.getElementById('q-count').textContent = questions.filter(q => q.type !== 'heading').length;
 
-    // Render question cards
-    const list = document.getElementById('questions-list');
-    let qNumber = 0;
-    list.innerHTML = questions.map((q, i) => {
-      const isHeading = q.type === 'heading';
-      const isPledge = q.type === 'pledge';
-      const isQuiz = q.type === 'quiz';
-      const hasOpts = ['multiple','checkbox','dropdown','quiz'].includes(q.type);
-      if (!isHeading) qNumber++;
+    sections.forEach(s=>{
+      const sectionQs = questions.filter(q=>q.sectionId===s.id).sort((a,b)=>a.order-b.order);
+      const isActive = activeSectionId===s.id;
+      html += '<div class="section-group">';
+      html += '<div class="section-group-header'+(isActive?' active-section':'')+'" data-sid="'+s.id+'" onclick="setActiveSectionId(\''+s.id+'\')">';
+      html += '<span class="drag-handle" title="Drag to reorder">⠿</span>';
+      html += '<span class="section-color-dot" style="background:'+s.color+'"></span>';
+      html += '<span class="section-title-sidebar">'+escHtml(s.title||'Untitled Section')+'</span>';
+      html += '<span class="section-q-count">'+sectionQs.length+'</span>';
+      html += '<button class="section-collapse-btn'+(s.collapsed?' collapsed':'')+'" onclick="event.stopPropagation();toggleSectionCollapse(\''+s.id+'\')">'+(s.collapsed?'▶':'▼')+'</button>';
+      html += '</div>';
+      html += '<div class="section-questions'+(s.collapsed?' collapsed':'')+'" style="max-height:'+(s.collapsed?'0':'500px')+'">';
+      sectionQs.forEach(q=>{
+        if(q.type!=='heading') qNum++;
+        const hasLogic = q.logic&&q.logic.length>0;
+        html += '<div class="q-sidebar-item" data-qid="'+q.id+'" onclick="scrollToQ(\''+q.id+'\')">';
+        html += '<span class="drag-handle" title="Drag to reorder">⠿</span>';
+        html += '<div class="q-num" style="background:'+s.color+'">'+qNum+'</div>';
+        html += '<div class="q-item-text">'+(q.text||'Untitled')+'</div>';
+        html += '<div class="q-item-type">'+getTypeLabel(q.type)+(hasLogic?' 🔀':'')+'</div>';
+        html += '</div>';
+      });
+      html += '</div></div>';
+    });
 
-      let inputHtml = '';
-      if (isHeading) {
-        inputHtml = '<input class="heading-input" id="q-heading-' + q.id + '" placeholder="Section title e.g. Personal Information" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><textarea class="subheading-input" id="q-sub-' + q.id + '" placeholder="Optional section description" rows="2" oninput="questions.find(x=>x.id===' + q.id + ').subtext=this.value">' + escHtml(q.subtext||'') + '</textarea>';
-      } else if (isPledge) {
-        inputHtml = '<input class="q-input" id="q-text-' + q.id + '" placeholder="e.g. I pledge to reduce my carbon footprint by 20% this year" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><div class="pledge-preview-box"><div class="pledge-preview-text">' + (q.text||'Your pledge statement...') + '</div><div class="pledge-preview-check"><div class="pledge-box"></div><span>I agree and commit to this pledge</span></div></div>';
-      } else if (isQuiz) {
-        inputHtml = '<input class="q-input" id="q-text-' + q.id + '" placeholder="e.g. What is the capital of India?" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><div style="font-size:0.72rem;color:#64748B;margin-bottom:7px">Click ✓ to mark correct answer</div><div class="options-list">' +
-          (q.options||[]).map((opt, oi) => '<div class="option-row"><div class="opt-bullet"></div><input class="option-input opt-' + q.id + '" value="' + escHtml(opt) + '" placeholder="Option ' + (oi+1) + '"><button class="correct-mark ' + (q.correctIndex===oi?'correct':'') + '" onclick="markCorrect(' + q.id + ',' + oi + ')" title="Mark correct">✓</button><button class="opt-remove" onclick="removeOption(' + q.id + ',' + oi + ')">✕</button></div>').join('') +
-          '</div><button class="add-opt-btn" onclick="addOption(' + q.id + ')">+ Add option</button>';
-      } else if (hasOpts) {
-        const bc = q.type === 'checkbox' ? 'opt-bullet sq' : 'opt-bullet';
-        inputHtml = '<input class="q-input" id="q-text-' + q.id + '" placeholder="e.g. How satisfied are you?" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><div class="options-list">' +
-          (q.options||[]).map((opt, oi) => '<div class="option-row"><div class="' + bc + '"></div><input class="option-input opt-' + q.id + '" value="' + escHtml(opt) + '" placeholder="Option ' + (oi+1) + '"><button class="opt-remove" onclick="removeOption(' + q.id + ',' + oi + ')">✕</button></div>').join('') +
-          '</div><button class="add-opt-btn" onclick="addOption(' + q.id + ')">+ Add option</button>';
-      } else if (q.type === 'rating') {
-        inputHtml = '<input class="q-input" id="q-text-' + q.id + '" placeholder="e.g. How would you rate our service?" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><div class="rating-dots">' + [1,2,3,4,5].map(n=>'<div class="rating-dot">'+n+'</div>').join('') + '</div>';
-      } else if (q.type === 'scale') {
-        inputHtml = '<input class="q-input" id="q-text-' + q.id + '" placeholder="e.g. How likely to recommend us? (1-10)" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><div class="scale-dots">' + [1,2,3,4,5,6,7,8,9,10].map(n=>'<div class="scale-dot">'+n+'</div>').join('') + '</div>';
-      } else if (q.type === 'yesno') {
-        inputHtml = '<input class="q-input" id="q-text-' + q.id + '" placeholder="e.g. Would you recommend us?" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><div style="display:flex;gap:8px"><div style="padding:7px 18px;border-radius:8px;border:1.5px solid #E2DAD0;font-size:0.85rem;font-weight:600">Yes</div><div style="padding:7px 18px;border-radius:8px;border:1.5px solid #E2DAD0;font-size:0.85rem;font-weight:600">No</div></div>';
-      } else if (q.type === 'date') {
-        inputHtml = '<input class="q-input" id="q-text-' + q.id + '" placeholder="e.g. What is your date of birth?" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><div class="preview-chip">📅 Date picker — format DD-MM-YYYY</div>';
-      } else {
-        const ph = { text:'e.g. What is your full name?', textarea:'e.g. Please describe your experience', email:'e.g. What is your email?', phone:'e.g. What is your phone number?', number:'e.g. How many employees?', file:'e.g. Link to your portfolio' };
-        const pv = { text:'Short answer...', textarea:'Long answer...', email:'📧 Validates email format', phone:'📱 Phone number input', number:'🔢 Numbers only', file:'📎 Paste a URL' };
-        inputHtml = '<input class="q-input" id="q-text-' + q.id + '" placeholder="' + (ph[q.type]||'Type question...') + '" value="' + escHtml(q.text) + '" oninput="questions.find(x=>x.id===' + q.id + ').text=this.value"><div class="preview-chip" ' + (q.type==='textarea'?'style="min-height:50px"':'') + '>' + (pv[q.type]||'') + '</div>';
+    // Unsectioned
+    const unsectioned = questions.filter(q=>!q.sectionId).sort((a,b)=>a.order-b.order);
+    if(unsectioned.length>0){
+      html += '<div class="unsectioned-group">';
+      if(sections.length>0) html += '<div class="unsectioned-label">No section</div>';
+      unsectioned.forEach(q=>{
+        if(q.type!=='heading') qNum++;
+        const hasLogic = q.logic&&q.logic.length>0;
+        html += '<div class="q-sidebar-item" data-qid="'+q.id+'" onclick="scrollToQ(\''+q.id+'\')">';
+        html += '<span class="drag-handle" title="Drag to reorder">⠿</span>';
+        html += '<div class="q-num" style="background:#64748B">'+qNum+'</div>';
+        html += '<div class="q-item-text">'+(q.text||'Untitled')+'</div>';
+        html += '<div class="q-item-type">'+getTypeLabel(q.type)+(hasLogic?' 🔀':'')+'</div>';
+        html += '</div>';
+      });
+      html += '</div>';
+    }
+
+    list.innerHTML = html;
+    initDragDrop();
+  }
+
+  window.scrollToQ = function(qid) {
+    showMainPanel('questions');
+    setTimeout(()=>{
+      const el=document.getElementById('qcard-'+qid);
+      if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
+    },100);
+    closeMobileSidebar();
+  }
+
+  // ── RENDER QUESTIONS AREA ─────────────────────────────
+  function renderQuestionsArea() {
+    const area = document.getElementById('questions-render-area');
+    let html = '';
+    let qNum = 0;
+
+    // Render sections with their questions
+    sections.forEach(s=>{
+      const sectionQs = questions.filter(q=>q.sectionId===s.id).sort((a,b)=>a.order-b.order);
+
+      // Section card
+      html += '<div class="section-card" id="sec-card-'+s.id+'" style="border-color:'+s.color+';background:'+hexToRgba(s.color,0.04)+'">';
+      html += '<div class="section-card-header">';
+      html += '<span class="section-card-icon">📌</span>';
+      html += '<div class="section-card-title" style="color:'+s.color+'">'+escHtml(s.title||'New Section')+'</div>';
+      html += '<button class="section-delete-btn" onclick="deleteSection(\''+s.id+'\')">✕</button>';
+      html += '</div>';
+      html += '<div class="section-field"><label class="section-field-label">Section title</label>';
+      html += '<input class="section-input" id="sec-title-'+s.id+'" value="'+escHtml(s.title)+'" placeholder="e.g. Personal Information" style="border-color:'+hexToRgba(s.color,0.3)+'"></div>';
+      html += '<div class="section-field"><label class="section-field-label">Subtitle (optional)</label>';
+      html += '<input class="section-input" id="sec-sub-'+s.id+'" value="'+escHtml(s.subtitle||'')+'" placeholder="e.g. Please fill in your details" style="border-color:'+hexToRgba(s.color,0.3)+'"></div>';
+      html += '<div class="section-field"><label class="section-field-label">Display mode</label>';
+      html += '<div class="section-mode-toggle">';
+      html += '<button class="section-mode-btn'+(s.displayMode==='inline'?' active':'')+'" data-mode="inline" onclick="setSectionMode(\''+s.id+'\',\'inline\')">📋 Inline heading</button>';
+      html += '<button class="section-mode-btn'+(s.displayMode==='fullscreen'?' active':'')+'" data-mode="fullscreen" onclick="setSectionMode(\''+s.id+'\',\'fullscreen\')">🖥 Full screen</button>';
+      html += '</div>';
+      html += '<div class="section-mode-hint">'+(s.displayMode==='inline'?'Section title shows above first question':'Respondent sees a full screen with section info before questions')+'</div>';
+      html += '</div></div>';
+
+      // Questions in this section
+      sectionQs.forEach(q=>{
+        if(q.type!=='heading') qNum++;
+        html += renderQuestionCard(q, qNum, s.color);
+      });
+    });
+
+    // Unsectioned questions
+    const unsectioned = questions.filter(q=>!q.sectionId).sort((a,b)=>a.order-b.order);
+    unsectioned.forEach(q=>{
+      if(q.type!=='heading') qNum++;
+      html += renderQuestionCard(q, qNum, null);
+    });
+
+    area.innerHTML = html;
+  }
+
+  function hexToRgba(hex, alpha) {
+    const r=parseInt(hex.slice(1,3),16);
+    const g=parseInt(hex.slice(3,5),16);
+    const b=parseInt(hex.slice(5,7),16);
+    return 'rgba('+r+','+g+','+b+','+alpha+')';
+  }
+
+  function renderQuestionCard(q, qNum, sectionColor) {
+    const borderStyle = sectionColor ? 'border-left:4px solid '+sectionColor+';' : '';
+    const hasLogic = q.logic&&q.logic.length>0;
+    let html = '<div class="question-card'+(sectionColor?' in-section':'')+'" id="qcard-'+q.id+'" style="'+borderStyle+'">';
+
+    // TABS
+    html += '<div class="question-card-tabs">';
+    html += '<button class="q-tab active" data-tab="question" onclick="showQTab(\''+q.id+'\',\'question\')">Question</button>';
+    html += '<button class="q-tab" data-tab="logic" onclick="showQTab(\''+q.id+'\',\'logic\')">Logic'+(hasLogic?'<span class="q-tab-badge">'+q.logic.length+'</span>':'')+'</button>';
+    html += '</div>';
+
+    // QUESTION TAB
+    html += '<div class="q-tab-panel" data-tab="question">';
+    html += '<div class="question-card-body">';
+    html += '<div class="q-card-header">';
+    html += '<div class="q-num-badge" style="background:'+(sectionColor||'#64748B')+'">'+qNum+'</div>';
+    html += '<select class="q-type-select" onchange="changeType(\''+q.id+'\',this.value)">';
+    html += '<optgroup label="Choice"><option value="multiple"'+(q.type==='multiple'?' selected':'')+'>◉ Multiple choice</option><option value="checkbox"'+(q.type==='checkbox'?' selected':'')+'>☑ Checkboxes</option><option value="dropdown"'+(q.type==='dropdown'?' selected':'')+'>▾ Dropdown</option><option value="yesno"'+(q.type==='yesno'?' selected':'')+'>✓ Yes / No</option></optgroup>';
+    html += '<optgroup label="Text"><option value="text"'+(q.type==='text'?' selected':'')+'>✏️ Short text</option><option value="textarea"'+(q.type==='textarea'?' selected':'')+'>📝 Long text</option><option value="email"'+(q.type==='email'?' selected':'')+'>📧 Email</option><option value="phone"'+(q.type==='phone'?' selected':'')+'>📱 Phone</option><option value="number"'+(q.type==='number'?' selected':'')+'>🔢 Number</option></optgroup>';
+    html += '<optgroup label="Scale & Date"><option value="rating"'+(q.type==='rating'?' selected':'')+'>⭐ Rating 1-5</option><option value="scale"'+(q.type==='scale'?' selected':'')+'>📊 Scale 1-10</option><option value="date"'+(q.type==='date'?' selected':'')+'>📅 Date</option></optgroup>';
+    html += '<optgroup label="Special"><option value="file"'+(q.type==='file'?' selected':'')+'>📎 File URL</option><option value="pledge"'+(q.type==='pledge'?' selected':'')+'>🤝 Pledge</option><option value="quiz"'+(q.type==='quiz'?' selected':'')+'>🎓 Quiz MCQ</option></optgroup>';
+    html += '</select>';
+    html += '<button class="q-delete" onclick="deleteQuestion(\''+q.id+'\')">✕</button>';
+    html += '</div>';
+
+    // Input area
+    html += renderQuestionInput(q);
+
+    html += '<div class="q-footer"><button class="toggle'+(q.required?' on':'')+'" id="req-'+q.id+'" onclick="toggleRequired(\''+q.id+'\')"></button><span class="toggle-label">'+(q.type==='pledge'?'Must agree to proceed':'Required question')+'</span></div>';
+    html += '</div></div>'; // end body + question tab panel
+
+    // LOGIC TAB
+    html += '<div class="q-tab-panel" data-tab="logic" style="display:none">';
+    html += '<div class="question-card-body">';
+    html += renderLogicPanel(q);
+    html += '</div></div>';
+
+    html += '</div>'; // end card
+    return html;
+  }
+
+  function renderQuestionInput(q) {
+    let html = '';
+    const ph = { text:'e.g. What is your full name?', textarea:'e.g. Describe your experience', email:'e.g. Your email address?', phone:'e.g. Your phone number?', number:'e.g. How many employees?', file:'e.g. Link to your portfolio', rating:'e.g. How would you rate our service?', scale:'e.g. How likely to recommend us? (1-10)', yesno:'e.g. Would you recommend us?', date:'e.g. What is your date of birth?', multiple:'e.g. How satisfied are you?', checkbox:'e.g. Which features do you use?', dropdown:'e.g. Which country are you from?', pledge:'e.g. I pledge to reduce my carbon footprint by 20%', quiz:'e.g. What is the capital of India?' };
+
+    if(q.type==='pledge'){
+      html += '<input class="q-input" id="q-text-'+q.id+'" placeholder="'+escHtml(ph[q.type]||'')+'" value="'+escHtml(q.text)+'" oninput="questions.find(x=>x.id===\''+q.id+'\').text=this.value">';
+      html += '<div class="pledge-preview-box"><div class="pledge-preview-text">'+(q.text||'Your pledge statement will appear here...')+'</div><div class="pledge-preview-check"><div class="pledge-box-preview"></div><span>I agree and commit to this pledge</span></div></div>';
+    } else if(q.type==='quiz'){
+      html += '<input class="q-input" id="q-text-'+q.id+'" placeholder="'+escHtml(ph[q.type]||'')+'" value="'+escHtml(q.text)+'" oninput="questions.find(x=>x.id===\''+q.id+'\').text=this.value">';
+      html += '<div style="font-size:0.72rem;color:#64748B;margin-bottom:7px">✓ Click to mark correct answer</div>';
+      html += '<div class="options-list">';
+      (q.options||[]).forEach((opt,oi)=>{
+        html += '<div class="option-row"><div class="opt-bullet"></div><input class="option-input opt-'+q.id+'" value="'+escHtml(opt)+'" placeholder="Option '+(oi+1)+'"><button class="correct-mark'+(q.correctIndex===oi?' correct':'')+'" onclick="markCorrect(\''+q.id+'\','+oi+')" title="Mark correct">✓</button><button class="opt-remove" onclick="removeOption(\''+q.id+'\','+oi+')">✕</button></div>';
+      });
+      html += '</div><button class="add-opt-btn" onclick="addOption(\''+q.id+'\')">+ Add option</button>';
+    } else if(['multiple','checkbox','dropdown'].includes(q.type)){
+      const bc = q.type==='checkbox'?'opt-bullet sq':'opt-bullet';
+      html += '<input class="q-input" id="q-text-'+q.id+'" placeholder="'+escHtml(ph[q.type]||'')+'" value="'+escHtml(q.text)+'" oninput="questions.find(x=>x.id===\''+q.id+'\').text=this.value">';
+      html += '<div class="options-list">';
+      (q.options||[]).forEach((opt,oi)=>{
+        html += '<div class="option-row"><div class="'+bc+'"></div><input class="option-input opt-'+q.id+'" value="'+escHtml(opt)+'" placeholder="Option '+(oi+1)+'"><button class="opt-remove" onclick="removeOption(\''+q.id+'\','+oi+')">✕</button></div>';
+      });
+      html += '</div><button class="add-opt-btn" onclick="addOption(\''+q.id+'\')">+ Add option</button>';
+    } else if(q.type==='yesno'){
+      html += '<input class="q-input" id="q-text-'+q.id+'" placeholder="'+escHtml(ph.yesno)+'" value="'+escHtml(q.text)+'" oninput="questions.find(x=>x.id===\''+q.id+'\').text=this.value">';
+      html += '<div style="display:flex;gap:8px"><div style="padding:7px 18px;border-radius:8px;border:1.5px solid #E2DAD0;font-size:0.85rem;font-weight:600">Yes</div><div style="padding:7px 18px;border-radius:8px;border:1.5px solid #E2DAD0;font-size:0.85rem;font-weight:600">No</div></div>';
+    } else if(q.type==='rating'){
+      html += '<input class="q-input" id="q-text-'+q.id+'" placeholder="'+escHtml(ph.rating)+'" value="'+escHtml(q.text)+'" oninput="questions.find(x=>x.id===\''+q.id+'\').text=this.value">';
+      html += '<div class="rating-dots">'+[1,2,3,4,5].map(n=>'<div class="rating-dot">'+n+'</div>').join('')+'</div>';
+    } else if(q.type==='scale'){
+      html += '<input class="q-input" id="q-text-'+q.id+'" placeholder="'+escHtml(ph.scale)+'" value="'+escHtml(q.text)+'" oninput="questions.find(x=>x.id===\''+q.id+'\').text=this.value">';
+      html += '<div class="scale-dots">'+[1,2,3,4,5,6,7,8,9,10].map(n=>'<div class="scale-dot">'+n+'</div>').join('')+'</div>';
+    } else if(q.type==='date'){
+      html += '<input class="q-input" id="q-text-'+q.id+'" placeholder="'+escHtml(ph.date)+'" value="'+escHtml(q.text)+'" oninput="questions.find(x=>x.id===\''+q.id+'\').text=this.value">';
+      html += '<div class="preview-chip">📅 Date picker — DD-MM-YYYY format</div>';
+    } else {
+      const pv = { text:'Short answer...', textarea:'Long answer...', email:'📧 Validates email format', phone:'📱 Phone number input', number:'🔢 Numbers only', file:'📎 Paste a URL' };
+      html += '<input class="q-input" id="q-text-'+q.id+'" placeholder="'+escHtml(ph[q.type]||'Type question...')+'" value="'+escHtml(q.text)+'" oninput="questions.find(x=>x.id===\''+q.id+'\').text=this.value">';
+      html += '<div class="preview-chip">'+(pv[q.type]||'')+'</div>';
+    }
+    return html;
+  }
+
+  function renderLogicPanel(q) {
+    const allQuestions = getOrderedQuestions().filter(x=>x.id!==q.id);
+    const allSections = sections;
+    let html = '<div class="logic-panel">';
+
+    if(!q.logic||q.logic.length===0){
+      html += '<div class="logic-empty">No logic rules yet.<br>Add a rule to skip, show or hide questions based on answers.</div>';
+    }
+
+    q.logic.forEach((rule,ri)=>{
+      html += '<div class="logic-rule">';
+      html += '<div class="logic-rule-header"><span class="logic-rule-title">Rule '+(ri+1)+'</span><button class="logic-rule-delete" onclick="deleteLogicRule(\''+q.id+'\',\''+rule.id+'\')">✕ Delete</button></div>';
+
+      // Conditions
+      if(rule.conditions.length>1){
+        html += '<div class="logic-condition-type">';
+        html += '<button class="cond-type-btn'+(rule.conditionType==='ALL'?' active':'')+'" onclick="setConditionType(\''+q.id+'\',\''+rule.id+'\',\'ALL\')">ALL (AND)</button>';
+        html += '<button class="cond-type-btn'+(rule.conditionType==='ANY'?' active':'')+'" onclick="setConditionType(\''+q.id+'\',\''+rule.id+'\',\'ANY\')">ANY (OR)</button>';
+        html += '</div>';
       }
 
-      return '<div class="question-card ' + (isHeading?'type-heading':'') + '" id="qcard-' + q.id + '">' +
-        '<div class="q-card-header">' +
-        '<div class="q-num-badge">' + (isHeading?'§':qNumber) + '</div>' +
-        '<select class="q-type-select" onchange="changeType(' + q.id + ',this.value)">' +
-        '<optgroup label="Choice"><option value="multiple" ' + (q.type==='multiple'?'selected':'') + '>◉ Multiple choice</option><option value="checkbox" ' + (q.type==='checkbox'?'selected':'') + '>☑ Checkboxes</option><option value="dropdown" ' + (q.type==='dropdown'?'selected':'') + '>▾ Dropdown</option><option value="yesno" ' + (q.type==='yesno'?'selected':'') + '>✓ Yes / No</option></optgroup>' +
-        '<optgroup label="Text"><option value="text" ' + (q.type==='text'?'selected':'') + '>✏️ Short text</option><option value="textarea" ' + (q.type==='textarea'?'selected':'') + '>📝 Long text</option><option value="email" ' + (q.type==='email'?'selected':'') + '>📧 Email</option><option value="phone" ' + (q.type==='phone'?'selected':'') + '>📱 Phone</option><option value="number" ' + (q.type==='number'?'selected':'') + '>🔢 Number</option></optgroup>' +
-        '<optgroup label="Scale & Date"><option value="rating" ' + (q.type==='rating'?'selected':'') + '>⭐ Rating 1-5</option><option value="scale" ' + (q.type==='scale'?'selected':'') + '>📊 Scale 1-10</option><option value="date" ' + (q.type==='date'?'selected':'') + '>📅 Date</option></optgroup>' +
-        '<optgroup label="Special"><option value="file" ' + (q.type==='file'?'selected':'') + '>📎 File URL</option><option value="heading" ' + (q.type==='heading'?'selected':'') + '>📌 Section heading</option><option value="pledge" ' + (q.type==='pledge'?'selected':'') + '>🤝 Pledge</option><option value="quiz" ' + (q.type==='quiz'?'selected':'') + '>🎓 Quiz MCQ</option></optgroup>' +
-        '</select>' +
-        '<button class="q-delete" onclick="deleteQuestion(' + q.id + ')">✕</button></div>' +
-        inputHtml +
-        (!isHeading ? '<div class="q-footer"><button class="toggle ' + (q.required?'on':'') + '" id="req-' + q.id + '" onclick="toggleRequired(' + q.id + ')"></button><span class="toggle-label">' + (isPledge?'Must agree to proceed':'Required question') + '</span></div>' : '') +
-        '</div>';
-    }).join('');
+      rule.conditions.forEach((cond,ci)=>{
+        html += '<div class="logic-condition">';
+        // Which question
+        html += '<select class="logic-select" id="cond-q-'+rule.id+'-'+ci+'">';
+        html += '<option value="'+q.id+'"'+(cond.questionId===q.id?' selected':'')+'>This question</option>';
+        allQuestions.forEach(aq=>{
+          html += '<option value="'+aq.id+'"'+(cond.questionId===aq.id?' selected':'')+'>Q: '+(aq.text||'Untitled').slice(0,30)+'</option>';
+        });
+        html += '</select>';
+        // Operator
+        html += '<select class="logic-select" id="cond-op-'+rule.id+'-'+ci+'">';
+        html += '<option value="is"'+(cond.operator==='is'?' selected':'')+'>is</option>';
+        html += '<option value="is_not"'+(cond.operator==='is_not'?' selected':'')+'>is not</option>';
+        html += '<option value="contains"'+(cond.operator==='contains'?' selected':'')+'>contains</option>';
+        html += '<option value="not_contains"'+(cond.operator==='not_contains'?' selected':'')+'>does not contain</option>';
+        html += '<option value="filled"'+(cond.operator==='filled'?' selected':'')+'>is filled</option>';
+        html += '<option value="empty"'+(cond.operator==='empty'?' selected':'')+'>is empty</option>';
+        html += '</select>';
+        // Value
+        html += '<input class="logic-select" id="cond-val-'+rule.id+'-'+ci+'" value="'+escHtml(cond.value)+'" placeholder="value" style="min-width:80px">';
+        if(ci>0) html += '<button class="logic-rule-delete" onclick="removeCondition(\''+q.id+'\',\''+rule.id+'\','+ci+')">✕</button>';
+        html += '</div>';
+      });
+
+      html += '<button class="add-condition-btn" onclick="addCondition(\''+q.id+'\',\''+rule.id+'\')">+ Add condition</button>';
+
+      // Action
+      html += '<div class="logic-action-row">';
+      html += '<span class="logic-action-label">THEN</span>';
+      html += '<select class="logic-select" id="action-'+rule.id+'" onchange="renderActionTarget(\''+q.id+'\',\''+rule.id+'\')">';
+      html += '<option value="skip"'+(rule.action==='skip'?' selected':'')+'>Skip to</option>';
+      html += '<option value="skip_section"'+(rule.action==='skip_section'?' selected':'')+'>Skip to section</option>';
+      html += '<option value="show"'+(rule.action==='show'?' selected':'')+'>Show question</option>';
+      html += '<option value="hide"'+(rule.action==='hide'?' selected':'')+'>Hide question</option>';
+      html += '<option value="end"'+(rule.action==='end'?' selected':'')+'>End survey</option>';
+      html += '</select>';
+
+      if(rule.action==='skip'||rule.action==='show'||rule.action==='hide'){
+        html += '<select class="logic-select" id="target-'+rule.id+'">';
+        allQuestions.forEach(aq=>{
+          html += '<option value="'+aq.id+'"'+(rule.target===aq.id?' selected':'')+'>Q: '+(aq.text||'Untitled').slice(0,25)+'</option>';
+        });
+        html += '</select>';
+      } else if(rule.action==='skip_section'){
+        html += '<select class="logic-select" id="target-'+rule.id+'">';
+        allSections.forEach(s=>{
+          html += '<option value="'+s.id+'"'+(rule.target===s.id?' selected':'')+'>§ '+(s.title||'Untitled').slice(0,25)+'</option>';
+        });
+        html += '</select>';
+      } else {
+        // end survey — no target needed
+        html += '<span id="target-'+rule.id+'" style="display:none"></span>';
+      }
+
+      html += '</div>';
+      html += '</div>'; // end rule
+    });
+
+    html += '<button class="btn-add-rule" onclick="addLogicRule(\''+q.id+'\')">+ Add logic rule</button>';
+
+    // Default action
+    html += '<div class="logic-default-row"><span class="logic-default-label">OTHERWISE:</span><span style="font-size:0.82rem;color:#64748B">Continue to next question</span></div>';
+
+    html += '</div>';
+    return html;
   }
 
-  window.scrollToQuestion = function(id) {
-    showPanel('questions');
-    setTimeout(() => {
-      const el = document.getElementById('qcard-' + id);
-      if (el) el.scrollIntoView({ behavior:'smooth', block:'center' });
-    }, 100);
+  window.renderActionTarget = function(qid,rid) {
+    syncLogicFromDOM();
+    const q=questions.find(q=>q.id===qid);
+    const rule=q&&q.logic.find(r=>r.id===rid);
+    if(rule){ rule.action=document.getElementById('action-'+rid).value; renderAll(); setTimeout(()=>showQTab(qid,'logic'),60); }
   }
 
+  // ── RENDER ALL ───────────────────────────────────────
+  function renderAll() {
+    renderSidebar();
+    renderQuestionsArea();
+  }<div class="toast" id="toast"></div>
+
+    // ── SAVE SURVEY ──────────────────────────────────────
   async function saveSurvey(status) {
     syncFromDOM();
     const title = document.getElementById('survey-title').value.trim();
-    if (!title) { showToast('Please add a survey title'); return null; }
-    const validQs = questions.filter(q => q.type === 'heading' || q.text.trim());
-    if (!validQs.length) { showToast('Please add at least one question'); return null; }
+    if(!title){ showToast('Please add a survey title'); return null; }
+    const validQs = questions.filter(q=>q.text.trim()||q.type==='pledge');
+    if(!validQs.length){ showToast('Please add at least one question'); return null; }
 
     const surveyData = {
       title,
       description: document.getElementById('survey-desc').value.trim(),
+      sections,
       questions: validQs,
       settings,
       style: document.getElementById('survey-style').value,
@@ -1092,12 +1297,12 @@
       status,
       userId: currentUser.uid,
       responseCount: 0,
-      questionCount: validQs.filter(q => q.type !== 'heading').length,
+      questionCount: validQs.length,
       updatedAt: serverTimestamp()
     };
 
     try {
-      if (savedSurveyId) {
+      if(savedSurveyId){
         await updateDoc(doc(db,'surveys',savedSurveyId), surveyData);
         return savedSurveyId;
       } else {
@@ -1106,36 +1311,39 @@
         savedSurveyId = ref.id;
         return ref.id;
       }
-    } catch(e) {
+    } catch(e){
       console.error(e);
       showToast('Error saving. Please try again');
       return null;
     }
   }
 
+  // ── PREVIEW ───────────────────────────────────────────
   window.previewSurvey = async function() {
     const title = document.getElementById('survey-title').value.trim();
-    if (!title) { showToast('Please add a survey title first'); return; }
+    if(!title){ showToast('Please add a survey title first'); return; }
     const id = await saveSurvey('draft');
-    if (id) window.open('/s/?id=' + id + '&preview=1', '_blank');
+    if(id) window.open('/s/?id='+id+'&preview=1','_blank');
   }
 
+  // ── SAVE DRAFT ────────────────────────────────────────
   window.saveDraft = async function() {
     const id = await saveSurvey('draft');
-    if (id) showToast('✓ Draft saved!');
+    if(id) showToast('✓ Draft saved!');
   }
 
+  // ── PUBLISH ───────────────────────────────────────────
   window.publishSurvey = async function() {
     const btn = document.getElementById('publish-btn');
-    btn.disabled = true; btn.textContent = 'Publishing...';
+    btn.disabled=true; btn.textContent='Publishing...';
     const id = await saveSurvey('active');
-    if (id) {
-      btn.textContent = 'Creating Sheet...';
+    if(id){
+      btn.textContent='Creating Sheet...';
       try {
-        const qs = questions.map(q => q.text).filter(t => t && t.trim());
-        const res = await fetch(SHEETS_SCRIPT, {
+        const qs = questions.map(q=>q.text).filter(t=>t&&t.trim());
+        const res = await fetch(SHEETS_SCRIPT,{
           method:'POST',
-          body: JSON.stringify({
+          body:JSON.stringify({
             action:'create_sheet',
             surveyTitle: document.getElementById('survey-title').value.trim(),
             questions: qs,
@@ -1143,27 +1351,19 @@
           })
         });
         const result = await res.json();
-        if (result.success) {
-          await updateDoc(doc(db,'surveys',id), { sheetId:result.sheetId, sheetUrl:result.sheetUrl });
-          showToast('🎉 Survey published + Sheet created!', 2000);
-        } else { showToast('🎉 Survey published!', 1500); }
-      } catch(e) { showToast('🎉 Survey published!', 1500); }
-      setTimeout(() => window.location.href = '/dashboard', 2200);
+        if(result.success){
+          await updateDoc(doc(db,'surveys',id),{ sheetId:result.sheetId, sheetUrl:result.sheetUrl });
+          showToast('🎉 Survey published + Sheet created!',2000);
+        } else {
+          showToast('🎉 Survey published!',1500);
+        }
+      } catch(e){ showToast('🎉 Survey published!',1500); }
+      setTimeout(()=>window.location.href='/dashboard',2200);
     } else {
-      btn.disabled = false; btn.textContent = 'Publish →';
+      btn.disabled=false; btn.textContent='Publish →';
     }
   }
 
-  // Close type picker when clicking outside
-  document.addEventListener('click', function(e) {
-    const wrap = document.getElementById('type-picker-wrap');
-    if (wrap && wrap.style.display !== 'none' && !wrap.contains(e.target)) {
-      const btns = document.querySelectorAll('[onclick="showTypePicker()"]');
-      let isBtn = false;
-      btns.forEach(b => { if (b.contains(e.target)) isBtn = true; });
-      if (!isBtn) hideTypePicker();
-    }
-  });
 </script>
 </body>
 </html>
