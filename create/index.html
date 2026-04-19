@@ -872,10 +872,40 @@
   }
 
   // ── RENDER Q AREA ─────────────────────────────────────
-  function renderQA(){
+    function renderQA(){
     const area=document.getElementById('q-render');let html='',qn=0;
-    secs.forEach(s=>{
-      const sq=qs.filter(q=>q.sectionId===s.id).sort((a,b)=>a.order-b.order);
+    const ordered = ordQs();
+    let lastSecId = undefined;
+
+    ordered.forEach(q=>{
+      // If this question belongs to a new section, render section card first
+      if(q.sectionId !== lastSecId){
+        if(q.sectionId){
+          const s=secs.find(s=>s.id===q.sectionId);
+          if(s){
+            html+=`<div class="sec-card" id="sc-${s.id}" style="border-color:${s.color};background:${h2r(s.color,0.04)}">
+              <div class="sc-top"><span>📌</span><span class="sc-ttl" style="color:${s.color}">${eh(s.title||'New Section')}</span><button class="sc-del" onclick="delSec('${s.id}')">✕</button></div>
+              <div class="sc-f"><label class="sc-lbl">Section title</label><input class="sc-inp" id="sc-ti-${s.id}" value="${eh(s.title)}" placeholder="e.g. Personal Information" style="border-color:${h2r(s.color,0.3)}"></div>
+              <div class="sc-f"><label class="sc-lbl">Subtitle (optional)</label><input class="sc-inp" id="sc-su-${s.id}" value="${eh(s.subtitle||'')}" placeholder="e.g. Please fill in your details" style="border-color:${h2r(s.color,0.3)}"></div>
+              <div class="sc-f"><label class="sc-lbl">Display mode</label>
+                <div class="sc-modes">
+                  <button class="sc-mode${s.displayMode==='one'?' active':''}" data-mode="one" onclick="setSecMode('${s.id}','one')">✨ One at a time</button>
+                  <button class="sc-mode${s.displayMode==='all'?' active':''}" data-mode="all" onclick="setSecMode('${s.id}','all')">📋 All on one page</button>
+                  <button class="sc-mode${s.displayMode==='fullscreen'?' active':''}" data-mode="fullscreen" onclick="setSecMode('${s.id}','fullscreen')">🖥 Full screen intro</button>
+                </div>
+                <div class="sc-hint">${s.displayMode==='one'?'Each question shows on its own screen':s.displayMode==='all'?'All questions show together on one page':'Full-screen section intro before questions'}</div>
+              </div>
+            </div>`;
+          }
+        }
+        lastSecId = q.sectionId;
+      }
+      if(q.type!=='heading')qn++;
+      html+=renderQCard(q,qn,q.sectionId?secs.find(s=>s.id===q.sectionId)?.color:null);
+    });
+
+    area.innerHTML=html;
+  }
       html+=`<div class="sec-card" id="sc-${s.id}" style="border-color:${s.color};background:${h2r(s.color,0.04)}">
         <div class="sc-top"><span>📌</span><span class="sc-ttl" style="color:${s.color}">${eh(s.title||'New Section')}</span><button class="sc-del" onclick="delSec('${s.id}')">✕</button></div>
         <div class="sc-f"><label class="sc-lbl">Section title</label><input class="sc-inp" id="sc-ti-${s.id}" value="${eh(s.title)}" placeholder="e.g. Personal Information" style="border-color:${h2r(s.color,0.3)}"></div>
