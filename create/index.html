@@ -1,12 +1,3 @@
-Don't worry! The file got corrupted from partial edits. Let's do a complete clean rewrite in 3 chunks — same as before.
-
-Go to **create/index.html** → pencil ✏️ → **Ctrl+A** → delete everything → paste Chunk 1.
-
----
-
-## CHUNK 1:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,12 +25,11 @@ Go to **create/index.html** → pencil ✏️ → **Ctrl+A** → delete everythi
     .layout{position:fixed;top:56px;left:0;right:0;bottom:0;display:flex;overflow:hidden}
     .sidebar{width:256px;height:100%;background:#fff;border-right:1.5px solid #E2DAD0;display:flex;flex-direction:column;flex-shrink:0;z-index:100;transition:transform 0.3s ease}
     .sb-scroll{flex:1;overflow-y:auto;overflow-x:hidden;min-height:0}
-    .sb-grp{}
     .sb-grp-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;border-bottom:1px solid #E2DAD0;background:#fff;user-select:none}
     .sb-grp-hdr:hover{background:#F5F0E8}
     .sb-grp-lbl{font-size:0.68rem;font-weight:700;color:#64748B;letter-spacing:0.08em;text-transform:uppercase}
     .sb-grp-badge{font-size:0.62rem;font-weight:700;background:#EDE9FF;color:#2D1B69;padding:1px 6px;border-radius:100px;margin-left:6px}
-    .sb-grp-arrow{font-size:0.7rem;color:#94A3B8;transition:transform 0.25s;border:none;background:none;cursor:pointer;flex-shrink:0}
+    .sb-grp-arrow{font-size:0.7rem;color:#94A3B8;border:none;background:none;cursor:pointer;flex-shrink:0;transition:transform 0.2s}
     .sb-grp-body{overflow:hidden;transition:max-height 0.3s ease}
     .sb-nav{padding:6px 8px}
     .sb-nav-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;color:#64748B;transition:all 0.2s}
@@ -51,7 +41,6 @@ Go to **create/index.html** → pencil ✏️ → **Ctrl+A** → delete everythi
     .sec-hdr{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;cursor:pointer;user-select:none;transition:background 0.2s}
     .sec-hdr:hover{background:#F5F0E8}
     .sec-hdr.active-s{background:#EDE9FF}
-    .sec-hdr.dt{border:2px dashed #D97706;background:#FEF3C7}
     .dh{font-size:0.85rem;color:#C4B9AA;cursor:grab;padding:1px 3px;touch-action:none;flex-shrink:0;line-height:1}
     .dh:active{cursor:grabbing;color:#2D1B69}
     .sec-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
@@ -63,9 +52,9 @@ Go to **create/index.html** → pencil ✏️ → **Ctrl+A** → delete everythi
     .sec-qs.c{max-height:0!important}
     .q-item{display:flex;align-items:center;gap:5px;padding:5px 8px;border-radius:7px;cursor:pointer;transition:all 0.15s;margin-bottom:1px;user-select:none;-webkit-user-select:none}
     .q-item:hover{background:#F5F0E8}
-    .q-item.aq{background:#EDE9FF}
     .q-item.doq{border-top:2px solid #2D1B69}
     .q-item.di{opacity:0.35}
+    .sec-hdr.dt{border:2px dashed #D97706;background:#FEF3C7}
     .q-num{width:17px;height:17px;border-radius:50%;font-size:0.58rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
     .q-itxt{font-size:0.72rem;color:#64748B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
     .q-ityp{font-size:0.58rem;color:#94A3B8;flex-shrink:0}
@@ -142,7 +131,6 @@ Go to **create/index.html** → pencil ✏️ → **Ctrl+A** → delete everythi
     .tgl.on::after{transform:translateX(15px)}
     .tgl-l{font-size:0.72rem;color:#64748B;font-weight:500}
     .dm-sel{padding:5px 7px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.72rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none;margin-left:auto}
-    .dm-sel:focus{border-color:#2D1B69}
     .qtab-panel{display:none}
     .qtab-panel.active{display:block}
     .lw{padding:2px 0}
@@ -154,7 +142,6 @@ Go to **create/index.html** → pencil ✏️ → **Ctrl+A** → delete everythi
     .l-rdel:hover{color:#DC2626}
     .l-cond{display:flex;align-items:center;gap:4px;margin-bottom:5px;flex-wrap:wrap}
     .ls{padding:5px 6px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.71rem;font-weight:600;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer}
-    .ls:focus{border-color:#2D1B69}
     .ct-row{display:flex;gap:4px;margin-bottom:5px}
     .ct-btn{padding:3px 8px;border-radius:5px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.66rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;color:#64748B;transition:all 0.2s}
     .ct-btn.active{background:#2D1B69;border-color:#2D1B69;color:#fff}
@@ -211,13 +198,9 @@ Go to **create/index.html** → pencil ✏️ → **Ctrl+A** → delete everythi
       .sidebar{position:fixed;top:56px;left:0;bottom:0;transform:translateX(-100%);z-index:200;width:270px;height:calc(100vh - 56px)}
       .sidebar.open{transform:translateX(0)}
       .hbtn{display:flex}
-      .btn-g.hm{display:none}
       .content{padding:14px}
     }
-    @media(max-width:480px){
-      .nav-t{max-width:100px}
-      .btn-prev{display:none}
-    }
+    @media(max-width:480px){.nav-t{max-width:100px}.btn-prev{display:none}}
   </style>
 </head>
 <body>
@@ -242,14 +225,14 @@ Go to **create/index.html** → pencil ✏️ → **Ctrl+A** → delete everythi
   </div>
   <div class="topnav-right">
     <button class="btn-prev" onclick="previewSurvey()">👁 Preview</button>
-    <button class="btn-g hm" onclick="saveDraft()">Save draft</button>
+    <button class="btn-g" onclick="saveDraft()" style="display:none" id="save-draft-btn">Save draft</button>
     <button class="btn-pub" id="pub-btn" onclick="publishSurvey()">Publish →</button>
   </div>
 </div>
 <div class="layout">
   <div class="sidebar" id="sidebar">
     <div class="sb-scroll">
-      <div class="sb-grp">
+      <div>
         <div class="sb-grp-hdr" onclick="togGrp('pages')">
           <span class="sb-grp-lbl">Pages</span>
           <button class="sb-grp-arrow" id="sba-pages">▼</button>
@@ -259,12 +242,12 @@ Go to **create/index.html** → pencil ✏️ → **Ctrl+A** → delete everythi
             <button class="sb-nav-item active" id="sn-questions" onclick="showPanel('questions')"><span class="ico">📋</span>Questions</button>
             <button class="sb-nav-item" id="sn-welcome" onclick="showPanel('welcome')"><span class="ico">🎨</span>Welcome page</button>
             <button class="sb-nav-item" id="sn-thankyou" onclick="showPanel('thankyou')"><span class="ico">🙏</span>Thank you page</button>
-            <button class="sb-nav-item" id="sn-prize" onclick="showPanel('prize')"><span class="ico">🎁</span>Prize & Incentive</button>
+            <button class="sb-nav-item" id="sn-prize" onclick="showPanel('prize')"><span class="ico">🎁</span>Prize &amp; Incentive</button>
             <button class="sb-nav-item" id="sn-settings" onclick="showPanel('settings')"><span class="ico">⚙️</span>Survey settings</button>
           </div>
         </div>
       </div>
-      <div class="sb-grp">
+      <div>
         <div class="sb-grp-hdr" onclick="togGrp('questions')">
           <span class="sb-grp-lbl">Questions <span class="sb-grp-badge" id="q-badge">0</span></span>
           <button class="sb-grp-arrow" id="sba-questions">▼</button>
@@ -291,13 +274,13 @@ Go to **create/index.html** → pencil ✏️ → **Ctrl+A** → delete everythi
     <div class="panel" id="panel-welcome">
       <div class="pt">🎨 Welcome page</div><p class="ps">Customise what respondents see before starting.</p>
       <div class="sc2"><div class="sc2-t">Branding</div>
-        <div class="sf"><label class="sl">Logo URL</label><input class="si" id="w-logo" placeholder="e.g. https://yoursite.com/logo.png"><div class="hb"><strong>📁 Google Drive:</strong><ol><li>Upload → Right click → Share → "Anyone with link"</li><li>Copy link → paste above</li></ol><div style="margin-top:5px"><span class="dtg">Max 200×60px</span><span class="dtg">PNG/SVG/JPG</span></div></div></div>
+        <div class="sf"><label class="sl">Logo URL</label><input class="si" id="w-logo" placeholder="e.g. https://yoursite.com/logo.png"><div class="hb"><strong>📁 Google Drive:</strong><ol><li>Upload → Right click → Share → Anyone with link</li><li>Copy link → paste above</li></ol><div style="margin-top:5px"><span class="dtg">Max 200x60px</span><span class="dtg">PNG/SVG/JPG</span></div></div></div>
         <div class="sf"><label class="sl">Custom headline</label><input class="si" id="w-head" placeholder="Leave blank to use survey title"></div>
-        <div class="sf"><label class="sl">Start button text</label><input class="si" id="w-btn" placeholder="Default: Let's go →"></div>
+        <div class="sf"><label class="sl">Start button text</label><input class="si" id="w-btn" placeholder="Default: Let's go"></div>
       </div>
       <div class="sc2"><div class="sc2-t">Background</div>
         <div class="sf"><label class="sl">Background color</label><div class="cr"><input class="si" id="w-bgc" placeholder="#0F0E1A" style="flex:1"><input type="color" id="w-bgcp" value="#0F0E1A" oninput="document.getElementById('w-bgc').value=this.value" style="width:38px;height:38px;border-radius:7px;border:1.5px solid #E2DAD0;cursor:pointer;padding:2px;flex-shrink:0"></div></div>
-        <div class="sf"><label class="sl">Background image URL</label><input class="si" id="w-bgi" placeholder="e.g. https://images.unsplash.com/..."><div class="hb"><span class="dtg">1920×1080px</span><span class="dtg">JPG/PNG/WEBP</span> Overrides color</div></div>
+        <div class="sf"><label class="sl">Background image URL</label><input class="si" id="w-bgi" placeholder="e.g. https://images.unsplash.com/..."><div class="hb"><span class="dtg">1920x1080px</span><span class="dtg">JPG/PNG/WEBP</span> Overrides color</div></div>
         <div class="sf"><label class="sl">Background video URL</label><input class="si" id="w-bgv" placeholder="e.g. https://youtube.com/watch?v=..."><div class="hb"><span class="dtg">YouTube</span><span class="dtg">Vimeo</span> Muted loop. Overrides image.</div></div>
       </div>
     </div>
@@ -311,22 +294,22 @@ Go to **create/index.html** → pencil ✏️ → **Ctrl+A** → delete everythi
       </div>
     </div>
     <div class="panel" id="panel-prize">
-      <div class="pt">🎁 Prize & Incentive</div><p class="ps">Add a prize to boost response rates.</p>
+      <div class="pt">🎁 Prize &amp; Incentive</div><p class="ps">Add a prize to boost response rates.</p>
       <div class="sc2">
         <div class="sr"><div><div class="sr-n">Enable prize</div><div class="sr-d">Show prize badge on welcome page</div></div><button class="tgl" id="tgl-prize" onclick="togPrize()"></button></div>
         <div id="pf" style="display:none;margin-top:10px">
-          <div class="sf"><label class="sl">Prize type</label><div class="pt-btns"><button class="ptb active" onclick="selP('cash',this)">💵 Cash</button><button class="ptb" onclick="selP('voucher',this)">🎟 Voucher</button><button class="ptb" onclick="selP('gift',this)">🎁 Gift</button><button class="ptb" onclick="selP('other',this)">✦ Other</button></div></div>
-          <div class="sf"><label class="sl">Prize description</label><input class="si" id="p-desc" placeholder="e.g. ₹500 Amazon voucher"></div>
+          <div class="sf"><label class="sl">Prize type</label><div class="pt-btns"><button class="ptb active" onclick="selP('cash',this)">💵 Cash</button><button class="ptb" onclick="selP('voucher',this)">🎟 Voucher</button><button class="ptb" onclick="selP('gift',this)">🎁 Gift</button><button class="ptb" onclick="selP('other',this)">Other</button></div></div>
+          <div class="sf"><label class="sl">Prize description</label><input class="si" id="p-desc" placeholder="e.g. Rs 500 Amazon voucher"></div>
           <div class="sf"><label class="sl">Number of winners</label><input class="si" id="p-win" type="number" min="1" placeholder="e.g. 3" style="max-width:110px"></div>
-          <div class="sf"><label class="sl">Winner selection</label><select class="si" id="p-sel" style="max-width:220px"><option value="random">🎲 Random draw</option><option value="best">⭐ Best answer</option><option value="first">🏃 First N respondents</option></select></div>
-          <div class="sf"><label class="sl">Winner notification</label><select class="si" id="p-not" style="max-width:260px"><option value="manual">📧 I will contact manually</option><option value="email">✉️ SwoopForm sends email</option><option value="leaderboard">🏆 Public leaderboard</option></select></div>
+          <div class="sf"><label class="sl">Winner selection</label><select class="si" id="p-sel" style="max-width:220px"><option value="random">Random draw</option><option value="best">Best answer</option><option value="first">First N respondents</option></select></div>
+          <div class="sf"><label class="sl">Winner notification</label><select class="si" id="p-not" style="max-width:260px"><option value="manual">I will contact manually</option><option value="email">SwoopForm sends email</option><option value="leaderboard">Public leaderboard</option></select></div>
         </div>
       </div>
     </div>
     <div class="panel" id="panel-settings">
       <div class="pt">⚙️ Survey settings</div><p class="ps">Configure how your survey behaves.</p>
       <div class="sc2">
-        <div class="sr"><div><div class="sr-n">Survey style</div><div class="sr-d">Default display mode</div></div><select id="s-style" style="padding:5px 8px;border-radius:7px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.77rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none"><option value="conversational">✨ One at a time</option><option value="classic">📋 All on one page</option></select></div>
+        <div class="sr"><div><div class="sr-n">Survey style</div><div class="sr-d">Default display mode</div></div><select id="s-style" style="padding:5px 8px;border-radius:7px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.77rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none"><option value="conversational">One at a time</option><option value="classic">All on one page</option></select></div>
         <div class="sr"><div><div class="sr-n">Public survey</div><div class="sr-d">Show in SwoopForm discovery</div></div><button class="tgl" id="tgl-public" onclick="togS('public')"></button></div>
         <div class="sr"><div><div class="sr-n">Collect email addresses</div></div><button class="tgl" id="tgl-email" onclick="togS('email')"></button></div>
         <div class="sr" style="border-bottom:none"><div><div class="sr-n">One response per person</div></div><button class="tgl" id="tgl-once" onclick="togS('once')"></button></div>
@@ -335,789 +318,337 @@ Go to **create/index.html** → pencil ✏️ → **Ctrl+A** → delete everythi
   </div>
 </div>
 <div class="toast" id="toast"></div>
-```
 
----
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,collection,addDoc,doc,updateDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-**CHUNK 1 DONE ✅ — Ready for Chunk 2?**
-  <script type="module">
-  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-  import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-  import { getFirestore, collection, addDoc, doc, updateDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const SHEETS='https://script.google.com/macros/s/AKfycbx3evlOErDpdpR_TK_FvQaEEI5Kr6HvJYc46A_OG0SzIqJz8Gn0OKvUQxj7uoBLgyGH/exec';
+const app=initializeApp(FB);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-  const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
-  const SHEETS='https://script.google.com/macros/s/AKfycbx3evlOErDpdpR_TK_FvQaEEI5Kr6HvJYc46A_OG0SzIqJz8Gn0OKvUQxj7uoBLgyGH/exec';
-  const app=initializeApp(FB);
-  const auth=getAuth(app);
-  const db=getFirestore(app);
+const COLORS=['#2D1B69','#D97706','#0D9B8A','#DC2626','#2563EB','#7C3AED','#047857'];
+let ci=0,U=null,SID=null,secs=[],qs=[],cfg={public:false,email:false,once:false,share:false,prize:false},pt='cash',activeSec=null,longT=null,dragSt=null,grpOpen={pages:true,questions:true};
+const TMPL=[{id:'fn',icon:'👤',label:'First name',type:'text',req:true,on:true},{id:'ln',icon:'👤',label:'Last name',type:'text',req:false,on:true},{id:'em',icon:'📧',label:'Email address',type:'email',req:true,on:true},{id:'ph',icon:'📱',label:'Mobile number',type:'phone',req:false,on:true},{id:'co',icon:'🏢',label:'Company name',type:'text',req:false,on:false}];
+let tmpl=JSON.parse(JSON.stringify(TMPL));
 
-  // ── CONSTANTS ────────────────────────────────────────
-  const COLORS=['#2D1B69','#D97706','#0D9B8A','#DC2626','#2563EB','#7C3AED','#047857'];
-  let ci=0;
+onAuthStateChanged(auth,u=>{
+  if(!u){window.location.href='/login';return}
+  U=u;
+  document.getElementById('ls').style.display='none';
+  qs=[mkQ('multiple',null)];
+  renderAll();
+});
 
-  // ── STATE ────────────────────────────────────────────
-  let U=null,SID=null;
-  let secs=[],qs=[];
-  let cfg={public:false,email:false,once:false,share:false,prize:false};
-  let pt='cash',activeSec=null;
-  let longT=null,dragSt=null;
-  let grpOpen={pages:true,questions:true};
+function getNext(){const all=[...secs.map(s=>s.go||0),...qs.map(q=>q.go||0)];return all.length?Math.max(...all)+1:0}
 
-  const TMPL=[
-    {id:'fn',icon:'👤',label:'First name',type:'text',req:true,on:true},
-    {id:'ln',icon:'👤',label:'Last name',type:'text',req:false,on:true},
-    {id:'em',icon:'📧',label:'Email address',type:'email',req:true,on:true},
-    {id:'ph',icon:'📱',label:'Mobile number',type:'phone',req:false,on:true},
-    {id:'co',icon:'🏢',label:'Company name',type:'text',req:false,on:false},
-  ];
-  let tmpl=JSON.parse(JSON.stringify(TMPL));
+function flatList(){
+  const items=[];
+  secs.forEach(s=>items.push({type:'sec',item:s,order:s.go||0}));
+  qs.filter(q=>!q.sectionId).forEach(q=>items.push({type:'q',item:q,order:q.go||0}));
+  items.sort((a,b)=>a.order-b.order);
+  return items;
+}
 
-  // ── INIT ─────────────────────────────────────────────
-  onAuthStateChanged(auth,u=>{
-    if(!u){window.location.href='/login';return}
-    U=u;
-    document.getElementById('ls').style.display='none';
-    qs=[mkQ('multiple',null)];
-    renderAll();
+function ordQs(){
+  const r=[];
+  flatList().forEach(e=>{
+    if(e.type==='sec'){qs.filter(q=>q.sectionId===e.item.id).sort((a,b)=>(a.go||0)-(b.go||0)).forEach(q=>r.push(q))}
+    else{r.push(e.item)}
   });
+  return r;
+}
 
-  // ── GLOBAL ORDER ─────────────────────────────────────
-  function getNextOrder(){
-    const all=[...secs.map(s=>s.gOrder||0),...qs.map(q=>q.gOrder||0)];
-    return all.length?Math.max(...all)+1:0;
+function normalizeOrders(){
+  const flat=flatList();let idx=0;
+  flat.forEach(e=>{
+    e.item.go=idx++;
+    if(e.type==='sec'){qs.filter(q=>q.sectionId===e.item.id).sort((a,b)=>(a.go||0)-(b.go||0)).forEach(q=>{q.go=idx;idx+=0.01})}
+  });
+  const all=[...secs,...qs].sort((a,b)=>(a.go||0)-(b.go||0));
+  all.forEach((x,i)=>x.go=i);
+}
+
+function mkQ(type,secId){return{id:'q'+Date.now()+Math.random().toString(36).slice(2,5),sectionId:secId||null,type,text:'',subtext:'',options:['',''],required:false,hidden:false,displayMode:'auto',go:getNext(),correctIndex:-1,logic:[]}}
+function mkSec(title){const c=COLORS[ci%COLORS.length];ci++;return{id:'s'+Date.now()+Math.random().toString(36).slice(2,5),title:title||'New Section',subtitle:'',displayMode:'one',color:c,collapsed:false,go:getNext()}}
+
+function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function tl(t){const m={multiple:'MCQ',checkbox:'Check',dropdown:'Drop',yesno:'Yes/No',text:'Text',textarea:'Long',email:'Email',phone:'Phone',number:'Num',rating:'Rate',scale:'Scale',date:'Date',file:'File',pledge:'Pledge',quiz:'Quiz'};return m[t]||t}
+function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
+function h2r(h,a){const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return`rgba(${r},${g},${b},${a})`}
+
+window.togGrp=function(g){
+  grpOpen[g]=!grpOpen[g];
+  const body=document.getElementById('sbb-'+g),arrow=document.getElementById('sba-'+g);
+  if(!body||!arrow)return;
+  if(grpOpen[g]){body.style.maxHeight=g==='questions'?'600px':'300px';arrow.textContent='▼'}
+  else{body.style.maxHeight='0';arrow.textContent='▶'}
+}
+
+window.showPanel=function(p){
+  syncDOM();
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.sb-nav-item').forEach(x=>x.classList.remove('active'));
+  document.getElementById('panel-'+p).classList.add('active');
+  const n=document.getElementById('sn-'+p);if(n)n.classList.add('active');
+  closeSb();
+}
+window.openSb=()=>{document.getElementById('sidebar').classList.add('open');document.getElementById('sbo').classList.add('open')}
+window.closeSb=()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('sbo').classList.remove('open')}
+
+window.togS=function(k){cfg[k]=!cfg[k];document.getElementById('tgl-'+k).classList.toggle('on',cfg[k])}
+window.togPrize=function(){cfg.prize=!cfg.prize;document.getElementById('tgl-prize').classList.toggle('on',cfg.prize);document.getElementById('pf').style.display=cfg.prize?'block':'none'}
+window.selP=function(t,el){pt=t;document.querySelectorAll('.ptb').forEach(b=>b.classList.remove('active'));el.classList.add('active')}
+
+window.addSec=function(){
+  syncDOM();const s=mkSec('New Section');secs.push(s);activeSec=s.id;
+  renderAll();showPanel('questions');
+  setTimeout(()=>{const el=document.getElementById('sc-ti-'+s.id);if(el){el.focus();el.select()}},120);
+}
+window.delSec=function(sid){
+  if(!confirm('Delete this section?\nQuestions inside will become unsectioned.'))return;
+  syncDOM();qs.forEach(q=>{if(q.sectionId===sid)q.sectionId=null});
+  secs=secs.filter(s=>s.id!==sid);if(activeSec===sid)activeSec=null;renderAll();
+}
+window.togSecColl=function(sid){const s=secs.find(s=>s.id===sid);if(s){s.collapsed=!s.collapsed;renderSB()}}
+window.setSecMode=function(sid,mode){
+  const s=secs.find(s=>s.id===sid);if(!s)return;s.displayMode=mode;
+  const card=document.getElementById('sc-'+sid);if(!card)return;
+  card.querySelectorAll('.sc-mode').forEach(b=>b.classList.remove('active'));
+  const b=card.querySelector('[data-mode="'+mode+'"]');if(b)b.classList.add('active');
+  const hint=card.querySelector('.sc-hint');
+  if(hint)hint.textContent=mode==='one'?'Each question shows on its own screen':mode==='all'?'All questions show together on one page':'Full-screen section intro before questions begin';
+}
+window.setActSec=function(sid){activeSec=sid;renderSB()}
+
+window.addQ=function(type){
+  syncDOM();const q=mkQ(type||'multiple',activeSec);
+  if(activeSec){const sq=qs.filter(x=>x.sectionId===activeSec);q.go=sq.length?Math.max(...sq.map(x=>x.go||0))+0.5:(secs.find(s=>s.id===activeSec)?.go||0)+0.5}
+  qs.push(q);normalizeOrders();renderAll();showPanel('questions');
+  setTimeout(()=>{const el=document.getElementById('qi-'+q.id);if(el){el.focus();el.scrollIntoView({behavior:'smooth',block:'center'})}},80);
+}
+window.delQ=function(qid){syncDOM();if(qs.length===1){toast('Need at least 1 question');return}qs=qs.filter(q=>q.id!==qid);renderAll()}
+window.chT=function(qid,type){syncDOM();const q=qs.find(q=>q.id===qid);if(q){q.type=type;renderAll()}}
+window.togReq=function(qid){const q=qs.find(q=>q.id===qid);if(q){q.required=!q.required;document.getElementById('req-'+qid).classList.toggle('on',q.required)}}
+window.setDM=function(qid,v){const q=qs.find(q=>q.id===qid);if(q)q.displayMode=v}
+window.addOpt=function(qid){syncDOM();const q=qs.find(q=>q.id===qid);if(q){q.options.push('');renderAll();setTimeout(()=>{const o=document.querySelectorAll('.oi-'+qid);if(o.length)o[o.length-1].focus()},60)}}
+window.rmOpt=function(qid,i){syncDOM();const q=qs.find(q=>q.id===qid);if(q&&q.options.length>2){q.options.splice(i,1);if(q.correctIndex===i)q.correctIndex=-1;else if(q.correctIndex>i)q.correctIndex--;renderAll()}else toast('Need at least 2 options')}
+window.mkOK=function(qid,i){syncDOM();const q=qs.find(q=>q.id===qid);if(q){q.correctIndex=q.correctIndex===i?-1:i;renderAll()}}
+
+window.showQTab=function(qid,tab){
+  const c=document.getElementById('qc-'+qid);if(!c)return;
+  c.querySelectorAll('.q-tab').forEach(t=>t.classList.remove('active'));
+  c.querySelectorAll('.qtab-panel').forEach(p=>p.classList.remove('active'));
+  c.querySelector('.q-tab[data-tab="'+tab+'"]').classList.add('active');
+  c.querySelector('.qtab-panel[data-tab="'+tab+'"]').classList.add('active');
+}
+
+window.addRule=function(qid){syncDOM();const q=qs.find(q=>q.id===qid);if(!q)return;q.logic.push({id:'r'+Date.now(),condType:'ALL',conditions:[{qid:qid,op:'is',val:''}],action:'skip',target:''});renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}
+window.delRule=function(qid,rid){syncDOM();const q=qs.find(q=>q.id===qid);if(q){q.logic=q.logic.filter(r=>r.id!==rid);renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}}
+window.setCondType=function(qid,rid,ct){const q=qs.find(q=>q.id===qid);const r=q&&q.logic.find(r=>r.id===rid);if(r){r.condType=ct;renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}}
+window.addCond=function(qid,rid){syncDOM();const q=qs.find(q=>q.id===qid);const r=q&&q.logic.find(r=>r.id===rid);if(r){r.conditions.push({qid:qid,op:'is',val:''});renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}}
+window.rmCond=function(qid,rid,ci2){syncDOM();const q=qs.find(q=>q.id===qid);const r=q&&q.logic.find(r=>r.id===rid);if(r&&r.conditions.length>1){r.conditions.splice(ci2,1);renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}else toast('Need at least 1 condition')}
+window.chAct=function(qid,rid){sLogic();const q=qs.find(q=>q.id===qid);const r=q&&q.logic.find(r=>r.id===rid);if(r){r.action=document.getElementById('act-'+rid).value;renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}}
+
+function sLogic(){qs.forEach(q=>{q.logic.forEach(rule=>{rule.conditions.forEach((c,ci2)=>{const a=document.getElementById('cq-'+rule.id+'-'+ci2);const b=document.getElementById('co-'+rule.id+'-'+ci2);const d=document.getElementById('cv-'+rule.id+'-'+ci2);if(a)c.qid=a.value;if(b)c.op=b.value;if(d)c.val=d.value});const e=document.getElementById('act-'+rule.id);const f=document.getElementById('tgt-'+rule.id);if(e)rule.action=e.value;if(f)rule.target=f.value})})}
+
+function syncDOM(){
+  qs.forEach(q=>{
+    const a=document.getElementById('qi-'+q.id);if(a)q.text=a.value;
+    const b=document.getElementById('qs-'+q.id);if(b)q.subtext=b.value;
+    if(['multiple','checkbox','dropdown','quiz'].includes(q.type)){const c=document.querySelectorAll('.oi-'+q.id);if(c.length)q.options=Array.from(c).map(e=>e.value)}
+    const d=document.getElementById('dm-'+q.id);if(d)q.displayMode=d.value;
+  });
+  secs.forEach(s=>{const a=document.getElementById('sc-ti-'+s.id);if(a)s.title=a.value;const b=document.getElementById('sc-su-'+s.id);if(b)s.subtitle=b.value});
+  sLogic();
+}
+
+window.openTmpl=function(){renderTmpl();document.getElementById('tmpl-modal').classList.add('open')}
+window.closeTmpl=function(){document.getElementById('tmpl-modal').classList.remove('open')}
+function renderTmpl(){document.getElementById('tmpl-list').innerHTML=tmpl.map((f,i)=>`<div class="tr" style="${f.on?'':'opacity:0.5'}"><div class="ti"><span class="tic">${f.icon}</span><div><div class="tn">${f.label}</div><div class="tt2">${f.type}</div></div></div><div class="tc"><span class="trl">Req</span><button class="tgl ${f.req?'on':''}" style="width:28px;height:15px" onclick="tReq(${i})"></button><button class="tgl ${f.on?'on':''}" style="background:${f.on?'#10B981':'#E2DAD0'}" onclick="tOn(${i})"></button></div></div>`).join('')}
+window.tReq=function(i){tmpl[i].req=!tmpl[i].req;renderTmpl()}
+window.tOn=function(i){tmpl[i].on=!tmpl[i].on;renderTmpl()}
+
+window.insertTmpl=function(){
+  syncDOM();
+  const minO=Math.min(...secs.map(s=>s.go||0),...qs.map(q=>q.go||0),0);
+  const s=mkSec('Contact Information');s.subtitle='Please fill in your details.';s.displayMode='all';s.go=minO-10;
+  secs.push(s);activeSec=s.id;
+  tmpl.filter(f=>f.on).forEach((f,i)=>{qs.push({id:'q'+Date.now()+i,sectionId:s.id,type:f.type,text:f.label,subtext:'',options:['',''],required:f.req,hidden:false,displayMode:'auto',go:minO-9+i,correctIndex:-1,logic:[]})});
+  normalizeOrders();closeTmpl();renderAll();showPanel('questions');
+  toast('Contact Info template inserted!');
+}
+
+function initDrag(){
+  const list=document.getElementById('q-list');if(!list)return;
+  list.querySelectorAll('.q-item[data-qid]').forEach(item=>{
+    const dh=item.querySelector('.dh');if(!dh)return;
+    dh.addEventListener('mousedown',e=>{e.preventDefault();startDrag('q',item.dataset.qid,item,e.clientX,e.clientY)});
+    item.addEventListener('touchstart',e=>{longT=setTimeout(()=>{const t=e.touches[0];startDrag('q',item.dataset.qid,item,t.clientX,t.clientY);navigator.vibrate&&navigator.vibrate(40)},500)},{passive:true});
+    item.addEventListener('touchend',()=>clearTimeout(longT));item.addEventListener('touchmove',()=>clearTimeout(longT),{passive:true});
+  });
+  list.querySelectorAll('.sec-hdr[data-sid]').forEach(hdr=>{
+    const dh=hdr.querySelector('.dh');if(!dh)return;
+    dh.addEventListener('mousedown',e=>{e.preventDefault();startDrag('s',hdr.dataset.sid,hdr,e.clientX,e.clientY)});
+    hdr.addEventListener('touchstart',e=>{longT=setTimeout(()=>{const t=e.touches[0];startDrag('s',hdr.dataset.sid,hdr,t.clientX,t.clientY);navigator.vibrate&&navigator.vibrate(40)},500)},{passive:true});
+    hdr.addEventListener('touchend',()=>clearTimeout(longT));hdr.addEventListener('touchmove',()=>clearTimeout(longT),{passive:true});
+  });
+}
+
+function startDrag(type,id,el,cx,cy){
+  dragSt={type,id,el};el.classList.add('di');
+  const clr=()=>{document.querySelectorAll('.doq').forEach(x=>x.classList.remove('doq'));document.querySelectorAll('.dt').forEach(x=>x.classList.remove('dt'))};
+  const getEl=(x,y)=>{for(const e of document.elementsFromPoint(x,y)){const qi=e.closest('.q-item[data-qid]');if(qi&&qi.dataset.qid!==id)return{type:'q',id:qi.dataset.qid,el:qi};const si=e.closest('.sec-hdr[data-sid]');if(si&&si.dataset.sid!==id)return{type:'s',id:si.dataset.sid,el:si}}return null};
+  const mv=e=>{clr();const x=e.clientX||e.touches?.[0]?.clientX,y=e.clientY||e.touches?.[0]?.clientY;if(!x)return;const d=getEl(x,y);if(d){if(d.type==='q')d.el.classList.add('doq');else d.el.classList.add('dt')}};
+  const up=e=>{
+    el.classList.remove('di');clr();
+    document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);document.removeEventListener('touchmove',mv);document.removeEventListener('touchend',up);
+    const x=e.clientX||e.changedTouches?.[0]?.clientX,y=e.clientY||e.changedTouches?.[0]?.clientY;
+    if(x){const d=getEl(x,y);if(d)doDrop(dragSt,d)}dragSt=null;
+  };
+  document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);document.addEventListener('touchmove',mv,{passive:true});document.addEventListener('touchend',up);
+}
+
+function doDrop(drag,drop){
+  syncDOM();
+  if(drag.type==='q'&&drop.type==='q'){
+    const dq=qs.find(q=>q.id===drag.id),tq=qs.find(q=>q.id===drop.id);
+    if(!dq||!tq||dq.id===tq.id)return;
+    dq.sectionId=tq.sectionId;dq.go=tq.go-0.5;normalizeOrders();renderAll();toast('Question moved');
+  } else if(drag.type==='q'&&drop.type==='s'){
+    const dq=qs.find(q=>q.id===drag.id),ts=secs.find(s=>s.id===drop.id);
+    if(!dq||!ts)return;dq.sectionId=ts.id;const sq=qs.filter(q=>q.sectionId===ts.id&&q.id!==dq.id);dq.go=sq.length?Math.max(...sq.map(q=>q.go||0))+0.5:ts.go+0.5;normalizeOrders();renderAll();toast('Moved to section');
+  } else if(drag.type==='s'&&drop.type==='s'){
+    const ds=secs.find(s=>s.id===drag.id),ts=secs.find(s=>s.id===drop.id);
+    if(!ds||!ts||ds.id===ts.id)return;ds.go=ts.go-0.5;qs.filter(q=>q.sectionId===ds.id).forEach(q=>q.go=ds.go+0.1);normalizeOrders();renderAll();toast('Section moved');
+  } else if(drag.type==='s'&&drop.type==='q'){
+    const ds=secs.find(s=>s.id===drag.id),tq=qs.find(q=>q.id===drop.id);
+    if(!ds||!tq)return;ds.go=tq.go-0.5;qs.filter(q=>q.sectionId===ds.id).forEach(q=>q.go=ds.go+0.1);normalizeOrders();renderAll();toast('Section moved');
   }
+}
 
-  // Flat ordered list of {type:'sec'|'q', item}
-  function flatList(){
-    const items=[];
-    secs.forEach(s=>items.push({type:'sec',item:s,order:s.gOrder||0}));
-    qs.filter(q=>!q.sectionId).forEach(q=>items.push({type:'q',item:q,order:q.gOrder||0}));
-    items.sort((a,b)=>a.order-b.order);
-    return items;
-  }
-
-  // All questions in correct display order
-  function ordQs(){
-    const r=[];
-    flatList().forEach(e=>{
-      if(e.type==='sec'){
-        qs.filter(q=>q.sectionId===e.item.id)
-          .sort((a,b)=>(a.gOrder||0)-(b.gOrder||0))
-          .forEach(q=>r.push(q));
-      } else {
-        r.push(e.item);
-      }
-    });
-    return r;
-  }
-
-  // Normalize all gOrders to clean integers
-  function normalizeOrders(){
-    const flat=flatList();
-    let idx=0;
-    flat.forEach(e=>{
-      e.item.gOrder=idx++;
-      if(e.type==='sec'){
-        qs.filter(q=>q.sectionId===e.item.id)
-          .sort((a,b)=>(a.gOrder||0)-(b.gOrder||0))
-          .forEach(q=>{q.gOrder=idx;idx+=0.01});
-      }
-    });
-    // Final clean integer pass
-    const allItems=[...secs,...qs].sort((a,b)=>(a.gOrder||0)-(b.gOrder||0));
-    allItems.forEach((item,i)=>item.gOrder=i);
-  }
-
-  // ── FACTORIES ────────────────────────────────────────
-  function mkQ(type,secId){
-    return{
-      id:'q'+Date.now()+Math.random().toString(36).slice(2,5),
-      sectionId:secId||null,type,text:'',subtext:'',
-      options:['',''],required:false,hidden:false,
-      displayMode:'auto',gOrder:getNextOrder(),
-      correctIndex:-1,logic:[]
-    };
-  }
-  function mkSec(title){
-    const c=COLORS[ci%COLORS.length];ci++;
-    return{
-      id:'s'+Date.now()+Math.random().toString(36).slice(2,5),
-      title:title||'New Section',subtitle:'',
-      displayMode:'one',color:c,collapsed:false,
-      gOrder:getNextOrder()
-    };
-  }
-
-  // ── UTILS ────────────────────────────────────────────
-  function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-  function tl(t){const m={multiple:'MCQ',checkbox:'Check',dropdown:'Drop',yesno:'Yes/No',text:'Text',textarea:'Long',email:'Email',phone:'Phone',number:'Num',rating:'Rate',scale:'Scale',date:'Date',file:'File',pledge:'Pledge',quiz:'Quiz'};return m[t]||t}
-  function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
-  function h2r(h,a){const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return`rgba(${r},${g},${b},${a})`}
-
-  // ── COLLAPSIBLE SIDEBAR GROUPS ───────────────────────
-  window.togGrp=function(g){
-    grpOpen[g]=!grpOpen[g];
-    const body=document.getElementById('sbb-'+g);
-    const arrow=document.getElementById('sba-'+g);
-    if(!body||!arrow)return;
-    if(grpOpen[g]){body.style.maxHeight=g==='questions'?'600px':'300px';arrow.textContent='▼'}
-    else{body.style.maxHeight='0';arrow.textContent='▶'}
-  }
-
-  // ── PANELS ───────────────────────────────────────────
-  window.showPanel=function(p){
-    syncDOM();
-    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.sb-nav-item').forEach(x=>x.classList.remove('active'));
-    document.getElementById('panel-'+p).classList.add('active');
-    const n=document.getElementById('sn-'+p);if(n)n.classList.add('active');
-    closeSb();
-  }
-  window.openSb=()=>{document.getElementById('sidebar').classList.add('open');document.getElementById('sbo').classList.add('open')}
-  window.closeSb=()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('sbo').classList.remove('open')}
-
-  // ── SETTINGS ─────────────────────────────────────────
-  window.togS=function(k){cfg[k]=!cfg[k];document.getElementById('tgl-'+k).classList.toggle('on',cfg[k])}
-  window.togPrize=function(){cfg.prize=!cfg.prize;document.getElementById('tgl-prize').classList.toggle('on',cfg.prize);document.getElementById('pf').style.display=cfg.prize?'block':'none'}
-  window.selP=function(t,el){pt=t;document.querySelectorAll('.ptb').forEach(b=>b.classList.remove('active'));el.classList.add('active')}
-
-  // ── SECTIONS ─────────────────────────────────────────
-  window.addSec=function(){
-    syncDOM();
-    const s=mkSec('New Section');
-    secs.push(s);activeSec=s.id;
-    renderAll();showPanel('questions');
-    setTimeout(()=>{const el=document.getElementById('sc-ti-'+s.id);if(el){el.focus();el.select()}},120);
-  }
-
-  window.delSec=function(sid){
-    if(!confirm('Delete this section?\nQuestions inside will become unsectioned.'))return;
-    syncDOM();
-    qs.forEach(q=>{if(q.sectionId===sid)q.sectionId=null});
-    secs=secs.filter(s=>s.id!==sid);
-    if(activeSec===sid)activeSec=null;
-    renderAll();
-  }
-
-  window.togSecColl=function(sid){
-    const s=secs.find(s=>s.id===sid);
-    if(s){s.collapsed=!s.collapsed;renderSB()}
-  }
-
-  window.setSecMode=function(sid,mode){
-    const s=secs.find(s=>s.id===sid);if(!s)return;
-    s.displayMode=mode;
-    const card=document.getElementById('sc-'+sid);if(!card)return;
-    card.querySelectorAll('.sc-mode').forEach(b=>b.classList.remove('active'));
-    const b=card.querySelector('[data-mode="'+mode+'"]');if(b)b.classList.add('active');
-    const hint=card.querySelector('.sc-hint');
-    if(hint)hint.textContent=
-      mode==='one'?'Each question shows on its own screen':
-      mode==='all'?'All questions show together on one page':
-      'Full-screen section intro before questions begin';
-  }
-
-  window.setActSec=function(sid){activeSec=sid;renderSB()}
-
-  // ── QUESTIONS ─────────────────────────────────────────
-  window.addQ=function(type){
-    syncDOM();
-    const q=mkQ(type||'multiple',activeSec);
-    if(activeSec){
-      const sq=qs.filter(x=>x.sectionId===activeSec);
-      q.gOrder=sq.length?Math.max(...sq.map(x=>x.gOrder||0))+0.5:
-        (secs.find(s=>s.id===activeSec)?.gOrder||0)+0.5;
-    }
-    qs.push(q);
-    normalizeOrders();
-    renderAll();showPanel('questions');
-    setTimeout(()=>{
-      const el=document.getElementById('qi-'+q.id);
-      if(el){el.focus();el.scrollIntoView({behavior:'smooth',block:'center'})}
-    },80);
-  }
-
-  window.delQ=function(qid){
-    syncDOM();
-    if(qs.length===1){toast('Need at least 1 question');return}
-    qs=qs.filter(q=>q.id!==qid);
-    renderAll();
-  }
-
-  window.chT=function(qid,type){syncDOM();const q=qs.find(q=>q.id===qid);if(q){q.type=type;renderAll()}}
-  window.togReq=function(qid){const q=qs.find(q=>q.id===qid);if(q){q.required=!q.required;document.getElementById('req-'+qid).classList.toggle('on',q.required)}}
-  window.setDM=function(qid,v){const q=qs.find(q=>q.id===qid);if(q)q.displayMode=v}
-
-  window.addOpt=function(qid){
-    syncDOM();const q=qs.find(q=>q.id===qid);
-    if(q){q.options.push('');renderAll();
-      setTimeout(()=>{const o=document.querySelectorAll('.oi-'+qid);if(o.length)o[o.length-1].focus()},60)}
-  }
-
-  window.rmOpt=function(qid,i){
-    syncDOM();const q=qs.find(q=>q.id===qid);
-    if(q&&q.options.length>2){
-      q.options.splice(i,1);
-      if(q.correctIndex===i)q.correctIndex=-1;
-      else if(q.correctIndex>i)q.correctIndex--;
-      renderAll();
-    } else toast('Need at least 2 options');
-  }
-
-  window.mkOK=function(qid,i){syncDOM();const q=qs.find(q=>q.id===qid);if(q){q.correctIndex=q.correctIndex===i?-1:i;renderAll()}}
-
-  // ── TABS ─────────────────────────────────────────────
-  window.showQTab=function(qid,tab){
-    const c=document.getElementById('qc-'+qid);if(!c)return;
-    c.querySelectorAll('.q-tab').forEach(t=>t.classList.remove('active'));
-    c.querySelectorAll('.qtab-panel').forEach(p=>p.classList.remove('active'));
-    c.querySelector('.q-tab[data-tab="'+tab+'"]').classList.add('active');
-    c.querySelector('.qtab-panel[data-tab="'+tab+'"]').classList.add('active');
-  }
-
-  // ── LOGIC ─────────────────────────────────────────────
-  window.addRule=function(qid){
-    syncDOM();const q=qs.find(q=>q.id===qid);if(!q)return;
-    q.logic.push({id:'r'+Date.now(),condType:'ALL',conditions:[{qid:qid,op:'is',val:''}],action:'skip',target:''});
-    renderAll();setTimeout(()=>showQTab(qid,'logic'),60);
-  }
-  window.delRule=function(qid,rid){
-    syncDOM();const q=qs.find(q=>q.id===qid);
-    if(q){q.logic=q.logic.filter(r=>r.id!==rid);renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}
-  }
-  window.setCondType=function(qid,rid,ct){
-    const q=qs.find(q=>q.id===qid);const r=q&&q.logic.find(r=>r.id===rid);
-    if(r){r.condType=ct;renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}
-  }
-  window.addCond=function(qid,rid){
-    syncDOM();const q=qs.find(q=>q.id===qid);const r=q&&q.logic.find(r=>r.id===rid);
-    if(r){r.conditions.push({qid:qid,op:'is',val:''});renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}
-  }
-  window.rmCond=function(qid,rid,ci){
-    syncDOM();const q=qs.find(q=>q.id===qid);const r=q&&q.logic.find(r=>r.id===rid);
-    if(r&&r.conditions.length>1){r.conditions.splice(ci,1);renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}
-    else toast('Need at least 1 condition');
-  }
-  window.chAct=function(qid,rid){
-    sLogic();const q=qs.find(q=>q.id===qid);const r=q&&q.logic.find(r=>r.id===rid);
-    if(r){r.action=document.getElementById('act-'+rid).value;renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}
-  }
-
-  // ── SYNC DOM → STATE ─────────────────────────────────
-  function sLogic(){
-    qs.forEach(q=>{
-      q.logic.forEach(rule=>{
-        rule.conditions.forEach((c,ci)=>{
-          const a=document.getElementById('cq-'+rule.id+'-'+ci);
-          const b=document.getElementById('co-'+rule.id+'-'+ci);
-          const d=document.getElementById('cv-'+rule.id+'-'+ci);
-          if(a)c.qid=a.value;if(b)c.op=b.value;if(d)c.val=d.value;
-        });
-        const e=document.getElementById('act-'+rule.id);
-        const f=document.getElementById('tgt-'+rule.id);
-        if(e)rule.action=e.value;if(f)rule.target=f.value;
-      });
-    });
-  }
-
-  function syncDOM(){
-    qs.forEach(q=>{
-      const a=document.getElementById('qi-'+q.id);if(a)q.text=a.value;
-      const b=document.getElementById('qs-'+q.id);if(b)q.subtext=b.value;
-      if(['multiple','checkbox','dropdown','quiz'].includes(q.type)){
-        const c=document.querySelectorAll('.oi-'+q.id);
-        if(c.length)q.options=Array.from(c).map(e=>e.value);
-      }
-      const d=document.getElementById('dm-'+q.id);if(d)q.displayMode=d.value;
-    });
-    secs.forEach(s=>{
-      const a=document.getElementById('sc-ti-'+s.id);if(a)s.title=a.value;
-      const b=document.getElementById('sc-su-'+s.id);if(b)s.subtitle=b.value;
-    });
-    sLogic();
-  }
-
-  // ── TEMPLATE ─────────────────────────────────────────
-  window.openTmpl=function(){renderTmpl();document.getElementById('tmpl-modal').classList.add('open')}
-  window.closeTmpl=function(){document.getElementById('tmpl-modal').classList.remove('open')}
-
-  function renderTmpl(){
-    document.getElementById('tmpl-list').innerHTML=tmpl.map((f,i)=>
-      `<div class="tr" style="${f.on?'':'opacity:0.5'}">
-        <div class="ti"><span class="tic">${f.icon}</span><div><div class="tn">${f.label}</div><div class="tt2">${f.type}</div></div></div>
-        <div class="tc"><span class="trl">Req</span>
-          <button class="tgl ${f.req?'on':''}" style="width:28px;height:15px" onclick="tReq(${i})"></button>
-          <button class="tgl ${f.on?'on':''}" style="background:${f.on?'#10B981':'#E2DAD0'}" onclick="tOn(${i})"></button>
-        </div>
-      </div>`
-    ).join('');
-  }
-
-  window.tReq=function(i){tmpl[i].req=!tmpl[i].req;renderTmpl()}
-  window.tOn=function(i){tmpl[i].on=!tmpl[i].on;renderTmpl()}
-
-  window.insertTmpl=function(){
-    syncDOM();
-    // Place contact section BEFORE all existing items
-    const minOrder=Math.min(
-      ...secs.map(s=>s.gOrder||0),
-      ...qs.map(q=>q.gOrder||0),
-      0
-    );
-    const s=mkSec('Contact Information');
-    s.subtitle='Please fill in your details.';
-    s.displayMode='all';
-    s.gOrder=minOrder-10; // well before everything
-    secs.push(s);
-    activeSec=s.id;
-    tmpl.filter(f=>f.on).forEach((f,i)=>{
-      qs.push({
-        id:'q'+Date.now()+i,
-        sectionId:s.id,
-        type:f.type,text:f.label,subtext:'',
-        options:['',''],required:f.req,hidden:false,
-        displayMode:'auto',gOrder:minOrder-9+i,
-        correctIndex:-1,logic:[]
-      });
-    });
-    normalizeOrders();
-    closeTmpl();renderAll();showPanel('questions');
-    toast('✅ Contact Info template inserted!');
-  }
-
-  // ── DRAG & DROP ──────────────────────────────────────
-  function initDrag(){
-    const list=document.getElementById('q-list');if(!list)return;
-    list.querySelectorAll('.q-item[data-qid]').forEach(item=>{
-      const dh=item.querySelector('.dh');if(!dh)return;
-      dh.addEventListener('mousedown',e=>{e.preventDefault();startDrag('q',item.dataset.qid,item,e.clientX,e.clientY)});
-      item.addEventListener('touchstart',e=>{
-        longT=setTimeout(()=>{
-          const t=e.touches[0];
-          startDrag('q',item.dataset.qid,item,t.clientX,t.clientY);
-          navigator.vibrate&&navigator.vibrate(40);
-        },500);
-      },{passive:true});
-      item.addEventListener('touchend',()=>clearTimeout(longT));
-      item.addEventListener('touchmove',()=>clearTimeout(longT),{passive:true});
-    });
-    list.querySelectorAll('.sec-hdr[data-sid]').forEach(hdr=>{
-      const dh=hdr.querySelector('.dh');if(!dh)return;
-      dh.addEventListener('mousedown',e=>{e.preventDefault();startDrag('s',hdr.dataset.sid,hdr,e.clientX,e.clientY)});
-      hdr.addEventListener('touchstart',e=>{
-        longT=setTimeout(()=>{
-          const t=e.touches[0];
-          startDrag('s',hdr.dataset.sid,hdr,t.clientX,t.clientY);
-          navigator.vibrate&&navigator.vibrate(40);
-        },500);
-      },{passive:true});
-      hdr.addEventListener('touchend',()=>clearTimeout(longT));
-      hdr.addEventListener('touchmove',()=>clearTimeout(longT),{passive:true});
-    });
-  }
-
-  function startDrag(type,id,el,cx,cy){
-    dragSt={type,id,el};
-    el.classList.add('di');
-    const clr=()=>{
-      document.querySelectorAll('.doq').forEach(x=>x.classList.remove('doq'));
-      document.querySelectorAll('.dt').forEach(x=>x.classList.remove('dt'));
-    };
-    const getEl=(x,y)=>{
-      for(const e of document.elementsFromPoint(x,y)){
-        const qi=e.closest('.q-item[data-qid]');
-        if(qi&&qi.dataset.qid!==id)return{type:'q',id:qi.dataset.qid,el:qi};
-        const si=e.closest('.sec-hdr[data-sid]');
-        if(si&&si.dataset.sid!==id)return{type:'s',id:si.dataset.sid,el:si};
-      }return null;
-    };
-    const mv=e=>{
-      clr();
-      const x=e.clientX||e.touches?.[0]?.clientX;
-      const y=e.clientY||e.touches?.[0]?.clientY;
-      if(!x)return;
-      const d=getEl(x,y);
-      if(d){if(d.type==='q')d.el.classList.add('doq');else d.el.classList.add('dt')}
-    };
-    const up=e=>{
-      el.classList.remove('di');clr();
-      document.removeEventListener('mousemove',mv);
-      document.removeEventListener('mouseup',up);
-      document.removeEventListener('touchmove',mv);
-      document.removeEventListener('touchend',up);
-      const x=e.clientX||e.changedTouches?.[0]?.clientX;
-      const y=e.clientY||e.changedTouches?.[0]?.clientY;
-      if(x){const d=getEl(x,y);if(d)doDrop(dragSt,d)}
-      dragSt=null;
-    };
-    document.addEventListener('mousemove',mv);
-    document.addEventListener('mouseup',up);
-    document.addEventListener('touchmove',mv,{passive:true});
-    document.addEventListener('touchend',up);
-  }
-
-  function doDrop(drag,drop){
-    syncDOM();
-    if(drag.type==='q'&&drop.type==='q'){
-      const dq=qs.find(q=>q.id===drag.id);
-      const tq=qs.find(q=>q.id===drop.id);
-      if(!dq||!tq||dq.id===tq.id)return;
-      dq.sectionId=tq.sectionId;
-      dq.gOrder=tq.gOrder-0.5;
-      normalizeOrders();
-      renderAll();toast('Question moved ✓');
-    } else if(drag.type==='q'&&drop.type==='s'){
-      const dq=qs.find(q=>q.id===drag.id);
-      const ts=secs.find(s=>s.id===drop.id);
-      if(!dq||!ts)return;
-      dq.sectionId=ts.id;
-      const sq=qs.filter(q=>q.sectionId===ts.id&&q.id!==dq.id);
-      dq.gOrder=sq.length?Math.max(...sq.map(q=>q.gOrder||0))+0.5:ts.gOrder+0.5;
-      normalizeOrders();
-      renderAll();toast('Moved to section ✓');
-    } else if(drag.type==='s'&&drop.type==='s'){
-      const ds=secs.find(s=>s.id===drag.id);
-      const ts=secs.find(s=>s.id===drop.id);
-      if(!ds||!ts||ds.id===ts.id)return;
-      ds.gOrder=ts.gOrder-0.5;
-      // Move section's questions with it
-      qs.filter(q=>q.sectionId===ds.id).forEach(q=>q.gOrder=ds.gOrder+0.1);
-      normalizeOrders();
-      renderAll();toast('Section moved ✓');
-    } else if(drag.type==='s'&&drop.type==='q'){
-      const ds=secs.find(s=>s.id===drag.id);
-      const tq=qs.find(q=>q.id===drop.id);
-      if(!ds||!tq)return;
-      ds.gOrder=tq.gOrder-0.5;
-      qs.filter(q=>q.sectionId===ds.id).forEach(q=>q.gOrder=ds.gOrder+0.1);
-      normalizeOrders();
-      renderAll();toast('Section moved ✓');
-    }
-  }
-
-  // ── RENDER SIDEBAR ───────────────────────────────────
-  function renderSB(){
-    const list=document.getElementById('q-list');
-    let html='',qn=0;
-    const flat=flatList();
-
-    flat.forEach(e=>{
-      if(e.type==='sec'){
-        const s=e.item;
-        const sq=qs.filter(q=>q.sectionId===s.id).sort((a,b)=>(a.gOrder||0)-(b.gOrder||0));
-        const isA=activeSec===s.id;
-        html+=`<div class="sec-grp">
-          <div class="sec-hdr${isA?' active-s':''}" data-sid="${s.id}" onclick="setActSec('${s.id}')">
-            <span class="dh" title="Hold to drag">⠿</span>
-            <span class="sec-dot" style="background:${s.color}"></span>
-            <span class="sec-nm">${eh(s.title||'Untitled')}</span>
-            <span class="sec-cnt">${sq.length}</span>
-            <button class="sec-coll${s.collapsed?' c':''}" onclick="event.stopPropagation();togSecColl('${s.id}')">${s.collapsed?'▶':'▼'}</button>
-          </div>
-          <div class="sec-qs${s.collapsed?' c':''}" style="max-height:${s.collapsed?'0':'500px'}">`;
-        sq.forEach(q=>{
-          if(q.type!=='heading')qn++;
-          const hl=q.logic&&q.logic.length>0;
-          html+=`<div class="q-item" data-qid="${q.id}" onclick="goQ('${q.id}')">
-            <span class="dh" title="Hold to drag">⠿</span>
-            <div class="q-num" style="background:${s.color}">${qn}</div>
-            <div class="q-itxt">${eh(q.text)||'Untitled'}</div>
-            <div class="q-ityp">${tl(q.type)}${hl?' 🔀':''}</div>
-          </div>`;
-        });
-        html+=`</div></div>`;
-      } else {
-        const q=e.item;
-        if(q.type!=='heading')qn++;
-        const hl=q.logic&&q.logic.length>0;
-        html+=`<div class="unsec-item">
-          <div class="q-item" data-qid="${q.id}" onclick="goQ('${q.id}')">
-            <span class="dh" title="Hold to drag">⠿</span>
-            <div class="q-num" style="background:#64748B">${qn}</div>
-            <div class="q-itxt">${eh(q.text)||'Untitled'}</div>
-            <div class="q-ityp">${tl(q.type)}${hl?' 🔀':''}</div>
-          </div>
-        </div>`;
-      }
-    });
-
-    list.innerHTML=html;
-    document.getElementById('q-badge').textContent=qn;
-    initDrag();
-  }
-
-  window.goQ=function(qid){
-    showPanel('questions');
-    setTimeout(()=>{
-      const el=document.getElementById('qc-'+qid);
-      if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
-    },100);
-    closeSb();
-  }
-
-  // ── RENDER RIGHT SIDE ─────────────────────────────────
-  function renderQA(){
-    const area=document.getElementById('q-render');
-    let html='',qn=0;
-    const flat=flatList();
-
-    flat.forEach(e=>{
-      if(e.type==='sec'){
-        const s=e.item;
-        const sq=qs.filter(q=>q.sectionId===s.id).sort((a,b)=>(a.gOrder||0)-(b.gOrder||0));
-        html+=`<div class="sec-card" id="sc-${s.id}" style="border-color:${s.color};background:${h2r(s.color,0.04)}">
-          <div class="sc-top">
-            <span>📌</span>
-            <span class="sc-ttl" style="color:${s.color}">${eh(s.title||'New Section')}</span>
-            <button class="sc-del" onclick="delSec('${s.id}')">✕</button>
-          </div>
-          <div class="sc-f"><label class="sc-lbl">Section title</label>
-            <input class="sc-inp" id="sc-ti-${s.id}" value="${eh(s.title)}" placeholder="e.g. Personal Information" style="border-color:${h2r(s.color,0.3)}">
-          </div>
-          <div class="sc-f"><label class="sc-lbl">Subtitle (optional)</label>
-            <input class="sc-inp" id="sc-su-${s.id}" value="${eh(s.subtitle||'')}" placeholder="e.g. Please fill in your details" style="border-color:${h2r(s.color,0.3)}">
-          </div>
-          <div class="sc-f"><label class="sc-lbl">Display mode</label>
-            <div class="sc-modes">
-              <button class="sc-mode${s.displayMode==='one'?' active':''}" data-mode="one" onclick="setSecMode('${s.id}','one')">✨ One at a time</button>
-              <button class="sc-mode${s.displayMode==='all'?' active':''}" data-mode="all" onclick="setSecMode('${s.id}','all')">📋 All on one page</button>
-              <button class="sc-mode${s.displayMode==='fullscreen'?' active':''}" data-mode="fullscreen" onclick="setSecMode('${s.id}','fullscreen')">🖥 Full screen intro</button>
-            </div>
-            <div class="sc-hint">${
-              s.displayMode==='one'?'Each question shows on its own screen':
-              s.displayMode==='all'?'All questions show together on one page':
-              'Full-screen section intro before questions begin'
-            }</div>
-          </div>
-        </div>`;
-        sq.forEach(q=>{if(q.type!=='heading')qn++;html+=renderQCard(q,qn,s.color)});
-      } else {
-        const q=e.item;
-        if(q.type!=='heading')qn++;
-        html+=renderQCard(q,qn,null);
-      }
-    });
-
-    area.innerHTML=html;
-  }
-
-  function renderQCard(q,qn,sc){
-    const nb=sc||'#64748B';
-    const hl=q.logic&&q.logic.length>0;
-    const bl=sc?`border-left:4px solid ${sc};`:'';
-    const ph={multiple:'e.g. How satisfied are you?',checkbox:'e.g. Which features do you use?',dropdown:'e.g. Which country?',yesno:'e.g. Would you recommend us?',text:'e.g. What is your full name?',textarea:'e.g. Describe your experience',email:'e.g. Your email address?',phone:'e.g. Your phone number?',number:'e.g. How many employees?',rating:'e.g. Rate our service (1-5)',scale:'e.g. Likelihood to recommend (1-10)',date:'e.g. Your date of birth?',file:'e.g. Link to portfolio',pledge:'e.g. I pledge to reduce my carbon footprint',quiz:'e.g. What is the capital of India?'};
-    const pv={text:'Short answer...',textarea:'Long answer...',email:'📧 Email format validated',phone:'📱 Phone number',number:'🔢 Numbers only',date:'📅 Date picker — DD-MM-YYYY',file:'📎 Paste a URL'};
-    const hasO=['multiple','checkbox','dropdown','quiz'].includes(q.type);
-    let inp='';
-    if(q.type==='pledge'){
-      inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.pledge)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value">
-      <div class="plbox"><div class="pltxt">${q.text||'Your pledge statement...'}</div><div class="plchk"><div class="plchkb"></div><span>I agree and commit to this pledge</span></div></div>`;
-    } else if(q.type==='quiz'){
-      inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.quiz)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value">
-      <div style="font-size:0.68rem;color:#64748B;margin-bottom:5px">✓ Click to mark correct answer</div>
-      <div class="ol">${(q.options||[]).map((o,oi)=>`<div class="or"><div class="ob"></div><input class="oi oi-${q.id}" value="${eh(o)}" placeholder="Option ${oi+1}"><button class="okm${q.correctIndex===oi?' ok':''}" onclick="mkOK('${q.id}',${oi})">✓</button><button class="orm" onclick="rmOpt('${q.id}',${oi})">✕</button></div>`).join('')}</div>
-      <button class="aob" onclick="addOpt('${q.id}')">+ Add option</button>`;
-    } else if(hasO){
-      const bc2=q.type==='checkbox'?'ob sq':'ob';
-      inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph[q.type]||'')}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value">
-      <div class="ol">${(q.options||[]).map((o,oi)=>`<div class="or"><div class="${bc2}"></div><input class="oi oi-${q.id}" value="${eh(o)}" placeholder="Option ${oi+1}"><button class="orm" onclick="rmOpt('${q.id}',${oi})">✕</button></div>`).join('')}</div>
-      <button class="aob" onclick="addOpt('${q.id}')">+ Add option</button>`;
-    } else if(q.type==='yesno'){
-      inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.yesno)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value">
-      <div style="display:flex;gap:7px"><div style="padding:6px 14px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600">Yes</div><div style="padding:6px 14px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600">No</div></div>`;
-    } else if(q.type==='rating'){
-      inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.rating)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value">
-      <div class="rdots">${[1,2,3,4,5].map(n=>`<div class="rdot">${n}</div>`).join('')}</div>`;
-    } else if(q.type==='scale'){
-      inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.scale)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value">
-      <div class="sdots">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="sdot">${n}</div>`).join('')}</div>`;
+function renderSB(){
+  const list=document.getElementById('q-list');let html='',qn=0;
+  flatList().forEach(e=>{
+    if(e.type==='sec'){
+      const s=e.item,sq=qs.filter(q=>q.sectionId===s.id).sort((a,b)=>(a.go||0)-(b.go||0)),isA=activeSec===s.id;
+      html+=`<div class="sec-grp"><div class="sec-hdr${isA?' active-s':''}" data-sid="${s.id}" onclick="setActSec('${s.id}')"><span class="dh" title="Hold to drag">&#8942;</span><span class="sec-dot" style="background:${s.color}"></span><span class="sec-nm">${eh(s.title||'Untitled')}</span><span class="sec-cnt">${sq.length}</span><button class="sec-coll${s.collapsed?' c':''}" onclick="event.stopPropagation();togSecColl('${s.id}')">${s.collapsed?'▶':'▼'}</button></div><div class="sec-qs${s.collapsed?' c':''}" style="max-height:${s.collapsed?'0':'500px'}">`;
+      sq.forEach(q=>{if(q.type!=='heading')qn++;const hl=q.logic&&q.logic.length>0;html+=`<div class="q-item" data-qid="${q.id}" onclick="goQ('${q.id}')"><span class="dh" title="Hold to drag">&#8942;</span><div class="q-num" style="background:${s.color}">${qn}</div><div class="q-itxt">${eh(q.text)||'Untitled'}</div><div class="q-ityp">${tl(q.type)}${hl?' 🔀':''}</div></div>`});
+      html+=`</div></div>`;
     } else {
-      inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph[q.type]||'Type question...')}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value">
-      <div class="pchip">${pv[q.type]||''}</div>`;
+      const q=e.item;if(q.type!=='heading')qn++;const hl=q.logic&&q.logic.length>0;
+      html+=`<div class="unsec-item"><div class="q-item" data-qid="${q.id}" onclick="goQ('${q.id}')"><span class="dh" title="Hold to drag">&#8942;</span><div class="q-num" style="background:#64748B">${qn}</div><div class="q-itxt">${eh(q.text)||'Untitled'}</div><div class="q-ityp">${tl(q.type)}${hl?' 🔀':''}</div></div></div>`;
     }
+  });
+  list.innerHTML=html;document.getElementById('q-badge').textContent=qn;initDrag();
+}
 
-    const allQ=ordQs().filter(x=>x.id!==q.id);
-    let lh=`<div class="lw">`;
-    if(!q.logic||!q.logic.length)lh+=`<div class="l-empty">No logic rules yet.<br>Add a rule to skip, show or hide questions based on answers.</div>`;
-    (q.logic||[]).forEach((rule,ri)=>{
-      lh+=`<div class="l-rule"><div class="l-rhdr"><span class="l-rlbl">Rule ${ri+1}</span><button class="l-rdel" onclick="delRule('${q.id}','${rule.id}')">✕ Delete</button></div>`;
-      if(rule.conditions.length>1)lh+=`<div class="ct-row"><button class="ct-btn${rule.condType==='ALL'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ALL')">ALL (AND)</button><button class="ct-btn${rule.condType==='ANY'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ANY')">ANY (OR)</button></div>`;
-      rule.conditions.forEach((c,ci2)=>{
-        lh+=`<div class="l-cond">
-          <select class="ls" id="cq-${rule.id}-${ci2}"><option value="${q.id}"${c.qid===q.id?' selected':''}>This question</option>${allQ.map(aq=>`<option value="${aq.id}"${c.qid===aq.id?' selected':''}>${(aq.text||'Untitled').slice(0,24)}</option>`).join('')}</select>
-          <select class="ls" id="co-${rule.id}-${ci2}"><option value="is"${c.op==='is'?' selected':''}>is</option><option value="is_not"${c.op==='is_not'?' selected':''}>is not</option><option value="contains"${c.op==='contains'?' selected':''}>contains</option><option value="not_contains"${c.op==='not_contains'?' selected':''}>not contain</option><option value="filled"${c.op==='filled'?' selected':''}>is filled</option><option value="empty"${c.op==='empty'?' selected':''}>is empty</option></select>
-          <input class="ls" id="cv-${rule.id}-${ci2}" value="${eh(c.val)}" placeholder="value" style="min-width:60px">
-          ${ci2>0?`<button class="l-rdel" onclick="rmCond('${q.id}','${rule.id}',${ci2})">✕</button>`:''}
-        </div>`;
-      });
-      lh+=`<button class="acd" onclick="addCond('${q.id}','${rule.id}')">+ Add condition</button>`;
-      lh+=`<div class="l-arow"><span class="l-albl">THEN</span>
-        <select class="ls" id="act-${rule.id}" onchange="chAct('${q.id}','${rule.id}')">
-          <option value="skip"${rule.action==='skip'?' selected':''}>Skip to question</option>
-          <option value="skip_sec"${rule.action==='skip_sec'?' selected':''}>Skip to section</option>
-          <option value="show"${rule.action==='show'?' selected':''}>Show question</option>
-          <option value="hide"${rule.action==='hide'?' selected':''}>Hide question</option>
-          <option value="end"${rule.action==='end'?' selected':''}>End survey</option>
-        </select>`;
-      if(['skip','show','hide'].includes(rule.action)){
-        lh+=`<select class="ls" id="tgt-${rule.id}">${allQ.map(aq=>`<option value="${aq.id}"${rule.target===aq.id?' selected':''}>${(aq.text||'Untitled').slice(0,20)}</option>`).join('')}</select>`;
-      } else if(rule.action==='skip_sec'){
-        lh+=`<select class="ls" id="tgt-${rule.id}">${secs.map(s=>`<option value="${s.id}"${rule.target===s.id?' selected':''}>${(s.title||'Untitled').slice(0,20)}</option>`).join('')}</select>`;
-      } else {
-        lh+=`<span id="tgt-${rule.id}" style="display:none"></span>`;
-      }
-      lh+=`</div></div>`;
-    });
-    lh+=`<button class="badr" onclick="addRule('${q.id}')">+ Add logic rule</button>`;
-    lh+=`<div class="l-def"><strong>OTHERWISE:</strong> Continue to next question</div></div>`;
+window.goQ=function(qid){showPanel('questions');setTimeout(()=>{const el=document.getElementById('qc-'+qid);if(el)el.scrollIntoView({behavior:'smooth',block:'center'})},100);closeSb()}
 
-    return `<div class="q-card${sc?' ins':''}" id="qc-${q.id}" style="${bl}">
-      <div class="q-tabs">
-        <button class="q-tab active" data-tab="question" onclick="showQTab('${q.id}','question')">Question</button>
-        <button class="q-tab" data-tab="logic" onclick="showQTab('${q.id}','logic')">Logic${hl?`<span class="q-tbadge">${q.logic.length}</span>`:''}</button>
-      </div>
-      <div class="qtab-panel active" data-tab="question">
-        <div class="q-body">
-          <div class="q-hdr">
-            <div class="q-nb" style="background:${nb}">${qn}</div>
-            <select class="q-tsel" onchange="chT('${q.id}',this.value)">
-              <optgroup label="Choice"><option value="multiple"${q.type==='multiple'?' selected':''}>◉ Multiple choice</option><option value="checkbox"${q.type==='checkbox'?' selected':''}>☑ Checkboxes</option><option value="dropdown"${q.type==='dropdown'?' selected':''}>▾ Dropdown</option><option value="yesno"${q.type==='yesno'?' selected':''}>✓ Yes/No</option></optgroup>
-              <optgroup label="Text"><option value="text"${q.type==='text'?' selected':''}>✏️ Short text</option><option value="textarea"${q.type==='textarea'?' selected':''}>📝 Long text</option><option value="email"${q.type==='email'?' selected':''}>📧 Email</option><option value="phone"${q.type==='phone'?' selected':''}>📱 Phone</option><option value="number"${q.type==='number'?' selected':''}>🔢 Number</option></optgroup>
-              <optgroup label="Scale & Date"><option value="rating"${q.type==='rating'?' selected':''}>⭐ Rating 1-5</option><option value="scale"${q.type==='scale'?' selected':''}>📊 Scale 1-10</option><option value="date"${q.type==='date'?' selected':''}>📅 Date</option></optgroup>
-              <optgroup label="Special"><option value="file"${q.type==='file'?' selected':''}>📎 File URL</option><option value="pledge"${q.type==='pledge'?' selected':''}>🤝 Pledge</option><option value="quiz"${q.type==='quiz'?' selected':''}>🎓 Quiz MCQ</option></optgroup>
-            </select>
-            <button class="q-del" onclick="delQ('${q.id}')">✕</button>
-          </div>
-          ${inp}
-          <div class="q-foot">
-            <button class="tgl${q.required?' on':''}" id="req-${q.id}" onclick="togReq('${q.id}')"></button>
-            <span class="tgl-l">${q.type==='pledge'?'Must agree':'Required'}</span>
-            <select class="dm-sel" id="dm-${q.id}" onchange="setDM('${q.id}',this.value)" title="Display mode">
-              <option value="auto"${q.displayMode==='auto'?' selected':''}>📐 Follow section</option>
-              <option value="solo"${q.displayMode==='solo'?' selected':''}>🖥 Own screen</option>
-              <option value="group-prev"${q.displayMode==='group-prev'?' selected':''}>⬆ With previous</option>
-              <option value="group-next"${q.displayMode==='group-next'?' selected':''}>⬇ With next</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="qtab-panel" data-tab="logic">
-        <div class="q-body">${lh}</div>
-      </div>
-    </div>`;
+function renderQA(){
+  const area=document.getElementById('q-render');let html='',qn=0;
+  flatList().forEach(e=>{
+    if(e.type==='sec'){
+      const s=e.item,sq=qs.filter(q=>q.sectionId===s.id).sort((a,b)=>(a.go||0)-(b.go||0));
+      html+=`<div class="sec-card" id="sc-${s.id}" style="border-color:${s.color};background:${h2r(s.color,0.04)}"><div class="sc-top"><span>📌</span><span class="sc-ttl" style="color:${s.color}">${eh(s.title||'New Section')}</span><button class="sc-del" onclick="delSec('${s.id}')">✕</button></div><div class="sc-f"><label class="sc-lbl">Section title</label><input class="sc-inp" id="sc-ti-${s.id}" value="${eh(s.title)}" placeholder="e.g. Personal Information" style="border-color:${h2r(s.color,0.3)}"></div><div class="sc-f"><label class="sc-lbl">Subtitle (optional)</label><input class="sc-inp" id="sc-su-${s.id}" value="${eh(s.subtitle||'')}" placeholder="e.g. Please fill in your details" style="border-color:${h2r(s.color,0.3)}"></div><div class="sc-f"><label class="sc-lbl">Display mode</label><div class="sc-modes"><button class="sc-mode${s.displayMode==='one'?' active':''}" data-mode="one" onclick="setSecMode('${s.id}','one')">One at a time</button><button class="sc-mode${s.displayMode==='all'?' active':''}" data-mode="all" onclick="setSecMode('${s.id}','all')">All on one page</button><button class="sc-mode${s.displayMode==='fullscreen'?' active':''}" data-mode="fullscreen" onclick="setSecMode('${s.id}','fullscreen')">Full screen intro</button></div><div class="sc-hint">${s.displayMode==='one'?'Each question shows on its own screen':s.displayMode==='all'?'All questions show together on one page':'Full-screen section intro before questions begin'}</div></div></div>`;
+      sq.forEach(q=>{if(q.type!=='heading')qn++;html+=renderQCard(q,qn,s.color)});
+    } else {
+      const q=e.item;if(q.type!=='heading')qn++;html+=renderQCard(q,qn,null);
+    }
+  });
+  area.innerHTML=html;
+}
+
+function renderQCard(q,qn,sc){
+  const nb=sc||'#64748B',hl=q.logic&&q.logic.length>0,bl=sc?`border-left:4px solid ${sc};`:'';
+  const ph={multiple:'e.g. How satisfied are you?',checkbox:'e.g. Which features do you use?',dropdown:'e.g. Which country?',yesno:'e.g. Would you recommend us?',text:'e.g. What is your full name?',textarea:'e.g. Describe your experience',email:'e.g. Your email address?',phone:'e.g. Your phone number?',number:'e.g. How many employees?',rating:'e.g. Rate our service 1-5',scale:'e.g. Likelihood to recommend 1-10',date:'e.g. Your date of birth?',file:'e.g. Link to portfolio',pledge:'e.g. I pledge to reduce my carbon footprint',quiz:'e.g. What is the capital of India?'};
+  const pv={text:'Short answer...',textarea:'Long answer...',email:'Email format validated',phone:'Phone number',number:'Numbers only',date:'Date picker DD-MM-YYYY',file:'Paste a URL'};
+  const hasO=['multiple','checkbox','dropdown','quiz'].includes(q.type);
+  let inp='';
+  if(q.type==='pledge'){
+    inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.pledge)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div class="plbox"><div class="pltxt">${q.text||'Your pledge statement...'}</div><div class="plchk"><div class="plchkb"></div><span>I agree and commit to this pledge</span></div></div>`;
+  } else if(q.type==='quiz'){
+    inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.quiz)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div style="font-size:0.68rem;color:#64748B;margin-bottom:5px">Click to mark correct answer</div><div class="ol">${(q.options||[]).map((o,oi)=>`<div class="or"><div class="ob"></div><input class="oi oi-${q.id}" value="${eh(o)}" placeholder="Option ${oi+1}"><button class="okm${q.correctIndex===oi?' ok':''}" onclick="mkOK('${q.id}',${oi})">✓</button><button class="orm" onclick="rmOpt('${q.id}',${oi})">✕</button></div>`).join('')}</div><button class="aob" onclick="addOpt('${q.id}')">+ Add option</button>`;
+  } else if(hasO){
+    const bc2=q.type==='checkbox'?'ob sq':'ob';
+    inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph[q.type]||'')}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div class="ol">${(q.options||[]).map((o,oi)=>`<div class="or"><div class="${bc2}"></div><input class="oi oi-${q.id}" value="${eh(o)}" placeholder="Option ${oi+1}"><button class="orm" onclick="rmOpt('${q.id}',${oi})">✕</button></div>`).join('')}</div><button class="aob" onclick="addOpt('${q.id}')">+ Add option</button>`;
+  } else if(q.type==='yesno'){
+    inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.yesno)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div style="display:flex;gap:7px"><div style="padding:6px 14px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600">Yes</div><div style="padding:6px 14px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600">No</div></div>`;
+  } else if(q.type==='rating'){
+    inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.rating)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div class="rdots">${[1,2,3,4,5].map(n=>`<div class="rdot">${n}</div>`).join('')}</div>`;
+  } else if(q.type==='scale'){
+    inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.scale)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div class="sdots">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="sdot">${n}</div>`).join('')}</div>`;
+  } else {
+    inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph[q.type]||'Type question...')}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div class="pchip">${pv[q.type]||''}</div>`;
   }
 
-  function renderAll(){renderSB();renderQA()}
-    // ── SAVE ─────────────────────────────────────────────
-  async function save(status){
-    syncDOM();
-    const title=document.getElementById('s-title').value.trim();
-    if(!title){toast('Please add a survey title');return null}
-    const validQs=qs.filter(q=>q.text.trim()||q.type==='pledge');
-    if(!validQs.length){toast('Please add at least one question');return null}
-    const data={
-      title,
-      description:document.getElementById('s-desc').value.trim(),
-      sections:secs,
-      questions:validQs,
-      settings:cfg,
-      style:document.getElementById('s-style').value,
-      welcomePage:{
-        logo:document.getElementById('w-logo').value.trim(),
-        headline:document.getElementById('w-head').value.trim(),
-        btnText:document.getElementById('w-btn').value.trim(),
-        bgColor:document.getElementById('w-bgc').value.trim(),
-        bgImage:document.getElementById('w-bgi').value.trim(),
-        bgVideo:document.getElementById('w-bgv').value.trim(),
-      },
-      thankYouPage:{
-        headline:document.getElementById('ty-h').value.trim(),
-        message:document.getElementById('ty-m').value.trim(),
-        redirect:document.getElementById('ty-r').value.trim(),
-        showShare:cfg.share||false,
-      },
-      prize:cfg.prize?{
-        enabled:true,type:pt,
-        description:document.getElementById('p-desc').value.trim(),
-        winners:document.getElementById('p-win').value||'1',
-        selection:document.getElementById('p-sel').value,
-        notification:document.getElementById('p-not').value,
-      }:{enabled:false},
-      status,
-      userId:U.uid,
-      responseCount:0,
-      questionCount:validQs.length,
-      updatedAt:serverTimestamp()
-    };
+  const allQ=ordQs().filter(x=>x.id!==q.id);
+  let lh=`<div class="lw">`;
+  if(!q.logic||!q.logic.length)lh+=`<div class="l-empty">No logic rules yet.<br>Add a rule to skip, show or hide questions based on answers.</div>`;
+  (q.logic||[]).forEach((rule,ri)=>{
+    lh+=`<div class="l-rule"><div class="l-rhdr"><span class="l-rlbl">Rule ${ri+1}</span><button class="l-rdel" onclick="delRule('${q.id}','${rule.id}')">Delete</button></div>`;
+    if(rule.conditions.length>1)lh+=`<div class="ct-row"><button class="ct-btn${rule.condType==='ALL'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ALL')">ALL (AND)</button><button class="ct-btn${rule.condType==='ANY'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ANY')">ANY (OR)</button></div>`;
+    rule.conditions.forEach((c,ci2)=>{
+      lh+=`<div class="l-cond"><select class="ls" id="cq-${rule.id}-${ci2}"><option value="${q.id}"${c.qid===q.id?' selected':''}>This question</option>${allQ.map(aq=>`<option value="${aq.id}"${c.qid===aq.id?' selected':''}>${(aq.text||'Untitled').slice(0,24)}</option>`).join('')}</select><select class="ls" id="co-${rule.id}-${ci2}"><option value="is"${c.op==='is'?' selected':''}>is</option><option value="is_not"${c.op==='is_not'?' selected':''}>is not</option><option value="contains"${c.op==='contains'?' selected':''}>contains</option><option value="not_contains"${c.op==='not_contains'?' selected':''}>not contain</option><option value="filled"${c.op==='filled'?' selected':''}>is filled</option><option value="empty"${c.op==='empty'?' selected':''}>is empty</option></select><input class="ls" id="cv-${rule.id}-${ci2}" value="${eh(c.val)}" placeholder="value" style="min-width:60px">${ci2>0?`<button class="l-rdel" onclick="rmCond('${q.id}','${rule.id}',${ci2})">✕</button>`:''}</div>`;
+    });
+    lh+=`<button class="acd" onclick="addCond('${q.id}','${rule.id}')">+ Add condition</button><div class="l-arow"><span class="l-albl">THEN</span><select class="ls" id="act-${rule.id}" onchange="chAct('${q.id}','${rule.id}')"><option value="skip"${rule.action==='skip'?' selected':''}>Skip to question</option><option value="skip_sec"${rule.action==='skip_sec'?' selected':''}>Skip to section</option><option value="show"${rule.action==='show'?' selected':''}>Show question</option><option value="hide"${rule.action==='hide'?' selected':''}>Hide question</option><option value="end"${rule.action==='end'?' selected':''}>End survey</option></select>`;
+    if(['skip','show','hide'].includes(rule.action)){lh+=`<select class="ls" id="tgt-${rule.id}">${allQ.map(aq=>`<option value="${aq.id}"${rule.target===aq.id?' selected':''}>${(aq.text||'Untitled').slice(0,20)}</option>`).join('')}</select>`}
+    else if(rule.action==='skip_sec'){lh+=`<select class="ls" id="tgt-${rule.id}">${secs.map(s=>`<option value="${s.id}"${rule.target===s.id?' selected':''}>${(s.title||'Untitled').slice(0,20)}</option>`).join('')}</select>`}
+    else{lh+=`<span id="tgt-${rule.id}" style="display:none"></span>`}
+    lh+=`</div></div>`;
+  });
+  lh+=`<button class="badr" onclick="addRule('${q.id}')">+ Add logic rule</button><div class="l-def"><strong>OTHERWISE:</strong> Continue to next question</div></div>`;
+
+  return `<div class="q-card${sc?' ins':''}" id="qc-${q.id}" style="${bl}"><div class="q-tabs"><button class="q-tab active" data-tab="question" onclick="showQTab('${q.id}','question')">Question</button><button class="q-tab" data-tab="logic" onclick="showQTab('${q.id}','logic')">Logic${hl?`<span class="q-tbadge">${q.logic.length}</span>`:''}</button></div><div class="qtab-panel active" data-tab="question"><div class="q-body"><div class="q-hdr"><div class="q-nb" style="background:${nb}">${qn}</div><select class="q-tsel" onchange="chT('${q.id}',this.value)"><optgroup label="Choice"><option value="multiple"${q.type==='multiple'?' selected':''}>Multiple choice</option><option value="checkbox"${q.type==='checkbox'?' selected':''}>Checkboxes</option><option value="dropdown"${q.type==='dropdown'?' selected':''}>Dropdown</option><option value="yesno"${q.type==='yesno'?' selected':''}>Yes/No</option></optgroup><optgroup label="Text"><option value="text"${q.type==='text'?' selected':''}>Short text</option><option value="textarea"${q.type==='textarea'?' selected':''}>Long text</option><option value="email"${q.type==='email'?' selected':''}>Email</option><option value="phone"${q.type==='phone'?' selected':''}>Phone</option><option value="number"${q.type==='number'?' selected':''}>Number</option></optgroup><optgroup label="Scale and Date"><option value="rating"${q.type==='rating'?' selected':''}>Rating 1-5</option><option value="scale"${q.type==='scale'?' selected':''}>Scale 1-10</option><option value="date"${q.type==='date'?' selected':''}>Date</option></optgroup><optgroup label="Special"><option value="file"${q.type==='file'?' selected':''}>File URL</option><option value="pledge"${q.type==='pledge'?' selected':''}>Pledge</option><option value="quiz"${q.type==='quiz'?' selected':''}>Quiz MCQ</option></optgroup></select><button class="q-del" onclick="delQ('${q.id}')">✕</button></div>${inp}<div class="q-foot"><button class="tgl${q.required?' on':''}" id="req-${q.id}" onclick="togReq('${q.id}')"></button><span class="tgl-l">${q.type==='pledge'?'Must agree':'Required'}</span><select class="dm-sel" id="dm-${q.id}" onchange="setDM('${q.id}',this.value)" title="Display mode"><option value="auto"${q.displayMode==='auto'?' selected':''}>Follow section</option><option value="solo"${q.displayMode==='solo'?' selected':''}>Own screen</option><option value="group-prev"${q.displayMode==='group-prev'?' selected':''}>With previous</option><option value="group-next"${q.displayMode==='group-next'?' selected':''}>With next</option></select></div></div></div><div class="qtab-panel" data-tab="logic"><div class="q-body">${lh}</div></div></div>`;
+}
+
+function renderAll(){renderSB();renderQA()}
+
+async function save(status){
+  syncDOM();
+  const title=document.getElementById('s-title').value.trim();
+  if(!title){toast('Please add a survey title');return null}
+  const validQs=qs.filter(q=>q.text.trim()||q.type==='pledge');
+  if(!validQs.length){toast('Please add at least one question');return null}
+  const data={
+    title,description:document.getElementById('s-desc').value.trim(),
+    sections:secs,questions:validQs,settings:cfg,
+    style:document.getElementById('s-style').value,
+    welcomePage:{logo:document.getElementById('w-logo').value.trim(),headline:document.getElementById('w-head').value.trim(),btnText:document.getElementById('w-btn').value.trim(),bgColor:document.getElementById('w-bgc').value.trim(),bgImage:document.getElementById('w-bgi').value.trim(),bgVideo:document.getElementById('w-bgv').value.trim()},
+    thankYouPage:{headline:document.getElementById('ty-h').value.trim(),message:document.getElementById('ty-m').value.trim(),redirect:document.getElementById('ty-r').value.trim(),showShare:cfg.share||false},
+    prize:cfg.prize?{enabled:true,type:pt,description:document.getElementById('p-desc').value.trim(),winners:document.getElementById('p-win').value||'1',selection:document.getElementById('p-sel').value,notification:document.getElementById('p-not').value}:{enabled:false},
+    status,userId:U.uid,responseCount:0,questionCount:validQs.length,updatedAt:serverTimestamp()
+  };
+  try{
+    if(SID){await updateDoc(doc(db,'surveys',SID),data);return SID}
+    else{data.createdAt=serverTimestamp();const ref=await addDoc(collection(db,'surveys'),data);SID=ref.id;return SID}
+  } catch(e){console.error(e);toast('Error saving. Please try again');return null}
+}
+
+window.previewSurvey=async function(){
+  const title=document.getElementById('s-title').value.trim();
+  if(!title){toast('Please add a survey title first');return}
+  const id=await save('draft');if(id)window.open('/s/?id='+id+'&preview=1','_blank');
+}
+window.saveDraft=async function(){const id=await save('draft');if(id)toast('Draft saved!')}
+window.publishSurvey=async function(){
+  const btn=document.getElementById('pub-btn');btn.disabled=true;btn.textContent='Publishing...';
+  const id=await save('active');
+  if(id){
+    btn.textContent='Creating Sheet...';
     try{
-      if(SID){
-        await updateDoc(doc(db,'surveys',SID),data);
-        return SID;
-      } else {
-        data.createdAt=serverTimestamp();
-        const ref=await addDoc(collection(db,'surveys'),data);
-        SID=ref.id;
-        return SID;
-      }
-    } catch(e){
-      console.error(e);
-      toast('Error saving. Please try again');
-      return null;
-    }
-  }
-
-  // ── PREVIEW ───────────────────────────────────────────
-  window.previewSurvey=async function(){
-    const title=document.getElementById('s-title').value.trim();
-    if(!title){toast('Please add a survey title first');return}
-    const id=await save('draft');
-    if(id)window.open('/s/?id='+id+'&preview=1','_blank');
-  }
-
-  // ── SAVE DRAFT ────────────────────────────────────────
-  window.saveDraft=async function(){
-    const id=await save('draft');
-    if(id)toast('✓ Draft saved!');
-  }
-
-  // ── PUBLISH ───────────────────────────────────────────
-  window.publishSurvey=async function(){
-    const btn=document.getElementById('pub-btn');
-    btn.disabled=true;btn.textContent='Publishing...';
-    const id=await save('active');
-    if(id){
-      btn.textContent='Creating Sheet...';
-      try{
-        const qTexts=qs.map(q=>q.text).filter(t=>t&&t.trim());
-        const res=await fetch(SHEETS,{
-          method:'POST',
-          body:JSON.stringify({
-            action:'create_sheet',
-            surveyTitle:document.getElementById('s-title').value.trim(),
-            questions:qTexts,
-            hostEmail:U.email
-          })
-        });
-        const result=await res.json();
-        if(result.success){
-          await updateDoc(doc(db,'surveys',id),{
-            sheetId:result.sheetId,
-            sheetUrl:result.sheetUrl
-          });
-          toast('🎉 Survey published + Sheet created!',2000);
-        } else {
-          toast('🎉 Survey published!',1500);
-        }
-      } catch(e){
-        toast('🎉 Survey published!',1500);
-      }
-      setTimeout(()=>window.location.href='/dashboard',2200);
-    } else {
-      btn.disabled=false;
-      btn.textContent='Publish →';
-    }
-  }
-
+      const qTexts=qs.map(q=>q.text).filter(t=>t&&t.trim());
+      const res=await fetch(SHEETS,{method:'POST',body:JSON.stringify({action:'create_sheet',surveyTitle:document.getElementById('s-title').value.trim(),questions:qTexts,hostEmail:U.email})});
+      const result=await res.json();
+      if(result.success){await updateDoc(doc(db,'surveys',id),{sheetId:result.sheetId,sheetUrl:result.sheetUrl});toast('Survey published and Sheet created!',2000)}
+      else toast('Survey published!',1500);
+    } catch(e){toast('Survey published!',1500)}
+    setTimeout(()=>window.location.href='/dashboard',2200);
+  } else {btn.disabled=false;btn.textContent='Publish →'}
+}
 </script>
 </body>
 </html>
