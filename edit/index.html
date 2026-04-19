@@ -9,7 +9,7 @@
     *{margin:0;padding:0;box-sizing:border-box}
     html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A}
     .topnav{height:56px;background:#fff;border-bottom:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:fixed;top:0;left:0;right:0;z-index:300}
-    .topnav-left{display:flex;align-items:center;gap:10px}
+    .topnav-left{display:flex;align-items:center;gap:10px;z-index:301;position:relative}
     .logo-s{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none;flex-shrink:0}
     .nav-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#0F0E1A;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .topnav-right{display:flex;align-items:center;gap:8px}
@@ -208,6 +208,7 @@
   <div class="topnav-left">
     <button class="hbtn" id="hbtn" onclick="openSb()"><span></span><span></span><span></span></button>
     <a href="/dashboard" class="logo-s">S</a>
+    <a href="/dashboard" class="btn-g" style="font-size:0.78rem;padding:5px 10px">← Dashboard</a>
     <span class="nav-t" id="nav-t">Edit Survey</span>
   </div>
   <div class="topnav-right">
