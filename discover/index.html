@@ -239,6 +239,15 @@ let allSurveys=[],filtered=[],currentCat='all',currentSearch='',currentSort='rec
 
 async function init(){
   try{
+    // Load categories from Firestore
+    const catSnap=await getDocs(collection(db,'categories'));
+    const dbCats=catSnap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.order||0)-(b.order||0));
+    if(dbCats.length>0){
+      const wrap=document.getElementById('categories-wrap');
+      wrap.innerHTML='<button class="cat-btn active" onclick="selectCat(\'all\',this)">🌐 All <span class="cat-count" id="cat-count-all">0</span></button>'+
+        dbCats.map(c=>`<button class="cat-btn" onclick="selectCat('${c.name}',this)">${c.emoji||'📂'} ${c.name}</button>`).join('')+
+        '<button class="cat-btn" onclick="openSuggest()" style="border-style:dashed">+ Suggest category</button>';
+    }
     const q=query(collection(db,'surveys'),where('status','==','active'),where('settings.public','==',true));
     const snap=await getDocs(q);
     allSurveys=snap.docs.map(d=>({id:d.id,...d.data()}));
@@ -384,6 +393,34 @@ window.loadMore=function(){
 }
 
 init();
+
+// SUGGEST CATEGORY
+window.openSuggest=function(){
+  const name=prompt('Suggest a category name:');
+  if(!name||!name.trim())return;
+  const trimmed=name.trim();
+  // Save to Firestore
+  import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js').then(({addDoc,collection,serverTimestamp,getDocs,query,where,updateDoc,increment,doc})=>{
+    const db2=getFirestore(app);
+    // Check if suggestion already exists
+    getDocs(query(collection(db2,'categorySuggestions'),where('nameLower','==',trimmed.toLowerCase()))).then(snap=>{
+      if(!snap.empty){
+        // Vote on existing
+        updateDoc(doc(db2,'categorySuggestions',snap.docs[0].id),{votes:increment(1)});
+        alert('Your vote has been added to "'+trimmed+'"! The admin will review it.');
+      } else {
+        // New suggestion
+        addDoc(collection(db2,'categorySuggestions'),{
+          name:trimmed,nameLower:trimmed.toLowerCase(),
+          votes:1,status:'pending',
+          suggestedByEmail:'anonymous',
+          createdAt:serverTimestamp()
+        });
+        alert('Thanks! "'+trimmed+'" has been suggested. The admin will review it.');
+      }
+    });
+  });
+}
 </script>
 </body>
 </html>
