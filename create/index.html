@@ -310,7 +310,8 @@
     <div class="panel" id="panel-settings">
       <div class="pt">⚙️ Survey settings</div><p class="ps">Configure how your survey behaves.</p>
       <div class="sc2">
-        <div class="sr"><div><div class="sr-n">Survey style</div><div class="sr-d">Default display mode</div></div><select id="s-style" style="padding:5px 8px;border-radius:7px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.77rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none"><option value="conversational">One at a time</option><option value="classic">All on one page</option></select></div>
+        <div class="sr"><div><div class="sr-n">Category</div><div class="sr-d">Shown on discover page</div></div><select id="s-category" style="padding:5px 8px;border-radius:7px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.77rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none"><option value="Other">✦ Other</option><option value="Education">🎓 Education</option><option value="Business">💼 Business</option><option value="Health">🏥 Health</option><option value="Research">🔬 Research</option><option value="Community">🤝 Community</option><option value="Events">📅 Events</option><option value="Feedback">💬 Feedback</option><option value="HR">👥 HR</option><option value="Customer">⭐ Customer</option><option value="Product">📦 Product</option></select></div>
+<div class="sr"><div><div class="sr-n">Survey style</div><div class="sr-d">Default display mode</div></div><select id="s-style" style="padding:5px 8px;border-radius:7px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.77rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none"><option value="conversational">One at a time</option><option value="classic">All on one page</option></select></div>
         <div class="sr"><div><div class="sr-n">Public survey</div><div class="sr-d">Show in SwoopForm discovery</div></div><button class="tgl" id="tgl-public" onclick="togS('public')"></button></div>
         <div class="sr"><div><div class="sr-n">Collect email addresses</div></div><button class="tgl" id="tgl-email" onclick="togS('email')"></button></div>
         <div class="sr" style="border-bottom:none"><div><div class="sr-n">One response per person</div></div><button class="tgl" id="tgl-once" onclick="togS('once')"></button></div>
@@ -618,6 +619,7 @@ async function save(status){
     title,description:document.getElementById('s-desc').value.trim(),
     sections:secs,questions:validQs,settings:cfg,
     style:document.getElementById('s-style').value,
+category:document.getElementById('s-category')?.value||'Other',
     welcomePage:{logo:document.getElementById('w-logo').value.trim(),headline:document.getElementById('w-head').value.trim(),btnText:document.getElementById('w-btn').value.trim(),bgColor:document.getElementById('w-bgc').value.trim(),bgImage:document.getElementById('w-bgi').value.trim(),bgVideo:document.getElementById('w-bgv').value.trim()},
     thankYouPage:{headline:document.getElementById('ty-h').value.trim(),message:document.getElementById('ty-m').value.trim(),redirect:document.getElementById('ty-r').value.trim(),showShare:cfg.share||false},
     prize:cfg.prize?{enabled:true,type:pt,description:document.getElementById('p-desc').value.trim(),winners:document.getElementById('p-win').value||'1',selection:document.getElementById('p-sel').value,notification:document.getElementById('p-not').value}:{enabled:false},
