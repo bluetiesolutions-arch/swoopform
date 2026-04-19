@@ -7,623 +7,539 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{
-      font-family:'DM Sans',sans-serif;
-      background:#F5F0E8;
-      color:#0F0E1A;
-      min-height:100vh;
-    }
-    nav{
-      background:#fff;
-      border-bottom:1.5px solid #E2DAD0;
-      padding:0 24px;height:60px;
-      display:flex;align-items:center;
-      justify-content:space-between;
-      position:sticky;top:0;z-index:100;
-    }
-    .nav-logo{
-      display:flex;align-items:center;gap:10px;
-      text-decoration:none;flex-shrink:0;
-    }
-    .logo-mark{
-      width:32px;height:32px;
-      background:linear-gradient(135deg,#2D1B69,#D97706);
-      border-radius:8px;
-      display:flex;align-items:center;justify-content:center;
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:0.9rem;color:#fff;
-    }
-    .logo-name{
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1rem;color:#0F0E1A;
-    }
-    .nav-right{display:flex;align-items:center;gap:10px}
-    .btn-nav{
-      padding:7px 14px;border-radius:8px;
-      border:1.5px solid #E2DAD0;
-      background:transparent;color:#64748B;
-      font-size:0.82rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;
-      cursor:pointer;transition:all 0.2s;
-      text-decoration:none;white-space:nowrap;
-    }
-    .btn-nav:hover{border-color:#0F0E1A;color:#0F0E1A}
-    .nav-avatar{
-      width:34px;height:34px;border-radius:50%;
-      background:linear-gradient(135deg,#2D1B69,#D97706);
-      display:flex;align-items:center;justify-content:center;
-      font-weight:700;color:#fff;font-size:0.85rem;
-      cursor:pointer;flex-shrink:0;overflow:hidden;
-      border:2px solid #E2DAD0;transition:border-color 0.2s;
-    }
-    .nav-avatar:hover{border-color:#2D1B69}
-    .nav-avatar img{width:100%;height:100%;object-fit:cover}
-    .hamburger{
-      display:none;flex-direction:column;
-      gap:5px;cursor:pointer;padding:4px;
-      background:none;border:none;
-    }
-    .hamburger span{
-      display:block;width:22px;height:2px;
-      background:#0F0E1A;border-radius:2px;
-    }
-    .drawer-overlay{
-      position:fixed;inset:0;
-      background:rgba(0,0,0,0.4);
-      z-index:200;display:none;opacity:0;
-      transition:opacity 0.3s;
-    }
-    .drawer-overlay.open{display:block;opacity:1}
-    .drawer{
-      position:fixed;top:0;right:0;
-      width:280px;height:100vh;
-      background:#fff;z-index:201;
-      padding:24px;
-      transform:translateX(100%);
-      transition:transform 0.3s ease;
-      overflow-y:auto;
-    }
-    .drawer.open{transform:translateX(0)}
-    .drawer-header{
-      display:flex;align-items:center;
-      justify-content:space-between;
-      margin-bottom:32px;
-    }
-    .drawer-logo{
-      display:flex;align-items:center;gap:8px;
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1rem;text-decoration:none;color:#0F0E1A;
-    }
-    .drawer-close{
-      background:none;border:none;cursor:pointer;
-      font-size:1.4rem;color:#64748B;padding:4px;
-    }
-    .drawer-links{display:flex;flex-direction:column;gap:4px}
-    .drawer-link{
-      padding:12px 16px;border-radius:10px;
-      text-decoration:none;color:#0F0E1A;
-      font-size:0.95rem;font-weight:500;
-      transition:background 0.2s;display:block;
-    }
-    .drawer-link:hover{background:#F5F0E8}
-    .drawer-divider{height:1px;background:#E2DAD0;margin:16px 0}
-    .drawer-link.accent{color:#2D1B69;font-weight:600}
-    .main{max-width:1100px;margin:0 auto;padding:32px 20px}
-    .welcome{
-      display:flex;align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;gap:16px;margin-bottom:28px;
-    }
-    .welcome-left h1{
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1.6rem;letter-spacing:-0.03em;
-      margin-bottom:6px;
-      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-    }
-    .welcome-left p{color:#64748B;font-size:0.9rem}
-    .plan-badge{
-      display:inline-flex;align-items:center;
-      padding:4px 12px;border-radius:100px;
-      font-size:0.75rem;font-weight:700;
-    }
-    .plan-free{background:#EDE9FF;color:#2D1B69}
-    .plan-student{background:#D1FAE5;color:#047857}
-    .plan-ngo{background:#D1FAE5;color:#047857}
-    .plan-business{background:#FEF3C7;color:#92400E}
-    .plan-paid{background:#FEF3C7;color:#92400E}
-    .btn-new{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:12px 22px;border-radius:10px;border:none;
-      background:linear-gradient(135deg,#2D1B69,#D97706);
-      color:#fff;font-size:0.92rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;
-      text-decoration:none;transition:opacity 0.2s;
-      white-space:nowrap;flex-shrink:0;
-    }
+    body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh;overflow-x:hidden}
+
+    /* TOP NAV */
+    .topnav{height:56px;background:#fff;border-bottom:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:fixed;top:0;left:0;right:0;z-index:200}
+    .topnav-left{display:flex;align-items:center;gap:10px}
+    .hbtn{background:none;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;gap:5px;flex-shrink:0}
+    .hbtn span{display:block;width:20px;height:2px;background:#0F0E1A;border-radius:2px}
+    .logo-wrap{display:flex;align-items:center;gap:8px;text-decoration:none}
+    .logo-mark{width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff}
+    .logo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;color:#0F0E1A}
+    .topnav-right{display:flex;align-items:center;gap:8px}
+    .btn-new{padding:8px 16px;border-radius:8px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.82rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:opacity 0.2s}
     .btn-new:hover{opacity:0.9}
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:14px;margin-bottom:28px;
-    }
-    .stat-card{
-      background:#fff;border-radius:14px;
-      border:1.5px solid #E2DAD0;padding:20px;
-    }
-    .stat-num{
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:2rem;letter-spacing:-0.03em;color:#0F0E1A;
-    }
-    .stat-label{font-size:0.82rem;color:#64748B;margin-top:4px}
-    .section-header{
-      display:flex;align-items:center;
-      justify-content:space-between;margin-bottom:16px;
-    }
-    .section-title{
-      font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;
-    }
-    .empty-state{
-      background:#fff;border-radius:16px;
-      border:1.5px dashed #E2DAD0;
-      padding:60px 20px;text-align:center;
-    }
-    .empty-icon{font-size:2.5rem;margin-bottom:16px}
-    .empty-state h3{
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1.1rem;margin-bottom:8px;
-    }
-    .empty-state p{
-      color:#64748B;font-size:0.88rem;
-      margin-bottom:24px;line-height:1.6;
-    }
-    .surveys-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-      gap:16px;
-    }
-    .survey-card{
-      background:#fff;border-radius:14px;
-      border:1.5px solid #E2DAD0;padding:22px;
-      transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;
-      cursor:pointer;
-    }
-    .survey-card:hover{
-      transform:translateY(-2px);
-      box-shadow:0 8px 30px rgba(15,14,26,0.1);
-      border-color:rgba(45,27,105,0.2);
-    }
-    .survey-card-top{
-      display:flex;justify-content:space-between;
-      align-items:flex-start;margin-bottom:12px;
-    }
-    .survey-status{
-      padding:3px 10px;border-radius:100px;
-      font-size:0.72rem;font-weight:700;
-    }
-    .status-active{background:#D1FAE5;color:#047857}
-    .status-draft{background:#F5F0E8;color:#64748B}
-    .status-closed{background:#FEE2E2;color:#DC2626}
-    .survey-title{
-      font-family:'Syne',sans-serif;font-weight:700;
-      font-size:0.98rem;margin-bottom:8px;line-height:1.35;
-    }
-    .survey-meta{
-      display:flex;gap:14px;
-      font-size:0.78rem;color:#64748B;
-      margin-bottom:14px;flex-wrap:wrap;
-    }
-    .survey-footer{
-      padding-top:14px;border-top:1px solid #E2DAD0;
-    }
-    .survey-responses{
-      font-size:0.82rem;font-weight:600;color:#0F0E1A;
-      margin-bottom:10px;
-      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-    }
-    .sheet-link{
-      font-size:0.75rem;color:#047857;
-      font-weight:600;text-decoration:none;
-    }
-    .sheet-link:hover{text-decoration:underline}
-    .survey-actions{display:flex;gap:6px;flex-wrap:wrap}
-    .btn-sm{
-      padding:6px 12px;border-radius:7px;
-      font-size:0.76rem;font-weight:600;
-      cursor:pointer;border:none;
-      font-family:'DM Sans',sans-serif;
-      transition:all 0.2s;white-space:nowrap;
-    }
-    .btn-sm-ghost{
-      background:transparent;
-      border:1.5px solid #E2DAD0;color:#64748B;
-    }
-    .btn-sm-ghost:hover{border-color:#0F0E1A;color:#0F0E1A}
-    .btn-sm-primary{
-      background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;
-    }
-    .btn-sm-danger{
-      background:transparent;
-      border:1.5px solid #FEE2E2;color:#DC2626;
-    }
-    .btn-sm-danger:hover{background:#FEE2E2}
-    .btn-sm-success{
-      background:transparent;
-      border:1.5px solid #D1FAE5;color:#047857;
-    }
-    .btn-sm-success:hover{background:#D1FAE5}
-    .loading-screen{
-      display:flex;align-items:center;justify-content:center;
-      min-height:100vh;background:#0F0E1A;
-      flex-direction:column;gap:16px;
-    }
-    .spinner{
-      width:36px;height:36px;
-      border:3px solid rgba(217,119,6,0.2);
-      border-top-color:#D97706;border-radius:50%;
-      animation:spin 0.8s linear infinite;
-    }
-    .loading-text{
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1.2rem;color:#fff;
-    }
+
+    /* LAYOUT */
+    .layout{display:flex;min-height:calc(100vh - 56px);margin-top:56px}
+
+    /* SIDEBAR */
+    .sidebar{width:240px;flex-shrink:0;background:#fff;border-right:1.5px solid #E2DAD0;display:flex;flex-direction:column;position:fixed;top:56px;left:0;bottom:0;z-index:100;transition:transform 0.3s ease;overflow-y:auto}
+    .sidebar.mobile-hidden{transform:translateX(-100%)}
+    .sb-user{padding:20px 16px 16px;border-bottom:1px solid #E2DAD0}
+    .sb-user-row{display:flex;align-items:center;gap:10px}
+    .sb-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:#fff;flex-shrink:0;overflow:hidden}
+    .sb-avatar img{width:100%;height:100%;object-fit:cover}
+    .sb-user-name{font-size:0.88rem;font-weight:700;color:#0F0E1A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .sb-user-email{font-size:0.72rem;color:#64748B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:1px}
+    .sb-plan{margin-top:8px}
+    .plan-badge{display:inline-block;padding:2px 10px;border-radius:100px;font-size:0.68rem;font-weight:700}
+    .plan-free{background:#EDE9FF;color:#2D1B69;border:1px solid #C4B5FD}
+    .plan-student{background:#DCFCE7;color:#166534;border:1px solid #86EFAC}
+    .plan-ngo{background:#FEF3C7;color:#92400E;border:1px solid #FCD34D}
+    .plan-starter{background:#DBEAFE;color:#1E40AF;border:1px solid #93C5FD}
+    .plan-pro{background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;border:none}
+    .plan-business{background:#0F0E1A;color:#fff;border:none}
+    .sb-nav{padding:12px 10px;flex:1}
+    .sb-nav-label{font-size:0.65rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase;padding:0 8px;margin-bottom:4px;margin-top:12px}
+    .sb-nav-label:first-child{margin-top:0}
+    .sb-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:600;color:#64748B;transition:all 0.2s;text-decoration:none}
+    .sb-item:hover{background:#F5F0E8;color:#0F0E1A}
+    .sb-item.active{background:#EDE9FF;color:#2D1B69}
+    .sb-item.danger{color:#DC2626}
+    .sb-item.danger:hover{background:#FEE2E2}
+    .sb-item .ico{width:20px;text-align:center;font-size:1rem;flex-shrink:0}
+    .sb-bottom{padding:12px 10px;border-top:1px solid #E2DAD0}
+
+    /* OVERLAY */
+    .sb-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:99;display:none}
+    .sb-overlay.open{display:block}
+
+    /* CONTENT */
+    .content{flex:1;margin-left:240px;padding:28px 24px;min-height:calc(100vh - 56px)}
+
+    /* WELCOME */
+    .welcome-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;gap:12px;flex-wrap:wrap}
+    .welcome-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-0.02em;color:#0F0E1A}
+    .welcome-sub{font-size:0.88rem;color:#64748B;margin-top:4px}
+    .view-toggle{display:flex;gap:4px;background:#fff;border-radius:8px;padding:3px;border:1.5px solid #E2DAD0}
+    .view-btn{padding:6px 10px;border-radius:6px;border:none;background:transparent;cursor:pointer;font-size:0.9rem;transition:all 0.2s;color:#94A3B8}
+    .view-btn.active{background:#EDE9FF;color:#2D1B69}
+
+    /* STATS */
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
+    .stat-card{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;padding:16px 18px;transition:box-shadow 0.2s}
+    .stat-card:hover{box-shadow:0 4px 16px rgba(15,14,26,0.06)}
+    .stat-icon{font-size:1.2rem;margin-bottom:8px}
+    .stat-value{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;letter-spacing:-0.03em;color:#0F0E1A;line-height:1}
+    .stat-label{font-size:0.75rem;color:#64748B;font-weight:500;margin-top:4px}
+    .stat-change{font-size:0.72rem;margin-top:4px;font-weight:600}
+    .stat-change.up{color:#10B981}
+    .stat-change.neutral{color:#94A3B8}
+
+    /* SECTION HEADERS */
+    .section-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;margin-top:28px}
+    .section-header:first-of-type{margin-top:0}
+    .section-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+    .section-dot.active{background:#10B981}
+    .section-dot.draft{background:#F59E0B}
+    .section-dot.closed{background:#94A3B8}
+    .section-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#0F0E1A}
+    .section-count{font-size:0.75rem;font-weight:700;color:#94A3B8;background:#E2DAD0;padding:2px 8px;border-radius:100px}
+
+    /* GRID LAYOUT */
+    .surveys-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+    .survey-card{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:20px;transition:all 0.2s;position:relative}
+    .survey-card:hover{box-shadow:0 6px 24px rgba(15,14,26,0.08);border-color:rgba(45,27,105,0.2);transform:translateY(-1px)}
+    .card-status-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .status-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:0.72rem;font-weight:700}
+    .status-active{background:#DCFCE7;color:#166534}
+    .status-draft{background:#FEF3C7;color:#92400E}
+    .status-closed{background:#F1F5F9;color:#64748B}
+    .card-date{font-size:0.72rem;color:#94A3B8}
+    .card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:#0F0E1A;margin-bottom:4px;line-height:1.3}
+    .card-desc{font-size:0.78rem;color:#64748B;margin-bottom:12px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .card-meta{display:flex;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+    .card-meta-item{display:flex;align-items:center;gap:5px;font-size:0.78rem;color:#64748B}
+    .card-meta-item strong{color:#0F0E1A;font-weight:700}
+    .response-bar-wrap{margin-bottom:16px}
+    .response-bar-label{display:flex;justify-content:space-between;font-size:0.72rem;color:#64748B;margin-bottom:5px}
+    .response-bar-track{height:6px;background:#F5F0E8;border-radius:3px;overflow:hidden}
+    .response-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#2D1B69,#D97706);transition:width 0.8s ease}
+    .card-actions{display:flex;gap:6px;flex-wrap:wrap}
+    .card-btn{padding:6px 12px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+    .card-btn:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
+    .card-btn.primary{background:linear-gradient(135deg,#2D1B69,#D97706);border:none;color:#fff}
+    .card-btn.primary:hover{opacity:0.9;background:linear-gradient(135deg,#2D1B69,#D97706)}
+    .card-btn.danger{color:#DC2626;border-color:#FEE2E2}
+    .card-btn.danger:hover{background:#FEE2E2;border-color:#DC2626}
+    .card-btn.sheet{color:#10B981;border-color:#BBF7D0}
+    .card-btn.sheet:hover{background:#DCFCE7;border-color:#10B981}
+
+    /* LIST LAYOUT */
+    .surveys-list{display:flex;flex-direction:column;gap:8px}
+    .survey-list-item{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;padding:14px 18px;display:flex;align-items:center;gap:14px;transition:all 0.2s;flex-wrap:wrap}
+    .survey-list-item:hover{box-shadow:0 4px 14px rgba(15,14,26,0.06);border-color:rgba(45,27,105,0.2)}
+    .list-status-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+    .list-info{flex:1;min-width:0}
+    .list-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.92rem;color:#0F0E1A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .list-meta{font-size:0.75rem;color:#64748B;margin-top:2px}
+    .list-resp{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:#0F0E1A;flex-shrink:0;min-width:60px;text-align:center}
+    .list-resp-lbl{font-size:0.65rem;color:#64748B;font-weight:500}
+    .list-bar{width:100px;flex-shrink:0}
+    .list-actions{display:flex;gap:5px;flex-shrink:0;flex-wrap:wrap}
+
+    /* EMPTY STATE */
+    .empty-state{text-align:center;padding:48px 24px;background:#fff;border-radius:14px;border:1.5px dashed #E2DAD0}
+    .empty-icon{font-size:2.5rem;margin-bottom:12px}
+    .empty-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:#64748B;margin-bottom:6px}
+    .empty-sub{font-size:0.82rem;color:#94A3B8;margin-bottom:20px}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,0.3);white-space:nowrap}
+
+    /* LOADING */
+    .ls{position:fixed;inset:0;background:#F5F0E8;display:flex;align-items:center;justify-content:center;z-index:999}
+    .spinner{width:32px;height:32px;border:3px solid rgba(45,27,105,0.2);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
-    .toast{
-      position:fixed;bottom:24px;left:50%;
-      transform:translateX(-50%);
-      background:#0F0E1A;color:#fff;
-      padding:12px 24px;border-radius:10px;
-      font-size:0.88rem;font-weight:600;
-      display:none;z-index:999;
-      box-shadow:0 4px 20px rgba(0,0,0,0.3);
-      white-space:nowrap;
-    }
+
+    /* CONFIRM MODAL */
+    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
+    .modal-bg.open{display:flex}
+    .modal{background:#fff;border-radius:16px;padding:28px;width:100%;max-width:400px}
+    .modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:8px}
+    .modal-sub{font-size:0.85rem;color:#64748B;margin-bottom:24px;line-height:1.6}
+    .modal-actions{display:flex;gap:8px;justify-content:flex-end}
+    .btn-cancel{padding:8px 16px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer}
+    .btn-confirm{padding:8px 16px;border-radius:8px;border:none;background:#DC2626;color:#fff;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer}
+    .btn-confirm.green{background:#2D1B69}
+
     @media(max-width:900px){
-      .stats{grid-template-columns:repeat(2,1fr)}
+      .sidebar{transform:translateX(-100%)}
+      .sidebar.open{transform:translateX(0)}
+      .content{margin-left:0;padding:20px 16px}
+      .stats-grid{grid-template-columns:repeat(2,1fr)}
+      .hbtn{display:flex}
     }
-    @media(max-width:600px){
-      .stats{grid-template-columns:repeat(2,1fr)}
-      .welcome{flex-direction:column;align-items:flex-start}
-      .btn-nav{display:none}
-      .hamburger{display:flex}
+    @media(max-width:500px){
+      .stats-grid{grid-template-columns:repeat(2,1fr)}
+      .surveys-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
+<div class="ls" id="ls"><div class="spinner"></div></div>
 
-<div id="loading-screen" class="loading-screen">
-  <div class="spinner"></div>
-  <div class="loading-text">SwoopForm</div>
-</div>
-
-<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
-<div class="drawer" id="drawer">
-  <div class="drawer-header">
-    <a href="/" class="drawer-logo">
-      <div class="logo-mark" style="width:28px;height:28px;font-size:0.8rem">S</div>
-      SwoopForm
-    </a>
-    <button class="drawer-close" onclick="closeDrawer()">✕</button>
-  </div>
-  <div class="drawer-links">
-    <a href="/#how" class="drawer-link">How it works</a>
-    <a href="/#features" class="drawer-link">Features</a>
-    <a href="/#pricing" class="drawer-link">Pricing</a>
-    <a href="/#solutions" class="drawer-link">Solutions</a>
-    <a href="/#discover" class="drawer-link">Discover</a>
-    <a href="/#blog" class="drawer-link">Blog</a>
-    <a href="/#faq" class="drawer-link">FAQ</a>
-    <div class="drawer-divider"></div>
-    <a href="/dashboard" class="drawer-link accent">Dashboard</a>
-    <a href="/create" class="drawer-link accent">+ New Survey</a>
-    <a href="/settings" class="drawer-link">⚙️ Settings</a>
-    <a href="#" class="drawer-link" onclick="handleLogout();return false;">Log out</a>
+<!-- CONFIRM MODAL -->
+<div class="modal-bg" id="confirm-modal">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Are you sure?</div>
+    <div class="modal-sub" id="modal-sub"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-confirm" id="modal-confirm-btn" onclick="modalConfirm()">Confirm</button>
+    </div>
   </div>
 </div>
 
-<div id="dashboard" style="display:none">
-  <nav>
-    <a href="/" class="nav-logo">
+<div class="sb-overlay" id="sb-overlay" onclick="closeSb()"></div>
+
+<!-- TOP NAV -->
+<div class="topnav">
+  <div class="topnav-left">
+    <button class="hbtn" onclick="toggleSb()"><span></span><span></span><span></span></button>
+    <a href="/dashboard" class="logo-wrap">
       <div class="logo-mark">S</div>
       <div class="logo-name">SwoopForm</div>
     </a>
-    <div class="nav-right">
-      <a href="/settings" class="btn-nav">⚙️ Settings</a>
-<a href="/admin" class="btn-nav" id="admin-link" style="display:none">🛡 Admin</a>
-      <button class="btn-nav" onclick="handleLogout()">Log out</button>
-      <div class="nav-avatar" id="nav-avatar"
-        onclick="window.location.href='/settings'"
-        title="Account settings">?</div>
-      <button class="hamburger" onclick="openDrawer()">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
+  </div>
+  <div class="topnav-right">
+    <a href="/create" class="btn-new">+ New Survey</a>
+  </div>
+</div>
 
-  <div class="main">
-    <div class="welcome">
-      <div class="welcome-left">
-        <h1 id="welcome-msg">
-          Welcome! 👋
-          <span class="plan-badge plan-free" id="plan-badge">Free Plan</span>
-        </h1>
-        <p id="welcome-sub">Ready to create your first survey?</p>
+<div class="layout">
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="sb-user">
+      <div class="sb-user-row">
+        <div class="sb-avatar" id="sb-avatar">U</div>
+        <div style="min-width:0">
+          <div class="sb-user-name" id="sb-name">Loading...</div>
+          <div class="sb-user-email" id="sb-email"></div>
+        </div>
       </div>
-      <a href="/create" class="btn-new">+ New Survey</a>
+      <div class="sb-plan"><span class="plan-badge plan-free" id="sb-plan">Free</span></div>
     </div>
 
-    <div class="stats">
-      <div class="stat-card">
-        <div class="stat-num" id="stat-surveys">0</div>
-        <div class="stat-label">Surveys created</div>
+    <div class="sb-nav">
+      <div class="sb-nav-label">Main</div>
+      <a class="sb-item active" href="/dashboard"><span class="ico">📊</span>Dashboard</a>
+      <a class="sb-item" href="/dashboard"><span class="ico">📋</span>My Surveys</a>
+      <a class="sb-item" href="#"><span class="ico">🌍</span>Discover</a>
+
+      <div class="sb-nav-label">Account</div>
+      <a class="sb-item" href="/settings"><span class="ico">⚙️</span>Settings</a>
+      <a class="sb-item" id="admin-link" href="/admin" style="display:none"><span class="ico">👑</span>Admin</a>
+
+      <div class="sb-nav-label">Help</div>
+      <a class="sb-item" href="https://docs.swoopform.com" target="_blank"><span class="ico">📖</span>Documentation</a>
+      <a class="sb-item" href="mailto:support@swoopform.com"><span class="ico">💬</span>Support</a>
+    </div>
+
+    <div class="sb-bottom">
+      <button class="sb-item danger" onclick="signOut()" style="width:100%"><span class="ico">🚪</span>Sign out</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content" id="content">
+    <div class="welcome-row">
+      <div>
+        <div class="welcome-title" id="welcome-title">Good morning! 👋</div>
+        <div class="welcome-sub" id="welcome-sub">Here's how your surveys are doing</div>
       </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <div class="view-toggle">
+          <button class="view-btn active" id="view-grid" onclick="setView('grid')" title="Grid view">⊞</button>
+          <button class="view-btn" id="view-list" onclick="setView('list')" title="List view">☰</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-num" id="stat-responses">0</div>
+        <div class="stat-icon">📊</div>
+        <div class="stat-value" id="stat-total">0</div>
         <div class="stat-label">Total responses</div>
+        <div class="stat-change neutral" id="stat-total-sub">across all surveys</div>
       </div>
       <div class="stat-card">
-        <div class="stat-num" id="stat-active">0</div>
+        <div class="stat-icon">📅</div>
+        <div class="stat-value" id="stat-today">0</div>
+        <div class="stat-label">Responses today</div>
+        <div class="stat-change neutral" id="stat-today-sub">loading...</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🟢</div>
+        <div class="stat-value" id="stat-active">0</div>
         <div class="stat-label">Active surveys</div>
+        <div class="stat-change neutral" id="stat-active-sub">collecting responses</div>
       </div>
       <div class="stat-card">
-        <div class="stat-num" id="stat-limit">100</div>
-        <div class="stat-label">Responses per survey</div>
+        <div class="stat-icon">🏆</div>
+        <div class="stat-value" id="stat-top">—</div>
+        <div class="stat-label">Most active survey</div>
+        <div class="stat-change neutral" id="stat-top-sub">by responses</div>
       </div>
     </div>
 
-    <div class="section-header">
-      <div class="section-title">Your Surveys</div>
-    </div>
-
-    <div id="empty-state" class="empty-state">
-      <div class="empty-icon">📋</div>
-      <h3>No surveys yet</h3>
-      <p>Create your first survey and start collecting responses in minutes.</p>
-      <a href="/create" class="btn-new">+ Create your first survey</a>
-    </div>
-
-    <div id="surveys-grid" class="surveys-grid" style="display:none"></div>
+    <!-- SURVEYS -->
+    <div id="surveys-container"></div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script type="module">
-  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-  import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-  import { getFirestore, doc, getDoc, collection, query, where, getDocs, updateDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged,signOut as fbSignOut}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,collection,query,where,getDocs,doc,getDoc,updateDoc,deleteDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",
-    authDomain: "swoopform.firebaseapp.com",
-    projectId: "swoopform",
-    storageBucket: "swoopform.firebasestorage.app",
-    messagingSenderId: "378850092986",
-    appId: "1:378850092986:web:4fed92128136e048fa5f83"
-  };
+const ADMIN_UID='7WPJK6ZuaEb3lgevyUbbU87umuH3';
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+let currentUser=null,userProfile=null,surveys=[],viewMode='grid',modalAction=null;
 
-  onAuthStateChanged(auth, async (user) => {
-    if (!user) { window.location.href = '/login'; return; }
+onAuthStateChanged(auth,async u=>{
+  if(!u){window.location.href='/login';return}
+  currentUser=u;
+  await loadUser();
+  await loadSurveys();
+  document.getElementById('ls').style.display='none';
+});
 
-    const userDoc = await getDoc(doc(db, 'users', user.uid));
-    const userData = userDoc.exists() ? userDoc.data() : {};
-    const name = user.displayName || userData.name || 'there';
-    const plan = userData.plan || 'free';
+async function loadUser(){
+  try{
+    const snap=await getDoc(doc(db,'users',currentUser.uid));
+    userProfile=snap.exists()?snap.data():{};
+    const name=userProfile.name||currentUser.displayName||currentUser.email?.split('@')[0]||'User';
+    const email=currentUser.email||'';
+    const plan=userProfile.plan||'free';
+    const photoURL=userProfile.photoURL||currentUser.photoURL||'';
 
-    const avatar = document.getElementById('nav-avatar');
-    if (userData.photoUrl) {
-      avatar.innerHTML = '<img src="' + userData.photoUrl + '" alt="' + name + '">';
-    } else {
-      avatar.textContent = name.charAt(0).toUpperCase();
-      if (user.uid === '7WPJK6ZuaEb3lgevyUbbU87umuH3') {
-      var adminLink = document.getElementById('admin-link');
-      if (adminLink) adminLink.style.display = 'inline-flex';
-    }
-    }
+    // Sidebar user info
+    document.getElementById('sb-name').textContent=name;
+    document.getElementById('sb-email').textContent=email;
+    const avatarEl=document.getElementById('sb-avatar');
+    if(photoURL){avatarEl.innerHTML=`<img src="${photoURL}" alt="${name}">`}
+    else{avatarEl.textContent=name[0].toUpperCase()}
 
-    const hour = new Date().getHours();
-    const greeting = hour < 12 ? 'Good morning' :
-      hour < 17 ? 'Good afternoon' : 'Good evening';
-    document.getElementById('welcome-msg').innerHTML =
-      greeting + ', ' + name.split(' ')[0] + '! 👋 <span class="plan-badge plan-' + plan + '">' + getPlanLabel(plan) + '</span>';
+    // Plan badge
+    const planEl=document.getElementById('sb-plan');
+    planEl.textContent=plan.charAt(0).toUpperCase()+plan.slice(1);
+    planEl.className='plan-badge plan-'+plan;
 
-    const subs = {
-      student: '🎓 Student plan — Unlimited responses, free forever',
-      ngo: '🤝 NGO plan — Unlimited responses, free forever',
-      business: '🏢 Business plan — Professional features',
-      paid: '⭐ Paid plan — Unlimited everything',
-      free: 'Free plan — 100 responses per survey'
-    };
-    document.getElementById('welcome-sub').textContent = subs[plan] || subs.free;
+    // Admin link
+    if(currentUser.uid===ADMIN_UID)document.getElementById('admin-link').style.display='flex';
 
-    const limits = { student:'Unlimited', ngo:'Unlimited', business:'Unlimited', paid:'Unlimited', free:'100' };
-    document.getElementById('stat-limit').textContent = limits[plan] || '100';
+    // Welcome message
+    const hour=new Date().getHours();
+    const greeting=hour<12?'Good morning':'hour<17'?'Good afternoon':'Good evening';
+    const greet=hour<12?'Good morning ☀️':hour<17?'Good afternoon 👋':'Good evening 🌙';
+    document.getElementById('welcome-title').textContent=greet+', '+name.split(' ')[0]+'!';
+  }catch(e){console.error(e)}
+}
 
-    await loadSurveys(user.uid);
+async function loadSurveys(){
+  try{
+    const q=query(collection(db,'surveys'),where('userId','==',currentUser.uid));
+    const snap=await getDocs(q);
+    surveys=snap.docs.map(d=>({id:d.id,...d.data()}));
+    surveys.sort((a,b)=>{
+      const ta=a.updatedAt?.toMillis?a.updatedAt.toMillis():0;
+      const tb=b.updatedAt?.toMillis?b.updatedAt.toMillis():0;
+      return tb-ta;
+    });
+    renderStats();
+    renderSurveys();
+  }catch(e){console.error(e)}
+}
 
-    document.getElementById('loading-screen').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
+function renderStats(){
+  const total=surveys.reduce((s,sv)=>s+(sv.responseCount||0),0);
+  const active=surveys.filter(s=>s.status==='active');
+  document.getElementById('stat-total').textContent=total;
+  document.getElementById('stat-active').textContent=active.length;
+  document.getElementById('stat-active-sub').textContent=active.length===1?'1 survey active':active.length+' surveys active';
+
+  // Today's responses (approximate from responseCount changes — we use a simple heuristic)
+  // Since we don't store per-day counts, show total with note
+  const todayStr=new Date().toLocaleDateString('en-IN');
+  document.getElementById('stat-today').textContent='—';
+  document.getElementById('stat-today-sub').textContent='open responses to see';
+
+  // Most active survey
+  const top=surveys.filter(s=>s.responseCount>0).sort((a,b)=>(b.responseCount||0)-(a.responseCount||0))[0];
+  if(top){
+    document.getElementById('stat-top').textContent=top.responseCount||0;
+    document.getElementById('stat-top-sub').textContent=(top.title||'Untitled').slice(0,20)+(top.title?.length>20?'...':'');
+  }
+}
+
+function renderSurveys(){
+  const container=document.getElementById('surveys-container');
+  const active=surveys.filter(s=>s.status==='active');
+  const drafts=surveys.filter(s=>s.status==='draft'||!s.status);
+  const closed=surveys.filter(s=>s.status==='closed');
+  let html='';
+
+  if(surveys.length===0){
+    html=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No surveys yet</div><div class="empty-sub">Create your first survey to start collecting responses.</div><a href="/create" class="btn-new" style="display:inline-flex">+ Create survey</a></div>`;
+    container.innerHTML=html;return;
+  }
+
+  if(active.length>0){
+    html+=`<div class="section-header"><div class="section-dot active"></div><div class="section-title">Active Surveys</div><span class="section-count">${active.length}</span></div>`;
+    html+=viewMode==='grid'?`<div class="surveys-grid">${active.map(s=>renderCardGrid(s)).join('')}</div>`:`<div class="surveys-list">${active.map(s=>renderCardList(s)).join('')}</div>`;
+  }
+  if(drafts.length>0){
+    html+=`<div class="section-header"><div class="section-dot draft"></div><div class="section-title">Draft Surveys</div><span class="section-count">${drafts.length}</span></div>`;
+    html+=viewMode==='grid'?`<div class="surveys-grid">${drafts.map(s=>renderCardGrid(s)).join('')}</div>`:`<div class="surveys-list">${drafts.map(s=>renderCardList(s)).join('')}</div>`;
+  }
+  if(closed.length>0){
+    html+=`<div class="section-header"><div class="section-dot closed"></div><div class="section-title">Closed Surveys</div><span class="section-count">${closed.length}</span></div>`;
+    html+=viewMode==='grid'?`<div class="surveys-grid">${closed.map(s=>renderCardGrid(s)).join('')}</div>`:`<div class="surveys-list">${closed.map(s=>renderCardList(s)).join('')}</div>`;
+  }
+
+  container.innerHTML=html;
+  // Animate bars
+  setTimeout(()=>{document.querySelectorAll('.response-bar-fill,.list-bar-fill').forEach(b=>{const w=b.dataset.width;if(w)b.style.width=w+'%'})},100);
+}
+
+function renderCardGrid(s){
+  const resp=s.responseCount||0;
+  const qCount=s.questionCount||0;
+  const date=s.createdAt?.toDate?s.createdAt.toDate().toLocaleDateString('en-IN',{day:'2-digit',month:'short'}):'';
+  const status=s.status||'draft';
+  const statusBadge=status==='active'?'<span class="status-badge status-active">🟢 Active</span>':status==='closed'?'<span class="status-badge status-closed">💤 Closed</span>':'<span class="status-badge status-draft">✏️ Draft</span>';
+  // Response rate bar — use responseCount vs a "target" of 100 for visual
+  const barPct=Math.min(resp,100);
+  const sheetBtn=s.sheetUrl?`<a class="card-btn sheet" href="${s.sheetUrl}" target="_blank">📊 Sheet</a>`:'';
+  const closeBtn=status==='active'?`<button class="card-btn danger" onclick="confirmClose('${s.id}','${eh(s.title)}')">✕ Close</button>`:'';
+  const reopenBtn=status==='closed'?`<button class="card-btn" onclick="reopenSurvey('${s.id}')">↺ Reopen</button>`:'';
+  const publishBtn=status==='draft'?`<a class="card-btn primary" href="/edit/?id=${s.id}">🚀 Publish</a>`:'';
+
+  return`<div class="survey-card">
+    <div class="card-status-row">${statusBadge}<span class="card-date">${date}</span></div>
+    <div class="card-title">${eh(s.title||'Untitled Survey')}</div>
+    ${s.description?`<div class="card-desc">${eh(s.description)}</div>`:'<div style="margin-bottom:12px"></div>'}
+    <div class="card-meta">
+      <div class="card-meta-item">📝 <strong>${qCount}</strong> questions</div>
+      <div class="card-meta-item">📊 <strong>${resp}</strong> responses</div>
+    </div>
+    <div class="response-bar-wrap">
+      <div class="response-bar-label"><span>Responses</span><span>${resp}</span></div>
+      <div class="response-bar-track"><div class="response-bar-fill" data-width="${barPct}" style="width:0%"></div></div>
+    </div>
+    <div class="card-actions">
+      <a class="card-btn primary" href="/responses/?id=${s.id}">📊 Responses</a>
+      <a class="card-btn" href="/edit/?id=${s.id}">✏️ Edit</a>
+      <button class="card-btn" onclick="copyLink('${s.id}')">🔗 Copy link</button>
+      ${sheetBtn}${closeBtn}${reopenBtn}${publishBtn}
+      <button class="card-btn danger" onclick="confirmDelete('${s.id}','${eh(s.title)}')">🗑 Delete</button>
+    </div>
+  </div>`;
+}
+
+function renderCardList(s){
+  const resp=s.responseCount||0;
+  const qCount=s.questionCount||0;
+  const status=s.status||'draft';
+  const dotColor=status==='active'?'#10B981':status==='closed'?'#94A3B8':'#F59E0B';
+  const barPct=Math.min(resp,100);
+  const sheetBtn=s.sheetUrl?`<a class="card-btn sheet" href="${s.sheetUrl}" target="_blank">📊</a>`:'';
+  const closeBtn=status==='active'?`<button class="card-btn danger" onclick="confirmClose('${s.id}','${eh(s.title)}')">✕</button>`:'';
+  const reopenBtn=status==='closed'?`<button class="card-btn" onclick="reopenSurvey('${s.id}')">↺</button>`:'';
+
+  return`<div class="survey-list-item">
+    <div class="list-status-dot" style="background:${dotColor}"></div>
+    <div class="list-info">
+      <div class="list-title">${eh(s.title||'Untitled Survey')}</div>
+      <div class="list-meta">${qCount} questions • ${status}</div>
+    </div>
+    <div style="text-align:center">
+      <div class="list-resp">${resp}</div>
+      <div class="list-resp-lbl">responses</div>
+    </div>
+    <div class="list-bar">
+      <div class="response-bar-track"><div class="response-bar-fill list-bar-fill" data-width="${barPct}" style="width:0%"></div></div>
+    </div>
+    <div class="list-actions">
+      <a class="card-btn primary" href="/responses/?id=${s.id}">📊</a>
+      <a class="card-btn" href="/edit/?id=${s.id}">✏️</a>
+      <button class="card-btn" onclick="copyLink('${s.id}')">🔗</button>
+      ${sheetBtn}${closeBtn}${reopenBtn}
+      <button class="card-btn danger" onclick="confirmDelete('${s.id}','${eh(s.title)}')">🗑</button>
+    </div>
+  </div>`;
+}
+
+function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
+
+// VIEW TOGGLE
+window.setView=function(v){
+  viewMode=v;
+  document.getElementById('view-grid').classList.toggle('active',v==='grid');
+  document.getElementById('view-list').classList.toggle('active',v==='list');
+  renderSurveys();
+}
+
+// SIDEBAR
+window.toggleSb=function(){
+  const sb=document.getElementById('sidebar');
+  const ov=document.getElementById('sb-overlay');
+  const isOpen=sb.classList.contains('open');
+  sb.classList.toggle('open',!isOpen);
+  ov.classList.toggle('open',!isOpen);
+}
+window.closeSb=function(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sb-overlay').classList.remove('open');
+}
+
+// SIGN OUT
+window.signOut=async function(){
+  await fbSignOut(auth);
+  window.location.href='/login';
+}
+
+// COPY LINK
+window.copyLink=function(id){
+  const url=window.location.origin+'/s/?id='+id;
+  navigator.clipboard.writeText(url).then(()=>toast('Survey link copied!')).catch(()=>{
+    const el=document.createElement('textarea');el.value=url;document.body.appendChild(el);el.select();document.execCommand('copy');document.body.removeChild(el);toast('Link copied!');
   });
+}
 
-  function getPlanLabel(plan) {
-    const labels = {
-      free:'Free Plan', student:'🎓 Student', ngo:'🤝 NGO',
-      business:'🏢 Business', paid:'⭐ Paid', custom:'💎 Custom'
-    };
-    return labels[plan] || 'Free Plan';
-  }
+// CLOSE SURVEY
+window.confirmClose=function(id,title){
+  document.getElementById('modal-title').textContent='Close survey?';
+  document.getElementById('modal-sub').textContent=`"${title}" will stop accepting new responses. All existing responses are kept safely. You can reopen it anytime.`;
+  document.getElementById('modal-confirm-btn').textContent='Close survey';
+  document.getElementById('modal-confirm-btn').className='btn-confirm';
+  modalAction=async()=>{await updateDoc(doc(db,'surveys',id),{status:'closed'});toast('Survey closed');await loadSurveys()};
+  document.getElementById('confirm-modal').classList.add('open');
+}
 
-  async function loadSurveys(uid) {
-    try {
-      const q = query(collection(db, 'surveys'), where('userId', '==', uid));
-      const snap = await getDocs(q);
+// REOPEN SURVEY
+window.reopenSurvey=async function(id){
+  await updateDoc(doc(db,'surveys',id),{status:'active'});
+  toast('Survey reopened!');
+  await loadSurveys();
+}
 
-      if (snap.empty) {
-        document.getElementById('empty-state').style.display = 'block';
-        document.getElementById('surveys-grid').style.display = 'none';
-        return;
-      }
+// DELETE SURVEY
+window.confirmDelete=function(id,title){
+  document.getElementById('modal-title').textContent='Delete survey?';
+  document.getElementById('modal-sub').textContent=`"${title}" and ALL its responses will be permanently deleted. This cannot be undone.`;
+  document.getElementById('modal-confirm-btn').textContent='Delete permanently';
+  document.getElementById('modal-confirm-btn').className='btn-confirm';
+  modalAction=async()=>{await deleteDoc(doc(db,'surveys',id));toast('Survey deleted');await loadSurveys()};
+  document.getElementById('confirm-modal').classList.add('open');
+}
 
-      const surveys = [];
-      snap.forEach(d => surveys.push({ id: d.id, ...d.data() }));
-      surveys.sort((a, b) => {
-        const ta = a.createdAt && a.createdAt.toMillis ? a.createdAt.toMillis() : 0;
-        const tb = b.createdAt && b.createdAt.toMillis ? b.createdAt.toMillis() : 0;
-        return tb - ta;
-      });
-
-      document.getElementById('stat-surveys').textContent = surveys.length;
-      document.getElementById('stat-responses').textContent =
-        surveys.reduce(function(s, sv) { return s + (sv.responseCount || 0); }, 0);
-      document.getElementById('stat-active').textContent =
-        surveys.filter(function(s) { return s.status === 'active'; }).length;
-
-      var html = '';
-      surveys.forEach(function(survey) {
-        var statusClass = 'status-' + (survey.status || 'draft');
-        var statusText = survey.status === 'active' ? '● Active' :
-          survey.status === 'closed' ? '✕ Closed' : '○ Draft';
-        var sheetHtml = survey.sheetUrl
-          ? '<a href="' + survey.sheetUrl + '" target="_blank" class="sheet-link" onclick="event.stopPropagation()">📊 Open Sheet</a>'
-          : '';
-        var closeReopenBtn = '';
-        if (survey.status === 'active') {
-          closeReopenBtn = '<button class="btn-sm btn-sm-danger" onclick="event.stopPropagation();closeSurvey(\'' + survey.id + '\',this)">✕ Close</button>';
-        } else if (survey.status === 'closed') {
-          closeReopenBtn = '<button class="btn-sm btn-sm-success" onclick="event.stopPropagation();reopenSurvey(\'' + survey.id + '\',this)">↺ Reopen</button>';
-        }
-        html += '<div class="survey-card" onclick="window.location.href=\'/responses/?id=' + survey.id + '\'">';
-        html += '<div class="survey-card-top"><span class="survey-status ' + statusClass + '">' + statusText + '</span></div>';
-        html += '<div class="survey-title">' + (survey.title || 'Untitled Survey') + '</div>';
-        html += '<div class="survey-meta"><span>📝 ' + (survey.questionCount || 0) + ' questions</span><span>📅 ' + formatDate(survey.createdAt) + '</span></div>';
-        html += '<div class="survey-footer">';
-        html += '<div class="survey-responses"><span>' + (survey.responseCount || 0) + ' responses</span>' + sheetHtml + '</div>';
-        html += '<div class="survey-actions">';
-        html += '<button class="btn-sm btn-sm-ghost" onclick="event.stopPropagation();window.location.href=\'/responses/?id=' + survey.id + '\'">Responses</button>';
-        html += '<button class="btn-sm btn-sm-primary" onclick="event.stopPropagation();copyLink(\'' + survey.id + '\',this)">🔗 Copy link</button>';
-        html += '<button class="btn-sm btn-sm-ghost" onclick="event.stopPropagation();window.location.href=\'/edit/?id=' + survey.id + '\'">✏️ Edit</button>';
-        html += closeReopenBtn;
-        html += '</div></div></div>';
-      });
-
-      document.getElementById('surveys-grid').innerHTML = html;
-      document.getElementById('empty-state').style.display = 'none';
-      document.getElementById('surveys-grid').style.display = 'grid';
-
-    } catch(e) {
-      console.error('Error loading surveys:', e);
-    }
-  }
-
-  function formatDate(ts) {
-    if (!ts) return 'Recently';
-    var d = ts.toDate ? ts.toDate() : new Date(ts);
-    return d.toLocaleDateString('en-IN', { day:'numeric', month:'short' });
-  }
-
-  window.copyLink = function(surveyId, btn) {
-    var link = 'https://swoopform.com/s/?id=' + surveyId;
-    var el = document.createElement('textarea');
-    el.value = link;
-    el.style.position = 'fixed';
-    el.style.opacity = '0';
-    document.body.appendChild(el);
-    el.focus(); el.select();
-    try {
-      document.execCommand('copy');
-      var orig = btn.textContent;
-      btn.textContent = '✓ Copied!';
-      btn.style.background = 'linear-gradient(135deg,#047857,#10B981)';
-      btn.style.color = '#fff';
-      btn.style.borderColor = 'transparent';
-      setTimeout(function() {
-        btn.textContent = orig;
-        btn.style.background = '';
-        btn.style.color = '';
-        btn.style.borderColor = '';
-      }, 2000);
-    } catch(e) {
-      alert('Copy this link:\n\n' + link);
-    }
-    document.body.removeChild(el);
-  }
-
-  window.closeSurvey = async function(surveyId, btn) {
-    var confirmed = confirm(
-      'Close this survey?\n\n' +
-      '• Respondents can no longer submit answers\n' +
-      '• All existing responses are kept safely\n' +
-      '• Your Google Sheet stays intact\n' +
-      '• Use the Reopen button to accept responses again\n\n' +
-      'Are you sure?'
-    );
-    if (!confirmed) return;
-    btn.disabled = true;
-    btn.textContent = 'Closing...';
-    try {
-      await updateDoc(doc(db, 'surveys', surveyId), {
-        status: 'closed',
-        updatedAt: serverTimestamp()
-      });
-      showToast('Survey closed. Click Reopen anytime to accept responses again.');
-      setTimeout(function() { window.location.reload(); }, 2000);
-    } catch(e) {
-      btn.disabled = false;
-      btn.textContent = '✕ Close';
-      showToast('Error closing survey. Please try again.');
-    }
-  }
-
-  window.reopenSurvey = async function(surveyId, btn) {
-    var confirmed = confirm(
-      'Reopen this survey?\n\n' +
-      '• Respondents will be able to submit answers again\n' +
-      '• New responses will appear in your Google Sheet\n\n' +
-      'Are you sure?'
-    );
-    if (!confirmed) return;
-    btn.disabled = true;
-    btn.textContent = 'Reopening...';
-    try {
-      await updateDoc(doc(db, 'surveys', surveyId), {
-        status: 'active',
-        updatedAt: serverTimestamp()
-      });
-      showToast('Survey reopened! Now accepting responses again.');
-      setTimeout(function() { window.location.reload(); }, 2000);
-    } catch(e) {
-      btn.disabled = false;
-      btn.textContent = '↺ Reopen';
-      showToast('Error reopening survey. Please try again.');
-    }
-  }
-
-  window.handleLogout = async function() {
-    await signOut(auth);
-    window.location.href = '/login';
-  }
-
-  function showToast(msg) {
-    var t = document.getElementById('toast');
-    t.textContent = msg;
-    t.style.display = 'block';
-    setTimeout(function() { t.style.display = 'none'; }, 3000);
-  }
-
-  window.openDrawer = function() {
-    document.getElementById('drawer').classList.add('open');
-    document.getElementById('drawer-overlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  window.closeDrawer = function() {
-    document.getElementById('drawer').classList.remove('open');
-    document.getElementById('drawer-overlay').classList.remove('open');
-    document.body.style.overflow = '';
-  }
+window.closeModal=function(){document.getElementById('confirm-modal').classList.remove('open');modalAction=null}
+window.modalConfirm=async function(){
+  if(modalAction){try{await modalAction()}catch(e){console.error(e);toast('Something went wrong')}modalAction=null}
+  closeModal();
+}
 </script>
 </body>
 </html>
