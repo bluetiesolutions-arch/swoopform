@@ -474,7 +474,7 @@ window.tOn=function(i){tmpl[i].on=!tmpl[i].on;renderTmpl()}
 
 window.insertTmpl=function(){
   syncDOM();
-  const allOrders=[...secs.map(s=>s.go||0),...qs.map(q=>q.go||0)];const minO=allOrders.length?Math.min(...allOrders)-100:0;
+  const minO=-1000;
   const s=mkSec('Contact Information');s.subtitle='Please fill in your details.';s.displayMode='all';s.go=minO-10;
   secs.push(s);activeSec=s.id;
   tmpl.filter(f=>f.on).forEach((f,i)=>{qs.push({id:'q'+Date.now()+i,sectionId:s.id,type:f.type,text:f.label,subtext:'',options:['',''],required:f.req,hidden:false,displayMode:'auto',go:minO-9+i,correctIndex:-1,logic:[]})});
