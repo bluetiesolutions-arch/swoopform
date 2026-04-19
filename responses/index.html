@@ -7,692 +7,425 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{
-      font-family:'DM Sans',sans-serif;
-      background:#F5F0E8;
-      color:#0F0E1A;
-      min-height:100vh;
-    }
-    nav{
-      background:#fff;
-      border-bottom:1.5px solid #E2DAD0;
-      padding:0 24px;height:60px;
-      display:flex;align-items:center;
-      justify-content:space-between;
-      position:sticky;top:0;z-index:100;
-    }
-    .nav-logo{
-      display:flex;align-items:center;gap:10px;
-      text-decoration:none;
-    }
-    .logo-mark{
-      width:32px;height:32px;
-      background:linear-gradient(135deg,#2D1B69,#D97706);
-      border-radius:8px;
-      display:flex;align-items:center;justify-content:center;
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:0.9rem;color:#fff;
-    }
-    .logo-name{
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1rem;color:#0F0E1A;
-    }
-    .nav-right{display:flex;align-items:center;gap:10px}
-    .btn-ghost{
-      padding:8px 16px;border-radius:8px;
-      border:1.5px solid #E2DAD0;
-      background:transparent;color:#64748B;
-      font-size:0.85rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;
-      cursor:pointer;transition:all 0.2s;
-      text-decoration:none;display:inline-flex;
-      align-items:center;gap:6px;
-    }
-    .btn-ghost:hover{border-color:#0F0E1A;color:#0F0E1A}
-    .btn-primary{
-      padding:8px 16px;border-radius:8px;border:none;
-      background:linear-gradient(135deg,#2D1B69,#D97706);
-      color:#fff;font-size:0.85rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;
-      transition:opacity 0.2s;display:inline-flex;
-      align-items:center;gap:6px;
-    }
-    .btn-primary:hover{opacity:0.9}
-    .main{max-width:1000px;margin:0 auto;padding:32px 20px}
-
-    /* HEADER */
-    .page-header{
-      display:flex;align-items:flex-start;
-      justify-content:space-between;
-      flex-wrap:wrap;gap:16px;
-      margin-bottom:28px;
-    }
-    .survey-title{
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1.5rem;letter-spacing:-0.03em;
-      margin-bottom:4px;
-    }
-    .survey-meta{
-      font-size:0.85rem;color:#64748B;
-      display:flex;gap:14px;flex-wrap:wrap;
-    }
-    .status-badge{
-      display:inline-flex;align-items:center;gap:5px;
-      padding:3px 10px;border-radius:100px;
-      font-size:0.75rem;font-weight:700;
-    }
-    .status-active{background:#D1FAE5;color:#047857}
-    .status-draft{background:#F5F0E8;color:#64748B}
-    .status-closed{background:#FEE2E2;color:#DC2626}
+    body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
+    nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .nav-left{display:flex;align-items:center;gap:12px}
+    .logo-s{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none;flex-shrink:0}
+    .nav-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#0F0E1A;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .nav-right{display:flex;gap:8px;align-items:center}
+    .btn-g{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;text-decoration:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+    .btn-g:hover{border-color:#0F0E1A;color:#0F0E1A}
+    .btn-pub{padding:7px 14px;border-radius:8px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:inline-flex;align-items:center;gap:6px}
+    .btn-pub:hover{opacity:0.9}
+    .main{max-width:960px;margin:0 auto;padding:24px 20px}
 
     /* STATS */
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-      gap:12px;margin-bottom:28px;
-    }
-    .stat-card{
-      background:#fff;border-radius:12px;
-      border:1.5px solid #E2DAD0;
-      padding:18px;
-    }
-    .stat-num{
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1.8rem;letter-spacing:-0.03em;
-    }
-    .stat-label{font-size:0.78rem;color:#64748B;margin-top:4px}
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+    .stat-card{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;padding:16px 20px}
+    .stat-value{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:-0.03em;color:#0F0E1A;margin-bottom:4px}
+    .stat-label{font-size:0.75rem;color:#64748B;font-weight:500}
+    .stat-sub{font-size:0.7rem;color:#94A3B8;margin-top:2px}
 
     /* TABS */
-    .tabs{
-      display:flex;gap:4px;
-      background:#fff;border-radius:10px;
-      padding:4px;border:1.5px solid #E2DAD0;
-      margin-bottom:24px;
-      width:fit-content;
-    }
-    .tab{
-      padding:8px 18px;border-radius:7px;
-      font-size:0.85rem;font-weight:600;
-      cursor:pointer;border:none;
-      background:transparent;color:#64748B;
-      font-family:'DM Sans',sans-serif;
-      transition:all 0.2s;
-    }
-    .tab.active{background:#0F0E1A;color:#fff}
+    .tabs-wrap{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;overflow:hidden}
+    .tabs-header{display:flex;border-bottom:1.5px solid #E2DAD0;background:#FAFAF7}
+    .tab-btn{padding:12px 20px;font-size:0.85rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:#64748B;font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;transition:all 0.2s}
+    .tab-btn.active{color:#2D1B69;border-bottom-color:#2D1B69;background:#fff}
+    .tab-content{display:none;padding:24px}
+    .tab-content.active{display:block}
 
-    /* RESPONSES TABLE */
-    .responses-wrap{
-      background:#fff;border-radius:14px;
-      border:1.5px solid #E2DAD0;
-      overflow:hidden;
-    }
-    .responses-header{
-      padding:16px 20px;
-      border-bottom:1.5px solid #E2DAD0;
-      display:flex;align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;gap:10px;
-    }
-    .responses-title{
-      font-family:'Syne',sans-serif;font-weight:700;
-      font-size:0.95rem;
-    }
-    .search-input{
-      padding:8px 14px;border-radius:8px;
-      border:1.5px solid #E2DAD0;
-      font-family:'DM Sans',sans-serif;
-      font-size:0.85rem;color:#0F0E1A;
-      outline:none;width:220px;
-      transition:border-color 0.2s;
-    }
-    .search-input:focus{border-color:#2D1B69}
-    .search-input::placeholder{color:#C4B9AA}
-    .table-wrap{overflow-x:auto}
-    table{width:100%;border-collapse:collapse}
-    thead tr{background:#F5F0E8}
-    th{
-      padding:12px 16px;text-align:left;
-      font-size:0.75rem;font-weight:700;
-      color:#64748B;letter-spacing:0.05em;
-      text-transform:uppercase;
-      white-space:nowrap;
-    }
-    td{
-      padding:14px 16px;
-      border-top:1px solid #E2DAD0;
-      font-size:0.85rem;
-      vertical-align:top;
-    }
-    tr:hover td{background:#FAFAF7}
-    .response-num{
-      font-weight:700;color:#64748B;
-      font-size:0.78rem;
-    }
-    .response-date{
-      color:#64748B;font-size:0.78rem;
-      white-space:nowrap;
-    }
-    .answer-cell{
-      max-width:200px;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-    }
-    .answer-tag{
-      display:inline-block;
-      padding:2px 8px;border-radius:6px;
-      background:#EDE9FF;color:#2D1B69;
-      font-size:0.78rem;font-weight:600;
-    }
-    .empty-state{
-      padding:60px 20px;text-align:center;
-    }
-    .empty-icon{font-size:2.5rem;margin-bottom:12px}
-    .empty-state h3{
-      font-family:'Syne',sans-serif;font-weight:700;
-      font-size:1rem;margin-bottom:8px;
-    }
-    .empty-state p{color:#64748B;font-size:0.85rem}
-
-    /* SUMMARY TAB */
-    .summary-grid{display:flex;flex-direction:column;gap:16px}
-    .question-summary{
-      background:#fff;border-radius:14px;
-      border:1.5px solid #E2DAD0;
-      padding:22px;
-    }
-    .qs-header{
-      display:flex;align-items:center;gap:10px;
-      margin-bottom:16px;
-    }
-    .qs-num{
-      width:26px;height:26px;border-radius:50%;
-      background:#EDE9FF;color:#2D1B69;
-      font-size:0.75rem;font-weight:700;
-      display:flex;align-items:center;justify-content:center;
-      flex-shrink:0;
-    }
-    .qs-text{
-      font-family:'Syne',sans-serif;font-weight:700;
-      font-size:0.95rem;
-    }
-    .qs-type{
-      margin-left:auto;
-      padding:2px 8px;border-radius:6px;
-      background:#F5F0E8;color:#64748B;
-      font-size:0.72rem;font-weight:600;
-    }
+    /* SUMMARY */
+    .q-block{margin-bottom:32px;padding-bottom:32px;border-bottom:1.5px solid #E2DAD0}
+    .q-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+    .q-block-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:12px;flex-wrap:wrap}
+    .q-block-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:#0F0E1A;flex:1}
+    .q-block-type{font-size:0.72rem;font-weight:700;color:#94A3B8;background:#F5F0E8;padding:3px 8px;border-radius:100px;flex-shrink:0;margin-top:3px}
+    .q-block-count{font-size:0.78rem;color:#64748B;margin-top:4px}
+    .chart-toggle{display:flex;gap:4px;flex-shrink:0}
+    .chart-toggle-btn{padding:4px 10px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;color:#64748B;font-size:0.72rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+    .chart-toggle-btn.active{background:#2D1B69;border-color:#2D1B69;color:#fff}
 
     /* BAR CHART */
-    .bar-chart{display:flex;flex-direction:column;gap:8px}
+    .bar-chart{display:flex;flex-direction:column;gap:10px}
     .bar-row{display:flex;align-items:center;gap:10px}
-    .bar-label{
-      font-size:0.82rem;font-weight:500;
-      min-width:120px;max-width:160px;
-      overflow:hidden;text-overflow:ellipsis;
-      white-space:nowrap;
-    }
-    .bar-track{
-      flex:1;height:24px;background:#F5F0E8;
-      border-radius:6px;overflow:hidden;
-    }
-    .bar-fill{
-      height:100%;
-      background:linear-gradient(90deg,#2D1B69,#D97706);
-      border-radius:6px;transition:width 0.6s ease;
-      min-width:4px;
-    }
-    .bar-count{
-      font-size:0.78rem;font-weight:700;
-      color:#64748B;min-width:40px;text-align:right;
-    }
+    .bar-label{font-size:0.82rem;font-weight:500;color:#0F0E1A;width:160px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .bar-track{flex:1;height:28px;background:#F5F0E8;border-radius:6px;overflow:hidden;position:relative}
+    .bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#2D1B69,#7C3AED);transition:width 0.8s ease;min-width:0}
+    .bar-count{font-size:0.78rem;font-weight:700;color:#0F0E1A;width:60px;flex-shrink:0;text-align:right}
+    .bar-pct{font-size:0.72rem;color:#64748B;width:40px;flex-shrink:0;text-align:right}
 
-    /* RATING CHART */
-    .rating-chart{display:flex;gap:8px;flex-wrap:wrap}
-    .rating-bar{text-align:center}
-    .rating-bar-track{
-      width:40px;background:#F5F0E8;
-      border-radius:6px;overflow:hidden;
-      display:flex;align-items:flex-end;
-      height:80px;margin-bottom:6px;
-    }
-    .rating-bar-fill{
-      width:100%;
-      background:linear-gradient(180deg,#2D1B69,#D97706);
-      border-radius:6px;transition:height 0.6s ease;
-    }
-    .rating-bar-label{font-size:0.78rem;font-weight:700;color:#64748B}
-    .rating-bar-count{font-size:0.7rem;color:#94A3B8}
+    /* DONUT CHART */
+    .donut-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+    .donut-canvas-wrap{position:relative;width:160px;height:160px;flex-shrink:0}
+    .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+    .donut-center-val{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:#0F0E1A}
+    .donut-center-lbl{font-size:0.68rem;color:#64748B;margin-top:2px}
+    .donut-legend{display:flex;flex-direction:column;gap:8px;flex:1}
+    .donut-legend-item{display:flex;align-items:center;gap:8px;font-size:0.82rem}
+    .donut-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+    .donut-legend-label{flex:1;color:#0F0E1A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .donut-legend-pct{font-weight:700;color:#64748B;font-size:0.75rem}
 
-    /* TEXT RESPONSES */
-    .text-responses{display:flex;flex-direction:column;gap:8px}
-    .text-response-item{
-      padding:10px 14px;background:#F5F0E8;
-      border-radius:8px;font-size:0.85rem;
-      line-height:1.5;
-    }
+    /* RATING DISPLAY */
+    .rating-display{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+    .rating-avg{font-family:'Syne',sans-serif;font-weight:800;font-size:2.5rem;color:#0F0E1A}
+    .rating-stars{display:flex;gap:4px;font-size:1.4rem}
+    .rating-max{font-size:0.82rem;color:#64748B;margin-top:4px}
+    .rating-breakdown{flex:1;display:flex;flex-direction:column;gap:6px;min-width:200px}
+    .rating-bar-row{display:flex;align-items:center;gap:8px;font-size:0.78rem}
+    .rating-bar-lbl{width:20px;text-align:right;color:#64748B;font-weight:600}
+    .rating-bar-track{flex:1;height:8px;background:#F5F0E8;border-radius:4px;overflow:hidden}
+    .rating-bar-fill{height:100%;border-radius:4px;background:#D97706}
+    .rating-bar-cnt{width:30px;color:#64748B;font-size:0.72rem}
+
+    /* TEXT ANSWERS */
+    .text-answers-list{display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto;padding-right:4px}
+    .text-answer-item{background:#F5F0E8;border-radius:8px;padding:12px 14px;font-size:0.85rem;color:#0F0E1A;line-height:1.5;border-left:3px solid #2D1B69}
+    .text-answer-empty{font-size:0.82rem;color:#94A3B8;font-style:italic}
+
+    /* YESNO */
+    .yesno-display{display:flex;gap:16px;flex-wrap:wrap}
+    .yesno-card{flex:1;min-width:120px;background:#F5F0E8;border-radius:10px;padding:16px;text-align:center}
+    .yesno-emoji{font-size:1.8rem;margin-bottom:8px}
+    .yesno-count{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:#0F0E1A}
+    .yesno-pct{font-size:0.78rem;color:#64748B;margin-top:2px}
+    .yesno-label{font-size:0.82rem;font-weight:600;color:#64748B;margin-top:4px}
+
+    /* ALL RESPONSES TABLE */
+    .table-wrap{overflow-x:auto}
+    .responses-table{width:100%;border-collapse:collapse;font-size:0.82rem;min-width:600px}
+    .responses-table th{background:#F5F0E8;padding:10px 14px;text-align:left;font-weight:700;font-size:0.72rem;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;border-bottom:1.5px solid #E2DAD0;white-space:nowrap}
+    .responses-table td{padding:10px 14px;border-bottom:1px solid #E2DAD0;color:#0F0E1A;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:top}
+    .responses-table tr:hover td{background:#F5F0E8}
+    .responses-table tr:last-child td{border-bottom:none}
+    .no-responses{text-align:center;padding:48px 20px;color:#94A3B8}
+    .no-responses-icon{font-size:2.5rem;margin-bottom:12px}
+    .no-responses-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:#64748B;margin-bottom:6px}
+    .no-responses-sub{font-size:0.82rem}
+
+    /* SEARCH */
+    .table-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+    .search-input{flex:1;padding:8px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.85rem;font-family:'DM Sans',sans-serif;outline:none;min-width:200px}
+    .search-input:focus{border-color:#2D1B69}
+    .search-input::placeholder{color:#C4B9AA}
+    .response-count-badge{font-size:0.78rem;font-weight:600;color:#64748B;white-space:nowrap}
 
     /* LOADING */
-    .loading-screen{
-      display:flex;align-items:center;
-      justify-content:center;min-height:100vh;
-      background:#F5F0E8;
-    }
-    .spinner{
-      width:32px;height:32px;
-      border:3px solid rgba(45,27,105,0.2);
-      border-top-color:#2D1B69;border-radius:50%;
-      animation:spin 0.8s linear infinite;
-    }
+    .loading-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#F5F0E8}
+    .spinner{width:32px;height:32px;border:3px solid rgba(45,27,105,0.2);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
 
-    @media(max-width:600px){
-      .stats{grid-template-columns:repeat(2,1fr)}
-      .search-input{width:100%}
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,0.3)}
+
+    @media(max-width:680px){
+      .stats-grid{grid-template-columns:repeat(2,1fr)}
+      .bar-label{width:100px}
+      .main{padding:16px}
     }
   </style>
 </head>
 <body>
-
-<div id="loading-screen" class="loading-screen">
-  <div class="spinner"></div>
-</div>
-
+<div class="loading-screen" id="ls"><div class="spinner"></div></div>
 <div id="app" style="display:none">
   <nav>
-    <a href="/dashboard" class="nav-logo">
-      <div class="logo-mark">S</div>
-      <div class="logo-name">SwoopForm</div>
-    </a>
+    <div class="nav-left">
+      <a href="/dashboard" class="logo-s">S</a>
+      <a href="/dashboard" class="btn-g" style="font-size:0.78rem;padding:5px 10px">← Dashboard</a>
+      <div class="nav-title" id="nav-title">Responses</div>
+    </div>
     <div class="nav-right">
-      <a href="/dashboard" class="btn-ghost">← Dashboard</a>
-      <button class="btn-primary" id="export-btn" onclick="exportCSV()">
-        ⬇ Export CSV
-      </button>
+      <a class="btn-g" id="survey-link-btn" href="#" target="_blank">🔗 Survey link</a>
+      <button class="btn-pub" onclick="exportCSV()">⬇ Export CSV</button>
     </div>
   </nav>
-
   <div class="main">
-
-    <!-- HEADER -->
-    <div class="page-header">
-      <div>
-        <div class="survey-title" id="survey-title">Loading...</div>
-        <div class="survey-meta">
-          <span id="survey-status"></span>
-          <span id="survey-questions"></span>
-          <span id="survey-created"></span>
-        </div>
-      </div>
-      <button class="btn-ghost" onclick="copyShareLink()">
-        🔗 Copy survey link
-      </button>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-value" id="stat-total">0</div><div class="stat-label">Total responses</div></div>
+      <div class="stat-card"><div class="stat-value" id="stat-today">0</div><div class="stat-label">Today</div><div class="stat-sub" id="stat-today-sub"></div></div>
+      <div class="stat-card"><div class="stat-value" id="stat-completion">—</div><div class="stat-label">Questions answered</div><div class="stat-sub">avg per response</div></div>
+      <div class="stat-card"><div class="stat-value" id="stat-questions">0</div><div class="stat-label">Questions</div></div>
     </div>
-
-    <!-- STATS -->
-    <div class="stats">
-      <div class="stat-card">
-        <div class="stat-num" id="stat-total">0</div>
-        <div class="stat-label">Total responses</div>
+    <div class="tabs-wrap">
+      <div class="tabs-header">
+        <button class="tab-btn active" onclick="switchTab('summary',this)">📊 Summary</button>
+        <button class="tab-btn" onclick="switchTab('all',this)">📋 All Responses</button>
       </div>
-      <div class="stat-card">
-        <div class="stat-num" id="stat-today">0</div>
-        <div class="stat-label">Today</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num" id="stat-completion">0%</div>
-        <div class="stat-label">Completion rate</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num" id="stat-questions">0</div>
-        <div class="stat-label">Questions</div>
-      </div>
+      <div class="tab-content active" id="tab-summary"></div>
+      <div class="tab-content" id="tab-all"></div>
     </div>
-
-    <!-- TABS -->
-    <div class="tabs">
-      <button class="tab active" id="tab-summary" onclick="showTab('summary')">📊 Summary</button>
-      <button class="tab" id="tab-responses" onclick="showTab('responses')">📋 All responses</button>
-    </div>
-
-    <!-- SUMMARY VIEW -->
-    <div id="view-summary">
-      <div class="summary-grid" id="summary-grid">
-        <div class="empty-state">
-          <div class="empty-icon">📊</div>
-          <h3>No responses yet</h3>
-          <p>Share your survey link to start collecting responses</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- RESPONSES VIEW -->
-    <div id="view-responses" style="display:none">
-      <div class="responses-wrap">
-        <div class="responses-header">
-          <div class="responses-title" id="responses-count">0 responses</div>
-          <input class="search-input" id="search-input"
-            placeholder="Search responses..."
-            oninput="filterResponses(this.value)">
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr id="table-head"></tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>
+<div class="toast" id="toast"></div>
 
 <script type="module">
-  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-  import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-  import { getFirestore, doc, getDoc, collection, query, where, getDocs, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,doc,getDoc,collection,query,where,getDocs,orderBy}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",
-    authDomain: "swoopform.firebaseapp.com",
-    projectId: "swoopform",
-    storageBucket: "swoopform.firebasestorage.app",
-    messagingSenderId: "378850092986",
-    appId: "1:378850092986:web:4fed92128136e048fa5f83"
-  };
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+const params=new URLSearchParams(window.location.search);
+const surveyId=params.get('id');
+let survey=null,responses=[],questions=[];
+const DONUT_COLORS=['#2D1B69','#D97706','#0D9B8A','#DC2626','#2563EB','#7C3AED','#047857','#DB2777'];
 
-  let survey = null;
-  let allResponses = [];
-  let filteredResponses = [];
-  let surveyId = null;
+onAuthStateChanged(auth,async u=>{
+  if(!u){window.location.href='/login';return}
+  if(!surveyId){window.location.href='/dashboard';return}
+  await loadData();
+  document.getElementById('ls').style.display='none';
+  document.getElementById('app').style.display='block';
+});
 
-  const params = new URLSearchParams(window.location.search);
-  surveyId = params.get('id');
+async function loadData(){
+  try{
+    const snap=await getDoc(doc(db,'surveys',surveyId));
+    if(!snap.exists()){window.location.href='/dashboard';return}
+    survey={id:snap.id,...snap.data()};
+    document.getElementById('nav-title').textContent=survey.title||'Responses';
+    document.getElementById('survey-link-btn').href='/s/?id='+surveyId;
+    questions=(survey.questions||[]).filter(q=>q.type!=='heading').sort((a,b)=>(a.go||a.globalOrder||0)-(b.go||b.globalOrder||0));
 
-  onAuthStateChanged(auth, async (user) => {
-    if (!user) { window.location.href = '/login'; return; }
-    if (!surveyId) { window.location.href = '/dashboard'; return; }
-    await loadData(user.uid);
-    document.getElementById('loading-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
+    const q2=query(collection(db,'responses'),where('surveyId','==',surveyId));
+    const rSnap=await getDocs(q2);
+    responses=rSnap.docs.map(d=>({id:d.id,...d.data()}));
+    responses.sort((a,b)=>{
+      const ta=a.submittedAt?.toMillis?a.submittedAt.toMillis():0;
+      const tb=b.submittedAt?.toMillis?b.submittedAt.toMillis():0;
+      return tb-ta;
+    });
+
+    renderStats();
+    renderSummary();
+    renderAllResponses();
+  }catch(e){console.error(e);toast('Error loading responses')}
+}
+
+function renderStats(){
+  const total=responses.length;
+  document.getElementById('stat-total').textContent=total;
+  document.getElementById('stat-questions').textContent=questions.length;
+
+  // Today's responses
+  const today=new Date();today.setHours(0,0,0,0);
+  const todayCount=responses.filter(r=>{
+    const t=r.submittedAt?.toMillis?r.submittedAt.toMillis():0;
+    return t>=today.getTime();
+  }).length;
+  document.getElementById('stat-today').textContent=todayCount;
+  document.getElementById('stat-today-sub').textContent=total>0?'of '+total+' total':'no responses yet';
+
+  // Avg questions answered
+  if(total>0&&questions.length>0){
+    const avgAnswered=responses.reduce((sum,r)=>{
+      const ans=(r.answers||[]).filter(a=>a.answer&&a.answer.trim()).length;
+      return sum+ans;
+    },0)/total;
+    document.getElementById('stat-completion').textContent=avgAnswered.toFixed(1);
+  }
+}
+
+function renderSummary(){
+  const container=document.getElementById('tab-summary');
+  if(responses.length===0){
+    container.innerHTML='<div class="no-responses"><div class="no-responses-icon">📭</div><div class="no-responses-title">No responses yet</div><div class="no-responses-sub">Share your survey link to start collecting responses.</div></div>';
+    return;
+  }
+
+  let html='';
+  questions.forEach((q,qi)=>{
+    const answersForQ=responses.map(r=>{
+      const a=(r.answers||[]).find(a=>a.question===q.text||(r.answers||[])[qi]?.question===q.text);
+      return a?a.answer:'';
+    }).filter(a=>a&&a.trim());
+    const answered=answersForQ.length;
+    html+=`<div class="q-block"><div class="q-block-header"><div><div class="q-block-title">${qi+1}. ${q.text||'Untitled'}</div><div class="q-block-count">${answered} of ${responses.length} answered</div></div><div style="display:flex;align-items:center;gap:8px"><span class="q-block-type">${getTypeLabel(q.type)}</span>${['multiple','checkbox','dropdown','yesno','quiz'].includes(q.type)?`<div class="chart-toggle"><button class="chart-toggle-btn active" onclick="toggleChart('bar','${qi}',this)">Bar</button><button class="chart-toggle-btn" onclick="toggleChart('donut','${qi}',this)">Donut</button></div>`:''}</div></div>`;
+    html+=`<div id="chart-${qi}">`;
+    html+=renderQuestionChart(q,answersForQ,qi,'bar');
+    html+=`</div></div>`;
   });
+  container.innerHTML=html;
+  // Animate bars
+  setTimeout(()=>{document.querySelectorAll('.bar-fill').forEach(b=>{const w=b.dataset.width;b.style.width=w+'%'})},100);
+}
 
-  async function loadData(uid) {
-    // Load survey
-    const surveySnap = await getDoc(doc(db, 'surveys', surveyId));
-    if (!surveySnap.exists()) { window.location.href = '/dashboard'; return; }
-    survey = { id: surveySnap.id, ...surveySnap.data() };
+function renderQuestionChart(q,answers,qi,chartType){
+  const total=answers.length;
+  if(total===0)return`<div class="text-answer-empty">No answers yet</div>`;
 
-    // Security check
-    if (survey.userId !== uid) { window.location.href = '/dashboard'; return; }
+  if(['multiple','checkbox','dropdown','quiz'].includes(q.type)){
+    // Count occurrences
+    const counts={};
+    (q.options||[]).forEach(o=>counts[o]=0);
+    answers.forEach(a=>{
+      const opts=a.includes(',')?a.split(', '):[a];
+      opts.forEach(o=>{if(counts[o]!==undefined)counts[o]++;else counts[o]=1});
+    });
+    const entries=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
 
-    // Update header
-    document.getElementById('survey-title').textContent = survey.title;
-    document.getElementById('survey-status').innerHTML =
-      `<span class="status-badge status-${survey.status}">● ${survey.status}</span>`;
-    document.getElementById('survey-questions').textContent =
-      `${survey.questionCount || 0} questions`;
-    document.getElementById('stat-questions').textContent =
-      survey.questionCount || 0;
-    document.getElementById('survey-created').textContent =
-      survey.createdAt ? formatDate(survey.createdAt) : '';
-
-    // Load responses
-    try {
-      const q = query(
-        collection(db, 'responses'),
-        where('surveyId', '==', surveyId)
-      );
-      const snap = await getDocs(q);
-      allResponses = [];
-      snap.forEach(d => allResponses.push({ id: d.id, ...d.data() }));
-
-      // Sort by date newest first
-      allResponses.sort((a, b) => {
-        const ta = a.submittedAt?.toMillis?.() || 0;
-        const tb = b.submittedAt?.toMillis?.() || 0;
-        return tb - ta;
-      });
-
-      filteredResponses = [...allResponses];
-
-      // Update stats
-      const total = allResponses.length;
-      document.getElementById('stat-total').textContent = total;
-      document.getElementById('responses-count').textContent =
-        `${total} response${total !== 1 ? 's' : ''}`;
-
-      // Today count
-      const today = new Date();
-      today.setHours(0,0,0,0);
-      const todayCount = allResponses.filter(r => {
-        const d = r.submittedAt?.toDate?.();
-        return d && d >= today;
-      }).length;
-      document.getElementById('stat-today').textContent = todayCount;
-
-      // Completion rate (100% if they submitted)
-      document.getElementById('stat-completion').textContent =
-        total > 0 ? '100%' : '0%';
-
-      renderSummary();
-      renderTable();
-
-    } catch(e) {
-      console.error(e);
+    if(chartType==='bar'){
+      const maxCount=Math.max(...entries.map(e=>e[1]),1);
+      return`<div class="bar-chart">${entries.map(([label,count])=>{
+        const pct=Math.round((count/total)*100);
+        return`<div class="bar-row"><div class="bar-label" title="${label}">${label}</div><div class="bar-track"><div class="bar-fill" data-width="${(count/maxCount)*100}" style="width:0%"></div></div><div class="bar-count">${count}</div><div class="bar-pct">${pct}%</div></div>`;
+      }).join('')}</div>`;
+    } else {
+      // Donut
+      return renderDonut(entries,total,qi);
     }
   }
 
-  function renderSummary() {
-    const questions = survey.questions || [];
-    if (allResponses.length === 0) return;
-
-    const grid = document.getElementById('summary-grid');
-    grid.innerHTML = questions.map((q, qi) => {
-      const answers = allResponses
-        .map(r => r.answers?.[qi]?.answer)
-        .filter(a => a !== undefined && a !== '');
-
-      let chartHtml = '';
-
-      if (q.type === 'multiple' || q.type === 'yesno') {
-        // Count each option
-        const counts = {};
-        answers.forEach(a => { counts[a] = (counts[a] || 0) + 1; });
-        const total = answers.length;
-        const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]);
-
-        chartHtml = `
-          <div class="bar-chart">
-            ${sorted.map(([opt, count]) => `
-              <div class="bar-row">
-                <div class="bar-label" title="${opt}">${opt}</div>
-                <div class="bar-track">
-                  <div class="bar-fill" style="width:${total>0?(count/total*100):0}%"></div>
-                </div>
-                <div class="bar-count">${count} <span style="color:#C4B9AA;font-weight:400">(${total>0?Math.round(count/total*100):0}%)</span></div>
-              </div>
-            `).join('')}
-          </div>`;
-
-      } else if (q.type === 'rating') {
-        const counts = {1:0,2:0,3:0,4:0,5:0};
-        answers.forEach(a => { if (counts[a] !== undefined) counts[a]++; });
-        const max = Math.max(...Object.values(counts), 1);
-        const avg = answers.length > 0
-          ? (answers.reduce((s,a) => s + Number(a), 0) / answers.length).toFixed(1)
-          : '—';
-
-        chartHtml = `
-          <div style="margin-bottom:12px">
-            <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:2rem">${avg}</span>
-            <span style="color:#64748B;font-size:0.85rem"> / 5 average</span>
-          </div>
-          <div class="rating-chart">
-            ${[1,2,3,4,5].map(n => `
-              <div class="rating-bar">
-                <div class="rating-bar-track">
-                  <div class="rating-bar-fill" style="height:${counts[n]/max*100}%"></div>
-                </div>
-                <div class="rating-bar-label">${n}</div>
-                <div class="rating-bar-count">${counts[n]}</div>
-              </div>
-            `).join('')}
-          </div>`;
-
-      } else {
-        // Text responses
-        chartHtml = `
-          <div class="text-responses">
-            ${answers.slice(0,10).map(a => `
-              <div class="text-response-item">${a}</div>
-            `).join('')}
-            ${answers.length > 10 ? `<div style="font-size:0.78rem;color:#64748B;padding:4px 0">+${answers.length-10} more responses</div>` : ''}
-          </div>`;
-      }
-
-      return `
-        <div class="question-summary">
-          <div class="qs-header">
-            <div class="qs-num">${qi+1}</div>
-            <div class="qs-text">${q.text || 'Untitled'}</div>
-            <div class="qs-type">${q.type}</div>
-          </div>
-          <div style="font-size:0.78rem;color:#64748B;margin-bottom:14px">
-            ${answers.length} answer${answers.length!==1?'s':''}
-          </div>
-          ${chartHtml}
-        </div>`;
-    }).join('');
+  if(q.type==='yesno'){
+    const yes=answers.filter(a=>a==='Yes').length;
+    const no=answers.filter(a=>a==='No').length;
+    const yesPct=total>0?Math.round((yes/total)*100):0;
+    const noPct=total>0?Math.round((no/total)*100):0;
+    if(chartType==='donut'){
+      return renderDonut([['Yes',yes],['No',no]],total,qi);
+    }
+    return`<div class="yesno-display"><div class="yesno-card"><div class="yesno-emoji">👍</div><div class="yesno-count">${yes}</div><div class="yesno-pct">${yesPct}%</div><div class="yesno-label">Yes</div></div><div class="yesno-card"><div class="yesno-emoji">👎</div><div class="yesno-count">${no}</div><div class="yesno-pct">${noPct}%</div><div class="yesno-label">No</div></div></div>`;
   }
 
-  function renderTable() {
-    const questions = survey.questions || [];
-    const head = document.getElementById('table-head');
-    const body = document.getElementById('table-body');
+  if(q.type==='rating'){
+    const nums=answers.map(a=>parseFloat(a)).filter(n=>!isNaN(n));
+    const avg=nums.length>0?(nums.reduce((s,n)=>s+n,0)/nums.length).toFixed(1):0;
+    const stars='⭐'.repeat(Math.round(avg))+'☆'.repeat(5-Math.round(avg));
+    const breakdown={};
+    [1,2,3,4,5].forEach(n=>breakdown[n]=(nums.filter(x=>x===n).length));
+    const maxB=Math.max(...Object.values(breakdown),1);
+    return`<div class="rating-display"><div style="text-align:center"><div class="rating-avg">${avg}</div><div class="rating-stars">${stars}</div><div class="rating-max">out of 5</div></div><div class="rating-breakdown">${[5,4,3,2,1].map(n=>`<div class="rating-bar-row"><div class="rating-bar-lbl">${n}</div><div class="rating-bar-track"><div class="rating-bar-fill" style="width:${(breakdown[n]/maxB)*100}%"></div></div><div class="rating-bar-cnt">${breakdown[n]}</div></div>`).join('')}</div></div>`;
+  }
 
-    // Build headers
-    head.innerHTML = `
+  if(q.type==='scale'){
+    const nums=answers.map(a=>parseFloat(a)).filter(n=>!isNaN(n));
+    const avg=nums.length>0?(nums.reduce((s,n)=>s+n,0)/nums.length).toFixed(1):0;
+    const breakdown={};
+    [1,2,3,4,5,6,7,8,9,10].forEach(n=>breakdown[n]=(nums.filter(x=>x===n).length));
+    const maxB=Math.max(...Object.values(breakdown),1);
+    return`<div><div style="margin-bottom:12px"><span style="font-family:Syne,sans-serif;font-weight:800;font-size:2rem">${avg}</span><span style="font-size:0.82rem;color:#64748B;margin-left:8px">average out of 10</span></div><div class="bar-chart">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="bar-row"><div class="bar-label" style="width:30px">${n}</div><div class="bar-track"><div class="bar-fill" data-width="${(breakdown[n]/maxB)*100}" style="width:0%;background:linear-gradient(90deg,#D97706,#2D1B69)"></div></div><div class="bar-count">${breakdown[n]}</div></div>`).join('')}</div></div>`;
+  }
+
+  if(q.type==='pledge'){
+    const agreed=answers.filter(a=>a==='agreed').length;
+    const pct=total>0?Math.round((agreed/total)*100):0;
+    return`<div style="display:flex;align-items:center;gap:16px"><div style="font-family:Syne,sans-serif;font-weight:800;font-size:2rem;color:#2D1B69">${pct}%</div><div><div style="font-size:0.85rem;font-weight:600;color:#0F0E1A">${agreed} of ${total} agreed</div><div style="font-size:0.78rem;color:#64748B;margin-top:3px">pledged commitment</div></div></div>`;
+  }
+
+  // Text answers (text, textarea, email, phone, number, file, date)
+  return`<div class="text-answers-list">${answers.map(a=>`<div class="text-answer-item">${a}</div>`).join('')}</div>`;
+}
+
+function renderDonut(entries,total,qi){
+  const size=160,cx=80,cy=80,r=60,strokeW=24;
+  const circumference=2*Math.PI*r;
+  let offset=0;
+  const segments=entries.map(([label,count],i)=>{
+    const pct=total>0?count/total:0;
+    const dash=pct*circumference;
+    const gap=circumference-dash;
+    const seg=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${DONUT_COLORS[i%DONUT_COLORS.length]}" stroke-width="${strokeW}" stroke-dasharray="${dash} ${gap}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${cx} ${cy})" style="transition:stroke-dasharray 0.8s ease"/>`;
+    offset+=dash;
+    return{seg,label,count,color:DONUT_COLORS[i%DONUT_COLORS.length],pct:Math.round(pct*100)};
+  });
+  const svg=`<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${segments.map(s=>s.seg).join('')}<circle cx="${cx}" cy="${cy}" r="${r-strokeW/2}" fill="#fff"/></svg>`;
+  const legend=segments.map(s=>`<div class="donut-legend-item"><div class="donut-dot" style="background:${s.color}"></div><div class="donut-legend-label" title="${s.label}">${s.label}</div><div class="donut-legend-pct">${s.pct}%</div></div>`).join('');
+  return`<div class="donut-wrap"><div class="donut-canvas-wrap">${svg}<div class="donut-center"><div class="donut-center-val">${total}</div><div class="donut-center-lbl">total</div></div></div><div class="donut-legend">${legend}</div></div>`;
+}
+
+window.toggleChart=function(type,qi,btn){
+  btn.closest('.chart-toggle').querySelectorAll('.chart-toggle-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const q=questions[qi];
+  const answersForQ=responses.map(r=>{
+    const a=(r.answers||[]).find(a=>a.question===q.text||(r.answers||[])[qi]?.question===q.text);
+    return a?a.answer:'';
+  }).filter(a=>a&&a.trim());
+  const container=document.getElementById('chart-'+qi);
+  container.innerHTML=renderQuestionChart(q,answersForQ,qi,type);
+  setTimeout(()=>{container.querySelectorAll('.bar-fill').forEach(b=>{const w=b.dataset.width;b.style.width=w+'%'})},100);
+}
+
+function renderAllResponses(){
+  const container=document.getElementById('tab-all');
+  if(responses.length===0){
+    container.innerHTML='<div class="no-responses"><div class="no-responses-icon">📭</div><div class="no-responses-title">No responses yet</div><div class="no-responses-sub">Share your survey link to start collecting responses.</div></div>';
+    return;
+  }
+
+  let html=`<div class="table-toolbar">
+    <input class="search-input" id="search-input" placeholder="🔍 Search responses..." oninput="filterTable(this.value)">
+    <span class="response-count-badge" id="response-count">${responses.length} responses</span>
+  </div>
+  <div class="table-wrap"><table class="responses-table" id="responses-table">
+    <thead><tr>
       <th>#</th>
       <th>Date</th>
-      ${questions.map(q => `<th>${q.text || 'Q'}</th>`).join('')}
-    `;
+      ${questions.map(q=>`<th title="${q.text||''}">${(q.text||'Q').slice(0,20)}${q.text&&q.text.length>20?'...':''}</th>`).join('')}
+    </tr></thead>
+    <tbody id="table-body">`;
 
-    if (filteredResponses.length === 0) {
-      body.innerHTML = `
-        <tr>
-          <td colspan="${questions.length + 2}">
-            <div class="empty-state">
-              <div class="empty-icon">📋</div>
-              <h3>No responses yet</h3>
-              <p>Share your survey to start collecting responses</p>
-            </div>
-          </td>
-        </tr>`;
-      return;
-    }
+  responses.forEach((r,ri)=>{
+    const date=r.submittedAt?.toDate?r.submittedAt.toDate().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
+    html+=`<tr>
+      <td style="color:#94A3B8;font-size:0.75rem">${responses.length-ri}</td>
+      <td style="color:#64748B;font-size:0.78rem;white-space:nowrap">${date}</td>
+      ${questions.map(q=>{
+        const a=(r.answers||[]).find(a=>a.question===q.text);
+        const val=a?a.answer:'—';
+        return`<td title="${val}">${val.slice?val.slice(0,40):val}${val.length>40?'...':''}</td>`;
+      }).join('')}
+    </tr>`;
+  });
 
-    body.innerHTML = filteredResponses.map((r, i) => `
-      <tr>
-        <td class="response-num">#${filteredResponses.length - i}</td>
-        <td class="response-date">${r.submittedAt ? formatDate(r.submittedAt) : '—'}</td>
-        ${questions.map((q, qi) => {
-          const ans = r.answers?.[qi]?.answer || '—';
-          return `<td class="answer-cell">
-            ${q.type === 'multiple' || q.type === 'yesno'
-              ? `<span class="answer-tag">${ans}</span>`
-              : `<span title="${ans}">${ans}</span>`}
-          </td>`;
-        }).join('')}
-      </tr>
-    `).join('');
-  }
+  html+=`</tbody></table></div>`;
+  container.innerHTML=html;
+}
 
-  window.showTab = function(tab) {
-    document.getElementById('tab-summary').classList.toggle('active', tab==='summary');
-    document.getElementById('tab-responses').classList.toggle('active', tab==='responses');
-    document.getElementById('view-summary').style.display = tab==='summary' ? 'block' : 'none';
-    document.getElementById('view-responses').style.display = tab==='responses' ? 'block' : 'none';
-  }
+window.filterTable=function(search){
+  const rows=document.querySelectorAll('#table-body tr');
+  const s=search.toLowerCase();
+  let visible=0;
+  rows.forEach(row=>{
+    const text=row.textContent.toLowerCase();
+    const show=!s||text.includes(s);
+    row.style.display=show?'':'none';
+    if(show)visible++;
+  });
+  document.getElementById('response-count').textContent=visible+' of '+responses.length+' responses';
+}
 
-  window.filterResponses = function(query) {
-    const q = query.toLowerCase();
-    filteredResponses = allResponses.filter(r =>
-      JSON.stringify(r.answers).toLowerCase().includes(q)
-    );
-    renderTable();
-    document.getElementById('responses-count').textContent =
-      `${filteredResponses.length} response${filteredResponses.length!==1?'s':''}`;
-  }
+window.switchTab=function(tab,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+}
 
-  window.copyShareLink = function() {
-    const link = 'https://swoopform.com/s/?id=' + surveyId;
-    const el = document.createElement('textarea');
-    el.value = link;
-    el.style.position = 'fixed';
-    el.style.opacity = '0';
-    document.body.appendChild(el);
-    el.focus(); el.select();
-    try {
-      document.execCommand('copy');
-      const btn = document.querySelector('[onclick="copyShareLink()"]');
-      if (btn) {
-        btn.textContent = '✓ Copied!';
-        setTimeout(() => btn.textContent = '🔗 Copy survey link', 2000);
-      }
-    } catch(e) {
-      alert('Copy this link:\n\n' + link);
-    }
-    document.body.removeChild(el);
-  }
-
-  window.exportCSV = function() {
-    if (allResponses.length === 0) {
-      alert('No responses to export yet');
-      return;
-    }
-    const questions = survey.questions || [];
-    const headers = ['#', 'Date', ...questions.map(q => q.text || 'Question')];
-    const rows = allResponses.map((r, i) => [
-      i + 1,
-      r.submittedAt ? formatDateSimple(r.submittedAt) : '',
-      ...questions.map((q, qi) => r.answers?.[qi]?.answer || '')
-    ]);
-    const csv = [headers, ...rows]
-      .map(row => row.map(cell =>
-        `"${String(cell).replace(/"/g, '""')}"`
-      ).join(','))
-      .join('\n');
-
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${survey.title || 'responses'}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
-  }
-
-  function formatDate(ts) {
-    if (!ts) return '';
-    const d = ts.toDate ? ts.toDate() : new Date(ts);
-    return d.toLocaleDateString('en-IN', {
-      day:'numeric', month:'short', year:'numeric',
-      hour:'2-digit', minute:'2-digit'
+window.exportCSV=function(){
+  if(responses.length===0){toast('No responses to export');return}
+  const headers=['#','Date',...questions.map(q=>q.text||'Question')];
+  const rows=responses.map((r,ri)=>{
+    const date=r.submittedAt?.toDate?r.submittedAt.toDate().toLocaleDateString('en-IN'):'';
+    const answers=questions.map(q=>{
+      const a=(r.answers||[]).find(a=>a.question===q.text);
+      return a?`"${(a.answer||'').replace(/"/g,'""')}"`:''
     });
-  }
+    return[responses.length-ri,`"${date}"`,...answers].join(',');
+  });
+  const csv=[headers.map(h=>`"${h}"`).join(','),...rows].join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;
+  a.download=(survey.title||'responses').replace(/[^a-z0-9]/gi,'_')+'.csv';
+  a.click();URL.revokeObjectURL(url);
+  toast('CSV downloaded!');
+}
 
-  function formatDateSimple(ts) {
-    if (!ts) return '';
-    const d = ts.toDate ? ts.toDate() : new Date(ts);
-    return d.toLocaleDateString('en-IN');
-  }
+function getTypeLabel(t){const m={multiple:'MCQ',checkbox:'Checkbox',dropdown:'Dropdown',yesno:'Yes/No',text:'Text',textarea:'Long text',email:'Email',phone:'Phone',number:'Number',rating:'Rating',scale:'Scale',date:'Date',file:'File',pledge:'Pledge',quiz:'Quiz'};return m[t]||t}
+function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
 </script>
 </body>
 </html>
