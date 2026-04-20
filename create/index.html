@@ -12,8 +12,13 @@
     .topnav-left{display:flex;align-items:center;gap:10px}
     .logo-s{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none;flex-shrink:0}
     .nav-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#0F0E1A;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .topnav-right{display:flex;align-items:center;gap:8px}
+    .topnav-right{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;flex-shrink:0}
+    .topnav-left{flex-shrink:1;min-width:0;overflow:hidden}
     .btn-g{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;text-decoration:none;transition:all 0.2s}
+.hide-tablet{display:inline-flex}
+.hide-mobile{display:inline-flex}
+@media(max-width:768px){.hide-tablet{display:none!important}}
+@media(max-width:480px){.hide-mobile{display:none!important}}
     .btn-g:hover{border-color:#0F0E1A;color:#0F0E1A}
     .btn-prev{padding:7px 14px;border-radius:8px;border:1.5px solid #2D1B69;background:transparent;color:#2D1B69;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:all 0.2s}
     .btn-prev:hover{background:#EDE9FF}
@@ -225,9 +230,9 @@
     <span class="nav-t" id="nav-t">New Survey</span>
   </div>
   <div class="topnav-right">
-    <button class="btn-prev" onclick="previewSurvey()">👁 Preview</button>
-    <button class="btn-g" onclick="saveDraft()" id="save-draft-btn">Save draft</button>
-    <button class="btn-pub" id="pub-btn" onclick="publishSurvey()">Publish →</button>
+   <button class="btn-prev hide-tablet" onclick="previewSurvey()">👁 Preview</button>
+      <button class="btn-g hide-tablet" onclick="saveDraft()">Save draft</button>
+      <button class="btn-pub" id="pub-btn" onclick="publishSurvey()">Publish →</button>
   </div>
 </div>
 <div class="layout">

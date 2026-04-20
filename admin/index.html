@@ -16,7 +16,8 @@
     .logo-mark{width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff}
     .logo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;color:#fff}
     .admin-badge{padding:3px 10px;border-radius:100px;background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;font-size:0.7rem;font-weight:800;letter-spacing:0.06em}
-    .topnav-right{display:flex;align-items:center;gap:8px}
+    .topnav-right{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;flex-shrink:0}
+    .topnav-left{flex-shrink:1;min-width:0;overflow:hidden}
     .btn-back{padding:7px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.7);font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
     .btn-back:hover{border-color:#fff;color:#fff}
     .layout{display:flex;min-height:calc(100vh - 56px);margin-top:56px}
@@ -129,7 +130,13 @@
       .hbtn{display:flex}
     }
     @media(max-width:500px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
-  </style>
+ @media(min-width:600px){#btn-back-admin{display:inline-flex!important}}
+@media(max-width:600px){
+  .topnav{padding:0 10px}
+  .admin-badge{font-size:0.6rem;padding:2px 7px}
+  .logo-name{font-size:0.82rem}
+}
+ </style>
 </head>
 <body>
 <div class="ls" id="ls"><div class="spinner"></div></div>
@@ -154,7 +161,7 @@
     <span class="admin-badge">ADMIN</span>
   </div>
   <div class="topnav-right">
-    <a href="/dashboard" class="btn-back">← Back to app</a>
+    <a href="/dashboard" class="btn-back" style="display:none" id="btn-back-admin">← Dashboard</a>
   </div>
 </div>
 
