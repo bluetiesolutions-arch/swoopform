@@ -122,6 +122,11 @@
       .bar-label{width:100px}
       .main{padding:16px}
     }
+  @media(max-width:480px){
+  nav{padding:0 12px}
+  .nav-title{max-width:120px;font-size:0.85rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .btn-pub{padding:6px 12px;font-size:0.78rem}
+}
   </style>
 </head>
 <body>
@@ -134,7 +139,7 @@
       <div class="nav-title" id="nav-title">Responses</div>
     </div>
     <div class="nav-right">
-      <a class="btn-g" id="survey-link-btn" href="#" target="_blank">🔗 Survey link</a>
+      <a class="btn-g" id="survey-link-btn" href="#" target="_blank" style="display:none" id="survey-link-btn">🔗 Link</a>
       <button class="btn-pub" onclick="exportCSV()">⬇ Export CSV</button>
     </div>
   </nav>
