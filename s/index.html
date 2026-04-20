@@ -209,7 +209,7 @@
 
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import{getFirestore,doc,getDoc,collection,addDoc,updateDoc,increment,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getFirestore,doc,getDoc,collection,addDoc,updateDoc,increment,serverTimestamp,query,where,getDocs}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const SHEETS='https://script.google.com/macros/s/AKfycbx3evlOErDpdpR_TK_FvQaEEI5Kr6HvJYc46A_OG0SzIqJz8Gn0OKvUQxj7uoBLgyGH/exec';
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
@@ -657,6 +657,43 @@ async function submitSurvey(){
   }catch(e){console.error(e)}
 
   showThankYou();
+  await sendResponseNotification();
+}
+
+async function sendResponseNotification(){
+  try{
+    // Get host user data
+    if(!survey.userId)return;
+    const hostSnap=await getDoc(doc(db,'users',survey.userId));
+    if(!hostSnap.exists())return;
+    const host=hostSnap.data();
+    if(!host.email)return;
+
+    // Check notification preference
+    const notifPref=host.notificationPref||'none';
+    if(notifPref==='none')return;
+
+    // For instant notifications send immediately
+    // For daily/weekly store in queue (handled by digest)
+    if(notifPref==='instant'){
+      await emailjs.send('service_o34py9mte','template_awyfb6j',{
+        to_email:host.email,
+        subject:'📊 New response on "'+survey.title+'"',
+        message:`Hi ${host.name||'there'},\n\nYou just got a new response on your survey "${survey.title}"!\n\nTotal responses so far: ${(survey.responseCount||0)+1}\n\nView all responses:\nhttps://swoopform.com/responses/?id=${surveyId}\n\nSwoopForm Team`
+      });
+    } else {
+      // Store in digest queue
+      await addDoc(collection(db,'digestQueue'),{
+        hostId:survey.userId,
+        hostEmail:host.email,
+        hostName:host.name||'',
+        surveyId,
+        surveyTitle:survey.title,
+        pref:notifPref,
+        createdAt:serverTimestamp()
+      });
+    }
+  }catch(e){console.error('Notification error:',e)}
 }
 
 function showThankYou(){
@@ -680,5 +717,7 @@ document.addEventListener('keydown',e=>{
 
 init();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>emailjs.init('xOsG4gZ6uR_UnN_ac')</script>
 </body>
 </html>

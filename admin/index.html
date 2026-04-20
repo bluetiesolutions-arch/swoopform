@@ -595,6 +595,17 @@ window.approveVerif=async function(vid,uid,type){
   renderVerifications();renderUsers();renderOverview();
   const pending=allVerifs.filter(v=>v.status==='pending').length;
   const badge=document.getElementById('verif-badge');badge.textContent=pending;badge.style.display=pending>0?'inline':'none';
+
+  // Send approval email
+  if(u&&u.email){
+    try{
+      await emailjs.send('service_o34py9mte','template_awyfb6j',{
+        to_email:u.email,
+        subject:'✅ Your SwoopForm '+type+' verification is approved!',
+        message:`Hi ${u.name||'there'},\n\nGreat news! Your ${type} verification on SwoopForm has been approved.\n\nYour account has been upgraded to the ${type.charAt(0).toUpperCase()+type.slice(1)} plan — you now have unlimited surveys and responses for free!\n\nLog in to start creating surveys:\nhttps://swoopform.com/dashboard\n\nThank you,\nSwoopForm Team`
+      });
+    }catch(e){console.error('Email failed:',e)}
+  }
   toast('✅ Verification approved! User upgraded to '+type+' plan');
 }
 window.rejectVerif=async function(vid){
@@ -755,18 +766,44 @@ window.sendAnnouncement=async function(){
   const to=document.getElementById('announce-to').value;
   if(!subject){toast('Please add a subject');return}
   if(!message){toast('Please add a message');return}
-  // Save announcement to Firestore
-  await addDoc(collection(db,'announcements'),{
-    subject,message,to,
-    sentBy:'admin',
-    sentAt:serverTimestamp(),
-    recipientCount:to==='all'?allUsers.length:allUsers.filter(u=>{
-      const p=u.plan||'free';
-      if(to==='paid')return p!=='free'&&p!=='student'&&p!=='ngo';
-      return p===to;
-    }).length
+
+  // Filter recipients
+  const recipients=to==='all'?allUsers:allUsers.filter(u=>{
+    const p=u.plan||'free';
+    if(to==='paid')return p!=='free'&&p!=='student'&&p!=='ngo';
+    return p===to;
   });
-  toast('✅ Announcement saved! Configure EmailJS to send emails.',3000);
+
+  const emailList=recipients.map(u=>u.email).filter(Boolean);
+  if(emailList.length===0){toast('No recipients found');return}
+
+  const btn=document.querySelector('[onclick="sendAnnouncement()"]');
+  btn.textContent='Sending...';btn.disabled=true;
+
+  // Save to Firestore
+  await addDoc(collection(db,'announcements'),{
+    subject,message,to,sentBy:'admin',
+    sentAt:serverTimestamp(),
+    recipientCount:emailList.length
+  });
+
+  // Send via EmailJS
+  let sent=0,failed=0;
+  for(const email of emailList){
+    try{
+      await emailjs.send('service_o34py9mte','template_awyfb6j',{
+        to_email:email,
+        subject:subject,
+        message:message
+      });
+      sent++;
+    }catch(e){console.error('Failed to send to',email,e);failed++}
+    // Small delay to avoid rate limiting
+    await new Promise(r=>setTimeout(r,200));
+  }
+
+  btn.textContent='📨 Send announcement';btn.disabled=false;
+  toast(`✅ Sent to ${sent} users${failed>0?' ('+failed+' failed)':''}`,3000);
   clearAnnouncement();
 }
 
@@ -805,5 +842,7 @@ function showModal(title,sub,action,btnText,type){
 window.closeModal=function(){document.getElementById('confirm-modal').classList.remove('open');modalAction=null}
 window.doModalAction=async function(){if(modalAction){try{await modalAction()}catch(e){console.error(e);toast('Error: '+e.message)}modalAction=null}closeModal()}
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>emailjs.init('xOsG4gZ6uR_UnN_ac')</script>
 </body>
 </html>

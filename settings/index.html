@@ -832,5 +832,27 @@
     }
   }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>emailjs.init('xOsG4gZ6uR_UnN_ac')</script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+emailjs.init('xOsG4gZ6uR_UnN_ac');
+
+// Test email button
+window.sendTestEmail=async function(){
+  const user=firebase.auth().currentUser;
+  if(!user)return;
+  try{
+    await emailjs.send('service_o34py9mte','template_awyfb6j',{
+      to_email:user.email,
+      subject:'✅ SwoopForm email notifications are working!',
+      message:`Hi there,\n\nThis is a test email from SwoopForm.\n\nYour email notifications are set up correctly!\n\nSwoopForm Team`
+    });
+    alert('✅ Test email sent to '+user.email+'! Check your inbox.');
+  }catch(e){
+    alert('❌ Email failed: '+e.text||e.message);
+  }
+}
+</script>
 </body>
 </html>
