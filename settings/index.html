@@ -94,6 +94,23 @@
     .upgrade-price{font-size:0.78rem;color:#64748B;margin-bottom:8px}
     .upgrade-btn{padding:6px 14px;border-radius:6px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.75rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer}
 
+    <!-- CHANGE PASSWORD -->
+<div class="section" id="password-section">
+  <div class="section-title">🔑 Change password</div>
+  <div class="field">
+    <label class="field-label">New password</label>
+    <input class="field-input" id="inp-new-pass" 
+    type="password" placeholder="At least 6 characters">
+  </div>
+  <div class="field">
+    <label class="field-label">Confirm new password</label>
+    <input class="field-input" id="inp-confirm-pass" 
+    type="password" placeholder="Repeat new password">
+  </div>
+  <button class="btn-save" onclick="changePassword()" 
+  style="margin-top:4px">Update password</button>
+</div>
+
     /* DANGER */
     .danger-section{background:#fff;border-radius:16px;border:1.5px solid #FEE2E2;padding:24px;margin-bottom:16px}
     .danger-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#DC2626;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #FEE2E2}
@@ -528,6 +545,23 @@ window.deleteAccount=async function(){
 }
 
 function toast(msg,d=2800){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
+window.changePassword=async function(){
+  const newPass=document.getElementById('inp-new-pass').value;
+  const confirmPass=document.getElementById('inp-confirm-pass').value;
+  if(!newPass||newPass.length<6){toast('Password must be at least 6 characters');return}
+  if(newPass!==confirmPass){toast('Passwords do not match');return}
+  try{
+    const{updatePassword}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js');
+    await updatePassword(currentUser,newPass);
+    document.getElementById('inp-new-pass').value='';
+    document.getElementById('inp-confirm-pass').value='';
+    toast('✅ Password updated successfully!');
+  }catch(e){
+    if(e.code==='auth/requires-recent-login')toast('Please sign out and sign back in before changing password.');
+    else toast('Error: '+e.message);
+  }
+}
+
 </script>
 </body>
 </html>
