@@ -240,7 +240,8 @@
   <!-- NOTIFICATIONS -->
   <div class="section">
     <div class="section-title">🔔 Email notifications</div>
-    <div class="notif-options">
+    <div id="notif-access-msg" style="margin-bottom:10px"></div>
+<div class="notif-options">
       <div class="notif-option active" id="notif-instant" onclick="selectNotif('instant')">
         <div class="notif-radio"></div>
         <div><div class="notif-title">Instant notifications</div><div class="notif-desc">Get an email every time someone responds to your survey</div></div>
@@ -353,6 +354,17 @@ async function loadProfile(){
     selectNotif(userProfile.notificationPref||'instant',true);
     // Plan badge
     updatePlanDisplay(plan);
+    const hasNotifAccess=['starter','pro','business'].includes(plan);
+    const notifMsg=document.getElementById('notif-access-msg');
+    if(notifMsg){
+      if(hasNotifAccess){
+        notifMsg.innerHTML='<div style="font-size:0.75rem;color:#10B981;font-weight:600">✓ Email notifications included in your plan</div>';
+        document.querySelectorAll('.notif-option').forEach(o=>{o.style.opacity='1';o.style.pointerEvents='auto'});
+      } else {
+        notifMsg.innerHTML='<div style="font-size:0.78rem;color:#DC2626;font-weight:600;background:#FEE2E2;padding:10px 12px;border-radius:8px;line-height:1.6">🔒 Email notifications are on Starter, Pro and Business plans only.<br><a href="/#pricing" style="color:#DC2626;font-weight:700;text-decoration:underline">Upgrade your plan →</a></div>';
+        document.querySelectorAll('.notif-option').forEach(o=>{o.style.opacity='0.4';o.style.pointerEvents='none'});
+      }
+    }
   }catch(e){console.error(e)}
 }
 
