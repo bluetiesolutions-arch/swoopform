@@ -3,494 +3,305 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SwoopForm — Account Settings</title>
+  <title>SwoopForm — Settings</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{
-      font-family:'DM Sans',sans-serif;
-      background:#F5F0E8;color:#0F0E1A;
-      min-height:100vh;
-    }
-    nav{
-      background:#fff;border-bottom:1.5px solid #E2DAD0;
-      padding:0 24px;height:60px;
-      display:flex;align-items:center;justify-content:space-between;
-      position:sticky;top:0;z-index:100;
-    }
-    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-    .logo-mark{
-      width:32px;height:32px;
-      background:linear-gradient(135deg,#2D1B69,#D97706);
-      border-radius:8px;display:flex;align-items:center;justify-content:center;
-      font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:#fff;
-    }
-    .logo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#0F0E1A}
-    .btn-ghost{
-      padding:8px 16px;border-radius:8px;border:1.5px solid #E2DAD0;
-      background:transparent;color:#64748B;font-size:0.85rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-decoration:none;
-    }
-    .btn-ghost:hover{border-color:#0F0E1A;color:#0F0E1A}
-    .main{max-width:680px;margin:0 auto;padding:32px 20px}
-    .page-title{
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1.6rem;letter-spacing:-0.03em;margin-bottom:6px;
-    }
-    .page-sub{color:#64748B;font-size:0.9rem;margin-bottom:32px}
-    .section{
-      background:#fff;border-radius:16px;
-      border:1.5px solid #E2DAD0;padding:24px;margin-bottom:16px;
-    }
-    .section-title{
-      font-family:'Syne',sans-serif;font-weight:700;
-      font-size:1rem;margin-bottom:20px;
-      display:flex;align-items:center;gap:8px;
-    }
-    .field{margin-bottom:18px}
-    .field:last-of-type{margin-bottom:0}
-    label{
-      display:block;font-size:0.82rem;font-weight:600;
-      color:#64748B;margin-bottom:6px;
-      letter-spacing:0.04em;text-transform:uppercase;
-    }
-    .field-hint{
-      font-size:0.76rem;color:#94A3B8;
-      margin-top:5px;line-height:1.5;
-    }
-    .field-hint a{color:#2D1B69;text-decoration:none;font-weight:600}
-    .field-hint a:hover{text-decoration:underline}
-    .hint-box{
-      background:#EDE9FF;border-radius:8px;
-      padding:12px 14px;margin-top:8px;
-      font-size:0.78rem;color:#2D1B69;
-      line-height:1.6;
-    }
-    .hint-box strong{font-weight:700}
-    .hint-box ol{padding-left:16px;margin-top:4px}
-    .hint-step{margin-bottom:2px}
-    .dimension-tag{
-      display:inline-block;padding:2px 8px;
-      border-radius:4px;background:#fff;
-      border:1px solid #C4B9F4;
-      font-size:0.72rem;font-weight:600;
-      color:#2D1B69;margin-right:4px;
-    }
-    input[type="text"],input[type="email"],
-    input[type="password"],input[type="url"],select{
-      width:100%;padding:11px 14px;border-radius:10px;
-      border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;
-      font-size:0.92rem;font-family:'DM Sans',sans-serif;
-      outline:none;transition:border-color 0.2s;
-    }
-    input:focus,select:focus{border-color:#2D1B69}
-    input::placeholder{color:#C4B9AA}
-    input:disabled{background:#F5F0E8;color:#94A3B8;cursor:not-allowed}
-    .btn-save{
-      padding:10px 22px;border-radius:10px;border:none;
-      background:linear-gradient(135deg,#2D1B69,#D97706);
-      color:#fff;font-size:0.9rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s;
-      margin-top:4px;
-    }
+    body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
+    nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .nav-left{display:flex;align-items:center;gap:12px}
+    .logo-s{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none}
+    .btn-g{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
+    .btn-g:hover{border-color:#0F0E1A;color:#0F0E1A}
+    .btn-save{padding:7px 16px;border-radius:8px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.82rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s}
     .btn-save:hover{opacity:0.9}
     .btn-save:disabled{opacity:0.5;cursor:not-allowed}
-    .btn-danger{
-      padding:10px 22px;border-radius:10px;border:none;
-      background:#FEE2E2;color:#DC2626;font-size:0.9rem;font-weight:600;
-      font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;
-    }
+    .main{max-width:680px;margin:0 auto;padding:28px 20px}
+    .page-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-0.02em;margin-bottom:4px}
+    .page-sub{font-size:0.85rem;color:#64748B;margin-bottom:28px}
+    .section{background:#fff;border-radius:16px;border:1.5px solid #E2DAD0;padding:24px;margin-bottom:16px}
+    .section-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #E2DAD0}
+    .field{margin-bottom:16px}
+    .field:last-child{margin-bottom:0}
+    .field-label{display:block;font-size:0.72rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px}
+    .field-input{width:100%;padding:10px 14px;border-radius:9px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
+    .field-input:focus{border-color:#2D1B69}
+    .field-hint{font-size:0.72rem;color:#94A3B8;margin-top:4px;line-height:1.4}
+    .field-row{display:flex;gap:8px}
+    .field-row .field-input{flex:1}
+
+    /* AVATAR */
+    .avatar-section{display:flex;align-items:flex-start;gap:20px;margin-bottom:20px}
+    .avatar-preview{flex-shrink:0;position:relative}
+    .avatar-circle{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;color:#fff;overflow:hidden;border:3px solid #E2DAD0}
+    .avatar-circle img{width:100%;height:100%;object-fit:cover;display:none}
+    .avatar-info{flex:1}
+    .avatar-label{font-size:0.72rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px}
+    .avatar-url-row{display:flex;gap:6px;margin-bottom:6px}
+    .avatar-url-inp{flex:1;padding:9px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.82rem;font-family:'DM Sans',sans-serif;outline:none}
+    .avatar-url-inp:focus{border-color:#2D1B69}
+    .fetch-btn{padding:9px 14px;border-radius:8px;border:none;background:#2D1B69;color:#fff;font-size:0.78rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:opacity 0.2s}
+    .fetch-btn:hover{opacity:0.85}
+    .avatar-hint{font-size:0.72rem;color:#94A3B8;line-height:1.5;position:relative;cursor:help;display:inline-block}
+    .avatar-hint-text{display:none;position:absolute;left:0;top:20px;background:#0F0E1A;color:#fff;font-size:0.72rem;padding:8px 12px;border-radius:8px;width:260px;z-index:10;line-height:1.5}
+    .avatar-hint:hover .avatar-hint-text{display:block}
+    .avatar-status{font-size:0.75rem;margin-top:5px;font-weight:600}
+    .avatar-status.ok{color:#10B981}
+    .avatar-status.err{color:#DC2626}
+    .crop-indicator{background:#EDE9FF;border-radius:8px;padding:8px 12px;font-size:0.72rem;color:#2D1B69;margin-top:6px;display:none;line-height:1.5}
+
+    /* ACCOUNT TYPE */
+    .account-types{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:4px}
+    .acc-type-btn{padding:10px 6px;border-radius:10px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.78rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;text-align:center;transition:all 0.2s;color:#64748B}
+    .acc-type-btn:hover{border-color:#2D1B69;color:#2D1B69;background:#EDE9FF}
+    .acc-type-btn.active{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
+    .acc-type-icon{font-size:1.2rem;display:block;margin-bottom:4px}
+    .acc-type-modal{display:none;background:#F5F0E8;border-radius:12px;padding:16px;margin-top:12px;border:1.5px solid #E2DAD0}
+    .acc-type-modal.show{display:block}
+    .acc-type-modal-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;margin-bottom:6px}
+    .acc-type-modal-sub{font-size:0.78rem;color:#64748B;line-height:1.6;margin-bottom:12px}
+    .acc-type-qualify{font-size:0.75rem;color:#64748B;margin-bottom:10px}
+    .acc-type-qualify li{margin-left:14px;margin-bottom:3px}
+    .btn-apply{padding:8px 16px;border-radius:8px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.8rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer}
+
+    /* NOTIFICATION */
+    .notif-options{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+    .notif-option{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:10px;border:1.5px solid #E2DAD0;background:#fff;cursor:pointer;transition:all 0.2s}
+    .notif-option:hover{border-color:#2D1B69;background:#EDE9FF}
+    .notif-option.active{border-color:#2D1B69;background:#EDE9FF}
+    .notif-radio{width:16px;height:16px;border-radius:50%;border:2px solid #E2DAD0;flex-shrink:0;margin-top:2px;transition:all 0.2s;position:relative}
+    .notif-option.active .notif-radio{border-color:#2D1B69;background:#2D1B69}
+    .notif-option.active .notif-radio::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:5px;height:5px;border-radius:50%;background:#fff}
+    .notif-title{font-size:0.85rem;font-weight:700;color:#0F0E1A}
+    .notif-desc{font-size:0.75rem;color:#64748B;margin-top:2px;line-height:1.4}
+
+    /* PLAN */
+    .plan-current{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#F5F0E8;border-radius:10px;margin-bottom:14px}
+    .plan-badge{padding:3px 10px;border-radius:100px;font-size:0.72rem;font-weight:700}
+    .plan-free{background:#EDE9FF;color:#2D1B69;border:1px solid #C4B5FD}
+    .plan-student{background:#DCFCE7;color:#166534;border:1px solid #86EFAC}
+    .plan-ngo{background:#FEF3C7;color:#92400E;border:1px solid #FCD34D}
+    .plan-starter{background:#DBEAFE;color:#1E40AF;border:1px solid #93C5FD}
+    .plan-pro{background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;border:none}
+    .plan-name{font-weight:700;font-size:0.88rem}
+    .plan-desc{font-size:0.75rem;color:#64748B;margin-top:1px}
+    .upgrade-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .upgrade-card{padding:14px;border-radius:10px;border:1.5px solid #E2DAD0;background:#fff;cursor:pointer;transition:all 0.2s;text-align:center}
+    .upgrade-card:hover{border-color:#2D1B69;transform:translateY(-1px);box-shadow:0 4px 14px rgba(45,27,105,0.1)}
+    .upgrade-plan{font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;margin-bottom:4px}
+    .upgrade-price{font-size:0.78rem;color:#64748B;margin-bottom:8px}
+    .upgrade-btn{padding:6px 14px;border-radius:6px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.75rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer}
+
+    /* DANGER */
+    .danger-section{background:#fff;border-radius:16px;border:1.5px solid #FEE2E2;padding:24px;margin-bottom:16px}
+    .danger-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#DC2626;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #FEE2E2}
+    .danger-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #FEE2E2;flex-wrap:wrap}
+    .danger-row:last-child{border-bottom:none;padding-bottom:0}
+    .danger-name{font-size:0.85rem;font-weight:600}
+    .danger-desc{font-size:0.72rem;color:#64748B;margin-top:2px}
+    .btn-danger{padding:7px 14px;border-radius:8px;border:none;background:#FEE2E2;color:#DC2626;font-size:0.8rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:all 0.2s}
     .btn-danger:hover{background:#DC2626;color:#fff}
-    .photo-row{
-      display:flex;align-items:center;gap:16px;margin-bottom:20px;
-    }
-    .photo-avatar{
-      width:72px;height:72px;border-radius:50%;
-      background:linear-gradient(135deg,#2D1B69,#D97706);
-      display:flex;align-items:center;justify-content:center;
-      font-family:'Syne',sans-serif;font-weight:800;
-      font-size:1.6rem;color:#fff;flex-shrink:0;overflow:hidden;
-    }
-    .photo-avatar img{width:100%;height:100%;object-fit:cover}
-    .roles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-    .role-option{
-      padding:12px;border-radius:10px;
-      border:1.5px solid #E2DAD0;background:#fff;
-      cursor:pointer;text-align:center;transition:all 0.2s;
-    }
-    .role-option:hover{border-color:rgba(217,119,6,0.4)}
-    .role-option.selected{border-color:#D97706;background:#FEF3C7}
-    .role-icon{font-size:1.3rem;margin-bottom:4px}
-    .role-name{font-size:0.78rem;font-weight:700;color:#0F0E1A}
-    .role-desc{font-size:0.7rem;color:#64748B;margin-top:2px}
-    .role-badge{
-      display:inline-flex;align-items:center;
-      padding:4px 12px;border-radius:100px;
-      font-size:0.75rem;font-weight:700;margin-bottom:14px;
-    }
-    .badge-free{background:#EDE9FF;color:#2D1B69}
-    .badge-student{background:#D1FAE5;color:#047857}
-    .badge-ngo{background:#D1FAE5;color:#047857}
-    .badge-business{background:#FEF3C7;color:#92400E}
-    .verification-status{
-      display:flex;align-items:center;gap:8px;
-      padding:10px 14px;border-radius:8px;
-      font-size:0.85rem;font-weight:600;margin-bottom:14px;
-    }
-    .vs-verified{background:#D1FAE5;color:#047857}
-    .vs-pending{background:#FEF3C7;color:#92400E}
-    .vs-unverified{background:#FEE2E2;color:#DC2626}
-    .notif-options{display:flex;flex-direction:column;gap:8px}
-    .notif-option{
-      display:flex;align-items:flex-start;gap:12px;
-      padding:12px 16px;border-radius:10px;
-      border:1.5px solid #E2DAD0;cursor:pointer;transition:all 0.2s;
-    }
-    .notif-option:hover{border-color:rgba(45,27,105,0.3)}
-    .notif-option.selected{border-color:#2D1B69;background:#EDE9FF}
-    .notif-radio{
-      width:18px;height:18px;border-radius:50%;
-      border:2px solid #E2DAD0;flex-shrink:0;margin-top:2px;
-      display:flex;align-items:center;justify-content:center;
-      transition:all 0.2s;
-    }
-    .notif-option.selected .notif-radio{border-color:#2D1B69;background:#2D1B69}
-    .notif-option.selected .notif-radio::after{
-      content:'';width:6px;height:6px;border-radius:50%;background:#fff;
-    }
-    .notif-label{font-size:0.88rem;font-weight:600}
-    .notif-desc{font-size:0.76rem;color:#64748B;margin-top:2px}
-    .day-select{
-      width:100%;margin-top:10px;padding:8px 12px;
-      border-radius:8px;border:1.5px solid #E2DAD0;
-      font-family:'DM Sans',sans-serif;font-size:0.85rem;
-      color:#0F0E1A;background:#fff;outline:none;display:none;
-    }
-    .paid-only-notice{
-      background:#FEF3C7;border:1px solid #F59E0B;
-      border-radius:8px;padding:10px 14px;
-      font-size:0.82rem;color:#92400E;margin-bottom:14px;display:none;
-    }
-    .danger-section{
-      background:#fff;border-radius:16px;
-      border:1.5px solid #FEE2E2;padding:24px;margin-bottom:16px;
-    }
-    .danger-title{
-      font-family:'Syne',sans-serif;font-weight:700;
-      font-size:1rem;color:#DC2626;margin-bottom:16px;
-    }
-    .danger-row{
-      display:flex;align-items:center;justify-content:space-between;
-      flex-wrap:wrap;gap:12px;padding:12px 0;
-      border-bottom:1px solid #FEE2E2;
-    }
-    .danger-row:last-child{border-bottom:none}
-    .danger-name{font-size:0.88rem;font-weight:600}
-    .danger-desc{font-size:0.76rem;color:#64748B;margin-top:2px}
-    .toast{
-      position:fixed;bottom:24px;left:50%;
-      transform:translateX(-50%);
-      padding:12px 24px;border-radius:10px;
-      font-size:0.88rem;font-weight:600;
-      display:none;z-index:999;
-      box-shadow:0 4px 20px rgba(0,0,0,0.3);
-      color:#fff;
-    }
-    .toast-success{background:#047857}
-    .toast-error{background:#DC2626}
-    .toast-default{background:#0F0E1A}
-    .loading-screen{
-      display:flex;align-items:center;justify-content:center;
-      min-height:100vh;background:#F5F0E8;
-    }
-    .spinner{
-      width:32px;height:32px;
-      border:3px solid rgba(45,27,105,0.2);
-      border-top-color:#2D1B69;border-radius:50%;
-      animation:spin 0.8s linear infinite;
-    }
+
+    /* TOAST */
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.3)}
+
+    /* LOADING */
+    .ls{position:fixed;inset:0;background:#F5F0E8;display:flex;align-items:center;justify-content:center;z-index:999}
+    .spinner{width:32px;height:32px;border:3px solid rgba(45,27,105,0.2);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
-    .loading-inline{
-      display:inline-block;width:14px;height:14px;
-      border:2px solid rgba(255,255,255,0.3);
-      border-top-color:#fff;border-radius:50%;
-      animation:spin 0.8s linear infinite;
-      margin-right:6px;vertical-align:middle;
-    }
+
     @media(max-width:600px){
-      .photo-row{flex-direction:column;text-align:center}
-      .roles{grid-template-columns:1fr 1fr}
+      .account-types{grid-template-columns:repeat(2,1fr)}
+      .upgrade-grid{grid-template-columns:1fr}
+      nav{padding:0 14px}
+      .main{padding:16px 14px}
     }
   </style>
 </head>
 <body>
-<div id="loading-screen" class="loading-screen">
-  <div class="spinner"></div>
-</div>
-<div id="app" style="display:none">
-  <nav>
-    <a href="/dashboard" class="nav-logo">
-      <div class="logo-mark">S</div>
-      <div class="logo-name">SwoopForm</div>
-    </a>
-    <a href="/dashboard" class="btn-ghost">← Dashboard</a>
-  </nav>
+<div class="ls" id="ls"><div class="spinner"></div></div>
 
-  <div class="main">
-    <div class="page-title">Account settings</div>
-    <p class="page-sub">Manage your profile, role, notifications and security</p>
+<nav>
+  <div class="nav-left">
+    <a href="/dashboard" class="logo-s">S</a>
+    <a href="/dashboard" class="btn-g">← Dashboard</a>
+  </div>
+  <button class="btn-save" id="save-btn" onclick="saveProfile()">Save changes</button>
+</nav>
 
-    <!-- PROFILE -->
-    <div class="section">
-      <div class="section-title">👤 Profile</div>
+<div class="main">
+  <div class="page-title">⚙️ Settings</div>
+  <div class="page-sub">Manage your profile, notifications and account preferences</div>
 
-      <div class="photo-row">
-        <div class="photo-avatar" id="profile-avatar">?</div>
-        <div>
-          <strong style="font-size:0.9rem">Profile photo</strong>
-          <p style="font-size:0.82rem;color:#64748B;margin-top:4px;line-height:1.5">
-            Paste a Google Drive or direct image link below.
-            Displayed at <strong>72×72px</strong> — use a square photo.
-          </p>
+  <!-- PROFILE -->
+  <div class="section">
+    <div class="section-title">👤 Profile</div>
+
+    <!-- AVATAR -->
+    <div class="avatar-section">
+      <div class="avatar-preview">
+        <div class="avatar-circle" id="avatar-circle">
+          <img id="avatar-img" alt="Profile photo">
+          <span id="avatar-initial">U</span>
         </div>
       </div>
-
-      <div class="field">
-        <label>Profile photo URL</label>
-        <input type="url" id="photo-url"
-          placeholder="e.g. https://drive.google.com/... or https://i.imgur.com/...">
-        <div class="hint-box">
-          <strong>📁 How to use Google Drive:</strong>
-          <ol>
-            <li class="hint-step">Upload your photo to Google Drive</li>
-            <li class="hint-step">Right click the file → <strong>Share</strong></li>
-            <li class="hint-step">Change to <strong>"Anyone with the link"</strong> → Copy link</li>
-            <li class="hint-step">Paste the link above</li>
-          </ol>
-          <div style="margin-top:8px">
-            <strong>📐 Recommended dimensions:</strong>
-            <span class="dimension-tag">400×400px</span>
-            <span class="dimension-tag">Square (1:1 ratio)</span>
-            <span class="dimension-tag">JPG or PNG</span>
-          </div>
-          <div style="margin-top:6px">
-            <strong>🖼 Alternatively use</strong>
-            <a href="https://imgur.com" target="_blank">imgur.com</a>
-            — upload → right click image → Copy image address
+      <div class="avatar-info" style="flex:1">
+        <div class="avatar-label">Profile photo</div>
+        <div class="avatar-url-row">
+          <input class="avatar-url-inp" id="photo-url" type="url" placeholder="Paste image or Google Drive URL">
+          <button class="fetch-btn" onclick="fetchPhoto()">Fetch →</button>
+        </div>
+        <div class="avatar-hint">ℹ️ How to get image URL
+          <div class="avatar-hint-text">
+            <strong>Google Drive:</strong><br>
+            1. Upload image to Drive<br>
+            2. Right click → Share → Anyone with link<br>
+            3. Copy link and paste above<br>
+            4. Click Fetch to preview<br><br>
+            <strong>Direct URL:</strong><br>
+            Any public image URL works (jpg, png, webp)
           </div>
         </div>
+        <div class="avatar-status" id="avatar-status"></div>
+        <div class="crop-indicator" id="crop-indicator">
+          ✂️ Your image will be cropped to a <strong>circle</strong>. The centre of the image will be visible. Make sure the main subject is centred.
+        </div>
       </div>
+    </div>
 
-      <div class="field">
-        <label>Full name</label>
-        <input type="text" id="profile-name" placeholder="e.g. Rahul Sharma">
-      </div>
+    <div class="field">
+      <label class="field-label">Full name</label>
+      <input class="field-input" id="inp-name" type="text" placeholder="Your full name">
+    </div>
+    <div class="field">
+      <label class="field-label">Email address</label>
+      <input class="field-input" id="inp-email" type="email" placeholder="you@example.com" disabled style="background:#F5F0E8;color:#94A3B8;cursor:not-allowed">
+      <div class="field-hint">Email cannot be changed here. Contact support to update.</div>
+    </div>
+    <div class="field">
+      <label class="field-label">Mobile number</label>
+      <input class="field-input" id="inp-mobile" type="tel" placeholder="+91 98765 43210">
+      <div class="field-hint">Saved for future mobile login. Not shared publicly.</div>
+    </div>
+  </div>
 
-      <div class="field">
-        <label>Email address</label>
-        <input type="email" id="profile-email" placeholder="e.g. rahul@gmail.com">
-        <div class="field-hint">Changing your email requires your current password</div>
-      </div>
-
-      <div id="email-password-field" class="field" style="display:none">
-        <label>Current password (required to change email)</label>
-        <input type="password" id="email-confirm-password"
-          placeholder="Enter your current password">
-      </div>
-
-      <button class="btn-save" id="profile-save-btn" onclick="saveProfile()">
-        Save profile
+  <!-- ACCOUNT TYPE -->
+  <div class="section">
+    <div class="section-title">🏷️ Account type</div>
+    <div class="field-hint" style="margin-bottom:12px">Select the type that best describes you. Student/Educator and NGO accounts get unlimited surveys free after verification.</div>
+    <div class="account-types">
+      <button class="acc-type-btn active" id="acc-individual" onclick="selectAccType('individual')">
+        <span class="acc-type-icon">👤</span>Individual
+      </button>
+      <button class="acc-type-btn" id="acc-student" onclick="selectAccType('student')">
+        <span class="acc-type-icon">🎓</span>Student / Educator
+      </button>
+      <button class="acc-type-btn" id="acc-ngo" onclick="selectAccType('ngo')">
+        <span class="acc-type-icon">🤝</span>NGO
+      </button>
+      <button class="acc-type-btn" id="acc-business" onclick="selectAccType('business')">
+        <span class="acc-type-icon">💼</span>Business
       </button>
     </div>
 
-    <!-- ACCOUNT TYPE -->
-    <div class="section">
-      <div class="section-title">🏷️ Account type</div>
-      <div id="current-plan-badge" class="role-badge badge-free">Free Plan</div>
-      <p style="font-size:0.85rem;color:#64748B;margin-bottom:16px">
-        Changes take effect immediately. Student and NGO plans are free forever.
-      </p>
-      <div class="roles">
-        <div class="role-option" id="role-individual" onclick="selectRole('individual')">
-          <div class="role-icon">👤</div>
-          <div class="role-name">Individual</div>
-          <div class="role-desc">Free — 100 responses</div>
-        </div>
-        <div class="role-option" id="role-student" onclick="selectRole('student')">
-          <div class="role-icon">🎓</div>
-          <div class="role-name">Student</div>
-          <div class="role-desc">Free forever</div>
-        </div>
-        <div class="role-option" id="role-ngo" onclick="selectRole('ngo')">
-          <div class="role-icon">🤝</div>
-          <div class="role-name">NGO</div>
-          <div class="role-desc">Free forever</div>
-        </div>
-        <div class="role-option" id="role-business" onclick="selectRole('business')">
-          <div class="role-icon">🏢</div>
-          <div class="role-name">Business</div>
-          <div class="role-desc">Professional</div>
-        </div>
+    <!-- Student/Educator verification info -->
+    <div class="acc-type-modal" id="modal-student">
+      <div class="acc-type-modal-title">🎓 Student / Educator — Free Forever</div>
+      <div class="acc-type-modal-sub">Verified students, teachers, professors and academic researchers get unlimited surveys and responses completely free.</div>
+      <div class="acc-type-qualify">
+        <div style="font-size:0.75rem;font-weight:700;color:#64748B;margin-bottom:4px">WHO QUALIFIES:</div>
+        <ul>
+          <li>School, college or university students</li>
+          <li>Teachers and professors</li>
+          <li>Academic researchers</li>
+          <li>Educational institution staff</li>
+        </ul>
       </div>
-
-      <!-- STUDENT DOCS -->
-      <div id="student-verification" style="display:none">
-        <div class="verification-status vs-unverified" id="student-status">
-          ⚠️ Submit documents to verify your student status
-        </div>
-        <div class="field">
-          <label>Institution name</label>
-          <input type="text" id="student-institution"
-            placeholder="e.g. IIT Delhi, Mumbai University">
-        </div>
-        <div class="field">
-          <label>Student ID card</label>
-          <input type="url" id="student-id-url"
-            placeholder="e.g. https://drive.google.com/...">
-          <div class="hint-box">
-            <strong>📁 Google Drive upload steps:</strong>
-            <ol>
-              <li class="hint-step">Upload your student ID to Google Drive</li>
-              <li class="hint-step">Right click → Share → "Anyone with the link"</li>
-              <li class="hint-step">Copy link → paste above</li>
-            </ol>
-            <div style="margin-top:6px">
-              <strong>📐 Accepted formats:</strong>
-              <span class="dimension-tag">JPG</span>
-              <span class="dimension-tag">PNG</span>
-              <span class="dimension-tag">PDF</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- NGO DOCS -->
-      <div id="ngo-verification" style="display:none">
-        <div class="verification-status vs-unverified" id="ngo-status">
-          ⚠️ Submit documents to verify your NGO status
-        </div>
-        <div class="field">
-          <label>Organisation name</label>
-          <input type="text" id="ngo-name"
-            placeholder="e.g. Shakti Foundation">
-        </div>
-        <div class="field">
-          <label>Official organisation email</label>
-          <input type="email" id="ngo-email"
-            placeholder="e.g. info@shaktifoundation.org">
-          <div class="field-hint">Must be your organisation's domain — not Gmail or Yahoo</div>
-        </div>
-        <div class="field">
-          <label>NGO registration certificate</label>
-          <input type="url" id="ngo-certificate"
-            placeholder="e.g. https://drive.google.com/...">
-          <div class="hint-box">
-            <strong>📁 Google Drive upload steps:</strong>
-            <ol>
-              <li class="hint-step">Upload certificate to Google Drive</li>
-              <li class="hint-step">Right click → Share → "Anyone with the link"</li>
-              <li class="hint-step">Copy link → paste above</li>
-            </ol>
-            <div style="margin-top:6px">
-              <strong>📐 Accepted formats:</strong>
-              <span class="dimension-tag">PDF</span>
-              <span class="dimension-tag">JPG</span>
-              <span class="dimension-tag">PNG</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <button class="btn-save" id="role-save-btn" onclick="saveRole()">
-        Save account type
-      </button>
+      <button class="btn-apply" onclick="applyVerification('student')">Apply for verification →</button>
     </div>
 
-    <!-- PASSWORD -->
-    <div class="section">
-      <div class="section-title">🔒 Change password</div>
-      <div class="field">
-        <label>Current password</label>
-        <input type="password" id="current-password"
-          placeholder="Enter your current password">
+    <!-- NGO verification info -->
+    <div class="acc-type-modal" id="modal-ngo">
+      <div class="acc-type-modal-title">🤝 NGO — Free Forever</div>
+      <div class="acc-type-modal-sub">Verified non-profit organisations get unlimited surveys and responses completely free.</div>
+      <div class="acc-type-qualify">
+        <div style="font-size:0.75rem;font-weight:700;color:#64748B;margin-bottom:4px">WHO QUALIFIES:</div>
+        <ul>
+          <li>Registered non-profit organisations</li>
+          <li>Charitable trusts and foundations</li>
+          <li>Community welfare organisations</li>
+          <li>Social impact initiatives</li>
+        </ul>
       </div>
-      <div class="field">
-        <label>New password</label>
-        <input type="password" id="new-password"
-          placeholder="Min. 8 characters">
-        <div class="field-hint">Minimum 8 characters</div>
-      </div>
-      <div class="field">
-        <label>Confirm new password</label>
-        <input type="password" id="confirm-password"
-          placeholder="Type new password again">
-      </div>
-      <button class="btn-save" id="password-save-btn" onclick="savePassword()">
-        Update password
-      </button>
+      <button class="btn-apply" onclick="applyVerification('ngo')">Apply for verification →</button>
     </div>
+  </div>
 
-    <!-- NOTIFICATIONS -->
-    <div class="section">
-      <div class="section-title">🔔 Email notifications</div>
-      <div class="paid-only-notice" id="paid-only-notice">
-        🔒 Email notifications are available on Paid and Custom plans only.
-        <a href="/pricing" style="color:#92400E;font-weight:700;margin-left:4px">Upgrade →</a>
+  <!-- NOTIFICATIONS -->
+  <div class="section">
+    <div class="section-title">🔔 Email notifications</div>
+    <div class="notif-options">
+      <div class="notif-option active" id="notif-instant" onclick="selectNotif('instant')">
+        <div class="notif-radio"></div>
+        <div><div class="notif-title">Instant notifications</div><div class="notif-desc">Get an email every time someone responds to your survey</div></div>
       </div>
-      <div id="notif-options-wrap">
-        <p style="font-size:0.85rem;color:#64748B;margin-bottom:14px">
-          Choose when to receive email updates. All emails include your Google Sheet link.
-        </p>
-        <div class="notif-options">
-          <div class="notif-option selected" id="notif-none" onclick="selectNotif('none')">
-            <div class="notif-radio"></div>
-            <div>
-              <div class="notif-label">No notifications</div>
-              <div class="notif-desc">Check your Google Sheet manually</div>
-            </div>
-          </div>
-          <div class="notif-option" id="notif-daily" onclick="selectNotif('daily')">
-            <div class="notif-radio"></div>
-            <div>
-              <div class="notif-label">Daily digest</div>
-              <div class="notif-desc">Summary of new responses every day at 9am</div>
-            </div>
-          </div>
-          <div class="notif-option" id="notif-weekly" onclick="selectNotif('weekly')">
-            <div class="notif-radio"></div>
-            <div style="flex:1">
-              <div class="notif-label">Weekly digest</div>
-              <div class="notif-desc">Summary once a week on your chosen day</div>
-              <select class="day-select" id="weekly-day">
-                <option value="monday">Every Monday</option>
-                <option value="tuesday">Every Tuesday</option>
-                <option value="wednesday">Every Wednesday</option>
-                <option value="thursday">Every Thursday</option>
-                <option value="friday">Every Friday</option>
-                <option value="sunday">Every Sunday</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <br>
-        <button class="btn-save" id="notif-save-btn" onclick="saveNotifications()">
-          Save preferences
-        </button>
+      <div class="notif-option" id="notif-none" onclick="selectNotif('none')">
+        <div class="notif-radio"></div>
+        <div><div class="notif-title">No notifications</div><div class="notif-desc">Check your responses manually from the dashboard</div></div>
       </div>
     </div>
+  </div>
 
-    <!-- DANGER -->
-    <div class="danger-section">
-      <div class="danger-title">⚠️ Danger zone</div>
-      <div class="danger-row">
-        <div>
-          <div class="danger-name">Delete account</div>
-          <div class="danger-desc">
-            Permanently delete your account, all surveys and all responses. Cannot be undone.
-          </div>
-        </div>
-        <button class="btn-danger" onclick="deleteAccount()">Delete account</button>
+  <!-- CHANGE PASSWORD -->
+  <div class="section" id="password-section">
+    <div class="section-title">🔑 Change password</div>
+    <div class="field">
+      <label class="field-label">New password</label>
+      <input class="field-input" id="inp-new-pass" type="password" placeholder="At least 6 characters">
+    </div>
+    <div class="field">
+      <label class="field-label">Confirm new password</label>
+      <input class="field-input" id="inp-confirm-pass" type="password" placeholder="Repeat new password">
+    </div>
+    <button class="btn-save" onclick="changePassword()" style="margin-top:4px">Update password</button>
+  </div>
+
+  <!-- PLAN -->
+  <div class="section">
+    <div class="section-title">💳 Plan & billing</div>
+    <div class="plan-current">
+      <div>
+        <div class="plan-name" id="plan-name">Free plan</div>
+        <div class="plan-desc" id="plan-desc">3 surveys · 100 responses each</div>
       </div>
+      <span class="plan-badge plan-free" id="plan-badge">Free</span>
+    </div>
+    <div class="upgrade-grid">
+      <div class="upgrade-card">
+        <div class="upgrade-plan">⚡ Starter</div>
+        <div class="upgrade-price">₹499 / month</div>
+        <button class="upgrade-btn">Upgrade</button>
+      </div>
+      <div class="upgrade-card">
+        <div class="upgrade-plan">🚀 Pro</div>
+        <div class="upgrade-price">₹1,499 / month</div>
+        <button class="upgrade-btn">Upgrade</button>
+      </div>
+    </div>
+    <div style="margin-top:12px;font-size:0.75rem;color:#94A3B8;text-align:center">
+      🎓 Student/Educator or NGO? <a href="#" onclick="selectAccType('student');document.getElementById('modal-student').scrollIntoView({behavior:'smooth'})" style="color:#2D1B69;font-weight:600">Apply for free plan →</a>
+    </div>
+  </div>
+
+  <!-- DANGER ZONE -->
+  <div class="danger-section">
+    <div class="danger-title">⚠️ Danger zone</div>
+    <div class="danger-row">
+      <div>
+        <div class="danger-name">Delete account</div>
+        <div class="danger-desc">Permanently delete your account and all surveys. Cannot be undone.</div>
+      </div>
+      <button class="btn-danger" onclick="deleteAccount()">Delete account</button>
     </div>
   </div>
 </div>
@@ -498,361 +309,196 @@
 <div class="toast" id="toast"></div>
 
 <script type="module">
-  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-  import { getAuth, onAuthStateChanged, updateProfile, updateEmail, updatePassword, reauthenticateWithCredential, EmailAuthProvider, deleteUser } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-  import { getFirestore, doc, getDoc, updateDoc, serverTimestamp, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged,updatePassword,reauthenticateWithCredential,EmailAuthProvider,deleteUser,signOut}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,doc,getDoc,updateDoc,setDoc,addDoc,collection,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",
-    authDomain: "swoopform.firebaseapp.com",
-    projectId: "swoopform",
-    storageBucket: "swoopform.firebasestorage.app",
-    messagingSenderId: "378850092986",
-    appId: "1:378850092986:web:4fed92128136e048fa5f83"
-  };
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+let currentUser=null,userProfile=null,selectedAccType='individual',selectedNotif='instant';
 
-  let currentUser = null;
-  let userData = null;
-  let selectedRole = 'individual';
-  let selectedNotif = 'none';
-  let originalEmail = '';
-
-  onAuthStateChanged(auth, async (user) => {
-    if (!user) { window.location.href = '/login'; return; }
-    currentUser = user;
-    originalEmail = user.email;
-    await loadUserData();
-    document.getElementById('loading-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-  });
-
-  async function loadUserData() {
-    const snap = await getDoc(doc(db, 'users', currentUser.uid));
-    userData = snap.exists() ? snap.data() : {};
-
-    document.getElementById('profile-name').value = currentUser.displayName || userData.name || '';
-    document.getElementById('profile-email').value = currentUser.email || '';
-    document.getElementById('photo-url').value = userData.photoUrl || '';
-    updateAvatar(userData.photoUrl, currentUser.displayName || userData.name || '?');
-
-    document.getElementById('profile-email').addEventListener('input', function() {
-      document.getElementById('email-password-field').style.display =
-        this.value.trim() !== originalEmail ? 'block' : 'none';
-    });
-    document.getElementById('photo-url').addEventListener('input', function() {
-      updateAvatar(this.value, currentUser.displayName || '?');
-    });
-
-    selectedRole = userData.role || 'individual';
-    document.querySelectorAll('.role-option').forEach(el => el.classList.remove('selected'));
-    const roleEl = document.getElementById('role-' + selectedRole);
-    if (roleEl) roleEl.classList.add('selected');
-    updateRoleBadge(userData.plan || 'free');
-    showVerificationFields(selectedRole);
-    updateVerificationStatus(selectedRole, userData);
-
-    if (userData.studentInstitution)
-      document.getElementById('student-institution').value = userData.studentInstitution;
-    if (userData.studentIdUrl)
-      document.getElementById('student-id-url').value = userData.studentIdUrl;
-    if (userData.ngoName)
-      document.getElementById('ngo-name').value = userData.ngoName;
-    if (userData.ngoEmail)
-      document.getElementById('ngo-email').value = userData.ngoEmail;
-    if (userData.ngoCertificate)
-      document.getElementById('ngo-certificate').value = userData.ngoCertificate;
-
-    selectedNotif = userData.notificationPreference || 'none';
-    const plan = userData.plan || 'free';
-    const isPaid = ['paid','business','custom'].includes(plan);
-    if (!isPaid) {
-      document.getElementById('paid-only-notice').style.display = 'block';
-      document.getElementById('notif-options-wrap').style.opacity = '0.4';
-      document.getElementById('notif-options-wrap').style.pointerEvents = 'none';
-    } else {
-      selectNotif(selectedNotif);
-      if (userData.notificationDay)
-        document.getElementById('weekly-day').value = userData.notificationDay;
-    }
+onAuthStateChanged(auth,async u=>{
+  if(!u){window.location.href='/login';return}
+  currentUser=u;
+  await loadProfile();
+  document.getElementById('ls').style.display='none';
+  // Hide password section for Google users
+  if(u.providerData[0]?.providerId==='google.com'){
+    document.getElementById('password-section').style.display='none';
   }
+});
 
-  function updateAvatar(photoUrl, name) {
-    const avatar = document.getElementById('profile-avatar');
-    if (photoUrl) {
-      avatar.innerHTML = `<img src="${photoUrl}" alt="Profile"
-        onerror="this.parentElement.textContent='${(name||'?').charAt(0).toUpperCase()}'">`;
-    } else {
-      avatar.textContent = (name||'?').charAt(0).toUpperCase();
-    }
-  }
-
-  function updateRoleBadge(plan) {
-    const badge = document.getElementById('current-plan-badge');
-    const labels = {
-      free:'Free Plan', student:'🎓 Student — Free Forever',
-      ngo:'🤝 NGO — Free Forever', business:'🏢 Business',
-      paid:'⭐ Paid Plan', custom:'💎 Custom Plan'
-    };
-    const classes = {
-      free:'badge-free', student:'badge-student', ngo:'badge-ngo',
-      business:'badge-business', paid:'badge-business', custom:'badge-business'
-    };
-    badge.textContent = labels[plan] || 'Free Plan';
-    badge.className = 'role-badge ' + (classes[plan] || 'badge-free');
-  }
-
-  function showVerificationFields(role) {
-    document.getElementById('student-verification').style.display =
-      role === 'student' ? 'block' : 'none';
-    document.getElementById('ngo-verification').style.display =
-      role === 'ngo' ? 'block' : 'none';
-  }
-
-  function updateVerificationStatus(role, data) {
-    if (role === 'student') {
-      const el = document.getElementById('student-status');
-      if (data.studentVerified) {
-        el.className = 'verification-status vs-verified';
-        el.textContent = '✅ Student verified';
-      } else if (data.studentIdUrl) {
-        el.className = 'verification-status vs-pending';
-        el.textContent = '⏳ Documents submitted — under review';
-      } else {
-        el.className = 'verification-status vs-unverified';
-        el.textContent = '⚠️ Submit documents to verify your student status';
-      }
-    }
-    if (role === 'ngo') {
-      const el = document.getElementById('ngo-status');
-      if (data.ngoVerified) {
-        el.className = 'verification-status vs-verified';
-        el.textContent = '✅ NGO verified';
-      } else if (data.ngoCertificate) {
-        el.className = 'verification-status vs-pending';
-        el.textContent = '⏳ Documents submitted — under review';
-      } else {
-        el.className = 'verification-status vs-unverified';
-        el.textContent = '⚠️ Submit documents to verify your NGO status';
-      }
-    }
-  }
-
-  window.selectRole = function(role) {
-    selectedRole = role;
-    document.querySelectorAll('.role-option').forEach(el => el.classList.remove('selected'));
-    document.getElementById('role-' + role).classList.add('selected');
-    showVerificationFields(role);
-  }
-
-  window.selectNotif = function(type) {
-    selectedNotif = type;
-    document.querySelectorAll('.notif-option').forEach(el => el.classList.remove('selected'));
-    const el = document.getElementById('notif-' + type);
-    if (el) el.classList.add('selected');
-    document.getElementById('weekly-day').style.display =
-      type === 'weekly' ? 'block' : 'none';
-  }
-
-  function showToast(msg, type='default') {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = 'toast toast-' + type;
-    t.style.display = 'block';
-    setTimeout(() => t.style.display = 'none', 3000);
-  }
-
-  window.saveProfile = async function() {
-    const btn = document.getElementById('profile-save-btn');
-    const name = document.getElementById('profile-name').value.trim();
-    const email = document.getElementById('profile-email').value.trim();
-    const photoUrl = document.getElementById('photo-url').value.trim();
-    if (!name) { showToast('Please enter your name', 'error'); return; }
-    if (!email) { showToast('Please enter your email', 'error'); return; }
-    btn.disabled = true;
-    btn.innerHTML = '<span class="loading-inline"></span>Saving...';
-    try {
-      await updateProfile(currentUser, { displayName: name });
-      if (email !== originalEmail) {
-        const password = document.getElementById('email-confirm-password').value;
-        if (!password) {
-          showToast('Enter your password to change email', 'error');
-          btn.disabled = false; btn.textContent = 'Save profile'; return;
-        }
-        const credential = EmailAuthProvider.credential(originalEmail, password);
-        await reauthenticateWithCredential(currentUser, credential);
-        await updateEmail(currentUser, email);
-        originalEmail = email;
-        document.getElementById('email-password-field').style.display = 'none';
-      }
-      await updateDoc(doc(db, 'users', currentUser.uid), {
-        name, email, photoUrl: photoUrl || '', updatedAt: serverTimestamp()
-      });
-      updateAvatar(photoUrl, name);
-      showToast('✅ Profile saved!', 'success');
-    } catch(e) {
-      const msgs = {
-        'auth/wrong-password': 'Incorrect password',
-        'auth/email-already-in-use': 'Email already in use',
-        'auth/requires-recent-login': 'Please log out and log in again'
-      };
-      showToast(msgs[e.code] || 'Error saving profile', 'error');
-    }
-    btn.disabled = false; btn.textContent = 'Save profile';
-  }
-
-  window.saveRole = async function() {
-    const btn = document.getElementById('role-save-btn');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="loading-inline"></span>Saving...';
-    try {
-      const updateData = {
-        role: selectedRole,
-        plan: selectedRole === 'student' ? 'student' :
-              selectedRole === 'ngo' ? 'ngo' : 'free',
-        updatedAt: serverTimestamp()
-      };
-      if (selectedRole === 'student') {
-        const institution = document.getElementById('student-institution').value.trim();
-        const idUrl = document.getElementById('student-id-url').value.trim();
-        updateData.studentInstitution = institution;
-        updateData.studentIdUrl = idUrl;
-        if (institution && idUrl) {
-          await addDoc(collection(db, 'verificationRequests'), {
-            userId: currentUser.uid,
-            userEmail: currentUser.email,
-            userName: currentUser.displayName,
-            type: 'student', institution,
-            documentUrl: idUrl, status: 'pending',
-            submittedAt: serverTimestamp()
-          });
-        }
-      }
-      if (selectedRole === 'ngo') {
-        const ngoName = document.getElementById('ngo-name').value.trim();
-        const ngoEmail = document.getElementById('ngo-email').value.trim();
-        const certificate = document.getElementById('ngo-certificate').value.trim();
-        updateData.ngoName = ngoName;
-        updateData.ngoEmail = ngoEmail;
-        updateData.ngoCertificate = certificate;
-        if (ngoName && certificate) {
-          await addDoc(collection(db, 'verificationRequests'), {
-            userId: currentUser.uid,
-            userEmail: currentUser.email,
-            userName: currentUser.displayName,
-            type: 'ngo', ngoName, ngoEmail,
-            documentUrl: certificate, status: 'pending',
-            submittedAt: serverTimestamp()
-          });
-        }
-      }
-      await updateDoc(doc(db, 'users', currentUser.uid), updateData);
-      userData = { ...userData, ...updateData };
-      updateRoleBadge(updateData.plan);
-      updateVerificationStatus(selectedRole, updateData);
-      showToast('✅ Account type updated!', 'success');
-    } catch(e) {
-      showToast('Error saving. Please try again', 'error');
-    }
-    btn.disabled = false; btn.textContent = 'Save account type';
-  }
-
-  window.savePassword = async function() {
-    const btn = document.getElementById('password-save-btn');
-    const current = document.getElementById('current-password').value;
-    const newPass = document.getElementById('new-password').value;
-    const confirm = document.getElementById('confirm-password').value;
-    if (!current || !newPass || !confirm) {
-      showToast('Please fill in all password fields', 'error'); return;
-    }
-    if (newPass.length < 8) {
-      showToast('New password must be at least 8 characters', 'error'); return;
-    }
-    if (newPass !== confirm) {
-      showToast('New passwords do not match', 'error'); return;
-    }
-    btn.disabled = true;
-    btn.innerHTML = '<span class="loading-inline"></span>Updating...';
-    try {
-      const credential = EmailAuthProvider.credential(currentUser.email, current);
-      await reauthenticateWithCredential(currentUser, credential);
-      await updatePassword(currentUser, newPass);
-      document.getElementById('current-password').value = '';
-      document.getElementById('new-password').value = '';
-      document.getElementById('confirm-password').value = '';
-      showToast('✅ Password updated!', 'success');
-    } catch(e) {
-      const msgs = {
-        'auth/wrong-password': 'Current password is incorrect',
-        'auth/weak-password': 'New password is too weak',
-        'auth/requires-recent-login': 'Please log out and log in again'
-      };
-      showToast(msgs[e.code] || 'Error updating password', 'error');
-    }
-    btn.disabled = false; btn.textContent = 'Update password';
-  }
-
-  window.saveNotifications = async function() {
-    const btn = document.getElementById('notif-save-btn');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="loading-inline"></span>Saving...';
-    try {
-      const updateData = {
-        notificationPreference: selectedNotif,
-        updatedAt: serverTimestamp()
-      };
-      if (selectedNotif === 'weekly')
-        updateData.notificationDay = document.getElementById('weekly-day').value;
-      await updateDoc(doc(db, 'users', currentUser.uid), updateData);
-      showToast('✅ Notification preferences saved!', 'success');
-    } catch(e) {
-      showToast('Error saving preferences', 'error');
-    }
-    btn.disabled = false; btn.textContent = 'Save preferences';
-  }
-
-  window.deleteAccount = async function() {
-    if (!confirm('Delete your account? All surveys and responses will be permanently deleted.')) return;
-    if (!confirm('This CANNOT be undone. Are you absolutely sure?')) return;
-    try {
-      await updateDoc(doc(db, 'users', currentUser.uid), {
-        deleted: true, deletedAt: serverTimestamp()
-      });
-      await deleteUser(currentUser);
-      window.location.href = '/';
-    } catch(e) {
-      if (e.code === 'auth/requires-recent-login') {
-        showToast('Please log out and log in again before deleting', 'error');
-      } else {
-        showToast('Error deleting account. Please try again', 'error');
-      }
-    }
-  }
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<script>emailjs.init('xOsG4gZ6uR_UnN_ac')</script>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<script>
-emailjs.init('xOsG4gZ6uR_UnN_ac');
-
-// Test email button
-window.sendTestEmail=async function(){
-  const user=firebase.auth().currentUser;
-  if(!user)return;
+async function loadProfile(){
   try{
-    await emailjs.send('service_o34py9mte','template_awyfb6j',{
-      to_email:user.email,
-      subject:'✅ SwoopForm email notifications are working!',
-      message:`Hi there,\n\nThis is a test email from SwoopForm.\n\nYour email notifications are set up correctly!\n\nSwoopForm Team`
-    });
-    alert('✅ Test email sent to '+user.email+'! Check your inbox.');
-  }catch(e){
-    alert('❌ Email failed: '+e.text||e.message);
+    const snap=await getDoc(doc(db,'users',currentUser.uid));
+    userProfile=snap.exists()?snap.data():{};
+    document.getElementById('inp-name').value=userProfile.name||currentUser.displayName||'';
+    document.getElementById('inp-email').value=currentUser.email||'';
+    document.getElementById('inp-mobile').value=userProfile.mobile||'';
+    document.getElementById('photo-url').value=userProfile.photoURL||currentUser.photoURL||'';
+    // Set avatar
+    const initial=(userProfile.name||currentUser.displayName||'U')[0].toUpperCase();
+    document.getElementById('avatar-initial').textContent=initial;
+    if(userProfile.photoURL||currentUser.photoURL){
+      loadPhoto(userProfile.photoURL||currentUser.photoURL,false);
+    }
+    // Account type
+    const plan=userProfile.plan||'free';
+    const accType=plan==='student'||plan==='educator'?'student':plan==='ngo'?'ngo':plan==='business'||plan==='starter'||plan==='pro'?'business':'individual';
+    selectAccType(accType,true);
+    // Notification pref
+    selectNotif(userProfile.notificationPref||'instant',true);
+    // Plan badge
+    updatePlanDisplay(plan);
+  }catch(e){console.error(e)}
+}
+
+function updatePlanDisplay(plan){
+  const names={free:'Free plan',student:'Student/Educator plan',ngo:'NGO plan',starter:'Starter plan',pro:'Pro plan',business:'Business plan'};
+  const descs={free:'3 surveys · 100 responses each',student:'Unlimited surveys · Unlimited responses',ngo:'Unlimited surveys · Unlimited responses',starter:'10 surveys · Unlimited responses',pro:'Unlimited surveys · Unlimited responses',business:'Unlimited surveys · Team features'};
+  document.getElementById('plan-name').textContent=names[plan]||'Free plan';
+  document.getElementById('plan-desc').textContent=descs[plan]||'';
+  const badge=document.getElementById('plan-badge');
+  badge.textContent=plan.charAt(0).toUpperCase()+plan.slice(1);
+  badge.className='plan-badge plan-'+(plan||'free');
+}
+
+// PHOTO FETCH
+window.fetchPhoto=function(){
+  let url=document.getElementById('photo-url').value.trim();
+  if(!url){toast('Please paste an image URL first');return}
+  url=fixGDriveUrl(url);
+  document.getElementById('photo-url').value=url;
+  loadPhoto(url,true);
+}
+
+function fixGDriveUrl(url){
+  // Convert Google Drive share URL to direct image URL
+  const m=url.match(/drive\.google\.com\/file\/d\/([^/]+)/)||url.match(/drive\.google\.com\/open\?id=([^&]+)/)||url.match(/id=([^&]+)/);
+  if(m&&m[1])return'https://drive.google.com/uc?export=view&id='+m[1];
+  return url;
+}
+
+function loadPhoto(url,showStatus){
+  const img=document.getElementById('avatar-img');
+  const initial=document.getElementById('avatar-initial');
+  const status=document.getElementById('avatar-status');
+  const crop=document.getElementById('crop-indicator');
+  img.onload=function(){
+    img.style.display='block';
+    initial.style.display='none';
+    if(showStatus){status.textContent='✓ Image loaded successfully';status.className='avatar-status ok';crop.style.display='block'}
+  };
+  img.onerror=function(){
+    img.style.display='none';
+    initial.style.display='flex';
+    if(showStatus){status.textContent='✕ Could not load image. Check the URL or sharing settings.';status.className='avatar-status err';crop.style.display='none'}
+  };
+  img.src=url;
+}
+
+// ACCOUNT TYPE
+window.selectAccType=function(type,silent){
+  selectedAccType=type;
+  document.querySelectorAll('.acc-type-btn').forEach(b=>b.classList.remove('active'));
+  const btn=document.getElementById('acc-'+type);
+  if(btn)btn.classList.add('active');
+  document.querySelectorAll('.acc-type-modal').forEach(m=>m.classList.remove('show'));
+  if((type==='student'||type==='ngo')&&!silent){
+    document.getElementById('modal-'+type).classList.add('show');
   }
 }
+
+// APPLY VERIFICATION
+window.applyVerification=async function(type){
+  if(!currentUser)return;
+  const name=document.getElementById('inp-name').value.trim();
+  try{
+    await addDoc(collection(db,'verificationRequests'),{
+      userId:currentUser.uid,
+      name:name||currentUser.displayName||'',
+      email:currentUser.email,
+      type,
+      status:'pending',
+      submittedAt:serverTimestamp()
+    });
+    toast('✅ Verification request submitted! Admin will review within 24 hours.');
+  }catch(e){toast('Error submitting request. Please try again.')}
+}
+
+// NOTIFICATIONS
+window.selectNotif=function(pref,silent){
+  selectedNotif=pref;
+  document.querySelectorAll('.notif-option').forEach(o=>o.classList.remove('active'));
+  document.getElementById('notif-'+pref).classList.add('active');
+}
+
+// SAVE PROFILE
+window.saveProfile=async function(){
+  if(!currentUser)return;
+  const btn=document.getElementById('save-btn');
+  btn.disabled=true;btn.textContent='Saving...';
+  try{
+    const name=document.getElementById('inp-name').value.trim();
+    const mobile=document.getElementById('inp-mobile').value.trim();
+    const photoURL=document.getElementById('photo-url').value.trim();
+    const fixedURL=photoURL?fixGDriveUrl(photoURL):'';
+    await updateDoc(doc(db,'users',currentUser.uid),{
+      name,mobile,
+      photoURL:fixedURL,
+      notificationPref:selectedNotif,
+      updatedAt:serverTimestamp()
+    });
+    toast('✅ Profile saved!');
+    // Update avatar initial
+    if(name)document.getElementById('avatar-initial').textContent=name[0].toUpperCase();
+  }catch(e){
+    console.error(e);
+    toast('Error saving. Please try again.');
+  }
+  btn.disabled=false;btn.textContent='Save changes';
+}
+
+// CHANGE PASSWORD
+window.changePassword=async function(){
+  const newPass=document.getElementById('inp-new-pass').value;
+  const confirmPass=document.getElementById('inp-confirm-pass').value;
+  if(!newPass||newPass.length<6){toast('Password must be at least 6 characters');return}
+  if(newPass!==confirmPass){toast('Passwords do not match');return}
+  try{
+    await updatePassword(currentUser,newPass);
+    document.getElementById('inp-new-pass').value='';
+    document.getElementById('inp-confirm-pass').value='';
+    toast('✅ Password updated!');
+  }catch(e){
+    if(e.code==='auth/requires-recent-login'){
+      toast('Please sign out and sign back in before changing your password.');
+    } else {
+      toast('Error: '+e.message);
+    }
+  }
+}
+
+// DELETE ACCOUNT
+window.deleteAccount=async function(){
+  if(!confirm('Are you sure you want to delete your account?\n\nAll your surveys and data will be permanently deleted.\nThis cannot be undone.'))return;
+  if(!confirm('Last warning — this will permanently delete EVERYTHING. Continue?'))return;
+  try{
+    await deleteUser(currentUser);
+    window.location.href='/';
+  }catch(e){
+    if(e.code==='auth/requires-recent-login'){
+      toast('Please sign out and sign back in first, then try deleting again.');
+    } else {
+      toast('Error: '+e.message);
+    }
+  }
+}
+
+function toast(msg,d=2800){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
 </script>
 </body>
 </html>
