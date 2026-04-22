@@ -9,16 +9,11 @@
     *{margin:0;padding:0;box-sizing:border-box}
     html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A}
     .topnav{height:56px;background:#fff;border-bottom:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:fixed;top:0;left:0;right:0;z-index:300}
-    .topnav-left{display:flex;align-items:center;gap:10px}
+    .topnav-left{display:flex;align-items:center;gap:10px;z-index:301;position:relative}
     .logo-s{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none;flex-shrink:0}
     .nav-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#0F0E1A;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .topnav-right{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;flex-shrink:0}
-    .topnav-left{flex-shrink:1;min-width:0;overflow:hidden}
     .btn-g{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;text-decoration:none;transition:all 0.2s}
-.hide-tablet{display:inline-flex}
-.hide-mobile{display:inline-flex}
-@media(max-width:768px){.hide-tablet{display:none!important}}
-@media(max-width:480px){.hide-mobile{display:none!important}}
     .btn-g:hover{border-color:#0F0E1A;color:#0F0E1A}
     .btn-prev{padding:7px 14px;border-radius:8px;border:1.5px solid #2D1B69;background:transparent;color:#2D1B69;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:all 0.2s}
     .btn-prev:hover{background:#EDE9FF}
@@ -69,8 +64,6 @@
     .btn-aq:hover{background:#DDD6FE}
     .btn-as{width:100%;padding:9px;border-radius:9px;border:1.5px dashed #D97706;background:#FEF3C7;color:#92400E;font-size:0.8rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center}
     .btn-as:hover{background:#FDE68A}
-    .btn-at{width:100%;padding:8px;border-radius:9px;border:1.5px solid #E2DAD0;background:#F5F0E8;color:#64748B;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center}
-    .btn-at:hover{border-color:#D97706;color:#D97706}
     .content{flex:1;height:100%;overflow-y:auto;padding:20px}
     .panel{display:none}
     .panel.active{display:block}
@@ -92,13 +85,15 @@
     .sc-mode{flex:1;min-width:0;padding:6px 4px;border-radius:7px;border:1.5px solid rgba(0,0,0,0.1);background:rgba(255,255,255,0.6);font-size:0.7rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center}
     .sc-mode.active{background:rgba(0,0,0,0.1);border-color:rgba(0,0,0,0.25)}
     .sc-hint{font-size:0.67rem;color:#64748B;margin-top:4px;line-height:1.4}
-    .q-card{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;margin-bottom:10px;overflow:hidden}
+    .q-card{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;margin-bottom:10px;overflow:hidden;transition:box-shadow 0.2s,border-color 0.2s}
     .q-card:hover{box-shadow:0 3px 14px rgba(15,14,26,0.07)}
     .q-card.ins{border-left-width:4px}
-    .q-tabs{display:flex;border-bottom:1px solid #E2DAD0;background:#FAFAF7}
+    .q-card.logic-glow{box-shadow:0 0 0 2px rgba(45,27,105,0.15);border-color:#2D1B69}
+    .q-tabs{display:flex;border-bottom:1px solid #E2DAD0;background:#FAFAF7;align-items:center;flex-wrap:wrap}
     .q-tab{padding:9px 14px;font-size:0.75rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:#64748B;font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;transition:all 0.2s}
     .q-tab.active{color:#2D1B69;border-bottom-color:#2D1B69;background:#fff}
     .q-tbadge{background:#EF4444;color:#fff;font-size:0.58rem;font-weight:700;padding:1px 4px;border-radius:100px;margin-left:3px}
+    .logic-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:100px;background:#EDE9FF;color:#2D1B69;font-size:0.65rem;font-weight:700;border:1px solid #C4B5FD;margin-left:auto;margin-right:8px}
     .q-body{padding:15px}
     .q-hdr{display:flex;align-items:center;gap:7px;margin-bottom:11px;flex-wrap:wrap}
     .q-nb{width:22px;height:22px;border-radius:50%;font-size:0.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
@@ -128,7 +123,7 @@
     .rdots{display:flex;gap:5px;flex-wrap:wrap}
     .rdot{width:30px;height:30px;border-radius:7px;border:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:center;font-size:0.76rem;font-weight:600;color:#64748B}
     .sdots{display:flex;gap:4px;flex-wrap:wrap}
-    .sdot{width:24px;height:24px;border-radius:5px;border:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:center;font-size:0.64rem;font-weight:600;color:#64748B}
+    .sdot{width:24px;height:24px;border-radius:5px;border:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:center;font-size:0.64px;font-weight:600;color:#64748B}
     .q-foot{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid #F5F0E8;flex-wrap:wrap}
     .tgl{width:32px;height:17px;border-radius:100px;background:#E2DAD0;cursor:pointer;position:relative;transition:background 0.2s;border:none;flex-shrink:0}
     .tgl.on{background:#2D1B69}
@@ -156,6 +151,13 @@
     .badr{width:100%;padding:7px;border-radius:8px;border:1.5px dashed #C4B5FD;background:transparent;color:#2D1B69;font-size:0.73rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center;margin-top:4px}
     .badr:hover{background:#EDE9FF}
     .l-def{display:flex;align-items:center;gap:7px;margin-top:7px;padding:8px 10px;background:#fff;border-radius:7px;border:1px solid #E2DAD0;font-size:0.71rem;color:#64748B}
+    .media-inp{width:100%;padding:7px 10px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.78rem;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:6px}
+    .media-inp:focus{border-color:#2D1B69}
+    .media-layout-row{display:flex;gap:6px;margin-bottom:8px}
+    .media-layout-btn{flex:1;padding:5px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.7rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:center;transition:all 0.2s}
+    .media-layout-btn.active{background:#EDE9FF;border-color:#2D1B69;color:#2D1B69}
+    .media-preview{border-radius:10px;overflow:hidden;border:1.5px solid #E2DAD0;background:#F5F0E8;min-height:80px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;color:#C4B9AA;text-align:center;padding:10px}
+    .media-preview img,.media-preview video{width:100%;max-height:140px;object-fit:cover;display:block}
     .pt{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-0.02em;margin-bottom:5px}
     .ps{color:#64748B;font-size:0.83rem;margin-bottom:18px}
     .sc2{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:18px;margin-bottom:12px}
@@ -164,9 +166,6 @@
     .sf:last-child{margin-bottom:0}
     .sl{display:block;font-size:0.7rem;font-weight:700;color:#64748B;margin-bottom:4px;letter-spacing:0.04em;text-transform:uppercase}
     .sh{font-size:0.68rem;color:#94A3B8;margin-top:3px;line-height:1.4}
-    .hb{background:#EDE9FF;border-radius:7px;padding:9px 11px;margin-top:5px;font-size:0.71rem;color:#2D1B69;line-height:1.6}
-    .hb ol{padding-left:12px;margin-top:3px}
-    .dtg{display:inline-block;padding:2px 5px;border-radius:4px;background:#fff;border:1px solid #C4B5FD;font-size:0.64rem;font-weight:600;color:#2D1B69;margin-right:2px;margin-top:2px}
     .si{width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.82rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
     .si:focus{border-color:#2D1B69}
     .si::placeholder{color:#C4B9AA}
@@ -179,34 +178,12 @@
     .ptb{padding:6px 11px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.74rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
     .ptb:hover{border-color:#2D1B69;background:#EDE9FF}
     .ptb.active{border-color:#D97706;background:#FEF3C7;color:#92400E}
-    .mbg{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:600;display:none;align-items:center;justify-content:center;padding:20px}
-    .mbg.open{display:flex}
-    .modal{background:#fff;border-radius:16px;padding:24px;width:100%;max-width:440px;max-height:85vh;overflow-y:auto}
-    .mt{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;margin-bottom:4px}
-    .ms{color:#64748B;font-size:0.82rem;margin-bottom:16px}
-    .tl{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
-    .tr{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:9px;border:1.5px solid #E2DAD0;background:#F5F0E8}
-    .ti{display:flex;align-items:center;gap:8px}
-    .tic{font-size:0.95rem}
-    .tn{font-size:0.83rem;font-weight:600}
-    .tt2{font-size:0.68rem;color:#64748B;margin-top:1px}
-    .tc{display:flex;align-items:center;gap:6px}
-    .trl{font-size:0.65rem;color:#64748B}
-    .mf{display:flex;gap:7px;justify-content:flex-end}
+    .slug-row{display:flex;gap:8px;align-items:center}
+    .slug-pre{font-size:0.72rem;color:#64748B;white-space:nowrap;flex-shrink:0}
+    .slug-status{font-size:0.72rem;margin-top:4px}
     .sbo{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:99;display:none}
     .sbo.open{display:block}
-    .logic-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:100px;background:#EDE9FF;color:#2D1B69;font-size:0.65rem;font-weight:700;border:1px solid #C4B5FD;margin-left:6px}
-.logic-glow{box-shadow:0 0 0 2px rgba(45,27,105,0.15);border-color:#2D1B69!important}
-.media-q-wrap{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;align-items:start}
-.media-q-preview{border-radius:10px;overflow:hidden;border:1.5px solid #E2DAD0;background:#F5F0E8;min-height:100px;display:flex;align-items:center;justify-content:center}
-.media-q-preview img,.media-q-preview video{width:100%;height:140px;object-fit:cover;display:block}
-.media-empty{font-size:0.75rem;color:#C4B9AA;text-align:center;padding:20px}
-.media-inp{width:100%;padding:7px 10px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.78rem;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:6px}
-.media-inp:focus{border-color:#2D1B69}
-.media-layout-row{display:flex;gap:6px;margin-bottom:8px}
-.media-layout-btn{flex:1;padding:5px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.7rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:center;transition:all 0.2s}
-.media-layout-btn.active{background:#EDE9FF;border-color:#2D1B69;color:#2D1B69}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,0.3);white-space:nowrap}
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,0.3);white-space:nowrap}
     .ls-screen{position:fixed;inset:0;background:#0F0E1A;display:flex;align-items:center;justify-content:center;z-index:900}
     .spinner{width:32px;height:32px;border:3px solid rgba(217,119,6,0.2);border-top-color:#D97706;border-radius:50%;animation:spin 0.8s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
@@ -215,23 +192,14 @@
       .sidebar.open{transform:translateX(0)}
       .hbtn{display:flex}
       .content{padding:14px}
+      .sc-modes{flex-direction:column}
     }
-    @media(max-width:480px){.nav-t{max-width:100px}.btn-prev{display:none}}
+    @media(max-width:768px){.btn-prev{display:none}.btn-g{padding:6px 10px;font-size:0.78rem}.btn-pub{padding:6px 10px;font-size:0.78rem}}
+    @media(max-width:480px){.nav-t{max-width:80px}}
   </style>
 </head>
 <body>
 <div class="ls-screen" id="ls"><div class="spinner"></div></div>
-<div class="mbg" id="tmpl-modal">
-  <div class="modal">
-    <div class="mt">🧩 Contact Info Template</div>
-    <p class="ms">Pick fields. Toggle required for each.</p>
-    <div class="tl" id="tmpl-list"></div>
-    <div class="mf">
-      <button class="btn-g" onclick="closeTmpl()">Cancel</button>
-      <button class="btn-pub" onclick="insertTmpl()">Insert fields →</button>
-    </div>
-  </div>
-</div>
 <div class="sbo" id="sbo" onclick="closeSb()"></div>
 <div class="topnav">
   <div class="topnav-left">
@@ -241,9 +209,9 @@
     <span class="nav-t" id="nav-t">New Survey</span>
   </div>
   <div class="topnav-right">
-   <button class="btn-prev hide-tablet" onclick="previewSurvey()">👁 Preview</button>
-      <button class="btn-g hide-tablet" onclick="saveDraft()">Save draft</button>
-      <button class="btn-pub" id="pub-btn" onclick="publishSurvey()">Publish →</button>
+    <button class="btn-prev" onclick="previewSurvey()">👁 Preview</button>
+    <button class="btn-g" onclick="saveDraft()">Save draft</button>
+    <button class="btn-pub" id="pub-btn" onclick="publishSurvey()">Publish →</button>
   </div>
 </div>
 <div class="layout">
@@ -261,7 +229,7 @@
             <button class="sb-nav-item" id="sn-thankyou" onclick="showPanel('thankyou')"><span class="ico">🙏</span>Thank you page</button>
             <button class="sb-nav-item" id="sn-prize" onclick="showPanel('prize')"><span class="ico">🎁</span>Prize &amp; Incentive</button>
             <button class="sb-nav-item" id="sn-settings" onclick="showPanel('settings')"><span class="ico">⚙️</span>Survey settings</button>
-<button class="sb-nav-item" id="sn-seo" onclick="showPanel('seo')"><span class="ico">🔍</span>SEO settings</button>
+            <button class="sb-nav-item" id="sn-seo" onclick="showPanel('seo')"><span class="ico">🔍</span>SEO settings</button>
           </div>
         </div>
       </div>
@@ -278,7 +246,6 @@
     <div class="sb-btm">
       <button class="btn-aq" onclick="addQ()">+ Add question</button>
       <button class="btn-as" onclick="addSec()">📌 Add section</button>
-      
     </div>
   </div>
   <div class="content" id="content">
@@ -292,14 +259,14 @@
     <div class="panel" id="panel-welcome">
       <div class="pt">🎨 Welcome page</div><p class="ps">Customise what respondents see before starting.</p>
       <div class="sc2"><div class="sc2-t">Branding</div>
-        <div class="sf"><label class="sl">Logo URL</label><input class="si" id="w-logo" placeholder="e.g. https://yoursite.com/logo.png"><div class="hb"><strong>📁 Google Drive:</strong><ol><li>Upload → Right click → Share → Anyone with link</li><li>Copy link → paste above</li></ol><div style="margin-top:5px"><span class="dtg">Max 200x60px</span><span class="dtg">PNG/SVG/JPG</span></div></div></div>
+        <div class="sf"><label class="sl">Logo URL</label><input class="si" id="w-logo" placeholder="e.g. https://yoursite.com/logo.png"></div>
         <div class="sf"><label class="sl">Custom headline</label><input class="si" id="w-head" placeholder="Leave blank to use survey title"></div>
         <div class="sf"><label class="sl">Start button text</label><input class="si" id="w-btn" placeholder="Default: Let's go"></div>
       </div>
       <div class="sc2"><div class="sc2-t">Background</div>
         <div class="sf"><label class="sl">Background color</label><div class="cr"><input class="si" id="w-bgc" placeholder="#0F0E1A" style="flex:1"><input type="color" id="w-bgcp" value="#0F0E1A" oninput="document.getElementById('w-bgc').value=this.value" style="width:38px;height:38px;border-radius:7px;border:1.5px solid #E2DAD0;cursor:pointer;padding:2px;flex-shrink:0"></div></div>
-        <div class="sf"><label class="sl">Background image URL</label><input class="si" id="w-bgi" placeholder="e.g. https://images.unsplash.com/..."><div class="hb"><span class="dtg">1920x1080px</span><span class="dtg">JPG/PNG/WEBP</span> Overrides color</div></div>
-        <div class="sf"><label class="sl">Background video URL</label><input class="si" id="w-bgv" placeholder="e.g. https://youtube.com/watch?v=..."><div class="hb"><span class="dtg">YouTube</span><span class="dtg">Vimeo</span> Muted loop. Overrides image.</div></div>
+        <div class="sf"><label class="sl">Background image URL</label><input class="si" id="w-bgi" placeholder="e.g. https://images.unsplash.com/..."><div class="sh">Overrides color</div></div>
+        <div class="sf"><label class="sl">Background video URL (YouTube)</label><input class="si" id="w-bgv" placeholder="e.g. https://youtube.com/watch?v=..."><div class="sh">Muted loop. Overrides image.</div></div>
       </div>
     </div>
     <div class="panel" id="panel-thankyou">
@@ -320,178 +287,45 @@
           <div class="sf"><label class="sl">Prize description</label><input class="si" id="p-desc" placeholder="e.g. Rs 500 Amazon voucher"></div>
           <div class="sf"><label class="sl">Number of winners</label><input class="si" id="p-win" type="number" min="1" placeholder="e.g. 3" style="max-width:110px"></div>
           <div class="sf"><label class="sl">Winner selection</label><select class="si" id="p-sel" style="max-width:220px"><option value="random">Random draw</option><option value="best">Best answer</option><option value="first">First N respondents</option></select></div>
-          <div class="sf"><label class="sl">Winner notification</label><select class="si" id="p-not" style="max-width:260px"><option value="manual">I will contact manually</option><option value="email">SwoopForm sends email</option><option value="leaderboard">Public leaderboard</option></select></div>
+          <div class="sf"><label class="sl">Winner notification</label><select class="si" id="p-not" style="max-width:260px"><option value="manual">I will contact manually</option><option value="email">SwoopForm sends email</option></select></div>
         </div>
       </div>
     </div>
-    <div class="panel" id="panel-seo">
-  <div class="pt">🔍 SEO Settings</div><p class="ps">Control how your survey appears in search engines and social media.</p>
-  <div class="sc2"><div class="sc2-t">URL & Indexing</div>
-    <div class="sf"><label class="sl">URL Slug</label>
-      <div style="display:flex;gap:8px;align-items:center">
-        <span style="font-size:0.78rem;color:#64748B;white-space:nowrap">swoopform.com/survey/</span>
-        <input class="si" id="seo-slug" placeholder="my-survey-title" oninput="validateSlug(this)">
-        <button onclick="autoSlug()" style="padding:8px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.75rem;font-weight:600;cursor:pointer;white-space:nowrap">Auto</button>
-      </div>
-      <div class="sh">Only letters, numbers and hyphens. Must be unique.</div>
-      <div id="slug-status" style="font-size:0.72rem;margin-top:4px"></div>
-    </div>
-    <div class="sf"><label class="sl">Search indexing</label>
-      <select class="si" id="seo-index" style="max-width:200px">
-        <option value="index">Index (appear in Google)</option>
-        <option value="noindex">No-index (hide from Google)</option>
-      </select>
-    </div>
-  </div>
-  <div class="sc2"><div class="sc2-t">Search appearance</div>
-    <div class="sf"><label class="sl">SEO Title</label><input class="si" id="seo-title" placeholder="Leave blank to use survey title" maxlength="60"><div class="sh">Max 60 characters. Shows in Google search results.</div></div>
-    <div class="sf"><label class="sl">SEO Description</label><textarea class="si" id="seo-desc" placeholder="Brief description of your survey for search engines..." rows="3" maxlength="160" style="resize:vertical"></textarea><div class="sh">Max 160 characters.</div></div>
-  </div>
-  <div class="sc2"><div class="sc2-t">Social sharing preview</div>
-    <div class="sf"><label class="sl">OG Image URL</label><input class="si" id="seo-og" placeholder="https://... (1200x630px recommended)"><div class="sh">Image shown when shared on WhatsApp, Twitter, LinkedIn.</div></div>
-    <div id="og-preview" style="display:none;margin-top:10px;background:#F5F0E8;border-radius:10px;overflow:hidden;border:1.5px solid #E2DAD0">
-      <img id="og-img" style="width:100%;height:140px;object-fit:cover" alt="">
-      <div style="padding:10px 12px"><div id="og-title" style="font-weight:700;font-size:0.85rem"></div><div id="og-url" style="font-size:0.72rem;color:#94A3B8;margin-top:2px">swoopform.com/survey/...</div></div>
-    </div>
-  </div>
-</div>
-
-<div class="panel" id="panel-seo">
-  <div class="pt">🔍 SEO Settings</div><p class="ps">Control how your survey appears in search engines and social media.</p>
-  <div class="sc2"><div class="sc2-t">URL & Indexing</div>
-    <div class="sf"><label class="sl">URL Slug</label>
-      <div style="display:flex;gap:8px;align-items:center">
-        <span style="font-size:0.78rem;color:#64748B;white-space:nowrap">swoopform.com/survey/</span>
-        <input class="si" id="seo-slug" placeholder="my-survey-title" oninput="validateSlug(this)">
-        <button onclick="autoSlug()" style="padding:8px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.75rem;font-weight:600;cursor:pointer;white-space:nowrap">Auto</button>
-      </div>
-      <div class="sh">Only letters, numbers and hyphens. Must be unique.</div>
-      <div id="slug-status" style="font-size:0.72rem;margin-top:4px"></div>
-    </div>
-    <div class="sf"><label class="sl">Search indexing</label>
-      <select class="si" id="seo-index" style="max-width:200px">
-        <option value="index">Index (appear in Google)</option>
-        <option value="noindex">No-index (hide from Google)</option>
-      </select>
-    </div>
-  </div>
-  <div class="sc2"><div class="sc2-t">Search appearance</div>
-    <div class="sf"><label class="sl">SEO Title</label><input class="si" id="seo-title" placeholder="Leave blank to use survey title" maxlength="60"><div class="sh">Max 60 characters. Shows in Google search results.</div></div>
-    <div class="sf"><label class="sl">SEO Description</label><textarea class="si" id="seo-desc" placeholder="Brief description of your survey for search engines..." rows="3" maxlength="160" style="resize:vertical"></textarea><div class="sh">Max 160 characters.</div></div>
-  </div>
-  <div class="sc2"><div class="sc2-t">Social sharing preview</div>
-    <div class="sf"><label class="sl">OG Image URL</label><input class="si" id="seo-og" placeholder="https://... (1200x630px recommended)"><div class="sh">Image shown when shared on WhatsApp, Twitter, LinkedIn.</div></div>
-    <div id="og-preview" style="display:none;margin-top:10px;background:#F5F0E8;border-radius:10px;overflow:hidden;border:1.5px solid #E2DAD0">
-      <img id="og-img" style="width:100%;height:140px;object-fit:cover" alt="">
-      <div style="padding:10px 12px"><div id="og-title" style="font-weight:700;font-size:0.85rem"></div><div id="og-url" style="font-size:0.72rem;color:#94A3B8;margin-top:2px">swoopform.com/survey/...</div></div>
-    </div>
-  </div>
-</div>
-
-<div class="panel" id="panel-seo">
-  <div class="pt">🔍 SEO Settings</div><p class="ps">Control how your survey appears in search engines and social media.</p>
-  <div class="sc2"><div class="sc2-t">URL & Indexing</div>
-    <div class="sf"><label class="sl">URL Slug</label>
-      <div style="display:flex;gap:8px;align-items:center">
-        <span style="font-size:0.78rem;color:#64748B;white-space:nowrap">swoopform.com/survey/</span>
-        <input class="si" id="seo-slug" placeholder="my-survey-title" oninput="validateSlug(this)">
-        <button onclick="autoSlug()" style="padding:8px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.75rem;font-weight:600;cursor:pointer;white-space:nowrap">Auto</button>
-      </div>
-      <div class="sh">Only letters, numbers and hyphens. Must be unique.</div>
-      <div id="slug-status" style="font-size:0.72rem;margin-top:4px"></div>
-    </div>
-    <div class="sf"><label class="sl">Search indexing</label>
-      <select class="si" id="seo-index" style="max-width:200px">
-        <option value="index">Index (appear in Google)</option>
-        <option value="noindex">No-index (hide from Google)</option>
-      </select>
-    </div>
-  </div>
-  <div class="sc2"><div class="sc2-t">Search appearance</div>
-    <div class="sf"><label class="sl">SEO Title</label><input class="si" id="seo-title" placeholder="Leave blank to use survey title" maxlength="60"><div class="sh">Max 60 characters. Shows in Google search results.</div></div>
-    <div class="sf"><label class="sl">SEO Description</label><textarea class="si" id="seo-desc" placeholder="Brief description of your survey for search engines..." rows="3" maxlength="160" style="resize:vertical"></textarea><div class="sh">Max 160 characters.</div></div>
-  </div>
-  <div class="sc2"><div class="sc2-t">Social sharing preview</div>
-    <div class="sf"><label class="sl">OG Image URL</label><input class="si" id="seo-og" placeholder="https://... (1200x630px recommended)"><div class="sh">Image shown when shared on WhatsApp, Twitter, LinkedIn.</div></div>
-    <div id="og-preview" style="display:none;margin-top:10px;background:#F5F0E8;border-radius:10px;overflow:hidden;border:1.5px solid #E2DAD0">
-      <img id="og-img" style="width:100%;height:140px;object-fit:cover" alt="">
-      <div style="padding:10px 12px"><div id="og-title" style="font-weight:700;font-size:0.85rem"></div><div id="og-url" style="font-size:0.72rem;color:#94A3B8;margin-top:2px">swoopform.com/survey/...</div></div>
-    </div>
-  </div>
-</div>
-
-<div class="panel" id="panel-seo">
-  <div class="pt">🔍 SEO Settings</div><p class="ps">Control how your survey appears in search engines and social media.</p>
-  <div class="sc2"><div class="sc2-t">URL & Indexing</div>
-    <div class="sf"><label class="sl">URL Slug</label>
-      <div style="display:flex;gap:8px;align-items:center">
-        <span style="font-size:0.78rem;color:#64748B;white-space:nowrap">swoopform.com/survey/</span>
-        <input class="si" id="seo-slug" placeholder="my-survey-title" oninput="validateSlug(this)">
-        <button onclick="autoSlug()" style="padding:8px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.75rem;font-weight:600;cursor:pointer;white-space:nowrap">Auto</button>
-      </div>
-      <div class="sh">Only letters, numbers and hyphens. Must be unique.</div>
-      <div id="slug-status" style="font-size:0.72rem;margin-top:4px"></div>
-    </div>
-    <div class="sf"><label class="sl">Search indexing</label>
-      <select class="si" id="seo-index" style="max-width:200px">
-        <option value="index">Index (appear in Google)</option>
-        <option value="noindex">No-index (hide from Google)</option>
-      </select>
-    </div>
-  </div>
-  <div class="sc2"><div class="sc2-t">Search appearance</div>
-    <div class="sf"><label class="sl">SEO Title</label><input class="si" id="seo-title" placeholder="Leave blank to use survey title" maxlength="60"><div class="sh">Max 60 characters. Shows in Google search results.</div></div>
-    <div class="sf"><label class="sl">SEO Description</label><textarea class="si" id="seo-desc" placeholder="Brief description of your survey for search engines..." rows="3" maxlength="160" style="resize:vertical"></textarea><div class="sh">Max 160 characters.</div></div>
-  </div>
-  <div class="sc2"><div class="sc2-t">Social sharing preview</div>
-    <div class="sf"><label class="sl">OG Image URL</label><input class="si" id="seo-og" placeholder="https://... (1200x630px recommended)"><div class="sh">Image shown when shared on WhatsApp, Twitter, LinkedIn.</div></div>
-    <div id="og-preview" style="display:none;margin-top:10px;background:#F5F0E8;border-radius:10px;overflow:hidden;border:1.5px solid #E2DAD0">
-      <img id="og-img" style="width:100%;height:140px;object-fit:cover" alt="">
-      <div style="padding:10px 12px"><div id="og-title" style="font-weight:700;font-size:0.85rem"></div><div id="og-url" style="font-size:0.72rem;color:#94A3B8;margin-top:2px">swoopform.com/survey/...</div></div>
-    </div>
-  </div>
-</div>
-
-<div class="panel" id="panel-seo">
-  <div class="pt">🔍 SEO Settings</div><p class="ps">Control how your survey appears in search engines and social media.</p>
-  <div class="sc2"><div class="sc2-t">URL & Indexing</div>
-    <div class="sf"><label class="sl">URL Slug</label>
-      <div style="display:flex;gap:8px;align-items:center">
-        <span style="font-size:0.78rem;color:#64748B;white-space:nowrap">swoopform.com/survey/</span>
-        <input class="si" id="seo-slug" placeholder="my-survey-title" oninput="validateSlug(this)">
-        <button onclick="autoSlug()" style="padding:8px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.75rem;font-weight:600;cursor:pointer;white-space:nowrap">Auto</button>
-      </div>
-      <div class="sh">Only letters, numbers and hyphens. Must be unique.</div>
-      <div id="slug-status" style="font-size:0.72rem;margin-top:4px"></div>
-    </div>
-    <div class="sf"><label class="sl">Search indexing</label>
-      <select class="si" id="seo-index" style="max-width:200px">
-        <option value="index">Index (appear in Google)</option>
-        <option value="noindex">No-index (hide from Google)</option>
-      </select>
-    </div>
-  </div>
-  <div class="sc2"><div class="sc2-t">Search appearance</div>
-    <div class="sf"><label class="sl">SEO Title</label><input class="si" id="seo-title" placeholder="Leave blank to use survey title" maxlength="60"><div class="sh">Max 60 characters. Shows in Google search results.</div></div>
-    <div class="sf"><label class="sl">SEO Description</label><textarea class="si" id="seo-desc" placeholder="Brief description of your survey for search engines..." rows="3" maxlength="160" style="resize:vertical"></textarea><div class="sh">Max 160 characters.</div></div>
-  </div>
-  <div class="sc2"><div class="sc2-t">Social sharing preview</div>
-    <div class="sf"><label class="sl">OG Image URL</label><input class="si" id="seo-og" placeholder="https://... (1200x630px recommended)"><div class="sh">Image shown when shared on WhatsApp, Twitter, LinkedIn.</div></div>
-    <div id="og-preview" style="display:none;margin-top:10px;background:#F5F0E8;border-radius:10px;overflow:hidden;border:1.5px solid #E2DAD0">
-      <img id="og-img" style="width:100%;height:140px;object-fit:cover" alt="">
-      <div style="padding:10px 12px"><div id="og-title" style="font-weight:700;font-size:0.85rem"></div><div id="og-url" style="font-size:0.72rem;color:#94A3B8;margin-top:2px">swoopform.com/survey/...</div></div>
-    </div>
-  </div>
-</div>
-
-<div class="panel" id="panel-settings">
+    <div class="panel" id="panel-settings">
       <div class="pt">⚙️ Survey settings</div><p class="ps">Configure how your survey behaves.</p>
       <div class="sc2">
-        <div class="sr"><div><div class="sr-n">Category</div><div class="sr-d">Shown on discover page</div></div><select id="s-category" style="padding:5px 8px;border-radius:7px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.77rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none"><option value="Other">✦ Other</option><option value="Education">🎓 Education</option><option value="Business">💼 Business</option><option value="Health">🏥 Health</option><option value="Research">🔬 Research</option><option value="Community">🤝 Community</option><option value="Events">📅 Events</option><option value="Feedback">💬 Feedback</option><option value="HR">👥 HR</option><option value="Customer">⭐ Customer</option><option value="Product">📦 Product</option></select></div>
-<div class="sr"><div><div class="sr-n">Survey style</div><div class="sr-d">Default display mode</div></div><select id="s-style" style="padding:5px 8px;border-radius:7px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.77rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none"><option value="conversational">One at a time</option><option value="classic">All on one page</option></select></div>
+        <div class="sf"><label class="sl">Category</label><select class="si" id="s-category" style="max-width:220px"><option value="Other">✦ Other</option><option value="Education">🎓 Education</option><option value="Business">💼 Business</option><option value="Health">🏥 Health</option><option value="Research">🔬 Research</option><option value="Community">🤝 Community</option><option value="Events">📅 Events</option><option value="Feedback">💬 Feedback</option><option value="HR">👥 HR</option><option value="Customer">⭐ Customer</option><option value="Product">📦 Product</option></select></div>
+        <div class="sr"><div><div class="sr-n">Survey style</div><div class="sr-d">Default display mode</div></div><select id="s-style" style="padding:5px 8px;border-radius:7px;border:1.5px solid #E2DAD0;font-family:'DM Sans',sans-serif;font-size:0.77rem;font-weight:600;color:#0F0E1A;background:#fff;cursor:pointer;outline:none"><option value="conversational">One at a time</option><option value="classic">All on one page</option></select></div>
+        <div class="sr"><div><div class="sr-n">Show quiz score</div><div class="sr-d">Show respondents their score at end</div></div><button class="tgl" id="tgl-quizscore" onclick="togS('quizscore')"></button></div>
         <div class="sr"><div><div class="sr-n">Public survey</div><div class="sr-d">Show in SwoopForm discovery</div></div><button class="tgl" id="tgl-public" onclick="togS('public')"></button></div>
         <div class="sr"><div><div class="sr-n">Collect email addresses</div></div><button class="tgl" id="tgl-email" onclick="togS('email')"></button></div>
         <div class="sr" style="border-bottom:none"><div><div class="sr-n">One response per person</div></div><button class="tgl" id="tgl-once" onclick="togS('once')"></button></div>
+      </div>
+    </div>
+    <div class="panel" id="panel-seo">
+      <div class="pt">🔍 SEO Settings</div><p class="ps">Control how your survey appears in search engines and social media.</p>
+      <div class="sc2"><div class="sc2-t">URL &amp; Indexing</div>
+        <div class="sf"><label class="sl">URL Slug</label>
+          <div class="slug-row">
+            <span class="slug-pre">swoopform.com/survey/</span>
+            <input class="si" id="seo-slug" placeholder="my-survey-title" oninput="validateSlug(this)" style="flex:1">
+            <button onclick="autoSlug()" style="padding:8px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.75rem;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0">Auto</button>
+          </div>
+          <div class="sh">Only lowercase letters, numbers and hyphens.</div>
+          <div class="slug-status" id="slug-status"></div>
+        </div>
+        <div class="sf"><label class="sl">Search indexing</label><select class="si" id="seo-index" style="max-width:220px"><option value="index">Index (appear in Google)</option><option value="noindex">No-index (hide from Google)</option></select></div>
+      </div>
+      <div class="sc2"><div class="sc2-t">Search appearance</div>
+        <div class="sf"><label class="sl">SEO Title</label><input class="si" id="seo-title" placeholder="Leave blank to use survey title" maxlength="60"><div class="sh">Max 60 characters. Shows in Google search results.</div></div>
+        <div class="sf"><label class="sl">SEO Description</label><textarea class="si" id="seo-desc" placeholder="Brief description for search engines..." rows="3" maxlength="160" style="resize:vertical"></textarea><div class="sh">Max 160 characters.</div></div>
+      </div>
+      <div class="sc2"><div class="sc2-t">Social sharing</div>
+        <div class="sf"><label class="sl">OG Image URL</label><input class="si" id="seo-og" placeholder="https://... (1200x630px recommended)" oninput="previewOG()"><div class="sh">Image shown when shared on WhatsApp, Twitter, LinkedIn.</div></div>
+        <div id="og-preview" style="display:none;margin-top:10px;background:#F5F0E8;border-radius:10px;overflow:hidden;border:1.5px solid #E2DAD0">
+          <img id="og-img" style="width:100%;height:140px;object-fit:cover" alt="">
+          <div style="padding:10px 12px"><div id="og-title-prev" style="font-weight:700;font-size:0.85rem"></div><div style="font-size:0.72rem;color:#94A3B8;margin-top:2px">swoopform.com/survey/...</div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -510,9 +344,7 @@ const auth=getAuth(app);
 const db=getFirestore(app);
 
 const COLORS=['#2D1B69','#D97706','#0D9B8A','#DC2626','#2563EB','#7C3AED','#047857'];
-let ci=0,U=null,SID=null,secs=[],qs=[],cfg={public:false,email:false,once:false,share:false,prize:false},pt='cash',activeSec=null,longT=null,dragSt=null,grpOpen={pages:true,questions:true};
-const TMPL=[{id:'fn',icon:'👤',label:'First name',type:'text',req:true,on:true},{id:'ln',icon:'👤',label:'Last name',type:'text',req:false,on:true},{id:'em',icon:'📧',label:'Email address',type:'email',req:true,on:true},{id:'ph',icon:'📱',label:'Mobile number',type:'phone',req:false,on:true},{id:'co',icon:'🏢',label:'Company name',type:'text',req:false,on:false}];
-let tmpl=JSON.parse(JSON.stringify(TMPL));
+let ci=0,U=null,SID=null,secs=[],qs=[],cfg={public:false,email:false,once:false,share:false,prize:false,quizscore:false},pt='cash',activeSec=null,longT=null,dragSt=null,grpOpen={pages:true,questions:true};
 
 onAuthStateChanged(auth,u=>{
   if(!u){window.location.href='/login';return}
@@ -551,7 +383,7 @@ function normalizeOrders(){
   all.forEach((x,i)=>x.go=i);
 }
 
-function mkQ(type,secId){return{id:'q'+Date.now()+Math.random().toString(36).slice(2,5),sectionId:secId||null,type,text:'',subtext:'',options:['',''],required:false,hidden:false,displayMode:'auto',go:getNext(),correctIndex:-1,logic:[]}}
+function mkQ(type,secId){return{id:'q'+Date.now()+Math.random().toString(36).slice(2,5),sectionId:secId||null,type,text:'',subtext:'',options:['',''],required:false,hidden:false,displayMode:'auto',go:getNext(),correctIndex:-1,logic:[],mediaUrl:'',mediaLayout:'top'}}
 function mkSec(title){const c=COLORS[ci%COLORS.length];ci++;return{id:'s'+Date.now()+Math.random().toString(36).slice(2,5),title:title||'New Section',subtitle:'',displayMode:'one',color:c,collapsed:false,go:getNext()}}
 
 function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
@@ -577,7 +409,6 @@ window.showPanel=function(p){
 }
 window.openSb=()=>{document.getElementById('sidebar').classList.add('open');document.getElementById('sbo').classList.add('open')}
 window.closeSb=()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('sbo').classList.remove('open')}
-
 window.togS=function(k){cfg[k]=!cfg[k];document.getElementById('tgl-'+k).classList.toggle('on',cfg[k])}
 window.togPrize=function(){cfg.prize=!cfg.prize;document.getElementById('tgl-prize').classList.toggle('on',cfg.prize);document.getElementById('pf').style.display=cfg.prize?'block':'none'}
 window.selP=function(t,el){pt=t;document.querySelectorAll('.ptb').forEach(b=>b.classList.remove('active'));el.classList.add('active')}
@@ -616,7 +447,6 @@ window.setDM=function(qid,v){const q=qs.find(q=>q.id===qid);if(q)q.displayMode=v
 window.addOpt=function(qid){syncDOM();const q=qs.find(q=>q.id===qid);if(q){q.options.push('');renderAll();setTimeout(()=>{const o=document.querySelectorAll('.oi-'+qid);if(o.length)o[o.length-1].focus()},60)}}
 window.rmOpt=function(qid,i){syncDOM();const q=qs.find(q=>q.id===qid);if(q&&q.options.length>2){q.options.splice(i,1);if(q.correctIndex===i)q.correctIndex=-1;else if(q.correctIndex>i)q.correctIndex--;renderAll()}else toast('Need at least 2 options')}
 window.mkOK=function(qid,i){syncDOM();const q=qs.find(q=>q.id===qid);if(q){q.correctIndex=q.correctIndex===i?-1:i;renderAll()}}
-
 window.showQTab=function(qid,tab){
   const c=document.getElementById('qc-'+qid);if(!c)return;
   c.querySelectorAll('.q-tab').forEach(t=>t.classList.remove('active'));
@@ -626,34 +456,53 @@ window.showQTab=function(qid,tab){
 }
 
 window.previewMedia=function(qid,url){
-  const q=qs.find(q=>q.id===qid);if(!q)return;
-  q.mediaUrl=url;
-  const preview=document.getElementById('media-preview-'+qid);
-  if(!preview)return;
-  if(!url){preview.innerHTML='<div class="media-empty">No media added</div>';return}
+  const q=qs.find(q=>q.id===qid);if(!q)return;q.mediaUrl=url;
+  const preview=document.getElementById('media-preview-'+qid);if(!preview)return;
+  if(!url){preview.innerHTML='No media added';preview.style.cssText='';return}
   if(url.includes('youtube.com')||url.includes('youtu.be')){
     const m=url.match(/(?:v=|youtu\.be\/)([^&\s]+)/);
-    if(m)preview.innerHTML=`<img src="https://img.youtube.com/vi/${m[1]}/0.jpg" style="width:100%;height:140px;object-fit:cover">`;
+    if(m)preview.innerHTML=`<img src="https://img.youtube.com/vi/${m[1]}/0.jpg" style="width:100%;max-height:140px;object-fit:cover">`;
   } else if(url.match(/\.(mp4|webm|ogg)$/i)){
-    preview.innerHTML=`<video src="${url}" style="width:100%;height:140px;object-fit:cover" muted></video>`;
-  } else {
-    preview.innerHTML=`<img src="${url}" style="width:100%;height:140px;object-fit:cover" onerror="this.parentElement.innerHTML='<div class=\\'media-empty\\'>Could not load image</div>'">`;
+    preview.innerHTML=`<video src="${url}" style="width:100%;max-height:140px;object-fit:cover" muted></video>`;
+  } else{
+    preview.innerHTML=`<img src="${url}" style="width:100%;max-height:140px;object-fit:cover" onerror="this.parentElement.innerHTML='Could not load image'">`;
   }
 }
 window.setMediaLayout=function(qid,layout){
-  const q=qs.find(q=>q.id===qid);if(!q)return;
-  q.mediaLayout=layout;
-  document.querySelectorAll(`#qc-${qid} .media-layout-btn`).forEach(b=>b.classList.remove('active'));
-  event.currentTarget.classList.add('active');
+  const q=qs.find(q=>q.id===qid);if(!q)return;q.mediaLayout=layout;
+  const card=document.getElementById('qc-'+qid);
+  if(card){card.querySelectorAll('.media-layout-btn').forEach(b=>b.classList.remove('active'));event.currentTarget.classList.add('active')}
 }
 window.clearMedia=function(qid){
   const q=qs.find(q=>q.id===qid);if(!q)return;
   q.mediaUrl='';q.mediaLayout='top';
   const inp=document.getElementById('media-url-'+qid);if(inp)inp.value='';
-  const preview=document.getElementById('media-preview-'+qid);
-  if(preview)preview.innerHTML='<div class="media-empty">No media added</div>';
+  const preview=document.getElementById('media-preview-'+qid);if(preview)preview.innerHTML='No media added';
   toast('Media removed');
 }
+
+window.autoSlug=function(){
+  const title=document.getElementById('s-title').value.trim();
+  if(!title){toast('Add a survey title first');return}
+  const slug=title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60);
+  document.getElementById('seo-slug').value=slug;
+  const status=document.getElementById('slug-status');
+  status.textContent='✓ swoopform.com/survey/'+slug;status.style.color='#10B981';
+}
+window.validateSlug=function(inp){
+  const val=inp.value.replace(/[^a-z0-9-]/g,'');inp.value=val;
+  const status=document.getElementById('slug-status');
+  if(val.length>3){status.textContent='✓ swoopform.com/survey/'+val;status.style.color='#10B981'}
+  else if(val.length>0){status.textContent='Too short — min 4 characters';status.style.color='#DC2626'}
+  else{status.textContent='';status.style.color=''}
+}
+window.previewOG=function(){
+  const url=document.getElementById('seo-og').value.trim();
+  const preview=document.getElementById('og-preview');
+  if(url){preview.style.display='block';document.getElementById('og-img').src=url;document.getElementById('og-title-prev').textContent=document.getElementById('s-title').value||'Survey title'}
+  else{preview.style.display='none'}
+}
+
 window.addRule=function(qid){syncDOM();const q=qs.find(q=>q.id===qid);if(!q)return;q.logic.push({id:'r'+Date.now(),condType:'ALL',conditions:[{qid:qid,op:'is',val:''}],action:'skip',target:''});renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}
 window.delRule=function(qid,rid){syncDOM();const q=qs.find(q=>q.id===qid);if(q){q.logic=q.logic.filter(r=>r.id!==rid);renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}}
 window.setCondType=function(qid,rid,ct){const q=qs.find(q=>q.id===qid);const r=q&&q.logic.find(r=>r.id===rid);if(r){r.condType=ct;renderAll();setTimeout(()=>showQTab(qid,'logic'),60)}}
@@ -666,28 +515,12 @@ function sLogic(){qs.forEach(q=>{q.logic.forEach(rule=>{rule.conditions.forEach(
 function syncDOM(){
   qs.forEach(q=>{
     const a=document.getElementById('qi-'+q.id);if(a)q.text=a.value;
-    const b=document.getElementById('qs-'+q.id);if(b)q.subtext=b.value;
     if(['multiple','checkbox','dropdown','quiz'].includes(q.type)){const c=document.querySelectorAll('.oi-'+q.id);if(c.length)q.options=Array.from(c).map(e=>e.value)}
     const d=document.getElementById('dm-'+q.id);if(d)q.displayMode=d.value;
+    const mu=document.getElementById('media-url-'+q.id);if(mu)q.mediaUrl=mu.value;
   });
   secs.forEach(s=>{const a=document.getElementById('sc-ti-'+s.id);if(a)s.title=a.value;const b=document.getElementById('sc-su-'+s.id);if(b)s.subtitle=b.value});
   sLogic();
-}
-
-window.openTmpl=function(){renderTmpl();document.getElementById('tmpl-modal').classList.add('open')}
-window.closeTmpl=function(){document.getElementById('tmpl-modal').classList.remove('open')}
-function renderTmpl(){document.getElementById('tmpl-list').innerHTML=tmpl.map((f,i)=>`<div class="tr" style="${f.on?'':'opacity:0.5'}"><div class="ti"><span class="tic">${f.icon}</span><div><div class="tn">${f.label}</div><div class="tt2">${f.type}</div></div></div><div class="tc"><span class="trl">Req</span><button class="tgl ${f.req?'on':''}" style="width:28px;height:15px" onclick="tReq(${i})"></button><button class="tgl ${f.on?'on':''}" style="background:${f.on?'#10B981':'#E2DAD0'}" onclick="tOn(${i})"></button></div></div>`).join('')}
-window.tReq=function(i){tmpl[i].req=!tmpl[i].req;renderTmpl()}
-window.tOn=function(i){tmpl[i].on=!tmpl[i].on;renderTmpl()}
-
-window.insertTmpl=function(){
-  syncDOM();
-  const minO=-1000;
-  const s=mkSec('Contact Information');s.subtitle='Please fill in your details.';s.displayMode='all';s.go=minO-10;
-  secs.push(s);activeSec=s.id;
-  tmpl.filter(f=>f.on).forEach((f,i)=>{qs.push({id:'q'+Date.now()+i,sectionId:s.id,type:f.type,text:f.label,subtext:'',options:['',''],required:f.req,hidden:false,displayMode:'auto',go:minO-9+i,correctIndex:-1,logic:[]})});
-  normalizeOrders();closeTmpl();renderAll();showPanel('questions');
-  toast('Contact Info template inserted!');
 }
 
 function initDrag(){
@@ -722,20 +555,10 @@ function startDrag(type,id,el,cx,cy){
 
 function doDrop(drag,drop){
   syncDOM();
-  if(drag.type==='q'&&drop.type==='q'){
-    const dq=qs.find(q=>q.id===drag.id),tq=qs.find(q=>q.id===drop.id);
-    if(!dq||!tq||dq.id===tq.id)return;
-    dq.sectionId=tq.sectionId;dq.go=tq.go-0.5;normalizeOrders();renderAll();toast('Question moved');
-  } else if(drag.type==='q'&&drop.type==='s'){
-    const dq=qs.find(q=>q.id===drag.id),ts=secs.find(s=>s.id===drop.id);
-    if(!dq||!ts)return;dq.sectionId=ts.id;const sq=qs.filter(q=>q.sectionId===ts.id&&q.id!==dq.id);dq.go=sq.length?Math.max(...sq.map(q=>q.go||0))+0.5:ts.go+0.5;normalizeOrders();renderAll();toast('Moved to section');
-  } else if(drag.type==='s'&&drop.type==='s'){
-    const ds=secs.find(s=>s.id===drag.id),ts=secs.find(s=>s.id===drop.id);
-    if(!ds||!ts||ds.id===ts.id)return;ds.go=ts.go-0.5;qs.filter(q=>q.sectionId===ds.id).forEach(q=>q.go=ds.go+0.1);normalizeOrders();renderAll();toast('Section moved');
-  } else if(drag.type==='s'&&drop.type==='q'){
-    const ds=secs.find(s=>s.id===drag.id),tq=qs.find(q=>q.id===drop.id);
-    if(!ds||!tq)return;ds.go=tq.go-0.5;qs.filter(q=>q.sectionId===ds.id).forEach(q=>q.go=ds.go+0.1);normalizeOrders();renderAll();toast('Section moved');
-  }
+  if(drag.type==='q'&&drop.type==='q'){const dq=qs.find(q=>q.id===drag.id),tq=qs.find(q=>q.id===drop.id);if(!dq||!tq||dq.id===tq.id)return;dq.sectionId=tq.sectionId;dq.go=tq.go-0.5;normalizeOrders();renderAll();toast('Question moved')}
+  else if(drag.type==='q'&&drop.type==='s'){const dq=qs.find(q=>q.id===drag.id),ts=secs.find(s=>s.id===drop.id);if(!dq||!ts)return;dq.sectionId=ts.id;const sq=qs.filter(q=>q.sectionId===ts.id&&q.id!==dq.id);dq.go=sq.length?Math.max(...sq.map(q=>q.go||0))+0.5:ts.go+0.5;normalizeOrders();renderAll();toast('Moved to section')}
+  else if(drag.type==='s'&&drop.type==='s'){const ds=secs.find(s=>s.id===drag.id),ts=secs.find(s=>s.id===drop.id);if(!ds||!ts||ds.id===ts.id)return;ds.go=ts.go-0.5;qs.filter(q=>q.sectionId===ds.id).forEach(q=>q.go=ds.go+0.1);normalizeOrders();renderAll();toast('Section moved')}
+  else if(drag.type==='s'&&drop.type==='q'){const ds=secs.find(s=>s.id===drag.id),tq=qs.find(q=>q.id===drop.id);if(!ds||!tq)return;ds.go=tq.go-0.5;qs.filter(q=>q.sectionId===ds.id).forEach(q=>q.go=ds.go+0.1);normalizeOrders();renderAll();toast('Section moved')}
 }
 
 function renderSB(){
@@ -743,12 +566,12 @@ function renderSB(){
   flatList().forEach(e=>{
     if(e.type==='sec'){
       const s=e.item,sq=qs.filter(q=>q.sectionId===s.id).sort((a,b)=>(a.go||0)-(b.go||0)),isA=activeSec===s.id;
-      html+=`<div class="sec-grp"><div class="sec-hdr${isA?' active-s':''}" data-sid="${s.id}" onclick="setActSec('${s.id}')"><span class="dh" title="Hold to drag">&#8942;</span><span class="sec-dot" style="background:${s.color}"></span><span class="sec-nm">${eh(s.title||'Untitled')}</span><span class="sec-cnt">${sq.length}</span><button class="sec-coll${s.collapsed?' c':''}" onclick="event.stopPropagation();togSecColl('${s.id}')">${s.collapsed?'▶':'▼'}</button></div><div class="sec-qs${s.collapsed?' c':''}" style="max-height:${s.collapsed?'0':'500px'}">`;
-      sq.forEach(q=>{if(q.type!=='heading')qn++;const hl=q.logic&&q.logic.length>0;html+=`<div class="q-item" data-qid="${q.id}" onclick="goQ('${q.id}')"><span class="dh" title="Hold to drag">&#8942;</span><div class="q-num" style="background:${s.color}">${qn}</div><div class="q-itxt">${eh(q.text)||'Untitled'}</div><div class="q-ityp">${tl(q.type)}${hl?' 🔀':''}</div></div>`});
+      html+=`<div class="sec-grp"><div class="sec-hdr${isA?' active-s':''}" data-sid="${s.id}" onclick="setActSec('${s.id}')"><span class="dh">&#8942;</span><span class="sec-dot" style="background:${s.color}"></span><span class="sec-nm">${eh(s.title||'Untitled')}</span><span class="sec-cnt">${sq.length}</span><button class="sec-coll${s.collapsed?' c':''}" onclick="event.stopPropagation();togSecColl('${s.id}')">${s.collapsed?'▶':'▼'}</button></div><div class="sec-qs${s.collapsed?' c':''}" style="max-height:${s.collapsed?'0':'500px'}">`;
+      sq.forEach(q=>{qn++;const hl=q.logic&&q.logic.length>0,hm=!!q.mediaUrl;html+=`<div class="q-item" data-qid="${q.id}" onclick="goQ('${q.id}')"><span class="dh">&#8942;</span><div class="q-num" style="background:${s.color}">${qn}</div><div class="q-itxt">${eh(q.text)||'Untitled'}</div><div class="q-ityp">${tl(q.type)}${hl?' 🔀':''}${hm?' 🖼':''}</div></div>`});
       html+=`</div></div>`;
     } else {
-      const q=e.item;if(q.type!=='heading')qn++;const hl=q.logic&&q.logic.length>0;
-      html+=`<div class="unsec-item"><div class="q-item" data-qid="${q.id}" onclick="goQ('${q.id}')"><span class="dh" title="Hold to drag">&#8942;</span><div class="q-num" style="background:#64748B">${qn}</div><div class="q-itxt">${eh(q.text)||'Untitled'}</div><div class="q-ityp">${tl(q.type)}${hl?' 🔀':''}</div></div></div>`;
+      const q=e.item;qn++;const hl=q.logic&&q.logic.length>0,hm=!!q.mediaUrl;
+      html+=`<div class="unsec-item"><div class="q-item" data-qid="${q.id}" onclick="goQ('${q.id}')"><span class="dh">&#8942;</span><div class="q-num" style="background:#64748B">${qn}</div><div class="q-itxt">${eh(q.text)||'Untitled'}</div><div class="q-ityp">${tl(q.type)}${hl?' 🔀':''}${hm?' 🖼':''}</div></div></div>`;
     }
   });
   list.innerHTML=html;document.getElementById('q-badge').textContent=qn;initDrag();
@@ -762,48 +585,37 @@ function renderQA(){
     if(e.type==='sec'){
       const s=e.item,sq=qs.filter(q=>q.sectionId===s.id).sort((a,b)=>(a.go||0)-(b.go||0));
       html+=`<div class="sec-card" id="sc-${s.id}" style="border-color:${s.color};background:${h2r(s.color,0.04)}"><div class="sc-top"><span>📌</span><span class="sc-ttl" style="color:${s.color}">${eh(s.title||'New Section')}</span><button class="sc-del" onclick="delSec('${s.id}')">✕</button></div><div class="sc-f"><label class="sc-lbl">Section title</label><input class="sc-inp" id="sc-ti-${s.id}" value="${eh(s.title)}" placeholder="e.g. Personal Information" style="border-color:${h2r(s.color,0.3)}"></div><div class="sc-f"><label class="sc-lbl">Subtitle (optional)</label><input class="sc-inp" id="sc-su-${s.id}" value="${eh(s.subtitle||'')}" placeholder="e.g. Please fill in your details" style="border-color:${h2r(s.color,0.3)}"></div><div class="sc-f"><label class="sc-lbl">Display mode</label><div class="sc-modes"><button class="sc-mode${s.displayMode==='one'?' active':''}" data-mode="one" onclick="setSecMode('${s.id}','one')">One at a time</button><button class="sc-mode${s.displayMode==='all'?' active':''}" data-mode="all" onclick="setSecMode('${s.id}','all')">All on one page</button><button class="sc-mode${s.displayMode==='fullscreen'?' active':''}" data-mode="fullscreen" onclick="setSecMode('${s.id}','fullscreen')">Full screen intro</button></div><div class="sc-hint">${s.displayMode==='one'?'Each question shows on its own screen':s.displayMode==='all'?'All questions show together on one page':'Full-screen section intro before questions begin'}</div></div></div>`;
-      sq.forEach(q=>{if(q.type!=='heading')qn++;html+=renderQCard(q,qn,s.color)});
+      sq.forEach(q=>{qn++;html+=renderQCard(q,qn,s.color)});
     } else {
-      const q=e.item;if(q.type!=='heading')qn++;html+=renderQCard(q,qn,null);
+      const q=e.item;qn++;html+=renderQCard(q,qn,null);
     }
   });
   area.innerHTML=html;
 }
 
 function renderQCard(q,qn,sc){
-  const nb=sc||'#64748B',hl=q.logic&&q.logic.length>0;
+  const nb=sc||'#64748B',hl=q.logic&&q.logic.length>0,hm=!!q.mediaUrl;
   const bl=sc?`border-left:4px solid ${sc};`:'';
   const logicStyle=hl?'box-shadow:0 0 0 2px rgba(45,27,105,0.15);border-color:#2D1B69;':'';
   const ph={multiple:'e.g. How satisfied are you?',checkbox:'e.g. Which features do you use?',dropdown:'e.g. Which country?',yesno:'e.g. Would you recommend us?',text:'e.g. What is your full name?',textarea:'e.g. Describe your experience',email:'e.g. Your email address?',phone:'e.g. Your phone number?',number:'e.g. How many employees?',rating:'e.g. Rate our service 1-5',scale:'e.g. Likelihood to recommend 1-10',date:'e.g. Your date of birth?',file:'e.g. Link to portfolio',pledge:'e.g. I pledge to reduce my carbon footprint',quiz:'e.g. What is the capital of India?'};
   const pv={text:'Short answer...',textarea:'Long answer...',email:'Email format validated',phone:'Phone number',number:'Numbers only',date:'Date picker DD-MM-YYYY',file:'Paste a URL'};
   const hasO=['multiple','checkbox','dropdown','quiz'].includes(q.type);
   let inp='';
-  if(q.type==='pledge'){
-    inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.pledge)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div class="plbox"><div class="pltxt">${q.text||'Your pledge statement...'}</div><div class="plchk"><div class="plchkb"></div><span>I agree and commit to this pledge</span></div></div>`;
-  } else if(q.type==='quiz'){
-    inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.quiz)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div style="font-size:0.68rem;color:#64748B;margin-bottom:5px">Click to mark correct answer</div><div class="ol">${(q.options||[]).map((o,oi)=>`<div class="or"><div class="ob"></div><input class="oi oi-${q.id}" value="${eh(o)}" placeholder="Option ${oi+1}"><button class="okm${q.correctIndex===oi?' ok':''}" onclick="mkOK('${q.id}',${oi})">✓</button><button class="orm" onclick="rmOpt('${q.id}',${oi})">✕</button></div>`).join('')}</div><button class="aob" onclick="addOpt('${q.id}')">+ Add option</button>`;
-  } else if(hasO){
-    const bc2=q.type==='checkbox'?'ob sq':'ob';
-    inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph[q.type]||'')}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div class="ol">${(q.options||[]).map((o,oi)=>`<div class="or"><div class="${bc2}"></div><input class="oi oi-${q.id}" value="${eh(o)}" placeholder="Option ${oi+1}"><button class="orm" onclick="rmOpt('${q.id}',${oi})">✕</button></div>`).join('')}</div><button class="aob" onclick="addOpt('${q.id}')">+ Add option</button>`;
-  } else if(q.type==='yesno'){
-    inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.yesno)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div style="display:flex;gap:7px"><div style="padding:6px 14px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600">Yes</div><div style="padding:6px 14px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600">No</div></div>`;
-  } else if(q.type==='rating'){
-    inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.rating)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div class="rdots">${[1,2,3,4,5].map(n=>`<div class="rdot">${n}</div>`).join('')}</div>`;
-  } else if(q.type==='scale'){
-    inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.scale)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div class="sdots">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="sdot">${n}</div>`).join('')}</div>`;
-  } else {
-    inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph[q.type]||'Type question...')}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div class="pchip">${pv[q.type]||''}</div>`;
-  }
+  if(q.type==='pledge'){inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.pledge)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div class="plbox"><div class="pltxt">${q.text||'Your pledge statement...'}</div><div class="plchk"><div class="plchkb"></div><span>I agree and commit to this pledge</span></div></div>`}
+  else if(q.type==='quiz'){inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.quiz)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div style="font-size:0.68rem;color:#64748B;margin-bottom:5px">Click ✓ to mark correct answer</div><div class="ol">${(q.options||[]).map((o,oi)=>`<div class="or"><div class="ob"></div><input class="oi oi-${q.id}" value="${eh(o)}" placeholder="Option ${oi+1}"><button class="okm${q.correctIndex===oi?' ok':''}" onclick="mkOK('${q.id}',${oi})">✓</button><button class="orm" onclick="rmOpt('${q.id}',${oi})">✕</button></div>`).join('')}</div><button class="aob" onclick="addOpt('${q.id}')">+ Add option</button>`}
+  else if(hasO){const bc2=q.type==='checkbox'?'ob sq':'ob';inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph[q.type]||'')}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div class="ol">${(q.options||[]).map((o,oi)=>`<div class="or"><div class="${bc2}"></div><input class="oi oi-${q.id}" value="${eh(o)}" placeholder="Option ${oi+1}"><button class="orm" onclick="rmOpt('${q.id}',${oi})">✕</button></div>`).join('')}</div><button class="aob" onclick="addOpt('${q.id}')">+ Add option</button>`}
+  else if(q.type==='yesno'){inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.yesno)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div style="display:flex;gap:7px"><div style="padding:6px 14px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600">Yes</div><div style="padding:6px 14px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600">No</div></div>`}
+  else if(q.type==='rating'){inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.rating)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div class="rdots">${[1,2,3,4,5].map(n=>`<div class="rdot">${n}</div>`).join('')}</div>`}
+  else if(q.type==='scale'){inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph.scale)}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div class="sdots">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="sdot">${n}</div>`).join('')}</div>`}
+  else{inp=`<input class="q-inp" id="qi-${q.id}" placeholder="${eh(ph[q.type]||'Type question...')}" value="${eh(q.text)}" oninput="qs.find(x=>x.id==='${q.id}').text=this.value"><div class="pchip">${pv[q.type]||''}</div>`}
 
   const allQ=ordQs().filter(x=>x.id!==q.id);
   let lh=`<div class="lw">`;
   if(!q.logic||!q.logic.length)lh+=`<div class="l-empty">No logic rules yet.<br>Add a rule to skip, show or hide questions based on answers.</div>`;
   (q.logic||[]).forEach((rule,ri)=>{
     lh+=`<div class="l-rule"><div class="l-rhdr"><span class="l-rlbl">Rule ${ri+1}</span><button class="l-rdel" onclick="delRule('${q.id}','${rule.id}')">Delete</button></div>`;
-    if(rule.conditions.length>1)lh+=`<div class="ct-row"><button class="ct-btn${rule.condType==='ALL'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ALL')">ALL (AND)</button><button class="ct-btn${rule.condType==='ANY'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ANY')">ANY (OR)</button></div>`;
-    rule.conditions.forEach((c,ci2)=>{
-      lh+=`<div class="l-cond"><select class="ls" id="cq-${rule.id}-${ci2}"><option value="${q.id}"${c.qid===q.id?' selected':''}>This question</option>${allQ.map(aq=>`<option value="${aq.id}"${c.qid===aq.id?' selected':''}>${(aq.text||'Untitled').slice(0,24)}</option>`).join('')}</select><select class="ls" id="co-${rule.id}-${ci2}"><option value="is"${c.op==='is'?' selected':''}>is</option><option value="is_not"${c.op==='is_not'?' selected':''}>is not</option><option value="contains"${c.op==='contains'?' selected':''}>contains</option><option value="not_contains"${c.op==='not_contains'?' selected':''}>not contain</option><option value="filled"${c.op==='filled'?' selected':''}>is filled</option><option value="empty"${c.op==='empty'?' selected':''}>is empty</option></select><input class="ls" id="cv-${rule.id}-${ci2}" value="${eh(c.val)}" placeholder="value" style="min-width:60px">${ci2>0?`<button class="l-rdel" onclick="rmCond('${q.id}','${rule.id}',${ci2})">✕</button>`:''}</div>`;
-    });
+    if(rule.conditions.length>1)lh+=`<div class="ct-row"><button class="ct-btn${rule.condType==='ALL'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ALL')">ALL</button><button class="ct-btn${rule.condType==='ANY'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ANY')">ANY</button></div>`;
+    rule.conditions.forEach((c,ci2)=>{lh+=`<div class="l-cond"><select class="ls" id="cq-${rule.id}-${ci2}"><option value="${q.id}"${c.qid===q.id?' selected':''}>This question</option>${allQ.map(aq=>`<option value="${aq.id}"${c.qid===aq.id?' selected':''}>${(aq.text||'Untitled').slice(0,24)}</option>`).join('')}</select><select class="ls" id="co-${rule.id}-${ci2}"><option value="is">is</option><option value="is_not">is not</option><option value="contains">contains</option><option value="not_contains">not contain</option><option value="filled">is filled</option><option value="empty">is empty</option></select><input class="ls" id="cv-${rule.id}-${ci2}" value="${eh(c.val)}" placeholder="value" style="min-width:60px">${ci2>0?`<button class="l-rdel" onclick="rmCond('${q.id}','${rule.id}',${ci2})">✕</button>`:''}</div>`});
     lh+=`<button class="acd" onclick="addCond('${q.id}','${rule.id}')">+ Add condition</button><div class="l-arow"><span class="l-albl">THEN</span><select class="ls" id="act-${rule.id}" onchange="chAct('${q.id}','${rule.id}')"><option value="skip"${rule.action==='skip'?' selected':''}>Skip to question</option><option value="skip_sec"${rule.action==='skip_sec'?' selected':''}>Skip to section</option><option value="show"${rule.action==='show'?' selected':''}>Show question</option><option value="hide"${rule.action==='hide'?' selected':''}>Hide question</option><option value="end"${rule.action==='end'?' selected':''}>End survey</option></select>`;
     if(['skip','show','hide'].includes(rule.action)){lh+=`<select class="ls" id="tgt-${rule.id}">${allQ.map(aq=>`<option value="${aq.id}"${rule.target===aq.id?' selected':''}>${(aq.text||'Untitled').slice(0,20)}</option>`).join('')}</select>`}
     else if(rule.action==='skip_sec'){lh+=`<select class="ls" id="tgt-${rule.id}">${secs.map(s=>`<option value="${s.id}"${rule.target===s.id?' selected':''}>${(s.title||'Untitled').slice(0,20)}</option>`).join('')}</select>`}
@@ -812,23 +624,62 @@ function renderQCard(q,qn,sc){
   });
   lh+=`<button class="badr" onclick="addRule('${q.id}')">+ Add logic rule</button><div class="l-def"><strong>OTHERWISE:</strong> Continue to next question</div></div>`;
 
-  return `<div class="q-card${sc?' ins':''}" id="qc-${q.id}" style="${bl}${logicStyle}"><div class="q-tabs"><button class="q-tab active" data-tab="question" onclick="showQTab('${q.id}','question')">Question</button><button class="q-tab" data-tab="logic" onclick="showQTab('${q.id}','logic')">Logic${hl?`<span class="q-tbadge">${q.logic.length}</span>`:''}</button><button class="q-tab" data-tab="media" onclick="showQTab('${q.id}','media')">Media</button>${hl?`<span class="logic-badge">🔀 Logic applied</span>`:''}</div><div class="qtab-panel active" data-tab="question"><div class="q-body"><div class="q-hdr"><div class="q-nb" style="background:${nb}">${qn}</div><select class="q-tsel" onchange="chT('${q.id}',this.value)"><optgroup label="Choice"><option value="multiple"${q.type==='multiple'?' selected':''}>◉ Multiple choice</option><option value="checkbox"${q.type==='checkbox'?' selected':''}>☑ Checkboxes</option><option value="dropdown"${q.type==='dropdown'?' selected':''}>▾ Dropdown</option><option value="yesno"${q.type==='yesno'?' selected':''}>✓ Yes/No</option></optgroup><optgroup label="Text"><option value="text"${q.type==='text'?' selected':''}>✏️ Short text</option><option value="textarea"${q.type==='textarea'?' selected':''}>📝 Long text</option><option value="email"${q.type==='email'?' selected':''}>📧 Email</option><option value="phone"${q.type==='phone'?' selected':''}>📱 Phone</option><option value="number"${q.type==='number'?' selected':''}>🔢 Number</option></optgroup><optgroup label="Scale &amp; Date"><option value="rating"${q.type==='rating'?' selected':''}>⭐ Rating 1-5</option><option value="scale"${q.type==='scale'?' selected':''}>📊 Scale 1-10</option><option value="date"${q.type==='date'?' selected':''}>📅 Date</option></optgroup><optgroup label="Special"><option value="file"${q.type==='file'?' selected':''}>📎 File URL</option><option value="pledge"${q.type==='pledge'?' selected':''}>🤝 Pledge</option><option value="quiz"${q.type==='quiz'?' selected':''}>🎓 Quiz MCQ</option></optgroup></select><button class="q-del" onclick="delQ('${q.id}')">✕</button></div>${inp}<div class="q-foot"><button class="tgl${q.required?' on':''}" id="req-${q.id}" onclick="togReq('${q.id}')"></button><span class="tgl-l">${q.type==='pledge'?'Must agree':'Required'}</span><select class="dm-sel" id="dm-${q.id}" onchange="setDM('${q.id}',this.value)" title="Display mode"><option value="auto"${q.displayMode==='auto'?' selected':''}>Follow section</option><option value="solo"${q.displayMode==='solo'?' selected':''}>Own screen</option><option value="group-prev"${q.displayMode==='group-prev'?' selected':''}>With previous</option><option value="group-next"${q.displayMode==='group-next'?' selected':''}>With next</option></select></div></div></div><div class="qtab-panel" data-tab="logic"><div class="q-body">${lh}</div></div>
-<div class="qtab-panel" data-tab="media"><div class="q-body">
-  <div style="font-size:0.72rem;color:#64748B;margin-bottom:10px">Add an image or video to this question. Appears beside the question text.</div>
-  <label style="display:block;font-size:0.68rem;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:5px">Media URL</label>
-  <input class="media-inp" id="media-url-${q.id}" value="${eh(q.mediaUrl||'')}" placeholder="Paste image or video URL..." oninput="previewMedia('${q.id}',this.value)">
-  <div style="font-size:0.68rem;color:#94A3B8;margin-bottom:10px">Supports: JPG, PNG, GIF, MP4, YouTube links</div>
-  <label style="display:block;font-size:0.68rem;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:5px">Layout</label>
-  <div class="media-layout-row">
-    <button class="media-layout-btn${(q.mediaLayout||'top')==='top'?' active':''}" onclick="setMediaLayout('${q.id}','top')">⬆ Top</button>
-    <button class="media-layout-btn${(q.mediaLayout||'top')==='left'?' active':''}" onclick="setMediaLayout('${q.id}','left')">⬅ Left</button>
-    <button class="media-layout-btn${(q.mediaLayout||'top')==='right'?' active':''}" onclick="setMediaLayout('${q.id}','right')">➡ Right</button>
-  </div>
-  <div class="media-q-preview" id="media-preview-${q.id}">${q.mediaUrl?`<img src="${eh(q.mediaUrl)}" onerror="this.style.display='none'">`:'<div class="media-empty">No media added</div>'}</div>
-  <div style="margin-top:8px;display:flex;gap:6px">
-    <button onclick="clearMedia('${q.id}')" style="padding:6px 12px;border-radius:7px;border:1.5px solid #FEE2E2;background:#fff;color:#DC2626;font-size:0.75rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">Remove media</button>
-  </div>
-</div></div></div>`;
+  const mediaPanelHtml=`<div class="q-body"><div style="font-size:0.75rem;color:#64748B;margin-bottom:10px">Add an image or video to this question.</div><label style="display:block;font-size:0.68rem;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:5px">Media URL</label><input class="media-inp" id="media-url-${q.id}" value="${eh(q.mediaUrl||'')}" placeholder="Paste image or video URL..." oninput="previewMedia('${q.id}',this.value)"><div style="font-size:0.68rem;color:#94A3B8;margin-bottom:10px">Supports: JPG, PNG, GIF, MP4, YouTube links</div><label style="display:block;font-size:0.68rem;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:5px">Layout</label><div class="media-layout-row"><button class="media-layout-btn${(q.mediaLayout||'top')==='top'?' active':''}" onclick="setMediaLayout('${q.id}','top')">⬆ Top</button><button class="media-layout-btn${(q.mediaLayout||'top')==='left'?' active':''}" onclick="setMediaLayout('${q.id}','left')">⬅ Left</button><button class="media-layout-btn${(q.mediaLayout||'top')==='right'?' active':''}" onclick="setMediaLayout('${q.id}','right')">➡ Right</button></div><div class="media-preview" id="media-preview-${q.id}">${q.mediaUrl?`<img src="${eh(q.mediaUrl)}" style="width:100%;max-height:140px;object-fit:cover" onerror="this.parentElement.innerHTML='Could not load image'">`:'No media added'}</div><div style="margin-top:8px"><button onclick="clearMedia('${q.id}')" style="padding:6px 12px;border-radius:7px;border:1.5px solid #FEE2E2;background:#fff;color:#DC2626;font-size:0.75rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">Remove media</button></div></div>`;
+
+  return `<div class="q-card${sc?' ins':''}" id="qc-${q.id}" style="${bl}${logicStyle}">
+    <div class="q-tabs">
+      <button class="q-tab active" data-tab="question" onclick="showQTab('${q.id}','question')">Question</button>
+      <button class="q-tab" data-tab="logic" onclick="showQTab('${q.id}','logic')">Logic${hl?`<span class="q-tbadge">${q.logic.length}</span>`:''}</button>
+      <button class="q-tab" data-tab="media" onclick="showQTab('${q.id}','media')">Media${hm?' 🖼':''}</button>
+      ${hl?`<span class="logic-badge">🔀 Logic applied</span>`:''}
+    </div>
+    <div class="qtab-panel active" data-tab="question">
+      <div class="q-body">
+        <div class="q-hdr">
+          <div class="q-nb" style="background:${nb}">${qn}</div>
+          <select class="q-tsel" onchange="chT('${q.id}',this.value)">
+            <optgroup label="Choice">
+              <option value="multiple"${q.type==='multiple'?' selected':''}>◉ Multiple choice</option>
+              <option value="checkbox"${q.type==='checkbox'?' selected':''}>☑ Checkboxes</option>
+              <option value="dropdown"${q.type==='dropdown'?' selected':''}>▾ Dropdown</option>
+              <option value="yesno"${q.type==='yesno'?' selected':''}>✓ Yes/No</option>
+            </optgroup>
+            <optgroup label="Text">
+              <option value="text"${q.type==='text'?' selected':''}>✏️ Short text</option>
+              <option value="textarea"${q.type==='textarea'?' selected':''}>📝 Long text</option>
+              <option value="email"${q.type==='email'?' selected':''}>📧 Email</option>
+              <option value="phone"${q.type==='phone'?' selected':''}>📱 Phone</option>
+              <option value="number"${q.type==='number'?' selected':''}>🔢 Number</option>
+            </optgroup>
+            <optgroup label="Scale &amp; Date">
+              <option value="rating"${q.type==='rating'?' selected':''}>⭐ Rating 1-5</option>
+              <option value="scale"${q.type==='scale'?' selected':''}>📊 Scale 1-10</option>
+              <option value="date"${q.type==='date'?' selected':''}>📅 Date</option>
+            </optgroup>
+            <optgroup label="Special">
+              <option value="file"${q.type==='file'?' selected':''}>📎 File URL</option>
+              <option value="pledge"${q.type==='pledge'?' selected':''}>🤝 Pledge</option>
+              <option value="quiz"${q.type==='quiz'?' selected':''}>🎓 Quiz MCQ</option>
+            </optgroup>
+          </select>
+          <button class="q-del" onclick="delQ('${q.id}')">✕</button>
+        </div>
+        ${inp}
+        <div class="q-foot">
+          <button class="tgl${q.required?' on':''}" id="req-${q.id}" onclick="togReq('${q.id}')"></button>
+          <span class="tgl-l">${q.type==='pledge'?'Must agree':'Required'}</span>
+          <select class="dm-sel" id="dm-${q.id}" onchange="setDM('${q.id}',this.value)">
+            <option value="auto"${q.displayMode==='auto'?' selected':''}>Follow section</option>
+            <option value="solo"${q.displayMode==='solo'?' selected':''}>Own screen</option>
+            <option value="group-prev"${q.displayMode==='group-prev'?' selected':''}>With previous</option>
+            <option value="group-next"${q.displayMode==='group-next'?' selected':''}>With next</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="qtab-panel" data-tab="logic"><div class="q-body">${lh}</div></div>
+    <div class="qtab-panel" data-tab="media">${mediaPanelHtml}</div>
+  </div>`;
 }
 
 function renderAll(){renderSB();renderQA()}
@@ -839,11 +690,19 @@ async function save(status){
   if(!title){toast('Please add a survey title');return null}
   const validQs=qs.filter(q=>q.text.trim()||q.type==='pledge');
   if(!validQs.length){toast('Please add at least one question');return null}
+  const slug=document.getElementById('seo-slug').value.trim();
   const data={
     title,description:document.getElementById('s-desc').value.trim(),
     sections:secs,questions:validQs,settings:cfg,
     style:document.getElementById('s-style').value,
-category:document.getElementById('s-category')?.value||'Other',
+    category:document.getElementById('s-category').value||'Other',
+    slug:slug||null,
+    seo:{
+      title:document.getElementById('seo-title').value.trim(),
+      description:document.getElementById('seo-desc').value.trim(),
+      ogImage:document.getElementById('seo-og').value.trim(),
+      index:document.getElementById('seo-index').value,
+    },
     welcomePage:{logo:document.getElementById('w-logo').value.trim(),headline:document.getElementById('w-head').value.trim(),btnText:document.getElementById('w-btn').value.trim(),bgColor:document.getElementById('w-bgc').value.trim(),bgImage:document.getElementById('w-bgi').value.trim(),bgVideo:document.getElementById('w-bgv').value.trim()},
     thankYouPage:{headline:document.getElementById('ty-h').value.trim(),message:document.getElementById('ty-m').value.trim(),redirect:document.getElementById('ty-r').value.trim(),showShare:cfg.share||false},
     prize:cfg.prize?{enabled:true,type:pt,description:document.getElementById('p-desc').value.trim(),winners:document.getElementById('p-win').value||'1',selection:document.getElementById('p-sel').value,notification:document.getElementById('p-not').value}:{enabled:false},
@@ -852,13 +711,18 @@ category:document.getElementById('s-category')?.value||'Other',
   try{
     if(SID){await updateDoc(doc(db,'surveys',SID),data);return SID}
     else{data.createdAt=serverTimestamp();const ref=await addDoc(collection(db,'surveys'),data);SID=ref.id;return SID}
-  } catch(e){console.error(e);toast('Error saving. Please try again');return null}
+  }catch(e){console.error(e);toast('Error saving. Please try again');return null}
 }
 
 window.previewSurvey=async function(){
   const title=document.getElementById('s-title').value.trim();
   if(!title){toast('Please add a survey title first');return}
-  const id=await save('draft');if(id)window.open('/s/?id='+id+'&preview=1','_blank');
+  const id=await save('draft');
+  if(id){
+    const slug=document.getElementById('seo-slug').value.trim();
+    const url=slug?`/survey/${slug}?preview=1`:`/s/?id=${id}&preview=1`;
+    window.open(url,'_blank');
+  }
 }
 window.saveDraft=async function(){const id=await save('draft');if(id)toast('Draft saved!')}
 window.publishSurvey=async function(){
@@ -870,11 +734,11 @@ window.publishSurvey=async function(){
       const qTexts=qs.map(q=>q.text).filter(t=>t&&t.trim());
       const res=await fetch(SHEETS,{method:'POST',body:JSON.stringify({action:'create_sheet',surveyTitle:document.getElementById('s-title').value.trim(),questions:qTexts,hostEmail:U.email})});
       const result=await res.json();
-      if(result.success){await updateDoc(doc(db,'surveys',id),{sheetId:result.sheetId,sheetUrl:result.sheetUrl});toast('Survey published and Sheet created!',2000)}
-      else toast('Survey published!',1500);
-    } catch(e){toast('Survey published!',1500)}
+      if(result.success){await updateDoc(doc(db,'surveys',id),{sheetId:result.sheetId,sheetUrl:result.sheetUrl})}
+    }catch(e){console.error(e)}
+    toast('Survey published!',2000);
     setTimeout(()=>window.location.href='/dashboard',2200);
-  } else {btn.disabled=false;btn.textContent='Publish →'}
+  }else{btn.disabled=false;btn.textContent='Publish →'}
 }
 </script>
 </body>
