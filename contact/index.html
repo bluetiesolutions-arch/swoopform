@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — SwoopForm</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
+    nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .logo-mark{width:32px;height:32px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:#fff}
+    .logo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#0F0E1A}
+    .nav-links{display:flex;gap:10px;align-items:center}
+    .btn-ghost{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
+    .btn-ghost:hover{border-color:#0F0E1A;color:#0F0E1A}
+    .btn-primary{padding:7px 16px;border-radius:8px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.82rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:opacity 0.2s}
+    .btn-primary:hover{opacity:0.9}
+    .main{max-width:900px;margin:0 auto;padding:60px 24px}
+    .page-header{text-align:center;margin-bottom:48px}
+    .page-label{font-size:0.75rem;font-weight:700;color:#D97706;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
+    .page-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-0.03em;color:#0F0E1A;margin-bottom:12px}
+    .page-sub{font-size:0.95rem;color:#64748B;line-height:1.7;max-width:480px;margin:0 auto}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .contact-options{display:flex;flex-direction:column;gap:14px}
+    .contact-card{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:22px;transition:all 0.2s;text-decoration:none;display:block}
+    .contact-card:hover{border-color:#2D1B69;box-shadow:0 4px 16px rgba(45,27,105,0.1);transform:translateY(-1px)}
+    .contact-card-icon{font-size:1.6rem;margin-bottom:10px}
+    .contact-card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#0F0E1A;margin-bottom:4px}
+    .contact-card-desc{font-size:0.8rem;color:#64748B;line-height:1.5;margin-bottom:8px}
+    .contact-card-action{font-size:0.8rem;font-weight:700;color:#2D1B69}
+    .form-card{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:28px}
+    .form-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:20px}
+    .field{margin-bottom:14px}
+    .field-label{display:block;font-size:0.72rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px}
+    .field-input{width:100%;padding:10px 14px;border-radius:9px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
+    .field-input:focus{border-color:#2D1B69}
+    .field-select{width:100%;padding:10px 14px;border-radius:9px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer}
+    .field-textarea{width:100%;padding:10px 14px;border-radius:9px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;resize:vertical;min-height:110px;transition:border-color 0.2s}
+    .field-textarea:focus{border-color:#2D1B69}
+    .btn-submit{width:100%;padding:12px;border-radius:9px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.9rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s;margin-top:4px}
+    .btn-submit:hover{opacity:0.9}
+    .btn-submit:disabled{opacity:0.5;cursor:not-allowed}
+    .success-msg{background:#DCFCE7;border:1.5px solid #86EFAC;border-radius:10px;padding:16px;text-align:center;font-size:0.88rem;color:#166534;font-weight:600;display:none}
+    .faq-section{margin-top:60px}
+    .faq-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:20px;text-align:center}
+    .faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .faq-card{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;padding:18px}
+    .faq-q{font-weight:700;font-size:0.88rem;margin-bottom:6px}
+    .faq-a{font-size:0.8rem;color:#64748B;line-height:1.6}
+    .footer{background:#0F0E1A;padding:32px 24px;text-align:center;margin-top:60px}
+    .footer-links{display:flex;gap:20px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}
+    .footer-link{font-size:0.78rem;color:rgba(255,255,255,0.4);text-decoration:none}
+    .footer-link:hover{color:#fff}
+    .footer-copy{font-size:0.75rem;color:rgba(255,255,255,0.25)}
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999}
+    @media(max-width:700px){
+      .contact-grid{grid-template-columns:1fr}
+      .faq-grid{grid-template-columns:1fr}
+      nav{padding:0 14px}
+      .logo-name{display:none}
+      .main{padding:40px 16px}
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo"><div class="logo-mark">S</div><div class="logo-name">SwoopForm</div></a>
+  <div class="nav-links">
+    <a href="/" class="btn-ghost">Home</a>
+    <a href="/login" class="btn-primary">Get started →</a>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="page-header">
+    <div class="page-label">Contact us</div>
+    <h1 class="page-title">We'd love to hear from you</h1>
+    <p class="page-sub">Got a question, feedback or need help? We're here for you. Usually reply within 24 hours.</p>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-options">
+      <a href="mailto:contact@swoopform.com" class="contact-card">
+        <div class="contact-card-icon">📧</div>
+        <div class="contact-card-title">Email support</div>
+        <div class="contact-card-desc">For general questions, billing and account issues. We reply within 24 hours.</div>
+        <div class="contact-card-action">contact@swoopform.com →</div>
+      </a>
+      <a href="mailto:contact@swoopform.com?subject=Bug Report" class="contact-card">
+        <div class="contact-card-icon">🐛</div>
+        <div class="contact-card-title">Report a bug</div>
+        <div class="contact-card-desc">Found something broken? Tell us and we'll fix it fast.</div>
+        <div class="contact-card-action">Report bug →</div>
+      </a>
+      <a href="mailto:contact@swoopform.com?subject=Feature Request" class="contact-card">
+        <div class="contact-card-icon">💡</div>
+        <div class="contact-card-title">Feature request</div>
+        <div class="contact-card-desc">Have an idea? We read every suggestion and build the most popular ones.</div>
+        <div class="contact-card-action">Share your idea →</div>
+      </a>
+      <a href="mailto:contact@swoopform.com?subject=Verification Request" class="contact-card">
+        <div class="contact-card-icon">🎓</div>
+        <div class="contact-card-title">Verification help</div>
+        <div class="contact-card-desc">Questions about Student, Educator or NGO verification? We're happy to help.</div>
+        <div class="contact-card-action">Get verified →</div>
+      </a>
+    </div>
+
+    <div class="form-card">
+      <div class="form-title">Send us a message</div>
+      <div class="success-msg" id="success-msg">✅ Message sent! We'll get back to you within 24 hours.</div>
+      <div class="field">
+        <label class="field-label">Your name</label>
+        <input class="field-input" id="f-name" type="text" placeholder="Your full name">
+      </div>
+      <div class="field">
+        <label class="field-label">Email address</label>
+        <input class="field-input" id="f-email" type="email" placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label class="field-label">Topic</label>
+        <select class="field-select" id="f-topic">
+          <option value="">Select a topic...</option>
+          <option value="General question">General question</option>
+          <option value="Bug report">Bug report</option>
+          <option value="Feature request">Feature request</option>
+          <option value="Billing">Billing</option>
+          <option value="Verification">Verification help</option>
+          <option value="Partnership">Partnership</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="field-label">Message</label>
+        <textarea class="field-textarea" id="f-message" placeholder="Tell us how we can help..."></textarea>
+      </div>
+      <button class="btn-submit" id="submit-btn" onclick="sendMessage()">Send message →</button>
+    </div>
+  </div>
+
+  <div class="faq-section">
+    <div class="faq-title">Common questions</div>
+    <div class="faq-grid">
+      <div class="faq-card">
+        <div class="faq-q">How quickly do you reply?</div>
+        <div class="faq-a">We typically reply within 24 hours on weekdays. Complex issues may take up to 48 hours.</div>
+      </div>
+      <div class="faq-card">
+        <div class="faq-q">How do I get verified as a student or NGO?</div>
+        <div class="faq-a">Go to Settings → Account type → Select Student/Educator or NGO → Apply for verification. We review within 24 hours.</div>
+      </div>
+      <div class="faq-card">
+        <div class="faq-q">Can I get a refund?</div>
+        <div class="faq-a">Yes — we offer a 7-day refund policy on all paid plans. Just email us within 7 days of payment.</div>
+      </div>
+      <div class="faq-card">
+        <div class="faq-q">Do you offer discounts for bulk plans?</div>
+        <div class="faq-a">Yes! For teams or educational institutions needing multiple accounts, email us for custom pricing.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-links">
+    <a href="/" class="footer-link">Home</a>
+    <a href="/about" class="footer-link">About</a>
+    <a href="/pricing" class="footer-link">Pricing</a>
+    <a href="/contact" class="footer-link">Contact</a>
+    <a href="/privacy" class="footer-link">Privacy</a>
+    <a href="/terms" class="footer-link">Terms</a>
+  </div>
+  <div class="footer-copy">© 2024 SwoopForm. All rights reserved.</div>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+emailjs.init('xOsG4gZ6uR_UnN_ac');
+window.sendMessage=async function(){
+  const name=document.getElementById('f-name').value.trim();
+  const email=document.getElementById('f-email').value.trim();
+  const topic=document.getElementById('f-topic').value;
+  const message=document.getElementById('f-message').value.trim();
+  if(!name||!email||!message){toast('Please fill in all fields');return}
+  if(!email.includes('@')){toast('Please enter a valid email');return}
+  const btn=document.getElementById('submit-btn');
+  btn.disabled=true;btn.textContent='Sending...';
+  try{
+    await emailjs.send('service_o34py9mte','template_awyfb6j',{
+      to_email:'contact@swoopform.com',
+      subject:'[SwoopForm Contact] '+topic+' from '+name,
+      message:`Name: ${name}\nEmail: ${email}\nTopic: ${topic}\n\nMessage:\n${message}`
+    });
+    document.getElementById('success-msg').style.display='block';
+    document.getElementById('f-name').value='';
+    document.getElementById('f-email').value='';
+    document.getElementById('f-topic').value='';
+    document.getElementById('f-message').value='';
+  }catch(e){toast('Error sending. Please email us directly at contact@swoopform.com')}
+  btn.disabled=false;btn.textContent='Send message →';
+}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',3000)}
+</script>
+</body>
+</html>
