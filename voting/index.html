@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voting — SwoopForm</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:#0A0F1E;color:#fff;min-height:100vh;display:flex;flex-direction:column}
+    nav{background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+    .logo-mk{width:28px;height:28px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;color:#fff}
+    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;color:#fff}
+    .vote-type-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;background:rgba(217,119,6,0.2);border:1px solid rgba(217,119,6,0.4);color:#FCD34D;font-size:0.75rem;font-weight:700}
+    .stage{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px;position:relative;overflow:hidden}
+    .bg-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(217,119,6,0.08) 0%,transparent 70%);pointer-events:none}
+    .voting-wrap{width:100%;max-width:640px;position:relative;z-index:1;animation:slideUp 0.5s ease both}
+    @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .voting-header{text-align:center;margin-bottom:40px}
+    .voting-label{font-size:0.72rem;font-weight:700;color:#D97706;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px}
+    .voting-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.6rem,4vw,2.6rem);letter-spacing:-0.04em;line-height:1.1;margin-bottom:12px}
+    .voting-sub{font-size:0.9rem;color:rgba(255,255,255,0.5);line-height:1.7;max-width:480px;margin:0 auto}
+    .voting-meta{display:flex;gap:16px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+    .voting-meta-item{font-size:0.78rem;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:5px}
+    .candidates{display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
+    .candidate{padding:20px 22px;border-radius:16px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:16px;position:relative;overflow:hidden}
+    .candidate:hover{border-color:rgba(217,119,6,0.4);background:rgba(217,119,6,0.06);transform:translateX(4px)}
+    .candidate.selected{border-color:#D97706;background:rgba(217,119,6,0.1)}
+    .candidate.voted{cursor:default;transform:none}
+    .candidate-bar{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,rgba(217,119,6,0.15),rgba(217,119,6,0.05));border-radius:16px;transition:width 1s ease;width:0}
+    .candidate-num{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:rgba(255,255,255,0.4);flex-shrink:0;transition:all 0.2s;position:relative;z-index:1}
+    .candidate.selected .candidate-num{background:rgba(217,119,6,0.2);border-color:#D97706;color:#D97706}
+    .candidate-info{flex:1;min-width:0;position:relative;z-index:1}
+    .candidate-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:2px}
+    .candidate-desc{font-size:0.78rem;color:rgba(255,255,255,0.45);line-height:1.4}
+    .candidate-votes{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:#D97706;flex-shrink:0;opacity:0;transition:opacity 0.3s;position:relative;z-index:1}
+    .candidate.results-shown .candidate-votes{opacity:1}
+    .candidate-check{width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;position:relative;z-index:1;transition:all 0.2s;display:flex;align-items:center;justify-content:center}
+    .candidate.selected .candidate-check{border-color:#D97706;background:#D97706}
+    .candidate.selected .candidate-check::after{content:'✓';color:#fff;font-size:0.75rem;font-weight:700}
+    .vote-btn{width:100%;padding:16px;border-radius:14px;border:none;background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;font-size:1rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;margin-bottom:16px;font-family:'Syne',sans-serif}
+    .vote-btn:hover{opacity:0.9;transform:translateY(-2px);box-shadow:0 8px 24px rgba(217,119,6,0.3)}
+    .vote-btn:disabled{opacity:0.3;cursor:not-allowed;transform:none;box-shadow:none}
+    .vote-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+    .total-votes{font-size:0.82rem;color:rgba(255,255,255,0.3)}
+    .results-status{font-size:0.78rem;color:rgba(255,255,255,0.3);font-style:italic}
+    .winner-card{background:linear-gradient(135deg,rgba(217,119,6,0.2),rgba(217,119,6,0.05));border:1.5px solid rgba(217,119,6,0.4);border-radius:16px;padding:24px;text-align:center;margin-bottom:20px;animation:slideUp 0.5s ease both}
+    .winner-icon{font-size:2.5rem;margin-bottom:8px}
+    .winner-label{font-size:0.72rem;font-weight:700;color:#D97706;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px}
+    .winner-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem}
+    .sf-brand{display:flex;align-items:center;gap:6px;justify-content:center;margin-top:24px;opacity:0.3}
+    .sf-brand-logo{width:18px;height:18px;border-radius:4px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.55rem;color:#fff}
+    .sf-brand-text{font-size:0.7rem;color:rgba(255,255,255,0.5)}
+    .loading{display:flex;align-items:center;justify-content:center;min-height:60vh;flex-direction:column;gap:16px}
+    .spinner{width:32px;height:32px;border:3px solid rgba(217,119,6,0.2);border-top-color:#D97706;border-radius:50%;animation:spin 0.8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .deadline-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:100px;background:rgba(217,119,6,0.15);border:1px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:0.72rem;font-weight:700}
+    @media(max-width:600px){.stage{padding:24px 14px}.voting-title{font-size:1.5rem}nav{padding:0 14px}.logo-nm{display:none}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
+  <div class="vote-type-badge">🗳️ Voting</div>
+</nav>
+<div class="stage" id="stage">
+  <div class="bg-glow"></div>
+  <div class="loading"><div class="spinner"></div></div>
+</div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getFirestore,collection,query,where,getDocs,doc,getDoc,addDoc,updateDoc,increment,serverTimestamp,onSnapshot}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);
+const db=getFirestore(app);
+
+const pathParts=window.location.pathname.split('/').filter(Boolean);
+const slug=pathParts[1];
+let voting=null,votingId=null,hasVoted=false,selectedIdx=-1,totalVotes=0;
+
+async function init(){
+  if(!slug){showError('Invalid link');return}
+  try{
+    let data=null;
+    const q=query(collection(db,'votings'),where('slug','==',slug));
+    const snap=await getDocs(q);
+    if(!snap.empty){data={id:snap.docs[0].id,...snap.docs[0].data()};votingId=snap.docs[0].id}
+    else{const byId=await getDoc(doc(db,'votings',slug));if(byId.exists()){data={id:byId.id,...byId.data()};votingId=byId.id}}
+    if(!data){showError('Voting not found');return}
+    if(data.status==='closed'){
+      voting=data;totalVotes=data.totalVotes||0;
+      hasVoted=true;renderVoting();
+      if(data.showResults==='after_close'||data.showResults==='always')revealResults();
+      return;
+    }
+    voting=data;totalVotes=data.totalVotes||0;
+    hasVoted=localStorage.getItem('voted_voting_'+votingId)==='1';
+    document.title=(voting.title||'Vote')+' — SwoopForm';
+    renderVoting();
+    if(hasVoted&&(voting.showResults==='after_vote'||voting.showResults==='always'))revealResults();
+    onSnapshot(doc(db,'votings',votingId),s=>{if(s.exists()){const d=s.data();totalVotes=d.totalVotes||0;voting.candidates=d.candidates||voting.candidates;updateCounts()}});
+  }catch(e){console.error(e);showError('Something went wrong')}
+}
+
+function renderVoting(){
+  const deadline=voting.deadline?new Date(voting.deadline):null;
+  const deadlineHtml=deadline?`<span class="deadline-badge">⏰ Closes ${deadline.toLocaleDateString('en-IN',{day:'2-digit',month:'short'})}</span>`:'';
+  document.getElementById('stage').innerHTML=`
+  <div class="bg-glow"></div>
+  <div class="voting-wrap">
+    <div class="voting-header">
+      <div class="voting-label">🗳️ ${voting.category||'Vote'}</div>
+      <h1 class="voting-title">${voting.title||'Untitled Voting'}</h1>
+      ${voting.description?`<p class="voting-sub">${voting.description}</p>`:''}
+      <div class="voting-meta">
+        ${deadlineHtml}
+        <div class="voting-meta-item">👥 ${totalVotes} vote${totalVotes!==1?'s':''} cast</div>
+        ${voting.showResults==='hidden'||(!hasVoted&&voting.showResults==='after_vote')?'<div class="voting-meta-item">🔒 Results revealed after voting</div>':''}
+      </div>
+    </div>
+    <div class="candidates" id="candidates">
+      ${(voting.candidates||[]).map((c,i)=>`
+        <div class="candidate${hasVoted&&selectedIdx===i?' selected':''}" id="cand-${i}" onclick="selectCandidate(${i})">
+          <div class="candidate-bar" id="cbar-${i}"></div>
+          <div class="candidate-num">${String.fromCharCode(65+i)}</div>
+          <div class="candidate-info">
+            <div class="candidate-name">${c.name||'Candidate '+(i+1)}</div>
+            ${c.description?`<div class="candidate-desc">${c.description}</div>`:''}
+          </div>
+          <div class="candidate-votes" id="cvotes-${i}">0</div>
+          <div class="candidate-check" id="ccheck-${i}"></div>
+        </div>`).join('')}
+    </div>
+    <button class="vote-btn" id="vote-btn" onclick="submitVote()" ${hasVoted||selectedIdx<0?'disabled':''}>
+      ${hasVoted?'✓ Vote cast':'Cast your vote'}
+    </button>
+    <div class="vote-footer">
+      <div class="total-votes" id="total-votes">${totalVotes} total vote${totalVotes!==1?'s':''}</div>
+      <div class="results-status">${voting.showResults==='hidden'?'Results hidden by host':voting.showResults==='after_vote'?'Results shown after voting':voting.showResults==='after_close'?'Results shown when voting closes':'Results live'}</div>
+    </div>
+    <div class="sf-brand"><div class="sf-brand-logo">S</div><div class="sf-brand-text">Powered by SwoopForm</div></div>
+  </div>`;
+  if(hasVoted&&(voting.showResults==='after_vote'||voting.showResults==='always'))revealResults();
+}
+
+window.selectCandidate=function(i){
+  if(hasVoted)return;
+  selectedIdx=i;
+  document.querySelectorAll('.candidate').forEach((c,idx)=>{
+    c.classList.toggle('selected',idx===i);
+    const check=document.getElementById('ccheck-'+idx);
+    if(check)check.style.cssText=idx===i?'border-color:#D97706;background:#D97706;':'';
+  });
+  const btn=document.getElementById('vote-btn');if(btn){btn.disabled=false;btn.textContent='Cast your vote'}
+}
+
+window.submitVote=async function(){
+  if(selectedIdx<0||hasVoted)return;
+  const btn=document.getElementById('vote-btn');btn.disabled=true;btn.textContent='Submitting...';
+  try{
+    const updates={totalVotes:increment(1),updatedAt:serverTimestamp()};
+    updates[`candidates.${selectedIdx}.votes`]=increment(1);
+    await updateDoc(doc(db,'votings',votingId),updates);
+    await addDoc(collection(db,'votingResponses'),{votingId,votingSlug:slug,selectedIdx,submittedAt:serverTimestamp()});
+    localStorage.setItem('voted_voting_'+votingId,'1');
+    hasVoted=true;totalVotes++;
+    const cands=[...voting.candidates];cands[selectedIdx].votes=(cands[selectedIdx].votes||0)+1;voting.candidates=cands;
+    btn.textContent='✓ Vote cast';btn.style.background='#10B981';
+    if(voting.showResults==='after_vote'||voting.showResults==='always'){setTimeout(()=>revealResults(),600)}
+    const tv=document.getElementById('total-votes');if(tv)tv.textContent=totalVotes+' total votes';
+  }catch(e){console.error(e);btn.disabled=false;btn.textContent='Cast your vote'}
+}
+
+function revealResults(){
+  const candidates=voting.candidates||[];
+  const maxVotes=Math.max(...candidates.map(c=>c.votes||0),1);
+  const winner=candidates.reduce((a,b)=>(a.votes||0)>(b.votes||0)?a:b,candidates[0]);
+  candidates.forEach((c,i)=>{
+    const votes=c.votes||0;const pct=totalVotes>0?Math.round((votes/totalVotes)*100):0;
+    const bar=document.getElementById('cbar-'+i);const vEl=document.getElementById('cvotes-'+i);
+    const el=document.getElementById('cand-'+i);
+    if(bar)bar.style.width=pct+'%';
+    if(vEl){vEl.textContent=pct+'%'}
+    if(el)el.classList.add('results-shown');
+  });
+  // Show winner card
+  const wrap=document.querySelector('.voting-wrap');
+  if(wrap&&winner){
+    const existing=document.querySelector('.winner-card');if(existing)existing.remove();
+    const wc=document.createElement('div');wc.className='winner-card';
+    wc.innerHTML=`<div class="winner-icon">👑</div><div class="winner-label">Leading</div><div class="winner-name">${winner.name||'Candidate'}</div><div style="font-size:0.82rem;color:rgba(255,255,255,0.5);margin-top:4px">${winner.votes||0} votes · ${totalVotes>0?Math.round(((winner.votes||0)/totalVotes)*100):0}%</div>`;
+    const candSection=document.getElementById('candidates');if(candSection)candSection.before(wc);
+  }
+}
+
+function updateCounts(){
+  const tv=document.getElementById('total-votes');if(tv)tv.textContent=totalVotes+' total votes';
+  const meta=document.querySelector('.voting-meta');
+  if(meta){const mi=meta.querySelector('.voting-meta-item');if(mi)mi.textContent='👥 '+totalVotes+' vote'+(totalVotes!==1?'s':'')+' cast'}
+  if(hasVoted&&(voting.showResults==='after_vote'||voting.showResults==='always'))revealResults();
+}
+
+function showError(msg){document.getElementById('stage').innerHTML=`<div style="text-align:center;padding:60px 20px"><div style="font-size:2.5rem;margin-bottom:16px">🗳️</div><h2 style="font-family:Syne,sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:8px">${msg}</h2><p style="color:rgba(255,255,255,0.4);font-size:0.88rem">This vote may have ended or the link is incorrect.</p><br><a href="/" style="color:#D97706;font-weight:600;text-decoration:none">← SwoopForm</a></div>`}
+
+init();
+</script>
+</body>
+</html>
