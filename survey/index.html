@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading...</title>
+  <!-- SEO meta tags injected dynamically -->
+  <script>
+    // Get slug from URL: /survey/my-survey-slug
+    const pathParts = window.location.pathname.split('/').filter(Boolean);
+    const slug = pathParts[1]; // survey/SLUG
+    if (!slug) window.location.href = '/discover';
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#0F0E1A;--accent:#D97706;--text:#fff;--muted:rgba(255,255,255,0.5);--border:rgba(255,255,255,0.08)}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+    .vid-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;overflow:hidden;display:none}
+    .vid-bg iframe{position:absolute;top:50%;left:50%;width:100vw;height:56.25vw;min-height:100vh;min-width:177.77vh;transform:translate(-50%,-50%);pointer-events:none}
+    .vid-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.55)}
+    .img-bg{position:fixed;inset:0;z-index:0;background-size:cover;background-position:center;display:none}
+    .img-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.5)}
+    .preview-banner{position:fixed;top:0;left:0;right:0;z-index:200;background:linear-gradient(135deg,#2D1B69,#D97706);padding:8px 20px;text-align:center;font-size:0.82rem;font-weight:600;color:#fff;display:flex;align-items:center;justify-content:center;gap:10px}
+    .preview-banner button{padding:4px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.4);background:transparent;color:#fff;cursor:pointer;font-size:0.78rem}
+    .progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,0.08);z-index:100}
+    .progress-fill{height:100%;background:linear-gradient(90deg,#2D1B69,#D97706);transition:width 0.5s ease}
+    .top-nav{position:fixed;top:3px;left:0;right:0;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;z-index:99}
+    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;opacity:0.6;transition:opacity 0.2s}
+    .nav-logo:hover{opacity:1}
+    .logo-mk{width:28px;height:28px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;color:#fff}
+    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:#fff}
+    .progress-txt{font-size:0.78rem;color:var(--muted);font-weight:600}
+    .stage{position:relative;z-index:10;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 20px 100px}
+    .welcome-screen{width:100%;max-width:680px;animation:slideUp 0.5s ease both}
+    .prize-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:100px;background:rgba(217,119,6,0.2);border:1px solid rgba(217,119,6,0.4);color:#FCD34D;font-size:0.82rem;font-weight:700;margin-bottom:20px}
+    .welcome-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:100px;background:rgba(217,119,6,0.15);border:1px solid rgba(217,119,6,0.3);color:var(--accent);font-size:0.8rem;font-weight:600;margin-bottom:20px}
+    .welcome-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-0.04em;line-height:1.1;margin-bottom:16px}
+    .welcome-desc{font-size:1rem;color:var(--muted);line-height:1.7;margin-bottom:32px;max-width:520px}
+    .welcome-meta{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:36px}
+    .welcome-meta-item{display:flex;align-items:center;gap:6px;font-size:0.85rem;color:var(--muted)}
+    .start-btn{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border-radius:12px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:1.05rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
+    .start-btn:hover{opacity:0.9;transform:translateY(-1px)}
+    .section-intro{width:100%;max-width:680px;animation:slideUp 0.4s ease both;text-align:center}
+    .section-intro-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:-0.04em;margin-bottom:12px}
+    .section-intro-sub{color:var(--muted);font-size:1rem;line-height:1.7;margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto}
+    .all-page{width:100%;max-width:680px;animation:slideUp 0.4s ease both}
+    .all-page-section-name{font-size:0.78rem;font-weight:700;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
+    .all-page-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.4rem,3vw,2rem);letter-spacing:-0.03em;margin-bottom:6px}
+    .all-page-sub{color:var(--muted);font-size:0.9rem;line-height:1.6}
+    .all-q-block{margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+    .all-q-block:last-child{border-bottom:none}
+    .all-q-label{font-size:0.75rem;font-weight:700;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
+    .all-q-text{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;line-height:1.3;margin-bottom:16px}
+    .continue-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-size:1rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;margin-top:8px}
+    .continue-btn:hover{background:#B45309}
+    .slide{width:100%;max-width:680px;animation:slideUp 0.4s ease both}
+    .q-number{font-size:0.78rem;font-weight:700;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+    .q-number::after{content:'→';color:var(--accent)}
+    .q-text{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:-0.03em;line-height:1.2;margin-bottom:28px}
+    .q-media{margin-bottom:20px;border-radius:14px;overflow:hidden;max-height:300px}
+    .q-media img,.q-media video{width:100%;max-height:300px;object-fit:cover;display:block}
+    .q-media-layout-left,.q-media-layout-right{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+    .choices{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+    .choice{padding:16px 20px;border-radius:12px;border:1.5px solid var(--border);background:rgba(255,255,255,0.03);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:14px;font-size:1rem;font-weight:500}
+    .choice:hover{border-color:var(--accent);background:rgba(217,119,6,0.08)}
+    .choice.selected{border-color:var(--accent);background:rgba(217,119,6,0.12)}
+    .choice-key{width:28px;height:28px;border-radius:6px;border:1.5px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:var(--muted);flex-shrink:0;transition:all 0.2s}
+    .choice.selected .choice-key{background:var(--accent);border-color:var(--accent);color:#fff}
+    .choice-cb{width:20px;height:20px;border-radius:4px;border:2px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .choice.selected .choice-cb{background:var(--accent);border-color:var(--accent)}
+    .choice.selected .choice-cb::after{content:'✓';color:#fff;font-size:0.75rem;font-weight:700}
+    .survey-select{width:100%;background:rgba(255,255,255,0.05);border:1.5px solid var(--border);border-radius:12px;color:#fff;font-size:1rem;font-family:'DM Sans',sans-serif;padding:16px 20px;outline:none;cursor:pointer;margin-bottom:32px}
+    .survey-select option{background:#1A1828}
+    .text-ans{width:100%;background:transparent;border:none;border-bottom:2px solid rgba(255,255,255,0.2);color:#fff;font-size:1.3rem;font-family:'DM Sans',sans-serif;padding:12px 0;outline:none;transition:border-color 0.2s;margin-bottom:32px}
+    .text-ans:focus{border-bottom-color:var(--accent)}
+    .text-ans::placeholder{color:rgba(255,255,255,0.2)}
+    .textarea-ans{width:100%;background:rgba(255,255,255,0.04);border:1.5px solid var(--border);border-radius:12px;color:#fff;font-size:1rem;font-family:'DM Sans',sans-serif;padding:16px;outline:none;margin-bottom:32px;resize:none;min-height:120px}
+    .rating-group{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+    .rating-btn{width:56px;height:56px;border-radius:12px;border:1.5px solid var(--border);background:rgba(255,255,255,0.03);color:#fff;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+    .rating-btn:hover{border-color:var(--accent)}
+    .rating-btn.selected{background:var(--accent);border-color:var(--accent)}
+    .rating-labels{display:flex;justify-content:space-between;font-size:0.75rem;color:var(--muted);margin-bottom:24px}
+    .scale-group{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+    .scale-btn{width:46px;height:46px;border-radius:10px;border:1.5px solid var(--border);background:rgba(255,255,255,0.03);color:#fff;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+    .scale-btn:hover{border-color:var(--accent)}
+    .scale-btn.selected{background:var(--accent);border-color:var(--accent)}
+    .yesno-group{display:flex;gap:12px;margin-bottom:32px}
+    .yesno-btn{flex:1;padding:18px;border-radius:12px;border:1.5px solid var(--border);background:rgba(255,255,255,0.03);color:#fff;font-size:1rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;text-align:center}
+    .yesno-btn:hover{border-color:var(--accent)}
+    .yesno-btn.selected{background:var(--accent);border-color:var(--accent)}
+    .date-input{background:rgba(255,255,255,0.05);border:1.5px solid var(--border);border-radius:12px;color:#fff;font-size:1rem;font-family:'DM Sans',sans-serif;padding:16px 20px;outline:none;margin-bottom:32px;color-scheme:dark}
+    .date-input:focus{border-color:var(--accent)}
+    .pledge-statement{background:rgba(45,27,105,0.2);border:1.5px solid rgba(45,27,105,0.4);border-radius:14px;padding:24px;margin-bottom:24px}
+    .pledge-text{font-size:1.05rem;line-height:1.7;margin-bottom:20px}
+    .pledge-agree{display:flex;align-items:flex-start;gap:14px;cursor:pointer;padding:14px 18px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);transition:all 0.2s}
+    .pledge-agree:hover{border-color:var(--accent)}
+    .pledge-agree.agreed{border-color:var(--accent);background:rgba(217,119,6,0.12)}
+    .pledge-checkbox{width:22px;height:22px;border-radius:5px;border:2px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+    .pledge-agree.agreed .pledge-checkbox{background:var(--accent);border-color:var(--accent)}
+    .pledge-agree.agreed .pledge-checkbox::after{content:'✓';color:#fff;font-size:0.85rem;font-weight:700}
+    .next-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-size:1rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
+    .next-btn:hover{background:#B45309}
+    .next-hint{font-size:0.78rem;color:var(--muted);margin-left:14px}
+    .bottom-nav{position:fixed;bottom:0;left:0;right:0;padding:20px 24px;display:flex;align-items:center;gap:8px;background:linear-gradient(to top,var(--bg) 60%,transparent);z-index:99}
+    .nav-up,.nav-dn{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+    .nav-up:hover,.nav-dn:hover{border-color:rgba(255,255,255,0.3);color:#fff}
+    .nav-up:disabled,.nav-dn:disabled{opacity:0.2;cursor:not-allowed}
+    .thankyou-screen{text-align:center;width:100%;max-width:560px;animation:slideUp 0.5s ease both}
+    .ty-icon{font-size:4rem;margin-bottom:24px;animation:bounce 0.6s ease both}
+    .ty-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:-0.03em;margin-bottom:14px}
+    .ty-sub{color:var(--muted);font-size:1rem;line-height:1.7;margin-bottom:28px}
+    .score-card{background:rgba(45,27,105,0.3);border:1.5px solid rgba(45,27,105,0.5);border-radius:16px;padding:24px;margin-bottom:28px}
+    .score-label{font-size:0.82rem;font-weight:700;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
+    .score-value{font-family:'Syne',sans-serif;font-weight:800;font-size:3rem;letter-spacing:-0.04em;color:#fff;margin-bottom:4px}
+    .sf-brand{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:24px;opacity:0.5}
+    .sf-brand-logo{width:20px;height:20px;border-radius:5px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.6rem;color:#fff}
+    .sf-brand-text{font-size:0.72rem;color:rgba(255,255,255,0.5)}
+    .loading-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px}
+    .spinner{width:32px;height:32px;border:3px solid rgba(217,119,6,0.2);border-top-color:#D97706;border-radius:50%;animation:spin 0.8s linear infinite}
+    .error-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;text-align:center;padding:40px;gap:16px}
+    .all-choices{display:flex;flex-direction:column;gap:8px}
+    .all-choice{padding:12px 16px;border-radius:10px;border:1.5px solid var(--border);background:rgba(255,255,255,0.03);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:12px;font-size:0.92rem;font-weight:500}
+    .all-choice:hover{border-color:var(--accent)}
+    .all-choice.selected{border-color:var(--accent);background:rgba(217,119,6,0.12)}
+    .all-choice-key{width:24px;height:24px;border-radius:5px;border:1.5px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;color:var(--muted);flex-shrink:0}
+    .all-choice.selected .all-choice-key{background:var(--accent);border-color:var(--accent);color:#fff}
+    .all-text-ans{width:100%;background:rgba(255,255,255,0.06);border:1.5px solid var(--border);border-radius:10px;color:#fff;font-size:0.95rem;font-family:'DM Sans',sans-serif;padding:12px 16px;outline:none}
+    .all-text-ans:focus{border-color:var(--accent)}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes bounce{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+    @media(max-width:600px){
+      .stage{padding:70px 16px 90px}
+      .q-text{font-size:1.5rem}
+      .rating-btn{width:44px;height:44px}
+      .scale-btn{width:36px;height:36px}
+      .next-hint{display:none}
+      .q-media-layout-left,.q-media-layout-right{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+<div class="top-nav">
+  <a href="/" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
+  <div class="progress-txt" id="progress-txt"></div>
+</div>
+<div class="vid-bg" id="vid-bg"><iframe id="yt-iframe" frameborder="0" allow="autoplay" allowfullscreen></iframe><div class="vid-overlay"></div></div>
+<div class="img-bg" id="img-bg"><div class="img-overlay"></div></div>
+<div class="stage" id="stage"><div class="loading-screen"><div class="spinner"></div></div></div>
+<div class="bottom-nav" id="bottom-nav" style="display:none">
+  <button class="nav-up" id="nav-up" onclick="prevStep()">▲</button>
+  <button class="nav-dn" id="nav-dn" onclick="nextStep()">▼</button>
+</div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getFirestore,collection,query,where,getDocs,doc,getDoc,addDoc,updateDoc,increment,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const SHEETS='https://script.google.com/macros/s/AKfycbx3evlOErDpdpR_TK_FvQaEEI5Kr6HvJYc46A_OG0SzIqJz8Gn0OKvUQxj7uoBLgyGH/exec';
+const app=initializeApp(FB);
+const db=getFirestore(app);
+
+const pathParts=window.location.pathname.split('/').filter(Boolean);
+const slug=pathParts[1];
+const isPreview=new URLSearchParams(window.location.search).get('preview')==='1';
+
+let survey=null,questions=[],sections=[],steps=[],currentStep=0,answers={},hiddenQs=new Set(),quizScore=0,quizTotal=0,surveyId=null;
+
+// Inject SEO meta tags
+function injectSEO(s){
+  const title=s.seo?.title||s.title||'Survey';
+  const desc=s.seo?.description||s.description||'Take this survey on SwoopForm';
+  const ogImg=s.seo?.ogImage||'https://swoopform.com/og-default.jpg';
+  const canonical=`https://swoopform.com/survey/${slug}`;
+  document.title=title+' — SwoopForm';
+  const setMeta=(name,content,prop)=>{
+    const el=document.createElement('meta');
+    if(prop)el.setAttribute('property',name);else el.setAttribute('name',name);
+    el.setAttribute('content',content);document.head.appendChild(el);
+  };
+  setMeta('description',desc);
+  setMeta('og:title',title,true);setMeta('og:description',desc,true);
+  setMeta('og:image',ogImg,true);setMeta('og:url',canonical,true);setMeta('og:type','website',true);
+  setMeta('twitter:card','summary_large_image');setMeta('twitter:title',title);setMeta('twitter:description',desc);setMeta('twitter:image',ogImg);
+  const rel=document.createElement('link');rel.rel='canonical';rel.href=canonical;document.head.appendChild(rel);
+  if(s.seo?.index==='noindex'){const r=document.createElement('meta');r.name='robots';r.content='noindex,nofollow';document.head.appendChild(r)}
+  // Schema.org
+  const schema={
+    "@context":"https://schema.org",
+    "@type":"CreativeWork",
+    "name":title,
+    "description":desc,
+    "url":canonical,
+    "publisher":{"@type":"Organization","name":"SwoopForm","url":"https://swoopform.com"}
+  };
+  const s2=document.createElement('script');s2.type='application/ld+json';s2.textContent=JSON.stringify(schema);document.head.appendChild(s2);
+}
+
+async function init(){
+  if(!slug){showError('Invalid link','No survey found.');return}
+  try{
+    // Try to find by slug first
+    let surveyData=null;
+    const q=query(collection(db,'surveys'),where('slug','==',slug));
+    const snap=await getDocs(q);
+    if(!snap.empty){surveyData={id:snap.docs[0].id,...snap.docs[0].data()};surveyId=snap.docs[0].id}
+    // Fallback — try by ID (backwards compat)
+    else{
+      const byId=await getDoc(doc(db,'surveys',slug));
+      if(byId.exists()){surveyData={id:byId.id,...byId.data()};surveyId=byId.id}
+    }
+    if(!surveyData){showError('Not found','This survey does not exist.');return}
+    survey=surveyData;
+    if(!isPreview){
+      if(survey.status==='draft'){showError('Not published','This survey is not yet published.');return}
+      if(survey.status==='closed'){showError('Closed','This survey is no longer accepting responses.');return}
+    }
+    injectSEO(survey);
+    sections=survey.sections||[];
+    questions=(survey.questions||[]).sort((a,b)=>(a.go||a.globalOrder||0)-(b.go||b.globalOrder||0));
+    applyBg(survey.welcomePage);
+    buildSteps();
+    showWelcome();
+  }catch(e){console.error(e);showError('Error','Something went wrong. Please try again.')}
+}
+
+function applyBg(wp){
+  if(!wp)return;
+  if(wp.bgVideo&&wp.bgVideo.includes('youtube')){
+    const m=wp.bgVideo.match(/(?:v=|youtu\.be\/)([^&\s]+)/);
+    if(m){document.getElementById('yt-iframe').src='https://www.youtube.com/embed/'+m[1]+'?autoplay=1&mute=1&loop=1&playlist='+m[1]+'&controls=0';document.getElementById('vid-bg').style.display='block';return}
+  }
+  if(wp.bgImage){const el=document.getElementById('img-bg');el.style.backgroundImage='url('+wp.bgImage+')';el.style.display='block';return}
+  if(wp.bgColor)document.body.style.background=wp.bgColor;
+}
+
+function buildSteps(){
+  steps=[];
+  steps.push({type:'welcome'});
+  const items=[];
+  sections.forEach(s=>items.push({kind:'sec',item:s,order:s.go||s.globalOrder||0}));
+  questions.filter(q=>!q.sectionId).forEach(q=>items.push({kind:'q',item:q,order:q.go||q.globalOrder||0}));
+  items.sort((a,b)=>a.order-b.order);
+  items.forEach(entry=>{
+    if(entry.kind==='sec'){
+      const s=entry.item;
+      const secQs=questions.filter(q=>q.sectionId===s.id).sort((a,b)=>(a.go||0)-(b.go||0));
+      if(!secQs.length)return;
+      if(s.displayMode==='fullscreen'){steps.push({type:'section-intro',section:s,questions:secQs});secQs.forEach(q=>steps.push({type:'question',question:q,section:s}))}
+      else if(s.displayMode==='all'){steps.push({type:'all-page',section:s,questions:secQs})}
+      else{secQs.forEach(q=>steps.push({type:'question',question:q,section:s}))}
+    } else steps.push({type:'question',question:entry.item,section:null});
+  });
+}
+
+function getRealQSteps(){return steps.filter(s=>s.type==='question'||s.type==='all-page')}
+function getStepNum(){const real=getRealQSteps();const idx=real.indexOf(steps[currentStep]);return idx>=0?idx+1:0}
+function updateProgress(){
+  const real=getRealQSteps();const total=real.length;const done=getStepNum();
+  document.getElementById('progress-fill').style.width=Math.min(total>0?(done/total)*100:0,100)+'%';
+  document.getElementById('progress-txt').textContent=done>0&&done<=total?done+' of '+total:'';
+  const up=document.getElementById('nav-up'),dn=document.getElementById('nav-dn');
+  if(up)up.disabled=currentStep<=0;if(dn)dn.disabled=false;
+}
+function showError(title,msg){document.getElementById('bottom-nav').style.display='none';document.getElementById('stage').innerHTML=`<div class="error-screen"><div style="font-size:3rem">😕</div><h2 style="font-family:'Syne',sans-serif;font-weight:800">${title}</h2><p style="color:var(--muted)">${msg}</p><a href="/" style="color:var(--accent)">← SwoopForm</a></div>`}
+
+function showWelcome(){
+  currentStep=0;updateProgress();document.getElementById('bottom-nav').style.display='none';
+  const wp=survey.welcomePage||{},prize=survey.prize||{};
+  const qCount=questions.length,estTime=Math.max(1,Math.ceil(qCount*0.5));
+  const logoHtml=wp.logo?`<img src="${wp.logo}" style="max-height:56px;max-width:200px;object-fit:contain;margin-bottom:24px;display:block" alt="Logo">`:'';
+  const prizeHtml=prize.enabled&&prize.description?`<div class="prize-badge">🎁 Win ${prize.description}</div><br>`:'';
+  document.getElementById('stage').innerHTML=`<div class="welcome-screen">${logoHtml}${prizeHtml}<div class="welcome-badge">✦ Survey</div><h1 class="welcome-title">${wp.headline||survey.title}</h1>${survey.description?`<p class="welcome-desc">${survey.description}</p>`:''}<div class="welcome-meta"><div class="welcome-meta-item">📝 <span>${qCount} question${qCount!==1?'s':''}</span></div><div class="welcome-meta-item">⏱ <span>~${estTime} min</span></div><div class="welcome-meta-item">🔒 <span>Anonymous</span></div></div><button class="start-btn" onclick="startSurvey()">${wp.btnText||"Let's go →"}</button></div>`;
+}
+
+window.startSurvey=function(){currentStep=1;document.getElementById('bottom-nav').style.display='flex';renderStep()}
+
+function renderStep(){
+  if(currentStep>=steps.length){submitSurvey();return}
+  const step=steps[currentStep];updateProgress();
+  if(step.type==='section-intro')renderSectionIntro(step);
+  else if(step.type==='all-page')renderAllPage(step);
+  else if(step.type==='question')renderOneQuestion(step);
+}
+
+window.nextStep=function(){
+  saveCurrentAnswer();
+  const step=steps[currentStep];
+  if(step&&step.type==='question'){
+    const q=step.question;
+    if(q.required&&!hiddenQs.has(q.id)){const ans=answers[q.id];if(!ans||(Array.isArray(ans)&&!ans.length)||ans===''){showRequired();return}}
+  }
+  if(step&&(step.type==='question'||step.type==='all-page')){
+    const qs2=step.type==='question'?[step.question]:step.questions;
+    for(const q of qs2){const jump=evalLogic(q);if(jump){if(jump.type==='end'){submitSurvey();return}if(jump.type==='step'){currentStep=jump.stepIndex;renderStep();return}}}
+  }
+  currentStep++;
+  while(currentStep<steps.length){const s=steps[currentStep];if(s.type==='question'&&hiddenQs.has(s.question.id))currentStep++;else break}
+  renderStep();
+}
+
+window.prevStep=function(){saveCurrentAnswer();currentStep=Math.max(1,currentStep-1);renderStep()}
+
+function showRequired(){const btn=document.getElementById('next-btn');if(btn){const o=btn.innerHTML;btn.style.background='#DC2626';btn.innerHTML='Required!';setTimeout(()=>{btn.style.background='';btn.innerHTML=o},1000)}}
+
+function evalLogic(q){
+  if(!q.logic||!q.logic.length)return null;
+  for(const rule of q.logic){
+    const match=rule.condType==='ALL'?rule.conditions.every(c=>evalCond(c)):rule.conditions.some(c=>evalCond(c));
+    if(match){
+      if(rule.action==='end')return{type:'end'};
+      if(rule.action==='skip'&&rule.target){const idx=findQStep(rule.target);if(idx>-1)return{type:'step',stepIndex:idx}}
+      if(rule.action==='skip_sec'&&rule.target){const idx=findSecStep(rule.target);if(idx>-1)return{type:'step',stepIndex:idx}}
+      if(rule.action==='show'&&rule.target)hiddenQs.delete(rule.target);
+      if(rule.action==='hide'&&rule.target)hiddenQs.add(rule.target);
+    }
+  }
+  return null;
+}
+function evalCond(c){
+  const ans=answers[c.qid];const val=(c.val||'').toLowerCase();const ansStr=(Array.isArray(ans)?ans.join(','):ans||'').toLowerCase();
+  if(c.op==='is')return ansStr===val;if(c.op==='is_not')return ansStr!==val;
+  if(c.op==='contains')return ansStr.includes(val);if(c.op==='not_contains')return!ansStr.includes(val);
+  if(c.op==='filled')return!!ans&&ansStr!=='';if(c.op==='empty')return!ans||ansStr==='';
+  return false;
+}
+function findQStep(qid){return steps.findIndex(s=>s.type==='question'&&s.question.id===qid)}
+function findSecStep(sid){return steps.findIndex(s=>(s.type==='all-page'||s.type==='section-intro')&&s.section&&s.section.id===sid)}
+
+function renderMedia(q){
+  if(!q.mediaUrl)return'';
+  const layout=q.mediaLayout||'top';
+  let mediaHtml='';
+  if(q.mediaUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i)||(!q.mediaUrl.includes('youtube')&&!q.mediaUrl.match(/\.(mp4|webm)$/i))){
+    mediaHtml=`<img src="${q.mediaUrl}" alt="Question media" loading="lazy" style="width:100%;border-radius:12px;max-height:300px;object-fit:cover">`;
+  } else if(q.mediaUrl.includes('youtube')){
+    const m=q.mediaUrl.match(/(?:v=|youtu\.be\/)([^&\s]+)/);
+    if(m)mediaHtml=`<iframe src="https://www.youtube.com/embed/${m[1]}" style="width:100%;height:200px;border-radius:12px;border:none" allowfullscreen></iframe>`;
+  } else{mediaHtml=`<video src="${q.mediaUrl}" controls style="width:100%;border-radius:12px;max-height:300px"></video>`}
+  return`<div class="q-media" style="margin-bottom:20px">${mediaHtml}</div>`;
+}
+
+function renderSectionIntro(step){
+  const s=step.section,qCount=step.questions.length;
+  document.getElementById('stage').innerHTML=`<div class="section-intro"><div style="font-size:3rem;margin-bottom:20px">📌</div><h2 class="section-intro-title">${s.title||'Section'}</h2>${s.subtitle?`<p class="section-intro-sub">${s.subtitle}</p>`:''}<div style="font-size:0.82rem;color:var(--muted);margin-bottom:28px">${qCount} question${qCount!==1?'s':''} in this section</div><button class="start-btn" onclick="nextStep()">Continue →</button></div>`;
+}
+
+function renderAllPage(step){
+  const s=step.section,qs2=step.questions.filter(q=>!hiddenQs.has(q.id));
+  let html=`<div class="all-page">`;
+  if(s){html+=`<div style="margin-bottom:28px"><div class="all-page-section-name">${s.title}</div>${s.subtitle?`<p class="all-page-sub">${s.subtitle}</p>`:''}</div>`}
+  qs2.forEach((q,qi)=>{
+    html+=`<div class="all-q-block" id="all-block-${q.id}"><div class="all-q-label">Q${qi+1}</div><div class="all-q-text">${q.text||'Untitled'}${q.required?`<span style="color:var(--accent);margin-left:4px">*</span>`:''}</div>${renderAllInput(q)}</div>`;
+  });
+  html+=`<button class="continue-btn" onclick="nextStep()">Continue →</button></div>`;
+  document.getElementById('stage').innerHTML=html;
+}
+
+function renderAllInput(q){
+  const ans=answers[q.id];const letters=['A','B','C','D','E','F','G','H'];
+  if(['multiple','quiz'].includes(q.type))return`<div class="all-choices">${(q.options||[]).map((o,i)=>`<div class="all-choice${ans===o?' selected':''}" onclick="allSelectSingle('${q.id}','${esc(o)}',this)"><div class="all-choice-key">${letters[i]||i+1}</div><span>${o}</span></div>`).join('')}</div>`;
+  if(q.type==='checkbox'){const arr=ans||[];return`<div class="all-choices">${(q.options||[]).map(o=>`<div class="all-choice${arr.includes(o)?' selected':''}" onclick="allToggleCb('${q.id}','${esc(o)}',this)"><div class="all-choice-key${arr.includes(o)?' selected':''}">☑</div><span>${o}</span></div>`).join('')}</div>`}
+  if(q.type==='yesno')return`<div style="display:flex;gap:10px"><div class="all-choice${ans==='Yes'?' selected':''}" style="flex:1;justify-content:center" onclick="allSelectSingle('${q.id}','Yes',this)">👍 Yes</div><div class="all-choice${ans==='No'?' selected':''}" style="flex:1;justify-content:center" onclick="allSelectSingle('${q.id}','No',this)">👎 No</div></div>`;
+  if(q.type==='date')return`<input type="date" class="date-input" style="font-size:0.9rem" value="${ans||''}" onchange="answers['${q.id}']=formatDate(this.value)">`;
+  return`<input class="all-text-ans" type="${q.type==='email'?'email':q.type==='number'?'number':q.type==='phone'?'tel':'text'}" placeholder="Your answer..." value="${ans||''}" oninput="answers['${q.id}']=this.value">`;
+}
+
+window.allSelectSingle=function(qid,val,el){answers[qid]=val;const block=document.getElementById('all-block-'+qid);if(block){block.querySelectorAll('.all-choice').forEach(c=>c.classList.remove('selected'));el.classList.add('selected')}}
+window.allToggleCb=function(qid,val,el){if(!answers[qid])answers[qid]=[];const arr=answers[qid],idx=arr.indexOf(val);if(idx>-1)arr.splice(idx,1);else arr.push(val);el.classList.toggle('selected',arr.includes(val))}
+
+function renderOneQuestion(step){
+  const q=step.question;
+  if(hiddenQs.has(q.id)){nextStep();return}
+  const ans=answers[q.id];const isLast=isLastReal();const letters=['A','B','C','D','E','F','G','H'];
+  const mediaHtml=renderMedia(q);
+  let inp='';
+  const layout=q.mediaLayout||'top';
+  const wrapOpen=q.mediaUrl&&layout!=='top'?`<div class="q-media-layout-${layout}"><div>`:'';
+  const wrapMedia=q.mediaUrl&&layout!=='top'?`</div>${mediaHtml}</div>`:'';
+
+  if(['multiple','quiz'].includes(q.type)){inp=`${wrapOpen}<div class="choices">${(q.options||[]).map((o,i)=>`<div class="choice${ans===o?' selected':''}" onclick="selectChoice('${q.id}','${esc(o)}',this)"><div class="choice-key">${letters[i]||i+1}</div><span>${o}</span></div>`).join('')}</div>${wrapMedia}`}
+  else if(q.type==='checkbox'){inp=`${wrapOpen}<div class="choices">${(q.options||[]).map(o=>`<div class="choice${(ans||[]).includes(o)?' selected':''}" onclick="toggleCb('${q.id}','${esc(o)}',this)"><div class="choice-cb"></div><span>${o}</span></div>`).join('')}</div><div style="display:flex;align-items:center;margin-top:8px"><button class="next-btn" id="next-btn" onclick="nextStep()">${isLast?'Submit ✓':'OK →'}</button></div>${wrapMedia}`}
+  else if(q.type==='yesno'){inp=`${wrapOpen}<div class="yesno-group"><button class="yesno-btn${ans==='Yes'?' selected':''}" onclick="selectYN('${q.id}','Yes',this)">👍 Yes</button><button class="yesno-btn${ans==='No'?' selected':''}" onclick="selectYN('${q.id}','No',this)">👎 No</button></div>${wrapMedia}`}
+  else if(q.type==='rating'){inp=`${wrapOpen}<div class="rating-group">${[1,2,3,4,5].map(n=>`<button class="rating-btn${ans==n?' selected':''}" onclick="selectRating('${q.id}',${n},this)">${n}</button>`).join('')}</div><div class="rating-labels"><span>Not at all</span><span>Extremely</span></div>${wrapMedia}`}
+  else if(q.type==='scale'){inp=`${wrapOpen}<div class="scale-group">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<button class="scale-btn${ans==n?' selected':''}" onclick="selectScale('${q.id}',${n},this)">${n}</button>`).join('')}</div>${wrapMedia}`}
+  else if(q.type==='pledge'){inp=`${wrapOpen}<div class="pledge-statement"><div class="pledge-text">${q.text}</div><div class="pledge-agree${ans==='agreed'?' agreed':''}" onclick="togglePledge('${q.id}',this)"><div class="pledge-checkbox"></div><div class="pledge-agree-text" style="font-size:0.95rem;font-weight:600">I agree and commit to this pledge</div></div></div><div style="margin-top:8px"><button class="next-btn" id="next-btn" onclick="nextStep()">${isLast?'Submit ✓':'OK →'}</button></div>${wrapMedia}`}
+  else{
+    const ph={text:'Type your answer...',textarea:'Your answer...',email:'your@email.com',phone:'Phone number...',number:'Enter a number...',file:'Paste a URL...'};
+    inp=`${wrapOpen}${q.type==='textarea'?`<textarea class="textarea-ans" id="text-input" placeholder="${ph.textarea}" oninput="answers['${q.id}']=this.value">${ans||''}</textarea>`:`<input class="text-ans" id="text-input" type="${q.type==='email'?'email':q.type==='phone'?'tel':q.type==='number'?'number':'text'}" placeholder="${ph[q.type]||'Type...'}" value="${ans||''}" oninput="answers['${q.id}']=this.value" onkeydown="if(event.key==='Enter')nextStep()">`}<div style="display:flex;align-items:center"><button class="next-btn" id="next-btn" onclick="nextStep()">${isLast?'Submit ✓':'OK →'}</button><span class="next-hint">or Enter</span></div>${wrapMedia}`;
+  }
+
+  const qNum=getStepNum();const total=getRealQSteps().length;
+  document.getElementById('stage').innerHTML=`<div class="slide"><div class="q-number">Question ${qNum} of ${total}</div>${q.mediaUrl&&layout==='top'?mediaHtml:''}<div class="q-text">${q.text||'Untitled'}</div>${inp}</div>`;
+  setTimeout(()=>{const ti=document.getElementById('text-input');if(ti)ti.focus()},100);
+}
+
+function isLastReal(){for(let i=currentStep+1;i<steps.length;i++){const s=steps[i];if(s.type==='question'&&!hiddenQs.has(s.question.id))return false;if(s.type==='all-page')return false}return true}
+
+window.selectChoice=function(qid,val,el){answers[qid]=val;document.querySelectorAll('.choice').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');setTimeout(()=>nextStep(),600)}
+window.toggleCb=function(qid,val,el){if(!answers[qid])answers[qid]=[];const arr=answers[qid],idx=arr.indexOf(val);if(idx>-1)arr.splice(idx,1);else arr.push(val);el.classList.toggle('selected',arr.includes(val));const cb=el.querySelector('.choice-cb');if(cb)cb.classList.toggle('selected',arr.includes(val))}
+window.selectYN=function(qid,val,el){answers[qid]=val;document.querySelectorAll('.yesno-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');setTimeout(()=>nextStep(),600)}
+window.selectRating=function(qid,val,el){answers[qid]=val;document.querySelectorAll('.rating-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');setTimeout(()=>nextStep(),400)}
+window.selectScale=function(qid,val,el){answers[qid]=val;document.querySelectorAll('.scale-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');setTimeout(()=>nextStep(),400)}
+window.togglePledge=function(qid,el){el.classList.toggle('agreed');answers[qid]=el.classList.contains('agreed')?'agreed':null}
+
+function saveCurrentAnswer(){const ti=document.getElementById('text-input');if(ti){const step=steps[currentStep];if(step&&step.type==='question')answers[step.question.id]=ti.value}}
+function formatDate(val){if(!val)return val;const[y,m,d]=val.split('-');return`${d}-${m}-${y}`}
+function esc(s){return(s||'').replace(/'/g,"\\'").replace(/"/g,'\\"')}
+
+async function submitSurvey(){
+  if(isPreview){document.getElementById('bottom-nav').style.display='none';document.getElementById('progress-fill').style.width='100%';document.getElementById('stage').innerHTML=`<div class="thankyou-screen"><div class="ty-icon">🎉</div><h1 class="ty-title">Preview complete!</h1><p class="ty-sub">This is how your thank you page looks.</p><button onclick="window.close()" style="padding:12px 24px;border-radius:10px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.9rem;font-weight:600;cursor:pointer">Close preview</button></div>`;return}
+  document.getElementById('bottom-nav').style.display='none';document.getElementById('progress-fill').style.width='100%';
+  document.getElementById('stage').innerHTML='<div class="loading-screen"><div class="spinner"></div></div>';
+  questions.filter(q=>q.type==='quiz').forEach(q=>{if(q.correctIndex>=0){quizTotal++;if(answers[q.id]===q.options[q.correctIndex])quizScore++}});
+  try{
+    const responseAnswers=questions.map(q=>({question:q.text||'',type:q.type,answer:Array.isArray(answers[q.id])?answers[q.id].join(', '):(answers[q.id]||'')}));
+    await addDoc(collection(db,'responses'),{surveyId,surveyTitle:survey.title,surveySlug:slug,answers:responseAnswers,quizScore:quizTotal>0?quizScore+'/'+quizTotal:null,submittedAt:serverTimestamp()});
+    await updateDoc(doc(db,'surveys',surveyId),{responseCount:increment(1)});
+    if(survey.sheetId){try{await fetch(SHEETS,{method:'POST',body:JSON.stringify({action:'add_response',sheetId:survey.sheetId,submittedAt:new Date().toLocaleString(),answers:responseAnswers.map(a=>a.answer)})})}catch(e){}}
+  }catch(e){console.error(e)}
+  showThankYou();
+}
+
+function showThankYou(){
+  const ty=survey.thankYouPage||{};
+  const showScore=survey.settings?.quizscore&&quizTotal>0;
+  const scoreHtml=showScore?`<div class="score-card"><div class="score-label">Your Quiz Score</div><div class="score-value">${quizScore}/${quizTotal}</div><div style="font-size:0.88rem;color:var(--muted)">${Math.round((quizScore/quizTotal)*100)}% correct</div></div>`:'';
+  const shareHtml=ty.showShare?`<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:24px"><a style="padding:10px 20px;border-radius:8px;border:1.5px solid var(--border);background:transparent;color:#fff;font-size:0.85rem;font-weight:600;text-decoration:none" href="https://wa.me/?text=${encodeURIComponent('Take this survey: https://swoopform.com/survey/'+slug)}" target="_blank">💬 WhatsApp</a><button style="padding:10px 20px;border-radius:8px;border:1.5px solid var(--border);background:transparent;color:#fff;font-size:0.85rem;font-weight:600;cursor:pointer" onclick="navigator.clipboard.writeText('https://swoopform.com/survey/${slug}');this.textContent='✓ Copied!'">🔗 Copy link</button></div>`:'';
+  document.getElementById('stage').innerHTML=`<div class="thankyou-screen"><div class="ty-icon">🎉</div><h1 class="ty-title">${ty.headline||'Thank you!'}</h1><p class="ty-sub">${ty.message||'Your response has been recorded.'}</p>${scoreHtml}${shareHtml}<a href="/" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.9rem;font-weight:600">← Back to SwoopForm</a><div class="sf-brand"><div class="sf-brand-logo">S</div><div class="sf-brand-text">Powered by SwoopForm</div></div></div>`;
+  if(ty.redirect)setTimeout(()=>window.location.href=ty.redirect,3000);
+}
+
+document.addEventListener('keydown',e=>{if(currentStep<=0){if(e.key==='Enter')window.startSurvey&&startSurvey();return}if(e.key==='Enter'&&!document.getElementById('text-input'))nextStep();if(e.key==='ArrowUp')prevStep();if(e.key==='ArrowDown')nextStep()});
+init();
+</script>
+</body>
+</html>
