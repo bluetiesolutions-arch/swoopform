@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Poll Screen — SwoopForm</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:#0F1629;color:#fff;min-height:100vh;display:flex;flex-direction:column;overflow:hidden}
+    .screen-header{padding:14px 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.06)}
+    .header-left{display:flex;align-items:center;gap:12px}
+    .logo-mk{width:30px;height:30px;background:linear-gradient(135deg,#2563EB,#7C3AED);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem}
+    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem}
+    .poll-title-sm{font-size:0.85rem;color:rgba(255,255,255,0.4)}
+    .join-code-sm{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:#2563EB;letter-spacing:0.12em;background:rgba(37,99,235,0.1);padding:6px 16px;border-radius:100px;border:1px solid rgba(37,99,235,0.3)}
+    .participant-count{font-size:0.82rem;color:rgba(255,255,255,0.4)}
+    .screen-body{flex:1;display:flex;align-items:center;justify-content:center;padding:32px;overflow:hidden}
+    .slide-display{width:100%;max-width:1000px;animation:slideUp 0.4s ease both}
+    @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .slide-label{font-size:0.78rem;font-weight:700;color:#60A5FA;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;text-align:center}
+    .slide-question{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-0.04em;text-align:center;margin-bottom:36px;line-height:1.2}
+    .results-grid{display:flex;flex-direction:column;gap:14px}
+    .result-bar-row{display:flex;align-items:center;gap:16px}
+    .result-bar-label{font-size:1.1rem;font-weight:700;width:180px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .result-bar-track{flex:1;height:48px;background:rgba(255,255,255,0.06);border-radius:10px;overflow:hidden;position:relative}
+    .result-bar-fill{height:100%;border-radius:10px;transition:width 0.6s ease;display:flex;align-items:center;padding-left:16px}
+    .result-bar-fill-text{color:#fff;font-weight:700;font-size:1rem}
+    .result-bar-count{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:rgba(255,255,255,0.6);width:60px;text-align:right;flex-shrink:0}
+    .word-cloud-big{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;align-items:center;padding:20px 0}
+    .word-tag-big{padding:8px 20px;border-radius:100px;font-weight:800;cursor:default;transition:all 0.3s;animation:popIn 0.4s ease both}
+    @keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+    .open-text-stream{display:flex;flex-direction:column;gap:10px;max-height:400px;overflow:hidden}
+    .open-text-item{background:rgba(255,255,255,0.05);border-radius:12px;padding:14px 20px;font-size:1.1rem;color:rgba(255,255,255,0.8);animation:slideInLeft 0.4s ease both;border-left:4px solid #2563EB}
+    @keyframes slideInLeft{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+    .responses-total{text-align:center;font-size:0.88rem;color:rgba(255,255,255,0.3);margin-top:12px}
+    .waiting-big{text-align:center}
+    .waiting-pin{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(5rem,15vw,9rem);color:#2563EB;letter-spacing:0.15em;line-height:1;margin-bottom:12px}
+    .waiting-url{font-size:1.2rem;color:rgba(255,255,255,0.5);margin-bottom:8px}
+    .waiting-sub{font-size:1rem;color:rgba(255,255,255,0.3)}
+  </style>
+</head>
+<body>
+<div class="screen-header">
+  <div class="header-left">
+    <div class="logo-mk">S</div>
+    <div class="logo-nm">SwoopForm Live Poll</div>
+    <div class="poll-title-sm" id="poll-title-sm"></div>
+  </div>
+  <div class="join-code-sm" id="join-code-sm">----</div>
+  <div class="participant-count" id="participant-count">0 participants</div>
+</div>
+<div class="screen-body" id="screen-body">
+  <div style="text-align:center"><div style="width:40px;height:40px;border:4px solid rgba(37,99,235,0.2);border-top-color:#2563EB;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto"></div></div>
+</div>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getDatabase,ref,onValue}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83",databaseURL:"https://swoopform-default-rtdb.firebaseio.com"};
+const app=initializeApp(FB);
+const db=getDatabase(app);
+
+const params=new URLSearchParams(window.location.search);
+const sessionId=params.get('session');
+const COLORS=['#2563EB','#7C3AED','#10B981','#F59E0B','#EF4444','#EC4899'];
+const WORDCLOUD_SIZES=[2.4,2,1.7,1.4,1.2,1,0.9,0.85,0.8];
+let currentSlide=-1;
+
+if(!sessionId){document.getElementById('screen-body').innerHTML='<div style="text-align:center;color:rgba(255,255,255,0.4)">No session ID</div>'}
+else{
+  onValue(ref(db,'livePollSessions/'+sessionId),snap=>{
+    if(!snap.exists())return;
+    const s=snap.val();
+    document.getElementById('join-code-sm').textContent=s.code||'----';
+    document.getElementById('poll-title-sm').textContent=s.title||'';
+    if(s.status==='ended'){showEnded();return}
+    if(s.currentSlide!==currentSlide||currentSlide===-1){
+      currentSlide=s.currentSlide;
+      const slide=s.slides?.[currentSlide];
+      if(slide)showSlide(slide,currentSlide,s);
+      else showWaiting(s);
+    }
+  });
+  onValue(ref(db,'livePollParticipants/'+sessionId),snap=>{
+    const c=snap.exists()?snap.size:0;
+    document.getElementById('participant-count').textContent=c+' participant'+(c!==1?'s':'');
+  });
+}
+
+function showWaiting(s){
+  document.getElementById('screen-body').innerHTML=`<div class="waiting-big">
+    <div class="waiting-url">Join at swoopform.com/livepoll/join · Enter PIN</div>
+    <div class="waiting-pin">${s.code||'----'}</div>
+    <div class="waiting-sub">${s.title||'Live Poll'}</div>
+  </div>`;
+}
+
+function showSlide(slide,idx,session){
+  const typeLabel={mcq:'📊 Multiple Choice',wordcloud:'☁️ Word Cloud',opentext:'💬 Open Responses'};
+  document.getElementById('screen-body').innerHTML=`<div class="slide-display">
+    <div class="slide-label">${typeLabel[slide.type]||'Question'}</div>
+    <div class="slide-question">${slide.question||''}</div>
+    <div id="results-area"><div style="text-align:center;color:rgba(255,255,255,0.3)">Waiting for responses...</div></div>
+    <div class="responses-total" id="resp-total">0 responses</div>
+  </div>`;
+
+  onValue(ref(db,'livePollResponses/'+sessionId+'/'+idx),snap=>{
+    const responses=[];let total=0;
+    if(snap.exists())snap.forEach(c=>{responses.push(c.val().answer);total++});
+    document.getElementById('resp-total').textContent=total+' response'+(total!==1?'s':'');
+    renderResults(slide,responses,total);
+  });
+}
+
+function renderResults(slide,responses,total){
+  const area=document.getElementById('results-area');if(!area)return;
+  if(!responses.length){area.innerHTML='<div style="text-align:center;color:rgba(255,255,255,0.3);font-size:1.1rem">Waiting for responses...</div>';return}
+  if(slide.type==='mcq'){
+    const counts={};(slide.options||[]).forEach(o=>counts[o]=0);
+    responses.forEach(r=>{if(counts[r]!==undefined)counts[r]++});
+    const max=Math.max(...Object.values(counts),1);
+    area.innerHTML=`<div class="results-grid">${(slide.options||[]).map((o,oi)=>`<div class="result-bar-row">
+      <div class="result-bar-label">${o}</div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="background:${COLORS[oi]};width:${(counts[o]/max)*100}%"><span class="result-bar-fill-text">${total>0?Math.round((counts[o]/total)*100)+'%':''}</span></div></div>
+      <div class="result-bar-count">${counts[o]}</div>
+    </div>`).join('')}</div>`;
+  } else if(slide.type==='wordcloud'){
+    const freq={};responses.forEach(r=>{const w=r.trim().toLowerCase();if(w)freq[w]=(freq[w]||0)+1});
+    const sorted=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,25);
+    area.innerHTML=`<div class="word-cloud-big">${sorted.map(([word,count],i)=>{
+      const size=WORDCLOUD_SIZES[Math.min(i,WORDCLOUD_SIZES.length-1)];
+      return`<div class="word-tag-big" style="font-size:${size}rem;background:${COLORS[i%COLORS.length]}22;border:2px solid ${COLORS[i%COLORS.length]}55;color:${COLORS[i%COLORS.length]};animation-delay:${i*0.05}s">${word}</div>`
+    }).join('')}</div>`;
+  } else {
+    area.innerHTML=`<div class="open-text-stream">${responses.slice(-6).reverse().map((r,i)=>`<div class="open-text-item" style="animation-delay:${i*0.08}s">${r}</div>`).join('')}</div>`;
+  }
+}
+
+function showEnded(){
+  document.getElementById('screen-body').innerHTML=`<div style="text-align:center"><div style="font-size:4rem;margin-bottom:16px">🎊</div><div style="font-family:Syne,sans-serif;font-weight:800;font-size:3rem;letter-spacing:-0.04em;margin-bottom:12px">Poll Complete!</div><div style="font-size:1.1rem;color:rgba(255,255,255,0.4)">Thank you for participating</div><div style="margin-top:24px;font-size:0.85rem;color:rgba(255,255,255,0.25)">Powered by SwoopForm</div></div>`;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Quiz — SwoopForm</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,#1A0533,#2D1B69,#1A0533);background-attachment:fixed;color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+    .card{background:rgba(255,255,255,0.07);backdrop-filter:blur(20px);border:1.5px solid rgba(255,255,255,0.1);border-radius:24px;padding:36px;width:100%;max-width:420px;text-align:center;animation:slideUp 0.4s ease both}
+    @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .logo{width:48px;height:48px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:#fff;margin:0 auto 16px}
+    .title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-0.03em;margin-bottom:6px}
+    .sub{font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:28px}
+    .pin-inputs{display:flex;gap:10px;justify-content:center;margin-bottom:20px}
+    .pin-digit{width:60px;height:70px;border-radius:12px;border:2px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;text-align:center;outline:none;transition:border-color 0.2s;caret-color:transparent}
+    .pin-digit:focus{border-color:#A855F7}
+    .name-input{width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#fff;font-size:1rem;font-family:'DM Sans',sans-serif;outline:none;text-align:center;margin-bottom:16px;transition:border-color 0.2s}
+    .name-input:focus{border-color:#A855F7}
+    .name-input::placeholder{color:rgba(255,255,255,0.25)}
+    .join-btn{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;font-size:1rem;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;transition:all 0.2s}
+    .join-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(124,58,237,0.4)}
+    .join-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none}
+    .err{font-size:0.82rem;color:#EF4444;margin-bottom:12px;display:none}
+
+    /* WAITING */
+    .waiting-screen{display:none;text-align:center}
+    .waiting-emoji{font-size:3rem;margin-bottom:16px;animation:bounce 1s ease infinite}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    .waiting-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;margin-bottom:6px}
+    .waiting-sub{font-size:0.85rem;color:rgba(255,255,255,0.4)}
+    .player-name-display{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:#A855F7;background:rgba(168,85,247,0.15);border-radius:100px;padding:8px 24px;display:inline-block;margin-bottom:20px}
+
+    /* QUESTION */
+    .question-screen{display:none;width:100%;max-width:500px}
+    .q-timer{font-family:'Syne',sans-serif;font-weight:800;font-size:2.5rem;color:#F59E0B;text-align:center;margin-bottom:8px;transition:color 0.3s}
+    .q-timer.urgent{color:#EF4444;animation:pulse 0.5s ease infinite}
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+    .q-progress{height:6px;background:rgba(255,255,255,0.08);border-radius:3px;margin-bottom:20px;overflow:hidden}
+    .q-progress-fill{height:100%;background:linear-gradient(90deg,#7C3AED,#A855F7);border-radius:3px;transition:width 1s linear}
+    .q-num{font-size:0.72rem;font-weight:700;color:#A855F7;letter-spacing:0.1em;text-transform:uppercase;text-align:center;margin-bottom:10px}
+    .q-text{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.1rem,3vw,1.5rem);letter-spacing:-0.02em;text-align:center;margin-bottom:24px;line-height:1.3}
+    .options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .option-btn{padding:20px 16px;border-radius:14px;border:none;color:#fff;font-size:0.95rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center;display:flex;align-items:center;gap:8px;justify-content:center}
+    .option-btn:hover{transform:scale(1.03)}
+    .option-btn:active{transform:scale(0.97)}
+    .option-btn.answered{cursor:default;transform:none}
+    .option-btn.correct{box-shadow:0 0 0 3px #10B981}
+    .option-btn.wrong{opacity:0.5}
+    .option-letter{width:24px;height:24px;border-radius:6px;background:rgba(0,0,0,0.2);display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0}
+    .answer-feedback{text-align:center;padding:20px;font-size:1.5rem;animation:popIn 0.3s ease both;display:none}
+    @keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+    .score-chip{display:inline-block;padding:6px 16px;border-radius:100px;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;margin-top:8px}
+
+    /* RESULTS */
+    .results-screen{display:none;text-align:center}
+    .results-icon{font-size:3.5rem;margin-bottom:16px;animation:bounceIn 0.6s ease both}
+    @keyframes bounceIn{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+    .results-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;margin-bottom:8px}
+    .results-score{font-family:'Syne',sans-serif;font-weight:800;font-size:3rem;color:#A855F7;margin-bottom:4px}
+    .results-sub{font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:20px}
+    .lb-mini{display:flex;flex-direction:column;gap:6px;margin-bottom:20px;text-align:left}
+    .lb-mini-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.04)}
+    .lb-mini-rank{font-family:'Syne',sans-serif;font-weight:800;width:20px;text-align:center;font-size:0.82rem;color:rgba(255,255,255,0.4)}
+    .lb-mini-name{flex:1;font-weight:600;font-size:0.88rem}
+    .lb-mini-score{font-family:'Syne',sans-serif;font-weight:700;color:#A855F7;font-size:0.88rem}
+    .lb-mini-me{background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.3)}
+    .spinner{width:28px;height:28px;border:3px solid rgba(168,85,247,0.2);border-top-color:#A855F7;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media(max-width:400px){.pin-digit{width:48px;height:58px;font-size:1.6rem}.options-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<!-- JOIN SCREEN -->
+<div class="card" id="join-screen">
+  <div class="logo">S</div>
+  <div class="title">⚡ Join Quiz</div>
+  <div class="sub">Enter the 4-digit PIN from your host</div>
+  <div class="pin-inputs">
+    <input class="pin-digit" id="pin-0" maxlength="1" type="tel" oninput="pinInput(0)" onkeydown="pinBack(event,0)">
+    <input class="pin-digit" id="pin-1" maxlength="1" type="tel" oninput="pinInput(1)" onkeydown="pinBack(event,1)">
+    <input class="pin-digit" id="pin-2" maxlength="1" type="tel" oninput="pinInput(2)" onkeydown="pinBack(event,2)">
+    <input class="pin-digit" id="pin-3" maxlength="1" type="tel" oninput="pinInput(3)" onkeydown="pinBack(event,3)">
+  </div>
+  <input class="name-input" id="player-name" placeholder="Your name" maxlength="20">
+  <div class="err" id="err-msg"></div>
+  <button class="join-btn" id="join-btn" onclick="joinQuiz()">Join →</button>
+</div>
+
+<!-- WAITING SCREEN -->
+<div class="waiting-screen card" id="waiting-screen">
+  <div class="waiting-emoji">🎮</div>
+  <div class="player-name-display" id="waiting-name"></div>
+  <div class="waiting-title">You're in!</div>
+  <div class="waiting-sub">Waiting for the host to start the quiz...</div>
+  <div style="margin-top:20px"><div class="spinner"></div></div>
+</div>
+
+<!-- QUESTION SCREEN -->
+<div class="question-screen" id="question-screen">
+  <div class="q-timer" id="q-timer">--</div>
+  <div class="q-progress"><div class="q-progress-fill" id="q-progress-fill" style="width:100%"></div></div>
+  <div class="q-num" id="q-num">Question 1</div>
+  <div class="q-text" id="q-text"></div>
+  <div class="options-grid" id="options-grid"></div>
+  <div class="answer-feedback" id="answer-feedback"></div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div class="results-screen card" id="results-screen">
+  <div class="results-icon">🏆</div>
+  <div class="results-title">Quiz complete!</div>
+  <div class="results-score" id="final-score">0</div>
+  <div class="results-sub">Your final score</div>
+  <div class="lb-mini" id="lb-mini"></div>
+  <a href="/" style="color:rgba(255,255,255,0.3);font-size:0.82rem;text-decoration:none">← SwoopForm</a>
+</div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getDatabase,ref,get,push,set,update,onValue,query,orderByChild,equalTo}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83",databaseURL:"https://swoopform-default-rtdb.firebaseio.com"};
+const app=initializeApp(FB);
+const db=getDatabase(app);
+
+let sessionId=null,playerId=null,playerName='',myScore=0,timerInterval=null,answered=false,currentQIdx=-1;
+const COLORS=['#EF4444','#3B82F6','#10B981','#F59E0B','#8B5CF6','#EC4899'];
+const LETTERS=['A','B','C','D','E','F'];
+
+window.pinInput=function(i){
+  const val=document.getElementById('pin-'+i).value.replace(/\D/g,'');
+  document.getElementById('pin-'+i).value=val;
+  if(val&&i<3)document.getElementById('pin-'+(i+1)).focus();
+}
+window.pinBack=function(e,i){if(e.key==='Backspace'&&!document.getElementById('pin-'+i).value&&i>0)document.getElementById('pin-'+(i-1)).focus()}
+
+function getPin(){return[0,1,2,3].map(i=>document.getElementById('pin-'+i).value).join('')}
+
+window.joinQuiz=async function(){
+  const pin=getPin();const name=document.getElementById('player-name').value.trim();
+  const err=document.getElementById('err-msg');
+  if(pin.length!==4){err.textContent='Please enter the 4-digit PIN';err.style.display='block';return}
+  if(!name){err.textContent='Please enter your name';err.style.display='block';return}
+  err.style.display='none';
+  const btn=document.getElementById('join-btn');btn.disabled=true;btn.textContent='Joining...';
+  try{
+    // Find session by PIN
+    const sessSnap=await get(ref(db,'quizSessions'));
+    let found=null;
+    if(sessSnap.exists())sessSnap.forEach(child=>{const s=child.val();if(s.code===pin&&s.status!=='ended'){found={id:child.key,...s}}});
+    if(!found){err.textContent='Invalid PIN. Check with your host.';err.style.display='block';btn.disabled=false;btn.textContent='Join →';return}
+    sessionId=found.id;playerName=name;
+    const pRef=push(ref(db,'quizPlayers/'+sessionId));
+    playerId=pRef.key;
+    await set(pRef,{name,score:0,joinedAt:Date.now()});
+    document.getElementById('join-screen').style.display='none';
+    document.getElementById('waiting-screen').style.display='block';
+    document.getElementById('waiting-name').textContent=name;
+    waitForQuiz();
+  }catch(e){console.error(e);err.textContent='Something went wrong. Try again.';err.style.display='block';btn.disabled=false;btn.textContent='Join →'}
+}
+
+function waitForQuiz(){
+  onValue(ref(db,'quizSessions/'+sessionId),snap=>{
+    if(!snap.exists())return;
+    const s=snap.val();
+    if(s.status==='question'&&s.currentQuestion!==currentQIdx){
+      currentQIdx=s.currentQuestion;answered=false;
+      document.getElementById('waiting-screen').style.display='none';
+      document.getElementById('question-screen').style.display='block';
+      showQuestion(s);
+    } else if(s.status==='leaderboard'){
+      showLeaderboard(s);
+    } else if(s.status==='ended'){
+      showFinalResults(s);
+    }
+  });
+}
+
+function showQuestion(session){
+  const q=session.questions[currentQIdx];
+  const timeLimit=q.timeLimit||20;
+  document.getElementById('q-num').textContent='Question '+(currentQIdx+1)+' of '+session.questions.length;
+  document.getElementById('q-text').textContent=q.text;
+  document.getElementById('answer-feedback').style.display='none';
+  document.getElementById('q-timer').className='q-timer';
+  const fill=document.getElementById('q-progress-fill');if(fill)fill.style.width='100%';
+
+  document.getElementById('options-grid').innerHTML=q.options.map((o,oi)=>`
+    <button class="option-btn" id="opt-${oi}" style="background:${COLORS[oi]||'#64748B'}" onclick="selectAnswer(${oi})">
+      <div class="option-letter">${LETTERS[oi]}</div>
+      <span>${o}</span>
+    </button>`).join('');
+
+  if(timerInterval)clearInterval(timerInterval);
+  let timeLeft=timeLimit;
+  const timerEl=document.getElementById('q-timer');
+  timerEl.textContent=timeLeft;
+  timerInterval=setInterval(()=>{
+    timeLeft--;
+    timerEl.textContent=timeLeft;
+    if(fill)fill.style.width=(timeLeft/timeLimit*100)+'%';
+    if(timeLeft<=5)timerEl.className='q-timer urgent';
+    if(timeLeft<=0){clearInterval(timerInterval);if(!answered)timeUp(q)}
+  },1000);
+}
+
+window.selectAnswer=async function(oi){
+  if(answered)return;answered=true;
+  clearInterval(timerInterval);
+  const snap=await get(ref(db,'quizSessions/'+sessionId));
+  const session=snap.val();
+  const q=session.questions[currentQIdx];
+  const isCorrect=oi===q.correctIndex;
+  const timeBonus=parseInt(document.getElementById('q-timer').textContent)||0;
+  const points=isCorrect?Math.max(100,timeBonus*5):0;
+  if(points>0){
+    myScore+=points;
+    await update(ref(db,'quizPlayers/'+sessionId+'/'+playerId),{score:myScore});
+  }
+  await push(ref(db,'quizAnswers/'+sessionId+'/'+currentQIdx),{playerId,answer:oi,correct:isCorrect,points,timestamp:Date.now()});
+  document.querySelectorAll('.option-btn').forEach((btn,i)=>{
+    btn.classList.add('answered');
+    if(i===q.correctIndex)btn.classList.add('correct');
+    else if(i===oi&&!isCorrect)btn.classList.add('wrong');
+  });
+  const fb=document.getElementById('answer-feedback');
+  fb.innerHTML=isCorrect?`<div>✅</div><div style="font-size:1rem;margin-top:4px">+${points} pts</div><div class="score-chip" style="background:rgba(16,185,129,0.2);color:#10B981">Correct!</div>`:
+    `<div>❌</div><div style="font-size:1rem;margin-top:4px;color:rgba(255,255,255,0.5)">The answer was ${LETTERS[q.correctIndex]}</div>`;
+  fb.style.display='block';
+}
+
+function timeUp(q){
+  answered=true;
+  document.querySelectorAll('.option-btn').forEach((btn,i)=>{
+    btn.classList.add('answered');
+    if(i===q.correctIndex)btn.classList.add('correct');
+  });
+  const fb=document.getElementById('answer-feedback');
+  fb.innerHTML='<div>⏰</div><div style="font-size:1rem;color:rgba(255,255,255,0.4)">Time\'s up!</div>';
+  fb.style.display='block';
+}
+
+function showLeaderboard(session){
+  if(session.currentQuestion>=session.questions.length-1){showFinalResults(session);return}
+  document.getElementById('question-screen').style.display='none';
+  document.getElementById('waiting-screen').style.display='block';
+  document.getElementById('waiting-screen').innerHTML=`<div style="text-align:center"><div style="font-size:2rem;margin-bottom:12px">🏆</div><div style="font-family:Syne,sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:4px">My score</div><div style="font-family:Syne,sans-serif;font-weight:800;font-size:2.5rem;color:#A855F7;margin-bottom:16px">${myScore}</div><div style="font-size:0.85rem;color:rgba(255,255,255,0.4)">Next question coming up...</div><div style="margin-top:20px"><div class="spinner"></div></div></div>`;
+}
+
+function showFinalResults(session){
+  clearInterval(timerInterval);
+  document.getElementById('question-screen').style.display='none';
+  document.getElementById('waiting-screen').style.display='none';
+  document.getElementById('results-screen').style.display='block';
+  document.getElementById('final-score').textContent=myScore+' pts';
+  if(session.leaderboard){
+    document.getElementById('lb-mini').innerHTML=session.leaderboard.slice(0,5).map((p,i)=>`
+      <div class="lb-mini-row${p.name===playerName?' lb-mini-me':''}">
+        <div class="lb-mini-rank">${i+1}</div>
+        <div class="lb-mini-name">${p.name}${p.name===playerName?' (you)':''}</div>
+        <div class="lb-mini-score">${p.score} pts</div>
+      </div>`).join('');
+  }
+}
+</script>
+</body>
+</html>

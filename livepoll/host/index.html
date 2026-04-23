@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Poll — Host | SwoopForm</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:#0F1629;color:#fff;min-height:100vh}
+    nav{background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+    .logo-mk{width:28px;height:28px;background:linear-gradient(135deg,#2563EB,#7C3AED);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;color:#fff}
+    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;color:#fff}
+    .main{max-width:900px;margin:0 auto;padding:32px 20px}
+    .page-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-0.03em;margin-bottom:4px}
+    .page-sub{font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:28px}
+    .card{background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;margin-bottom:16px}
+    .card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:16px}
+    .field{margin-bottom:14px}
+    .field-label{display:block;font-size:0.7rem;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:5px}
+    .field-input{width:100%;padding:10px 14px;border-radius:9px;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#fff;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
+    .field-input:focus{border-color:#2563EB}
+    .field-input::placeholder{color:rgba(255,255,255,0.2)}
+    .slide-block{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:18px;margin-bottom:10px}
+    .slide-header{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+    .slide-num{width:24px;height:24px;border-radius:6px;background:#2563EB;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0}
+    .slide-type-badge{padding:3px 10px;border-radius:100px;font-size:0.68rem;font-weight:700}
+    .type-mcq{background:rgba(37,99,235,0.2);color:#93C5FD;border:1px solid rgba(37,99,235,0.3)}
+    .type-wordcloud{background:rgba(124,58,237,0.2);color:#C4B5FD;border:1px solid rgba(124,58,237,0.3)}
+    .type-opentext{background:rgba(16,185,129,0.2);color:#6EE7B7;border:1px solid rgba(16,185,129,0.3)}
+    .slide-del{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:0.9rem;margin-left:auto;padding:4px;transition:color 0.2s}
+    .slide-del:hover{color:#EF4444}
+    .type-btns{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+    .type-btn{padding:6px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.5);font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
+    .type-btn:hover{border-color:rgba(255,255,255,0.3);color:#fff}
+    .type-btn.active{border-color:#2563EB;background:rgba(37,99,235,0.15);color:#93C5FD}
+    .opt-row{display:flex;gap:8px;margin-bottom:8px}
+    .opt-input{flex:1;padding:7px 10px;border-radius:7px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:#fff;font-size:0.82rem;font-family:'DM Sans',sans-serif;outline:none}
+    .opt-input:focus{border-color:#2563EB}
+    .opt-del{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:0.82rem;padding:4px}
+    .opt-del:hover{color:#EF4444}
+    .add-opt-btn{background:none;border:none;cursor:pointer;color:#2563EB;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:2px 0}
+    .add-slide-btns{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+    .add-slide-btn{padding:10px 16px;border-radius:10px;border:1.5px dashed rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.5);font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+    .add-slide-btn:hover{border-color:#2563EB;color:#93C5FD;background:rgba(37,99,235,0.08)}
+    .btn-primary{padding:12px 24px;border-radius:10px;border:none;background:linear-gradient(135deg,#2563EB,#7C3AED);color:#fff;font-size:0.92rem;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;transition:all 0.2s}
+    .btn-primary:hover{opacity:0.9;transform:translateY(-1px)}
+    .btn-ghost{padding:10px 20px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.6);font-size:0.85rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
+    .btn-ghost:hover{border-color:rgba(255,255,255,0.3);color:#fff}
+    .btn-danger{padding:10px 20px;border-radius:10px;border:none;background:#EF4444;color:#fff;font-size:0.85rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s}
+    .btn-danger:hover{opacity:0.85}
+
+    /* LIVE */
+    .live-screen{display:none}
+    .live-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+    .live-code{font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;letter-spacing:0.12em;color:#2563EB}
+    .live-participants{font-size:0.85rem;color:rgba(255,255,255,0.4)}
+    .slide-nav{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+    .slide-indicator{font-size:0.82rem;color:rgba(255,255,255,0.4);flex:1}
+    .current-slide-display{background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.08);border-radius:14px;padding:24px;margin-bottom:20px}
+    .slide-q-text{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:16px}
+    .live-results{display:flex;flex-direction:column;gap:8px}
+    .live-bar-row{display:flex;align-items:center;gap:10px}
+    .live-bar-label{font-size:0.82rem;font-weight:600;width:120px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .live-bar-track{flex:1;height:28px;background:rgba(255,255,255,0.06);border-radius:6px;overflow:hidden;position:relative}
+    .live-bar-fill{height:100%;border-radius:6px;transition:width 0.5s ease}
+    .live-bar-cnt{font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.6);width:40px;text-align:right;flex-shrink:0}
+    .word-cloud{display:flex;gap:8px;flex-wrap:wrap;padding:12px 0}
+    .word-tag{padding:5px 12px;border-radius:100px;font-weight:700;cursor:default;transition:all 0.3s;animation:popIn 0.3s ease both}
+    @keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+    .open-answers{display:flex;flex-direction:column;gap:6px;max-height:240px;overflow-y:auto}
+    .open-answer{background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 14px;font-size:0.85rem;color:rgba(255,255,255,0.7);animation:slideIn 0.3s ease}
+    @keyframes slideIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+    .response-count-live{font-size:0.78rem;color:rgba(255,255,255,0.3);text-align:center;margin-top:8px}
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;border:1px solid rgba(255,255,255,0.1)}
+    @media(max-width:600px){.main{padding:16px}.add-slide-btns{flex-direction:column}nav{padding:0 14px}.logo-nm{display:none}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/dashboard" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
+  <span style="font-size:0.82rem;color:rgba(255,255,255,0.4)">📊 Live Poll — Host</span>
+</nav>
+<div class="main">
+
+  <!-- SETUP -->
+  <div id="setup-screen">
+    <div class="page-title">📊 Create Live Poll</div>
+    <div class="page-sub">Build an interactive poll. Audience joins with a 4-digit PIN.</div>
+    <div class="card">
+      <div class="card-title">📋 Poll details</div>
+      <div class="field"><label class="field-label">Poll title</label><input class="field-input" id="poll-title" placeholder="e.g. Team Retrospective Poll"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📑 Slides</div>
+      <div id="slides-list"></div>
+      <div class="add-slide-btns">
+        <button class="add-slide-btn" onclick="addSlide('mcq')">📊 + MCQ</button>
+        <button class="add-slide-btn" onclick="addSlide('wordcloud')">☁️ + Word Cloud</button>
+        <button class="add-slide-btn" onclick="addSlide('opentext')">💬 + Open Text</button>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn-primary" onclick="launchPoll()">🚀 Launch Poll</button>
+      <a href="/dashboard" class="btn-ghost">← Dashboard</a>
+    </div>
+  </div>
+
+  <!-- LIVE -->
+  <div class="live-screen" id="live-screen">
+    <div class="live-header">
+      <div>
+        <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-bottom:4px;letter-spacing:0.08em;text-transform:uppercase">JOIN AT swoopform.com/livepoll/join · PIN</div>
+        <div class="live-code" id="live-code">----</div>
+      </div>
+      <div class="live-participants" id="live-participants">0 participants</div>
+      <button class="btn-ghost" onclick="openPollScreen()">📺 Open screen</button>
+    </div>
+    <div class="slide-nav">
+      <div class="slide-indicator" id="slide-indicator">Slide 1 of 1</div>
+      <button class="btn-ghost" id="prev-slide-btn" onclick="prevSlide()">← Prev</button>
+      <button class="btn-primary" id="next-slide-btn" onclick="nextSlide()">Next →</button>
+      <button class="btn-danger" onclick="endPoll()">End poll</button>
+    </div>
+    <div class="current-slide-display" id="current-slide-display"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getDatabase,ref,set,push,onValue,update,off}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83",databaseURL:"https://swoopform-default-rtdb.firebaseio.com"};
+const app=initializeApp(FB);
+const auth=getAuth(app);
+const db=getDatabase(app);
+
+onAuthStateChanged(auth,u=>{if(!u)window.location.href='/login'});
+
+let slides=[],sessionId=null,currentSlideIdx=0;
+const COLORS=['#2563EB','#7C3AED','#10B981','#F59E0B','#EF4444','#EC4899'];
+const WORDCLOUD_SIZES=[2,1.6,1.4,1.2,1,0.9,0.85,0.8];
+
+window.addSlide=function(type){
+  slides.push({type,question:'',options:type==='mcq'?['','','']:[]});
+  renderSlides();
+}
+
+function renderSlides(){
+  const list=document.getElementById('slides-list');
+  if(!slides.length){list.innerHTML='<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:0.85rem">No slides yet. Add your first slide above.</div>';return}
+  list.innerHTML=slides.map((s,i)=>`<div class="slide-block">
+    <div class="slide-header">
+      <div class="slide-num">${i+1}</div>
+      <span class="slide-type-badge type-${s.type}">${s.type==='mcq'?'📊 MCQ':s.type==='wordcloud'?'☁️ Word Cloud':'💬 Open Text'}</span>
+      <button class="slide-del" onclick="deleteSlide(${i})">✕</button>
+    </div>
+    <input class="field-input" placeholder="${s.type==='mcq'?'Ask a question...':s.type==='wordcloud'?'What word comes to mind when you think of...':'Ask for open feedback...'}" value="${esc(s.question)}" oninput="slides[${i}].question=this.value" style="margin-bottom:${s.type==='mcq'?'12px':'0'}">
+    ${s.type==='mcq'?`<div id="opts-${i}">${s.options.map((o,oi)=>`<div class="opt-row"><input class="opt-input" placeholder="Option ${oi+1}" value="${esc(o)}" oninput="slides[${i}].options[${oi}]=this.value"><button class="opt-del" onclick="deleteOpt(${i},${oi})">✕</button></div>`).join('')}</div><button class="add-opt-btn" onclick="addOpt(${i})">+ Add option</button>`:''}
+  </div>`).join('');
+}
+
+window.deleteSlide=function(i){slides.splice(i,1);renderSlides()}
+window.addOpt=function(i){if(slides[i].options.length<6){slides[i].options.push('');renderSlides()}}
+window.deleteOpt=function(i,oi){if(slides[i].options.length>2){slides[i].options.splice(oi,1);renderSlides()}}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+
+window.launchPoll=async function(){
+  const title=document.getElementById('poll-title').value.trim();
+  if(!title){toast('Please add a poll title');return}
+  if(!slides.length){toast('Please add at least one slide');return}
+  const invalidSlide=slides.find(s=>!s.question.trim());
+  if(invalidSlide){toast('Please fill in all slide questions');return}
+
+  const code=String(Math.floor(1000+Math.random()*9000));
+  const sRef=push(ref(db,'livePollSessions'));
+  sessionId=sRef.key;
+
+  await set(sRef,{title,code,status:'active',currentSlide:0,slides:slides.map(s=>({type:s.type,question:s.question,options:s.options||[]})),createdAt:Date.now()});
+
+  document.getElementById('setup-screen').style.display='none';
+  document.getElementById('live-screen').style.display='block';
+  document.getElementById('live-code').textContent=code;
+
+  onValue(ref(db,'livePollParticipants/'+sessionId),snap=>{
+    const count=snap.exists()?snap.size:0;
+    document.getElementById('live-participants').textContent=count+' participant'+(count!==1?'s':'');
+  });
+
+  showLiveSlide(0);
+}
+
+function showLiveSlide(idx){
+  currentSlideIdx=idx;
+  const s=slides[idx];
+  const total=slides.length;
+  document.getElementById('slide-indicator').textContent='Slide '+(idx+1)+' of '+total;
+  document.getElementById('prev-slide-btn').disabled=idx===0;
+  document.getElementById('next-slide-btn').textContent=idx===total-1?'End →':'Next →';
+
+  const display=document.getElementById('current-slide-display');
+  display.innerHTML=`<div class="slide-q-text">${s.question||'Untitled slide'}</div><div id="live-results-wrap"><div style="color:rgba(255,255,255,0.3);font-size:0.85rem">Waiting for responses...</div></div><div class="response-count-live" id="resp-count-live">0 responses</div>`;
+
+  update(ref(db,'livePollSessions/'+sessionId),{currentSlide:idx});
+
+  // Listen for responses
+  onValue(ref(db,'livePollResponses/'+sessionId+'/'+idx),snap=>{
+    const responses=[];let total2=0;
+    if(snap.exists())snap.forEach(c=>{responses.push(c.val().answer);total2++});
+    document.getElementById('resp-count-live').textContent=total2+' response'+(total2!==1?'s':'');
+    renderLiveResults(s,responses,total2);
+  });
+}
+
+function renderLiveResults(s,responses,total){
+  const wrap=document.getElementById('live-results-wrap');if(!wrap)return;
+  if(!responses.length){wrap.innerHTML='<div style="color:rgba(255,255,255,0.3);font-size:0.85rem">Waiting for responses...</div>';return}
+  if(s.type==='mcq'){
+    const counts={};s.options.forEach(o=>counts[o]=0);
+    responses.forEach(r=>{if(counts[r]!==undefined)counts[r]++;});
+    const max=Math.max(...Object.values(counts),1);
+    wrap.innerHTML=`<div class="live-results">${s.options.map((o,oi)=>`<div class="live-bar-row"><div class="live-bar-label" title="${o}">${o}</div><div class="live-bar-track"><div class="live-bar-fill" style="background:${COLORS[oi]};width:${(counts[o]/max)*100}%"></div></div><div class="live-bar-cnt">${counts[o]}</div></div>`).join('')}</div>`;
+  } else if(s.type==='wordcloud'){
+    const freq={};responses.forEach(r=>{const w=r.trim().toLowerCase();if(w)freq[w]=(freq[w]||0)+1});
+    const sorted=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,30);
+    const max=sorted[0]?.[1]||1;
+    wrap.innerHTML=`<div class="word-cloud">${sorted.map(([word,count],i)=>{
+      const size=WORDCLOUD_SIZES[Math.min(i,WORDCLOUD_SIZES.length-1)];
+      return`<div class="word-tag" style="font-size:${size}rem;background:${COLORS[i%COLORS.length]}22;border:1px solid ${COLORS[i%COLORS.length]}44;color:${COLORS[i%COLORS.length]};padding:${4+Math.floor(size*2)}px ${8+Math.floor(size*4)}px">${word}</div>`}).join('')}</div>`;
+  } else {
+    wrap.innerHTML=`<div class="open-answers">${responses.slice(-10).reverse().map(r=>`<div class="open-answer">${r}</div>`).join('')}</div>`;
+  }
+}
+
+window.nextSlide=function(){
+  if(currentSlideIdx<slides.length-1){showLiveSlide(currentSlideIdx+1)}else{endPoll()}
+}
+window.prevSlide=function(){if(currentSlideIdx>0)showLiveSlide(currentSlideIdx-1)}
+window.endPoll=async function(){
+  await update(ref(db,'livePollSessions/'+sessionId),{status:'ended'});
+  toast('Poll ended!',2000);setTimeout(()=>window.location.href='/dashboard',2500);
+}
+window.openPollScreen=function(){window.open('/livepoll/screen/?session='+sessionId,'_blank','width=1200,height=700')}
+
+function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
+
+renderSlides();
+</script>
+</body>
+</html>
