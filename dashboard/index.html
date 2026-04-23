@@ -203,10 +203,10 @@ const db=getFirestore(app);
 
 const TYPE_META={
   surveys:{label:'Survey',icon:'📋',color:'#2D1B69',bg:'#EDE9FF',editPath:'/edit/?id=',viewPath:'/survey/',responsesPath:'/responses/?id=',createPath:'/create/'},
-  polls:{label:'Poll',icon:'📊',color:'#4F46E5',bg:'#EEF2FF',editPath:'/poll/create/?id=',viewPath:'/poll/',responsesPath:null,createPath:'/poll/create/'},
-  votings:{label:'Voting',icon:'🗳️',color:'#D97706',bg:'#FEF3C7',editPath:'/voting/create/?id=',viewPath:'/voting/',responsesPath:null,createPath:'/voting/create/'},
-  pledges:{label:'Pledge',icon:'🤝',color:'#10B981',bg:'#DCFCE7',editPath:'/pledge/create/?id=',viewPath:'/pledge/',responsesPath:null,createPath:'/pledge/create/'},
-  riddles:{label:'Riddle',icon:'🧩',color:'#A855F7',bg:'#F3E8FF',editPath:'/riddle/create/?id=',viewPath:'/riddle/',responsesPath:null,createPath:'/riddle/create/'},
+  polls:{label:'Poll',icon:'📊',color:'#4F46E5',bg:'#EEF2FF',editPath:'/poll/edit/?id=',viewPath:'/poll/',responsesPath:null,createPath:'/poll/create/'},
+  votings:{label:'Voting',icon:'🗳️',color:'#D97706',bg:'#FEF3C7',editPath:'/voting/edit/?id=',viewPath:'/voting/',responsesPath:null,createPath:'/voting/create/'},
+  pledges:{label:'Pledge',icon:'🤝',color:'#10B981',bg:'#DCFCE7',editPath:'/pledge/edit/?id=',viewPath:'/pledge/',responsesPath:null,createPath:'/pledge/create/'},
+  riddles:{label:'Riddle',icon:'🧩',color:'#A855F7',bg:'#F3E8FF',editPath:'/riddle/edit/?id=',viewPath:'/riddle/',responsesPath:null,createPath:'/riddle/create/'},
 };
 
 let U=null,allItems=[],activeFilter='all',viewMode='grid',ctxItem=null;

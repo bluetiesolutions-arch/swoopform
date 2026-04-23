@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwoopForm — Edit Riddle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,#1A0533,#2D1B69,#1A0533);background-attachment:fixed;color:#fff}
+    .topnav{height:56px;background:rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:fixed;top:0;left:0;right:0;z-index:300}
+    .topnav-left{display:flex;align-items:center;gap:10px;flex-shrink:1;min-width:0;overflow:hidden}
+    .logo-s{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none;flex-shrink:0}
+    .nav-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#fff;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .topnav-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+    .btn-g{padding:7px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.6);font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;text-decoration:none;transition:all 0.2s}
+    .btn-g:hover{border-color:#A855F7;color:#A855F7}
+    .btn-pub{padding:7px 14px;border-radius:8px;border:none;background:linear-gradient(135deg,#7C3AED,#A855F7);color:#fff;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:opacity 0.2s}
+    .btn-pub:hover{opacity:0.9}
+    .btn-pub:disabled{opacity:0.5;cursor:not-allowed}
+    .hbtn{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px}
+    .hbtn span{display:block;width:20px;height:2px;background:#fff;border-radius:2px}
+    .layout{position:fixed;top:56px;left:0;right:0;bottom:0;display:flex;overflow:hidden}
+    .sidebar{width:240px;height:100%;background:rgba(255,255,255,0.04);border-right:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;flex-shrink:0;z-index:100;transition:transform 0.3s ease;overflow-y:auto}
+    .sb-grp-hdr{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.06)}
+    .sb-grp-lbl{font-size:0.68rem;font-weight:700;color:rgba(255,255,255,0.3);letter-spacing:0.08em;text-transform:uppercase}
+    .sb-nav{padding:8px}
+    .sb-item{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:600;color:rgba(255,255,255,0.4);transition:all 0.2s}
+    .sb-item:hover{background:rgba(255,255,255,0.06);color:#fff}
+    .sb-item.active{background:rgba(168,85,247,0.2);color:#A855F7}
+    .sb-item .ico{width:18px;text-align:center}
+    .q-badge{font-size:0.62rem;font-weight:700;background:rgba(168,85,247,0.2);color:#A855F7;padding:1px 6px;border-radius:100px;margin-left:auto}
+    .content{flex:1;height:100%;overflow-y:auto;padding:20px}
+    .panel{display:none}
+    .panel.active{display:block}
+    .pt{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-0.02em;margin-bottom:5px}
+    .ps{color:rgba(255,255,255,0.4);font-size:0.83rem;margin-bottom:18px}
+    .card{background:rgba(255,255,255,0.05);border-radius:14px;border:1px solid rgba(255,255,255,0.08);padding:20px;margin-bottom:14px}
+    .fl{margin-bottom:14px}
+    .fl:last-child{margin-bottom:0}
+    .ll{display:block;font-size:0.7rem;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px}
+    .ii{width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#fff;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
+    .ii:focus{border-color:#A855F7}
+    .ii::placeholder{color:rgba(255,255,255,0.2)}
+    .q-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:18px;margin-bottom:12px}
+    .q-card-header{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+    .q-card-num{width:26px;height:26px;border-radius:7px;background:rgba(168,85,247,0.25);color:#A855F7;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.78rem;flex-shrink:0}
+    .q-card-del{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.25);font-size:0.9rem;margin-left:auto;padding:4px}
+    .q-card-del:hover{color:#EF4444}
+    .type-btns{display:flex;gap:6px;margin-bottom:12px}
+    .type-btn{padding:6px 12px;border-radius:7px;border:1.5px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
+    .type-btn.active{border-color:#A855F7;background:rgba(168,85,247,0.15);color:#A855F7}
+    .opt-row{display:flex;align-items:center;gap:6px;margin-bottom:7px}
+    .opt-letter{width:22px;height:22px;border-radius:5px;background:rgba(168,85,247,0.15);color:#A855F7;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700;flex-shrink:0}
+    .opt-inp{flex:1;padding:7px 10px;border-radius:7px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:#fff;font-size:0.82rem;font-family:'DM Sans',sans-serif;outline:none}
+    .opt-inp:focus{border-color:#A855F7}
+    .correct-btn{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,0.15);background:transparent;cursor:pointer;transition:all 0.2s;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.6rem;color:transparent}
+    .correct-btn.marked{background:#10B981;border-color:#10B981;color:#fff}
+    .opt-del-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.2);font-size:0.82rem;padding:2px}
+    .opt-del-btn:hover{color:#EF4444}
+    .add-opt-btn{background:none;border:none;cursor:pointer;color:#A855F7;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:2px 0}
+    .add-q-btn{width:100%;padding:12px;border-radius:12px;border:1.5px dashed rgba(168,85,247,0.3);background:transparent;color:#A855F7;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
+    .add-q-btn:hover{background:rgba(168,85,247,0.08)}
+    .slug-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .slug-pre{font-size:0.72rem;color:rgba(255,255,255,0.4);white-space:nowrap;flex-shrink:0}
+    .danger-zone{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:14px;padding:20px;margin-top:20px}
+    .danger-title{font-weight:700;font-size:0.92rem;color:#FCA5A5;margin-bottom:8px}
+    .danger-sub{font-size:0.82rem;color:rgba(255,255,255,0.4);margin-bottom:14px}
+    .btn-danger{padding:9px 18px;border-radius:9px;border:none;background:#DC2626;color:#fff;font-size:0.85rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer}
+    .sbo{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;display:none}
+    .sbo.open{display:block}
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;color:#0F0E1A;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;white-space:nowrap}
+    .ls-screen{position:fixed;inset:0;background:#1A0533;display:flex;align-items:center;justify-content:center;z-index:900}
+    .spinner{width:32px;height:32px;border:3px solid rgba(168,85,247,0.2);border-top-color:#A855F7;border-radius:50%;animation:spin 0.8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media(max-width:768px){.sidebar{position:fixed;top:56px;left:0;bottom:0;transform:translateX(-100%);z-index:200;width:260px}.sidebar.open{transform:translateX(0)}.hbtn{display:flex}.content{padding:14px}}
+  </style>
+</head>
+<body>
+<div class="ls-screen" id="ls"><div class="spinner"></div></div>
+<div class="sbo" id="sbo" onclick="closeSb()"></div>
+<div class="topnav">
+  <div class="topnav-left">
+    <button class="hbtn" onclick="openSb()"><span></span><span></span><span></span></button>
+    <a href="/dashboard" class="logo-s">S</a>
+    <a href="/dashboard" class="btn-g" style="font-size:0.78rem;padding:5px 10px">← Dashboard</a>
+    <span class="nav-t" id="nav-t">Edit Riddle</span>
+  </div>
+  <div class="topnav-right">
+    <button class="btn-g" onclick="saveDraft()">Save draft</button>
+    <button class="btn-pub" id="pub-btn" onclick="publishRiddle()">Save & publish →</button>
+  </div>
+</div>
+<div class="layout">
+  <div class="sidebar" id="sidebar">
+    <div class="sb-grp-hdr"><span class="sb-grp-lbl">Sections</span></div>
+    <div class="sb-nav">
+      <button class="sb-item active" id="sn-riddle" onclick="showPanel('riddle')"><span class="ico">🧩</span>Riddle</button>
+      <button class="sb-item" id="sn-questions" onclick="showPanel('questions')"><span class="ico">❓</span>Questions <span class="q-badge" id="q-badge">0</span></button>
+      <button class="sb-item" id="sn-seo" onclick="showPanel('seo')"><span class="ico">🔍</span>SEO</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="panel active" id="panel-riddle">
+      <div class="pt">🧩 Riddle</div><p class="ps">Edit your riddle details.</p>
+      <div class="card">
+        <div class="fl"><label class="ll">Title *</label><input class="ii" id="riddle-title" oninput="document.getElementById('nav-t').textContent=this.value||'Edit Riddle'" maxlength="120"></div>
+        <div class="fl"><label class="ll">Description</label><input class="ii" id="riddle-desc" maxlength="200"></div>
+        <div class="fl"><label class="ll">Icon emoji</label><input class="ii" id="riddle-emoji" placeholder="🧩" maxlength="4" style="max-width:80px"></div>
+      </div>
+      <div class="danger-zone">
+        <div class="danger-title">⚠️ Danger zone</div>
+        <div class="danger-sub">Deleting this riddle is permanent.</div>
+        <button class="btn-danger" onclick="deleteRiddle()">Delete riddle</button>
+      </div>
+    </div>
+    <div class="panel" id="panel-questions">
+      <div class="pt">❓ Questions</div><p class="ps">Edit your riddle questions.</p>
+      <div id="questions-render"></div>
+      <button class="add-q-btn" onclick="addQuestion()">+ Add riddle</button>
+    </div>
+    <div class="panel" id="panel-seo">
+      <div class="pt">🔍 SEO</div><p class="ps">Control how your riddle appears online.</p>
+      <div class="card">
+        <div class="fl"><label class="ll">URL Slug</label>
+          <div class="slug-row">
+            <span class="slug-pre">swoopform.com/engage/</span>
+            <input class="ii" id="seo-slug" oninput="validateSlug(this)" style="flex:1">
+            <button onclick="autoSlug()" style="padding:8px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.6);font-size:0.75rem;font-weight:600;cursor:pointer;flex-shrink:0">Auto</button>
+          </div>
+          <div class="sh" id="slug-status"></div>
+        </div>
+        <div class="fl"><label class="ll">SEO Title</label><input class="ii" id="seo-title" maxlength="60"></div>
+        <div class="fl"><label class="ll">SEO Description</label><textarea class="ii" id="seo-desc" rows="2" maxlength="160" style="resize:vertical"></textarea></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,doc,getDoc,updateDoc,deleteDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);const auth=getAuth(app);const db=getFirestore(app);
+const RID=new URLSearchParams(window.location.search).get('id');
+let U=null,questions=[];
+const LETTERS=['A','B','C','D','E'];
+function mkQ(){return{id:'q'+Date.now()+Math.random().toString(36).slice(2,4),type:'mcq',question:'',options:['','',''],correctIndex:0,answer:'',hint:'',acceptedAnswers:[]}}
+onAuthStateChanged(auth,async u=>{
+  if(!u){window.location.href='/login';return}
+  U=u;if(!RID)return;
+  const snap=await getDoc(doc(db,'riddles',RID));
+  if(!snap.exists()||snap.data().userId!==u.uid){window.location.href='/dashboard';return}
+  const r=snap.data();
+  document.getElementById('riddle-title').value=r.title||'';
+  document.getElementById('nav-t').textContent=r.title||'Edit Riddle';
+  document.getElementById('riddle-desc').value=r.description||'';
+  document.getElementById('riddle-emoji').value=r.emoji||'🧩';
+  document.getElementById('seo-slug').value=r.slug||'';
+  document.getElementById('seo-title').value=r.seo?.title||'';
+  document.getElementById('seo-desc').value=r.seo?.description||'';
+  questions=(r.questions||[]).map(q=>({...mkQ(),...q}));
+  renderQuestions();
+  document.getElementById('ls').style.display='none';
+});
+window.showPanel=function(p){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.sb-item').forEach(x=>x.classList.remove('active'));document.getElementById('panel-'+p).classList.add('active');document.getElementById('sn-'+p)?.classList.add('active');closeSb()}
+window.openSb=()=>{document.getElementById('sidebar').classList.add('open');document.getElementById('sbo').classList.add('open')}
+window.closeSb=()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('sbo').classList.remove('open')}
+window.addQuestion=function(){questions.push(mkQ());renderQuestions();showPanel('questions')}
+function renderQuestions(){
+  document.getElementById('q-badge').textContent=questions.length;
+  const area=document.getElementById('questions-render');
+  if(!questions.length){area.innerHTML='<div style="text-align:center;padding:24px;color:rgba(255,255,255,0.3);font-size:0.85rem">No riddles yet.</div>';return}
+  area.innerHTML=questions.map((q,i)=>`<div class="q-card" id="qcard-${q.id}">
+    <div class="q-card-header"><div class="q-card-num">${i+1}</div><div style="font-family:Syne,sans-serif;font-weight:700;font-size:0.85rem">Riddle ${i+1}</div><button class="q-card-del" onclick="deleteQuestion('${q.id}')">✕</button></div>
+    <div class="type-btns"><button class="type-btn${q.type==='mcq'?' active':''}" onclick="setQType('${q.id}','mcq',this)">◉ Multiple choice</button><button class="type-btn${q.type==='text'?' active':''}" onclick="setQType('${q.id}','text',this)">✏️ Text answer</button></div>
+    <div class="fl"><label class="ll">Question *</label><textarea class="ii" rows="2" style="resize:vertical" oninput="questions[${i}].question=this.value">${eh(q.question)}</textarea></div>
+    ${q.type==='mcq'?`<div class="fl"><label class="ll">Options (✓ = correct)</label><div id="opts-${q.id}">${q.options.map((o,oi)=>`<div class="opt-row"><div class="opt-letter">${LETTERS[oi]}</div><input class="opt-inp" value="${eh(o)}" oninput="questions[${i}].options[${oi}]=this.value"><button class="correct-btn${q.correctIndex===oi?' marked':''}" onclick="markCorrect('${q.id}',${oi})">✓</button>${q.options.length>2?`<button class="opt-del-btn" onclick="removeOpt('${q.id}',${oi})">✕</button>`:''}</div>`).join('')}</div><button class="add-opt-btn" onclick="addOpt('${q.id}')">+ Add option</button></div>`:
+    `<div class="fl"><label class="ll">Correct answer *</label><input class="ii" value="${eh(q.answer)}" oninput="questions[${i}].answer=this.value"></div><div class="fl"><label class="ll">Accepted variations</label><input class="ii" value="${(q.acceptedAnswers||[]).join(', ')}" placeholder="comma-separated alternatives" oninput="questions[${i}].acceptedAnswers=this.value.split(',').map(s=>s.trim()).filter(Boolean)"></div>`}
+    <div class="fl" style="margin-bottom:0"><label class="ll">Hint (optional)</label><input class="ii" value="${eh(q.hint||'')}" oninput="questions[${i}].hint=this.value"></div>
+  </div>`).join('');
+}
+window.setQType=function(id,type,el){const q=questions.find(q=>q.id===id);if(!q)return;q.type=type;const card=document.getElementById('qcard-'+id);if(card){card.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active')}renderQuestions();showPanel('questions')}
+window.deleteQuestion=function(id){questions=questions.filter(q=>q.id!==id);renderQuestions()}
+window.markCorrect=function(id,oi){const q=questions.find(q=>q.id===id);if(q){q.correctIndex=oi;renderQuestions();showPanel('questions')}}
+window.addOpt=function(id){const q=questions.find(q=>q.id===id);if(q&&q.options.length<5){q.options.push('');renderQuestions();showPanel('questions')}}
+window.removeOpt=function(id,oi){const q=questions.find(q=>q.id===id);if(q&&q.options.length>2){q.options.splice(oi,1);if(q.correctIndex>=q.options.length)q.correctIndex=q.options.length-1;renderQuestions();showPanel('questions')}}
+window.autoSlug=function(){const t=document.getElementById('riddle-title').value.trim();if(!t){toast('Add a title first');return}const slug=t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50);document.getElementById('seo-slug').value=slug;document.getElementById('slug-status').textContent='✓ swoopform.com/engage/'+slug;document.getElementById('slug-status').style.color='#A855F7'}
+window.validateSlug=function(inp){inp.value=inp.value.replace(/[^a-z0-9-]/g,'');const s=document.getElementById('slug-status');if(inp.value.length>3){s.textContent='✓ swoopform.com/engage/'+inp.value;s.style.color='#A855F7'}else{s.textContent='Too short';s.style.color='#EF4444'}}
+function getData(status){
+  const title=document.getElementById('riddle-title').value.trim();
+  if(!title){toast('Please add a title');return null}
+  if(!questions.length){toast('Please add at least one riddle');return null}
+  return{title,description:document.getElementById('riddle-desc').value.trim(),emoji:document.getElementById('riddle-emoji').value.trim()||'🧩',questions:questions.map(q=>({type:q.type,question:q.question,options:q.options||[],correctIndex:q.correctIndex||0,answer:q.answer||'',hint:q.hint||'',acceptedAnswers:q.acceptedAnswers||[]})),slug:document.getElementById('seo-slug').value.trim()||null,seo:{title:document.getElementById('seo-title').value.trim(),description:document.getElementById('seo-desc').value.trim()},status,updatedAt:serverTimestamp()}
+}
+async function save(status){const data=getData(status);if(!data)return false;try{await updateDoc(doc(db,'riddles',RID),data);return true}catch(e){console.error(e);toast('Error saving');return false}}
+window.saveDraft=async function(){if(await save('draft'))toast('Saved!')}
+window.publishRiddle=async function(){const btn=document.getElementById('pub-btn');btn.disabled=true;btn.textContent='Saving...';if(await save('active')){toast('Saved!',2000);setTimeout(()=>window.location.href='/dashboard',2200)}else{btn.disabled=false;btn.textContent='Save & publish →'}}
+window.deleteRiddle=async function(){if(!confirm('Delete this riddle permanently?'))return;try{await deleteDoc(doc(db,'riddles',RID));window.location.href='/dashboard'}catch(e){toast('Error deleting')}}
+function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;')}
+function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
+</script>
+</body>
+</html>

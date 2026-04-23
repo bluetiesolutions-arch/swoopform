@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwoopForm — Edit Pledge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;background:#0D1F16;color:#fff}
+    .topnav{height:56px;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:fixed;top:0;left:0;right:0;z-index:300}
+    .topnav-left{display:flex;align-items:center;gap:10px;flex-shrink:1;min-width:0;overflow:hidden}
+    .logo-s{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none;flex-shrink:0}
+    .nav-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#fff;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .topnav-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+    .btn-g{padding:7px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.6);font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;text-decoration:none;transition:all 0.2s}
+    .btn-g:hover{border-color:#10B981;color:#10B981}
+    .btn-pub{padding:7px 14px;border-radius:8px;border:none;background:linear-gradient(135deg,#10B981,#059669);color:#fff;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:opacity 0.2s}
+    .btn-pub:hover{opacity:0.9}
+    .btn-pub:disabled{opacity:0.5;cursor:not-allowed}
+    .hbtn{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px}
+    .hbtn span{display:block;width:20px;height:2px;background:#fff;border-radius:2px}
+    .layout{position:fixed;top:56px;left:0;right:0;bottom:0;display:flex;overflow:hidden}
+    .sidebar{width:240px;height:100%;background:rgba(255,255,255,0.03);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;flex-shrink:0;z-index:100;transition:transform 0.3s ease;overflow-y:auto}
+    .sb-grp-hdr{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.06)}
+    .sb-grp-lbl{font-size:0.68rem;font-weight:700;color:rgba(255,255,255,0.3);letter-spacing:0.08em;text-transform:uppercase}
+    .sb-nav{padding:8px}
+    .sb-item{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:600;color:rgba(255,255,255,0.4);transition:all 0.2s}
+    .sb-item:hover{background:rgba(255,255,255,0.05);color:#fff}
+    .sb-item.active{background:rgba(16,185,129,0.15);color:#10B981}
+    .sb-item .ico{width:18px;text-align:center}
+    .content{flex:1;height:100%;overflow-y:auto;padding:20px}
+    .panel{display:none}
+    .panel.active{display:block}
+    .pt{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-0.02em;margin-bottom:5px}
+    .ps{color:rgba(255,255,255,0.4);font-size:0.83rem;margin-bottom:18px}
+    .card{background:rgba(255,255,255,0.04);border-radius:14px;border:1px solid rgba(255,255,255,0.08);padding:20px;margin-bottom:14px}
+    .card-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.92rem;margin-bottom:14px}
+    .fl{margin-bottom:14px}
+    .fl:last-child{margin-bottom:0}
+    .ll{display:block;font-size:0.7rem;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px}
+    .ii{width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:#fff;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
+    .ii:focus{border-color:#10B981}
+    .ii::placeholder{color:rgba(255,255,255,0.2)}
+    .sr{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+    .sr:last-child{border-bottom:none}
+    .sr-n{font-size:0.85rem;font-weight:600}
+    .sr-d{font-size:0.72rem;color:rgba(255,255,255,0.35);margin-top:2px}
+    .tgl{width:32px;height:17px;border-radius:100px;background:rgba(255,255,255,0.15);cursor:pointer;position:relative;transition:background 0.2s;border:none;flex-shrink:0}
+    .tgl.on{background:#10B981}
+    .tgl::after{content:'';position:absolute;width:11px;height:11px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 0.2s}
+    .tgl.on::after{transform:translateX(15px)}
+    .commit-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+    .commit-inp{flex:1;padding:8px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:#fff;font-size:0.84rem;font-family:'DM Sans',sans-serif;outline:none}
+    .commit-inp:focus{border-color:#10B981}
+    .commit-del{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.25);font-size:0.9rem;padding:4px}
+    .commit-del:hover{color:#EF4444}
+    .add-commit-btn{background:none;border:none;cursor:pointer;color:#10B981;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:2px 0}
+    .section-toggle{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+    .section-toggle:last-child{border-bottom:none}
+    .section-toggle-name{font-size:0.85rem;font-weight:600}
+    .section-toggle-desc{font-size:0.72rem;color:rgba(255,255,255,0.35);margin-top:2px}
+    .slug-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .slug-pre{font-size:0.72rem;color:rgba(255,255,255,0.4);white-space:nowrap;flex-shrink:0}
+    .danger-zone{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:14px;padding:20px;margin-top:20px}
+    .danger-title{font-weight:700;font-size:0.92rem;color:#FCA5A5;margin-bottom:8px}
+    .danger-sub{font-size:0.82rem;color:rgba(255,255,255,0.4);margin-bottom:14px}
+    .btn-danger{padding:9px 18px;border-radius:9px;border:none;background:#DC2626;color:#fff;font-size:0.85rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer}
+    .sbo{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;display:none}
+    .sbo.open{display:block}
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;color:#0F0E1A;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;white-space:nowrap}
+    .ls-screen{position:fixed;inset:0;background:#0D1F16;display:flex;align-items:center;justify-content:center;z-index:900}
+    .spinner{width:32px;height:32px;border:3px solid rgba(16,185,129,0.2);border-top-color:#10B981;border-radius:50%;animation:spin 0.8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media(max-width:768px){.sidebar{position:fixed;top:56px;left:0;bottom:0;transform:translateX(-100%);z-index:200;width:260px}.sidebar.open{transform:translateX(0)}.hbtn{display:flex}.content{padding:14px}}
+  </style>
+</head>
+<body>
+<div class="ls-screen" id="ls"><div class="spinner"></div></div>
+<div class="sbo" id="sbo" onclick="closeSb()"></div>
+<div class="topnav">
+  <div class="topnav-left">
+    <button class="hbtn" onclick="openSb()"><span></span><span></span><span></span></button>
+    <a href="/dashboard" class="logo-s">S</a>
+    <a href="/dashboard" class="btn-g" style="font-size:0.78rem;padding:5px 10px">← Dashboard</a>
+    <span class="nav-t" id="nav-t">Edit Pledge</span>
+  </div>
+  <div class="topnav-right">
+    <button class="btn-g" onclick="saveDraft()">Save draft</button>
+    <button class="btn-pub" id="pub-btn" onclick="publishPledge()">Save & publish →</button>
+  </div>
+</div>
+<div class="layout">
+  <div class="sidebar" id="sidebar">
+    <div class="sb-grp-hdr"><span class="sb-grp-lbl">Sections</span></div>
+    <div class="sb-nav">
+      <button class="sb-item active" id="sn-hero" onclick="showPanel('hero')"><span class="ico">🌟</span>Hero</button>
+      <button class="sb-item" id="sn-problem" onclick="showPanel('problem')"><span class="ico">⚡</span>Problem</button>
+      <button class="sb-item" id="sn-statement" onclick="showPanel('statement')"><span class="ico">🤝</span>Statement</button>
+      <button class="sb-item" id="sn-form" onclick="showPanel('form')"><span class="ico">📝</span>Form</button>
+      <button class="sb-item" id="sn-impact" onclick="showPanel('impact')"><span class="ico">📊</span>Impact</button>
+      <button class="sb-item" id="sn-sections" onclick="showPanel('sections')"><span class="ico">🔧</span>Sections</button>
+      <button class="sb-item" id="sn-seo" onclick="showPanel('seo')"><span class="ico">🔍</span>SEO</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="panel active" id="panel-hero">
+      <div class="pt">🌟 Hero</div><p class="ps">Edit the hero section.</p>
+      <div class="card">
+        <div class="fl"><label class="ll">Campaign title *</label><input class="ii" id="hero-title" oninput="document.getElementById('nav-t').textContent=this.value||'Edit Pledge'" maxlength="150"></div>
+        <div class="fl"><label class="ll">Hero subtitle</label><textarea class="ii" id="hero-subtitle" rows="2" style="resize:vertical"></textarea></div>
+        <div class="fl"><label class="ll">CTA button text</label><input class="ii" id="hero-cta" maxlength="50"></div>
+        <div class="fl"><label class="ll">Hero image URL</label><input class="ii" id="hero-image"></div>
+        <div class="fl"><label class="ll">Category</label>
+          <select class="ii" id="pledge-category">
+            <option value="Community">🤝 Community</option>
+            <option value="Health">🏥 Health</option>
+            <option value="Education">🎓 Education</option>
+            <option value="Research">🔬 Research</option>
+            <option value="Other">✦ Other</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="panel" id="panel-problem">
+      <div class="pt">⚡ Problem</div><p class="ps">Edit the problem section.</p>
+      <div class="card">
+        <div class="fl"><label class="ll">Section title</label><input class="ii" id="problem-title" maxlength="100"></div>
+        <div class="fl"><label class="ll">Problem description</label><textarea class="ii" id="problem-content" rows="6" style="resize:vertical"></textarea></div>
+      </div>
+    </div>
+    <div class="panel" id="panel-statement">
+      <div class="pt">🤝 Statement</div><p class="ps">Edit the pledge statement.</p>
+      <div class="card">
+        <div class="fl"><label class="ll">Statement title</label><input class="ii" id="statement-title" maxlength="100"></div>
+        <div class="fl"><label class="ll">Pledge statement *</label><textarea class="ii" id="pledge-statement" rows="4" style="resize:vertical" placeholder="I pledge to..."></textarea></div>
+        <div class="fl"><label class="ll">Commitment points</label>
+          <div id="commitments-list"></div>
+          <button class="add-commit-btn" onclick="addCommitment()">+ Add commitment</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel" id="panel-form">
+      <div class="pt">📝 Form</div><p class="ps">Edit the pledge form.</p>
+      <div class="card">
+        <div class="fl"><label class="ll">Form title</label><input class="ii" id="form-title" maxlength="80"></div>
+        <div class="fl"><label class="ll">Form subtitle</label><input class="ii" id="form-subtitle" maxlength="150"></div>
+      </div>
+      <div class="card">
+        <div class="sr"><div><div class="sr-n">Collect name</div></div><button class="tgl on" id="tgl-name" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-n">Collect email</div></div><button class="tgl on" id="tgl-email" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr" style="border-bottom:none"><div><div class="sr-n">Collect message</div></div><button class="tgl" id="tgl-message" onclick="this.classList.toggle('on')"></button></div>
+      </div>
+    </div>
+    <div class="panel" id="panel-impact">
+      <div class="pt">📊 Impact Counter</div><p class="ps">Edit impact settings.</p>
+      <div class="card">
+        <div class="sr"><div><div class="sr-n">Show live counter</div></div><button class="tgl on" id="tgl-counter" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-n">Show pledger names</div></div><button class="tgl" id="tgl-names" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr" style="border-bottom:none"><div><div class="sr-n">Goal</div></div><input type="number" class="ii" id="pledge-goal" min="0" style="max-width:120px;padding:6px 10px"></div>
+      </div>
+      <div class="danger-zone">
+        <div class="danger-title">⚠️ Danger zone</div>
+        <div class="danger-sub">Deleting this pledge is permanent.</div>
+        <button class="btn-danger" onclick="deletePledge()">Delete pledge</button>
+      </div>
+    </div>
+    <div class="panel" id="panel-sections">
+      <div class="pt">🔧 Sections</div><p class="ps">Enable or disable sections.</p>
+      <div class="card">
+        <div class="section-toggle"><div><div class="section-toggle-name">⚡ Problem section</div></div><button class="tgl on" id="sec-problem" onclick="this.classList.toggle('on')"></button></div>
+        <div class="section-toggle"><div><div class="section-toggle-name">📊 Impact counter</div></div><button class="tgl on" id="sec-impact" onclick="this.classList.toggle('on')"></button></div>
+        <div class="section-toggle"><div><div class="section-toggle-name">📤 Social sharing</div></div><button class="tgl on" id="sec-social" onclick="this.classList.toggle('on')"></button></div>
+        <div class="section-toggle" style="border-bottom:none"><div><div class="section-toggle-name">❓ FAQ section</div></div><button class="tgl" id="sec-faq" onclick="this.classList.toggle('on')"></button></div>
+      </div>
+    </div>
+    <div class="panel" id="panel-seo">
+      <div class="pt">🔍 SEO</div><p class="ps">Control how your pledge appears online.</p>
+      <div class="card">
+        <div class="fl"><label class="ll">URL Slug</label>
+          <div class="slug-row">
+            <span class="slug-pre">swoopform.com/engage/</span>
+            <input class="ii" id="seo-slug" oninput="validateSlug(this)" style="flex:1">
+            <button onclick="autoSlug()" style="padding:8px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.6);font-size:0.75rem;font-weight:600;cursor:pointer;flex-shrink:0">Auto</button>
+          </div>
+          <div class="sh" id="slug-status"></div>
+        </div>
+        <div class="fl"><label class="ll">SEO Title</label><input class="ii" id="seo-title" maxlength="60"></div>
+        <div class="fl"><label class="ll">SEO Description</label><textarea class="ii" id="seo-desc" rows="2" maxlength="160" style="resize:vertical"></textarea></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,doc,getDoc,updateDoc,deleteDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);const auth=getAuth(app);const db=getFirestore(app);
+const PLID=new URLSearchParams(window.location.search).get('id');
+let U=null,commitments=[];
+function isTgl(id){return document.getElementById(id)?.classList.contains('on')}
+onAuthStateChanged(auth,async u=>{
+  if(!u){window.location.href='/login';return}
+  U=u;if(!PLID)return;
+  const snap=await getDoc(doc(db,'pledges',PLID));
+  if(!snap.exists()||snap.data().userId!==u.uid){window.location.href='/dashboard';return}
+  const p=snap.data();
+  document.getElementById('hero-title').value=p.title||'';
+  document.getElementById('nav-t').textContent=p.title||'Edit Pledge';
+  document.getElementById('hero-subtitle').value=p.heroSubtitle||'';
+  document.getElementById('hero-cta').value=p.heroCTA||'';
+  document.getElementById('hero-image').value=p.heroImage||'';
+  document.getElementById('pledge-category').value=p.category||'Community';
+  document.getElementById('problem-title').value=p.problem?.title||'';
+  document.getElementById('problem-content').value=p.problem?.content||'';
+  document.getElementById('statement-title').value=p.statementTitle||'';
+  document.getElementById('pledge-statement').value=p.statement||'';
+  document.getElementById('form-title').value=p.formTitle||'';
+  document.getElementById('form-subtitle').value=p.formSubtitle||'';
+  document.getElementById('pledge-goal').value=p.goal||'';
+  document.getElementById('seo-slug').value=p.slug||'';
+  document.getElementById('seo-title').value=p.seo?.title||'';
+  document.getElementById('seo-desc').value=p.seo?.description||'';
+  if(p.collectName!==false)document.getElementById('tgl-name').classList.add('on');
+  if(p.collectEmail!==false)document.getElementById('tgl-email').classList.add('on');
+  if(p.collectMessage)document.getElementById('tgl-message').classList.add('on');
+  if(p.showImpact!==false)document.getElementById('tgl-counter').classList.add('on');
+  if(p.showPledgerNames)document.getElementById('tgl-names').classList.add('on');
+  const sec=p.sections||{};
+  if(sec.problem!==false)document.getElementById('sec-problem').classList.add('on');
+  if(sec.impact!==false)document.getElementById('sec-impact').classList.add('on');
+  if(sec.social!==false)document.getElementById('sec-social').classList.add('on');
+  if(sec.faq)document.getElementById('sec-faq').classList.add('on');
+  commitments=p.commitments||[];
+  renderCommitments();
+  document.getElementById('ls').style.display='none';
+});
+window.showPanel=function(p){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.sb-item').forEach(x=>x.classList.remove('active'));document.getElementById('panel-'+p).classList.add('active');document.getElementById('sn-'+p)?.classList.add('active');closeSb()}
+window.openSb=()=>{document.getElementById('sidebar').classList.add('open');document.getElementById('sbo').classList.add('open')}
+window.closeSb=()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('sbo').classList.remove('open')}
+function renderCommitments(){
+  document.getElementById('commitments-list').innerHTML=commitments.map((c,i)=>`<div class="commit-row"><input class="commit-inp" value="${eh(c)}" oninput="commitments[${i}]=this.value"><button class="commit-del" onclick="removeCommitment(${i})">✕</button></div>`).join('');
+}
+window.addCommitment=function(){commitments.push('');renderCommitments();setTimeout(()=>{const inps=document.querySelectorAll('.commit-inp');if(inps.length)inps[inps.length-1].focus()},60)}
+window.removeCommitment=function(i){commitments.splice(i,1);renderCommitments()}
+window.autoSlug=function(){const t=document.getElementById('hero-title').value.trim();if(!t){toast('Add a title first');return}const slug=t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50);document.getElementById('seo-slug').value=slug;document.getElementById('slug-status').textContent='✓ swoopform.com/engage/'+slug;document.getElementById('slug-status').style.color='#10B981'}
+window.validateSlug=function(inp){inp.value=inp.value.replace(/[^a-z0-9-]/g,'');const s=document.getElementById('slug-status');if(inp.value.length>3){s.textContent='✓ swoopform.com/engage/'+inp.value;s.style.color='#10B981'}else{s.textContent='Too short';s.style.color='#EF4444'}}
+function getData(status){
+  const title=document.getElementById('hero-title').value.trim();
+  if(!title){toast('Please add a title');return null}
+  const statement=document.getElementById('pledge-statement').value.trim();
+  if(!statement){toast('Please add a pledge statement');return null}
+  return{title,heroSubtitle:document.getElementById('hero-subtitle').value.trim(),heroCTA:document.getElementById('hero-cta').value.trim()||'Take the Pledge →',heroImage:document.getElementById('hero-image').value.trim(),category:document.getElementById('pledge-category').value,problem:{title:document.getElementById('problem-title').value.trim(),content:document.getElementById('problem-content').value.trim()},statementTitle:document.getElementById('statement-title').value.trim()||'The Pledge',statement,commitments:commitments.filter(c=>c.trim()),formTitle:document.getElementById('form-title').value.trim()||'Take the Pledge',formSubtitle:document.getElementById('form-subtitle').value.trim(),collectName:isTgl('tgl-name'),collectEmail:isTgl('tgl-email'),collectMessage:isTgl('tgl-message'),showImpact:isTgl('tgl-counter'),showPledgerNames:isTgl('tgl-names'),goal:parseInt(document.getElementById('pledge-goal').value)||null,sections:{hero:true,problem:isTgl('sec-problem'),statement:true,impact:isTgl('sec-impact'),form:true,social:isTgl('sec-social'),faq:isTgl('sec-faq')},slug:document.getElementById('seo-slug').value.trim()||null,seo:{title:document.getElementById('seo-title').value.trim(),description:document.getElementById('seo-desc').value.trim()},status,updatedAt:serverTimestamp()}
+}
+async function save(status){const data=getData(status);if(!data)return false;try{await updateDoc(doc(db,'pledges',PLID),data);return true}catch(e){console.error(e);toast('Error saving');return false}}
+window.saveDraft=async function(){if(await save('draft'))toast('Saved!')}
+window.publishPledge=async function(){const btn=document.getElementById('pub-btn');btn.disabled=true;btn.textContent='Saving...';if(await save('active')){toast('Saved!',2000);setTimeout(()=>window.location.href='/dashboard',2200)}else{btn.disabled=false;btn.textContent='Save & publish →'}}
+window.deletePledge=async function(){if(!confirm('Delete this pledge permanently?'))return;try{await deleteDoc(doc(db,'pledges',PLID));window.location.href='/dashboard'}catch(e){toast('Error deleting')}}
+function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;')}
+function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
+</script>
+</body>
+</html>
