@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading — SwoopForm</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:#0F0E1A;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center}
+    .wrap{text-align:center;padding:40px 20px}
+    .logo{width:56px;height:56px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:#fff;margin:0 auto 24px;animation:pulse 1.5s ease infinite}
+    @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:0.8}}
+    .loading-text{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:rgba(255,255,255,0.5);margin-bottom:8px}
+    .loading-sub{font-size:0.82rem;color:rgba(255,255,255,0.25)}
+    .spinner{width:32px;height:32px;border:3px solid rgba(217,119,6,0.2);border-top-color:#D97706;border-radius:50%;animation:spin 0.8s linear infinite;margin:20px auto 0}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .error-wrap{text-align:center;padding:40px 20px;max-width:400px}
+    .error-icon{font-size:3rem;margin-bottom:16px}
+    .error-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;margin-bottom:8px}
+    .error-sub{font-size:0.88rem;color:rgba(255,255,255,0.4);margin-bottom:24px;line-height:1.6}
+    .home-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.6);font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.2s}
+    .home-btn:hover{border-color:rgba(255,255,255,0.4);color:#fff}
+  </style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <div class="logo">S</div>
+  <div class="loading-text">Finding your content...</div>
+  <div class="loading-sub">swoopform.com/engage/</div>
+  <div class="spinner"></div>
+</div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getFirestore,collection,query,where,getDocs}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);
+const db=getFirestore(app);
+
+// Extract slug from URL: /engage/my-slug
+const pathParts=window.location.pathname.split('/').filter(Boolean);
+const slug=pathParts[1];
+const params=window.location.search; // preserve ?preview=1 etc
+
+// Collections to search in order
+const COLLECTIONS=[
+  {name:'polls',    path:'/poll/'},
+  {name:'votings',  path:'/voting/'},
+  {name:'pledges',  path:'/pledge/'},
+  {name:'riddles',  path:'/riddle/'},
+  {name:'surveys',  path:'/survey/'},
+];
+
+async function route(){
+  if(!slug){showError('No slug provided','The URL is missing a content identifier.');return}
+
+  // Search each collection for a document with this slug
+  for(const col of COLLECTIONS){
+    try{
+      const q=query(collection(db,col.name),where('slug','==',slug));
+      const snap=await getDocs(q);
+      if(!snap.empty){
+        const doc=snap.docs[0];
+        const data=doc.data();
+        // Check if active or preview mode
+        const isPreview=params.includes('preview=1');
+        if(!isPreview&&data.status==='draft'){
+          showError('Not published yet','This content is not yet published.');
+          return;
+        }
+        // Redirect to the correct response page
+        const dest=col.path+slug+params;
+        window.location.replace(dest);
+        return;
+      }
+    }catch(e){console.error('Error searching',col.name,e)}
+  }
+
+  // Nothing found
+  showError('Content not found','This link may be incorrect or the content may have been removed.');
+}
+
+function showError(title,sub){
+  document.getElementById('wrap').innerHTML=`
+    <div class="error-wrap">
+      <div class="error-icon">🔍</div>
+      <div class="error-title">${title}</div>
+      <div class="error-sub">${sub}</div>
+      <a href="/discover" class="home-btn">← Browse SwoopForm</a>
+    </div>`;
+}
+
+route();
+</script>
+</body>
+</html>
