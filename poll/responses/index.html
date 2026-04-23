@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poll Responses — SwoopForm</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:#F0F4FF;color:#0F0E1A;min-height:100vh}
+    nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+    .logo-mk{width:28px;height:28px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;color:#fff}
+    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem}
+    .nav-right{display:flex;gap:8px}
+    .nav-btn{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
+    .nav-btn:hover{border-color:#4F46E5;color:#4F46E5}
+    .main{max-width:800px;margin:0 auto;padding:32px 20px}
+    .page-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-0.03em;margin-bottom:4px}
+    .page-sub{font-size:0.85rem;color:#64748B;margin-bottom:28px}
+    .card{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:24px;margin-bottom:16px}
+    .card-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:16px}
+    .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+    .stat-box{background:#EEF2FF;border-radius:12px;padding:16px;text-align:center}
+    .stat-val{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:#4F46E5;margin-bottom:2px}
+    .stat-lbl{font-size:0.72rem;color:#64748B;font-weight:600}
+    .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .bar-label{font-size:0.88rem;font-weight:600;width:160px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .bar-track{flex:1;height:32px;background:#EEF2FF;border-radius:8px;overflow:hidden;position:relative}
+    .bar-fill{height:100%;border-radius:8px;transition:width 0.8s ease;display:flex;align-items:center;padding-left:12px}
+    .bar-fill-text{color:#fff;font-size:0.78rem;font-weight:700}
+    .bar-count{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:#4F46E5;width:60px;text-align:right;flex-shrink:0}
+    .bar-pct{font-size:0.75rem;color:#94A3B8;width:40px;text-align:right;flex-shrink:0}
+    .spinner{width:28px;height:28px;border:3px solid rgba(79,70,229,0.15);border-top-color:#4F46E5;border-radius:50%;animation:spin 0.8s linear infinite;margin:40px auto;display:block}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media(max-width:600px){.bar-label{width:90px}.stat-row{grid-template-columns:repeat(2,1fr)}nav{padding:0 14px}.logo-nm{display:none}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/dashboard" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
+  <div class="nav-right"><a href="/dashboard" class="nav-btn">← Dashboard</a></div>
+</nav>
+<div class="main">
+  <div class="page-title">📊 Poll Responses</div>
+  <div class="page-sub" id="poll-sub">Loading...</div>
+  <div id="content"><div class="spinner"></div></div>
+</div>
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,doc,getDoc,collection,query,where,getDocs,orderBy}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);const auth=getAuth(app);const db=getFirestore(app);
+const id=new URLSearchParams(window.location.search).get('id');
+const COLORS=['#4F46E5','#7C3AED','#2563EB','#0891B2','#059669','#D97706','#DC2626','#EC4899'];
+onAuthStateChanged(auth,async u=>{
+  if(!u){window.location.href='/login';return}
+  if(!id){document.getElementById('content').innerHTML='<p style="color:#64748B">No poll ID provided.</p>';return}
+  const snap=await getDoc(doc(db,'polls',id));
+  if(!snap.exists()||snap.data().userId!==u.uid){document.getElementById('content').innerHTML='<p style="color:#64748B">Poll not found or access denied.</p>';return}
+  const poll={id:snap.id,...snap.data()};
+  document.title=poll.question+' — Poll Responses';
+  document.getElementById('poll-sub').textContent=poll.question;
+  const rSnap=await getDocs(query(collection(db,'pollResponses'),where('pollId','==',id)));
+  const responses=rSnap.docs.map(d=>d.data());
+  const total=poll.totalVotes||responses.length;
+  const counts={};(poll.options||[]).forEach(o=>counts[o.text||o]=o.votes||0);
+  const max=Math.max(...Object.values(counts),1);
+  document.getElementById('content').innerHTML=`
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-val">${total}</div><div class="stat-lbl">Total votes</div></div>
+      <div class="stat-box"><div class="stat-val">${(poll.options||[]).length}</div><div class="stat-lbl">Options</div></div>
+      <div class="stat-box"><div class="stat-val">${poll.type==='multiple'?'Multi':'Single'}</div><div class="stat-lbl">Type</div></div>
+    </div>
+    <div class="card">
+      <div class="card-t">Results</div>
+      ${(poll.options||[]).map((o,i)=>{const txt=o.text||o;const votes=o.votes||0;const pct=total>0?Math.round((votes/total)*100):0;return`<div class="bar-row"><div class="bar-label" title="${txt}">${txt}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${COLORS[i%COLORS.length]}"><span class="bar-fill-text">${pct>15?pct+'%':''}</span></div></div><div class="bar-count">${votes}</div><div class="bar-pct">${pct}%</div></div>`}).join('')}
+    </div>`;
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — SwoopForm</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
+    nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+    .logo-mk{width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff}
+    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#0F0E1A}
+    .nav-right{display:flex;gap:8px}
+    .nav-btn{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
+    .nav-btn:hover{border-color:#2D1B69;color:#2D1B69}
+    .nav-btn.primary{background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;border:none}
+    .main{max-width:740px;margin:0 auto;padding:40px 20px}
+    .breadcrumb{display:flex;align-items:center;gap:6px;font-size:0.78rem;color:#94A3B8;margin-bottom:24px}
+    .breadcrumb a{color:#94A3B8;text-decoration:none}
+    .breadcrumb a:hover{color:#2D1B69}
+    .post-header{margin-bottom:32px}
+    .post-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+    .post-tag{padding:3px 10px;border-radius:100px;background:#EDE9FF;color:#2D1B69;font-size:0.68rem;font-weight:700}
+    .post-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:-0.04em;line-height:1.15;margin-bottom:16px}
+    .post-meta{display:flex;align-items:center;gap:10px;font-size:0.78rem;color:#94A3B8;flex-wrap:wrap;margin-bottom:24px}
+    .post-author{font-weight:700;color:#64748B}
+    .post-cover{width:100%;border-radius:16px;overflow:hidden;margin-bottom:32px;background:linear-gradient(135deg,#2D1B69,#D97706);min-height:320px;display:flex;align-items:center;justify-content:center;font-size:5rem}
+    .post-cover img{width:100%;max-height:420px;object-fit:cover;display:block}
+    .post-body{font-size:1rem;line-height:1.8;color:#374151}
+    .post-body h1,.post-body h2,.post-body h3{font-family:'Syne',sans-serif;font-weight:800;color:#0F0E1A;margin:28px 0 12px;letter-spacing:-0.02em}
+    .post-body h1{font-size:1.6rem}
+    .post-body h2{font-size:1.3rem}
+    .post-body h3{font-size:1.1rem}
+    .post-body p{margin-bottom:16px}
+    .post-body ul,.post-body ol{padding-left:22px;margin-bottom:16px}
+    .post-body li{margin-bottom:6px;line-height:1.7}
+    .post-body blockquote{border-left:4px solid #D97706;padding:12px 20px;background:#FEF3C7;border-radius:0 10px 10px 0;margin:20px 0;font-style:italic;color:#92400E}
+    .post-body a{color:#2D1B69;font-weight:600}
+    .post-body a:hover{text-decoration:underline}
+    .post-body strong{font-weight:700;color:#0F0E1A}
+    .post-body code{background:#F1F5F9;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:0.88em}
+    .post-body pre{background:#0F0E1A;color:#E2DAD0;padding:16px 20px;border-radius:12px;overflow-x:auto;margin:16px 0;font-size:0.88em;line-height:1.6}
+    .post-body img{max-width:100%;border-radius:12px;margin:12px 0}
+    .post-body hr{border:none;border-top:1.5px solid #E2DAD0;margin:28px 0}
+    .share-section{margin-top:40px;padding:24px;background:#fff;border-radius:16px;border:1.5px solid #E2DAD0}
+    .share-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:12px}
+    .share-btns{display:flex;gap:8px;flex-wrap:wrap}
+    .share-btn{padding:8px 16px;border-radius:9px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;color:#64748B;transition:all 0.2s;text-decoration:none;display:inline-flex;align-items:center;gap:5px}
+    .share-btn:hover{border-color:#2D1B69;color:#2D1B69}
+    .cta-section{margin-top:32px;background:linear-gradient(135deg,#0F0E1A,#2D1B69);border-radius:16px;padding:32px;text-align:center;color:#fff}
+    .cta-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:8px}
+    .cta-sub{font-size:0.85rem;color:rgba(255,255,255,0.5);margin-bottom:20px}
+    .cta-btn{display:inline-block;padding:11px 24px;border-radius:10px;background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;font-size:0.88rem;font-weight:700;font-family:'Syne',sans-serif;text-decoration:none;transition:opacity 0.2s}
+    .cta-btn:hover{opacity:0.9}
+    .back-btn{display:inline-flex;align-items:center;gap:6px;color:#64748B;font-size:0.82rem;text-decoration:none;margin-top:32px;font-weight:600}
+    .back-btn:hover{color:#2D1B69}
+    .spinner{width:28px;height:28px;border:3px solid rgba(45,27,105,0.15);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite;margin:60px auto;display:block}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    footer{background:#0F0E1A;padding:28px 20px;text-align:center;margin-top:60px}
+    .footer-links{display:flex;gap:16px;justify-content:center;margin-bottom:8px;flex-wrap:wrap}
+    .footer-link{font-size:0.75rem;color:rgba(255,255,255,0.3);text-decoration:none}
+    .footer-link:hover{color:#fff}
+    .footer-copy{font-size:0.7rem;color:rgba(255,255,255,0.15)}
+    @media(max-width:600px){.main{padding:24px 14px}nav{padding:0 14px}.logo-nm{display:none}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
+  <div class="nav-right">
+    <a href="/blog" class="nav-btn">← Blog</a>
+    <a href="/login" class="nav-btn primary">Get started →</a>
+  </div>
+</nav>
+<div class="main" id="main">
+  <div class="spinner"></div>
+</div>
+<footer>
+  <div class="footer-links">
+    <a href="/" class="footer-link">Home</a><a href="/blog" class="footer-link">Blog</a>
+    <a href="/about" class="footer-link">About</a><a href="/contact" class="footer-link">Contact</a>
+    <a href="/privacy" class="footer-link">Privacy</a>
+  </div>
+  <div class="footer-copy">© 2024 SwoopForm</div>
+</footer>
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getFirestore,doc,getDoc}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);const db=getFirestore(app);
+const id=new URLSearchParams(window.location.search).get('id');
+async function init(){
+  if(!id){showError();return}
+  try{
+    const snap=await getDoc(doc(db,'blogPosts',id));
+    if(!snap.exists()||snap.data().status!=='published'){showError();return}
+    const p={id:snap.id,...snap.data()};
+    injectSEO(p);render(p);
+  }catch(e){showError()}
+}
+function injectSEO(p){
+  document.title=(p.title||'Post')+' — SwoopForm Blog';
+  const desc=p.excerpt||p.title||'SwoopForm Blog';
+  const setM=(n,c,prop)=>{const el=document.createElement('meta');if(prop)el.setAttribute('property',n);else el.setAttribute('name',n);el.setAttribute('content',c);document.head.appendChild(el)};
+  setM('description',desc);setM('og:title',p.title||'Post',true);setM('og:description',desc,true);
+  if(p.coverImage)setM('og:image',p.coverImage,true);setM('og:type','article',true);
+  setM('twitter:card','summary_large_image');setM('twitter:title',p.title||'');setM('twitter:description',desc);
+  const canon=document.createElement('link');canon.rel='canonical';canon.href='https://swoopform.com/blog/post/?id='+id;document.head.appendChild(canon);
+  const schema={
+    "@context":"https://schema.org","@type":"Article",
+    "headline":p.title,"description":p.excerpt||'',
+    "author":{"@type":"Person","name":p.author||'SwoopForm Team'},
+    "publisher":{"@type":"Organization","name":"SwoopForm","url":"https://swoopform.com"},
+    "url":"https://swoopform.com/blog/post/?id="+id,
+    "image":p.coverImage||'',"datePublished":p.publishedAt?.seconds?new Date(p.publishedAt.seconds*1000).toISOString():''
+  };
+  const s=document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify(schema);document.head.appendChild(s);
+}
+function formatDate(ts){if(!ts?.seconds)return'';return new Date(ts.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'})}
+function render(p){
+  const url='https://swoopform.com/blog/post/?id='+id;
+  document.getElementById('main').innerHTML=`
+    <div class="breadcrumb"><a href="/">Home</a> › <a href="/blog">Blog</a> › <span>${eh(p.title||'Post')}</span></div>
+    <div class="post-header">
+      ${p.tags?.length?`<div class="post-tags">${p.tags.map(t=>`<span class="post-tag">${t}</span>`).join('')}</div>`:''}
+      <h1 class="post-title">${eh(p.title||'')}</h1>
+      <div class="post-meta">
+        <span class="post-author">✍️ ${eh(p.author||'SwoopForm Team')}</span>
+        <span>·</span><span>📅 ${formatDate(p.publishedAt)}</span>
+        <span>·</span><span>⏱ ${p.readTime||'3'} min read</span>
+      </div>
+    </div>
+    ${p.coverImage?`<div class="post-cover"><img src="${p.coverImage}" alt="${eh(p.title)}" loading="lazy"></div>`:p.emoji?`<div class="post-cover">${p.emoji}</div>`:''}
+    <div class="post-body">${p.contentHtml||marked(p.content||'<p>No content.</p>')}</div>
+    <div class="share-section">
+      <div class="share-title">Found this helpful? Share it.</div>
+      <div class="share-btns">
+        <a class="share-btn" href="https://wa.me/?text=${encodeURIComponent(p.title+' '+url)}" target="_blank">💬 WhatsApp</a>
+        <a class="share-btn" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(p.title)}&url=${encodeURIComponent(url)}" target="_blank">🐦 Twitter</a>
+        <button class="share-btn" onclick="navigator.clipboard.writeText('${url}').then(()=>this.textContent='✓ Copied!')">🔗 Copy link</button>
+      </div>
+    </div>
+    <div class="cta-section">
+      <div class="cta-title">Ready to create better surveys?</div>
+      <div class="cta-sub">Join thousands of creators on SwoopForm. Free forever.</div>
+      <a href="/login" class="cta-btn">Create free account →</a>
+    </div>
+    <a href="/blog" class="back-btn">← Back to Blog</a>`;
+}
+function showError(){document.getElementById('main').innerHTML='<div style="text-align:center;padding:60px 20px"><div style="font-size:3rem;margin-bottom:12px">📝</div><h2 style="font-family:Syne,sans-serif;font-weight:800;margin-bottom:8px">Post not found</h2><p style="color:#64748B;margin-bottom:20px">This post may have been removed.</p><a href="/blog" style="color:#2D1B69;font-weight:600;text-decoration:none">← Back to Blog</a></div>'}
+function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function marked(md){return md.replace(/^### (.+)$/gm,'<h3>$1</h3>').replace(/^## (.+)$/gm,'<h2>$1</h2>').replace(/^# (.+)$/gm,'<h1>$1</h1>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/`(.+?)`/g,'<code>$1</code>').replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>').replace(/^\- (.+)$/gm,'<li>$1</li>').replace(/(<li>.*<\/li>)/s,'<ul>$1</ul>').replace(/\n\n/g,'</p><p>').replace(/^(?!<[hH\d]|<ul|<ol|<li|<blockquote|<pre)(.+)$/gm,'<p>$1</p>')}
+init();
+</script>
+</body>
+</html>

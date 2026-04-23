@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voting Results — SwoopForm</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:#0A0F1E;color:#fff;min-height:100vh}
+    nav{background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+    .logo-mk{width:28px;height:28px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;color:#fff}
+    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem}
+    .nav-btn{padding:7px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.5);font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
+    .nav-btn:hover{border-color:#D97706;color:#D97706}
+    .main{max-width:800px;margin:0 auto;padding:32px 20px}
+    .page-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-0.03em;margin-bottom:4px}
+    .page-sub{font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:28px}
+    .card{background:rgba(255,255,255,0.05);border-radius:14px;border:1px solid rgba(255,255,255,0.08);padding:24px;margin-bottom:16px}
+    .card-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:16px}
+    .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+    .stat-box{background:rgba(217,119,6,0.1);border:1px solid rgba(217,119,6,0.2);border-radius:12px;padding:16px;text-align:center}
+    .stat-val{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:#D97706;margin-bottom:2px}
+    .stat-lbl{font-size:0.72rem;color:rgba(255,255,255,0.35);font-weight:600}
+    .winner-banner{background:linear-gradient(135deg,rgba(217,119,6,0.2),rgba(217,119,6,0.05));border:1.5px solid rgba(217,119,6,0.4);border-radius:14px;padding:20px;text-align:center;margin-bottom:16px}
+    .winner-label{font-size:0.72rem;font-weight:700;color:#D97706;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px}
+    .winner-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem}
+    .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .bar-num{width:28px;height:28px;border-radius:7px;background:rgba(217,119,6,0.15);color:#D97706;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.78rem;flex-shrink:0}
+    .bar-label{font-size:0.88rem;font-weight:600;width:140px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .bar-track{flex:1;height:36px;background:rgba(255,255,255,0.05);border-radius:8px;overflow:hidden}
+    .bar-fill{height:100%;background:linear-gradient(90deg,#D97706,#F59E0B);border-radius:8px;transition:width 0.8s ease;display:flex;align-items:center;padding-left:12px}
+    .bar-fill-text{color:#fff;font-size:0.78rem;font-weight:700}
+    .bar-count{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:#D97706;width:50px;text-align:right;flex-shrink:0}
+    .bar-pct{font-size:0.75rem;color:rgba(255,255,255,0.3);width:40px;text-align:right;flex-shrink:0}
+    .spinner{width:28px;height:28px;border:3px solid rgba(217,119,6,0.15);border-top-color:#D97706;border-radius:50%;animation:spin 0.8s linear infinite;margin:40px auto;display:block}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media(max-width:600px){.bar-label{width:80px}.stat-row{grid-template-columns:repeat(2,1fr)}nav{padding:0 14px}.logo-nm{display:none}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/dashboard" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
+  <a href="/dashboard" class="nav-btn">← Dashboard</a>
+</nav>
+<div class="main">
+  <div class="page-title">🗳️ Voting Results</div>
+  <div class="page-sub" id="voting-sub">Loading...</div>
+  <div id="content"><div class="spinner"></div></div>
+</div>
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,doc,getDoc}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);const auth=getAuth(app);const db=getFirestore(app);
+const id=new URLSearchParams(window.location.search).get('id');
+onAuthStateChanged(auth,async u=>{
+  if(!u){window.location.href='/login';return}
+  const snap=await getDoc(doc(db,'votings',id));
+  if(!snap.exists()||snap.data().userId!==u.uid){document.getElementById('content').innerHTML='<p style="color:rgba(255,255,255,0.4)">Not found or access denied.</p>';return}
+  const v={id:snap.id,...snap.data()};
+  document.getElementById('voting-sub').textContent=v.title;
+  const total=v.totalVotes||0;
+  const winner=v.candidates?.reduce((a,b)=>(a.votes||0)>(b.votes||0)?a:b,v.candidates[0]);
+  const max=Math.max(...(v.candidates||[]).map(c=>c.votes||0),1);
+  document.getElementById('content').innerHTML=`
+    ${winner?`<div class="winner-banner"><div class="winner-label">👑 Leading candidate</div><div class="winner-name">${eh(winner.name)}</div><div style="font-size:0.82rem;color:rgba(255,255,255,0.4);margin-top:4px">${winner.votes||0} votes · ${total>0?Math.round(((winner.votes||0)/total)*100):0}%</div></div>`:''}
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-val">${total}</div><div class="stat-lbl">Total votes</div></div>
+      <div class="stat-box"><div class="stat-val">${(v.candidates||[]).length}</div><div class="stat-lbl">Candidates</div></div>
+      <div class="stat-box"><div class="stat-val">${v.status||'active'}</div><div class="stat-lbl">Status</div></div>
+    </div>
+    <div class="card">
+      <div class="card-t">Results breakdown</div>
+      ${(v.candidates||[]).sort((a,b)=>(b.votes||0)-(a.votes||0)).map((c,i)=>{const votes=c.votes||0;const pct=total>0?Math.round((votes/total)*100):0;return`<div class="bar-row"><div class="bar-num">${i+1}</div><div class="bar-label" title="${c.name}">${eh(c.name)}</div><div class="bar-track"><div class="bar-fill" style="width:${(votes/max)*100}%"><span class="bar-fill-text">${pct>15?pct+'%':''}</span></div></div><div class="bar-count">${votes}</div><div class="bar-pct">${pct}%</div></div>`}).join('')}
+    </div>`;
+});
+function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+</script>
+</body>
+</html>
