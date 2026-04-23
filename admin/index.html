@@ -3,375 +3,265 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SwoopForm — Admin</title>
+  <title>Admin — SwoopForm</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
-    .topnav{height:56px;background:#0F0E1A;border-bottom:1.5px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:fixed;top:0;left:0;right:0;z-index:200}
-    .topnav-left{display:flex;align-items:center;gap:10px}
-    .hbtn{background:none;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;gap:5px}
-    .hbtn span{display:block;width:20px;height:2px;background:#fff;border-radius:2px}
-    .logo-wrap{display:flex;align-items:center;gap:8px;text-decoration:none}
-    .logo-mark{width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff}
-    .logo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;color:#fff}
-    .admin-badge{padding:3px 10px;border-radius:100px;background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;font-size:0.7rem;font-weight:800;letter-spacing:0.06em}
-    .topnav-right{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;flex-shrink:0}
-    .topnav-left{flex-shrink:1;min-width:0;overflow:hidden}
-    .btn-back{padding:7px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.7);font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
-    .btn-back:hover{border-color:#fff;color:#fff}
-    .layout{display:flex;min-height:calc(100vh - 56px);margin-top:56px}
-    .sidebar{width:220px;flex-shrink:0;background:#1A1828;display:flex;flex-direction:column;position:fixed;top:56px;left:0;bottom:0;z-index:100;transition:transform 0.3s ease;overflow-y:auto}
-    .sb-nav{padding:16px 10px;flex:1}
-    .sb-label{font-size:0.65rem;font-weight:700;color:rgba(255,255,255,0.3);letter-spacing:0.08em;text-transform:uppercase;padding:0 8px;margin-bottom:4px;margin-top:16px}
-    .sb-label:first-child{margin-top:0}
-    .sb-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:600;color:rgba(255,255,255,0.5);transition:all 0.2s;text-decoration:none}
-    .sb-item:hover{background:rgba(255,255,255,0.08);color:#fff}
-    .sb-item.active{background:rgba(45,27,105,0.6);color:#fff}
-    .sb-item .ico{width:20px;text-align:center;font-size:1rem;flex-shrink:0}
-    .sb-badge{margin-left:auto;font-size:0.65rem;font-weight:700;background:#DC2626;color:#fff;padding:1px 6px;border-radius:100px}
-    .sb-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;display:none}
-    .sb-overlay.open{display:block}
-    .content{flex:1;margin-left:220px;padding:28px 24px;min-height:calc(100vh - 56px)}
-    .panel{display:none}
-    .panel.active{display:block}
-    .panel-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-0.02em;margin-bottom:4px}
-    .panel-sub{font-size:0.85rem;color:#64748B;margin-bottom:24px}
-    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
-    .stat-card{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;padding:16px 18px}
-    .stat-icon{font-size:1.2rem;margin-bottom:8px}
-    .stat-val{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;letter-spacing:-0.03em;color:#0F0E1A}
-    .stat-lbl{font-size:0.75rem;color:#64748B;font-weight:500;margin-top:4px}
-    .card{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:20px;margin-bottom:16px}
-    .card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-    .table{width:100%;border-collapse:collapse;font-size:0.82rem}
-    .table th{background:#F5F0E8;padding:10px 14px;text-align:left;font-weight:700;font-size:0.7rem;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;border-bottom:1.5px solid #E2DAD0}
-    .table td{padding:10px 14px;border-bottom:1px solid #E2DAD0;vertical-align:middle}
-    .table tr:last-child td{border-bottom:none}
-    .table tr:hover td{background:#F5F0E8}
-    .badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:0.7rem;font-weight:700}
-    .badge-active{background:#DCFCE7;color:#166534}
-    .badge-draft{background:#FEF3C7;color:#92400E}
-    .badge-closed{background:#F1F5F9;color:#64748B}
-    .badge-free{background:#EDE9FF;color:#2D1B69}
-    .badge-student{background:#DCFCE7;color:#166534}
-    .badge-ngo{background:#FEF3C7;color:#92400E}
-    .badge-pro{background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff}
-    .badge-pending{background:#FEF3C7;color:#92400E}
-    .badge-approved{background:#DCFCE7;color:#166534}
-    .badge-rejected{background:#FEE2E2;color:#DC2626}
-    .btn-sm{padding:5px 10px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
-    .btn-sm:hover{border-color:#2D1B69;color:#2D1B69}
-    .btn-sm.danger{color:#DC2626;border-color:#FEE2E2}
-    .btn-sm.danger:hover{background:#FEE2E2}
-    .btn-sm.success{color:#10B981;border-color:#BBF7D0}
-    .btn-sm.success:hover{background:#DCFCE7}
-    .btn-sm.primary{background:#2D1B69;border-color:#2D1B69;color:#fff}
-    .btn-sm.primary:hover{opacity:0.9}
-    .btn-primary{padding:8px 16px;border-radius:8px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.82rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s}
+    body{font-family:'DM Sans',sans-serif;background:#0F0E1A;color:#fff;min-height:100vh}
+    nav{background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+    .logo-mk{width:28px;height:28px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;color:#fff}
+    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem}
+    .admin-badge{font-size:0.68rem;font-weight:700;background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);color:#FCA5A5;padding:3px 8px;border-radius:100px}
+    .nav-right{display:flex;gap:8px}
+    .nav-btn{padding:6px 12px;border-radius:7px;border:1.5px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.5);font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
+    .nav-btn:hover{border-color:rgba(255,255,255,0.3);color:#fff}
+    .layout{display:flex;min-height:calc(100vh - 56px)}
+    .sidebar{width:220px;border-right:1px solid rgba(255,255,255,0.06);padding:12px;flex-shrink:0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}
+    .sb-lbl{font-size:0.62rem;font-weight:700;color:rgba(255,255,255,0.25);letter-spacing:0.1em;text-transform:uppercase;padding:6px 8px;margin-top:12px}
+    .sb-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.4);transition:all 0.2s}
+    .sb-item:hover{background:rgba(255,255,255,0.05);color:#fff}
+    .sb-item.active{background:rgba(255,255,255,0.08);color:#fff}
+    .sb-item .ico{width:16px;text-align:center}
+    .content{flex:1;padding:24px;overflow-y:auto;max-width:1100px}
+    .section{display:none}
+    .section.active{display:block}
+    .section-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;letter-spacing:-0.02em;margin-bottom:4px}
+    .section-sub{font-size:0.82rem;color:rgba(255,255,255,0.35);margin-bottom:24px}
+    .card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px;margin-bottom:14px}
+    .card-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+    .fl{margin-bottom:12px}
+    .fl:last-child{margin-bottom:0}
+    .ll{display:block;font-size:0.68rem;font-weight:700;color:rgba(255,255,255,0.35);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px}
+    .ii{width:100%;padding:8px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#fff;font-size:0.85rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
+    .ii:focus{border-color:#D97706}
+    .ii::placeholder{color:rgba(255,255,255,0.2)}
+    .btn{padding:8px 16px;border-radius:8px;border:none;font-size:0.82rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
+    .btn-primary{background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff}
     .btn-primary:hover{opacity:0.9}
-    .search-inp{padding:8px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.82rem;font-family:'DM Sans',sans-serif;outline:none;width:100%;max-width:320px}
-    .search-inp:focus{border-color:#2D1B69}
-    .form-group{margin-bottom:14px}
-    .form-label{display:block;font-size:0.72rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px}
-    .form-input{width:100%;padding:9px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.85rem;font-family:'DM Sans',sans-serif;outline:none}
-    .form-input:focus{border-color:#2D1B69}
-    .form-textarea{width:100%;padding:9px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.85rem;font-family:'DM Sans',sans-serif;outline:none;resize:vertical;min-height:100px}
-    .form-textarea:focus{border-color:#2D1B69}
-    .plan-bar-wrap{margin-bottom:12px}
-    .plan-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:0.82rem}
-    .plan-bar-label{width:80px;color:#64748B;font-weight:600}
-    .plan-bar-track{flex:1;height:10px;background:#F5F0E8;border-radius:5px;overflow:hidden}
-    .plan-bar-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,#2D1B69,#D97706);transition:width 0.8s ease}
-    .plan-bar-count{width:40px;text-align:right;font-weight:700;color:#0F0E1A}
-
-    /* CATEGORY STYLES */
-    .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:20px}
-    .cat-card{background:#F5F0E8;border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:10px;border:1.5px solid #E2DAD0}
-    .cat-emoji{font-size:1.4rem;flex-shrink:0}
-    .cat-info{flex:1;min-width:0}
-    .cat-name{font-weight:700;font-size:0.88rem;color:#0F0E1A}
-    .cat-count{font-size:0.72rem;color:#64748B;margin-top:2px}
-    .cat-actions{display:flex;gap:5px;flex-shrink:0}
-    .suggestion-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #E2DAD0;flex-wrap:wrap;gap:8px}
-    .suggestion-row:last-child{border-bottom:none}
-    .suggestion-name{font-weight:700;font-size:0.88rem}
-    .suggestion-meta{font-size:0.75rem;color:#64748B;margin-top:2px}
-    .vote-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;background:#EDE9FF;color:#2D1B69;font-size:0.75rem;font-weight:700}
-    .add-cat-form{background:#F5F0E8;border-radius:10px;padding:16px;border:1.5px dashed #E2DAD0;margin-bottom:16px;display:none}
-    .add-cat-form.open{display:block}
-
-    /* ANNOUNCEMENT */
-    .announce-preview{background:#0F0E1A;color:#fff;border-radius:10px;padding:16px;margin-top:12px;font-size:0.85rem;line-height:1.6}
-    .announce-preview-title{font-family:'Syne',sans-serif;font-weight:700;margin-bottom:6px}
-
-    /* MODAL */
-    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
-    .modal-bg.open{display:flex}
-    .modal{background:#fff;border-radius:16px;padding:28px;width:100%;max-width:420px}
-    .modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:8px}
-    .modal-sub{font-size:0.85rem;color:#64748B;margin-bottom:20px;line-height:1.6}
-    .modal-footer{display:flex;gap:8px;justify-content:flex-end}
-    .btn-cancel{padding:8px 16px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer}
-    .btn-confirm{padding:8px 16px;border-radius:8px;border:none;background:#DC2626;color:#fff;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer}
-    .btn-confirm.safe{background:#2D1B69}
-
-    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;white-space:nowrap}
-    .ls{position:fixed;inset:0;background:#F5F0E8;display:flex;align-items:center;justify-content:center;z-index:999}
-    .spinner{width:32px;height:32px;border:3px solid rgba(45,27,105,0.2);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite}
+    .btn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6)}
+    .btn-ghost:hover{border-color:rgba(255,255,255,0.4);color:#fff}
+    .btn-danger{background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#FCA5A5}
+    .btn-danger:hover{background:rgba(239,68,68,0.3)}
+    .btn-sm{padding:5px 10px;font-size:0.72rem}
+    .btn-success{background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);color:#6EE7B7}
+    .btn-success:hover{background:rgba(16,185,129,0.3)}
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+    .stat-box{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;text-align:center}
+    .stat-val{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:-0.03em}
+    .stat-lbl{font-size:0.72rem;color:rgba(255,255,255,0.35);margin-top:4px}
+    .table{width:100%;border-collapse:collapse;font-size:0.82rem}
+    .table th{padding:10px 12px;text-align:left;font-size:0.68rem;font-weight:700;color:rgba(255,255,255,0.3);letter-spacing:0.05em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,0.06)}
+    .table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle}
+    .table tr:hover td{background:rgba(255,255,255,0.02)}
+    .table tr:last-child td{border-bottom:none}
+    .badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:100px;font-size:0.65rem;font-weight:700}
+    .badge-green{background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);color:#6EE7B7}
+    .badge-yellow{background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);color:#FCD34D}
+    .badge-red{background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#FCA5A5}
+    .badge-blue{background:rgba(37,99,235,0.15);border:1px solid rgba(37,99,235,0.3);color:#93C5FD}
+    .badge-purple{background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);color:#C4B5FD}
+    .type-icons={surveys:'📋',polls:'📊',votings:'🗳️',pledges:'🤝',riddles:'🧩'}
+    .sr{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+    .sr:last-child{border-bottom:none}
+    .sr-n{font-size:0.82rem;font-weight:600}
+    .sr-d{font-size:0.7rem;color:rgba(255,255,255,0.3);margin-top:2px}
+    .tgl{width:30px;height:16px;border-radius:100px;background:rgba(255,255,255,0.15);cursor:pointer;position:relative;transition:background 0.2s;border:none;flex-shrink:0}
+    .tgl.on{background:#D97706}
+    .tgl::after{content:'';position:absolute;width:10px;height:10px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 0.2s}
+    .tgl.on::after{transform:translateX(14px)}
+    .announcement-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:14px;margin-bottom:8px}
+    .loading-wrap{text-align:center;padding:40px;color:rgba(255,255,255,0.3);font-size:0.85rem}
+    .spinner{width:24px;height:24px;border:3px solid rgba(217,119,6,0.2);border-top-color:#D97706;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 10px}
     @keyframes spin{to{transform:rotate(360deg)}}
-    .empty{text-align:center;padding:32px;color:#94A3B8;font-size:0.85rem}
-
-    @media(max-width:860px){
-      .sidebar{transform:translateX(-100%)}
-      .sidebar.open{transform:translateX(0)}
-      .content{margin-left:0;padding:20px 16px}
-      .stats-grid{grid-template-columns:repeat(2,1fr)}
-      .hbtn{display:flex}
-    }
-    @media(max-width:500px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
- @media(min-width:600px){#btn-back-admin{display:inline-flex!important}}
-@media(max-width:600px){
-  .topnav{padding:0 10px}
-  .admin-badge{font-size:0.6rem;padding:2px 7px}
-  .logo-name{font-size:0.82rem}
-}
- </style>
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;color:#0F0E1A;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;white-space:nowrap}
+    .blog-form{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;margin-bottom:16px}
+    .blog-form.hidden{display:none}
+    @media(max-width:700px){.sidebar{display:none}.stats-grid{grid-template-columns:repeat(2,1fr)}.layout{flex-direction:column}.content{padding:16px}}
+  </style>
 </head>
 <body>
-<div class="ls" id="ls"><div class="spinner"></div></div>
-
-<div class="modal-bg" id="confirm-modal">
-  <div class="modal">
-    <div class="modal-title" id="modal-title">Confirm</div>
-    <div class="modal-sub" id="modal-sub"></div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn-confirm" id="modal-btn" onclick="doModalAction()">Confirm</button>
-    </div>
-  </div>
-</div>
-
-<div class="sb-overlay" id="sb-overlay" onclick="closeSb()"></div>
-
-<div class="topnav">
-  <div class="topnav-left">
-    <button class="hbtn" onclick="toggleSb()"><span></span><span></span><span></span></button>
-    <a href="/dashboard" class="logo-wrap"><div class="logo-mark">S</div><div class="logo-name">SwoopForm</div></a>
-    <span class="admin-badge">ADMIN</span>
-  </div>
-  <div class="topnav-right">
-    <a href="/dashboard" class="btn-back" style="display:none" id="btn-back-admin">← Dashboard</a>
-  </div>
-</div>
-
+<nav>
+  <a href="/" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
+  <div style="display:flex;align-items:center;gap:8px"><span class="admin-badge">Admin</span></div>
+  <div class="nav-right"><a href="/dashboard" class="nav-btn">← Dashboard</a></div>
+</nav>
 <div class="layout">
-  <div class="sidebar" id="sidebar">
-    <div class="sb-nav">
-      <div class="sb-label">Dashboard</div>
-      <button class="sb-item active" id="sn-overview" onclick="showPanel('overview')"><span class="ico">📊</span>Overview</button>
-      <div class="sb-label">Management</div>
-      <button class="sb-item" id="sn-users" onclick="showPanel('users')"><span class="ico">👥</span>Users</button>
-      <button class="sb-item" id="sn-surveys" onclick="showPanel('surveys')"><span class="ico">📋</span>Surveys</button>
-      <button class="sb-item" id="sn-verifications" onclick="showPanel('verifications')"><span class="ico">✅</span>Verifications<span class="sb-badge" id="verif-badge" style="display:none">0</span></button>
-      <button class="sb-item" id="sn-categories" onclick="showPanel('categories')"><span class="ico">📂</span>Categories</button>
-      <div class="sb-label">Communication</div>
-      <button class="sb-item" id="sn-announce" onclick="showPanel('announce')"><span class="ico">📢</span>Announcements</button>
-      <div class="sb-label">Analytics</div>
-      <button class="sb-item" id="sn-revenue" onclick="showPanel('revenue')"><span class="ico">💰</span>Revenue</button>
-    </div>
+  <div class="sidebar">
+    <div class="sb-lbl">Overview</div>
+    <button class="sb-item active" id="sn-overview" onclick="showSection('overview')"><span class="ico">📊</span>Overview</button>
+    <button class="sb-item" id="sn-users" onclick="showSection('users')"><span class="ico">👥</span>Users</button>
+    <button class="sb-item" id="sn-content" onclick="showSection('content')"><span class="ico">📋</span>All content</button>
+    <div class="sb-lbl">Features</div>
+    <button class="sb-item" id="sn-featured" onclick="showSection('featured')"><span class="ico">⭐</span>Featured</button>
+    <button class="sb-item" id="sn-blog" onclick="showSection('blog')"><span class="ico">✍️</span>Blog</button>
+    <button class="sb-item" id="sn-categories" onclick="showSection('categories')"><span class="ico">🏷️</span>Categories</button>
+    <button class="sb-item" id="sn-verify" onclick="showSection('verify')"><span class="ico">✅</span>Verifications</button>
+    <div class="sb-lbl">System</div>
+    <button class="sb-item" id="sn-announce" onclick="showSection('announce')"><span class="ico">📢</span>Announcements</button>
+    <button class="sb-item" id="sn-settings" onclick="showSection('settings')"><span class="ico">⚙️</span>Settings</button>
   </div>
-
   <div class="content">
 
     <!-- OVERVIEW -->
-    <div class="panel active" id="panel-overview">
-      <div class="panel-title">📊 Platform Overview</div>
-      <div class="panel-sub">Real-time stats across SwoopForm</div>
-      <div class="stats-grid">
-        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val" id="ov-users">—</div><div class="stat-lbl">Total users</div></div>
-        <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-val" id="ov-surveys">—</div><div class="stat-lbl">Total surveys</div></div>
-        <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-val" id="ov-responses">—</div><div class="stat-lbl">Total responses</div></div>
-        <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-val" id="ov-pending">—</div><div class="stat-lbl">Pending verifications</div></div>
+    <div class="section active" id="section-overview">
+      <div class="section-title">📊 Platform Overview</div>
+      <div class="section-sub">Key metrics and platform health</div>
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-box"><div class="stat-val" id="st-users">—</div><div class="stat-lbl">Total users</div></div>
+        <div class="stat-box"><div class="stat-val" id="st-content">—</div><div class="stat-lbl">Total content</div></div>
+        <div class="stat-box"><div class="stat-val" id="st-responses">—</div><div class="stat-lbl">Responses</div></div>
+        <div class="stat-box"><div class="stat-val" id="st-blogs">—</div><div class="stat-lbl">Blog posts</div></div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;flex-wrap:wrap">
-        <div class="card">
-          <div class="card-title">Plan distribution</div>
-          <div class="plan-bar-wrap" id="plan-bars"></div>
-        </div>
-        <div class="card">
-          <div class="card-title">Survey status breakdown</div>
-          <div id="status-bars"></div>
-        </div>
+      <div class="card">
+        <div class="card-t">Recent users</div>
+        <div id="recent-users-wrap"><div class="loading-wrap"><div class="spinner"></div>Loading...</div></div>
       </div>
     </div>
 
     <!-- USERS -->
-    <div class="panel" id="panel-users">
-      <div class="panel-title">👥 Users</div>
-      <div class="panel-sub">Manage all SwoopForm users</div>
+    <div class="section" id="section-users">
+      <div class="section-title">👥 Users</div>
+      <div class="section-sub">All registered users on the platform</div>
       <div class="card">
-        <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
-          <input class="search-inp" id="user-search" placeholder="🔍 Search by name or email..." oninput="filterUsers(this.value)">
-          <select class="search-inp" style="max-width:160px" onchange="filterUsersByPlan(this.value)" id="plan-filter">
-            <option value="all">All plans</option>
-            <option value="free">Free</option>
-            <option value="student">Student</option>
-            <option value="ngo">NGO</option>
-            <option value="starter">Starter</option>
-            <option value="pro">Pro</option>
-            <option value="business">Business</option>
-          </select>
+        <div class="card-t">
+          <span>All users</span>
+          <input class="ii" id="user-search" placeholder="Search by name or email..." style="max-width:240px" oninput="filterUsers()">
         </div>
-        <div style="overflow-x:auto">
-          <table class="table" id="users-table">
-            <thead><tr><th>User</th><th>Plan</th><th>Surveys</th><th>Joined</th><th>Actions</th></tr></thead>
-            <tbody id="users-tbody"></tbody>
-          </table>
-        </div>
+        <div id="users-table-wrap"><div class="loading-wrap"><div class="spinner"></div>Loading users...</div></div>
       </div>
     </div>
 
-    <!-- SURVEYS -->
-    <div class="panel" id="panel-surveys">
-      <div class="panel-title">📋 All Surveys</div>
-      <div class="panel-sub">View and manage all surveys on the platform</div>
+    <!-- ALL CONTENT -->
+    <div class="section" id="section-content">
+      <div class="section-title">📋 All Content</div>
+      <div class="section-sub">Surveys, polls, votings, pledges and riddles across the platform</div>
       <div class="card">
-        <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
-          <input class="search-inp" id="survey-search" placeholder="🔍 Search surveys..." oninput="filterSurveys(this.value)">
-          <select class="search-inp" style="max-width:160px" onchange="filterSurveysByStatus(this.value)">
-            <option value="all">All status</option>
-            <option value="active">Active</option>
-            <option value="draft">Draft</option>
-            <option value="closed">Closed</option>
-          </select>
+        <div class="card-t">
+          <span>All items</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <select class="ii" id="content-type-filter" onchange="filterContent()" style="max-width:140px;padding:6px 10px">
+              <option value="all">All types</option>
+              <option value="surveys">Surveys</option>
+              <option value="polls">Polls</option>
+              <option value="votings">Voting</option>
+              <option value="pledges">Pledges</option>
+              <option value="riddles">Riddles</option>
+            </select>
+            <input class="ii" id="content-search" placeholder="Search..." style="max-width:180px" oninput="filterContent()">
+          </div>
         </div>
-        <div style="overflow-x:auto">
-          <table class="table" id="surveys-table">
-            <thead><tr><th>Title</th><th>Owner</th><th>Status</th><th>Responses</th><th>Created</th><th>Actions</th></tr></thead>
-            <tbody id="surveys-tbody"></tbody>
-          </table>
-        </div>
+        <div id="content-table-wrap"><div class="loading-wrap"><div class="spinner"></div>Loading content...</div></div>
       </div>
     </div>
 
-    <!-- VERIFICATIONS -->
-    <div class="panel" id="panel-verifications">
-      <div class="panel-title">✅ Verifications</div>
-      <div class="panel-sub">Approve or reject student and NGO verification requests</div>
+    <!-- FEATURED -->
+    <div class="section" id="section-featured">
+      <div class="section-title">⭐ Featured Content</div>
+      <div class="section-sub">Toggle featured status on any public content. Featured items appear at the top of Discover.</div>
       <div class="card">
-        <div class="card-title">Pending <span id="pending-count" class="badge badge-pending">0</span></div>
-        <div id="verif-list"></div>
+        <div class="card-t">
+          <span>Public content</span>
+          <select class="ii" id="feat-type-filter" onchange="loadFeatured()" style="max-width:140px;padding:6px 10px">
+            <option value="all">All types</option>
+            <option value="surveys">Surveys</option>
+            <option value="polls">Polls</option>
+            <option value="votings">Voting</option>
+            <option value="pledges">Pledges</option>
+            <option value="riddles">Riddles</option>
+          </select>
+        </div>
+        <div id="featured-table-wrap"><div class="loading-wrap"><div class="spinner"></div>Loading...</div></div>
       </div>
+    </div>
+
+    <!-- BLOG -->
+    <div class="section" id="section-blog">
+      <div class="section-title">✍️ Blog</div>
+      <div class="section-sub">Create and manage blog posts. Supports Markdown.</div>
       <div class="card">
-        <div class="card-title">Recently reviewed</div>
-        <div id="verif-done-list"></div>
+        <div class="card-t">
+          <span>Posts</span>
+          <button class="btn btn-primary btn-sm" onclick="toggleBlogForm()">+ New post</button>
+        </div>
+        <!-- BLOG FORM -->
+        <div class="blog-form hidden" id="blog-form">
+          <div class="fl"><label class="ll">Title *</label><input class="ii" id="bf-title" placeholder="Post title"></div>
+          <div class="fl"><label class="ll">Excerpt</label><textarea class="ii" id="bf-excerpt" rows="2" style="resize:vertical" placeholder="Short description shown in listings..."></textarea></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="fl"><label class="ll">Author</label><input class="ii" id="bf-author" placeholder="SwoopForm Team"></div>
+            <div class="fl"><label class="ll">Read time (min)</label><input class="ii" id="bf-time" type="number" min="1" placeholder="3"></div>
+          </div>
+          <div class="fl"><label class="ll">Cover image URL</label><input class="ii" id="bf-cover" placeholder="https://..."></div>
+          <div class="fl"><label class="ll">Emoji (if no cover)</label><input class="ii" id="bf-emoji" placeholder="📝" style="max-width:80px"></div>
+          <div class="fl"><label class="ll">Tags (comma separated)</label><input class="ii" id="bf-tags" placeholder="Surveys, Tips, Research"></div>
+          <div class="fl"><label class="ll">Content (Markdown) *</label><textarea class="ii" id="bf-content" rows="12" style="resize:vertical;font-family:monospace;font-size:0.82rem" placeholder="# Heading&#10;&#10;Write your post in Markdown..."></textarea></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px;flex-wrap:wrap;gap:8px">
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-primary" onclick="saveBlogPost('published')">Publish post</button>
+              <button class="btn btn-ghost" onclick="saveBlogPost('draft')">Save draft</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:0.78rem;color:rgba(255,255,255,0.35)">Featured:</span>
+              <button class="tgl" id="bf-featured" onclick="this.classList.toggle('on')"></button>
+              <button class="btn btn-ghost btn-sm" onclick="cancelBlogForm()">Cancel</button>
+            </div>
+          </div>
+        </div>
+        <div id="blog-posts-wrap"><div class="loading-wrap"><div class="spinner"></div>Loading posts...</div></div>
       </div>
     </div>
 
     <!-- CATEGORIES -->
-    <div class="panel" id="panel-categories">
-      <div class="panel-title">📂 Categories</div>
-      <div class="panel-sub">Manage survey categories shown on the discover page</div>
-
+    <div class="section" id="section-categories">
+      <div class="section-title">🏷️ Categories</div>
+      <div class="section-sub">Manage discover page categories</div>
       <div class="card">
-        <div class="card-title">
-          Active Categories
-          <button class="btn-primary" onclick="toggleAddCatForm()" id="add-cat-btn">+ Add category</button>
+        <div class="card-t">Add category</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+          <input class="ii" id="cat-emoji" placeholder="🎓" style="max-width:70px">
+          <input class="ii" id="cat-name" placeholder="Category name" style="flex:1">
+          <button class="btn btn-primary" onclick="addCategory()">Add</button>
         </div>
-
-        <!-- Add category form -->
-        <div class="add-cat-form" id="add-cat-form">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-            <div class="form-group" style="margin:0">
-              <label class="form-label">Category name</label>
-              <input class="form-input" id="new-cat-name" placeholder="e.g. Bollywood" oninput="previewEmoji()">
-            </div>
-            <div class="form-group" style="margin:0">
-              <label class="form-label">Auto emoji preview</label>
-              <div style="padding:9px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#F5F0E8;font-size:1.2rem" id="emoji-preview">—</div>
-            </div>
-          </div>
-          <div style="display:flex;gap:8px">
-            <button class="btn-primary" onclick="addCategory()">Add category</button>
-            <button class="btn-cancel" onclick="toggleAddCatForm()">Cancel</button>
-          </div>
-        </div>
-
-        <div class="cat-grid" id="cat-grid">
-          <div class="empty">Loading categories...</div>
-        </div>
-
-        <!-- Seed button for first time -->
-        <div id="seed-wrap" style="display:none;margin-top:12px;padding:14px;background:#FEF3C7;border-radius:10px;border:1.5px solid #F59E0B">
-          <div style="font-size:0.85rem;font-weight:600;color:#92400E;margin-bottom:8px">⚠️ No categories found. Seed default categories?</div>
-          <button class="btn-primary" onclick="seedCategories()">Seed default categories</button>
-        </div>
+        <div id="cats-list"><div class="loading-wrap"><div class="spinner"></div></div></div>
       </div>
+    </div>
 
+    <!-- VERIFICATIONS -->
+    <div class="section" id="section-verify">
+      <div class="section-title">✅ Verifications</div>
+      <div class="section-sub">Review student, educator and NGO verification requests</div>
       <div class="card">
-        <div class="card-title">User Suggestions <span id="suggestions-count" class="badge badge-pending">0</span></div>
-        <div id="suggestions-list">
-          <div class="empty">Loading suggestions...</div>
-        </div>
+        <div id="verify-wrap"><div class="loading-wrap"><div class="spinner"></div>Loading...</div></div>
       </div>
     </div>
 
     <!-- ANNOUNCEMENTS -->
-    <div class="panel" id="panel-announce">
-      <div class="panel-title">📢 Announcements</div>
-      <div class="panel-sub">Send announcements to users via email</div>
+    <div class="section" id="section-announce">
+      <div class="section-title">📢 Announcements</div>
+      <div class="section-sub">Send platform-wide announcements to all users</div>
       <div class="card">
-        <div class="card-title">Compose announcement</div>
-        <div class="form-group">
-          <label class="form-label">Send to</label>
-          <select class="form-input" id="announce-to" style="max-width:280px">
-            <option value="all">All users</option>
-            <option value="free">Free plan users</option>
-            <option value="paid">Paid plan users</option>
-            <option value="student">Student users</option>
-            <option value="ngo">NGO users</option>
-          </select>
+        <div class="card-t">New announcement</div>
+        <div class="fl"><label class="ll">Subject</label><input class="ii" id="ann-subject" placeholder="e.g. New feature: Live Poll"></div>
+        <div class="fl"><label class="ll">Message</label><textarea class="ii" id="ann-msg" rows="4" style="resize:vertical" placeholder="Announcement content..."></textarea></div>
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <button class="btn btn-primary" onclick="sendAnnouncement()">Send announcement</button>
         </div>
-        <div class="form-group">
-          <label class="form-label">Subject</label>
-          <input class="form-input" id="announce-subject" placeholder="e.g. New feature: Quiz scoring is live!">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Message</label>
-          <textarea class="form-textarea" id="announce-message" placeholder="Write your announcement here..." oninput="updatePreview()"></textarea>
-        </div>
-        <div id="announce-preview" style="display:none">
-          <div style="font-size:0.78rem;font-weight:700;color:#64748B;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em">Preview</div>
-          <div class="announce-preview">
-            <div class="announce-preview-title" id="preview-subject"></div>
-            <div id="preview-message" style="white-space:pre-wrap"></div>
-          </div>
-        </div>
-        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn-primary" onclick="sendAnnouncement()">📨 Send announcement</button>
-          <button class="btn-cancel" onclick="clearAnnouncement()">Clear</button>
-        </div>
-        <div style="margin-top:12px;font-size:0.75rem;color:#94A3B8">⚠️ EmailJS must be configured in settings before sending. Emails will be sent to all matching users.</div>
+      </div>
+      <div class="card">
+        <div class="card-t">Sent announcements</div>
+        <div id="announcements-wrap"><div class="loading-wrap"><div class="spinner"></div></div></div>
       </div>
     </div>
 
-    <!-- REVENUE -->
-    <div class="panel" id="panel-revenue">
-      <div class="panel-title">💰 Revenue Overview</div>
-      <div class="panel-sub">Platform plan statistics and revenue tracking</div>
-      <div class="stats-grid">
-        <div class="stat-card"><div class="stat-icon">💳</div><div class="stat-val" id="rev-paid">—</div><div class="stat-lbl">Paid users</div></div>
-        <div class="stat-card"><div class="stat-icon">📈</div><div class="stat-val" id="rev-mrr">—</div><div class="stat-lbl">Est. MRR (₹)</div></div>
-        <div class="stat-card"><div class="stat-icon">🎓</div><div class="stat-val" id="rev-student">—</div><div class="stat-lbl">Student users</div></div>
-        <div class="stat-card"><div class="stat-icon">🤝</div><div class="stat-val" id="rev-ngo">—</div><div class="stat-lbl">NGO users</div></div>
-      </div>
+    <!-- SETTINGS -->
+    <div class="section" id="section-settings">
+      <div class="section-title">⚙️ Platform Settings</div>
+      <div class="section-sub">Global platform configuration</div>
       <div class="card">
-        <div class="card-title">Plan pricing reference</div>
-        <table class="table">
-          <thead><tr><th>Plan</th><th>Price</th><th>Users</th><th>Est. Revenue</th></tr></thead>
-          <tbody id="revenue-table"></tbody>
-        </table>
+        <div class="sr"><div><div class="sr-n">Maintenance mode</div><div class="sr-d">Show maintenance page to non-admins</div></div><button class="tgl" id="tgl-maintenance" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-n">Registration open</div><div class="sr-d">Allow new user registrations</div></div><button class="tgl on" id="tgl-reg" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr" style="border-bottom:none"><div><div class="sr-n">Discover page</div><div class="sr-d">Show public discover page</div></div><button class="tgl on" id="tgl-discover" onclick="this.classList.toggle('on')"></button></div>
       </div>
     </div>
 
@@ -382,467 +272,256 @@
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getFirestore,collection,query,where,getDocs,doc,getDoc,updateDoc,deleteDoc,addDoc,setDoc,serverTimestamp,orderBy}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getFirestore,collection,query,where,getDocs,doc,getDoc,addDoc,updateDoc,deleteDoc,orderBy,serverTimestamp,limit}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-const ADMIN_UID='7WPJK6ZuaEb3lgevyUbbU87umuH3';
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
-const app=initializeApp(FB);
-const auth=getAuth(app);
-const db=getFirestore(app);
+const ADMIN_UID='7WPJK6ZuaEb3lgevyUbbU87umuH3';
+const app=initializeApp(FB);const auth=getAuth(app);const db=getFirestore(app);
 
-const PLAN_PRICES={free:0,student:0,ngo:0,starter:499,pro:1499,business:4999};
-const DEFAULT_CATEGORIES=[
-  {name:'Education',emoji:'🎓',order:1},
-  {name:'Business',emoji:'💼',order:2},
-  {name:'Health',emoji:'🏥',order:3},
-  {name:'Research',emoji:'🔬',order:4},
-  {name:'Community',emoji:'🤝',order:5},
-  {name:'Events',emoji:'📅',order:6},
-  {name:'Feedback',emoji:'💬',order:7},
-  {name:'HR',emoji:'👥',order:8},
-  {name:'Customer',emoji:'⭐',order:9},
-  {name:'Product',emoji:'📦',order:10},
-  {name:'Other',emoji:'✦',order:11},
-];
+let allUsers=[],allContent=[],allBlogPosts=[],editingPostId=null;
 
-let allUsers=[],allSurveys=[],allVerifs=[],allCategories=[],allSuggestions=[],modalAction=null;
+const TYPE_ICONS={surveys:'📋',polls:'📊',votings:'🗳️',pledges:'🤝',riddles:'🧩'};
+const TYPE_COLS={surveys:'surveys',polls:'polls',votings:'votings',pledges:'pledges',riddles:'riddles'};
 
 onAuthStateChanged(auth,async u=>{
-  if(!u||u.uid!==ADMIN_UID){window.location.href='/dashboard';return}
-  await Promise.all([loadUsers(),loadSurveys(),loadVerifications(),loadCategories(),loadSuggestions()]);
-  renderOverview();
-  renderRevenue();
-  document.getElementById('ls').style.display='none';
+  if(!u||u.uid!==ADMIN_UID){window.location.href='/';return}
+  loadOverview();
 });
 
-// ── LOAD DATA ────────────────────────────────────────
-async function loadUsers(){
-  const snap=await getDocs(collection(db,'users'));
-  allUsers=snap.docs.map(d=>({id:d.id,...d.data()}));
-  renderUsers();
-}
-async function loadSurveys(){
-  const snap=await getDocs(collection(db,'surveys'));
-  allSurveys=snap.docs.map(d=>({id:d.id,...d.data()}));
-  renderSurveys();
-}
-async function loadVerifications(){
-  const snap=await getDocs(collection(db,'verificationRequests'));
-  allVerifs=snap.docs.map(d=>({id:d.id,...d.data()}));
-  const pending=allVerifs.filter(v=>v.status==='pending').length;
-  const badge=document.getElementById('verif-badge');
-  badge.textContent=pending;badge.style.display=pending>0?'inline':'none';
-  document.getElementById('ov-pending').textContent=pending;
-  renderVerifications();
-}
-async function loadCategories(){
-  const snap=await getDocs(collection(db,'categories'));
-  allCategories=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.order||0)-(b.order||0));
-  renderCategories();
-}
-async function loadSuggestions(){
-  const snap=await getDocs(collection(db,'categorySuggestions'));
-  allSuggestions=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.votes||0)-(a.votes||0));
-  renderSuggestions();
-}
-
-// ── PANEL SWITCHING ──────────────────────────────────
-window.showPanel=function(p){
-  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+// ── SECTIONS ─────────────────────────────────────────
+window.showSection=function(s){
+  document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(x=>x.classList.remove('active'));
-  document.getElementById('panel-'+p).classList.add('active');
-  document.getElementById('sn-'+p).classList.add('active');
-  closeSb();
+  document.getElementById('section-'+s).classList.add('active');
+  document.getElementById('sn-'+s).classList.add('active');
+  if(s==='users'&&!allUsers.length)loadUsers();
+  if(s==='content'&&!allContent.length)loadContent();
+  if(s==='featured')loadFeatured();
+  if(s==='blog')loadBlogPosts();
+  if(s==='categories')loadCategories();
+  if(s==='verify')loadVerifications();
+  if(s==='announce')loadAnnouncements();
 }
-window.toggleSb=function(){
-  const sb=document.getElementById('sidebar'),ov=document.getElementById('sb-overlay');
-  const open=sb.classList.contains('open');
-  sb.classList.toggle('open',!open);ov.classList.toggle('open',!open);
-}
-window.closeSb=function(){
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sb-overlay').classList.remove('open');
-}
-
-function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
-function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
 // ── OVERVIEW ─────────────────────────────────────────
-function renderOverview(){
-  document.getElementById('ov-users').textContent=allUsers.length;
-  document.getElementById('ov-surveys').textContent=allSurveys.length;
-  const totalResp=allSurveys.reduce((s,sv)=>s+(sv.responseCount||0),0);
-  document.getElementById('ov-responses').textContent=totalResp.toLocaleString();
-
-  // Plan bars
-  const plans={free:0,student:0,ngo:0,starter:0,pro:0,business:0};
-  allUsers.forEach(u=>{ const p=u.plan||'free'; if(plans[p]!==undefined)plans[p]++; else plans.free++; });
-  const maxPlan=Math.max(...Object.values(plans),1);
-  document.getElementById('plan-bars').innerHTML=Object.entries(plans).map(([plan,count])=>
-    `<div class="plan-bar-row"><div class="plan-bar-label">${plan.charAt(0).toUpperCase()+plan.slice(1)}</div><div class="plan-bar-track"><div class="plan-bar-fill" style="width:${(count/maxPlan)*100}%"></div></div><div class="plan-bar-count">${count}</div></div>`
-  ).join('');
-
-  // Status bars
-  const statuses={active:0,draft:0,closed:0};
-  allSurveys.forEach(s=>{ const st=s.status||'draft'; if(statuses[st]!==undefined)statuses[st]++; });
-  const maxSt=Math.max(...Object.values(statuses),1);
-  document.getElementById('status-bars').innerHTML=Object.entries(statuses).map(([st,count])=>
-    `<div class="plan-bar-row"><div class="plan-bar-label">${st.charAt(0).toUpperCase()+st.slice(1)}</div><div class="plan-bar-track"><div class="plan-bar-fill" style="width:${(count/maxSt)*100}%;background:${st==='active'?'#10B981':st==='draft'?'#F59E0B':'#94A3B8'}"></div></div><div class="plan-bar-count">${count}</div></div>`
-  ).join('');
+async function loadOverview(){
+  try{
+    const [usersSnap,blogSnap]=await Promise.all([
+      getDocs(query(collection(db,'users'),orderBy('createdAt','desc'),limit(50))),
+      getDocs(collection(db,'blogPosts'))
+    ]);
+    allUsers=usersSnap.docs.map(d=>({id:d.id,...d.data()}));
+    const contentCounts=await Promise.all(Object.keys(TYPE_COLS).map(async col=>{
+      const snap=await getDocs(collection(db,col));return snap.size;
+    }));
+    const totalContent=contentCounts.reduce((a,b)=>a+b,0);
+    document.getElementById('st-users').textContent=allUsers.length;
+    document.getElementById('st-content').textContent=totalContent;
+    document.getElementById('st-blogs').textContent=blogSnap.size;
+    document.getElementById('st-responses').textContent='—';
+    document.getElementById('recent-users-wrap').innerHTML=`<table class="table"><thead><tr><th>Name</th><th>Email</th><th>Plan</th><th>Joined</th></tr></thead><tbody>${allUsers.slice(0,10).map(u=>`<tr><td>${eh(u.name||u.displayName||'—')}</td><td style="color:rgba(255,255,255,0.5)">${eh(u.email||'—')}</td><td><span class="badge ${u.plan==='pro'?'badge-yellow':u.plan==='starter'?'badge-blue':'badge-purple'}">${u.plan||'free'}</span></td><td style="color:rgba(255,255,255,0.35)">${fmtDate(u.createdAt)}</td></tr>`).join('')}</tbody></table>`;
+  }catch(e){console.error(e)}
 }
 
 // ── USERS ─────────────────────────────────────────────
-let filteredUsers=[];
-function renderUsers(users){
-  const list=users||allUsers;
-  filteredUsers=list;
-  document.getElementById('users-tbody').innerHTML=list.length===0?`<tr><td colspan="5" class="empty">No users found</td></tr>`:
-  list.map(u=>{
-    const plan=u.plan||'free';
-    const surveys=allSurveys.filter(s=>s.userId===u.id).length;
-    const date=u.createdAt?.toDate?u.createdAt.toDate().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit'}):'—';
-    return`<tr>
-      <td><div style="font-weight:600;font-size:0.85rem">${eh(u.name||'—')}</div><div style="font-size:0.72rem;color:#64748B">${eh(u.email||u.id)}</div></td>
-      <td><span class="badge badge-${plan}">${plan}</span></td>
-      <td>${surveys}</td>
-      <td style="font-size:0.78rem;color:#64748B">${date}</td>
-      <td><div style="display:flex;gap:5px;flex-wrap:wrap">
-        <select class="btn-sm" onchange="changePlan('${u.id}',this.value)" title="Change plan">
-          ${['free','student','ngo','starter','pro','business'].map(p=>`<option value="${p}"${plan===p?' selected':''}>${p}</option>`).join('')}
-        </select>
-        <button class="btn-sm danger" onclick="confirmDeleteUser('${u.id}','${eh(u.name||u.email||u.id)}')">🗑</button>
-      </div></td>
-    </tr>`;
-  }).join('');
-}
-window.filterUsers=function(s){const q=s.toLowerCase();renderUsers(allUsers.filter(u=>(u.name||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q)))}
-window.filterUsersByPlan=function(p){renderUsers(p==='all'?allUsers:allUsers.filter(u=>(u.plan||'free')===p))}
-window.changePlan=async function(uid,plan){
-  await updateDoc(doc(db,'users',uid),{plan});
-  const u=allUsers.find(u=>u.id===uid);if(u)u.plan=plan;
-  toast('Plan updated to '+plan);
-  renderOverview();renderRevenue();
-}
-window.confirmDeleteUser=function(uid,name){
-  showModal('Delete user?',`"${name}" will be permanently deleted. All their surveys and responses will remain.`,async()=>{
-    await deleteDoc(doc(db,'users',uid));
-    allUsers=allUsers.filter(u=>u.id!==uid);
-    renderUsers();renderOverview();toast('User deleted');
-  },'Delete','danger');
-}
-
-// ── SURVEYS ───────────────────────────────────────────
-function renderSurveys(surveys){
-  const list=surveys||allSurveys;
-  document.getElementById('surveys-tbody').innerHTML=list.length===0?`<tr><td colspan="6" class="empty">No surveys found</td></tr>`:
-  list.map(s=>{
-    const owner=allUsers.find(u=>u.id===s.userId);
-    const date=s.createdAt?.toDate?s.createdAt.toDate().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit'}):'—';
-    return`<tr>
-      <td><div style="font-weight:600;font-size:0.85rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${eh(s.title||'Untitled')}</div></td>
-      <td style="font-size:0.78rem;color:#64748B">${eh(owner?.name||owner?.email||s.userId?.slice(0,8)||'—')}</td>
-      <td><span class="badge badge-${s.status||'draft'}">${s.status||'draft'}</span></td>
-      <td style="font-weight:700">${s.responseCount||0}</td>
-      <td style="font-size:0.78rem;color:#64748B">${date}</td>
-      <td><div style="display:flex;gap:5px">
-        <a class="btn-sm" href="/responses/?id=${s.id}" target="_blank">📊</a>
-        <button class="btn-sm danger" onclick="confirmDeleteSurvey('${s.id}','${eh(s.title||'Untitled')}')">🗑</button>
-      </div></td>
-    </tr>`;
-  }).join('');
-}
-window.filterSurveys=function(s){const q=s.toLowerCase();renderSurveys(allSurveys.filter(sv=>(sv.title||'').toLowerCase().includes(q)))}
-window.filterSurveysByStatus=function(st){renderSurveys(st==='all'?allSurveys:allSurveys.filter(s=>(s.status||'draft')===st))}
-window.confirmDeleteSurvey=function(id,title){
-  showModal('Delete survey?',`"${title}" will be permanently deleted from the platform.`,async()=>{
-    await deleteDoc(doc(db,'surveys',id));
-    allSurveys=allSurveys.filter(s=>s.id!==id);
-    renderSurveys();renderOverview();toast('Survey deleted');
-  },'Delete','danger');
-}
-
-// ── VERIFICATIONS ─────────────────────────────────────
-function renderVerifications(){
-  const pending=allVerifs.filter(v=>v.status==='pending');
-  const done=allVerifs.filter(v=>v.status!=='pending');
-  document.getElementById('pending-count').textContent=pending.length;
-  document.getElementById('verif-list').innerHTML=pending.length===0?'<div class="empty">No pending verifications</div>':
-  pending.map(v=>`<div style="padding:14px 0;border-bottom:1px solid #E2DAD0">
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap">
-      <div>
-        <div style="font-weight:700;font-size:0.88rem">${eh(v.name||'—')} <span class="badge badge-${v.type==='student'?'student':'ngo'}">${v.type||'student'}</span></div>
-        <div style="font-size:0.75rem;color:#64748B;margin-top:3px">${eh(v.email||'—')}</div>
-        <div style="font-size:0.75rem;color:#64748B;margin-top:2px">${eh(v.institution||v.orgName||'—')}</div>
-        ${v.idCardUrl?`<a href="${v.idCardUrl}" target="_blank" class="btn-sm" style="margin-top:6px;display:inline-flex">View document →</a>`:''}
-      </div>
-      <div style="display:flex;gap:6px">
-        <button class="btn-sm success" onclick="approveVerif('${v.id}','${v.userId}','${v.type}')">✅ Approve</button>
-        <button class="btn-sm danger" onclick="rejectVerif('${v.id}')">❌ Reject</button>
-      </div>
-    </div>
-  </div>`).join('');
-  document.getElementById('verif-done-list').innerHTML=done.length===0?'<div class="empty">No reviewed verifications</div>':
-  done.slice(0,10).map(v=>`<div style="padding:10px 0;border-bottom:1px solid #E2DAD0;display:flex;align-items:center;justify-content:space-between;gap:10px">
-    <div><div style="font-weight:600;font-size:0.85rem">${eh(v.name||'—')}</div><div style="font-size:0.72rem;color:#64748B">${v.type} • ${eh(v.institution||v.orgName||'—')}</div></div>
-    <span class="badge badge-${v.status==='approved'?'approved':'rejected'}">${v.status}</span>
-  </div>`).join('');
-}
-window.approveVerif=async function(vid,uid,type){
-  await updateDoc(doc(db,'verificationRequests',vid),{status:'approved',reviewedAt:serverTimestamp()});
-  await updateDoc(doc(db,'users',uid),{plan:type,verified:true});
-  allVerifs=allVerifs.map(v=>v.id===vid?{...v,status:'approved'}:v);
-  const u=allUsers.find(u=>u.id===uid);if(u){u.plan=type;u.verified=true}
-  renderVerifications();renderUsers();renderOverview();
-  const pending=allVerifs.filter(v=>v.status==='pending').length;
-  const badge=document.getElementById('verif-badge');badge.textContent=pending;badge.style.display=pending>0?'inline':'none';
-
-  // Send approval email
-  if(u&&u.email){
-    try{
-      await emailjs.send('service_o34py9mte','template_awyfb6j',{
-        to_email:u.email,
-        subject:'✅ Your SwoopForm '+type+' verification is approved!',
-        message:`Hi ${u.name||'there'},\n\nGreat news! Your ${type} verification on SwoopForm has been approved.\n\nYour account has been upgraded to the ${type.charAt(0).toUpperCase()+type.slice(1)} plan — you now have unlimited surveys and responses for free!\n\nLog in to start creating surveys:\nhttps://swoopform.com/dashboard\n\nThank you,\nSwoopForm Team`
-      });
-    }catch(e){console.error('Email failed:',e)}
+async function loadUsers(){
+  if(!allUsers.length){
+    const snap=await getDocs(query(collection(db,'users'),orderBy('createdAt','desc')));
+    allUsers=snap.docs.map(d=>({id:d.id,...d.data()}));
   }
-  toast('✅ Verification approved! User upgraded to '+type+' plan');
+  renderUsersTable(allUsers);
 }
-window.rejectVerif=async function(vid){
-  await updateDoc(doc(db,'verificationRequests',vid),{status:'rejected',reviewedAt:serverTimestamp()});
-  allVerifs=allVerifs.map(v=>v.id===vid?{...v,status:'rejected'}:v);
-  renderVerifications();
-  const pending=allVerifs.filter(v=>v.status==='pending').length;
-  const badge=document.getElementById('verif-badge');badge.textContent=pending;badge.style.display=pending>0?'inline':'none';
-  toast('Verification rejected');
+function renderUsersTable(users){
+  document.getElementById('users-table-wrap').innerHTML=`<table class="table"><thead><tr><th>Name</th><th>Email</th><th>Plan</th><th>Type</th><th>Joined</th></tr></thead><tbody>${users.map(u=>`<tr><td style="font-weight:600">${eh(u.name||u.displayName||'—')}</td><td style="color:rgba(255,255,255,0.5)">${eh(u.email||'—')}</td><td><span class="badge ${u.plan==='pro'?'badge-yellow':u.plan==='starter'?'badge-blue':'badge-purple'}">${u.plan||'free'}</span></td><td style="color:rgba(255,255,255,0.4)">${u.accountType||'standard'}</td><td style="color:rgba(255,255,255,0.3)">${fmtDate(u.createdAt)}</td></tr>`).join('')}</tbody></table>`;
 }
-
-// ── CATEGORIES ────────────────────────────────────────
-function autoEmoji(name){
-  const n=name.toLowerCase();
-  if(n.includes('edu')||n.includes('school')||n.includes('learn'))return'🎓';
-  if(n.includes('bus')||n.includes('corp')||n.includes('work'))return'💼';
-  if(n.includes('health')||n.includes('med')||n.includes('hosp'))return'🏥';
-  if(n.includes('research')||n.includes('science')||n.includes('lab'))return'🔬';
-  if(n.includes('commun')||n.includes('social')||n.includes('people'))return'🤝';
-  if(n.includes('event')||n.includes('fest')||n.includes('party'))return'🎉';
-  if(n.includes('feed')||n.includes('review')||n.includes('opinion'))return'💬';
-  if(n.includes('hr')||n.includes('human')||n.includes('employee'))return'👥';
-  if(n.includes('customer')||n.includes('client')||n.includes('user'))return'⭐';
-  if(n.includes('product')||n.includes('feature')||n.includes('app'))return'📦';
-  if(n.includes('sport')||n.includes('game')||n.includes('play'))return'🏆';
-  if(n.includes('music')||n.includes('song')||n.includes('bollywood')||n.includes('film'))return'🎵';
-  if(n.includes('food')||n.includes('eat')||n.includes('restaurant'))return'🍽️';
-  if(n.includes('travel')||n.includes('tour')||n.includes('trip'))return'✈️';
-  if(n.includes('tech')||n.includes('digital')||n.includes('software'))return'💻';
-  if(n.includes('environ')||n.includes('climate')||n.includes('green'))return'🌱';
-  if(n.includes('polit')||n.includes('gov')||n.includes('civic'))return'🏛️';
-  if(n.includes('art')||n.includes('design')||n.includes('creative'))return'🎨';
-  if(n.includes('financ')||n.includes('money')||n.includes('invest'))return'💰';
-  return'📂';
+window.filterUsers=function(){
+  const q=(document.getElementById('user-search').value||'').toLowerCase();
+  renderUsersTable(q?allUsers.filter(u=>(u.name||u.displayName||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q)):allUsers);
 }
 
-window.previewEmoji=function(){
-  const name=document.getElementById('new-cat-name').value;
-  document.getElementById('emoji-preview').textContent=name?autoEmoji(name):'—';
+// ── ALL CONTENT ────────────────────────────────────────
+async function loadContent(){
+  const results=await Promise.all(Object.keys(TYPE_COLS).map(async col=>{
+    const snap=await getDocs(collection(db,col));
+    return snap.docs.map(d=>({id:d.id,_col:col,...d.data()}));
+  }));
+  allContent=results.flat().sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+  renderContentTable(allContent);
+}
+function renderContentTable(items){
+  document.getElementById('content-table-wrap').innerHTML=`<table class="table"><thead><tr><th>Type</th><th>Title</th><th>Status</th><th>Public</th><th>Featured</th><th>Actions</th></tr></thead><tbody>${items.map(item=>`<tr><td>${TYPE_ICONS[item._col]||'📄'} <span style="font-size:0.72rem;color:rgba(255,255,255,0.4)">${item._col}</span></td><td style="font-weight:600;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${eh(item.title||item.question||'Untitled')}</td><td><span class="badge ${item.status==='active'?'badge-green':item.status==='closed'?'badge-red':'badge-yellow'}">${item.status||'draft'}</span></td><td>${item.isPublic?'✅':'—'}</td><td>${item.featured?'⭐':'—'}</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm ${item.featured?'btn-danger':'btn-success'}" onclick="toggleFeatured('${item.id}','${item._col}',${!item.featured},this)">${item.featured?'Unfeature':'Feature'}</button></div></td></tr>`).join('')}</tbody></table>`;
+}
+window.filterContent=function(){
+  const type=document.getElementById('content-type-filter').value;
+  const q=(document.getElementById('content-search').value||'').toLowerCase();
+  let filtered=type==='all'?allContent:allContent.filter(i=>i._col===type);
+  if(q)filtered=filtered.filter(i=>(i.title||i.question||'').toLowerCase().includes(q));
+  renderContentTable(filtered);
 }
 
-function renderCategories(){
-  const grid=document.getElementById('cat-grid');
-  const seedWrap=document.getElementById('seed-wrap');
-  if(allCategories.length===0){
-    grid.innerHTML='';
-    seedWrap.style.display='block';
-    return;
-  }
-  seedWrap.style.display='none';
-  const surveysByCat={};
-  allSurveys.forEach(s=>{ const c=s.category||'Other'; surveysByCat[c]=(surveysByCat[c]||0)+1; });
-  grid.innerHTML=allCategories.map(c=>`
-    <div class="cat-card">
-      <div class="cat-emoji">${c.emoji||'📂'}</div>
-      <div class="cat-info">
-        <div class="cat-name">${eh(c.name)}</div>
-        <div class="cat-count">${surveysByCat[c.name]||0} surveys</div>
-      </div>
-      <div class="cat-actions">
-        <button class="btn-sm danger" onclick="deleteCategory('${c.id}','${eh(c.name)}')">✕</button>
-      </div>
-    </div>`).join('');
+// ── FEATURED ─────────────────────────────────────────
+window.loadFeatured=async function(){
+  const type=document.getElementById('feat-type-filter')?.value||'all';
+  document.getElementById('featured-table-wrap').innerHTML='<div class="loading-wrap"><div class="spinner"></div>Loading...</div>';
+  const results=await Promise.all(Object.keys(TYPE_COLS).map(async col=>{
+    if(type!=='all'&&col!==type)return[];
+    try{const snap=await getDocs(query(collection(db,col),where('isPublic','==',true)));return snap.docs.map(d=>({id:d.id,_col:col,...d.data()}))}catch(e){return[]}
+  }));
+  const items=results.flat().sort((a,b)=>(b.featured?1:0)-(a.featured?1:0));
+  document.getElementById('featured-table-wrap').innerHTML=items.length?`<table class="table"><thead><tr><th>Type</th><th>Title</th><th>Status</th><th>Featured</th><th>Toggle</th></tr></thead><tbody>${items.map(item=>`<tr><td>${TYPE_ICONS[item._col]||'📄'}</td><td style="font-weight:600">${eh(item.title||item.question||'Untitled')}</td><td><span class="badge ${item.status==='active'?'badge-green':'badge-yellow'}">${item.status||'draft'}</span></td><td style="font-size:1.1rem">${item.featured?'⭐':'—'}</td><td><button class="btn btn-sm ${item.featured?'btn-danger':'btn-success'}" onclick="toggleFeatured('${item.id}','${item._col}',${!item.featured},this)">${item.featured?'Remove':'Feature ⭐'}</button></td></tr>`).join('')}</tbody></table>`:'<div style="color:rgba(255,255,255,0.3);padding:20px;text-align:center">No public content found</div>';
 }
 
-window.toggleAddCatForm=function(){
-  const form=document.getElementById('add-cat-form');
-  form.classList.toggle('open');
-  if(form.classList.contains('open'))document.getElementById('new-cat-name').focus();
+window.toggleFeatured=async function(id,col,val,btn){
+  btn.disabled=true;btn.textContent='Saving...';
+  try{
+    await updateDoc(doc(db,col,id),{featured:val});
+    btn.textContent=val?'Remove':'Feature ⭐';
+    btn.className=`btn btn-sm ${val?'btn-danger':'btn-success'}`;
+    btn.onclick=()=>toggleFeatured(id,col,!val,btn);
+    // Update in allContent
+    const item=allContent.find(i=>i.id===id&&i._col===col);
+    if(item)item.featured=val;
+    toast(val?'⭐ Featured!':'Removed from featured');
+  }catch(e){toast('Error saving')}
+  btn.disabled=false;
 }
 
+// ── BLOG ─────────────────────────────────────────────
+async function loadBlogPosts(){
+  try{
+    const snap=await getDocs(query(collection(db,'blogPosts'),orderBy('createdAt','desc')));
+    allBlogPosts=snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderBlogPosts();
+  }catch(e){document.getElementById('blog-posts-wrap').innerHTML='<div style="color:rgba(255,255,255,0.3);padding:20px">Error loading posts</div>'}
+}
+function renderBlogPosts(){
+  const wrap=document.getElementById('blog-posts-wrap');
+  if(!allBlogPosts.length){wrap.innerHTML='<div style="color:rgba(255,255,255,0.3);padding:20px;text-align:center">No posts yet. Create your first post above.</div>';return}
+  wrap.innerHTML=`<table class="table"><thead><tr><th>Title</th><th>Author</th><th>Status</th><th>Featured</th><th>Date</th><th>Actions</th></tr></thead><tbody>${allBlogPosts.map(p=>`<tr><td style="font-weight:600;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${eh(p.title||'Untitled')}</td><td style="color:rgba(255,255,255,0.4)">${eh(p.author||'—')}</td><td><span class="badge ${p.status==='published'?'badge-green':'badge-yellow'}">${p.status||'draft'}</span></td><td>${p.featured?'⭐':'—'}</td><td style="color:rgba(255,255,255,0.3)">${fmtDate(p.createdAt)}</td><td><div style="display:flex;gap:4px"><a class="btn btn-ghost btn-sm" href="/blog/post/?id=${p.id}" target="_blank">View</a><button class="btn btn-ghost btn-sm" onclick="editPost('${p.id}')">Edit</button><button class="btn btn-danger btn-sm" onclick="deletePost('${p.id}')">Del</button></div></td></tr>`).join('')}</tbody></table>`;
+}
+
+window.toggleBlogForm=function(){
+  editingPostId=null;clearBlogForm();
+  document.getElementById('blog-form').classList.toggle('hidden');
+}
+window.cancelBlogForm=function(){document.getElementById('blog-form').classList.add('hidden');editingPostId=null;clearBlogForm()}
+function clearBlogForm(){['bf-title','bf-excerpt','bf-author','bf-time','bf-cover','bf-emoji','bf-tags','bf-content'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});document.getElementById('bf-featured')?.classList.remove('on')}
+
+window.editPost=function(id){
+  const p=allBlogPosts.find(p=>p.id===id);if(!p)return;
+  editingPostId=id;
+  document.getElementById('bf-title').value=p.title||'';
+  document.getElementById('bf-excerpt').value=p.excerpt||'';
+  document.getElementById('bf-author').value=p.author||'';
+  document.getElementById('bf-time').value=p.readTime||'';
+  document.getElementById('bf-cover').value=p.coverImage||'';
+  document.getElementById('bf-emoji').value=p.emoji||'';
+  document.getElementById('bf-tags').value=(p.tags||[]).join(', ');
+  document.getElementById('bf-content').value=p.content||'';
+  if(p.featured)document.getElementById('bf-featured').classList.add('on');
+  document.getElementById('blog-form').classList.remove('hidden');
+  document.getElementById('blog-form').scrollIntoView({behavior:'smooth'});
+}
+
+window.saveBlogPost=async function(status){
+  const title=document.getElementById('bf-title').value.trim();
+  if(!title){toast('Please add a title');return}
+  const content=document.getElementById('bf-content').value.trim();
+  if(!content){toast('Please add content');return}
+  const tags=document.getElementById('bf-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  const data={
+    title,excerpt:document.getElementById('bf-excerpt').value.trim(),
+    author:document.getElementById('bf-author').value.trim()||'SwoopForm Team',
+    readTime:parseInt(document.getElementById('bf-time').value)||3,
+    coverImage:document.getElementById('bf-cover').value.trim(),
+    emoji:document.getElementById('bf-emoji').value.trim()||'📝',
+    tags,content,status,
+    featured:document.getElementById('bf-featured').classList.contains('on'),
+    updatedAt:serverTimestamp()
+  };
+  try{
+    if(editingPostId){await updateDoc(doc(db,'blogPosts',editingPostId),data);toast('Post updated!')}
+    else{data.createdAt=serverTimestamp();data.publishedAt=status==='published'?serverTimestamp():null;await addDoc(collection(db,'blogPosts'),data);toast('Post '+(status==='published'?'published':'saved as draft')+'!')}
+    cancelBlogForm();loadBlogPosts();
+  }catch(e){console.error(e);toast('Error saving post')}
+}
+
+window.deletePost=async function(id){
+  if(!confirm('Delete this blog post? This cannot be undone.'))return;
+  try{await deleteDoc(doc(db,'blogPosts',id));allBlogPosts=allBlogPosts.filter(p=>p.id!==id);renderBlogPosts();toast('Post deleted')}
+  catch(e){toast('Error deleting')}
+}
+
+// ── CATEGORIES ─────────────────────────────────────────
+async function loadCategories(){
+  try{
+    const snap=await getDocs(query(collection(db,'categories'),orderBy('order')));
+    const cats=snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderCategories(cats);
+  }catch(e){document.getElementById('cats-list').innerHTML='<div style="color:rgba(255,255,255,0.3)">Error loading categories</div>'}
+}
+function renderCategories(cats){
+  document.getElementById('cats-list').innerHTML=cats.length?`<table class="table"><thead><tr><th>Emoji</th><th>Name</th><th>Order</th><th>Actions</th></tr></thead><tbody>${cats.map(c=>`<tr><td style="font-size:1.2rem">${c.emoji||''}</td><td style="font-weight:600">${eh(c.name)}</td><td style="color:rgba(255,255,255,0.3)">${c.order||0}</td><td><button class="btn btn-danger btn-sm" onclick="deleteCategory('${c.id}')">Delete</button></td></tr>`).join('')}</tbody></table>`:'<div style="color:rgba(255,255,255,0.3);text-align:center;padding:20px">No categories yet</div>';
+}
 window.addCategory=async function(){
-  const name=document.getElementById('new-cat-name').value.trim();
+  const name=document.getElementById('cat-name').value.trim();const emoji=document.getElementById('cat-emoji').value.trim();
   if(!name){toast('Please enter a category name');return}
-  const emoji=autoEmoji(name);
-  const order=allCategories.length+1;
-  const ref=await addDoc(collection(db,'categories'),{name,emoji,order,createdAt:serverTimestamp()});
-  allCategories.push({id:ref.id,name,emoji,order});
-  document.getElementById('new-cat-name').value='';
-  document.getElementById('emoji-preview').textContent='—';
-  document.getElementById('add-cat-form').classList.remove('open');
-  renderCategories();
-  toast('✅ Category "'+name+'" added!');
+  try{
+    const snap=await getDocs(collection(db,'categories'));
+    await addDoc(collection(db,'categories'),{name,emoji:emoji||'📌',order:snap.size,createdAt:serverTimestamp()});
+    document.getElementById('cat-name').value='';document.getElementById('cat-emoji').value='';
+    loadCategories();toast('Category added');
+  }catch(e){toast('Error adding category')}
+}
+window.deleteCategory=async function(id){
+  if(!confirm('Delete this category?'))return;
+  try{await deleteDoc(doc(db,'categories',id));loadCategories();toast('Deleted')}
+  catch(e){toast('Error')}
 }
 
-window.deleteCategory=async function(id,name){
-  showModal('Delete category?',`"${name}" will be removed from the discover page. Surveys tagged with this category will show as "Other".`,async()=>{
-    await deleteDoc(doc(db,'categories',id));
-    allCategories=allCategories.filter(c=>c.id!==id);
-    renderCategories();toast('Category deleted');
-  },'Delete','danger');
+// ── VERIFICATIONS ──────────────────────────────────────
+async function loadVerifications(){
+  try{
+    const snap=await getDocs(query(collection(db,'verificationRequests'),orderBy('createdAt','desc')));
+    const requests=snap.docs.map(d=>({id:d.id,...d.data()}));
+    document.getElementById('verify-wrap').innerHTML=requests.length?`<table class="table"><thead><tr><th>Name</th><th>Email</th><th>Type</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead><tbody>${requests.map(r=>`<tr><td style="font-weight:600">${eh(r.name||'—')}</td><td style="color:rgba(255,255,255,0.4)">${eh(r.email||'—')}</td><td><span class="badge badge-blue">${r.accountType||'student'}</span></td><td><span class="badge ${r.status==='approved'?'badge-green':r.status==='rejected'?'badge-red':'badge-yellow'}">${r.status||'pending'}</span></td><td style="color:rgba(255,255,255,0.3)">${fmtDate(r.createdAt)}</td><td><div style="display:flex;gap:4px">${r.status==='pending'?`<button class="btn btn-success btn-sm" onclick="approveVerify('${r.id}','${r.userId||''}')">Approve</button><button class="btn btn-danger btn-sm" onclick="rejectVerify('${r.id}')">Reject</button>`:'—'}</div></td></tr>`).join('')}</tbody></table>`:'<div style="color:rgba(255,255,255,0.3);padding:20px;text-align:center">No verification requests</div>';
+  }catch(e){document.getElementById('verify-wrap').innerHTML='<div style="color:rgba(255,255,255,0.3);padding:20px">Error loading</div>'}
+}
+window.approveVerify=async function(id,userId){
+  try{
+    await updateDoc(doc(db,'verificationRequests',id),{status:'approved',reviewedAt:serverTimestamp()});
+    if(userId)await updateDoc(doc(db,'users',userId),{verified:true,verifiedAt:serverTimestamp()});
+    loadVerifications();toast('Verification approved');
+  }catch(e){toast('Error')}
+}
+window.rejectVerify=async function(id){
+  try{await updateDoc(doc(db,'verificationRequests',id),{status:'rejected',reviewedAt:serverTimestamp()});loadVerifications();toast('Rejected')}
+  catch(e){toast('Error')}
 }
 
-window.seedCategories=async function(){
-  toast('Seeding categories...');
-  for(const cat of DEFAULT_CATEGORIES){
-    await addDoc(collection(db,'categories'),{...cat,createdAt:serverTimestamp()});
-  }
-  await loadCategories();
-  toast('✅ Default categories seeded!');
+// ── ANNOUNCEMENTS ──────────────────────────────────────
+async function loadAnnouncements(){
+  try{
+    const snap=await getDocs(query(collection(db,'announcements'),orderBy('sentAt','desc'),limit(20)));
+    const anns=snap.docs.map(d=>({id:d.id,...d.data()}));
+    document.getElementById('announcements-wrap').innerHTML=anns.length?anns.map(a=>`<div class="announcement-card"><div style="font-weight:700;font-size:0.88rem;margin-bottom:4px">${eh(a.subject||'Announcement')}</div><div style="font-size:0.78rem;color:rgba(255,255,255,0.4);margin-bottom:6px">${eh(a.message||'')}</div><div style="font-size:0.68rem;color:rgba(255,255,255,0.2)">${fmtDate(a.sentAt)}</div></div>`).join(''):'<div style="color:rgba(255,255,255,0.3);padding:20px;text-align:center">No announcements sent yet</div>';
+  }catch(e){}
 }
-
-// ── SUGGESTIONS ───────────────────────────────────────
-function renderSuggestions(){
-  const count=document.getElementById('suggestions-count');
-  const pending=allSuggestions.filter(s=>s.status!=='rejected'&&s.status!=='approved');
-  count.textContent=pending.length;
-  count.style.display=pending.length>0?'inline':'none';
-  document.getElementById('suggestions-list').innerHTML=allSuggestions.length===0?'<div class="empty">No category suggestions yet</div>':
-  allSuggestions.map(s=>`
-    <div class="suggestion-row">
-      <div>
-        <div class="suggestion-name">${autoEmoji(s.name)} ${eh(s.name)}</div>
-        <div class="suggestion-meta">Suggested by ${eh(s.suggestedByEmail||'anonymous')} • ${s.createdAt?.toDate?s.createdAt.toDate().toLocaleDateString('en-IN'):'—'}</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-        <span class="vote-badge">👍 ${s.votes||0} votes</span>
-        ${s.status==='approved'?'<span class="badge badge-approved">Approved</span>':
-          s.status==='rejected'?'<span class="badge badge-rejected">Rejected</span>':`
-          <button class="btn-sm success" onclick="approveSuggestion('${s.id}','${eh(s.name)}')">✅ Approve</button>
-          <button class="btn-sm danger" onclick="rejectSuggestion('${s.id}')">❌ Reject</button>`}
-      </div>
-    </div>`).join('');
-}
-
-window.approveSuggestion=async function(sid,name){
-  const emoji=autoEmoji(name);
-  const order=allCategories.length+1;
-  const ref=await addDoc(collection(db,'categories'),{name,emoji,order,createdAt:serverTimestamp()});
-  allCategories.push({id:ref.id,name,emoji,order});
-  await updateDoc(doc(db,'categorySuggestions',sid),{status:'approved'});
-  allSuggestions=allSuggestions.map(s=>s.id===sid?{...s,status:'approved'}:s);
-  renderCategories();renderSuggestions();
-  toast('✅ "'+name+'" approved and added to categories!');
-}
-
-window.rejectSuggestion=async function(sid){
-  await updateDoc(doc(db,'categorySuggestions',sid),{status:'rejected'});
-  allSuggestions=allSuggestions.map(s=>s.id===sid?{...s,status:'rejected'}:s);
-  renderSuggestions();toast('Suggestion rejected');
-}
-
-// ── ANNOUNCEMENTS ─────────────────────────────────────
-window.updatePreview=function(){
-  const subject=document.getElementById('announce-subject').value;
-  const message=document.getElementById('announce-message').value;
-  const preview=document.getElementById('announce-preview');
-  if(subject||message){
-    preview.style.display='block';
-    document.getElementById('preview-subject').textContent=subject||'(no subject)';
-    document.getElementById('preview-message').textContent=message;
-  } else {preview.style.display='none'}
-}
-
 window.sendAnnouncement=async function(){
-  const subject=document.getElementById('announce-subject').value.trim();
-  const message=document.getElementById('announce-message').value.trim();
-  const to=document.getElementById('announce-to').value;
-  if(!subject){toast('Please add a subject');return}
-  if(!message){toast('Please add a message');return}
-
-  // Filter recipients
-  const recipients=to==='all'?allUsers:allUsers.filter(u=>{
-    const p=u.plan||'free';
-    if(to==='paid')return p!=='free'&&p!=='student'&&p!=='ngo';
-    return p===to;
-  });
-
-  const emailList=recipients.map(u=>u.email).filter(Boolean);
-  if(emailList.length===0){toast('No recipients found');return}
-
-  const btn=document.querySelector('[onclick="sendAnnouncement()"]');
-  btn.textContent='Sending...';btn.disabled=true;
-
-  // Save to Firestore
-  await addDoc(collection(db,'announcements'),{
-    subject,message,to,sentBy:'admin',
-    sentAt:serverTimestamp(),
-    recipientCount:emailList.length
-  });
-
-  // Send via EmailJS
-  let sent=0,failed=0;
-  for(const email of emailList){
-    try{
-      await emailjs.send('service_o34py9mte','template_awyfb6j',{
-        to_email:email,
-        subject:subject,
-        message:message
-      });
-      sent++;
-    }catch(e){console.error('Failed to send to',email,e);failed++}
-    // Small delay to avoid rate limiting
-    await new Promise(r=>setTimeout(r,200));
-  }
-
-  btn.textContent='📨 Send announcement';btn.disabled=false;
-  toast(`✅ Sent to ${sent} users${failed>0?' ('+failed+' failed)':''}`,3000);
-  clearAnnouncement();
+  const subject=document.getElementById('ann-subject').value.trim();
+  const message=document.getElementById('ann-msg').value.trim();
+  if(!subject||!message){toast('Please fill in subject and message');return}
+  try{
+    await addDoc(collection(db,'announcements'),{subject,message,sentAt:serverTimestamp()});
+    document.getElementById('ann-subject').value='';document.getElementById('ann-msg').value='';
+    loadAnnouncements();toast('Announcement sent!');
+  }catch(e){toast('Error sending')}
 }
 
-window.clearAnnouncement=function(){
-  document.getElementById('announce-subject').value='';
-  document.getElementById('announce-message').value='';
-  document.getElementById('announce-preview').style.display='none';
-}
-
-// ── REVENUE ───────────────────────────────────────────
-function renderRevenue(){
-  const plans={free:0,student:0,ngo:0,starter:0,pro:0,business:0};
-  allUsers.forEach(u=>{ const p=u.plan||'free'; if(plans[p]!==undefined)plans[p]++; });
-  const paid=plans.starter+plans.pro+plans.business;
-  const mrr=plans.starter*499+plans.pro*1499+plans.business*4999;
-  document.getElementById('rev-paid').textContent=paid;
-  document.getElementById('rev-mrr').textContent='₹'+mrr.toLocaleString();
-  document.getElementById('rev-student').textContent=plans.student;
-  document.getElementById('rev-ngo').textContent=plans.ngo;
-  const prices={free:{price:'₹0',label:'Free'},student:{price:'₹0',label:'Student (verified)'},ngo:{price:'₹0',label:'NGO (verified)'},starter:{price:'₹499/mo',label:'Starter'},pro:{price:'₹1,499/mo',label:'Pro'},business:{price:'₹4,999/mo',label:'Business'}};
-  document.getElementById('revenue-table').innerHTML=Object.entries(plans).map(([plan,count])=>{
-    const rev=count*(PLAN_PRICES[plan]||0);
-    return`<tr><td><span class="badge badge-${plan}">${prices[plan]?.label||plan}</span></td><td style="color:#64748B">${prices[plan]?.price||'—'}</td><td style="font-weight:700">${count}</td><td style="font-weight:700;color:#2D1B69">${rev>0?'₹'+rev.toLocaleString():'—'}</td></tr>`;
-  }).join('');
-}
-
-// ── MODAL ─────────────────────────────────────────────
-function showModal(title,sub,action,btnText,type){
-  document.getElementById('modal-title').textContent=title;
-  document.getElementById('modal-sub').textContent=sub;
-  document.getElementById('modal-btn').textContent=btnText||'Confirm';
-  document.getElementById('modal-btn').className='btn-confirm'+(type==='danger'?' ':'  safe');
-  modalAction=action;
-  document.getElementById('confirm-modal').classList.add('open');
-}
-window.closeModal=function(){document.getElementById('confirm-modal').classList.remove('open');modalAction=null}
-window.doModalAction=async function(){if(modalAction){try{await modalAction()}catch(e){console.error(e);toast('Error: '+e.message)}modalAction=null}closeModal()}
+// ── UTILS ──────────────────────────────────────────────
+function fmtDate(ts){if(!ts?.seconds)return'—';return new Date(ts.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})}
+function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<script>emailjs.init('xOsG4gZ6uR_UnN_ac')</script>
 </body>
 </html>
