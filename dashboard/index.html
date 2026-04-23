@@ -3,544 +3,400 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SwoopForm — Dashboard</title>
+  <title>Dashboard — SwoopForm</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh;overflow-x:hidden}
+    body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
+    nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+    .logo-mk{width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff}
+    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#0F0E1A}
+    .nav-right{display:flex;align-items:center;gap:8px}
+    .nav-btn{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
+    .nav-btn:hover{border-color:#2D1B69;color:#2D1B69}
+    .nav-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:#fff;cursor:pointer;flex-shrink:0}
+    .main{max-width:1100px;margin:0 auto;padding:28px 20px}
 
-    /* TOP NAV */
-    .topnav{height:56px;background:#fff;border-bottom:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:fixed;top:0;left:0;right:0;z-index:200}
-    .topnav-left{display:flex;align-items:center;gap:10px}
-    .hbtn{background:none;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;gap:5px;flex-shrink:0}
-    .hbtn span{display:block;width:20px;height:2px;background:#0F0E1A;border-radius:2px}
-    .logo-wrap{display:flex;align-items:center;gap:8px;text-decoration:none}
-    .logo-mark{width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff}
-    .logo-name{font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;color:#0F0E1A}
-    .topnav-right{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;flex-shrink:0}
-    .topnav-left{flex-shrink:1;min-width:0;overflow:hidden}
-    .btn-new{padding:8px 16px;border-radius:8px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.82rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:opacity 0.2s}
-    .btn-new:hover{opacity:0.9}
-
-    /* LAYOUT */
-    .layout{display:flex;min-height:calc(100vh - 56px);margin-top:56px}
-
-    /* SIDEBAR */
-    .sidebar{width:240px;flex-shrink:0;background:#fff;border-right:1.5px solid #E2DAD0;display:flex;flex-direction:column;position:fixed;top:56px;left:0;bottom:0;z-index:100;transition:transform 0.3s ease;overflow-y:auto}
-    .sidebar.mobile-hidden{transform:translateX(-100%)}
-    .sb-user{padding:20px 16px 16px;border-bottom:1px solid #E2DAD0}
-    .sb-user-row{display:flex;align-items:center;gap:10px}
-    .sb-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:#fff;flex-shrink:0;overflow:hidden}
-    .sb-avatar img{width:100%;height:100%;object-fit:cover}
-    .sb-user-name{font-size:0.88rem;font-weight:700;color:#0F0E1A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .sb-user-email{font-size:0.72rem;color:#64748B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:1px}
-    .sb-plan{margin-top:8px}
-    .plan-badge{display:inline-block;padding:2px 10px;border-radius:100px;font-size:0.68rem;font-weight:700}
-    .plan-free{background:#EDE9FF;color:#2D1B69;border:1px solid #C4B5FD}
-    .plan-student{background:#DCFCE7;color:#166534;border:1px solid #86EFAC}
-    .plan-ngo{background:#FEF3C7;color:#92400E;border:1px solid #FCD34D}
-    .plan-starter{background:#DBEAFE;color:#1E40AF;border:1px solid #93C5FD}
-    .plan-pro{background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;border:none}
-    .plan-business{background:#0F0E1A;color:#fff;border:none}
-    .sb-nav{padding:12px 10px;flex:1}
-    .sb-nav-label{font-size:0.65rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase;padding:0 8px;margin-bottom:4px;margin-top:12px}
-    .sb-nav-label:first-child{margin-top:0}
-    .sb-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:600;color:#64748B;transition:all 0.2s;text-decoration:none}
-    .sb-item:hover{background:#F5F0E8;color:#0F0E1A}
-    .sb-item.active{background:#EDE9FF;color:#2D1B69}
-    .sb-item.danger{color:#DC2626}
-    .sb-item.danger:hover{background:#FEE2E2}
-    .sb-item .ico{width:20px;text-align:center;font-size:1rem;flex-shrink:0}
-    .sb-bottom{padding:12px 10px;border-top:1px solid #E2DAD0}
-
-    /* OVERLAY */
-    .sb-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:99;display:none}
-    .sb-overlay.open{display:block}
-
-    /* CONTENT */
-    .content{flex:1;margin-left:240px;padding:28px 24px;min-height:calc(100vh - 56px)}
-
-    /* WELCOME */
-    .welcome-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;gap:12px;flex-wrap:wrap}
-    .welcome-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-0.02em;color:#0F0E1A}
-    .welcome-sub{font-size:0.88rem;color:#64748B;margin-top:4px}
-    .view-toggle{display:flex;gap:4px;background:#fff;border-radius:8px;padding:3px;border:1.5px solid #E2DAD0}
-    .view-btn{padding:6px 10px;border-radius:6px;border:none;background:transparent;cursor:pointer;font-size:0.9rem;transition:all 0.2s;color:#94A3B8}
-    .view-btn.active{background:#EDE9FF;color:#2D1B69}
+    /* HEADER */
+    .dash-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;gap:16px;flex-wrap:wrap}
+    .dash-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-0.03em;margin-bottom:4px}
+    .dash-sub{font-size:0.85rem;color:#64748B}
+    .create-dropdown{position:relative;display:inline-block}
+    .create-main-btn{padding:10px 18px;border-radius:10px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.88rem;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;display:flex;align-items:center;gap:8px;transition:opacity 0.2s}
+    .create-main-btn:hover{opacity:0.9}
+    .create-dropdown-menu{position:absolute;top:calc(100% + 8px);right:0;background:#fff;border:1.5px solid #E2DAD0;border-radius:12px;padding:8px;min-width:200px;box-shadow:0 8px 32px rgba(15,14,26,0.12);display:none;z-index:200;animation:fadeIn 0.15s ease}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+    .create-dropdown-menu.open{display:block}
+    .create-menu-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;text-decoration:none;transition:background 0.15s;color:#0F0E1A}
+    .create-menu-item:hover{background:#F5F0E8}
+    .create-menu-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0}
+    .create-menu-label{font-size:0.85rem;font-weight:600}
+    .create-menu-desc{font-size:0.72rem;color:#64748B;margin-top:1px}
 
     /* STATS */
-    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
-    .stat-card{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;padding:16px 18px;transition:box-shadow 0.2s}
-    .stat-card:hover{box-shadow:0 4px 16px rgba(15,14,26,0.06)}
-    .stat-icon{font-size:1.2rem;margin-bottom:8px}
-    .stat-value{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;letter-spacing:-0.03em;color:#0F0E1A;line-height:1}
-    .stat-label{font-size:0.75rem;color:#64748B;font-weight:500;margin-top:4px}
-    .stat-change{font-size:0.72rem;margin-top:4px;font-weight:600}
-    .stat-change.up{color:#10B981}
-    .stat-change.neutral{color:#94A3B8}
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+    .stat-card{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;padding:16px}
+    .stat-val{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;letter-spacing:-0.03em;margin-bottom:2px}
+    .stat-lbl{font-size:0.75rem;color:#64748B;font-weight:600}
+    .stat-change{font-size:0.72rem;color:#10B981;margin-top:4px}
 
-    /* SECTION HEADERS */
-    .section-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;margin-top:28px}
-    .section-header:first-of-type{margin-top:0}
-    .section-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-    .section-dot.active{background:#10B981}
-    .section-dot.draft{background:#F59E0B}
-    .section-dot.closed{background:#94A3B8}
-    .section-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#0F0E1A}
-    .section-count{font-size:0.75rem;font-weight:700;color:#94A3B8;background:#E2DAD0;padding:2px 8px;border-radius:100px}
+    /* FILTERS */
+    .filters-row{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+    .filter-btn{padding:6px 14px;border-radius:100px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;color:#64748B}
+    .filter-btn:hover{border-color:#2D1B69;color:#2D1B69}
+    .filter-btn.active{background:#2D1B69;border-color:#2D1B69;color:#fff}
+    .search-inp{padding:7px 14px;border-radius:100px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.82rem;font-family:'DM Sans',sans-serif;outline:none;color:#0F0E1A;min-width:200px;margin-left:auto}
+    .search-inp:focus{border-color:#2D1B69}
+    .view-btns{display:flex;gap:4px}
+    .view-btn{width:32px;height:32px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.85rem;transition:all 0.2s;color:#64748B}
+    .view-btn.active{background:#2D1B69;border-color:#2D1B69;color:#fff}
 
-    /* GRID LAYOUT */
-    .surveys-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
-    .survey-card{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:20px;transition:all 0.2s;position:relative}
-    .survey-card:hover{box-shadow:0 6px 24px rgba(15,14,26,0.08);border-color:rgba(45,27,105,0.2);transform:translateY(-1px)}
-    .card-status-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-    .status-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:0.72rem;font-weight:700}
+    /* GRID */
+    .items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+    .items-list{display:flex;flex-direction:column;gap:10px}
+    .item-card{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:20px;transition:all 0.2s;cursor:pointer;position:relative;overflow:hidden}
+    .item-card:hover{box-shadow:0 6px 24px rgba(15,14,26,0.09);transform:translateY(-2px)}
+    .item-card-accent{position:absolute;top:0;left:0;right:0;height:3px}
+    .item-card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:8px}
+    .item-type-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:0.68rem;font-weight:700;flex-shrink:0}
+    .item-menu-btn{background:none;border:none;cursor:pointer;color:#C4B9AA;font-size:1rem;padding:2px 6px;border-radius:6px;transition:all 0.2s;flex-shrink:0}
+    .item-menu-btn:hover{background:#F5F0E8;color:#64748B}
+    .item-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:6px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+    .item-meta{display:flex;align-items:center;gap:10px;font-size:0.72rem;color:#94A3B8;flex-wrap:wrap;margin-bottom:12px}
+    .item-status{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:100px;font-size:0.65rem;font-weight:700}
     .status-active{background:#DCFCE7;color:#166534}
-    .status-draft{background:#FEF3C7;color:#92400E}
-    .status-closed{background:#F1F5F9;color:#64748B}
-    .card-date{font-size:0.72rem;color:#94A3B8}
-    .card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:#0F0E1A;margin-bottom:4px;line-height:1.3}
-    .card-desc{font-size:0.78rem;color:#64748B;margin-bottom:12px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-    .card-meta{display:flex;gap:14px;margin-bottom:14px;flex-wrap:wrap}
-    .card-meta-item{display:flex;align-items:center;gap:5px;font-size:0.78rem;color:#64748B}
-    .card-meta-item strong{color:#0F0E1A;font-weight:700}
-    .response-bar-wrap{margin-bottom:16px}
-    .response-bar-label{display:flex;justify-content:space-between;font-size:0.72rem;color:#64748B;margin-bottom:5px}
-    .response-bar-track{height:6px;background:#F5F0E8;border-radius:3px;overflow:hidden}
-    .response-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#2D1B69,#D97706);transition:width 0.8s ease}
-    .card-actions{display:flex;gap:6px;flex-wrap:wrap}
-    .card-btn{padding:6px 12px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
-    .card-btn:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
-    .card-btn.primary{background:linear-gradient(135deg,#2D1B69,#D97706);border:none;color:#fff}
-    .card-btn.primary:hover{opacity:0.9;background:linear-gradient(135deg,#2D1B69,#D97706)}
-    .card-btn.danger{color:#DC2626;border-color:#FEE2E2}
-    .card-btn.danger:hover{background:#FEE2E2;border-color:#DC2626}
-    .card-btn.sheet{color:#10B981;border-color:#BBF7D0}
-    .card-btn.sheet:hover{background:#DCFCE7;border-color:#10B981}
+    .status-draft{background:#F1F5F9;color:#64748B}
+    .status-closed{background:#FEE2E2;color:#DC2626}
+    .item-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid #F5F0E8;gap:8px}
+    .item-stat{display:flex;align-items:center;gap:4px;font-size:0.75rem;color:#94A3B8}
+    .item-stat strong{color:#64748B;font-weight:700}
+    .item-actions{display:flex;gap:6px}
+    .ia-btn{padding:5px 10px;border-radius:7px;border:1.5px solid #E2DAD0;background:transparent;font-size:0.72rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;color:#64748B;transition:all 0.2s;text-decoration:none;white-space:nowrap}
+    .ia-btn:hover{border-color:#2D1B69;color:#2D1B69}
+    .ia-btn.primary{background:#2D1B69;border-color:#2D1B69;color:#fff}
+    .ia-btn.primary:hover{opacity:0.85}
+    .ia-btn.danger{border-color:#FEE2E2;color:#DC2626}
+    .ia-btn.danger:hover{background:#FEE2E2}
 
-    /* LIST LAYOUT */
-    .surveys-list{display:flex;flex-direction:column;gap:8px}
-    .survey-list-item{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;padding:14px 18px;display:flex;align-items:center;gap:14px;transition:all 0.2s;flex-wrap:wrap}
-    .survey-list-item:hover{box-shadow:0 4px 14px rgba(15,14,26,0.06);border-color:rgba(45,27,105,0.2)}
-    .list-status-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-    .list-info{flex:1;min-width:0}
-    .list-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.92rem;color:#0F0E1A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .list-meta{font-size:0.75rem;color:#64748B;margin-top:2px}
-    .list-resp{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:#0F0E1A;flex-shrink:0;min-width:60px;text-align:center}
-    .list-resp-lbl{font-size:0.65rem;color:#64748B;font-weight:500}
-    .list-bar{width:100px;flex-shrink:0}
-    .list-actions{display:flex;gap:5px;flex-shrink:0;flex-wrap:wrap}
+    /* LIST VIEW */
+    .item-list-row{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;padding:14px 18px;display:flex;align-items:center;gap:14px;transition:all 0.2s}
+    .item-list-row:hover{box-shadow:0 4px 16px rgba(15,14,26,0.07);border-color:#D4CAF8}
+    .item-list-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+    .item-list-info{flex:1;min-width:0}
+    .item-list-title{font-weight:700;font-size:0.9rem;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .item-list-meta{display:flex;align-items:center;gap:8px;font-size:0.72rem;color:#94A3B8;flex-wrap:wrap}
+    .item-list-actions{display:flex;gap:6px;flex-shrink:0}
 
-    /* EMPTY STATE */
-    .empty-state{text-align:center;padding:48px 24px;background:#fff;border-radius:14px;border:1.5px dashed #E2DAD0}
-    .empty-icon{font-size:2.5rem;margin-bottom:12px}
-    .empty-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:#64748B;margin-bottom:6px}
-    .empty-sub{font-size:0.82rem;color:#94A3B8;margin-bottom:20px}
+    /* EMPTY */
+    .empty-state{text-align:center;padding:60px 20px;grid-column:1/-1}
+    .empty-icon{font-size:3rem;margin-bottom:16px}
+    .empty-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:8px}
+    .empty-sub{font-size:0.85rem;color:#64748B;margin-bottom:24px;line-height:1.6}
 
-    /* TOAST */
-    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,0.3);white-space:nowrap}
+    /* CONTEXT MENU */
+    .ctx-menu{position:fixed;background:#fff;border:1.5px solid #E2DAD0;border-radius:12px;padding:6px;min-width:180px;box-shadow:0 8px 32px rgba(15,14,26,0.15);z-index:500;display:none}
+    .ctx-menu.open{display:block}
+    .ctx-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:7px;cursor:pointer;font-size:0.82rem;font-weight:600;color:#0F0E1A;transition:background 0.15s;text-decoration:none}
+    .ctx-item:hover{background:#F5F0E8}
+    .ctx-item.danger{color:#DC2626}
+    .ctx-item.danger:hover{background:#FEE2E2}
+    .ctx-divider{height:1px;background:#E2DAD0;margin:4px 0}
 
-    /* LOADING */
-    .ls{position:fixed;inset:0;background:#F5F0E8;display:flex;align-items:center;justify-content:center;z-index:999}
-    .spinner{width:32px;height:32px;border:3px solid rgba(45,27,105,0.2);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite}
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;white-space:nowrap}
+    .loading-wrap{text-align:center;padding:60px 20px;grid-column:1/-1}
+    .spinner{width:32px;height:32px;border:3px solid rgba(45,27,105,0.15);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
     @keyframes spin{to{transform:rotate(360deg)}}
 
-    /* CONFIRM MODAL */
-    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
-    .modal-bg.open{display:flex}
-    .modal{background:#fff;border-radius:16px;padding:28px;width:100%;max-width:400px}
-    .modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:8px}
-    .modal-sub{font-size:0.85rem;color:#64748B;margin-bottom:24px;line-height:1.6}
-    .modal-actions{display:flex;gap:8px;justify-content:flex-end}
-    .btn-cancel{padding:8px 16px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer}
-    .btn-confirm{padding:8px 16px;border-radius:8px;border:none;background:#DC2626;color:#fff;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer}
-    .btn-confirm.green{background:#2D1B69}
-
-    @media(max-width:900px){
-      .sidebar{transform:translateX(-100%)}
-      .sidebar.open{transform:translateX(0)}
-      .content{margin-left:0;padding:20px 16px}
-      .stats-grid{grid-template-columns:repeat(2,1fr)}
-      .hbtn{display:flex}
-    }
-    @media(max-width:500px){
-      .stats-grid{grid-template-columns:repeat(2,1fr)}
-      .surveys-grid{grid-template-columns:1fr}
+    @media(max-width:900px){.stats-row{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:600px){
+      nav{padding:0 14px}.logo-nm{display:none}
+      .main{padding:16px 14px}.stats-row{grid-template-columns:repeat(2,1fr)}
+      .items-grid{grid-template-columns:1fr}.search-inp{min-width:120px}
+      .dash-header{flex-direction:column}
     }
   </style>
 </head>
 <body>
-<div class="ls" id="ls"><div class="spinner"></div></div>
+<nav>
+  <a href="/" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
+  <div class="nav-right">
+    <a href="/discover" class="nav-btn">Discover</a>
+    <a href="/settings" class="nav-btn">Settings</a>
+    <div class="nav-avatar" id="nav-avatar" onclick="window.location.href='/settings'">?</div>
+  </div>
+</nav>
 
-<!-- CONFIRM MODAL -->
-<div class="modal-bg" id="confirm-modal">
-  <div class="modal">
-    <div class="modal-title" id="modal-title">Are you sure?</div>
-    <div class="modal-sub" id="modal-sub"></div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn-confirm" id="modal-confirm-btn" onclick="modalConfirm()">Confirm</button>
+<div class="main">
+  <!-- HEADER -->
+  <div class="dash-header">
+    <div>
+      <div class="dash-title" id="dash-title">My Dashboard</div>
+      <div class="dash-sub">Manage all your surveys and engagement content</div>
     </div>
+    <div class="create-dropdown" id="create-dropdown">
+      <button class="create-main-btn" onclick="toggleCreateMenu()">+ Create new ▾</button>
+      <div class="create-dropdown-menu" id="create-menu">
+        <a href="/create/" class="create-menu-item"><div class="create-menu-icon" style="background:#EDE9FF">📋</div><div><div class="create-menu-label">Survey</div><div class="create-menu-desc">Questions, logic, quiz</div></div></a>
+        <a href="/poll/create/" class="create-menu-item"><div class="create-menu-icon" style="background:#EEF2FF">📊</div><div><div class="create-menu-label">Poll</div><div class="create-menu-desc">Quick single/multi choice</div></div></a>
+        <a href="/voting/create/" class="create-menu-item"><div class="create-menu-icon" style="background:#FEF3C7">🗳️</div><div><div class="create-menu-label">Voting</div><div class="create-menu-desc">Candidate-based voting</div></div></a>
+        <a href="/pledge/create/" class="create-menu-item"><div class="create-menu-icon" style="background:#DCFCE7">🤝</div><div><div class="create-menu-label">Pledge</div><div class="create-menu-desc">Campaign & commitment</div></div></a>
+        <a href="/riddle/create/" class="create-menu-item"><div class="create-menu-icon" style="background:#F3E8FF">🧩</div><div><div class="create-menu-label">Riddle</div><div class="create-menu-desc">Fun quiz with scoring</div></div></a>
+        <div class="ctx-divider"></div>
+        <a href="/quiz/host/" class="create-menu-item"><div class="create-menu-icon" style="background:#EDE9FF">⚡</div><div><div class="create-menu-label">Fast Quiz</div><div class="create-menu-desc">Live Kahoot-style quiz</div></div></a>
+        <a href="/livepoll/host/" class="create-menu-item"><div class="create-menu-icon" style="background:#EEF2FF">📡</div><div><div class="create-menu-label">Live Poll</div><div class="create-menu-desc">Real-time audience poll</div></div></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-val" id="stat-total">—</div><div class="stat-lbl">Total items</div></div>
+    <div class="stat-card"><div class="stat-val" id="stat-active">—</div><div class="stat-lbl">Active</div></div>
+    <div class="stat-card"><div class="stat-val" id="stat-responses">—</div><div class="stat-lbl">Total responses</div></div>
+    <div class="stat-card"><div class="stat-val" id="stat-drafts">—</div><div class="stat-lbl">Drafts</div></div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters-row">
+    <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setFilter('surveys',this)">📋 Surveys</button>
+    <button class="filter-btn" onclick="setFilter('polls',this)">📊 Polls</button>
+    <button class="filter-btn" onclick="setFilter('votings',this)">🗳️ Voting</button>
+    <button class="filter-btn" onclick="setFilter('pledges',this)">🤝 Pledges</button>
+    <button class="filter-btn" onclick="setFilter('riddles',this)">🧩 Riddles</button>
+    <input class="search-inp" id="search-inp" placeholder="🔍 Search..." oninput="renderItems()">
+    <div class="view-btns">
+      <button class="view-btn active" id="vb-grid" onclick="setView('grid')" title="Grid">⊞</button>
+      <button class="view-btn" id="vb-list" onclick="setView('list')" title="List">☰</button>
+    </div>
+  </div>
+
+  <!-- ITEMS -->
+  <div id="items-wrap" class="items-grid">
+    <div class="loading-wrap"><div class="spinner"></div><div style="font-size:0.85rem;color:#94A3B8">Loading your content...</div></div>
   </div>
 </div>
 
-<div class="sb-overlay" id="sb-overlay" onclick="closeSb()"></div>
-
-<!-- TOP NAV -->
-<div class="topnav">
-  <div class="topnav-left">
-    <button class="hbtn" onclick="toggleSb()"><span></span><span></span><span></span></button>
-    <a href="/dashboard" class="logo-wrap">
-      <div class="logo-mark">S</div>
-      <div class="logo-name">SwoopForm</div>
-    </a>
-  </div>
-  <div class="topnav-right">
-    <a href="/create" class="btn-new" id="btn-new">+ New Survey</a>
-  </div>
-</div>
-
-<div class="layout">
-  <!-- SIDEBAR -->
-  <div class="sidebar" id="sidebar">
-    <div class="sb-user">
-      <div class="sb-user-row">
-        <div class="sb-avatar" id="sb-avatar">U</div>
-        <div style="min-width:0">
-          <div class="sb-user-name" id="sb-name">Loading...</div>
-          <div class="sb-user-email" id="sb-email"></div>
-        </div>
-      </div>
-      <div class="sb-plan"><span class="plan-badge plan-free" id="sb-plan">Free</span></div>
-    </div>
-
-    <div class="sb-nav">
-      <div class="sb-nav-label">Main</div>
-      <a class="sb-item active" href="/dashboard"><span class="ico">📊</span>Dashboard</a>
-      <a class="sb-item" href="/dashboard"><span class="ico">📋</span>My Surveys</a>
-      <a class="sb-item" href="#"><span class="ico">🌍</span>Discover</a>
-
-      <div class="sb-nav-label">Account</div>
-      <a class="sb-item" href="/settings"><span class="ico">⚙️</span>Settings</a>
-      <a class="sb-item" id="admin-link" href="/admin" style="display:none"><span class="ico">👑</span>Admin</a>
-
-      <div class="sb-nav-label">Help</div>
-      <a class="sb-item" href="https://docs.swoopform.com" target="_blank"><span class="ico">📖</span>Documentation</a>
-      <a class="sb-item" href="mailto:support@swoopform.com"><span class="ico">💬</span>Support</a>
-    </div>
-
-    <div class="sb-bottom">
-      <button class="sb-item danger" onclick="signOut()" style="width:100%"><span class="ico">🚪</span>Sign out</button>
-    </div>
-  </div>
-
-  <!-- CONTENT -->
-  <div class="content" id="content">
-    <div class="welcome-row">
-      <div>
-        <div class="welcome-title" id="welcome-title">Good morning! 👋</div>
-        <div class="welcome-sub" id="welcome-sub">Here's how your surveys are doing</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        <div class="view-toggle">
-          <button class="view-btn active" id="view-grid" onclick="setView('grid')" title="Grid view">⊞</button>
-          <button class="view-btn" id="view-list" onclick="setView('list')" title="List view">☰</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- STATS -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon">📊</div>
-        <div class="stat-value" id="stat-total">0</div>
-        <div class="stat-label">Total responses</div>
-        <div class="stat-change neutral" id="stat-total-sub">across all surveys</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon">📅</div>
-        <div class="stat-value" id="stat-today">0</div>
-        <div class="stat-label">Responses today</div>
-        <div class="stat-change neutral" id="stat-today-sub">loading...</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon">🟢</div>
-        <div class="stat-value" id="stat-active">0</div>
-        <div class="stat-label">Active surveys</div>
-        <div class="stat-change neutral" id="stat-active-sub">collecting responses</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon">🏆</div>
-        <div class="stat-value" id="stat-top">—</div>
-        <div class="stat-label">Most active survey</div>
-        <div class="stat-change neutral" id="stat-top-sub">by responses</div>
-      </div>
-    </div>
-
-    <!-- SURVEYS -->
-    <div id="surveys-container"></div>
-  </div>
+<!-- CONTEXT MENU -->
+<div class="ctx-menu" id="ctx-menu">
+  <a class="ctx-item" id="ctx-view" href="#" target="_blank">👁 View / Share</a>
+  <a class="ctx-item" id="ctx-edit" href="#">✏️ Edit</a>
+  <a class="ctx-item" id="ctx-responses" href="#">📊 Responses</a>
+  <div class="ctx-divider"></div>
+  <div class="ctx-item" id="ctx-copy" onclick="copyLink()">🔗 Copy link</div>
+  <div class="ctx-divider"></div>
+  <div class="ctx-item danger" id="ctx-delete" onclick="deleteItem()">🗑 Delete</div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import{getAuth,onAuthStateChanged,signOut as fbSignOut}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getFirestore,collection,query,where,getDocs,doc,getDoc,updateDoc,deleteDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getAuth,onAuthStateChanged,signOut}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,collection,query,where,getDocs,doc,deleteDoc,orderBy}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-const ADMIN_UID='7WPJK6ZuaEb3lgevyUbbU87umuH3';
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
 const app=initializeApp(FB);
 const auth=getAuth(app);
 const db=getFirestore(app);
 
-let currentUser=null,userProfile=null,surveys=[],viewMode='grid',modalAction=null;
+const TYPE_META={
+  surveys:{label:'Survey',icon:'📋',color:'#2D1B69',bg:'#EDE9FF',editPath:'/edit/?id=',viewPath:'/survey/',responsesPath:'/responses/?id=',createPath:'/create/'},
+  polls:{label:'Poll',icon:'📊',color:'#4F46E5',bg:'#EEF2FF',editPath:'/poll/create/?id=',viewPath:'/poll/',responsesPath:null,createPath:'/poll/create/'},
+  votings:{label:'Voting',icon:'🗳️',color:'#D97706',bg:'#FEF3C7',editPath:'/voting/create/?id=',viewPath:'/voting/',responsesPath:null,createPath:'/voting/create/'},
+  pledges:{label:'Pledge',icon:'🤝',color:'#10B981',bg:'#DCFCE7',editPath:'/pledge/create/?id=',viewPath:'/pledge/',responsesPath:null,createPath:'/pledge/create/'},
+  riddles:{label:'Riddle',icon:'🧩',color:'#A855F7',bg:'#F3E8FF',editPath:'/riddle/create/?id=',viewPath:'/riddle/',responsesPath:null,createPath:'/riddle/create/'},
+};
+
+let U=null,allItems=[],activeFilter='all',viewMode='grid',ctxItem=null;
 
 onAuthStateChanged(auth,async u=>{
   if(!u){window.location.href='/login';return}
-  currentUser=u;
-  await loadUser();
-  await loadSurveys();
-  document.getElementById('ls').style.display='none';
+  U=u;
+  const av=document.getElementById('nav-avatar');
+  if(av)av.textContent=(u.displayName||u.email||'?')[0].toUpperCase();
+  const title=document.getElementById('dash-title');
+  if(title)title.textContent='Welcome, '+(u.displayName?.split(' ')[0]||'there');
+  await loadAll();
 });
 
-async function loadUser(){
+async function loadAll(){
   try{
-    const snap=await getDoc(doc(db,'users',currentUser.uid));
-    userProfile=snap.exists()?snap.data():{};
-    const name=userProfile.name||currentUser.displayName||currentUser.email?.split('@')[0]||'User';
-    const email=currentUser.email||'';
-    const plan=userProfile.plan||'free';
-    const photoURL=userProfile.photoURL||currentUser.photoURL||'';
-
-    // Sidebar user info
-    document.getElementById('sb-name').textContent=name;
-    document.getElementById('sb-email').textContent=email;
-    const avatarEl=document.getElementById('sb-avatar');
-    if(photoURL){avatarEl.innerHTML=`<img src="${photoURL}" alt="${name}">`}
-    else{avatarEl.textContent=name[0].toUpperCase()}
-
-    // Plan badge
-    const planEl=document.getElementById('sb-plan');
-    planEl.textContent=plan.charAt(0).toUpperCase()+plan.slice(1);
-    planEl.className='plan-badge plan-'+plan;
-
-    // Admin link
-    if(currentUser.uid===ADMIN_UID)document.getElementById('admin-link').style.display='flex';
-
-    // Welcome message
-    const hour=new Date().getHours();
-    const greeting=hour<12?'Good morning':'hour<17'?'Good afternoon':'Good evening';
-    const greet=hour<12?'Good morning ☀️':hour<17?'Good afternoon 👋':'Good evening 🌙';
-    document.getElementById('welcome-title').textContent=greet+', '+name.split(' ')[0]+'!';
+    const results=await Promise.all(Object.keys(TYPE_META).map(async col=>{
+      try{
+        const q=query(collection(db,col),where('userId','==',U.uid));
+        const snap=await getDocs(q);
+        return snap.docs.map(d=>({id:d.id,_col:col,...d.data()}));
+      }catch(e){return[]}
+    }));
+    allItems=results.flat().sort((a,b)=>(b.createdAt?.seconds||b.updatedAt?.seconds||0)-(a.createdAt?.seconds||a.updatedAt?.seconds||0));
+    updateStats();
+    renderItems();
   }catch(e){console.error(e)}
 }
 
-async function loadSurveys(){
-  try{
-    const q=query(collection(db,'surveys'),where('userId','==',currentUser.uid));
-    const snap=await getDocs(q);
-    surveys=snap.docs.map(d=>({id:d.id,...d.data()}));
-    surveys.sort((a,b)=>{
-      const ta=a.updatedAt?.toMillis?a.updatedAt.toMillis():0;
-      const tb=b.updatedAt?.toMillis?b.updatedAt.toMillis():0;
-      return tb-ta;
-    });
-    renderStats();
-    renderSurveys();
-  }catch(e){console.error(e)}
+function updateStats(){
+  const active=allItems.filter(i=>i.status==='active').length;
+  const drafts=allItems.filter(i=>i.status==='draft').length;
+  const responses=allItems.reduce((s,i)=>{
+    return s+(i.responseCount||i.totalVotes||i.totalPledges||0);
+  },0);
+  document.getElementById('stat-total').textContent=allItems.length;
+  document.getElementById('stat-active').textContent=active;
+  document.getElementById('stat-responses').textContent=responses;
+  document.getElementById('stat-drafts').textContent=drafts;
 }
 
-function renderStats(){
-  const total=surveys.reduce((s,sv)=>s+(sv.responseCount||0),0);
-  const active=surveys.filter(s=>s.status==='active');
-  document.getElementById('stat-total').textContent=total;
-  document.getElementById('stat-active').textContent=active.length;
-  document.getElementById('stat-active-sub').textContent=active.length===1?'1 survey active':active.length+' surveys active';
-
-  // Today's responses (approximate from responseCount changes — we use a simple heuristic)
-  // Since we don't store per-day counts, show total with note
-  const todayStr=new Date().toLocaleDateString('en-IN');
-  document.getElementById('stat-today').textContent='—';
-  document.getElementById('stat-today-sub').textContent='open responses to see';
-
-  // Most active survey
-  const top=surveys.filter(s=>s.responseCount>0).sort((a,b)=>(b.responseCount||0)-(a.responseCount||0))[0];
-  if(top){
-    document.getElementById('stat-top').textContent=top.responseCount||0;
-    document.getElementById('stat-top-sub').textContent=(top.title||'Untitled').slice(0,20)+(top.title?.length>20?'...':'');
+window.renderItems=function(){
+  const search=(document.getElementById('search-inp')?.value||'').toLowerCase();
+  let filtered=allItems.filter(i=>{
+    const matchFilter=activeFilter==='all'||i._col===activeFilter;
+    const matchSearch=!search||(getTitle(i)||'').toLowerCase().includes(search);
+    return matchFilter&&matchSearch;
+  });
+  const wrap=document.getElementById('items-wrap');
+  wrap.className=viewMode==='grid'?'items-grid':'items-list';
+  if(!filtered.length){
+    wrap.innerHTML=`<div class="empty-state"><div class="empty-icon">${activeFilter==='all'?'📭':TYPE_META[activeFilter]?.icon||'📭'}</div><div class="empty-title">No ${activeFilter==='all'?'content':TYPE_META[activeFilter]?.label+'s'} yet</div><div class="empty-sub">Create your first ${activeFilter==='all'?'survey or engagement':''}  to get started.</div><a href="${activeFilter!=='all'?TYPE_META[activeFilter]?.createPath||'/create/':'/create/'}" style="display:inline-block;padding:10px 20px;border-radius:10px;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.88rem;font-weight:700;text-decoration:none">+ Create now</a></div>`;
+    return;
   }
+  wrap.innerHTML=filtered.map(item=>viewMode==='grid'?renderCard(item):renderListRow(item)).join('');
 }
 
-function renderSurveys(){
-  const container=document.getElementById('surveys-container');
-  const active=surveys.filter(s=>s.status==='active');
-  const drafts=surveys.filter(s=>s.status==='draft'||!s.status);
-  const closed=surveys.filter(s=>s.status==='closed');
-  let html='';
-
-  if(surveys.length===0){
-    html=`<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No surveys yet</div><div class="empty-sub">Create your first survey to start collecting responses.</div><a href="/create" class="btn-new" style="display:inline-flex">+ Create survey</a></div>`;
-    container.innerHTML=html;return;
-  }
-
-  if(active.length>0){
-    html+=`<div class="section-header"><div class="section-dot active"></div><div class="section-title">Active Surveys</div><span class="section-count">${active.length}</span></div>`;
-    html+=viewMode==='grid'?`<div class="surveys-grid">${active.map(s=>renderCardGrid(s)).join('')}</div>`:`<div class="surveys-list">${active.map(s=>renderCardList(s)).join('')}</div>`;
-  }
-  if(drafts.length>0){
-    html+=`<div class="section-header"><div class="section-dot draft"></div><div class="section-title">Draft Surveys</div><span class="section-count">${drafts.length}</span></div>`;
-    html+=viewMode==='grid'?`<div class="surveys-grid">${drafts.map(s=>renderCardGrid(s)).join('')}</div>`:`<div class="surveys-list">${drafts.map(s=>renderCardList(s)).join('')}</div>`;
-  }
-  if(closed.length>0){
-    html+=`<div class="section-header"><div class="section-dot closed"></div><div class="section-title">Closed Surveys</div><span class="section-count">${closed.length}</span></div>`;
-    html+=viewMode==='grid'?`<div class="surveys-grid">${closed.map(s=>renderCardGrid(s)).join('')}</div>`:`<div class="surveys-list">${closed.map(s=>renderCardList(s)).join('')}</div>`;
-  }
-
-  container.innerHTML=html;
-  // Animate bars
-  setTimeout(()=>{document.querySelectorAll('.response-bar-fill,.list-bar-fill').forEach(b=>{const w=b.dataset.width;if(w)b.style.width=w+'%'})},100);
+function getTitle(item){return item.title||item.question||'Untitled'}
+function getResponseCount(item){return item.responseCount||item.totalVotes||item.totalPledges||0}
+function getViewUrl(item){
+  const m=TYPE_META[item._col];if(!m)return '#';
+  return item.slug?'/engage/'+item.slug:(m.viewPath+item.id);
+}
+function getEditUrl(item){
+  const m=TYPE_META[item._col];if(!m)return '#';
+  return item._col==='surveys'?(m.editPath+item.id):(m.editPath||'#');
+}
+function formatDate(item){
+  const ts=item.updatedAt||item.createdAt;if(!ts?.seconds)return '';
+  return new Date(ts.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
 }
 
-function renderCardGrid(s){
-  const resp=s.responseCount||0;
-  const qCount=s.questionCount||0;
-  const date=s.createdAt?.toDate?s.createdAt.toDate().toLocaleDateString('en-IN',{day:'2-digit',month:'short'}):'';
-  const status=s.status||'draft';
-  const statusBadge=status==='active'?'<span class="status-badge status-active">🟢 Active</span>':status==='closed'?'<span class="status-badge status-closed">💤 Closed</span>':'<span class="status-badge status-draft">✏️ Draft</span>';
-  // Response rate bar — use responseCount vs a "target" of 100 for visual
-  const barPct=Math.min(resp,100);
-  const sheetBtn=s.sheetUrl?`<a class="card-btn sheet" href="${s.sheetUrl}" target="_blank">📊 Sheet</a>`:'';
-  const closeBtn=status==='active'?`<button class="card-btn danger" onclick="confirmClose('${s.id}','${eh(s.title)}')">✕ Close</button>`:'';
-  const reopenBtn=status==='closed'?`<button class="card-btn" onclick="reopenSurvey('${s.id}')">↺ Reopen</button>`:'';
-  const publishBtn=status==='draft'?`<a class="card-btn primary" href="/edit/?id=${s.id}">🚀 Publish</a>`:'';
-
-  return`<div class="survey-card">
-    <div class="card-status-row">${statusBadge}<span class="card-date">${date}</span></div>
-    <div class="card-title">${eh(s.title||'Untitled Survey')}</div>
-    ${s.description?`<div class="card-desc">${eh(s.description)}</div>`:'<div style="margin-bottom:12px"></div>'}
-    <div class="card-meta">
-      <div class="card-meta-item">📝 <strong>${qCount}</strong> questions</div>
-      <div class="card-meta-item">📊 <strong>${resp}</strong> responses</div>
+function renderCard(item){
+  const m=TYPE_META[item._col]||{label:'Item',icon:'📄',color:'#64748B',bg:'#F5F0E8'};
+  const rc=getResponseCount(item);
+  const statusClass=item.status==='active'?'status-active':item.status==='closed'?'status-closed':'status-draft';
+  const statusText=item.status==='active'?'Active':item.status==='closed'?'Closed':'Draft';
+  return`<div class="item-card" onclick="openItem(event,'${item.id}','${item._col}')">
+    <div class="item-card-accent" style="background:${m.color}"></div>
+    <div class="item-card-header">
+      <div class="item-type-badge" style="background:${m.bg};color:${m.color}">${m.icon} ${m.label}</div>
+      <button class="item-menu-btn" onclick="openCtx(event,'${item.id}','${item._col}')">⋯</button>
     </div>
-    <div class="response-bar-wrap">
-      <div class="response-bar-label"><span>Responses</span><span>${resp}</span></div>
-      <div class="response-bar-track"><div class="response-bar-fill" data-width="${barPct}" style="width:0%"></div></div>
+    <div class="item-title">${eh(getTitle(item))}</div>
+    <div class="item-meta">
+      <span class="item-status ${statusClass}">${statusText}</span>
+      ${item.slug?`<span>🔗 /engage/${item.slug}</span>`:''}
+      <span>${formatDate(item)}</span>
     </div>
-    <div class="card-actions">
-      <a class="card-btn primary" href="/responses/?id=${s.id}">📊 Responses</a>
-      <a class="card-btn" href="/edit/?id=${s.id}">✏️ Edit</a>
-      <button class="card-btn" onclick="copyLink('${s.id}')">🔗 Copy link</button>
-      ${sheetBtn}${closeBtn}${reopenBtn}${publishBtn}
-      <button class="card-btn danger" onclick="confirmDelete('${s.id}','${eh(s.title)}')">🗑 Delete</button>
+    <div class="item-footer">
+      <div class="item-stat">${m.icon==='📋'?'📝':'👥'} <strong>${rc}</strong> ${m.icon==='📋'?'response':'vote'}${rc!==1?'s':''}</div>
+      <div class="item-actions">
+        <a class="ia-btn" href="${getViewUrl(item)}" target="_blank" onclick="event.stopPropagation()">View</a>
+        <a class="ia-btn primary" href="${getEditUrl(item)}" onclick="event.stopPropagation()">Edit</a>
+      </div>
     </div>
   </div>`;
 }
 
-function renderCardList(s){
-  const resp=s.responseCount||0;
-  const qCount=s.questionCount||0;
-  const status=s.status||'draft';
-  const dotColor=status==='active'?'#10B981':status==='closed'?'#94A3B8':'#F59E0B';
-  const barPct=Math.min(resp,100);
-  const sheetBtn=s.sheetUrl?`<a class="card-btn sheet" href="${s.sheetUrl}" target="_blank">📊</a>`:'';
-  const closeBtn=status==='active'?`<button class="card-btn danger" onclick="confirmClose('${s.id}','${eh(s.title)}')">✕</button>`:'';
-  const reopenBtn=status==='closed'?`<button class="card-btn" onclick="reopenSurvey('${s.id}')">↺</button>`:'';
-
-  return`<div class="survey-list-item">
-    <div class="list-status-dot" style="background:${dotColor}"></div>
-    <div class="list-info">
-      <div class="list-title">${eh(s.title||'Untitled Survey')}</div>
-      <div class="list-meta">${qCount} questions • ${status}</div>
+function renderListRow(item){
+  const m=TYPE_META[item._col]||{label:'Item',icon:'📄',color:'#64748B',bg:'#F5F0E8'};
+  const rc=getResponseCount(item);
+  const statusClass=item.status==='active'?'status-active':item.status==='closed'?'status-closed':'status-draft';
+  return`<div class="item-list-row">
+    <div class="item-list-icon" style="background:${m.bg}">${m.icon}</div>
+    <div class="item-list-info">
+      <div class="item-list-title">${eh(getTitle(item))}</div>
+      <div class="item-list-meta">
+        <span class="item-status ${statusClass}">${item.status||'draft'}</span>
+        <span style="color:${m.color};font-weight:600">${m.label}</span>
+        <span>${rc} response${rc!==1?'s':''}</span>
+        <span>${formatDate(item)}</span>
+      </div>
     </div>
-    <div style="text-align:center">
-      <div class="list-resp">${resp}</div>
-      <div class="list-resp-lbl">responses</div>
-    </div>
-    <div class="list-bar">
-      <div class="response-bar-track"><div class="response-bar-fill list-bar-fill" data-width="${barPct}" style="width:0%"></div></div>
-    </div>
-    <div class="list-actions">
-      <a class="card-btn primary" href="/responses/?id=${s.id}">📊</a>
-      <a class="card-btn" href="/edit/?id=${s.id}">✏️</a>
-      <button class="card-btn" onclick="copyLink('${s.id}')">🔗</button>
-      ${sheetBtn}${closeBtn}${reopenBtn}
-      <button class="card-btn danger" onclick="confirmDelete('${s.id}','${eh(s.title)}')">🗑</button>
+    <div class="item-list-actions">
+      <a class="ia-btn" href="${getViewUrl(item)}" target="_blank">View</a>
+      <a class="ia-btn primary" href="${getEditUrl(item)}">Edit</a>
+      <button class="ia-btn" onclick="openCtx(event,'${item.id}','${item._col}')">⋯</button>
     </div>
   </div>`;
 }
 
-function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
+window.openItem=function(e,id,col){
+  if(e.target.closest('.item-menu-btn,.ia-btn'))return;
+  const item=allItems.find(i=>i.id===id&&i._col===col);
+  if(item)window.open(getViewUrl(item),'_blank');
+}
 
-// VIEW TOGGLE
+window.setFilter=function(f,el){
+  activeFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderItems();
+}
 window.setView=function(v){
   viewMode=v;
-  document.getElementById('view-grid').classList.toggle('active',v==='grid');
-  document.getElementById('view-list').classList.toggle('active',v==='list');
-  renderSurveys();
+  document.getElementById('vb-grid').classList.toggle('active',v==='grid');
+  document.getElementById('vb-list').classList.toggle('active',v==='list');
+  renderItems();
 }
 
-// SIDEBAR
-window.toggleSb=function(){
-  const sb=document.getElementById('sidebar');
-  const ov=document.getElementById('sb-overlay');
-  const isOpen=sb.classList.contains('open');
-  sb.classList.toggle('open',!isOpen);
-  ov.classList.toggle('open',!isOpen);
+// CONTEXT MENU
+window.openCtx=function(e,id,col){
+  e.stopPropagation();e.preventDefault();
+  const item=allItems.find(i=>i.id===id&&i._col===col);
+  if(!item)return;
+  ctxItem=item;
+  const m=TYPE_META[col];
+  const menu=document.getElementById('ctx-menu');
+  document.getElementById('ctx-view').href=getViewUrl(item);
+  document.getElementById('ctx-edit').href=getEditUrl(item);
+  const respEl=document.getElementById('ctx-responses');
+  if(m?.responsesPath){respEl.style.display='flex';respEl.href=m.responsesPath+id}
+  else{respEl.style.display='none'}
+  const rect=e.currentTarget.getBoundingClientRect();
+  menu.style.top=(rect.bottom+8)+'px';
+  menu.style.right=(window.innerWidth-rect.right)+'px';
+  menu.style.left='auto';
+  menu.classList.add('open');
+  setTimeout(()=>document.addEventListener('click',closeCtx,{once:true}),10);
 }
-window.closeSb=function(){
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sb-overlay').classList.remove('open');
+function closeCtx(){document.getElementById('ctx-menu').classList.remove('open')}
+
+window.copyLink=function(){
+  if(!ctxItem)return;
+  const url='https://swoopform.com'+getViewUrl(ctxItem);
+  navigator.clipboard.writeText(url).then(()=>{toast('Link copied!');closeCtx()});
 }
 
-// SIGN OUT
-window.signOut=async function(){
-  await fbSignOut(auth);
-  window.location.href='/login';
+window.deleteItem=async function(){
+  if(!ctxItem)return;
+  if(!confirm('Delete "'+getTitle(ctxItem)+'"? This cannot be undone.'))return;
+  closeCtx();
+  try{
+    await deleteDoc(doc(db,ctxItem._col,ctxItem.id));
+    allItems=allItems.filter(i=>!(i.id===ctxItem.id&&i._col===ctxItem._col));
+    updateStats();renderItems();toast('Deleted');ctxItem=null;
+  }catch(e){console.error(e);toast('Error deleting')}
 }
 
-// COPY LINK
-window.copyLink=function(id){
-  const url=window.location.origin+'/s/?id='+id;
-  navigator.clipboard.writeText(url).then(()=>toast('Survey link copied!')).catch(()=>{
-    const el=document.createElement('textarea');el.value=url;document.body.appendChild(el);el.select();document.execCommand('copy');document.body.removeChild(el);toast('Link copied!');
-  });
+window.toggleCreateMenu=function(){
+  document.getElementById('create-menu').classList.toggle('open');
+  document.addEventListener('click',e=>{
+    if(!document.getElementById('create-dropdown').contains(e.target))
+      document.getElementById('create-menu').classList.remove('open');
+  },{once:true});
 }
 
-// CLOSE SURVEY
-window.confirmClose=function(id,title){
-  document.getElementById('modal-title').textContent='Close survey?';
-  document.getElementById('modal-sub').textContent=`"${title}" will stop accepting new responses. All existing responses are kept safely. You can reopen it anytime.`;
-  document.getElementById('modal-confirm-btn').textContent='Close survey';
-  document.getElementById('modal-confirm-btn').className='btn-confirm';
-  modalAction=async()=>{await updateDoc(doc(db,'surveys',id),{status:'closed'});toast('Survey closed');await loadSurveys()};
-  document.getElementById('confirm-modal').classList.add('open');
-}
-
-// REOPEN SURVEY
-window.reopenSurvey=async function(id){
-  await updateDoc(doc(db,'surveys',id),{status:'active'});
-  toast('Survey reopened!');
-  await loadSurveys();
-}
-
-// DELETE SURVEY
-window.confirmDelete=function(id,title){
-  document.getElementById('modal-title').textContent='Delete survey?';
-  document.getElementById('modal-sub').textContent=`"${title}" and ALL its responses will be permanently deleted. This cannot be undone.`;
-  document.getElementById('modal-confirm-btn').textContent='Delete permanently';
-  document.getElementById('modal-confirm-btn').className='btn-confirm';
-  modalAction=async()=>{await deleteDoc(doc(db,'surveys',id));toast('Survey deleted');await loadSurveys()};
-  document.getElementById('confirm-modal').classList.add('open');
-}
-
-window.closeModal=function(){document.getElementById('confirm-modal').classList.remove('open');modalAction=null}
-window.modalConfirm=async function(){
-  if(modalAction){try{await modalAction()}catch(e){console.error(e);toast('Something went wrong')}modalAction=null}
-  closeModal();
-}
+function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
 </script>
 </body>
 </html>
