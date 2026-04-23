@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Live Poll — SwoopForm</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,#0F1629,#162040,#0F1629);background-attachment:fixed;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+    .card{background:rgba(255,255,255,0.07);backdrop-filter:blur(20px);border:1.5px solid rgba(255,255,255,0.1);border-radius:24px;padding:36px;width:100%;max-width:420px;text-align:center;animation:slideUp 0.4s ease both}
+    @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .logo{width:48px;height:48px;background:linear-gradient(135deg,#2563EB,#7C3AED);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:#fff;margin:0 auto 16px}
+    .title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;margin-bottom:6px}
+    .sub{font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:28px}
+    .pin-inputs{display:flex;gap:10px;justify-content:center;margin-bottom:20px}
+    .pin-digit{width:60px;height:70px;border-radius:12px;border:2px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;text-align:center;outline:none;transition:border-color 0.2s;caret-color:transparent}
+    .pin-digit:focus{border-color:#2563EB}
+    .join-btn{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,#2563EB,#7C3AED);color:#fff;font-size:1rem;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;transition:all 0.2s}
+    .join-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,99,235,0.4)}
+    .join-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none}
+    .err{font-size:0.82rem;color:#EF4444;margin-bottom:12px;display:none}
+
+    /* QUESTION */
+    .question-card{display:none;width:100%;max-width:500px}
+    .q-header{text-align:center;margin-bottom:24px}
+    .q-label{font-size:0.72rem;font-weight:700;color:#60A5FA;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
+    .q-text{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.1rem,3vw,1.5rem);letter-spacing:-0.02em;line-height:1.3}
+    .mcq-options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+    .mcq-opt{padding:14px 18px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);cursor:pointer;transition:all 0.2s;font-size:0.95rem;font-weight:600;text-align:left}
+    .mcq-opt:hover{border-color:#2563EB;background:rgba(37,99,235,0.15);transform:translateX(4px)}
+    .mcq-opt.selected{border-color:#2563EB;background:rgba(37,99,235,0.2)}
+    .mcq-opt.voted{cursor:default;transform:none}
+    .text-inp{width:100%;padding:14px 18px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#fff;font-size:1rem;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:12px;transition:border-color 0.2s}
+    .text-inp:focus{border-color:#2563EB}
+    .text-inp::placeholder{color:rgba(255,255,255,0.2)}
+    .submit-btn{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,#2563EB,#7C3AED);color:#fff;font-size:0.95rem;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;transition:all 0.2s}
+    .submit-btn:hover{opacity:0.9}
+    .submit-btn:disabled{opacity:0.4;cursor:not-allowed}
+    .submitted-msg{text-align:center;padding:16px;font-size:1.3rem;display:none;animation:popIn 0.3s ease}
+    @keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+    .waiting-for-next{text-align:center;color:rgba(255,255,255,0.3);font-size:0.82rem;margin-top:12px}
+    .ended-card{display:none;text-align:center}
+    .ended-icon{font-size:3rem;margin-bottom:16px}
+    .ended-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;margin-bottom:8px}
+    .ended-sub{font-size:0.85rem;color:rgba(255,255,255,0.4)}
+    .spinner{width:24px;height:24px;border:3px solid rgba(37,99,235,0.2);border-top-color:#2563EB;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media(max-width:400px){.pin-digit{width:48px;height:58px;font-size:1.6rem}}
+  </style>
+</head>
+<body>
+
+<!-- JOIN -->
+<div class="card" id="join-card">
+  <div class="logo">S</div>
+  <div class="title">📊 Join Live Poll</div>
+  <div class="sub">Enter the 4-digit PIN from your presenter</div>
+  <div class="pin-inputs">
+    <input class="pin-digit" id="p0" maxlength="1" type="tel" oninput="pinIn(0)" onkeydown="pinBk(event,0)">
+    <input class="pin-digit" id="p1" maxlength="1" type="tel" oninput="pinIn(1)" onkeydown="pinBk(event,1)">
+    <input class="pin-digit" id="p2" maxlength="1" type="tel" oninput="pinIn(2)" onkeydown="pinBk(event,2)">
+    <input class="pin-digit" id="p3" maxlength="1" type="tel" oninput="pinIn(3)" onkeydown="pinBk(event,3)">
+  </div>
+  <div class="err" id="err"></div>
+  <button class="join-btn" id="join-btn" onclick="joinPoll()">Join →</button>
+</div>
+
+<!-- WAITING -->
+<div class="card" id="waiting-card" style="display:none">
+  <div style="font-size:2.5rem;margin-bottom:16px">🎯</div>
+  <div style="font-family:Syne,sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:6px">You're in!</div>
+  <div style="font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:20px">Waiting for the presenter to begin...</div>
+  <div class="spinner"></div>
+</div>
+
+<!-- QUESTION -->
+<div class="question-card card" id="question-card">
+  <div class="q-header">
+    <div class="q-label" id="q-label">Question</div>
+    <div class="q-text" id="q-text"></div>
+  </div>
+  <div id="q-input-area"></div>
+  <div class="submitted-msg" id="submitted-msg">✅ Submitted!</div>
+  <div class="waiting-for-next" id="waiting-next" style="display:none">Waiting for next slide...</div>
+</div>
+
+<!-- ENDED -->
+<div class="card ended-card" id="ended-card">
+  <div class="ended-icon">🎊</div>
+  <div class="ended-title">Poll ended</div>
+  <div class="ended-sub">Thank you for participating!</div>
+  <br>
+  <a href="/" style="color:rgba(255,255,255,0.3);font-size:0.82rem;text-decoration:none">← SwoopForm</a>
+</div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getDatabase,ref,get,push,set,onValue}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83",databaseURL:"https://swoopform-default-rtdb.firebaseio.com"};
+const app=initializeApp(FB);
+const db=getDatabase(app);
+
+let sessionId=null,participantId=null,currentSlide=-1,hasSubmitted=false;
+
+window.pinIn=function(i){const v=document.getElementById('p'+i).value.replace(/\D/g,'');document.getElementById('p'+i).value=v;if(v&&i<3)document.getElementById('p'+(i+1)).focus()}
+window.pinBk=function(e,i){if(e.key==='Backspace'&&!document.getElementById('p'+i).value&&i>0)document.getElementById('p'+(i-1)).focus()}
+function getPin(){return[0,1,2,3].map(i=>document.getElementById('p'+i).value).join('')}
+
+window.joinPoll=async function(){
+  const pin=getPin();const err=document.getElementById('err');
+  if(pin.length!==4){err.textContent='Please enter the 4-digit PIN';err.style.display='block';return}
+  err.style.display='none';
+  const btn=document.getElementById('join-btn');btn.disabled=true;btn.textContent='Joining...';
+  try{
+    const snap=await get(ref(db,'livePollSessions'));
+    let found=null;
+    if(snap.exists())snap.forEach(c=>{const s=c.val();if(s.code===pin&&s.status==='active'){found={id:c.key,...s}}});
+    if(!found){err.textContent='Invalid PIN. Try again.';err.style.display='block';btn.disabled=false;btn.textContent='Join →';return}
+    sessionId=found.id;
+    const pRef=push(ref(db,'livePollParticipants/'+sessionId));
+    participantId=pRef.key;
+    await set(pRef,{joinedAt:Date.now()});
+    document.getElementById('join-card').style.display='none';
+    document.getElementById('waiting-card').style.display='block';
+    watchSession();
+  }catch(e){console.error(e);err.textContent='Something went wrong.';err.style.display='block';btn.disabled=false;btn.textContent='Join →'}
+}
+
+function watchSession(){
+  onValue(ref(db,'livePollSessions/'+sessionId),snap=>{
+    if(!snap.exists())return;
+    const s=snap.val();
+    if(s.status==='ended'){showEnded();return}
+    if(s.currentSlide!==currentSlide){
+      currentSlide=s.currentSlide;hasSubmitted=false;
+      const slide=s.slides[currentSlide];
+      document.getElementById('waiting-card').style.display='none';
+      document.getElementById('question-card').style.display='block';
+      showSlide(slide,s.currentSlide);
+    }
+  });
+}
+
+function showSlide(slide,idx){
+  const typeLabels={mcq:'📊 Multiple Choice',wordcloud:'☁️ Word Association',opentext:'💬 Open Response'};
+  document.getElementById('q-label').textContent=typeLabels[slide.type]||'Question';
+  document.getElementById('q-text').textContent=slide.question||'';
+  document.getElementById('submitted-msg').style.display='none';
+  document.getElementById('waiting-next').style.display='none';
+  const area=document.getElementById('q-input-area');
+  if(slide.type==='mcq'){
+    area.innerHTML=`<div class="mcq-options">${(slide.options||[]).map(o=>`<div class="mcq-opt" onclick="submitMcq('${idx}','${esc(o)}',this)">${o}</div>`).join('')}</div>`;
+  } else {
+    const ph=slide.type==='wordcloud'?'Type a word...':'Share your thoughts...';
+    area.innerHTML=`<textarea class="text-inp" id="text-inp" placeholder="${ph}" rows="${slide.type==='opentext'?4:1}"></textarea><button class="submit-btn" onclick="submitText('${idx}')">Submit →</button>`;
+  }
+}
+
+window.submitMcq=async function(idx,val,el){
+  if(hasSubmitted)return;hasSubmitted=true;
+  document.querySelectorAll('.mcq-opt').forEach(o=>o.classList.add('voted'));
+  el.classList.add('selected');
+  await push(ref(db,'livePollResponses/'+sessionId+'/'+idx),{answer:val,participantId,timestamp:Date.now()});
+  document.getElementById('submitted-msg').style.display='block';
+  document.getElementById('waiting-next').style.display='block';
+  document.getElementById('q-input-area').style.opacity='0.4';
+}
+
+window.submitText=async function(idx){
+  if(hasSubmitted)return;
+  const inp=document.getElementById('text-inp');const val=inp?.value?.trim();
+  if(!val)return;
+  hasSubmitted=true;inp.disabled=true;
+  await push(ref(db,'livePollResponses/'+sessionId+'/'+idx),{answer:val,participantId,timestamp:Date.now()});
+  document.getElementById('submitted-msg').style.display='block';
+  document.getElementById('waiting-next').style.display='block';
+  const btn=document.querySelector('.submit-btn');if(btn)btn.disabled=true;
+}
+
+function showEnded(){
+  document.getElementById('question-card').style.display='none';
+  document.getElementById('waiting-card').style.display='none';
+  document.getElementById('ended-card').style.display='block';
+}
+
+function esc(s){return(s||'').replace(/'/g,"\\'").replace(/"/g,'\\"')}
+</script>
+</body>
+</html>
