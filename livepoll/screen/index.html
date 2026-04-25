@@ -44,7 +44,7 @@
 <div class="screen-header">
   <div class="header-left">
     <div class="logo-mk">S</div>
-    <div class="logo-nm">SwoopForm Live Poll</div>
+    <div class="logo-nm">SwoopForm PulseCheck</div>
     <div class="poll-title-sm" id="poll-title-sm"></div>
   </div>
   <div class="join-code-sm" id="join-code-sm">----</div>
@@ -92,7 +92,7 @@ else{
 
 function showWaiting(s){
   document.getElementById('screen-body').innerHTML=`<div class="waiting-big">
-    <div class="waiting-url">Join at swoopform.com/livepoll/join · Enter PIN</div>
+    <div class="waiting-url">Go to swoopform.com/livepoll/join · Enter PIN</div>
     <div class="waiting-pin">${s.code||'----'}</div>
     <div class="waiting-sub">${s.title||'Live Poll'}</div>
   </div>`;
@@ -140,7 +140,7 @@ function renderResults(slide,responses,total){
 }
 
 function showEnded(){
-  document.getElementById('screen-body').innerHTML=`<div style="text-align:center"><div style="font-size:4rem;margin-bottom:16px">🎊</div><div style="font-family:Syne,sans-serif;font-weight:800;font-size:3rem;letter-spacing:-0.04em;margin-bottom:12px">Poll Complete!</div><div style="font-size:1.1rem;color:rgba(255,255,255,0.4)">Thank you for participating</div><div style="margin-top:24px;font-size:0.85rem;color:rgba(255,255,255,0.25)">Powered by SwoopForm</div></div>`;
+  document.getElementById('screen-body').innerHTML=`<div style="text-align:center"><div style="font-size:4rem;margin-bottom:16px">🎊</div><div style="font-family:Syne,sans-serif;font-weight:800;font-size:3rem;letter-spacing:-0.04em;margin-bottom:12px">Session Complete!</div><div style="font-size:1.1rem;color:rgba(255,255,255,0.4)">Thank you for participating</div><div style="margin-top:24px;font-size:0.85rem;color:rgba(255,255,255,0.25)">Powered by SwoopForm</div></div>`;
 }
 </script>
 </body>
