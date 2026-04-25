@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard — SwoopForm</title>
+  <meta name="robots" content="noindex">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
@@ -16,62 +17,86 @@
     .nav-btn{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
     .nav-btn:hover{border-color:#2D1B69;color:#2D1B69}
     .nav-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:#fff;cursor:pointer;flex-shrink:0}
-    .main{max-width:1100px;margin:0 auto;padding:28px 20px}
+
+    /* LAYOUT */
+    .app-layout{display:flex;min-height:calc(100vh - 56px)}
+
+    /* SIDEBAR */
+    .sidebar{width:220px;background:#fff;border-right:1.5px solid #E2DAD0;display:flex;flex-direction:column;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;flex-shrink:0;transition:transform 0.3s ease;z-index:50}
+    .sb-section{padding:10px 10px 4px}
+    .sb-section-label{font-size:0.62rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase;padding:6px 8px;margin-bottom:2px}
+    .sb-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:9px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;color:#64748B;transition:all 0.2s;text-decoration:none}
+    .sb-item:hover{background:#F5F0E8;color:#0F0E1A}
+    .sb-item.active{background:#EDE9FF;color:#2D1B69}
+    .sb-item .sb-ico{font-size:0.95rem;width:18px;text-align:center;flex-shrink:0}
+    .sb-item .sb-badge{margin-left:auto;font-size:0.6rem;font-weight:700;background:#EDE9FF;color:#2D1B69;padding:1px 6px;border-radius:100px}
+    .sb-divider{height:1px;background:#E2DAD0;margin:8px 10px}
+    .sb-upgrade{margin:10px;padding:14px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:12px;cursor:pointer;border:none;width:calc(100% - 20px);font-family:'DM Sans',sans-serif}
+    .sb-upgrade-title{font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;margin-bottom:2px}
+    .sb-upgrade-sub{font-size:0.7rem;color:rgba(255,255,255,0.6)}
+
+    /* MAIN */
+    .main-content{flex:1;padding:24px;overflow-y:auto;min-width:0}
 
     /* HEADER */
-    .dash-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;gap:16px;flex-wrap:wrap}
-    .dash-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-0.03em;margin-bottom:4px}
-    .dash-sub{font-size:0.85rem;color:#64748B}
-    .create-dropdown{position:relative;display:inline-block}
-    .create-main-btn{padding:10px 18px;border-radius:10px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.88rem;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;display:flex;align-items:center;gap:8px;transition:opacity 0.2s}
-    .create-main-btn:hover{opacity:0.9}
-    .create-dropdown-menu{position:absolute;top:calc(100% + 8px);right:0;background:#fff;border:1.5px solid #E2DAD0;border-radius:12px;padding:8px;min-width:200px;box-shadow:0 8px 32px rgba(15,14,26,0.12);display:none;z-index:200;animation:fadeIn 0.15s ease}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
-    .create-dropdown-menu.open{display:block}
-    .create-menu-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;text-decoration:none;transition:background 0.15s;color:#0F0E1A}
+    .dash-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;gap:16px;flex-wrap:wrap}
+    .dash-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-0.03em;margin-bottom:2px}
+    .dash-sub{font-size:0.82rem;color:#64748B}
+
+    /* CREATE DROPDOWN */
+    .create-dropdown{position:relative}
+    .create-btn{padding:10px 18px;border-radius:10px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.88rem;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap}
+    .create-btn:hover{opacity:0.9}
+    .create-menu{position:absolute;top:calc(100% + 8px);right:0;background:#fff;border:1.5px solid #E2DAD0;border-radius:14px;padding:8px;min-width:240px;box-shadow:0 8px 32px rgba(15,14,26,0.12);display:none;z-index:200}
+    .create-menu.open{display:block;animation:fadeDown 0.15s ease}
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+    .create-menu-section{font-size:0.62rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase;padding:6px 10px 4px}
+    .create-menu-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;cursor:pointer;text-decoration:none;transition:background 0.15s;color:#0F0E1A}
     .create-menu-item:hover{background:#F5F0E8}
-    .create-menu-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0}
-    .create-menu-label{font-size:0.85rem;font-weight:600}
-    .create-menu-desc{font-size:0.72rem;color:#64748B;margin-top:1px}
+    .cmi-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0}
+    .cmi-label{font-size:0.83rem;font-weight:600}
+    .cmi-desc{font-size:0.7rem;color:#64748B;margin-top:1px}
+    .menu-divider{height:1px;background:#E2DAD0;margin:4px 0}
 
     /* STATS */
-    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
     .stat-card{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;padding:16px}
     .stat-val{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;letter-spacing:-0.03em;margin-bottom:2px}
-    .stat-lbl{font-size:0.75rem;color:#64748B;font-weight:600}
-    .stat-change{font-size:0.72rem;color:#10B981;margin-top:4px}
+    .stat-lbl{font-size:0.72rem;color:#64748B;font-weight:600}
 
     /* FILTERS */
-    .filters-row{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
-    .filter-btn{padding:6px 14px;border-radius:100px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;color:#64748B}
+    .filters-row{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+    .filter-btn{padding:6px 14px;border-radius:100px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;color:#64748B;white-space:nowrap}
     .filter-btn:hover{border-color:#2D1B69;color:#2D1B69}
     .filter-btn.active{background:#2D1B69;border-color:#2D1B69;color:#fff}
-    .search-inp{padding:7px 14px;border-radius:100px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.82rem;font-family:'DM Sans',sans-serif;outline:none;color:#0F0E1A;min-width:200px;margin-left:auto}
+    .search-inp{padding:7px 14px;border-radius:100px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.82rem;font-family:'DM Sans',sans-serif;outline:none;color:#0F0E1A;min-width:180px;margin-left:auto}
     .search-inp:focus{border-color:#2D1B69}
     .view-btns{display:flex;gap:4px}
     .view-btn{width:32px;height:32px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.85rem;transition:all 0.2s;color:#64748B}
     .view-btn.active{background:#2D1B69;border-color:#2D1B69;color:#fff}
 
     /* GRID */
-    .items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+    .items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
     .items-list{display:flex;flex-direction:column;gap:10px}
-    .item-card{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:20px;transition:all 0.2s;cursor:pointer;position:relative;overflow:hidden}
+
+    /* CARD */
+    .item-card{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:20px;transition:all 0.2s;position:relative;overflow:hidden}
     .item-card:hover{box-shadow:0 6px 24px rgba(15,14,26,0.09);transform:translateY(-2px)}
     .item-card-accent{position:absolute;top:0;left:0;right:0;height:3px}
     .item-card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:8px}
-    .item-type-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:0.68rem;font-weight:700;flex-shrink:0}
+    .type-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:0.68rem;font-weight:700}
     .item-menu-btn{background:none;border:none;cursor:pointer;color:#C4B9AA;font-size:1rem;padding:2px 6px;border-radius:6px;transition:all 0.2s;flex-shrink:0}
     .item-menu-btn:hover{background:#F5F0E8;color:#64748B}
     .item-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:6px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-    .item-meta{display:flex;align-items:center;gap:10px;font-size:0.72rem;color:#94A3B8;flex-wrap:wrap;margin-bottom:12px}
+    .item-meta{display:flex;align-items:center;gap:8px;font-size:0.72rem;color:#94A3B8;flex-wrap:wrap;margin-bottom:12px}
     .item-status{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:100px;font-size:0.65rem;font-weight:700}
     .status-active{background:#DCFCE7;color:#166534}
     .status-draft{background:#F1F5F9;color:#64748B}
     .status-closed{background:#FEE2E2;color:#DC2626}
-    .item-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid #F5F0E8;gap:8px}
+    .item-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid #F5F0E8;gap:8px;flex-wrap:wrap}
     .item-stat{display:flex;align-items:center;gap:4px;font-size:0.75rem;color:#94A3B8}
     .item-stat strong{color:#64748B;font-weight:700}
-    .item-actions{display:flex;gap:6px}
+    .item-actions{display:flex;gap:6px;flex-wrap:wrap}
     .ia-btn{padding:5px 10px;border-radius:7px;border:1.5px solid #E2DAD0;background:transparent;font-size:0.72rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;color:#64748B;transition:all 0.2s;text-decoration:none;white-space:nowrap}
     .ia-btn:hover{border-color:#2D1B69;color:#2D1B69}
     .ia-btn.primary{background:#2D1B69;border-color:#2D1B69;color:#fff}
@@ -79,9 +104,9 @@
     .ia-btn.danger{border-color:#FEE2E2;color:#DC2626}
     .ia-btn.danger:hover{background:#FEE2E2}
 
-    /* LIST VIEW */
+    /* LIST ROW */
     .item-list-row{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;padding:14px 18px;display:flex;align-items:center;gap:14px;transition:all 0.2s}
-    .item-list-row:hover{box-shadow:0 4px 16px rgba(15,14,26,0.07);border-color:#D4CAF8}
+    .item-list-row:hover{box-shadow:0 4px 16px rgba(15,14,26,0.07)}
     .item-list-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
     .item-list-info{flex:1;min-width:0}
     .item-list-title{font-weight:700;font-size:0.9rem;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -90,9 +115,10 @@
 
     /* EMPTY */
     .empty-state{text-align:center;padding:60px 20px;grid-column:1/-1}
-    .empty-icon{font-size:3rem;margin-bottom:16px}
-    .empty-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:8px}
-    .empty-sub{font-size:0.85rem;color:#64748B;margin-bottom:24px;line-height:1.6}
+    .empty-icon{font-size:3rem;margin-bottom:12px}
+    .empty-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:6px}
+    .empty-sub{font-size:0.85rem;color:#64748B;margin-bottom:20px;line-height:1.6}
+    .empty-cta{display:inline-block;padding:10px 20px;border-radius:10px;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.88rem;font-weight:700;text-decoration:none;cursor:pointer;border:none;font-family:'DM Sans',sans-serif}
 
     /* CONTEXT MENU */
     .ctx-menu{position:fixed;background:#fff;border:1.5px solid #E2DAD0;border-radius:12px;padding:6px;min-width:180px;box-shadow:0 8px 32px rgba(15,14,26,0.15);z-index:500;display:none}
@@ -103,23 +129,45 @@
     .ctx-item.danger:hover{background:#FEE2E2}
     .ctx-divider{height:1px;background:#E2DAD0;margin:4px 0}
 
-    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;white-space:nowrap}
+    /* MOBILE OVERLAY */
+    .sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:49}
+    .sb-overlay.open{display:block}
+    .mobile-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px}
+    .mobile-menu-btn span{display:block;width:20px;height:2px;background:#0F0E1A;border-radius:2px}
+
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.3)}
     .loading-wrap{text-align:center;padding:60px 20px;grid-column:1/-1}
-    .spinner{width:32px;height:32px;border:3px solid rgba(45,27,105,0.15);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+    .spinner{width:28px;height:28px;border:3px solid rgba(45,27,105,0.15);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px}
     @keyframes spin{to{transform:rotate(360deg)}}
 
-    @media(max-width:900px){.stats-row{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:600px){
-      nav{padding:0 14px}.logo-nm{display:none}
-      .main{padding:16px 14px}.stats-row{grid-template-columns:repeat(2,1fr)}
-      .items-grid{grid-template-columns:1fr}.search-inp{min-width:120px}
-      .dash-header{flex-direction:column}
+    @media(max-width:960px){.stats-row{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:768px){
+      .sidebar{position:fixed;top:56px;left:0;bottom:0;transform:translateX(-100%);z-index:50;width:240px;height:calc(100vh - 56px)}
+      .sidebar.open{transform:translateX(0)}
+      .sb-overlay{display:none}
+      .sb-overlay.open{display:block}
+      .mobile-menu-btn{display:flex}
+      .main-content{padding:16px 14px}
+      .stats-row{grid-template-columns:repeat(2,1fr)}
+      .items-grid{grid-template-columns:1fr}
+      .search-inp{min-width:120px}
+      .dash-header{flex-direction:column;align-items:flex-start}
+      .filters-row{overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px}
+      .filter-btn{flex-shrink:0}
+      .logo-nm{display:none}
+    }
+    @media(max-width:480px){
+      .stats-row{grid-template-columns:1fr 1fr}
+      .item-list-actions{display:none}
     }
   </style>
 </head>
 <body>
 <nav>
-  <a href="/" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
+  <div style="display:flex;align-items:center;gap:10px">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+    <a href="/" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
+  </div>
   <div class="nav-right">
     <a href="/discover" class="nav-btn">Discover</a>
     <a href="/settings" class="nav-btn">Settings</a>
@@ -127,64 +175,121 @@
   </div>
 </nav>
 
-<div class="main">
-  <!-- HEADER -->
-  <div class="dash-header">
-    <div>
-      <div class="dash-title" id="dash-title">My Dashboard</div>
-      <div class="dash-sub">Manage all your surveys and engagement content</div>
+<div class="sb-overlay" id="sb-overlay" onclick="toggleSidebar()"></div>
+
+<div class="app-layout">
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="sb-section">
+      <div class="sb-section-label">Main</div>
+      <button class="sb-item active" id="sb-all" onclick="setFilter('all',this);closeSidebar()"><span class="sb-ico">🏠</span>Overview</button>
+      <a href="/discover" class="sb-item"><span class="sb-ico">🔍</span>Discover</a>
+      <a href="/blog" class="sb-item"><span class="sb-ico">✍️</span>Blog</a>
     </div>
-    <div class="create-dropdown" id="create-dropdown">
-      <button class="create-main-btn" onclick="toggleCreateMenu()">+ Create new ▾</button>
-      <div class="create-dropdown-menu" id="create-menu">
-        <a href="/create/" class="create-menu-item"><div class="create-menu-icon" style="background:#EDE9FF">📋</div><div><div class="create-menu-label">Survey</div><div class="create-menu-desc">Questions, logic, quiz</div></div></a>
-        <a href="/poll/create/" class="create-menu-item"><div class="create-menu-icon" style="background:#EEF2FF">📊</div><div><div class="create-menu-label">Poll</div><div class="create-menu-desc">Quick single/multi choice</div></div></a>
-        <a href="/voting/create/" class="create-menu-item"><div class="create-menu-icon" style="background:#FEF3C7">🗳️</div><div><div class="create-menu-label">Voting</div><div class="create-menu-desc">Candidate-based voting</div></div></a>
-        <a href="/pledge/create/" class="create-menu-item"><div class="create-menu-icon" style="background:#DCFCE7">🤝</div><div><div class="create-menu-label">Pledge</div><div class="create-menu-desc">Campaign & commitment</div></div></a>
-        <a href="/riddle/create/" class="create-menu-item"><div class="create-menu-icon" style="background:#F3E8FF">🧩</div><div><div class="create-menu-label">Riddle</div><div class="create-menu-desc">Fun quiz with scoring</div></div></a>
-        <div class="ctx-divider"></div>
-        <a href="/quiz/host/" class="create-menu-item"><div class="create-menu-icon" style="background:#EDE9FF">⚡</div><div><div class="create-menu-label">Fast Quiz</div><div class="create-menu-desc">Live Kahoot-style quiz</div></div></a>
-        <a href="/livepoll/host/" class="create-menu-item"><div class="create-menu-icon" style="background:#EEF2FF">📡</div><div><div class="create-menu-label">Live Poll</div><div class="create-menu-desc">Real-time audience poll</div></div></a>
+    <div class="sb-divider"></div>
+    <div class="sb-section">
+      <div class="sb-section-label">My Content</div>
+      <button class="sb-item" onclick="setFilter('all',this);closeSidebar()"><span class="sb-ico">📁</span>All content</button>
+      <button class="sb-item" onclick="setFilter('surveys',this);closeSidebar()"><span class="sb-ico">📋</span>Surveys & Forms</button>
+      <button class="sb-item" onclick="setFilter('polls',this);closeSidebar()"><span class="sb-ico">📊</span>Polls</button>
+      <button class="sb-item" onclick="setFilter('votings',this);closeSidebar()"><span class="sb-ico">🗳️</span>Voting</button>
+      <button class="sb-item" onclick="setFilter('pledges',this);closeSidebar()"><span class="sb-ico">🤝</span>Pledge & Support</button>
+      <button class="sb-item" onclick="setFilter('riddles',this);closeSidebar()"><span class="sb-ico">🧩</span>Riddles</button>
+    </div>
+    <div class="sb-divider"></div>
+    <div class="sb-section">
+      <div class="sb-section-label">Live Sessions</div>
+      <a href="/quiz/host/" class="sb-item"><span class="sb-ico">⚡</span>Live Quiz</a>
+      <a href="/livepoll/host/" class="sb-item"><span class="sb-ico">📡</span>PulseCheck</a>
+    </div>
+    <div class="sb-divider"></div>
+    <div class="sb-section">
+      <div class="sb-section-label">Account</div>
+      <a href="/settings" class="sb-item"><span class="sb-ico">⚙️</span>Settings</a>
+      <a href="/settings#plan" class="sb-item"><span class="sb-ico">💎</span>My Plan</a>
+    </div>
+    <div style="padding:10px;margin-top:auto">
+      <button class="sb-upgrade" onclick="window.location.href='/pricing'">
+        <div class="sb-upgrade-title">Upgrade Plan</div>
+        <div class="sb-upgrade-sub">Unlock unlimited responses</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-content">
+    <!-- HEADER -->
+    <div class="dash-header">
+      <div>
+        <div class="dash-title" id="dash-title">My Dashboard</div>
+        <div class="dash-sub">Manage all your surveys and engagement content</div>
+      </div>
+      <div class="create-dropdown" id="create-dropdown">
+        <button class="create-btn" onclick="toggleCreateMenu()">+ Create new ▾</button>
+        <div class="create-menu" id="create-menu">
+          <div class="create-menu-section">Surveys & Forms</div>
+          <a href="/create/" class="create-menu-item"><div class="cmi-icon" style="background:#EDE9FF">📋</div><div><div class="cmi-label">Survey</div><div class="cmi-desc">General survey with logic</div></div></a>
+          <a href="/create/?template=assessment" class="create-menu-item"><div class="cmi-icon" style="background:#FEF3C7">🎓</div><div><div class="cmi-label">MCQ Assessment</div><div class="cmi-desc">Scored test with correct answers</div></div></a>
+          <a href="/create/?template=feedback" class="create-menu-item"><div class="cmi-icon" style="background:#DCFCE7">💬</div><div><div class="cmi-label">Feedback Form</div><div class="cmi-desc">Collect ratings and comments</div></div></a>
+          <a href="/create/?template=lead" class="create-menu-item"><div class="cmi-icon" style="background:#EEF2FF">📥</div><div><div class="cmi-label">Lead Generation</div><div class="cmi-desc">Capture names, emails, intent</div></div></a>
+          <a href="/create/?template=registration" class="create-menu-item"><div class="cmi-icon" style="background:#FFF7ED">📝</div><div><div class="cmi-label">Registration / Signup</div><div class="cmi-desc">Event or course registration</div></div></a>
+          <a href="/create/?template=jobapp" class="create-menu-item"><div class="cmi-icon" style="background:#F0FDF4">💼</div><div><div class="cmi-label">Job Application</div><div class="cmi-desc">Split-view with job description</div></div></a>
+          <a href="/create/?template=employee" class="create-menu-item"><div class="cmi-icon" style="background:#FDF4FF">👥</div><div><div class="cmi-label">Employee Engagement</div><div class="cmi-desc">Internal team pulse surveys</div></div></a>
+          <a href="/create/?template=product" class="create-menu-item"><div class="cmi-icon" style="background:#F0F9FF">📦</div><div><div class="cmi-label">Product Recommendation</div><div class="cmi-desc">Quiz-style product finder</div></div></a>
+          <div class="menu-divider"></div>
+          <div class="create-menu-section">Engagement</div>
+          <a href="/poll/create/" class="create-menu-item"><div class="cmi-icon" style="background:#EEF2FF">📊</div><div><div class="cmi-label">Poll</div><div class="cmi-desc">Quick single or multi choice</div></div></a>
+          <a href="/voting/create/" class="create-menu-item"><div class="cmi-icon" style="background:#FEF3C7">🗳️</div><div><div class="cmi-label">Voting</div><div class="cmi-desc">Option-based voting campaign</div></div></a>
+          <a href="/pledge/create/" class="create-menu-item"><div class="cmi-icon" style="background:#DCFCE7">🤝</div><div><div class="cmi-label">Pledge & Support</div><div class="cmi-desc">Campaign & commitment drive</div></div></a>
+          <a href="/riddle/create/" class="create-menu-item"><div class="cmi-icon" style="background:#F3E8FF">🧩</div><div><div class="cmi-label">Riddle</div><div class="cmi-desc">Fun quiz with scoring</div></div></a>
+          <div class="menu-divider"></div>
+          <div class="create-menu-section">Live Sessions</div>
+          <a href="/quiz/host/" class="create-menu-item"><div class="cmi-icon" style="background:#EDE9FF">⚡</div><div><div class="cmi-label">Live Quiz</div><div class="cmi-desc">Real-time scored quiz with PIN join</div></div></a>
+          <a href="/livepoll/host/" class="create-menu-item"><div class="cmi-icon" style="background:#EFF6FF">📡</div><div><div class="cmi-label">PulseCheck</div><div class="cmi-desc">Live audience polls & word clouds</div></div></a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- STATS -->
-  <div class="stats-row">
-    <div class="stat-card"><div class="stat-val" id="stat-total">—</div><div class="stat-lbl">Total items</div></div>
-    <div class="stat-card"><div class="stat-val" id="stat-active">—</div><div class="stat-lbl">Active</div></div>
-    <div class="stat-card"><div class="stat-val" id="stat-responses">—</div><div class="stat-lbl">Total responses</div></div>
-    <div class="stat-card"><div class="stat-val" id="stat-drafts">—</div><div class="stat-lbl">Drafts</div></div>
-  </div>
-
-  <!-- FILTERS -->
-  <div class="filters-row">
-    <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
-    <button class="filter-btn" onclick="setFilter('surveys',this)">📋 Surveys</button>
-    <button class="filter-btn" onclick="setFilter('polls',this)">📊 Polls</button>
-    <button class="filter-btn" onclick="setFilter('votings',this)">🗳️ Voting</button>
-    <button class="filter-btn" onclick="setFilter('pledges',this)">🤝 Pledges</button>
-    <button class="filter-btn" onclick="setFilter('riddles',this)">🧩 Riddles</button>
-    <input class="search-inp" id="search-inp" placeholder="🔍 Search..." oninput="renderItems()">
-    <div class="view-btns">
-      <button class="view-btn active" id="vb-grid" onclick="setView('grid')" title="Grid">⊞</button>
-      <button class="view-btn" id="vb-list" onclick="setView('list')" title="List">☰</button>
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-val" id="stat-total">—</div><div class="stat-lbl">Total items</div></div>
+      <div class="stat-card"><div class="stat-val" id="stat-active">—</div><div class="stat-lbl">Active</div></div>
+      <div class="stat-card"><div class="stat-val" id="stat-responses">—</div><div class="stat-lbl">Total responses</div></div>
+      <div class="stat-card"><div class="stat-val" id="stat-drafts">—</div><div class="stat-lbl">Drafts</div></div>
     </div>
-  </div>
 
-  <!-- ITEMS -->
-  <div id="items-wrap" class="items-grid">
-    <div class="loading-wrap"><div class="spinner"></div><div style="font-size:0.85rem;color:#94A3B8">Loading your content...</div></div>
+    <!-- FILTERS -->
+    <div class="filters-row">
+      <button class="filter-btn active" id="flt-all" onclick="setFilter('all',this)">All</button>
+      <button class="filter-btn" id="flt-surveys" onclick="setFilter('surveys',this)">📋 Surveys</button>
+      <button class="filter-btn" id="flt-polls" onclick="setFilter('polls',this)">📊 Polls</button>
+      <button class="filter-btn" id="flt-votings" onclick="setFilter('votings',this)">🗳️ Voting</button>
+      <button class="filter-btn" id="flt-pledges" onclick="setFilter('pledges',this)">🤝 Pledges</button>
+      <button class="filter-btn" id="flt-riddles" onclick="setFilter('riddles',this)">🧩 Riddles</button>
+      <button class="filter-btn" id="flt-quiz" onclick="setFilter('quiz',this)">⚡ Live Quiz</button>
+      <button class="filter-btn" id="flt-pulsecheck" onclick="setFilter('pulsecheck',this)">📡 PulseCheck</button>
+      <input class="search-inp" id="search-inp" placeholder="🔍 Search..." oninput="renderItems()">
+      <div class="view-btns">
+        <button class="view-btn active" id="vb-grid" onclick="setView('grid')" title="Grid">⊞</button>
+        <button class="view-btn" id="vb-list" onclick="setView('list')" title="List">☰</button>
+      </div>
+    </div>
+
+    <!-- ITEMS -->
+    <div id="items-wrap" class="items-grid">
+      <div class="loading-wrap"><div class="spinner"></div><div style="font-size:0.85rem;color:#94A3B8">Loading your content...</div></div>
+    </div>
   </div>
 </div>
 
 <!-- CONTEXT MENU -->
 <div class="ctx-menu" id="ctx-menu">
-  <a class="ctx-item" id="ctx-view" href="#" target="_blank">👁 View / Share</a>
+  <a class="ctx-item" id="ctx-view" href="#" target="_blank">🔗 View live</a>
   <a class="ctx-item" id="ctx-edit" href="#">✏️ Edit</a>
   <a class="ctx-item" id="ctx-responses" href="#">📊 Responses</a>
   <div class="ctx-divider"></div>
-  <div class="ctx-item" id="ctx-copy" onclick="copyLink()">🔗 Copy link</div>
+  <div class="ctx-item" id="ctx-copy" onclick="copyLink()">📋 Copy link</div>
+  <div class="ctx-item" id="ctx-share" onclick="shareItem()">📤 Share</div>
   <div class="ctx-divider"></div>
   <div class="ctx-item danger" id="ctx-delete" onclick="deleteItem()">🗑 Delete</div>
 </div>
@@ -194,7 +299,7 @@
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getAuth,onAuthStateChanged,signOut}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getFirestore,collection,query,where,getDocs,doc,deleteDoc,orderBy}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getFirestore,collection,query,where,getDocs,doc,deleteDoc}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
 const app=initializeApp(FB);
@@ -202,11 +307,16 @@ const auth=getAuth(app);
 const db=getFirestore(app);
 
 const TYPE_META={
-  surveys:{label:'Survey',icon:'📋',color:'#2D1B69',bg:'#EDE9FF',editPath:'/edit/?id=',viewPath:'/survey/',responsesPath:'/responses/?id=',createPath:'/create/'},
-  polls:{label:'Poll',icon:'📊',color:'#4F46E5',bg:'#EEF2FF',editPath:'/poll/edit/?id=',viewPath:'/poll/',responsesPath:null,createPath:'/poll/create/'},
-  votings:{label:'Voting',icon:'🗳️',color:'#D97706',bg:'#FEF3C7',editPath:'/voting/edit/?id=',viewPath:'/voting/',responsesPath:null,createPath:'/voting/create/'},
-  pledges:{label:'Pledge',icon:'🤝',color:'#10B981',bg:'#DCFCE7',editPath:'/pledge/edit/?id=',viewPath:'/pledge/',responsesPath:null,createPath:'/pledge/create/'},
-  riddles:{label:'Riddle',icon:'🧩',color:'#A855F7',bg:'#F3E8FF',editPath:'/riddle/edit/?id=',viewPath:'/riddle/',responsesPath:null,createPath:'/riddle/create/'},
+  surveys:{label:'Survey',icon:'📋',color:'#2D1B69',bg:'#EDE9FF',
+    editPath:'/edit/?id=',viewPath:'/survey/',responsesPath:'/responses/?id='},
+  polls:{label:'Poll',icon:'📊',color:'#4F46E5',bg:'#EEF2FF',
+    editPath:'/poll/edit/?id=',viewPath:'/poll/',responsesPath:'/poll/responses/?id='},
+  votings:{label:'Voting',icon:'🗳️',color:'#D97706',bg:'#FEF3C7',
+    editPath:'/voting/edit/?id=',viewPath:'/voting/',responsesPath:'/voting/responses/?id='},
+  pledges:{label:'Pledge & Support',icon:'🤝',color:'#10B981',bg:'#DCFCE7',
+    editPath:'/pledge/edit/?id=',viewPath:'/pledge/',responsesPath:'/pledge/responses/?id='},
+  riddles:{label:'Riddle',icon:'🧩',color:'#A855F7',bg:'#F3E8FF',
+    editPath:'/riddle/edit/?id=',viewPath:'/riddle/',responsesPath:'/riddle/responses/?id='},
 };
 
 let U=null,allItems=[],activeFilter='all',viewMode='grid',ctxItem=null;
@@ -217,7 +327,7 @@ onAuthStateChanged(auth,async u=>{
   const av=document.getElementById('nav-avatar');
   if(av)av.textContent=(u.displayName||u.email||'?')[0].toUpperCase();
   const title=document.getElementById('dash-title');
-  if(title)title.textContent='Welcome, '+(u.displayName?.split(' ')[0]||'there');
+  if(title&&u.displayName)title.textContent='Welcome, '+u.displayName.split(' ')[0];
   await loadAll();
 });
 
@@ -239,9 +349,7 @@ async function loadAll(){
 function updateStats(){
   const active=allItems.filter(i=>i.status==='active').length;
   const drafts=allItems.filter(i=>i.status==='draft').length;
-  const responses=allItems.reduce((s,i)=>{
-    return s+(i.responseCount||i.totalVotes||i.totalPledges||0);
-  },0);
+  const responses=allItems.reduce((s,i)=>s+(i.responseCount||i.totalVotes||i.totalPledges||0),0);
   document.getElementById('stat-total').textContent=allItems.length;
   document.getElementById('stat-active').textContent=active;
   document.getElementById('stat-responses').textContent=responses;
@@ -258,7 +366,7 @@ window.renderItems=function(){
   const wrap=document.getElementById('items-wrap');
   wrap.className=viewMode==='grid'?'items-grid':'items-list';
   if(!filtered.length){
-    wrap.innerHTML=`<div class="empty-state"><div class="empty-icon">${activeFilter==='all'?'📭':TYPE_META[activeFilter]?.icon||'📭'}</div><div class="empty-title">No ${activeFilter==='all'?'content':TYPE_META[activeFilter]?.label+'s'} yet</div><div class="empty-sub">Create your first ${activeFilter==='all'?'survey or engagement':''}  to get started.</div><a href="${activeFilter!=='all'?TYPE_META[activeFilter]?.createPath||'/create/':'/create/'}" style="display:inline-block;padding:10px 20px;border-radius:10px;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.88rem;font-weight:700;text-decoration:none">+ Create now</a></div>`;
+    wrap.innerHTML=`<div class="empty-state"><div class="empty-icon">${activeFilter==='all'?'📭':TYPE_META[activeFilter]?.icon||'📭'}</div><div class="empty-title">No content yet</div><div class="empty-sub">Create your first item to get started.</div><button class="empty-cta" onclick="toggleCreateMenu()">+ Create new</button></div>`;
     return;
   }
   wrap.innerHTML=filtered.map(item=>viewMode==='grid'?renderCard(item):renderListRow(item)).join('');
@@ -267,15 +375,20 @@ window.renderItems=function(){
 function getTitle(item){return item.title||item.question||'Untitled'}
 function getResponseCount(item){return item.responseCount||item.totalVotes||item.totalPledges||0}
 function getViewUrl(item){
-  const m=TYPE_META[item._col];if(!m)return '#';
-  return item.slug?'/engage/'+item.slug:(m.viewPath+item.id);
+  const m=TYPE_META[item._col];if(!m)return'#';
+  if(item._col==='surveys')return item.slug?'/survey/'+item.slug:'/s/?id='+item.id;
+  return item.slug?'/engage/'+item.slug:'#';
 }
 function getEditUrl(item){
-  const m=TYPE_META[item._col];if(!m)return '#';
-  return item._col==='surveys'?(m.editPath+item.id):(m.editPath||'#');
+  const m=TYPE_META[item._col];if(!m)return'#';
+  return m.editPath+item.id;
+}
+function getResponsesUrl(item){
+  const m=TYPE_META[item._col];if(!m||!m.responsesPath)return null;
+  return m.responsesPath+item.id;
 }
 function formatDate(item){
-  const ts=item.updatedAt||item.createdAt;if(!ts?.seconds)return '';
+  const ts=item.updatedAt||item.createdAt;if(!ts?.seconds)return'';
   return new Date(ts.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
 }
 
@@ -283,24 +396,26 @@ function renderCard(item){
   const m=TYPE_META[item._col]||{label:'Item',icon:'📄',color:'#64748B',bg:'#F5F0E8'};
   const rc=getResponseCount(item);
   const statusClass=item.status==='active'?'status-active':item.status==='closed'?'status-closed':'status-draft';
-  const statusText=item.status==='active'?'Active':item.status==='closed'?'Closed':'Draft';
-  return`<div class="item-card" onclick="openItem(event,'${item.id}','${item._col}')">
+  const viewUrl=getViewUrl(item);
+  const respUrl=getResponsesUrl(item);
+  return`<div class="item-card">
     <div class="item-card-accent" style="background:${m.color}"></div>
     <div class="item-card-header">
-      <div class="item-type-badge" style="background:${m.bg};color:${m.color}">${m.icon} ${m.label}</div>
+      <div class="type-badge" style="background:${m.bg};color:${m.color}">${m.icon} ${m.label}</div>
       <button class="item-menu-btn" onclick="openCtx(event,'${item.id}','${item._col}')">⋯</button>
     </div>
     <div class="item-title">${eh(getTitle(item))}</div>
     <div class="item-meta">
-      <span class="item-status ${statusClass}">${statusText}</span>
+      <span class="item-status ${statusClass}">${item.status||'draft'}</span>
       ${item.slug?`<span>🔗 /engage/${item.slug}</span>`:''}
       <span>${formatDate(item)}</span>
     </div>
     <div class="item-footer">
-      <div class="item-stat">${m.icon==='📋'?'📝':'👥'} <strong>${rc}</strong> ${m.icon==='📋'?'response':'vote'}${rc!==1?'s':''}</div>
+      <div class="item-stat">📊 <strong>${rc}</strong> response${rc!==1?'s':''}</div>
       <div class="item-actions">
-        <a class="ia-btn" href="${getViewUrl(item)}" target="_blank" onclick="event.stopPropagation()">View</a>
-        <a class="ia-btn primary" href="${getEditUrl(item)}" onclick="event.stopPropagation()">Edit</a>
+        ${viewUrl!=='#'?`<a class="ia-btn" href="${viewUrl}" target="_blank">View</a>`:''}
+        ${respUrl?`<a class="ia-btn" href="${respUrl}">Results</a>`:''}
+        <a class="ia-btn primary" href="${getEditUrl(item)}">Edit</a>
       </div>
     </div>
   </div>`;
@@ -310,6 +425,8 @@ function renderListRow(item){
   const m=TYPE_META[item._col]||{label:'Item',icon:'📄',color:'#64748B',bg:'#F5F0E8'};
   const rc=getResponseCount(item);
   const statusClass=item.status==='active'?'status-active':item.status==='closed'?'status-closed':'status-draft';
+  const viewUrl=getViewUrl(item);
+  const respUrl=getResponsesUrl(item);
   return`<div class="item-list-row">
     <div class="item-list-icon" style="background:${m.bg}">${m.icon}</div>
     <div class="item-list-info">
@@ -322,23 +439,19 @@ function renderListRow(item){
       </div>
     </div>
     <div class="item-list-actions">
-      <a class="ia-btn" href="${getViewUrl(item)}" target="_blank">View</a>
+      ${viewUrl!=='#'?`<a class="ia-btn" href="${viewUrl}" target="_blank">View</a>`:''}
+      ${respUrl?`<a class="ia-btn" href="${respUrl}">Results</a>`:''}
       <a class="ia-btn primary" href="${getEditUrl(item)}">Edit</a>
       <button class="ia-btn" onclick="openCtx(event,'${item.id}','${item._col}')">⋯</button>
     </div>
   </div>`;
 }
 
-window.openItem=function(e,id,col){
-  if(e.target.closest('.item-menu-btn,.ia-btn'))return;
-  const item=allItems.find(i=>i.id===id&&i._col===col);
-  if(item)window.open(getViewUrl(item),'_blank');
-}
-
 window.setFilter=function(f,el){
   activeFilter=f;
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
+  document.querySelectorAll('.filter-btn,.sb-item').forEach(b=>b.classList.remove('active'));
+  if(el)el.classList.add('active');
+  const fltEl=document.getElementById('flt-'+f);if(fltEl)fltEl.classList.add('active');
   renderItems();
 }
 window.setView=function(v){
@@ -350,21 +463,25 @@ window.setView=function(v){
 
 // CONTEXT MENU
 window.openCtx=function(e,id,col){
-  e.stopPropagation();e.preventDefault();
-  const item=allItems.find(i=>i.id===id&&i._col===col);
-  if(!item)return;
+  e.stopPropagation();
+  const item=allItems.find(i=>i.id===id&&i._col===col);if(!item)return;
   ctxItem=item;
   const m=TYPE_META[col];
   const menu=document.getElementById('ctx-menu');
-  document.getElementById('ctx-view').href=getViewUrl(item);
+  const viewUrl=getViewUrl(item);
+  const respUrl=getResponsesUrl(item);
+  document.getElementById('ctx-view').href=viewUrl;
+  document.getElementById('ctx-view').style.display=viewUrl!=='#'?'flex':'none';
   document.getElementById('ctx-edit').href=getEditUrl(item);
   const respEl=document.getElementById('ctx-responses');
-  if(m?.responsesPath){respEl.style.display='flex';respEl.href=m.responsesPath+id}
-  else{respEl.style.display='none'}
+  if(respUrl){respEl.style.display='flex';respEl.href=respUrl}else{respEl.style.display='none'}
   const rect=e.currentTarget.getBoundingClientRect();
+  const menuW=190;
+  let left=rect.right-menuW;
+  if(left<8)left=8;
   menu.style.top=(rect.bottom+8)+'px';
-  menu.style.right=(window.innerWidth-rect.right)+'px';
-  menu.style.left='auto';
+  menu.style.left=left+'px';
+  menu.style.right='auto';
   menu.classList.add('open');
   setTimeout(()=>document.addEventListener('click',closeCtx,{once:true}),10);
 }
@@ -375,7 +492,14 @@ window.copyLink=function(){
   const url='https://swoopform.com'+getViewUrl(ctxItem);
   navigator.clipboard.writeText(url).then(()=>{toast('Link copied!');closeCtx()});
 }
-
+window.shareItem=function(){
+  if(!ctxItem)return;
+  const url='https://swoopform.com'+getViewUrl(ctxItem);
+  const title=getTitle(ctxItem);
+  if(navigator.share){navigator.share({title,url}).catch(()=>{})}
+  else{navigator.clipboard.writeText(url).then(()=>toast('Link copied!'))}
+  closeCtx();
+}
 window.deleteItem=async function(){
   if(!ctxItem)return;
   if(!confirm('Delete "'+getTitle(ctxItem)+'"? This cannot be undone.'))return;
@@ -387,12 +511,28 @@ window.deleteItem=async function(){
   }catch(e){console.error(e);toast('Error deleting')}
 }
 
+// SIDEBAR MOBILE
+window.toggleSidebar=function(){
+  const sb=document.getElementById('sidebar');
+  const ov=document.getElementById('sb-overlay');
+  const open=sb.classList.toggle('open');
+  ov.classList.toggle('open',open);
+}
+window.closeSidebar=function(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sb-overlay').classList.remove('open');
+}
+
+// CREATE MENU
 window.toggleCreateMenu=function(){
-  document.getElementById('create-menu').classList.toggle('open');
-  document.addEventListener('click',e=>{
-    if(!document.getElementById('create-dropdown').contains(e.target))
-      document.getElementById('create-menu').classList.remove('open');
-  },{once:true});
+  const menu=document.getElementById('create-menu');
+  menu.classList.toggle('open');
+  if(menu.classList.contains('open')){
+    setTimeout(()=>document.addEventListener('click',e=>{
+      if(!document.getElementById('create-dropdown').contains(e.target))
+        document.getElementById('create-menu').classList.remove('open');
+    },{once:true}),10);
+  }
 }
 
 function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}

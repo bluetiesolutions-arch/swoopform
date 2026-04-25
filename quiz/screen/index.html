@@ -56,7 +56,7 @@
 </head>
 <body>
 <div class="screen-header">
-  <div class="screen-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm Quiz</div></div>
+  <div class="screen-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm Live Quiz</div></div>
   <div class="join-code-sm" id="join-code-sm">----</div>
   <div class="player-count-sm" id="player-count-sm">0 players</div>
 </div>
@@ -102,7 +102,7 @@ if(!sessionId){document.getElementById('screen-body').innerHTML='<div style="tex
 
 function showWaiting(s){
   document.getElementById('screen-body').innerHTML=`<div class="waiting-display">
-    <div class="big-pin-label">Join at swoopform.com/quiz/play · Enter PIN</div>
+    <div class="big-pin-label">Go to swoopform.com/quiz/play · Enter PIN</div>
     <div class="big-pin">${s.code||'----'}</div>
     <div class="join-url-big" style="margin-top:16px">${s.title||'Quiz'}</div>
     <div class="players-display" id="players-display"></div>

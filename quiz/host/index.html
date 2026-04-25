@@ -50,10 +50,10 @@
     .lobby-screen{display:none;text-align:center}
     .join-code-display{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3rem,10vw,6rem);letter-spacing:0.15em;color:#A855F7;background:rgba(124,58,237,0.1);border-radius:20px;padding:24px 40px;display:inline-block;border:2px solid rgba(124,58,237,0.3);margin-bottom:24px}
     .join-url{font-size:0.88rem;color:rgba(255,255,255,0.4);margin-bottom:32px}
-    .players-grid{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:24px;min-height:60px}
-    .player-chip{padding:6px 14px;border-radius:100px;background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);font-size:0.82rem;font-weight:600;color:#C4B5FD;animation:popIn 0.3s ease both}
+    .Participant-grid{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:24px;min-height:60px}
+    .Participant-chip{padding:6px 14px;border-radius:100px;background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);font-size:0.82rem;font-weight:600;color:#C4B5FD;animation:popIn 0.3s ease both}
     @keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
-    .player-count{font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:20px}
+    .Participant-count{font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:20px}
 
     /* QUESTION CONTROL */
     .question-control{display:none}
@@ -90,14 +90,14 @@
 <body>
 <nav>
   <a href="/dashboard" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
-  <span style="font-size:0.82rem;color:rgba(255,255,255,0.4)">⚡ Fast Quiz — Host</span>
+  <span style="font-size:0.82rem;color:rgba(255,255,255,0.4)">⚡ Live Quiz — Host</span>
 </nav>
 <div class="main">
 
   <!-- SETUP SCREEN -->
   <div id="setup-screen">
-    <div class="page-title">⚡ Create Fast Quiz</div>
-    <div class="page-sub">Build a real-time quiz. Players join with a 4-digit PIN.</div>
+    <div class="page-title">⚡ Create Live Quiz</div>
+    <div class="page-sub">Build a real-time quiz. Participants join with a 4-digit PIN.</div>
 
     <div class="card">
       <div class="card-title">📋 Quiz details</div>
@@ -119,12 +119,12 @@
 
   <!-- LOBBY SCREEN -->
   <div class="lobby-screen" id="lobby-screen">
-    <div class="page-title" style="text-align:center">⚡ Waiting for players</div>
-    <div class="page-sub" style="text-align:center">Share the PIN with players</div>
+    <div class="page-title" style="text-align:center">⚡ Waiting for participants</div>
+    <div class="page-sub" style="text-align:center">Share the PIN with Participant</div>
     <div class="join-code-display" id="join-code-display">----</div>
-    <div class="join-url">Players join at: <strong>swoopform.com/quiz/play</strong></div>
-    <div class="player-count" id="player-count">0 players joined</div>
-    <div class="players-grid" id="players-grid"></div>
+    <div class="join-url">Participant join at: <strong>swoopform.com/quiz/play</strong></div>
+    <div class="Participant-count" id="Participant-count">0 participants joined</div>
+    <div class="Participant-grid" id="Participant-grid"></div>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
       <button class="btn-primary" id="start-quiz-btn" onclick="startQuiz()" disabled>Start Quiz →</button>
       <button class="btn-ghost" onclick="openScreen()">📺 Open screen</button>
@@ -168,7 +168,7 @@ const app=initializeApp(FB);
 const auth=getAuth(app);
 const db=getDatabase(app);
 
-let sessionId=null,sessionCode=null,questions=[],currentQIdx=0,timerInterval=null,players={};
+let sessionId=null,sessionCode=null,questions=[],currentQIdx=0,timerInterval=null,Participant={};
 const COLORS=['#EF4444','#3B82F6','#10B981','#F59E0B','#8B5CF6','#EC4899'];
 const LETTERS=['A','B','C','D','E','F'];
 
@@ -238,13 +238,13 @@ window.launchQuiz=async function(){
   document.getElementById('lobby-screen').style.display='block';
   document.getElementById('join-code-display').textContent=code;
 
-  // Listen for players
-  onValue(ref(db,'quizPlayers/'+sessionId),snap=>{
-    players={};
-    if(snap.exists())snap.forEach(child=>{players[child.key]=child.val()});
-    const count=Object.keys(players).length;
-    document.getElementById('player-count').textContent=count+' player'+(count!==1?'s':'')+' joined';
-    document.getElementById('players-grid').innerHTML=Object.values(players).map(p=>`<div class="player-chip">${esc(p.name)}</div>`).join('');
+  // Listen for Participant
+  onValue(ref(db,'quizParticipant/'+sessionId),snap=>{
+    Participant={};
+    if(snap.exists())snap.forEach(child=>{Participant[child.key]=child.val()});
+    const count=Object.keys(Participant).length;
+    document.getElementById('Participant-count').textContent=count+' participant'+(count!==1?'s':'')+' joined';
+    document.getElementById('Participant-grid').innerHTML=Object.values(Participant).map(p=>`<div class="Participant-chip">${esc(p.name)}</div>`).join('');
     const btn=document.getElementById('start-quiz-btn');
     if(btn)btn.disabled=count===0;
   });
@@ -339,19 +339,19 @@ window.showLeaderboard=async function(){
   clearInterval(timerInterval);
   document.getElementById('question-control').style.display='none';
   document.getElementById('leaderboard-screen').style.display='block';
-  const snap=await get(ref(db,'quizPlayers/'+sessionId));
-  const playerList=[];
-  if(snap.exists())snap.forEach(child=>playerList.push({id:child.key,...child.val()}));
-  playerList.sort((a,b)=>(b.score||0)-(a.score||0));
+  const snap=await get(ref(db,'quizParticipant/'+sessionId));
+  const ParticipantList=[];
+  if(snap.exists())snap.forEach(child=>ParticipantList.push({id:child.key,...child.val()}));
+  ParticipantList.sort((a,b)=>(b.score||0)-(a.score||0));
   const rankClasses=['gold','silver','bronze'];
-  document.getElementById('leaderboard-list').innerHTML=playerList.slice(0,10).map((p,i)=>`
+  document.getElementById('leaderboard-list').innerHTML=ParticipantList.slice(0,10).map((p,i)=>`
     <div class="lb-row">
       <div class="lb-rank ${rankClasses[i]||'other'}">${i+1}</div>
       <div class="lb-name">${esc(p.name)}</div>
       <div class="lb-score">${p.score||0} pts</div>
     </div>`).join('');
   // Update leaderboard in Firebase for screen
-  await update(ref(db,'quizSessions/'+sessionId),{status:'leaderboard',leaderboard:playerList.slice(0,10).map(p=>({name:p.name,score:p.score||0}))});
+  await update(ref(db,'quizSessions/'+sessionId),{status:'leaderboard',leaderboard:ParticipantList.slice(0,10).map(p=>({name:p.name,score:p.score||0}))});
   const isLast=currentQIdx>=questions.length-1;
   document.getElementById('continue-btn').textContent=isLast?'End quiz':'Continue →';
 }
@@ -364,7 +364,7 @@ window.continueQuiz=function(){
 window.endQuiz=async function(){
   clearInterval(timerInterval);
   await update(ref(db,'quizSessions/'+sessionId),{status:'ended'});
-  toast('Quiz ended! Players can see final results.',3000);
+  toast('Quiz ended! Participant can see final results.',3000);
   setTimeout(()=>window.location.href='/dashboard',3500);
 }
 
