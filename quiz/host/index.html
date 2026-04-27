@@ -184,7 +184,7 @@ window.addQuestion=function(){
 
 function renderQuestions(){
   const list=document.getElementById('questions-list');
-  if(!questions.length){list.innerHTML='<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:0.85rem">No questions yet. Add your first question above.</div>';return}
+  if(!questions||!questions.length){list.innerHTML='<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:0.85rem">No questions yet. Add your first question above.</div>';return}
   list.innerHTML=questions.map((q,qi)=>`
     <div class="q-block">
       <div class="q-block-header">
