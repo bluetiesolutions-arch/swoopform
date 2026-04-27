@@ -3,472 +3,596 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SwoopForm — Settings</title>
+  <title>Settings — SwoopForm</title>
+  <meta name="robots" content="noindex">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
-    nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-    .nav-left{display:flex;align-items:center;gap:12px}
-    .logo-s{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none}
-    .btn-g{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
-    .btn-g:hover{border-color:#0F0E1A;color:#0F0E1A}
-    .btn-save{padding:7px 16px;border-radius:8px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.82rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s}
-    .btn-save:hover{opacity:0.9}
-    .btn-save:disabled{opacity:0.5;cursor:not-allowed}
-    .main{max-width:680px;margin:0 auto;padding:28px 20px}
-    .page-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-0.02em;margin-bottom:4px}
-    .page-sub{font-size:0.85rem;color:#64748B;margin-bottom:28px}
-    .section{background:#fff;border-radius:16px;border:1.5px solid #E2DAD0;padding:24px;margin-bottom:16px}
-    .section-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #E2DAD0}
+    nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+    .logo-mk{width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff}
+    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#0F0E1A}
+    .nav-right{display:flex;gap:8px;align-items:center}
+    .nav-btn{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
+    .nav-btn:hover{border-color:#2D1B69;color:#2D1B69}
+
+    .layout{display:flex;min-height:calc(100vh - 56px)}
+
+    /* SIDEBAR */
+    .sidebar{width:220px;background:#fff;border-right:1.5px solid #E2DAD0;padding:16px 10px;flex-shrink:0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}
+    .sb-label{font-size:0.62rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase;padding:6px 10px;margin-bottom:4px}
+    .sb-item{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:9px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:600;color:#64748B;transition:all 0.2s;border-left:3px solid transparent}
+    .sb-item:hover{background:#F5F0E8;color:#0F0E1A}
+    .sb-item.active{background:#EDE9FF;color:#2D1B69;border-left-color:#2D1B69}
+    .sb-item .ico{width:18px;text-align:center}
+
+    /* MAIN */
+    .main{flex:1;padding:28px 32px;max-width:720px}
+    .section-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-0.02em;margin-bottom:4px}
+    .section-sub{font-size:0.83rem;color:#64748B;margin-bottom:24px}
+
+    /* CARDS */
+    .card{background:#fff;border-radius:16px;border:1.5px solid #E2DAD0;padding:24px;margin-bottom:16px}
+    .card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #E2DAD0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+    /* FIELDS */
     .field{margin-bottom:16px}
     .field:last-child{margin-bottom:0}
-    .field-label{display:block;font-size:0.72rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px}
-    .field-input{width:100%;padding:10px 14px;border-radius:9px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
+    .field-label{display:block;font-size:0.72rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:6px}
+    .field-input{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
     .field-input:focus{border-color:#2D1B69}
-    .field-input:disabled{background:#F5F0E8;color:#94A3B8;cursor:not-allowed}
-    .field-hint{font-size:0.72rem;color:#94A3B8;margin-top:4px;line-height:1.4}
-    .avatar-top{display:flex;align-items:center;gap:20px;margin-bottom:20px}
-    .avatar-selected{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.4rem;border:3px solid #2D1B69;flex-shrink:0;transition:all 0.3s}
-    .avatar-selected-info{flex:1}
-    .avatar-selected-label{font-size:0.72rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:4px}
-    .avatar-selected-name{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#0F0E1A}
-    .avatar-selected-plan{font-size:0.72rem;color:#64748B;margin-top:2px}
-    .avatar-group{margin-bottom:16px}
-    .avatar-group-title{font-size:0.72rem;font-weight:700;color:#64748B;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-    .avatar-group-badge{padding:2px 8px;border-radius:100px;font-size:0.65rem;font-weight:700}
-    .badge-free{background:#EDE9FF;color:#2D1B69}
-    .badge-student{background:#DCFCE7;color:#166534}
-    .badge-ngo{background:#FEF3C7;color:#92400E}
-    .badge-pro{background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff}
-    .avatars-row{display:flex;gap:10px;flex-wrap:wrap}
-    .avatar-btn{width:60px;height:60px;border-radius:50%;border:2.5px solid transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.8rem;transition:all 0.2s;position:relative;background:#F5F0E8}
-    .avatar-btn:hover{transform:scale(1.1);border-color:#2D1B69}
-    .avatar-btn.selected{border-color:#2D1B69;box-shadow:0 0 0 3px rgba(45,27,105,0.2)}
-    .avatar-btn.locked{opacity:0.4;cursor:not-allowed;filter:grayscale(1)}
-    .avatar-btn.locked:hover{transform:none;border-color:transparent}
-    .lock-icon{position:absolute;bottom:-2px;right:-2px;width:18px;height:18px;background:#fff;border-radius:50%;border:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:center;font-size:0.6rem}
-    .locked-msg{font-size:0.72rem;color:#94A3B8;margin-top:6px;font-style:italic}
-    .account-types{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:4px}
-    .acc-type-btn{padding:10px 6px;border-radius:10px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.78rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;text-align:center;transition:all 0.2s;color:#64748B}
-    .acc-type-btn:hover{border-color:#2D1B69;color:#2D1B69;background:#EDE9FF}
-    .acc-type-btn.active{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
-    .acc-type-icon{font-size:1.2rem;display:block;margin-bottom:4px}
-    .acc-type-modal{display:none;background:#F5F0E8;border-radius:12px;padding:16px;margin-top:12px;border:1.5px solid #E2DAD0}
-    .acc-type-modal.show{display:block}
-    .acc-type-modal-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;margin-bottom:6px}
-    .acc-type-modal-sub{font-size:0.78rem;color:#64748B;line-height:1.6;margin-bottom:12px}
-    .qualify-list{font-size:0.75rem;color:#64748B;margin-bottom:10px;padding-left:14px}
-    .qualify-list li{margin-bottom:3px}
-    .btn-apply{padding:8px 16px;border-radius:8px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.8rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer}
-    .notif-locked{background:#FEE2E2;border-radius:10px;padding:12px 14px;font-size:0.78rem;color:#DC2626;font-weight:600;line-height:1.6;margin-bottom:10px;display:none}
-    .notif-locked a{color:#DC2626;font-weight:700;text-decoration:underline}
-    .notif-options{display:flex;flex-direction:column;gap:8px}
-    .notif-option{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:10px;border:1.5px solid #E2DAD0;background:#fff;cursor:pointer;transition:all 0.2s}
-    .notif-option:hover{border-color:#2D1B69;background:#EDE9FF}
-    .notif-option.active{border-color:#2D1B69;background:#EDE9FF}
-    .notif-option.disabled{opacity:0.4;pointer-events:none}
-    .notif-radio{width:16px;height:16px;border-radius:50%;border:2px solid #E2DAD0;flex-shrink:0;margin-top:2px;transition:all 0.2s;position:relative}
-    .notif-option.active .notif-radio{border-color:#2D1B69;background:#2D1B69}
-    .notif-option.active .notif-radio::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:5px;height:5px;border-radius:50%;background:#fff}
-    .notif-title{font-size:0.85rem;font-weight:700;color:#0F0E1A}
-    .notif-desc{font-size:0.75rem;color:#64748B;margin-top:2px;line-height:1.4}
-    .plan-current{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#F5F0E8;border-radius:10px;margin-bottom:14px}
-    .plan-name{font-weight:700;font-size:0.88rem}
-    .plan-desc{font-size:0.75rem;color:#64748B;margin-top:1px}
-    .upgrade-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-    .upgrade-card{padding:14px;border-radius:10px;border:1.5px solid #E2DAD0;background:#fff;transition:all 0.2s;text-align:center}
-    .upgrade-card:hover{border-color:#2D1B69;transform:translateY(-1px);box-shadow:0 4px 14px rgba(45,27,105,0.1)}
-    .upgrade-plan{font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;margin-bottom:4px}
-    .upgrade-price{font-size:0.78rem;color:#64748B;margin-bottom:8px}
-    .upgrade-btn{padding:6px 14px;border-radius:6px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.75rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer}
-    .danger-section{background:#fff;border-radius:16px;border:1.5px solid #FEE2E2;padding:24px;margin-bottom:16px}
-    .danger-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#DC2626;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #FEE2E2}
-    .danger-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    .danger-name{font-size:0.85rem;font-weight:600}
-    .danger-desc{font-size:0.72rem;color:#64748B;margin-top:2px}
-    .btn-danger{padding:7px 14px;border-radius:8px;border:none;background:#FEE2E2;color:#DC2626;font-size:0.8rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:all 0.2s}
-    .btn-danger:hover{background:#DC2626;color:#fff}
-    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.3)}
-    .ls{position:fixed;inset:0;background:#F5F0E8;display:flex;align-items:center;justify-content:center;z-index:999}
-    .spinner{width:32px;height:32px;border:3px solid rgba(45,27,105,0.2);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite}
+    .field-input::placeholder{color:#C4B9AA}
+    .field-input:disabled{opacity:0.5;cursor:not-allowed;background:#F5F0E8}
+    .field-hint{font-size:0.7rem;color:#94A3B8;margin-top:4px;line-height:1.4}
+
+    /* PHONE FIELD */
+    .phone-row{display:flex;gap:8px}
+    .country-code-sel{padding:10px 12px;border-radius:10px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer;flex-shrink:0;min-width:100px}
+    .country-code-sel:focus{border-color:#2D1B69}
+    .phone-number-inp{flex:1;padding:10px 14px;border-radius:10px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
+    .phone-number-inp:focus{border-color:#2D1B69}
+    .phone-number-inp::placeholder{color:#C4B9AA}
+
+    /* AVATAR */
+    .avatar-grid{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+    .avatar-opt{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;cursor:pointer;border:2.5px solid transparent;transition:all 0.2s}
+    .avatar-opt:hover{transform:scale(1.1)}
+    .avatar-opt.selected{border-color:#2D1B69;box-shadow:0 0 0 3px rgba(45,27,105,0.15)}
+
+    /* TOGGLE */
+    .sr{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #E2DAD0}
+    .sr:last-child{border-bottom:none}
+    .sr-label{font-size:0.85rem;font-weight:600}
+    .sr-desc{font-size:0.72px;color:#64748B;margin-top:2px}
+    .tgl{width:36px;height:19px;border-radius:100px;background:#E2DAD0;cursor:pointer;position:relative;transition:background 0.2s;border:none;flex-shrink:0}
+    .tgl.on{background:#2D1B69}
+    .tgl::after{content:'';position:absolute;width:13px;height:13px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 0.2s}
+    .tgl.on::after{transform:translateX(17px)}
+
+    /* PLAN BADGE */
+    .plan-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;font-size:0.72rem;font-weight:700}
+    .plan-free{background:#F1F5F9;color:#64748B;border:1px solid #E2DAD0}
+    .plan-starter{background:#EEF2FF;color:#4F46E5;border:1px solid #C7D2FE}
+    .plan-pro{background:#FEF3C7;color:#D97706;border:1px solid #FCD34D}
+    .plan-business{background:#EDE9FF;color:#2D1B69;border:1px solid #C4B5FD}
+    .plan-student{background:#DCFCE7;color:#166534;border:1px solid #86EFAC}
+    .plan-ngo{background:#F0FDF4;color:#166534;border:1px solid #86EFAC}
+
+    /* UPGRADE CARD */
+    .upgrade-card{background:linear-gradient(135deg,#0F0E1A,#2D1B69);border-radius:16px;padding:24px;margin-bottom:16px;color:#fff}
+    .upgrade-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:6px}
+    .upgrade-sub{font-size:0.82rem;color:rgba(255,255,255,0.5);margin-bottom:20px;line-height:1.6}
+    .upgrade-features{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
+    .upgrade-feat{display:flex;align-items:center;gap:8px;font-size:0.8rem;color:rgba(255,255,255,0.7)}
+    .upgrade-feat::before{content:'✓';color:#10B981;font-weight:700;flex-shrink:0}
+    .upgrade-btn{display:inline-block;padding:11px 24px;border-radius:10px;background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;font-size:0.88rem;font-weight:700;font-family:'Syne',sans-serif;text-decoration:none;cursor:pointer;border:none;transition:opacity 0.2s}
+    .upgrade-btn:hover{opacity:0.9}
+
+    /* VERIFICATION */
+    .verify-status{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;font-size:0.72rem;font-weight:700}
+    .verify-none{background:#F1F5F9;color:#64748B;border:1px solid #E2DAD0}
+    .verify-pending{background:#FEF3C7;color:#D97706;border:1px solid #FCD34D}
+    .verify-approved{background:#DCFCE7;color:#166534;border:1px solid #86EFAC}
+    .verify-rejected{background:#FEE2E2;color:#DC2626;border:1px solid #FECACA}
+    .type-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+    .type-btn{padding:8px 16px;border-radius:9px;border:1.5px solid #E2DAD0;background:#fff;color:#64748B;font-size:0.8rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
+    .type-btn:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
+    .type-btn.active{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
+    .verify-form{background:#F8F9FF;border:1.5px solid #E0E7FF;border-radius:12px;padding:18px;margin-top:12px}
+    .verify-form-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;margin-bottom:12px;color:#2D1B69}
+
+    /* DANGER ZONE */
+    .danger-card{background:#FFF5F5;border:1.5px solid #FECACA;border-radius:16px;padding:24px;margin-bottom:16px}
+    .danger-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#DC2626;margin-bottom:6px}
+    .danger-sub{font-size:0.82rem;color:#64748B;margin-bottom:16px;line-height:1.6}
+    .btn-danger{padding:10px 20px;border-radius:9px;border:none;background:#DC2626;color:#fff;font-size:0.85rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s}
+    .btn-danger:hover{opacity:0.85}
+
+    /* BUTTONS */
+    .btn-primary{padding:10px 22px;border-radius:10px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.88rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s}
+    .btn-primary:hover{opacity:0.9}
+    .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
+    .btn-ghost{padding:10px 20px;border-radius:10px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.85rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
+    .btn-ghost:hover{border-color:#2D1B69;color:#2D1B69}
+
+    /* SUCCESS / ERROR */
+    .alert{padding:10px 14px;border-radius:9px;font-size:0.82rem;margin-bottom:12px;display:none;line-height:1.4}
+    .alert-success{background:#F0FDF4;border:1px solid #86EFAC;color:#166534}
+    .alert-error{background:#FEF2F2;border:1px solid #FECACA;color:#DC2626}
+
+    .spinner{width:20px;height:20px;border:2px solid rgba(45,27,105,0.15);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite;display:inline-block}
     @keyframes spin{to{transform:rotate(360deg)}}
-    @media(max-width:600px){
-      .account-types{grid-template-columns:repeat(2,1fr)}
-      .upgrade-grid{grid-template-columns:1fr}
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;white-space:nowrap}
+    .ls-screen{position:fixed;inset:0;background:#F5F0E8;display:flex;align-items:center;justify-content:center;z-index:900}
+
+    @media(max-width:768px){
+      .layout{flex-direction:column}
+      .sidebar{width:100%;height:auto;position:relative;top:0;border-right:none;border-bottom:1.5px solid #E2DAD0;padding:10px;display:flex;flex-direction:row;overflow-x:auto;gap:4px}
+      .sb-item{white-space:nowrap;border-left:none;border-bottom:2px solid transparent;padding:8px 12px}
+      .sb-item.active{border-left:none;border-bottom-color:#2D1B69}
+      .sb-label{display:none}
+      .main{padding:20px 16px}
+      .phone-row{flex-direction:column}
+      .country-code-sel{width:100%}
+    }
+    @media(max-width:480px){
       nav{padding:0 14px}
-      .main{padding:16px 14px}
-      .avatars-row{gap:8px}
-      .avatar-btn{width:52px;height:52px;font-size:1.5rem}
+      .logo-nm{display:none}
     }
   </style>
 </head>
 <body>
-<div class="ls" id="ls"><div class="spinner"></div></div>
+<div class="ls-screen" id="ls"><div class="spinner"></div></div>
 <nav>
-  <div class="nav-left">
-    <a href="/dashboard" class="logo-s">S</a>
-    <a href="/dashboard" class="btn-g">← Dashboard</a>
+  <a href="/" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
+  <div class="nav-right">
+    <a href="/dashboard" class="nav-btn">← Dashboard</a>
   </div>
-  <button class="btn-save" id="save-btn" onclick="saveProfile()">Save changes</button>
 </nav>
-<div class="main">
-  <div class="page-title">⚙️ Settings</div>
-  <div class="page-sub">Manage your profile, notifications and account preferences</div>
 
-  <!-- PROFILE -->
-  <div class="section">
-    <div class="section-title">👤 Profile</div>
-    <div class="avatar-top">
-      <div class="avatar-selected" id="avatar-selected-circle" style="background:#EDE9FF">
-        <span id="avatar-selected-emoji">🧑</span>
-      </div>
-      <div class="avatar-selected-info">
-        <div class="avatar-selected-label">Your avatar</div>
-        <div class="avatar-selected-name" id="avatar-selected-name">Default</div>
-        <div class="avatar-selected-plan" id="avatar-selected-plan">Click any avatar below to change</div>
-      </div>
-    </div>
-    <div class="avatar-group">
-      <div class="avatar-group-title">Everyone <span class="avatar-group-badge badge-free">Free</span></div>
-      <div class="avatars-row" id="avatars-free"></div>
-    </div>
-    <div class="avatar-group">
-      <div class="avatar-group-title">Student / Educator <span class="avatar-group-badge badge-student">Verified</span></div>
-      <div class="avatars-row" id="avatars-student"></div>
-      <div class="locked-msg" id="lock-student" style="display:none">🔒 Verify as Student/Educator to unlock</div>
-    </div>
-    <div class="avatar-group">
-      <div class="avatar-group-title">NGO <span class="avatar-group-badge badge-ngo">Verified</span></div>
-      <div class="avatars-row" id="avatars-ngo"></div>
-      <div class="locked-msg" id="lock-ngo" style="display:none">🔒 Verify as NGO to unlock</div>
-    </div>
-    <div class="avatar-group">
-      <div class="avatar-group-title">Paid Plans <span class="avatar-group-badge badge-pro">Pro</span></div>
-      <div class="avatars-row" id="avatars-pro"></div>
-      <div class="locked-msg" id="lock-pro" style="display:none">🔒 Upgrade to Starter or above to unlock</div>
-    </div>
-    <div class="field" style="margin-top:20px">
-      <label class="field-label">Full name</label>
-      <input class="field-input" id="inp-name" type="text" placeholder="Your full name">
-    </div>
-    <div class="field">
-      <label class="field-label">Email address</label>
-      <input class="field-input" id="inp-email" type="email" disabled>
-      <div class="field-hint">Email cannot be changed. Contact support if needed.</div>
-    </div>
-    <div class="field">
-      <label class="field-label">Mobile number</label>
-      <input class="field-input" id="inp-mobile" type="tel" placeholder="+91 98765 43210">
-      <div class="field-hint">Saved for future mobile login. Not shared publicly.</div>
-    </div>
+<div class="layout">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sb-label">Settings</div>
+    <button class="sb-item active" id="sn-profile" onclick="showSection('profile')"><span class="ico">👤</span>Profile</button>
+    <button class="sb-item" id="sn-account" onclick="showSection('account')"><span class="ico">🔐</span>Account</button>
+    <button class="sb-item" id="sn-plan" onclick="showSection('plan')"><span class="ico">💎</span>Plan</button>
+    <button class="sb-item" id="sn-verify" onclick="showSection('verify')"><span class="ico">✅</span>Verification</button>
+    <button class="sb-item" id="sn-notifications" onclick="showSection('notifications')"><span class="ico">🔔</span>Notifications</button>
+    <button class="sb-item" id="sn-danger" onclick="showSection('danger')"><span class="ico">⚠️</span>Danger zone</button>
   </div>
 
-  <!-- ACCOUNT TYPE -->
-  <div class="section">
-    <div class="section-title">🏷️ Account type</div>
-    <div class="field-hint" style="margin-bottom:12px">Student/Educator and NGO accounts get unlimited surveys free after verification.</div>
-    <div class="account-types">
-      <button class="acc-type-btn active" id="acc-individual" onclick="selectAccType('individual')"><span class="acc-type-icon">👤</span>Individual</button>
-      <button class="acc-type-btn" id="acc-student" onclick="selectAccType('student')"><span class="acc-type-icon">🎓</span>Student / Educator</button>
-      <button class="acc-type-btn" id="acc-ngo" onclick="selectAccType('ngo')"><span class="acc-type-icon">🤝</span>NGO</button>
-      <button class="acc-type-btn" id="acc-business" onclick="selectAccType('business')"><span class="acc-type-icon">💼</span>Business</button>
-    </div>
-    <div class="acc-type-modal" id="modal-student">
-      <div class="acc-type-modal-title">🎓 Student / Educator — Free Forever</div>
-      <div class="acc-type-modal-sub">Verified students, teachers and professors get unlimited surveys and responses free.</div>
-      <ul class="qualify-list">
-        <li>School, college or university students</li>
-        <li>Teachers and professors</li>
-        <li>Academic researchers</li>
-        <li>Educational institution staff</li>
-      </ul>
-      <button class="btn-apply" onclick="applyVerification('student')">Apply for verification →</button>
-    </div>
-    <div class="acc-type-modal" id="modal-ngo">
-      <div class="acc-type-modal-title">🤝 NGO — Free Forever</div>
-      <div class="acc-type-modal-sub">Verified non-profit organisations get unlimited surveys and responses free.</div>
-      <ul class="qualify-list">
-        <li>Registered non-profit organisations</li>
-        <li>Charitable trusts and foundations</li>
-        <li>Community welfare organisations</li>
-        <li>Social impact initiatives</li>
-      </ul>
-      <button class="btn-apply" onclick="applyVerification('ngo')">Apply for verification →</button>
-    </div>
-  </div>
+  <!-- MAIN -->
+  <div class="main">
 
-  <!-- NOTIFICATIONS -->
-  <div class="section">
-    <div class="section-title">🔔 Email notifications</div>
-    <div class="notif-locked" id="notif-locked">
-      🔒 Email notifications are available on <strong>Starter, Pro and Business</strong> plans only.
-      <br><a href="/#pricing">Upgrade your plan →</a>
+    <!-- ── PROFILE ── -->
+    <div id="sec-profile">
+      <div class="section-title">👤 Profile</div>
+      <div class="section-sub">How you appear on SwoopForm</div>
+      <div class="alert alert-success" id="profile-success"></div>
+      <div class="alert alert-error" id="profile-error"></div>
+      <div class="card">
+        <div class="card-title">Avatar</div>
+        <div class="avatar-grid" id="avatar-grid"></div>
+        <div class="field-hint">Click to select your avatar emoji</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Personal details</div>
+        <div class="field"><label class="field-label">Full name</label><input class="field-input" id="p-name" placeholder="Your full name"></div>
+        <div class="field"><label class="field-label">Email address</label><input class="field-input" id="p-email" placeholder="your@email.com" disabled style="opacity:0.5;cursor:not-allowed"><div class="field-hint">Email cannot be changed. Contact support if needed.</div></div>
+        <div class="field">
+          <label class="field-label">Mobile number</label>
+          <div class="phone-row">
+            <select class="country-code-sel" id="p-countrycode">
+              <option value="+91">🇮🇳 +91</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+44">🇬🇧 +44</option>
+              <option value="+61">🇦🇺 +61</option>
+              <option value="+65">🇸🇬 +65</option>
+              <option value="+971">🇦🇪 +971</option>
+              <option value="+60">🇲🇾 +60</option>
+              <option value="+92">🇵🇰 +92</option>
+              <option value="+880">🇧🇩 +880</option>
+              <option value="+94">🇱🇰 +94</option>
+              <option value="+49">🇩🇪 +49</option>
+              <option value="+33">🇫🇷 +33</option>
+              <option value="+81">🇯🇵 +81</option>
+              <option value="+86">🇨🇳 +86</option>
+              <option value="+82">🇰🇷 +82</option>
+            </select>
+            <input class="phone-number-inp" id="p-phone" type="tel" placeholder="98765 43210" maxlength="15">
+          </div>
+          <div class="field-hint">Used for account recovery and notifications only</div>
+        </div>
+        <div class="field"><label class="field-label">Bio (optional)</label><textarea class="field-input" id="p-bio" placeholder="Tell us a bit about yourself..." rows="2" style="resize:vertical"></textarea></div>
+        <div style="margin-top:4px"><button class="btn-primary" onclick="saveProfile()">Save profile</button></div>
+      </div>
     </div>
-    <div class="notif-options" id="notif-options">
-      <div class="notif-option active" id="notif-instant" onclick="selectNotif('instant')">
-        <div class="notif-radio"></div>
-        <div><div class="notif-title">⚡ Instant</div><div class="notif-desc">Get an email every time someone responds to your survey</div></div>
-      </div>
-      <div class="notif-option" id="notif-weekly" onclick="selectNotif('weekly')">
-        <div class="notif-radio"></div>
-        <div><div class="notif-title">📅 Weekly digest</div><div class="notif-desc">Get a weekly summary of all responses every Monday morning</div></div>
-      </div>
-      <div class="notif-option" id="notif-none" onclick="selectNotif('none')">
-        <div class="notif-radio"></div>
-        <div><div class="notif-title">🔕 No notifications</div><div class="notif-desc">Check your responses manually from the dashboard</div></div>
-      </div>
-    </div>
-  </div>
 
-  <!-- CHANGE PASSWORD -->
-  <div class="section" id="password-section">
-    <div class="section-title">🔑 Change password</div>
-    <div class="field">
-      <label class="field-label">New password</label>
-      <input class="field-input" id="inp-new-pass" type="password" placeholder="At least 6 characters">
+    <!-- ── ACCOUNT ── -->
+    <div id="sec-account" style="display:none">
+      <div class="section-title">🔐 Account</div>
+      <div class="section-sub">Manage your login credentials</div>
+      <div class="alert alert-success" id="pw-success"></div>
+      <div class="alert alert-error" id="pw-error"></div>
+      <div class="card">
+        <div class="card-title">Change password</div>
+        <div class="field"><label class="field-label">Current password</label><input class="field-input" id="pw-current" type="password" placeholder="Current password"></div>
+        <div class="field"><label class="field-label">New password</label><input class="field-input" id="pw-new" type="password" placeholder="Min 8 characters"></div>
+        <div class="field"><label class="field-label">Confirm new password</label><input class="field-input" id="pw-confirm" type="password" placeholder="Repeat new password"></div>
+        <div style="margin-top:4px"><button class="btn-primary" onclick="changePassword()">Update password</button></div>
+      </div>
     </div>
-    <div class="field">
-      <label class="field-label">Confirm new password</label>
-      <input class="field-input" id="inp-confirm-pass" type="password" placeholder="Repeat new password">
-    </div>
-    <button class="btn-save" onclick="changePassword()" style="margin-top:4px">Update password</button>
-  </div>
 
-  <!-- PLAN -->
-  <div class="section">
-    <div class="section-title">💳 Plan &amp; billing</div>
-    <div class="plan-current">
-      <div style="flex:1">
-        <div class="plan-name" id="plan-name">Free plan</div>
-        <div class="plan-desc" id="plan-desc">3 surveys · 100 responses each</div>
+    <!-- ── PLAN ── -->
+    <div id="sec-plan" style="display:none">
+      <div class="section-title">💎 My Plan</div>
+      <div class="section-sub">Your current subscription and usage</div>
+      <div class="card">
+        <div class="card-title">
+          Current plan
+          <span class="plan-badge plan-free" id="plan-badge-display">Free</span>
+        </div>
+        <div id="plan-features" style="margin-bottom:16px">
+          <div style="font-size:0.82rem;color:#64748B;line-height:1.8" id="plan-feature-list"></div>
+        </div>
+        <div style="font-size:0.75rem;color:#94A3B8;margin-bottom:16px" id="plan-limits"></div>
       </div>
-      <span id="plan-badge" style="padding:3px 10px;border-radius:100px;font-size:0.72rem;font-weight:700;background:#EDE9FF;color:#2D1B69;border:1px solid #C4B5FD">Free</span>
-    </div>
-    <div class="upgrade-grid" id="upgrade-grid">
-      <div class="upgrade-card">
-        <div class="upgrade-plan">⚡ Starter</div>
-        <div class="upgrade-price">₹499 / month · 10 surveys · Unlimited responses</div>
-        <button class="upgrade-btn">Upgrade</button>
+      <div class="upgrade-card" id="upgrade-card">
+        <div class="upgrade-title">Unlock more with Starter</div>
+        <div class="upgrade-sub">Get more responses, remove branding and access advanced features.</div>
+        <div class="upgrade-features">
+          <div class="upgrade-feat">15 active surveys (vs 3 on Free)</div>
+          <div class="upgrade-feat">1,000 responses per survey</div>
+          <div class="upgrade-feat">Bulk CSV question upload</div>
+          <div class="upgrade-feat">Full analytics & CSV export</div>
+          <div class="upgrade-feat">Email notifications</div>
+          <div class="upgrade-feat">Custom redirect URL</div>
+        </div>
+        <a href="/pricing" class="upgrade-btn">See all plans →</a>
       </div>
-      <div class="upgrade-card">
-        <div class="upgrade-plan">🚀 Pro</div>
-        <div class="upgrade-price">₹1,499 / month · Unlimited everything</div>
-        <button class="upgrade-btn">Upgrade</button>
-      </div>
     </div>
-    <div style="margin-top:10px;font-size:0.75rem;color:#94A3B8;text-align:center">
-      🎓 Student/Educator or NGO? <button onclick="selectAccType('student');document.getElementById('modal-student').classList.add('show')" style="background:none;border:none;color:#2D1B69;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.75rem">Apply for free verified plan →</button>
-    </div>
-  </div>
 
-  <!-- DANGER -->
-  <div class="danger-section">
-    <div class="danger-title">⚠️ Danger zone</div>
-    <div class="danger-row">
-      <div>
-        <div class="danger-name">Delete account</div>
-        <div class="danger-desc">Permanently delete your account and all surveys. Cannot be undone.</div>
+    <!-- ── VERIFICATION ── -->
+    <div id="sec-verify" style="display:none">
+      <div class="section-title">✅ Verification</div>
+      <div class="section-sub">Get verified as a Student, Educator or NGO for a free lifetime plan</div>
+      <div class="card">
+        <div class="card-title">
+          Verification status
+          <span class="verify-status verify-none" id="verify-status-badge">Not applied</span>
+        </div>
+        <p style="font-size:0.85rem;color:#64748B;line-height:1.7;margin-bottom:20px">Verified accounts get a <strong>free lifetime plan</strong> with expanded limits. Choose your account type below and submit your verification documents.</p>
+
+        <!-- ACCOUNT TYPE SELECTOR -->
+        <label style="display:block;font-size:0.72rem;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px">I am a</label>
+        <div class="type-btns">
+          <button class="type-btn" id="vtype-student" onclick="selectVerifyType('student')">🎓 Student</button>
+          <button class="type-btn" id="vtype-educator" onclick="selectVerifyType('educator')">📚 Educator</button>
+          <button class="type-btn" id="vtype-ngo" onclick="selectVerifyType('ngo')">🤝 NGO</button>
+        </div>
+
+        <!-- VERIFICATION FORM -->
+        <div class="verify-form" id="verify-form" style="display:none">
+          <div class="verify-form-title" id="verify-form-title">Student Verification</div>
+          <div class="alert alert-success" id="verify-success"></div>
+          <div class="alert alert-error" id="verify-error"></div>
+          <div class="field"><label class="field-label">Full name *</label><input class="field-input" id="v-name" placeholder="Your full name"></div>
+          <div class="field" id="v-institution-wrap"><label class="field-label" id="v-institution-label">Institution name *</label><input class="field-input" id="v-institution" placeholder="e.g. IIT Delhi, Delhi University"></div>
+          <div class="field"><label class="field-label" id="v-doctype-label">Document type</label>
+            <select class="field-input" id="v-doctype">
+              <option value="student_id">Student ID card</option>
+              <option value="enrollment">Enrollment letter</option>
+              <option value="marksheet">Marksheet / Transcript</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field-label">Document URL *</label>
+            <input class="field-input" id="v-docurl" placeholder="Paste Google Drive / Dropbox public link">
+            <div class="field-hint">Upload your document to Google Drive, set sharing to "Anyone with link", then paste the link here.</div>
+          </div>
+          <div class="field"><label class="field-label">Additional notes (optional)</label><textarea class="field-input" id="v-notes" placeholder="Any additional information..." rows="2" style="resize:vertical"></textarea></div>
+          <div style="margin-top:4px;display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn-primary" onclick="submitVerification()">Submit for review</button>
+            <button class="btn-ghost" onclick="cancelVerify()">Cancel</button>
+          </div>
+          <div style="font-size:0.72rem;color:#94A3B8;margin-top:10px;line-height:1.5">We review within 24–48 hours. You'll receive a notification when your application is processed.</div>
+        </div>
+
+        <!-- PENDING STATE -->
+        <div id="verify-pending-msg" style="display:none;background:#FEF3C7;border:1px solid #FCD34D;border-radius:10px;padding:14px;margin-top:12px">
+          <div style="font-weight:700;font-size:0.88rem;color:#92400E;margin-bottom:4px">⏳ Application under review</div>
+          <div style="font-size:0.8rem;color:#B45309;line-height:1.6">Your verification is being reviewed. We'll notify you within 24–48 hours. No action needed.</div>
+        </div>
+
+        <!-- APPROVED STATE -->
+        <div id="verify-approved-msg" style="display:none;background:#F0FDF4;border:1px solid #86EFAC;border-radius:10px;padding:14px;margin-top:12px">
+          <div style="font-weight:700;font-size:0.88rem;color:#166534;margin-bottom:4px">✅ Verified!</div>
+          <div style="font-size:0.8rem;color:#15803D;line-height:1.6">Your account is verified. You have access to your free lifetime plan.</div>
+        </div>
       </div>
-      <button class="btn-danger" onclick="deleteAccount()">Delete account</button>
+
+      <!-- WHAT YOU GET -->
+      <div class="card">
+        <div class="card-title">What verified accounts get</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+          <div style="text-align:center;padding:16px;background:#F0FDF4;border-radius:12px">
+            <div style="font-size:1.4rem;margin-bottom:6px">🎓</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;margin-bottom:4px">Student</div>
+            <div style="font-size:0.7rem;color:#64748B;line-height:1.5">Pro features<br>500 resp/form<br>Lifetime free</div>
+          </div>
+          <div style="text-align:center;padding:16px;background:#EFF6FF;border-radius:12px">
+            <div style="font-size:1.4rem;margin-bottom:6px">📚</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;margin-bottom:4px">Educator</div>
+            <div style="font-size:0.7rem;color:#64748B;line-height:1.5">Pro features<br>1,000 resp/form<br>Live Quiz included</div>
+          </div>
+          <div style="text-align:center;padding:16px;background:#DCFCE7;border-radius:12px">
+            <div style="font-size:1.4rem;margin-bottom:6px">🤝</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;margin-bottom:4px">NGO</div>
+            <div style="font-size:0.7rem;color:#64748B;line-height:1.5">Business features<br>Unlimited resp<br>3 team seats</div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- ── NOTIFICATIONS ── -->
+    <div id="sec-notifications" style="display:none">
+      <div class="section-title">🔔 Notifications</div>
+      <div class="section-sub">Control when and how SwoopForm notifies you</div>
+      <div class="card">
+        <div class="card-title">Email notifications</div>
+        <div class="sr"><div><div class="sr-label">New response received</div><div style="font-size:0.72px;color:#64748B;margin-top:2px">Get an email for every new submission</div></div><button class="tgl" id="n-response" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-label">Weekly digest</div><div style="font-size:0.72px;color:#64748B;margin-top:2px">Summary of responses every Monday</div></div><button class="tgl on" id="n-digest" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-label">Survey milestone</div><div style="font-size:0.72px;color:#64748B;margin-top:2px">When you hit 100, 500, 1000 responses</div></div><button class="tgl on" id="n-milestone" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-label">Product updates</div><div style="font-size:0.72px;color:#64748B;margin-top:2px">New features and improvements</div></div><button class="tgl on" id="n-updates" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr" style="border-bottom:none"><div><div class="sr-label">Marketing emails</div><div style="font-size:0.72px;color:#64748B;margin-top:2px">Tips, guides and case studies</div></div><button class="tgl" id="n-marketing" onclick="this.classList.toggle('on')"></button></div>
+      </div>
+      <div style="margin-top:4px"><button class="btn-primary" onclick="saveNotifications()">Save preferences</button></div>
+    </div>
+
+    <!-- ── DANGER ZONE ── -->
+    <div id="sec-danger" style="display:none">
+      <div class="section-title">⚠️ Danger zone</div>
+      <div class="section-sub">Irreversible actions. Proceed with caution.</div>
+      <div class="danger-card">
+        <div class="danger-title">Delete account</div>
+        <div class="danger-sub">Permanently delete your SwoopForm account and all associated data — surveys, responses, settings. This action cannot be undone. All your data will be permanently removed within 30 days.</div>
+        <button class="btn-danger" onclick="confirmDelete()">Delete my account</button>
+      </div>
+    </div>
+
   </div>
 </div>
 <div class="toast" id="toast"></div>
 
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import{getAuth,onAuthStateChanged,updatePassword,deleteUser}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getFirestore,doc,getDoc,updateDoc,addDoc,collection,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getAuth,onAuthStateChanged,updateProfile,updatePassword,reauthenticateWithCredential,EmailAuthProvider,deleteUser}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,doc,getDoc,setDoc,updateDoc,addDoc,collection,serverTimestamp,query,where,getDocs}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
 const app=initializeApp(FB);
 const auth=getAuth(app);
 const db=getFirestore(app);
 
-const AVATARS={
-  free:[{id:'f1',emoji:'🧑',name:'Default',bg:'#EDE9FF'},{id:'f2',emoji:'👩',name:'Grace',bg:'#FCE7F3'},{id:'f3',emoji:'👨',name:'Alex',bg:'#DBEAFE'},{id:'f4',emoji:'🧔',name:'Max',bg:'#D1FAE5'},{id:'f5',emoji:'👱',name:'Sam',bg:'#FEF3C7'}],
-  student:[{id:'s1',emoji:'🎓',name:'Scholar',bg:'#DCFCE7'},{id:'s2',emoji:'📚',name:'Bookworm',bg:'#D1FAE5'},{id:'s3',emoji:'✏️',name:'Scribe',bg:'#ECFDF5'},{id:'s4',emoji:'🔬',name:'Scientist',bg:'#CCFBF1'},{id:'s5',emoji:'🏫',name:'Campus',bg:'#A7F3D0'}],
-  ngo:[{id:'n1',emoji:'🤝',name:'Partner',bg:'#FEF3C7'},{id:'n2',emoji:'💚',name:'Heart',bg:'#DCFCE7'},{id:'n3',emoji:'🌍',name:'Global',bg:'#DBEAFE'},{id:'n4',emoji:'🕊️',name:'Peace',bg:'#EDE9FF'},{id:'n5',emoji:'🌱',name:'Growth',bg:'#D1FAE5'}],
-  pro:[{id:'p1',emoji:'👑',name:'Crown',bg:'#FEF3C7'},{id:'p2',emoji:'💎',name:'Diamond',bg:'#DBEAFE'},{id:'p3',emoji:'🔥',name:'Fire',bg:'#FFE4E6'},{id:'p4',emoji:'⭐',name:'Star',bg:'#FEF3C7'},{id:'p5',emoji:'🎯',name:'Pro',bg:'#EDE9FF'}]
+const AVATARS=['😊','🦊','🐼','🦁','🐯','🐨','🦅','🦋','🌟','🚀','🎯','💡','🎨','🔬','📚','🌍'];
+const PLAN_INFO={
+  free:{label:'Free',badge:'plan-free',features:['3 active surveys','100 responses per survey','16+ question types','Basic logic branching','Google Sheets sync'],limits:'Upgrade to get more responses, remove branding and unlock advanced features.'},
+  starter:{label:'Starter',badge:'plan-starter',features:['15 active surveys','1,000 responses per survey','Full logic branching','Bulk CSV upload','Email notifications','Custom redirect URL','CSV export'],limits:''},
+  pro:{label:'Pro',badge:'plan-pro',features:['Unlimited surveys','Unlimited responses','Remove SwoopForm branding','Custom redirect URL','Priority email support','PDF export','API access'],limits:''},
+  business:{label:'Business',badge:'plan-business',features:['Everything in Pro','5 team seats','Team roles (Admin/Editor/Viewer)','Dedicated account manager','Live Quiz + PulseCheck','Custom domain'],limits:''},
+  student:{label:'Student (Verified)',badge:'plan-student',features:['Pro features free','500 responses per survey','All question types','Logic branching','Lifetime free'],limits:''},
+  educator:{label:'Educator (Verified)',badge:'plan-student',features:['Pro features free','1,000 responses per survey','Live Quiz included','PulseCheck included','Lifetime free'],limits:''},
+  ngo:{label:'NGO (Verified)',badge:'plan-ngo',features:['Business features free','Unlimited responses','3 team seats','Lifetime free'],limits:''},
 };
 
-let currentUser=null,userProfile=null,selectedAvatar='f1',selectedAccType='individual',selectedNotif='instant';
+let U=null,userData=null,selectedAvatar='😊',selectedVerifyType='student';
 
 onAuthStateChanged(auth,async u=>{
   if(!u){window.location.href='/login';return}
-  currentUser=u;
-  await loadProfile();
+  U=u;
+  document.getElementById('p-email').value=u.email||'';
+  document.getElementById('p-name').value=u.displayName||'';
+  // Load user data from Firestore
+  try{
+    const snap=await getDoc(doc(db,'users',u.uid));
+    if(snap.exists()){
+      userData=snap.data();
+      if(userData.avatar)selectedAvatar=userData.avatar;
+      if(userData.phone){
+        const parts=splitPhone(userData.phone);
+        document.getElementById('p-countrycode').value=parts.code||'+91';
+        document.getElementById('p-phone').value=parts.number||'';
+      }
+      if(userData.bio)document.getElementById('p-bio').value=userData.bio;
+      loadPlanInfo(userData.plan||'free');
+      loadVerifyStatus(userData);
+      loadNotifications(userData.notifications||{});
+    }
+  }catch(e){console.error(e)}
+  renderAvatars();
   document.getElementById('ls').style.display='none';
-  // Hide password section for Google users
-  if(u.providerData[0]?.providerId==='google.com'){
-    document.getElementById('password-section').style.display='none';
-  }
 });
 
-async function loadProfile(){
+function splitPhone(phone){
+  const codes=['+971','+880','+94','+65','+61','+92','+86','+82','+81','+49','+44','+33','+91','+60','+1'];
+  for(const code of codes){if(phone.startsWith(code))return{code,number:phone.slice(code.length).trim()}}
+  return{code:'+91',number:phone}
+}
+
+function renderAvatars(){
+  const grid=document.getElementById('avatar-grid');
+  grid.innerHTML=AVATARS.map(a=>`<div class="avatar-opt${a===selectedAvatar?' selected':''}" onclick="selectAvatar('${a}')" style="background:${a===selectedAvatar?'#EDE9FF':'#F5F0E8'}">${a}</div>`).join('');
+}
+window.selectAvatar=function(a){selectedAvatar=a;renderAvatars()}
+
+function loadPlanInfo(plan){
+  const info=PLAN_INFO[plan]||PLAN_INFO.free;
+  const badge=document.getElementById('plan-badge-display');
+  badge.textContent=info.label;badge.className='plan-badge '+info.badge;
+  document.getElementById('plan-feature-list').innerHTML=info.features.map(f=>`✓ ${f}`).join('<br>');
+  document.getElementById('plan-limits').textContent=info.limits;
+  if(['pro','business','ngo'].includes(plan))document.getElementById('upgrade-card').style.display='none';
+}
+
+function loadVerifyStatus(data){
+  const status=data.verificationStatus||'none';
+  const badge=document.getElementById('verify-status-badge');
+  const statusMap={none:{text:'Not applied',cls:'verify-none'},pending:{text:'⏳ Pending',cls:'verify-pending'},approved:{text:'✅ Verified',cls:'verify-approved'},rejected:{text:'❌ Rejected',cls:'verify-rejected'}};
+  const s=statusMap[status]||statusMap.none;
+  badge.textContent=s.text;badge.className='verify-status '+s.cls;
+  document.getElementById('verify-pending-msg').style.display=status==='pending'?'block':'none';
+  document.getElementById('verify-approved-msg').style.display=status==='approved'?'block':'none';
+  if(status==='rejected'){
+    const msg=document.getElementById('verify-pending-msg');
+    msg.style.display='block';msg.style.background='#FEF2F2';msg.style.borderColor='#FECACA';
+    msg.innerHTML='<div style="font-weight:700;font-size:0.88rem;color:#DC2626;margin-bottom:4px">❌ Application rejected</div><div style="font-size:0.8rem;color:#B91C1C;line-height:1.6">'+(data.verificationReason||'Your application was not approved. Please reapply with correct documents.')+'</div>';
+  }
+}
+
+function loadNotifications(notifs){
+  if(notifs.response)document.getElementById('n-response').classList.add('on');
+  if(notifs.digest!==false)document.getElementById('n-digest').classList.add('on');
+  if(notifs.milestone!==false)document.getElementById('n-milestone').classList.add('on');
+  if(notifs.updates!==false)document.getElementById('n-updates').classList.add('on');
+  if(notifs.marketing)document.getElementById('n-marketing').classList.add('on');
+}
+
+// ── SECTIONS ─────────────────────────────────────────
+window.showSection=function(s){
+  ['profile','account','plan','verify','notifications','danger'].forEach(id=>{
+    document.getElementById('sec-'+id).style.display=id===s?'block':'none';
+    document.getElementById('sn-'+id).classList.toggle('active',id===s);
+  });
+}
+
+// ── VERIFY TYPE ───────────────────────────────────────
+window.selectVerifyType=function(type){
+  selectedVerifyType=type;
+  document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('vtype-'+type).classList.add('active');
+  const form=document.getElementById('verify-form');
+  form.style.display='block';
+  const titles={student:'🎓 Student Verification',educator:'📚 Educator Verification',ngo:'🤝 NGO Verification'};
+  const doctypes={
+    student:'<option value="student_id">Student ID card</option><option value="enrollment">Enrollment letter</option><option value="marksheet">Marksheet / Transcript</option>',
+    educator:'<option value="staff_id">Staff / Faculty ID</option><option value="appointment">Appointment letter</option><option value="certificate">Teaching certificate</option>',
+    ngo:'<option value="reg_cert">Registration certificate</option><option value="12a">12A certificate (India)</option><option value="80g">80G certificate</option><option value="fcra">FCRA registration</option>'
+  };
+  const instLabels={student:'Institution / College / University name *',educator:'Institution / School / College name *',ngo:'Organisation name *'};
+  document.getElementById('verify-form-title').textContent=titles[type];
+  document.getElementById('v-doctype').innerHTML=doctypes[type];
+  document.getElementById('v-institution-label').textContent=instLabels[type];
+  document.getElementById('v-institution').placeholder=type==='ngo'?'e.g. Green Earth Foundation':'e.g. IIT Delhi, Delhi University';
+}
+window.cancelVerify=function(){document.getElementById('verify-form').style.display='none';document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'))}
+
+// ── SAVE PROFILE ──────────────────────────────────────
+window.saveProfile=async function(){
+  const name=document.getElementById('p-name').value.trim();
+  const code=document.getElementById('p-countrycode').value;
+  const phone=document.getElementById('p-phone').value.trim();
+  const bio=document.getElementById('p-bio').value.trim();
+  hideAlerts('profile');
+  if(!name){showAlert('profile-error','Please enter your full name');return}
   try{
-    const snap=await getDoc(doc(db,'users',currentUser.uid));
-    userProfile=snap.exists()?snap.data():{};
-    document.getElementById('inp-name').value=userProfile.name||currentUser.displayName||'';
-    document.getElementById('inp-email').value=currentUser.email||'';
-    document.getElementById('inp-mobile').value=userProfile.mobile||'';
-    const plan=userProfile.plan||'free';
-    selectedAvatar=userProfile.avatar||'f1';
-    renderAvatars(plan);
-    const accMap={student:'student',educator:'student',ngo:'ngo',starter:'business',pro:'business',business:'business'};
-    selectAccType(accMap[plan]||'individual',true);
-    selectedNotif=userProfile.notificationPref||'instant';
-    const hasPaidNotif=['starter','pro','business'].includes(plan);
-    setupNotifications(hasPaidNotif);
-    updatePlanDisplay(plan);
-  }catch(e){console.error(e)}
+    await updateProfile(U,{displayName:name});
+    await setDoc(doc(db,'users',U.uid),{
+      name,bio,avatar:selectedAvatar,
+      phone:phone?code+' '+phone:'',
+      updatedAt:serverTimestamp()
+    },{merge:true});
+    showAlert('profile-success','Profile saved successfully!');
+    toast('Profile saved!');
+  }catch(e){showAlert('profile-error','Error saving profile. Please try again.')}
 }
 
-function renderAvatars(plan){
-  const canStudent=['student','educator'].includes(plan);
-  const canNgo=plan==='ngo';
-  const canPro=['starter','pro','business'].includes(plan);
-  renderGroup('free',AVATARS.free,true);
-  renderGroup('student',AVATARS.student,canStudent);
-  renderGroup('ngo',AVATARS.ngo,canNgo);
-  renderGroup('pro',AVATARS.pro,canPro);
-  document.getElementById('lock-student').style.display=canStudent?'none':'block';
-  document.getElementById('lock-ngo').style.display=canNgo?'none':'block';
-  document.getElementById('lock-pro').style.display=canPro?'none':'block';
-  updateSelectedPreview();
-}
-
-function renderGroup(group,avatars,unlocked){
-  const container=document.getElementById('avatars-'+group);
-  container.innerHTML=avatars.map(a=>`<button class="avatar-btn${!unlocked?' locked':''}${selectedAvatar===a.id?' selected':''}" style="background:${a.bg}" onclick="${unlocked?`selectAvatar('${a.id}','${a.emoji}','${a.name}','${a.bg}')`:''}" title="${unlocked?a.name:'Locked — upgrade to unlock'}">${a.emoji}${!unlocked?'<div class="lock-icon">🔒</div>':''}</button>`).join('');
-}
-
-function updateSelectedPreview(){
-  const all=[...AVATARS.free,...AVATARS.student,...AVATARS.ngo,...AVATARS.pro];
-  const found=all.find(a=>a.id===selectedAvatar)||AVATARS.free[0];
-  document.getElementById('avatar-selected-emoji').textContent=found.emoji;
-  document.getElementById('avatar-selected-circle').style.background=found.bg;
-  document.getElementById('avatar-selected-name').textContent=found.name;
-}
-
-window.selectAvatar=function(id,emoji,name,bg){
-  selectedAvatar=id;
-  document.querySelectorAll('.avatar-btn').forEach(b=>b.classList.remove('selected'));
-  event.currentTarget.classList.add('selected');
-  document.getElementById('avatar-selected-emoji').textContent=emoji;
-  document.getElementById('avatar-selected-circle').style.background=bg;
-  document.getElementById('avatar-selected-name').textContent=name;
-  document.getElementById('avatar-selected-plan').textContent='Selected ✓';
-  toast('Avatar updated — click Save changes to keep it');
-}
-
-function setupNotifications(hasPaid){
-  const locked=document.getElementById('notif-locked');
-  const options=document.getElementById('notif-options');
-  if(hasPaid){
-    locked.style.display='none';
-    options.querySelectorAll('.notif-option').forEach(o=>o.classList.remove('disabled'));
-    selectNotif(selectedNotif,true);
-  } else {
-    locked.style.display='block';
-    options.querySelectorAll('.notif-option').forEach(o=>o.classList.add('disabled'));
+// ── CHANGE PASSWORD ───────────────────────────────────
+window.changePassword=async function(){
+  const current=document.getElementById('pw-current').value;
+  const newPw=document.getElementById('pw-new').value;
+  const confirm=document.getElementById('pw-confirm').value;
+  hideAlerts('pw');
+  if(!current||!newPw||!confirm){showAlert('pw-error','Please fill in all fields');return}
+  if(newPw.length<8){showAlert('pw-error','New password must be at least 8 characters');return}
+  if(newPw!==confirm){showAlert('pw-error','New passwords do not match');return}
+  try{
+    const cred=EmailAuthProvider.credential(U.email,current);
+    await reauthenticateWithCredential(U,cred);
+    await updatePassword(U,newPw);
+    showAlert('pw-success','Password updated successfully!');
+    document.getElementById('pw-current').value='';document.getElementById('pw-new').value='';document.getElementById('pw-confirm').value='';
+  }catch(e){
+    const msgs={'auth/wrong-password':'Current password is incorrect.','auth/weak-password':'New password is too weak.'};
+    showAlert('pw-error',msgs[e.code]||'Error updating password. Please try again.');
   }
 }
 
-window.selectNotif=function(pref,silent){
-  selectedNotif=pref;
-  document.querySelectorAll('.notif-option').forEach(o=>o.classList.remove('active'));
-  const el=document.getElementById('notif-'+pref);
-  if(el)el.classList.add('active');
-}
-
-window.selectAccType=function(type,silent){
-  selectedAccType=type;
-  document.querySelectorAll('.acc-type-btn').forEach(b=>b.classList.remove('active'));
-  const btn=document.getElementById('acc-'+type);
-  if(btn)btn.classList.add('active');
-  document.querySelectorAll('.acc-type-modal').forEach(m=>m.classList.remove('show'));
-  if(!silent&&(type==='student'||type==='ngo')){
-    document.getElementById('modal-'+type).classList.add('show');
-  }
-}
-
-window.applyVerification=async function(type){
-  if(!currentUser)return;
-  const name=document.getElementById('inp-name').value.trim();
+// ── SUBMIT VERIFICATION ───────────────────────────────
+window.submitVerification=async function(){
+  const name=document.getElementById('v-name').value.trim();
+  const institution=document.getElementById('v-institution').value.trim();
+  const doctype=document.getElementById('v-doctype').value;
+  const docurl=document.getElementById('v-docurl').value.trim();
+  const notes=document.getElementById('v-notes').value.trim();
+  const el=document.getElementById('verify-error');el.style.display='none';
+  const sel=document.getElementById('verify-success');sel.style.display='none';
+  if(!name||!institution||!docurl){showAlert('verify-error','Please fill in all required fields');return}
+  if(!docurl.startsWith('http')){showAlert('verify-error','Please paste a valid document URL (Google Drive / Dropbox link)');return}
   try{
     await addDoc(collection(db,'verificationRequests'),{
-      userId:currentUser.uid,
-      name:name||currentUser.displayName||'',
-      email:currentUser.email,
-      type,status:'pending',
-      submittedAt:serverTimestamp()
+      userId:U.uid,userEmail:U.email,name,accountType:selectedVerifyType,
+      institution,docType:doctype,docUrl:docurl,notes,
+      status:'pending',createdAt:serverTimestamp()
     });
-    toast('✅ Verification submitted! Admin will review within 24 hours.');
-  }catch(e){toast('Error submitting. Please try again.')}
+    await updateDoc(doc(db,'users',U.uid),{verificationStatus:'pending',verificationAppliedAt:serverTimestamp()});
+    showAlert('verify-success','Application submitted! We\'ll review within 24–48 hours.');
+    document.getElementById('verify-status-badge').textContent='⏳ Pending';
+    document.getElementById('verify-status-badge').className='verify-status verify-pending';
+    document.getElementById('verify-pending-msg').style.display='block';
+    cancelVerify();
+  }catch(e){showAlert('verify-error','Error submitting. Please try again.')}
 }
 
-function updatePlanDisplay(plan){
-  const names={free:'Free plan',student:'Student/Educator plan',ngo:'NGO plan',starter:'Starter plan',pro:'Pro plan',business:'Business plan'};
-  const descs={free:'3 surveys · 100 responses each',student:'Unlimited surveys · Unlimited responses',ngo:'Unlimited surveys · Unlimited responses',starter:'10 surveys · Unlimited responses',pro:'Unlimited surveys · Unlimited responses',business:'Unlimited surveys · Team features'};
-  const colors={free:'background:#EDE9FF;color:#2D1B69;border:1px solid #C4B5FD',student:'background:#DCFCE7;color:#166534;border:1px solid #86EFAC',ngo:'background:#FEF3C7;color:#92400E;border:1px solid #FCD34D',starter:'background:#DBEAFE;color:#1E40AF;border:1px solid #93C5FD',pro:'background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff',business:'background:#0F0E1A;color:#fff'};
-  document.getElementById('plan-name').textContent=names[plan]||'Free plan';
-  document.getElementById('plan-desc').textContent=descs[plan]||'';
-  const badge=document.getElementById('plan-badge');
-  badge.textContent=plan.charAt(0).toUpperCase()+plan.slice(1);
-  badge.style.cssText='padding:3px 10px;border-radius:100px;font-size:0.72rem;font-weight:700;'+colors[plan];
-  if(['starter','pro','business'].includes(plan)){
-    document.getElementById('upgrade-grid').style.display='none';
-  }
-}
-
-window.saveProfile=async function(){
-  if(!currentUser)return;
-  const btn=document.getElementById('save-btn');
-  btn.disabled=true;btn.textContent='Saving...';
+// ── NOTIFICATIONS ─────────────────────────────────────
+window.saveNotifications=async function(){
   try{
-    await updateDoc(doc(db,'users',currentUser.uid),{
-      name:document.getElementById('inp-name').value.trim(),
-      mobile:document.getElementById('inp-mobile').value.trim(),
-      avatar:selectedAvatar,
-      notificationPref:selectedNotif,
-      updatedAt:serverTimestamp()
+    await updateDoc(doc(db,'users',U.uid),{
+      notifications:{
+        response:document.getElementById('n-response').classList.contains('on'),
+        digest:document.getElementById('n-digest').classList.contains('on'),
+        milestone:document.getElementById('n-milestone').classList.contains('on'),
+        updates:document.getElementById('n-updates').classList.contains('on'),
+        marketing:document.getElementById('n-marketing').classList.contains('on'),
+      },updatedAt:serverTimestamp()
     });
-    toast('✅ Profile saved!');
-  }catch(e){console.error(e);toast('Error saving. Please try again.')}
-  btn.disabled=false;btn.textContent='Save changes';
+    toast('Notification preferences saved!');
+  }catch(e){toast('Error saving preferences')}
 }
 
-window.changePassword=async function(){
-  const newPass=document.getElementById('inp-new-pass').value;
-  const confirmPass=document.getElementById('inp-confirm-pass').value;
-  if(!newPass||newPass.length<6){toast('Password must be at least 6 characters');return}
-  if(newPass!==confirmPass){toast('Passwords do not match');return}
+// ── DELETE ACCOUNT ────────────────────────────────────
+window.confirmDelete=async function(){
+  const input=prompt('Type DELETE to confirm account deletion:');
+  if(input!=='DELETE'){alert('Account deletion cancelled.');return}
+  const pass=prompt('Enter your password to confirm:');
+  if(!pass)return;
   try{
-    await updatePassword(currentUser,newPass);
-    document.getElementById('inp-new-pass').value='';
-    document.getElementById('inp-confirm-pass').value='';
-    toast('✅ Password updated successfully!');
+    const cred=EmailAuthProvider.credential(U.email,pass);
+    await reauthenticateWithCredential(U,cred);
+    await updateDoc(doc(db,'users',U.uid),{deletedAt:serverTimestamp(),status:'deleted'});
+    await deleteUser(U);
+    window.location.href='/?deleted=1';
   }catch(e){
-    if(e.code==='auth/requires-recent-login')toast('Please sign out and sign back in before changing password.');
-    else toast('Error: '+e.message);
+    const msgs={'auth/wrong-password':'Incorrect password.','auth/requires-recent-login':'Please sign out and sign in again before deleting.'};
+    alert(msgs[e.code]||'Error deleting account. Please try again.');
   }
 }
 
-window.deleteAccount=async function(){
-  if(!confirm('Are you sure you want to delete your account?\n\nAll surveys and data will be permanently deleted.\nThis cannot be undone.'))return;
-  if(!confirm('Last warning — this will delete EVERYTHING permanently. Continue?'))return;
-  try{
-    await deleteUser(currentUser);
-    window.location.href='/';
-  }catch(e){
-    if(e.code==='auth/requires-recent-login')toast('Please sign out and sign back in first, then try again.');
-    else toast('Error: '+e.message);
-  }
-}
-
-function toast(msg,d=2800){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
+// ── HELPERS ───────────────────────────────────────────
+function showAlert(id,msg){const el=document.getElementById(id);el.textContent=msg;el.style.display='block';setTimeout(()=>{el.style.display='none'},5000)}
+function hideAlerts(...ids){ids.forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none'})}
+function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
 </script>
 </body>
 </html>
