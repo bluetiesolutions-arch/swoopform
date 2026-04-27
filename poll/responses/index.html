@@ -3,81 +3,129 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Poll Responses — SwoopForm</title>
+  <title>Poll — SwoopForm</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'DM Sans',sans-serif;background:#F0F4FF;color:#0F0E1A;min-height:100vh}
-    nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    body{font-family:'DM Sans',sans-serif;background:#F8F9FF;color:#0F0E1A;min-height:100vh;display:flex;flex-direction:column}
+    nav{background:#fff;border-bottom:1.5px solid #E0E7FF;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
     .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
     .logo-mk{width:28px;height:28px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;color:#fff}
-    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem}
-    .nav-right{display:flex;gap:8px}
-    .nav-btn{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
-    .nav-btn:hover{border-color:#4F46E5;color:#4F46E5}
-    .main{max-width:800px;margin:0 auto;padding:32px 20px}
-    .page-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-0.03em;margin-bottom:4px}
-    .page-sub{font-size:0.85rem;color:#64748B;margin-bottom:28px}
-    .card{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:24px;margin-bottom:16px}
-    .card-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:16px}
-    .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-    .stat-box{background:#EEF2FF;border-radius:12px;padding:16px;text-align:center}
-    .stat-val{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:#4F46E5;margin-bottom:2px}
-    .stat-lbl{font-size:0.72rem;color:#64748B;font-weight:600}
-    .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-    .bar-label{font-size:0.88rem;font-weight:600;width:160px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .bar-track{flex:1;height:32px;background:#EEF2FF;border-radius:8px;overflow:hidden;position:relative}
-    .bar-fill{height:100%;border-radius:8px;transition:width 0.8s ease;display:flex;align-items:center;padding-left:12px}
-    .bar-fill-text{color:#fff;font-size:0.78rem;font-weight:700}
-    .bar-count{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:#4F46E5;width:60px;text-align:right;flex-shrink:0}
-    .bar-pct{font-size:0.75rem;color:#94A3B8;width:40px;text-align:right;flex-shrink:0}
-    .spinner{width:28px;height:28px;border:3px solid rgba(79,70,229,0.15);border-top-color:#4F46E5;border-radius:50%;animation:spin 0.8s linear infinite;margin:40px auto;display:block}
+    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;color:#0F0E1A}
+    .poll-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:100px;background:#EEF2FF;border:1px solid #C7D2FE;color:#5B5EA6;font-size:0.75rem;font-weight:700}
+    .stage{flex:1;display:flex;align-items:center;justify-content:center;padding:32px 20px}
+    .poll-card{background:#fff;border-radius:24px;padding:36px;width:100%;max-width:560px;box-shadow:0 4px 32px rgba(91,94,166,0.08);border:1.5px solid #E0E7FF;animation:slideUp 0.4s ease both}
+    @keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    .poll-meta{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+    .poll-cat{font-size:0.7rem;font-weight:700;color:#5B5EA6;background:#EEF2FF;padding:3px 10px;border-radius:100px}
+    .poll-vote-count{font-size:0.72rem;color:#94A3B8;display:flex;align-items:center;gap:4px}
+    .deadline-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;background:#FEF3C7;border:1px solid #FCD34D;color:#92400E;font-size:0.7rem;font-weight:700}
+    .poll-question{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.2rem,3vw,1.7rem);letter-spacing:-0.03em;color:#0F0E1A;line-height:1.25;margin-bottom:8px}
+    .poll-desc{font-size:0.88rem;color:#64748B;margin-bottom:24px;line-height:1.6}
+    .poll-type-label{font-size:0.7rem;font-weight:700;color:#94A3B8;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:12px}
+    .poll-options{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+    .poll-option{padding:13px 18px;border-radius:14px;border:1.5px solid #E0E7FF;background:#FAFBFF;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:12px;font-size:0.92rem;font-weight:600;color:#0F0E1A;position:relative;overflow:hidden;user-select:none}
+    .poll-option:hover:not(.voted){border-color:#5B5EA6;background:#F0F2FF;transform:translateX(3px)}
+    .poll-option.selected{border-color:#5B5EA6;background:#EEF2FF}
+    .poll-option.voted{cursor:default}
+    .poll-option-bar{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,rgba(91,94,166,0.1),rgba(91,94,166,0.04));border-radius:14px;transition:width 0.8s ease;width:0;pointer-events:none}
+    .poll-option-radio{width:20px;height:20px;border-radius:50%;border:2px solid #C7D2FE;flex-shrink:0;transition:all 0.2s;display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
+    .poll-option.selected .poll-option-radio{border-color:#5B5EA6;background:#5B5EA6}
+    .poll-option.selected .poll-option-radio::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff}
+    .poll-option-cb{width:20px;height:20px;border-radius:6px;border:2px solid #C7D2FE;flex-shrink:0;transition:all 0.2s;display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
+    .poll-option.selected .poll-option-cb{border-color:#5B5EA6;background:#5B5EA6}
+    .poll-option.selected .poll-option-cb::after{content:'✓';color:#fff;font-size:0.75rem;font-weight:700}
+    .poll-option-text{flex:1;position:relative;z-index:1}
+    .poll-option-pct{font-size:0.82rem;font-weight:700;color:#5B5EA6;flex-shrink:0;opacity:0;transition:opacity 0.3s;position:relative;z-index:1;min-width:36px;text-align:right}
+    .poll-option.results-shown .poll-option-pct{opacity:1}
+    .poll-submit{width:100%;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,#5B5EA6,#7C3AED);color:#fff;font-size:0.95rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;margin-bottom:14px}
+    .poll-submit:hover:not(:disabled){opacity:0.9;transform:translateY(-1px)}
+    .poll-submit:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+    .poll-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+    .vote-count-text{font-size:0.8rem;color:#94A3B8;font-weight:600}
+    .results-note{font-size:0.75rem;color:#94A3B8;font-style:italic}
+    .share-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;padding-top:16px;border-top:1px solid #E0E7FF}
+    .share-btn{padding:8px 14px;border-radius:9px;border:1.5px solid #E0E7FF;background:#fff;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;color:#64748B;transition:all 0.2s;display:inline-flex;align-items:center;gap:5px}
+    .share-btn:hover{border-color:#5B5EA6;color:#5B5EA6}
+    .sf-brand{display:flex;align-items:center;gap:6px;justify-content:center;margin-top:20px;opacity:0.4}
+    .sf-brand-logo{width:18px;height:18px;border-radius:4px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.55rem;color:#fff}
+    .sf-brand-text{font-size:0.7rem;color:#94A3B8}
+    .thanked-card{text-align:center;padding:16px 0}
+    .thanked-icon{font-size:3rem;margin-bottom:12px;animation:bounceIn 0.5s ease}
+    @keyframes bounceIn{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+    .thanked-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:6px}
+    .thanked-sub{font-size:0.85rem;color:#64748B;line-height:1.6;margin-bottom:16px}
+    .results-summary{margin:16px 0}
+    .result-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+    .result-bar-label{font-size:0.82rem;font-weight:600;width:140px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .result-bar-track{flex:1;height:10px;background:#EEF2FF;border-radius:5px;overflow:hidden}
+    .result-bar-fill{height:100%;background:linear-gradient(90deg,#5B5EA6,#7C3AED);border-radius:5px;transition:width 0.8s ease}
+    .result-bar-pct{font-size:0.75rem;font-weight:700;color:#5B5EA6;width:36px;text-align:right;flex-shrink:0}
+    .loading{display:flex;align-items:center;justify-content:center;min-height:60vh;flex-direction:column;gap:16px}
+    .spinner{width:28px;height:28px;border:3px solid rgba(91,94,166,0.2);border-top-color:#5B5EA6;border-radius:50%;animation:spin 0.8s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
-    @media(max-width:600px){.bar-label{width:90px}.stat-row{grid-template-columns:repeat(2,1fr)}nav{padding:0 14px}.logo-nm{display:none}}
+    .error-card{text-align:center;padding:40px 20px}
+    @media(max-width:600px){.poll-card{padding:24px 18px;border-radius:16px}nav{padding:0 14px}.logo-nm{display:none}}
   </style>
 </head>
 <body>
 <nav>
-  <a href="/dashboard" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
-  <div class="nav-right"><a href="/dashboard" class="nav-btn">← Dashboard</a></div>
+  <a href="/" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
+  <div class="poll-badge">📊 Poll</div>
 </nav>
-<div class="main">
-  <div class="page-title">📊 Poll Responses</div>
-  <div class="page-sub" id="poll-sub">Loading...</div>
-  <div id="content"><div class="spinner"></div></div>
+<div class="stage" id="stage">
+  <div class="loading"><div class="spinner"></div></div>
 </div>
+
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getFirestore,doc,getDoc,collection,query,where,getDocs,orderBy}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getFirestore,collection,query,where,getDocs,doc,getDoc,addDoc,updateDoc,increment,serverTimestamp,onSnapshot}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
-const app=initializeApp(FB);const auth=getAuth(app);const db=getFirestore(app);
-const id=new URLSearchParams(window.location.search).get('id');
-const COLORS=['#4F46E5','#7C3AED','#2563EB','#0891B2','#059669','#D97706','#DC2626','#EC4899'];
-onAuthStateChanged(auth,async u=>{
-  if(!u){window.location.href='/login';return}
-  if(!id){document.getElementById('content').innerHTML='<p style="color:#64748B">No poll ID provided.</p>';return}
-  const snap=await getDoc(doc(db,'polls',id));
-  if(!snap.exists()||snap.data().userId!==u.uid){document.getElementById('content').innerHTML='<p style="color:#64748B">Poll not found or access denied.</p>';return}
-  const poll={id:snap.id,...snap.data()};
-  document.title=poll.question+' — Poll Responses';
-  document.getElementById('poll-sub').textContent=poll.question;
-  const rSnap=await getDocs(query(collection(db,'pollResponses'),where('pollId','==',id)));
-  const responses=rSnap.docs.map(d=>d.data());
-  const total=poll.totalVotes||responses.length;
-  const counts={};(poll.options||[]).forEach(o=>counts[o.text||o]=o.votes||0);
-  const max=Math.max(...Object.values(counts),1);
-  document.getElementById('content').innerHTML=`
-    <div class="stat-row">
-      <div class="stat-box"><div class="stat-val">${total}</div><div class="stat-lbl">Total votes</div></div>
-      <div class="stat-box"><div class="stat-val">${(poll.options||[]).length}</div><div class="stat-lbl">Options</div></div>
-      <div class="stat-box"><div class="stat-val">${poll.type==='multiple'?'Multi':'Single'}</div><div class="stat-lbl">Type</div></div>
-    </div>
-    <div class="card">
-      <div class="card-t">Results</div>
-      ${(poll.options||[]).map((o,i)=>{const txt=o.text||o;const votes=o.votes||0;const pct=total>0?Math.round((votes/total)*100):0;return`<div class="bar-row"><div class="bar-label" title="${txt}">${txt}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${COLORS[i%COLORS.length]}"><span class="bar-fill-text">${pct>15?pct+'%':''}</span></div></div><div class="bar-count">${votes}</div><div class="bar-pct">${pct}%</div></div>`}).join('')}
-    </div>`;
-});
-</script>
-</body>
-</html>
+const app=initializeApp(FB);const db=getFirestore(app);
+
+const pathParts=window.location.pathname.split('/').filter(Boolean);
+const slugFromPath=pathParts[1];
+const idFromQuery=new URLSearchParams(window.location.search).get('id');
+let poll=null,pollId=null,hasVoted=false,selectedOptions=[],totalVotes=0;
+
+async function init(){
+  try{
+    let pollData=null;
+    if(slugFromPath&&slugFromPath!=='poll'){
+      const q=query(collection(db,'polls'),where('slug','==',slugFromPath));
+      const snap=await getDocs(q);
+      if(!snap.empty){pollData={id:snap.docs[0].id,...snap.docs[0].data()};pollId=snap.docs[0].id}
+    }
+    if(!pollData&&idFromQuery){
+      const byId=await getDoc(doc(db,'polls',idFromQuery));
+      if(byId.exists()){pollData={id:byId.id,...byId.data()};pollId=byId.id}
+    }
+    if(!pollData){showError('Poll not found','This poll may have been removed.');return}
+    if(pollData.status==='closed'){showError('Poll closed','This poll is no longer accepting votes.');return}
+    poll=pollData;
+    injectSEO(poll);
+    hasVoted=localStorage.getItem('voted_poll_'+pollId)==='1';
+    totalVotes=poll.totalVotes||0;
+    render();
+    onSnapshot(doc(db,'polls',pollId),snap=>{
+      if(snap.exists()){
+        const d=snap.data();totalVotes=d.totalVotes||0;
+        poll.options=d.options||poll.options;
+        updateLiveUI();
+      }
+    });
+  }catch(e){console.error(e);showError('Something went wrong','Please try again.')}
+}
+
+function injectSEO(p){
+  document.title=(p.question||'Poll')+' — SwoopForm';
+  const desc=p.description||'Vote on this poll on SwoopForm';
+  const addMeta=(n,c,prop)=>{const el=document.createElement('meta');if(prop)el.setAttribute('property',n);else el.setAttribute('name',n);el.setAttribute('content',c);document.head.appendChild(el)};
+  addMeta('description',desc);addMeta('og:title',p.question||'Poll',true);addMeta('og:description',desc,true);addMeta('og:type','website',true);addMeta('twitter:card','summary');
+}
+
+function render(){
+  const isMulti=poll.type==='multiple';
+  const deadline=poll.deadline?new Date(poll.deadline):null;
+  document.getElementById('stage').innerHTML=`<div class="poll-card"
