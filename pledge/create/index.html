@@ -3,75 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SwoopForm — Create Pledge</title>
+  <title>Create Pledge & Support — SwoopForm</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;background:#0D1F16;color:#fff}
-    .topnav{height:56px;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:fixed;top:0;left:0;right:0;z-index:300}
+    html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;background:#F0FAF5;color:#0F0E1A}
+    .topnav{height:56px;background:#fff;border-bottom:1.5px solid #D1EDE0;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:fixed;top:0;left:0;right:0;z-index:300}
     .topnav-left{display:flex;align-items:center;gap:10px;flex-shrink:1;min-width:0;overflow:hidden}
     .logo-s{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none;flex-shrink:0}
-    .nav-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#fff;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .nav-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#0F0E1A;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .topnav-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
-    .btn-g{padding:7px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.6);font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;text-decoration:none;transition:all 0.2s}
-    .btn-g:hover{border-color:#10B981;color:#10B981}
-    .btn-prev{padding:7px 14px;border-radius:8px;border:1.5px solid #10B981;background:transparent;color:#10B981;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:all 0.2s}
-    .btn-prev:hover{background:rgba(16,185,129,0.1)}
-    .btn-pub{padding:7px 14px;border-radius:8px;border:none;background:linear-gradient(135deg,#10B981,#059669);color:#fff;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:opacity 0.2s}
+    .btn-g{padding:7px 14px;border-radius:8px;border:1.5px solid #D1EDE0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;text-decoration:none;transition:all 0.2s}
+    .btn-g:hover{border-color:#1A7A4A;color:#1A7A4A}
+    .btn-pub{padding:7px 14px;border-radius:8px;border:none;background:linear-gradient(135deg,#1A7A4A,#10B981);color:#fff;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:opacity 0.2s}
     .btn-pub:hover{opacity:0.9}
     .btn-pub:disabled{opacity:0.5;cursor:not-allowed}
     .hbtn{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px}
-    .hbtn span{display:block;width:20px;height:2px;background:#fff;border-radius:2px}
+    .hbtn span{display:block;width:20px;height:2px;background:#0F0E1A;border-radius:2px}
     .layout{position:fixed;top:56px;left:0;right:0;bottom:0;display:flex;overflow:hidden}
-    .sidebar{width:240px;height:100%;background:rgba(255,255,255,0.03);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;flex-shrink:0;z-index:100;transition:transform 0.3s ease;overflow-y:auto}
-    .sb-grp-hdr{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.06)}
-    .sb-grp-lbl{font-size:0.68rem;font-weight:700;color:rgba(255,255,255,0.3);letter-spacing:0.08em;text-transform:uppercase}
+    .sidebar{width:240px;height:100%;background:#fff;border-right:1.5px solid #D1EDE0;display:flex;flex-direction:column;flex-shrink:0;z-index:100;transition:transform 0.3s ease;overflow-y:auto}
+    .sb-grp-hdr{padding:12px 14px 6px;border-bottom:1px solid #D1EDE0}
+    .sb-grp-lbl{font-size:0.68rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase}
     .sb-nav{padding:8px}
-    .sb-item{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:600;color:rgba(255,255,255,0.4);transition:all 0.2s}
-    .sb-item:hover{background:rgba(255,255,255,0.05);color:#fff}
-    .sb-item.active{background:rgba(16,185,129,0.15);color:#10B981}
+    .sb-item{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:600;color:#64748B;transition:all 0.2s}
+    .sb-item:hover{background:#E8F7EF;color:#0F0E1A}
+    .sb-item.active{background:#DCFCE7;color:#1A7A4A}
     .sb-item .ico{width:18px;text-align:center}
-    .content{flex:1;height:100%;overflow-y:auto;padding:20px}
+    .content{flex:1;height:100%;overflow-y:auto;padding:24px}
     .panel{display:none}
     .panel.active{display:block}
     .pt{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-0.02em;margin-bottom:5px}
-    .ps{color:rgba(255,255,255,0.4);font-size:0.83rem;margin-bottom:18px}
-    .card{background:rgba(255,255,255,0.04);border-radius:14px;border:1px solid rgba(255,255,255,0.08);padding:20px;margin-bottom:14px}
-    .card-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.92rem;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+    .ps{color:#64748B;font-size:0.83rem;margin-bottom:20px}
+    .card{background:#fff;border-radius:16px;border:1.5px solid #D1EDE0;padding:22px;margin-bottom:14px}
+    .card-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.92rem;margin-bottom:16px}
     .fl{margin-bottom:14px}
     .fl:last-child{margin-bottom:0}
-    .ll{display:block;font-size:0.7rem;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px}
-    .ii{width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:#fff;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
-    .ii:focus{border-color:#10B981}
-    .ii::placeholder{color:rgba(255,255,255,0.2)}
-    .sh{font-size:0.68rem;color:rgba(255,255,255,0.3);margin-top:3px;line-height:1.4}
-    .sr{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+    .ll{display:block;font-size:0.7rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px}
+    .ii{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #D1EDE0;background:#F0FAF5;color:#0F0E1A;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
+    .ii:focus{border-color:#1A7A4A}
+    .ii::placeholder{color:#94A3B8}
+    .sh{font-size:0.68rem;color:#94A3B8;margin-top:3px;line-height:1.4}
+    .sr{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #D1EDE0}
     .sr:last-child{border-bottom:none}
     .sr-n{font-size:0.85rem;font-weight:600}
-    .sr-d{font-size:0.72rem;color:rgba(255,255,255,0.35);margin-top:2px}
-    .tgl{width:32px;height:17px;border-radius:100px;background:rgba(255,255,255,0.15);cursor:pointer;position:relative;transition:background 0.2s;border:none;flex-shrink:0}
-    .tgl.on{background:#10B981}
-    .tgl::after{content:'';position:absolute;width:11px;height:11px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 0.2s}
-    .tgl.on::after{transform:translateX(15px)}
-    .commit-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-    .commit-inp{flex:1;padding:8px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:#fff;font-size:0.84rem;font-family:'DM Sans',sans-serif;outline:none}
-    .commit-inp:focus{border-color:#10B981}
-    .commit-del{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.25);font-size:0.9rem;padding:4px}
-    .commit-del:hover{color:#EF4444}
-    .add-commit-btn{background:none;border:none;cursor:pointer;color:#10B981;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:2px 0}
-    .section-toggle{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
-    .section-toggle:last-child{border-bottom:none}
-    .section-toggle-name{font-size:0.85rem;font-weight:600}
-    .section-toggle-desc{font-size:0.72rem;color:rgba(255,255,255,0.35);margin-top:2px}
+    .sr-d{font-size:0.72rem;color:#64748B;margin-top:2px}
+    .tgl{width:34px;height:18px;border-radius:100px;background:#D1EDE0;cursor:pointer;position:relative;transition:background 0.2s;border:none;flex-shrink:0}
+    .tgl.on{background:#1A7A4A}
+    .tgl::after{content:'';position:absolute;width:12px;height:12px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 0.2s}
+    .tgl.on::after{transform:translateX(16px)}
+    .url-preview{margin-top:10px;border-radius:12px;overflow:hidden;border:1.5px solid #D1EDE0;display:none}
+    .url-preview img{width:100%;height:200px;object-fit:cover;display:block}
+    .url-preview iframe{width:100%;height:200px;border:none;display:block}
+    .url-preview-label{padding:8px 12px;font-size:0.72rem;color:#64748B;background:#F0FAF5;display:flex;justify-content:space-between}
+    .faq-item{background:#F0FAF5;border:1.5px solid #D1EDE0;border-radius:12px;padding:14px;margin-bottom:10px;position:relative}
+    .faq-del{position:absolute;top:10px;right:10px;background:none;border:none;cursor:pointer;color:#94A3B8;font-size:0.85rem;transition:color 0.2s}
+    .faq-del:hover{color:#EF4444}
+    .add-faq-btn{width:100%;padding:10px;border-radius:10px;border:1.5px dashed #1A7A4A;background:transparent;color:#1A7A4A;font-size:0.8rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;text-align:center;margin-top:4px}
+    .add-faq-btn:hover{background:#DCFCE7}
     .slug-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-    .slug-pre{font-size:0.72rem;color:rgba(255,255,255,0.4);white-space:nowrap;flex-shrink:0}
-    .sbo{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;display:none}
+    .slug-pre{font-size:0.72rem;color:#64748B;white-space:nowrap;flex-shrink:0}
+    .slug-status{font-size:0.72rem;margin-top:4px}
+    .sbo{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:99;display:none}
     .sbo.open{display:block}
-    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;color:#0F0E1A;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;white-space:nowrap}
-    .ls-screen{position:fixed;inset:0;background:#0D1F16;display:flex;align-items:center;justify-content:center;z-index:900}
-    .spinner{width:32px;height:32px;border:3px solid rgba(16,185,129,0.2);border-top-color:#10B981;border-radius:50%;animation:spin 0.8s linear infinite}
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;white-space:nowrap}
+    .ls-screen{position:fixed;inset:0;background:#F0FAF5;display:flex;align-items:center;justify-content:center;z-index:900}
+    .spinner{width:32px;height:32px;border:3px solid rgba(26,122,74,0.2);border-top-color:#1A7A4A;border-radius:50%;animation:spin 0.8s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
-    @media(max-width:768px){.sidebar{position:fixed;top:56px;left:0;bottom:0;transform:translateX(-100%);z-index:200;width:260px}.sidebar.open{transform:translateX(0)}.hbtn{display:flex}.content{padding:14px}.btn-prev{display:none}}
+    @media(max-width:768px){.sidebar{position:fixed;top:56px;left:0;bottom:0;transform:translateX(-100%);z-index:200;width:260px}.sidebar.open{transform:translateX(0)}.hbtn{display:flex}.content{padding:16px}}
   </style>
 </head>
 <body>
@@ -82,10 +80,9 @@
     <button class="hbtn" onclick="openSb()"><span></span><span></span><span></span></button>
     <a href="/dashboard" class="logo-s">S</a>
     <a href="/dashboard" class="btn-g" style="font-size:0.78rem;padding:5px 10px">← Dashboard</a>
-    <span class="nav-t" id="nav-t">New Pledge</span>
+    <span class="nav-t" id="nav-t">New Pledge & Support</span>
   </div>
   <div class="topnav-right">
-    <button class="btn-prev" onclick="previewPledge()">👁 Preview</button>
     <button class="btn-g" onclick="saveDraft()">Save draft</button>
     <button class="btn-pub" id="pub-btn" onclick="publishPledge()">Publish →</button>
   </div>
@@ -95,12 +92,11 @@
     <div class="sb-grp-hdr"><span class="sb-grp-lbl">Sections</span></div>
     <div class="sb-nav">
       <button class="sb-item active" id="sn-hero" onclick="showPanel('hero')"><span class="ico">🌟</span>Hero</button>
-      <button class="sb-item" id="sn-problem" onclick="showPanel('problem')"><span class="ico">⚡</span>Problem</button>
       <button class="sb-item" id="sn-statement" onclick="showPanel('statement')"><span class="ico">🤝</span>Statement</button>
-      <button class="sb-item" id="sn-form" onclick="showPanel('form')"><span class="ico">📝</span>Form</button>
+      <button class="sb-item" id="sn-form" onclick="showPanel('form')"><span class="ico">📝</span>Pledge form</button>
       <button class="sb-item" id="sn-impact" onclick="showPanel('impact')"><span class="ico">📊</span>Impact</button>
-      <button class="sb-item" id="sn-social" onclick="showPanel('social')"><span class="ico">📤</span>Social</button>
-      <button class="sb-item" id="sn-sections" onclick="showPanel('sections')"><span class="ico">🔧</span>Sections</button>
+      <button class="sb-item" id="sn-faq" onclick="showPanel('faq')"><span class="ico">❓</span>FAQ</button>
+      <button class="sb-item" id="sn-settings" onclick="showPanel('settings')"><span class="ico">⚙️</span>Settings</button>
       <button class="sb-item" id="sn-seo" onclick="showPanel('seo')"><span class="ico">🔍</span>SEO</button>
     </div>
   </div>
@@ -108,111 +104,172 @@
 
     <!-- HERO -->
     <div class="panel active" id="panel-hero">
-      <div class="pt">🌟 Hero Section</div><p class="ps">The first thing people see. Make it compelling.</p>
+      <div class="pt">🌟 Hero</div>
+      <p class="ps">The first thing people see. Make it powerful.</p>
       <div class="card">
-        <div class="fl"><label class="ll">Campaign title *</label><input class="ii" id="hero-title" placeholder="e.g. Pledge to Plant a Tree" oninput="document.getElementById('nav-t').textContent=this.value||'New Pledge'" maxlength="150"></div>
-        <div class="fl"><label class="ll">Hero subtitle</label><textarea class="ii" id="hero-subtitle" placeholder="One powerful sentence that explains why this matters..." rows="2" style="resize:vertical"></textarea></div>
-        <div class="fl"><label class="ll">CTA button text</label><input class="ii" id="hero-cta" placeholder="e.g. Take the Pledge →" maxlength="50"></div>
-        <div class="fl"><label class="ll">Hero image URL (optional)</label><input class="ii" id="hero-image" placeholder="https://images.unsplash.com/..."><div class="sh">1200x600px recommended. Displayed below the headline.</div></div>
-        <div class="fl"><label class="ll">Category</label>
-          <select class="ii" id="pledge-category">
-            <option value="Community">🤝 Community</option>
-            <option value="Health">🏥 Health</option>
-            <option value="Education">🎓 Education</option>
-            <option value="Research">🔬 Research</option>
-            <option value="Other">✦ Other</option>
-          </select>
+        <div class="fl">
+          <label class="ll">Campaign title *</label>
+          <input class="ii" id="hero-title" placeholder="e.g. Pledge to Plant 1 Million Trees" oninput="document.getElementById('nav-t').textContent=this.value||'New Pledge & Support'" maxlength="150">
+        </div>
+        <div class="fl">
+          <label class="ll">Hero subtitle</label>
+          <textarea class="ii" id="hero-subtitle" placeholder="A compelling one-liner about your campaign..." rows="2" style="resize:vertical"></textarea>
+        </div>
+        <div class="fl">
+          <label class="ll">CTA button text</label>
+          <input class="ii" id="hero-cta" placeholder="e.g. Take the Pledge →" maxlength="50">
         </div>
       </div>
-    </div>
-
-    <!-- PROBLEM -->
-    <div class="panel" id="panel-problem">
-      <div class="pt">⚡ The Problem</div><p class="ps">Explain the "why" — what problem does this pledge solve?</p>
       <div class="card">
-        <div class="fl"><label class="ll">Section title</label><input class="ii" id="problem-title" placeholder="e.g. Why this matters" maxlength="100"></div>
-        <div class="fl"><label class="ll">Problem description</label><textarea class="ii" id="problem-content" placeholder="Describe the problem clearly and emotionally. Use line breaks for paragraphs." rows="6" style="resize:vertical"></textarea></div>
+        <div class="card-t">Hero media</div>
+        <div class="fl">
+          <label class="ll">Hero image URL</label>
+          <input class="ii" id="hero-image" placeholder="Paste image URL..." oninput="previewMedia('image',this.value)">
+          <div class="sh">Recommended: 1920×600px — wide banner optimised for mobile, tablet and desktop</div>
+          <div class="url-preview" id="preview-image">
+            <img id="preview-image-img" alt="Hero preview">
+            <div class="url-preview-label"><span>Hero image preview</span><span>1920×600px recommended</span></div>
+          </div>
+        </div>
+        <div class="fl">
+          <label class="ll">Hero video URL (YouTube)</label>
+          <input class="ii" id="hero-video" placeholder="e.g. https://youtube.com/watch?v=..." oninput="previewMedia('video',this.value)">
+          <div class="sh">Auto-plays muted on loop. Overrides image if both provided.</div>
+          <div class="url-preview" id="preview-video">
+            <iframe id="preview-video-frame" allowfullscreen></iframe>
+            <div class="url-preview-label"><span>Video preview</span><span>16:9 ratio recommended</span></div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- STATEMENT -->
     <div class="panel" id="panel-statement">
-      <div class="pt">🤝 Pledge Statement</div><p class="ps">The actual commitment people are making.</p>
+      <div class="pt">🤝 Pledge Statement</div>
+      <p class="ps">The core commitment people are making.</p>
       <div class="card">
-        <div class="fl"><label class="ll">Statement title</label><input class="ii" id="statement-title" placeholder="e.g. Our Commitment" maxlength="100"></div>
-        <div class="fl"><label class="ll">Pledge statement *</label><textarea class="ii" id="pledge-statement" placeholder="I pledge to... (write in first person, make it specific and actionable)" rows="4" style="resize:vertical"></textarea><div class="sh">This is the text people agree to when they take the pledge.</div></div>
-        <div class="fl"><label class="ll">Commitment points</label>
-          <div id="commitments-list"></div>
-          <button class="add-commit-btn" onclick="addCommitment()">+ Add commitment point</button>
-          <div class="sh">Specific bullet points of what pledgers commit to.</div>
+        <div class="fl">
+          <label class="ll">Statement title</label>
+          <input class="ii" id="statement-title" placeholder="e.g. The Pledge" maxlength="80">
+        </div>
+        <div class="fl">
+          <label class="ll">Pledge statement *</label>
+          <textarea class="ii" id="pledge-statement" placeholder="I pledge to..." rows="4" style="resize:vertical"></textarea>
+          <div class="sh">This is what signers are committing to. Write in first person.</div>
+        </div>
+        <div class="fl">
+          <label class="ll">Problem section title</label>
+          <input class="ii" id="problem-title" placeholder="e.g. Why This Matters" maxlength="80">
+        </div>
+        <div class="fl">
+          <label class="ll">Problem description</label>
+          <textarea class="ii" id="problem-content" placeholder="Explain the problem your campaign addresses..." rows="4" style="resize:vertical"></textarea>
         </div>
       </div>
     </div>
 
     <!-- FORM -->
     <div class="panel" id="panel-form">
-      <div class="pt">📝 Pledge Form</div><p class="ps">Configure what information you collect from pledgers.</p>
+      <div class="pt">📝 Pledge Form</div>
+      <p class="ps">Configure what information you collect from signers.</p>
       <div class="card">
-        <div class="fl"><label class="ll">Form title</label><input class="ii" id="form-title" placeholder="e.g. Take the Pledge" maxlength="80"></div>
-        <div class="fl"><label class="ll">Form subtitle</label><input class="ii" id="form-subtitle" placeholder="e.g. Add your name to join thousands who have pledged." maxlength="150"></div>
+        <div class="fl">
+          <label class="ll">Form title</label>
+          <input class="ii" id="form-title" placeholder="e.g. Sign the Pledge" maxlength="80">
+        </div>
+        <div class="fl">
+          <label class="ll">Form subtitle</label>
+          <input class="ii" id="form-subtitle" placeholder="e.g. Join thousands standing up for change" maxlength="150">
+        </div>
       </div>
       <div class="card">
-        <div class="card-t">Collect from pledgers</div>
-        <div class="sr"><div><div class="sr-n">Name</div></div><button class="tgl on" id="tgl-name" onclick="this.classList.toggle('on')"></button></div>
-        <div class="sr"><div><div class="sr-n">Email address</div><div class="sr-d">Required for notifications</div></div><button class="tgl on" id="tgl-email" onclick="this.classList.toggle('on')"></button></div>
-        <div class="sr" style="border-bottom:none"><div><div class="sr-n">Personal message</div><div class="sr-d">Optional field for pledgers to share why</div></div><button class="tgl" id="tgl-message" onclick="this.classList.toggle('on')"></button></div>
+        <div class="card-t">Fields to collect</div>
+        <div class="sr"><div><div class="sr-n">Full name</div><div class="sr-d">Required by default</div></div><button class="tgl on" id="field-name" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-n">Email address</div></div><button class="tgl on" id="field-email" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-n">Phone number</div></div><button class="tgl" id="field-phone" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-n">City / Location</div></div><button class="tgl" id="field-city" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-n">Organisation / Company</div></div><button class="tgl" id="field-org" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-n">Personal message</div><div class="sr-d">Let signers add a short message</div></div><button class="tgl" id="field-message" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr" style="border-bottom:none"><div><div class="sr-n">Custom field</div></div><button class="tgl" id="field-custom" onclick="toggleCustomField()"></button></div>
+        <div id="custom-field-wrap" style="display:none;margin-top:10px">
+          <input class="ii" id="custom-field-label" placeholder="Custom field label e.g. Designation">
+        </div>
       </div>
     </div>
 
     <!-- IMPACT -->
     <div class="panel" id="panel-impact">
-      <div class="pt">📊 Impact Counter</div><p class="ps">Show how many people have pledged in real time.</p>
+      <div class="pt">📊 Impact Counter</div>
+      <p class="ps">Show signers the collective impact of the campaign.</p>
       <div class="card">
-        <div class="sr"><div><div class="sr-n">Show live counter</div><div class="sr-d">Displays real-time pledge count</div></div><button class="tgl on" id="tgl-counter" onclick="this.classList.toggle('on')"></button></div>
-        <div class="sr"><div><div class="sr-n">Show pledger names</div><div class="sr-d">Display names of recent pledgers</div></div><button class="tgl" id="tgl-names" onclick="this.classList.toggle('on')"></button></div>
-        <div class="sr" style="border-bottom:none"><div><div class="sr-n">Goal (optional)</div><div class="sr-d">Show a progress bar toward your goal</div></div><input type="number" class="ii" id="pledge-goal" placeholder="e.g. 1000" min="0" style="max-width:120px;padding:6px 10px"></div>
+        <div class="sr"><div><div class="sr-n">Show live pledge counter</div><div class="sr-d">Display total signers prominently</div></div><button class="tgl on" id="tgl-counter" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-n">Show pledger names</div><div class="sr-d">Display a wall of signers</div></div><button class="tgl" id="tgl-names" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr" style="border-bottom:none">
+          <div><div class="sr-n">Goal (target pledges)</div><div class="sr-d">Show progress bar toward goal</div></div>
+          <input type="number" class="ii" id="pledge-goal" min="0" placeholder="e.g. 10000" style="max-width:120px;padding:7px 10px">
+        </div>
       </div>
     </div>
 
-    <!-- SOCIAL -->
-    <div class="panel" id="panel-social">
-      <div class="pt">📤 Social Sharing</div><p class="ps">Help pledgers spread the word.</p>
+    <!-- FAQ -->
+    <div class="panel" id="panel-faq">
+      <div class="pt">❓ FAQ</div>
+      <p class="ps">Answer common questions about your campaign.</p>
       <div class="card">
-        <div class="sr"><div><div class="sr-n">Show share section</div><div class="sr-d">WhatsApp, Twitter, copy link buttons</div></div><button class="tgl on" id="tgl-social" onclick="this.classList.toggle('on')"></button></div>
-        <div class="sr" style="border-bottom:none"><div><div class="sr-n">Show on discover</div><div class="sr-d">List on SwoopForm discover page</div></div><button class="tgl" id="tgl-discover" onclick="this.classList.toggle('on')"></button></div>
+        <div class="card-t">Frequently asked questions</div>
+        <div id="faq-list"></div>
+        <button class="add-faq-btn" onclick="addFAQ()">+ Add FAQ</button>
       </div>
     </div>
 
-    <!-- SECTIONS -->
-    <div class="panel" id="panel-sections">
-      <div class="pt">🔧 Section Control</div><p class="ps">Enable or disable sections on your pledge page.</p>
+    <!-- SETTINGS -->
+    <div class="panel" id="panel-settings">
+      <div class="pt">⚙️ Settings</div>
+      <p class="ps">Campaign configuration and visibility.</p>
       <div class="card">
-        <div class="section-toggle"><div><div class="section-toggle-name">🌟 Hero section</div><div class="section-toggle-desc">Always shown — headline, CTA, stats</div></div><button class="tgl on" disabled style="opacity:0.5"></button></div>
-        <div class="section-toggle"><div><div class="section-toggle-name">⚡ Problem section</div><div class="section-toggle-desc">The "why" — explain the problem</div></div><button class="tgl on" id="sec-problem" onclick="this.classList.toggle('on')"></button></div>
-        <div class="section-toggle"><div><div class="section-toggle-name">🤝 Pledge statement</div><div class="section-toggle-desc">Always shown — the actual pledge text</div></div><button class="tgl on" disabled style="opacity:0.5"></button></div>
-        <div class="section-toggle"><div><div class="section-toggle-name">📊 Impact counter</div><div class="section-toggle-desc">Live pledge count</div></div><button class="tgl on" id="sec-impact" onclick="this.classList.toggle('on')"></button></div>
-        <div class="section-toggle"><div><div class="section-toggle-name">📝 Pledge form</div><div class="section-toggle-desc">Always shown — name, email, submit</div></div><button class="tgl on" disabled style="opacity:0.5"></button></div>
-        <div class="section-toggle"><div><div class="section-toggle-name">📤 Social sharing</div><div class="section-toggle-desc">Share buttons after pledging</div></div><button class="tgl on" id="sec-social" onclick="this.classList.toggle('on')"></button></div>
-        <div class="section-toggle" style="border-bottom:none"><div><div class="section-toggle-name">❓ FAQ section</div><div class="section-toggle-desc">Frequently asked questions</div></div><button class="tgl" id="sec-faq" onclick="this.classList.toggle('on')"></button></div>
+        <div class="fl">
+          <label class="ll">Category</label>
+          <select class="ii" id="pledge-category" style="max-width:220px">
+            <option value="Community">🤝 Community</option>
+            <option value="Health">🏥 Health</option>
+            <option value="Education">🎓 Education</option>
+            <option value="Environment">🌿 Environment</option>
+            <option value="Research">🔬 Research</option>
+            <option value="Other">✦ Other</option>
+          </select>
+        </div>
+        <div class="sr"><div><div class="sr-n">Public campaign</div><div class="sr-d">Show on SwoopForm Discover</div></div><button class="tgl" id="tgl-public" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-n">Show social share buttons</div></div><button class="tgl on" id="tgl-share" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr" style="border-bottom:none"><div><div class="sr-n">Show problem section</div></div><button class="tgl on" id="tgl-problem" onclick="this.classList.toggle('on')"></button></div>
       </div>
     </div>
 
     <!-- SEO -->
     <div class="panel" id="panel-seo">
-      <div class="pt">🔍 SEO</div><p class="ps">Control how your pledge page appears online.</p>
+      <div class="pt">🔍 SEO</div>
+      <p class="ps">Control how your campaign appears online.</p>
       <div class="card">
-        <div class="fl"><label class="ll">URL Slug</label>
+        <div class="fl">
+          <label class="ll">URL Slug</label>
           <div class="slug-row">
             <span class="slug-pre">swoopform.com/engage/</span>
             <input class="ii" id="seo-slug" placeholder="pledge-to-plant-trees" oninput="validateSlug(this)" style="flex:1">
-            <button onclick="autoSlug()" style="padding:8px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.6);font-size:0.75rem;font-weight:600;cursor:pointer;flex-shrink:0">Auto</button>
+            <button onclick="autoSlug()" style="padding:8px 12px;border-radius:8px;border:1.5px solid #D1EDE0;background:#fff;font-size:0.75rem;font-weight:600;cursor:pointer;flex-shrink:0;color:#1A7A4A">Auto</button>
           </div>
-          <div class="sh" id="slug-status"></div>
+          <div class="sh">Only lowercase letters, numbers and hyphens.</div>
+          <div class="slug-status" id="slug-status"></div>
         </div>
-        <div class="fl"><label class="ll">SEO Title</label><input class="ii" id="seo-title" placeholder="Leave blank to use campaign title" maxlength="60"></div>
-        <div class="fl"><label class="ll">SEO Description</label><textarea class="ii" id="seo-desc" placeholder="Brief description for search engines..." rows="2" maxlength="160" style="resize:vertical"></textarea></div>
+        <div class="fl">
+          <label class="ll">SEO Title</label>
+          <input class="ii" id="seo-title" placeholder="Leave blank to use campaign title" maxlength="60">
+        </div>
+        <div class="fl">
+          <label class="ll">SEO Description</label>
+          <textarea class="ii" id="seo-desc" placeholder="Brief description for search engines..." rows="2" maxlength="160" style="resize:vertical"></textarea>
+        </div>
       </div>
     </div>
+
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -223,41 +280,79 @@ import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1
 import{getFirestore,collection,addDoc,doc,updateDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
-const app=initializeApp(FB);
-const auth=getAuth(app);
-const db=getFirestore(app);
+const app=initializeApp(FB);const auth=getAuth(app);const db=getFirestore(app);
+let U=null,PID=null,faqs=[];
 
-let U=null,PLID=null,commitments=[];
+onAuthStateChanged(auth,u=>{
+  if(!u){window.location.href='/login';return}
+  U=u;document.getElementById('ls').style.display='none';renderFAQs();
+});
 
-onAuthStateChanged(auth,u=>{if(!u){window.location.href='/login';return}U=u;document.getElementById('ls').style.display='none';renderCommitments()});
-
-window.showPanel=function(p){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.sb-item').forEach(x=>x.classList.remove('active'));document.getElementById('panel-'+p).classList.add('active');document.getElementById('sn-'+p)?.classList.add('active');closeSb()}
+window.showPanel=function(p){
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(x=>x.classList.remove('active'));
+  document.getElementById('panel-'+p).classList.add('active');
+  document.getElementById('sn-'+p)?.classList.add('active');
+  closeSb();
+}
 window.openSb=()=>{document.getElementById('sidebar').classList.add('open');document.getElementById('sbo').classList.add('open')}
 window.closeSb=()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('sbo').classList.remove('open')}
 
-function renderCommitments(){
-  const list=document.getElementById('commitments-list');
-  list.innerHTML=commitments.map((c,i)=>`<div class="commit-row">
-    <input class="commit-inp" value="${eh(c)}" placeholder="e.g. Reduce single-use plastic in my home" oninput="commitments[${i}]=this.value">
-    <button class="commit-del" onclick="removeCommitment(${i})">✕</button>
-  </div>`).join('');
+window.previewMedia=function(type,url){
+  if(type==='image'){
+    const wrap=document.getElementById('preview-image');
+    const img=document.getElementById('preview-image-img');
+    if(url){wrap.style.display='block';img.src=url;img.onerror=()=>wrap.style.display='none'}
+    else wrap.style.display='none';
+  }
+  if(type==='video'){
+    const wrap=document.getElementById('preview-video');
+    const frame=document.getElementById('preview-video-frame');
+    if(url&&(url.includes('youtube.com')||url.includes('youtu.be'))){
+      const m=url.match(/(?:v=|youtu\.be\/)([^&\s]+)/);
+      if(m){wrap.style.display='block';frame.src='https://www.youtube.com/embed/'+m[1]+'?mute=1'}
+    } else wrap.style.display='none';
+  }
 }
-window.addCommitment=function(){commitments.push('');renderCommitments();setTimeout(()=>{const inps=document.querySelectorAll('.commit-inp');if(inps.length)inps[inps.length-1].focus()},60)}
-window.removeCommitment=function(i){commitments.splice(i,1);renderCommitments()}
+
+window.toggleCustomField=function(){
+  const on=document.getElementById('field-custom').classList.contains('on');
+  document.getElementById('custom-field-wrap').style.display=on?'block':'none';
+}
+
+// FAQ
+function renderFAQs(){
+  const list=document.getElementById('faq-list');if(!list)return;
+  if(!faqs.length){list.innerHTML='<div style="text-align:center;padding:16px;color:#94A3B8;font-size:0.82rem">No FAQs yet. Click below to add one.</div>';return}
+  list.innerHTML=faqs.map((f,i)=>`
+    <div class="faq-item">
+      <button class="faq-del" onclick="removeFAQ(${i})">✕</button>
+      <div class="fl"><label class="ll">Question</label><input class="ii" id="faq-q-${i}" value="${eh(f.question)}" placeholder="e.g. Is this pledge legally binding?" oninput="faqs[${i}].question=this.value"></div>
+      <div class="fl" style="margin-bottom:0"><label class="ll">Answer</label><textarea class="ii" id="faq-a-${i}" rows="2" style="resize:vertical" oninput="faqs[${i}].answer=this.value">${eh(f.answer)}</textarea></div>
+    </div>`).join('');
+}
+window.addFAQ=function(){
+  faqs.push({question:'',answer:''});renderFAQs();
+  setTimeout(()=>{const inp=document.getElementById('faq-q-'+(faqs.length-1));if(inp)inp.focus()},60);
+}
+window.removeFAQ=function(i){faqs.splice(i,1);renderFAQs()}
 
 window.autoSlug=function(){
   const t=document.getElementById('hero-title').value.trim();
-  if(!t){toast('Add a title first');return}
+  if(!t){toast('Add a campaign title first');return}
   const slug=t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50);
   document.getElementById('seo-slug').value=slug;
-  document.getElementById('slug-status').textContent='✓ swoopform.com/engage/'+slug;
-  document.getElementById('slug-status').style.color='#10B981';
+  setSlugStatus('✓ swoopform.com/engage/'+slug,true);
 }
 window.validateSlug=function(inp){
   inp.value=inp.value.replace(/[^a-z0-9-]/g,'');
+  if(inp.value.length>3)setSlugStatus('✓ swoopform.com/engage/'+inp.value,true);
+  else if(inp.value.length>0)setSlugStatus('Too short — min 4 characters',false);
+  else setSlugStatus('',null);
+}
+function setSlugStatus(msg,ok){
   const s=document.getElementById('slug-status');
-  if(inp.value.length>3){s.textContent='✓ swoopform.com/engage/'+inp.value;s.style.color='#10B981'}
-  else{s.textContent='Too short';s.style.color='#EF4444'}
+  s.textContent=msg;s.style.color=ok===true?'#10B981':ok===false?'#EF4444':'#94A3B8';
 }
 
 function isTgl(id){return document.getElementById(id)?.classList.contains('on')}
@@ -269,22 +364,42 @@ function getData(status){
   if(!statement){toast('Please add a pledge statement');return null}
   const slug=document.getElementById('seo-slug').value.trim();
   return{
-    title,heroSubtitle:document.getElementById('hero-subtitle').value.trim(),
+    title,
+    heroSubtitle:document.getElementById('hero-subtitle').value.trim(),
     heroCTA:document.getElementById('hero-cta').value.trim()||'Take the Pledge →',
     heroImage:document.getElementById('hero-image').value.trim(),
-    category:document.getElementById('pledge-category').value,
-    problem:{title:document.getElementById('problem-title').value.trim(),content:document.getElementById('problem-content').value.trim()},
+    heroVideo:document.getElementById('hero-video').value.trim(),
     statementTitle:document.getElementById('statement-title').value.trim()||'The Pledge',
-    statement,commitments:commitments.filter(c=>c.trim()),
-    formTitle:document.getElementById('form-title').value.trim()||'Take the Pledge',
+    statement,
+    problem:{
+      title:document.getElementById('problem-title').value.trim()||'Why This Matters',
+      content:document.getElementById('problem-content').value.trim()
+    },
+    formTitle:document.getElementById('form-title').value.trim()||'Sign the Pledge',
     formSubtitle:document.getElementById('form-subtitle').value.trim(),
-    collectName:isTgl('tgl-name'),collectEmail:isTgl('tgl-email'),collectMessage:isTgl('tgl-message'),
-    showImpact:isTgl('tgl-counter'),showPledgerNames:isTgl('tgl-names'),
+    fields:{
+      name:isTgl('field-name'),
+      email:isTgl('field-email'),
+      phone:isTgl('field-phone'),
+      city:isTgl('field-city'),
+      org:isTgl('field-org'),
+      message:isTgl('field-message'),
+      custom:isTgl('field-custom'),
+      customLabel:document.getElementById('custom-field-label')?.value.trim()||''
+    },
+    showCounter:isTgl('tgl-counter'),
+    showNames:isTgl('tgl-names'),
     goal:parseInt(document.getElementById('pledge-goal').value)||null,
-    sections:{hero:true,problem:isTgl('sec-problem'),statement:true,impact:isTgl('sec-impact'),form:true,social:isTgl('sec-social'),faq:isTgl('sec-faq')},
-    isPublic:isTgl('tgl-discover'),
+    faqs,
+    category:document.getElementById('pledge-category').value||'Community',
+    isPublic:isTgl('tgl-public'),
+    allowShare:isTgl('tgl-share'),
+    showProblem:isTgl('tgl-problem'),
     slug:slug||null,
-    seo:{title:document.getElementById('seo-title').value.trim(),description:document.getElementById('seo-desc').value.trim()},
+    seo:{
+      title:document.getElementById('seo-title').value.trim(),
+      description:document.getElementById('seo-desc').value.trim()
+    },
     status,userId:U.uid,totalPledges:0,updatedAt:serverTimestamp()
   };
 }
@@ -292,17 +407,16 @@ function getData(status){
 async function save(status){
   const data=getData(status);if(!data)return null;
   try{
-    if(PLID){await updateDoc(doc(db,'pledges',PLID),data);return PLID}
-    else{data.createdAt=serverTimestamp();const ref=await addDoc(collection(db,'pledges'),data);PLID=ref.id;return PLID}
-  }catch(e){console.error(e);toast('Error saving');return null}
+    if(PID){await updateDoc(doc(db,'pledges',PID),data);return PID}
+    else{data.createdAt=serverTimestamp();const ref=await addDoc(collection(db,'pledges'),data);PID=ref.id;return PID}
+  }catch(e){console.error(e);toast('Error saving. Please try again.');return null}
 }
 
-window.previewPledge=async function(){const id=await save('draft');if(id){const slug=document.getElementById('seo-slug').value.trim();window.open(slug?'/engage/'+slug+'?preview=1':'/pledge/?id='+id+'&preview=1','_blank')}}
 window.saveDraft=async function(){const id=await save('draft');if(id)toast('Draft saved!')}
 window.publishPledge=async function(){
   const btn=document.getElementById('pub-btn');btn.disabled=true;btn.textContent='Publishing...';
   const id=await save('active');
-  if(id){toast('Pledge published!',2000);setTimeout(()=>window.location.href='/dashboard',2200)}
+  if(id){toast('Campaign published!',2000);setTimeout(()=>window.location.href='/dashboard',2200)}
   else{btn.disabled=false;btn.textContent='Publish →'}
 }
 
