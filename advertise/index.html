@@ -1,12 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Advertise With Us — SwoopForm</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advertise With Us — SwoopForm</title>
+  <meta name="description" content="Put your brand in front of 50,000+ researchers, educators and decision makers on SwoopForm.">
+  <meta property="og:title" content="Advertise With Us — SwoopForm">
+  <meta property="og:description" content="Reach survey creators and respondents on India's growing data collection platform.">
+  <link rel="canonical" href="https://swoopform.com/advertise">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:#0F0E1A;color:#fff;min-height:100vh}
+    nav{background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+    .logo-mk{width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff}
+    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem}
+    .nav-right{display:flex;gap:8px}
+    .nav-btn{padding:7px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.6);font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
+    .nav-btn:hover{border-color:#D97706;color:#D97706}
+    .nav-btn.primary{background:linear-gradient(135deg,#D97706,#F59E0B);border:none;color:#fff}
+
+    /* HERO */
+    .hero{padding:80px 20px 64px;text-align:center;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(217,119,6,0.08) 0%,transparent 70%);pointer-events:none}
+    .hero-label{font-size:0.72rem;font-weight:700;color:#D97706;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px}
+    .hero-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-0.05em;line-height:1.1;margin-bottom:16px}
+    .hero-title span{background:linear-gradient(135deg,#D97706,#F59E0B);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-sub{font-size:1rem;color:rgba(255,255,255,0.5);max-width:560px;margin:0 auto 32px;line-height:1.7}
+    .hero-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:12px;background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;text-decoration:none;transition:all 0.2s}
+    .hero-cta:hover{opacity:0.9;transform:translateY(-2px)}
+
+    /* STATS STRIP */
+    .stats-strip{background:rgba(255,255,255,0.04);border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);padding:28px 20px}
+    .stats-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+    .stat-val{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:#D97706;letter-spacing:-0.04em}
+    .stat-lbl{font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:4px}
+
+    /* SECTIONS */
+    .section{padding:72px 20px}
+    .section.alt{background:rgba(255,255,255,0.02)}
+    .section-inner{max-width:1000px;margin:0 auto}
+    .section-label{font-size:0.72rem;font-weight:700;color:#D97706;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;text-align:center}
+    .section-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.4rem,3vw,1.9rem);letter-spacing:-0.04em;text-align:center;margin-bottom:10px}
+    .section-sub{font-size:0.92rem;color:rgba(255,255,255,0.45);text-align:center;margin-bottom:40px;line-height:1.6;max-width:560px;margin-left:auto;margin-right:auto}
+
+    /* AUDIENCE */
+    .audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+    .audience-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;transition:all 0.2s}
+    .audience-card:hover{border-color:rgba(217,119,6,0.3);background:rgba(255,255,255,0.07)}
+    .audience-icon{font-size:2rem;margin-bottom:12px}
+    .audience-name{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:6px}
+    .audience-desc{font-size:0.8rem;color:rgba(255,255,255,0.4);line-height:1.5}
+    .audience-pct{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:#D97706;margin-top:10px}
+
+    /* AD FORMATS */
+    .formats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .format-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;transition:all 0.2s}
+    .format-card:hover{border-color:rgba(217,119,6,0.3)}
+    .format-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;background:rgba(217,119,6,0.15);color:#D97706;font-size:0.7rem;font-weight:700;margin-bottom:12px}
+    .format-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;margin-bottom:8px}
+    .format-desc{font-size:0.82rem;color:rgba(255,255,255,0.45);line-height:1.6;margin-bottom:12px}
+    .format-price{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:#D97706}
+    .format-price-label{font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:2px}
+    .format-features{display:flex;flex-direction:column;gap:5px;margin-top:12px}
+    .format-feat{font-size:0.78rem;color:rgba(255,255,255,0.5);display:flex;align-items:center;gap:6px}
+    .format-feat::before{content:'→';color:#D97706;flex-shrink:0}
+
+    /* REVENUE STREAMS */
+    .revenue-list{display:flex;flex-direction:column;gap:12px}
+    .revenue-item{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:20px;display:flex;align-items:flex-start;gap:16px;transition:all 0.2s}
+    .revenue-item:hover{border-color:rgba(217,119,6,0.2)}
+    .revenue-icon{font-size:1.6rem;flex-shrink:0;margin-top:2px}
+    .revenue-name{font-family:'Syne',sans-serif;font-weight:700;font-size:0.92rem;margin-bottom:4px}
+    .revenue-desc{font-size:0.82rem;color:rgba(255,255,255,0.4);line-height:1.5}
+    .revenue-price{font-size:0.8rem;font-weight:700;color:#D97706;margin-top:6px}
+
+    /* CTA */
+    .cta-section{padding:72px 20px;text-align:center}
+    .cta-card{background:linear-gradient(135deg,rgba(45,27,105,0.4),rgba(15,14,26,0.8));border:1px solid rgba(217,119,6,0.2);border-radius:24px;padding:56px 40px;max-width:700px;margin:0 auto}
+    .cta-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.4rem,3vw,2rem);letter-spacing:-0.04em;margin-bottom:10px}
+    .cta-sub{font-size:0.92rem;color:rgba(255,255,255,0.45);margin-bottom:28px;line-height:1.6}
+    .cta-email{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:12px;background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;text-decoration:none;transition:all 0.2s}
+    .cta-email:hover{opacity:0.9;transform:translateY(-2px)}
+    .cta-note{margin-top:16px;font-size:0.78rem;color:rgba(255,255,255,0.25)}
+
+    footer{background:rgba(0,0,0,0.3);border-top:1px solid rgba(255,255,255,0.06);padding:28px 20px;text-align:center}
+    .footer-links{display:flex;gap:20px;justify-content:center;margin-bottom:8px;flex-wrap:wrap}
+    .footer-link{font-size:0.78rem;color:rgba(255,255,255,0.25);text-decoration:none}
+    .footer-link:hover{color:#fff}
+    .footer-copy{font-size:0.72rem;color:rgba(255,255,255,0.12)}
+
+    @media(max-width:768px){.audience-grid{grid-template-columns:1fr}.formats-grid{grid-template-columns:1fr}.stats-inner{grid-template-columns:repeat(2,1fr)}nav{padding:0 14px}.logo-nm{display:none}.cta-card{padding:36px 24px}}
+  </style>
 </head>
 <body>
-<h1>Advertise With Us</h1>
-<p>This page is working.</p>
+<nav>
+  <a href="/" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
+  <div class="nav-right">
+    <a href="/" class="nav-btn">← Back</a>
+    <a href="mailto:advertise@swoopform.com" class="nav-btn primary">Enquire now →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Advertise with us</div>
+  <h1 class="hero-title">Reach <span>50,000+</span> decision makers<br>who are actively collecting data</h1>
+  <p class="hero-sub">SwoopForm puts your brand in front of researchers, educators, HR professionals, business owners and NGOs — right at the moment they're most engaged.</p>
+  <a href="mailto:advertise@swoopform.com" class="hero-cta">📧 Get in touch →</a>
+</div>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div><div class="stat-val">50K+</div><div class="stat-lbl">Active users</div></div>
+    <div><div class="stat-val">2L+</div><div class="stat-lbl">Monthly responses</div></div>
+    <div><div class="stat-val">85%</div><div class="stat-lbl">India-based audience</div></div>
+    <div><div class="stat-val">4.2min</div><div class="stat-lbl">Avg. session time</div></div>
+  </div>
+</div>
+
+<!-- AUDIENCE REACH -->
+<div class="section">
+  <div class="section-inner">
+    <div class="section-label">Audience</div>
+    <div class="section-title">Who you'll reach</div>
+    <div class="section-sub">A highly engaged audience of creators and respondents across education, research, HR and business.</div>
+    <div class="audience-grid">
+      <div class="audience-card"><div class="audience-icon">🎓</div><div class="audience-name">Students & Educators</div><div class="audience-desc">College students, professors and school teachers running surveys for research, feedback and assessment.</div><div class="audience-pct">38%</div></div>
+      <div class="audience-card"><div class="audience-icon">💼</div><div class="audience-name">Business & HR</div><div class="audience-desc">Small business owners, HR managers and startup teams collecting customer and employee feedback.</div><div class="audience-pct">29%</div></div>
+      <div class="audience-card"><div class="audience-icon">🔬</div><div class="audience-name">Researchers & NGOs</div><div class="audience-desc">Academic researchers, field workers and non-profit organisations running data collection campaigns.</div><div class="audience-pct">22%</div></div>
+    </div>
+    <div style="background:rgba(255,255,255,0.04);border-radius:14px;padding:20px;text-align:center;border:1px solid rgba(255,255,255,0.06)">
+      <div style="font-size:0.78rem;color:rgba(255,255,255,0.35);margin-bottom:12px">Geographic breakdown</div>
+      <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap">
+        <div style="text-align:center"><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:#D97706">85%</div><div style="font-size:0.72rem;color:rgba(255,255,255,0.35)">India</div></div>
+        <div style="text-align:center"><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:#D97706">8%</div><div style="font-size:0.72rem;color:rgba(255,255,255,0.35)">South Asia</div></div>
+        <div style="text-align:center"><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:#D97706">7%</div><div style="font-size:0.72rem;color:rgba(255,255,255,0.35)">Rest of world</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AD FORMATS -->
+<div class="section alt">
+  <div class="section-inner">
+    <div class="section-label">Ad formats</div>
+    <div class="section-title">How you can advertise</div>
+    <div class="section-sub">Multiple placements across the SwoopForm platform — each with high intent and real engagement.</div>
+    <div class="formats-grid">
+      <div class="format-card"><div class="format-badge">📍 Display</div><div class="format-name">Discover Page Banner</div><div class="format-desc">Featured placement at the top of the SwoopForm Discover page. Seen by all users browsing public surveys and campaigns.</div><div class="format-price">₹5,000 <span style="font-size:0.75rem;color:rgba(255,255,255,0.35)">/week</span></div><div class="format-features"><div class="format-feat">High visibility placement</div><div class="format-feat">Link to your landing page</div><div class="format-feat">Logo + headline + CTA</div></div></div>
+      <div class="format-card"><div class="format-badge">🎯 High intent</div><div class="format-name">Thank You Page Ad</div><div class="format-desc">Shown to respondents right after they submit a survey or vote. Highest engagement moment — captive audience.</div><div class="format-price">₹8,000 <span style="font-size:0.75rem;color:rgba(255,255,255,0.35)">/week</span></div><div class="format-features"><div class="format-feat">Post-submission placement</div><div class="format-feat">Captive audience attention</div><div class="format-feat">Image + text + CTA button</div></div></div>
+      <div class="format-card"><div class="format-badge">✍️ Content</div><div class="format-name">Sponsored Blog Post</div><div class="format-desc">A blog article about your product, service or research — written by us or provided by you, published on our blog.</div><div class="format-price">₹12,000 <span style="font-size:0.75rem;color:rgba(255,255,255,0.35)">/post</span></div><div class="format-features"><div class="format-feat">SEO-optimised article</div><div class="format-feat">Promoted to our email list</div><div class="format-feat">Stays live permanently</div></div></div>
+      <div class="format-card"><div class="format-badge">📧 Email</div><div class="format-name">Newsletter Placement</div><div class="format-desc">A dedicated banner in our weekly digest email sent to all active SwoopForm users — researchers, educators and businesses.</div><div class="format-price">₹6,000 <span style="font-size:0.75rem;color:rgba(255,255,255,0.35)">/blast</span></div><div class="format-features"><div class="format-feat">Direct inbox placement</div><div class="format-feat">Logo + copy + CTA link</div><div class="format-feat">Open rate report included</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- REVENUE STREAMS -->
+<div class="section">
+  <div class="section-inner">
+    <div class="section-label">More ways to work with us</div>
+    <div class="section-title">Beyond advertising</div>
+    <div class="section-sub">Partner with SwoopForm to reach decision makers in more powerful ways.</div>
+    <div class="revenue-list">
+      <div class="revenue-item"><div class="revenue-icon">🔬</div><div style="flex:1"><div class="revenue-name">Research as a Service</div><div class="revenue-desc">We design and run a custom survey to your target audience — students, professionals, consumers or businesses. You receive a clean, anonymised data report with insights ready to act on.</div><div class="revenue-price">Starting ₹25,000 per study</div></div></div>
+      <div class="revenue-item"><div class="revenue-icon">🏷️</div><div style="flex:1"><div class="revenue-name">Co-branded Survey Templates</div><div class="revenue-desc">A professionally designed survey template featuring your brand, available to all SwoopForm users in our template library. Great for brand recall and lead generation.</div><div class="revenue-price">Starting ₹20,000 per month</div></div></div>
+      <div class="revenue-item"><div class="revenue-icon">🔒</div><div style="flex:1"><div class="revenue-name">White Labelling</div><div class="revenue-desc">Run the entire SwoopForm platform under your own brand — custom domain, your logo, your colour scheme. Ideal for agencies, large organisations and SaaS companies looking to offer survey tools to their clients.</div><div class="revenue-price">Enterprise pricing — contact us</div></div></div>
+      <div class="revenue-item"><div class="revenue-icon">🤝</div><div style="flex:1"><div class="revenue-name">Affiliate & Referral Partners</div><div class="revenue-desc">Earn commission by referring users to SwoopForm. Suitable for content creators, educators, marketing agencies and HR consultants. Our affiliate program pays per successful conversion.</div><div class="revenue-price">20% commission per paid referral</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-card">
+    <div style="font-size:2.5rem;margin-bottom:16px">📩</div>
+    <div class="cta-title">Let's work together</div>
+    <div class="cta-sub">Tell us about your brand, your goals and your audience. We'll put together the right package for you.</div>
+    <a href="mailto:advertise@swoopform.com?subject=Advertising Enquiry — SwoopForm" class="cta-email">📧 advertise@swoopform.com</a>
+    <div class="cta-note">We typically respond within 24 hours on business days.</div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="/" class="footer-link">Home</a><a href="/about" class="footer-link">About</a>
+    <a href="/pricing" class="footer-link">Pricing</a><a href="/blog" class="footer-link">Blog</a>
+    <a href="/contact" class="footer-link">Contact</a><a href="/privacy" class="footer-link">Privacy</a>
+  </div>
+  <div class="footer-copy">© 2024 SwoopForm. All rights reserved.</div>
+</footer>
 </body>
 </html>
