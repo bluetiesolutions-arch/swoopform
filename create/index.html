@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SwoopForm — Create Survey</title>
+<title>Create Survey — SwoopForm</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -13,13 +13,13 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 .nav{height:56px;background:#fff;border-bottom:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:fixed;top:0;left:0;right:0;z-index:300;gap:10px}
 .nav-l{display:flex;align-items:center;gap:8px;min-width:0;flex-shrink:1}
 .logo{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none;flex-shrink:0}
-.nav-back{padding:6px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#64748B;font-size:0.8rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;text-decoration:none;transition:all 0.2s;flex-shrink:0}
+.nav-back{padding:6px 11px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#64748B;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;text-decoration:none;transition:all 0.2s}
 .nav-back:hover{border-color:#2D1B69;color:#2D1B69}
 .nav-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.92rem;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .nav-r{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.btn-prev-toggle{padding:7px 13px;border-radius:8px;border:1.5px solid #2D1B69;background:#EDE9FF;color:#2D1B69;font-size:0.8rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:all 0.2s}
-.btn-draft{padding:7px 13px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#64748B;font-size:0.8rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap}
-.btn-pub{padding:7px 16px;border-radius:8px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.8rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap}
+.btn-prev-toggle{padding:7px 13px;border-radius:8px;border:1.5px solid #2D1B69;background:#EDE9FF;color:#2D1B69;font-size:0.8rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer}
+.btn-draft{padding:7px 13px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#64748B;font-size:0.8rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer}
+.btn-pub{padding:7px 16px;border-radius:8px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.8rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer}
 .btn-pub:disabled{opacity:0.5;cursor:not-allowed}
 .hbtn{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px;flex-shrink:0}
 .hbtn span{display:block;width:20px;height:2px;background:#0F0E1A;border-radius:2px}
@@ -28,12 +28,11 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 .layout{position:fixed;top:56px;left:0;right:0;bottom:0;display:flex}
 
 /* SIDEBAR */
-.sb{width:256px;height:100%;background:#fff;border-right:1.5px solid #E2DAD0;display:flex;flex-direction:column;flex-shrink:0;z-index:100;transition:transform 0.3s ease;overflow:hidden}
-.sb-pages{flex-shrink:0}
-.sb-grp{border-bottom:1px solid #E2DAD0}
+.sb{width:252px;height:100%;background:#fff;border-right:1.5px solid #E2DAD0;display:flex;flex-direction:column;flex-shrink:0;z-index:100;transition:transform 0.3s ease;overflow:hidden}
+.sb-grp{border-bottom:1px solid #E2DAD0;flex-shrink:0}
 .sb-grp-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;cursor:pointer;user-select:none;transition:background 0.15s}
 .sb-grp-hdr:hover{background:#F5F0E8}
-.sb-grp-lbl{font-size:0.63rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase}
+.sb-grp-lbl{font-size:0.63rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
 .sb-grp-arr{font-size:0.65rem;color:#C4B9AA;transition:transform 0.2s}
 .sb-grp-arr.closed{transform:rotate(-90deg)}
 .sb-grp-body{overflow:hidden;transition:max-height 0.25s ease}
@@ -41,174 +40,152 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 .sb-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.81rem;font-weight:600;color:#64748B;transition:all 0.18s}
 .sb-item:hover{background:#F5F0E8;color:#0F0E1A}
 .sb-item.active{background:#EDE9FF;color:#2D1B69}
-.sb-ico{font-size:0.9rem;width:18px;text-align:center;flex-shrink:0}
+.sb-ico{font-size:0.88rem;width:18px;text-align:center;flex-shrink:0}
 .sb-lbl{flex:1}
 .premium-pill{font-size:0.56rem;font-weight:700;background:#FEF3C7;color:#D97706;border:1px solid #FCD34D;padding:1px 5px;border-radius:3px;flex-shrink:0}
-
-/* Q LIST IN SIDEBAR */
 .sb-qscroll{flex:1;overflow-y:auto;min-height:0}
-.sb-qhdr{display:flex;align-items:center;justify-content:space-between;padding:7px 14px 4px;border-top:1px solid #E2DAD0}
-.sb-qlbl{font-size:0.63rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase}
-.sb-qcount{font-size:0.62rem;font-weight:700;background:#EDE9FF;color:#2D1B69;padding:1px 6px;border-radius:100px}
-.sb-qlist{padding:4px 8px 8px}
-.sb-qitem{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:7px;cursor:pointer;margin-bottom:1px;transition:all 0.15s;user-select:none}
+.sb-qlist{padding:4px 8px 80px}
+.sb-qitem{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:7px;cursor:pointer;margin-bottom:1px;transition:all 0.15s}
 .sb-qitem:hover{background:#F5F0E8}
-.sb-qitem.dragging-over{background:#EDE9FF;border:1.5px dashed #2D1B69}
-.sb-section-item{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:7px;cursor:pointer;margin-bottom:1px;margin-top:4px;transition:background 0.15s}
-.sb-section-item:hover{background:#F5F0E8}
-.sb-drag{color:#C4B9AA;font-size:0.72rem;cursor:grab;flex-shrink:0;line-height:1}
-.sb-drag:active{cursor:grabbing}
-.sb-qnum{width:19px;height:19px;border-radius:4px;font-size:0.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
-.sb-qtext{font-size:0.73rem;color:#64748B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.sb-secrow{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:7px;cursor:pointer;margin-bottom:1px;margin-top:4px;background:#F5F0E8}
+.sb-drag{color:#C4B9AA;font-size:0.7rem;cursor:grab;flex-shrink:0}
+.sb-qnum{width:18px;height:18px;border-radius:4px;font-size:0.59rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
+.sb-qtext{font-size:0.72rem;color:#64748B;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
 .sb-qtype{font-size:0.57rem;color:#94A3B8;flex-shrink:0}
 .sb-secdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .sb-sectext{font-size:0.73rem;font-weight:700;color:#0F0E1A;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-qcount-badge{font-size:0.62rem;font-weight:700;background:#EDE9FF;color:#2D1B69;padding:1px 6px;border-radius:100px}
 
-/* SIDEBAR BOTTOM */
-.sb-btm{flex-shrink:0;padding:8px;border-top:1.5px solid #E2DAD0;display:flex;flex-direction:column;gap:5px}
-.btn-addq{width:100%;padding:8px;border-radius:8px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.78rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:opacity 0.2s}
-.btn-addq:hover{opacity:0.9}
-.btn-addsec{width:100%;padding:8px;border-radius:8px;border:1.5px dashed #D97706;background:#FEF9EE;color:#92400E;font-size:0.78rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:all 0.2s}
-.btn-addsec:hover{background:#FEF3C7}
-
-/* Q TYPE PICKER */
-.qpicker{background:#F5F0E8;border-radius:10px;padding:8px;display:none;max-height:320px;overflow-y:auto;margin-top:0}
-.qpicker.open{display:block;animation:fi 0.15s ease}
-@keyframes fi{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
-.qp-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.qp-sec{font-size:0.59rem;font-weight:700;color:#94A3B8;letter-spacing:0.06em;text-transform:uppercase;padding:5px 4px 2px;grid-column:1/-1}
-.qp-btn{padding:5px 7px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.7rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;color:#0F0E1A;transition:all 0.13s;display:flex;align-items:center;gap:4px;text-align:left}
-.qp-btn:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
-
-/* MAIN CONTENT */
-.content{flex:1;height:100%;overflow-y:auto;padding:20px 24px;min-width:0}
+/* CONTENT */
+.content{flex:1;height:100%;overflow-y:auto;padding:20px 24px 100px;min-width:0}
 .panel{display:none}
-.panel.active{display:block;animation:fi 0.2s ease}
+.panel.active{display:block;animation:fi 0.18s ease}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
 /* TITLE CARD */
 .title-card{background:#fff;border-radius:16px;border:1.5px solid #E2DAD0;padding:22px 24px;margin-bottom:14px}
-.t-inp{width:100%;border:none;outline:none;font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-0.03em;color:#0F0E1A;background:transparent;line-height:1.2}
+.t-inp{width:100%;border:none;outline:none;font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-0.03em;color:#0F0E1A;background:transparent;line-height:1.2}
 .t-inp::placeholder{color:#C4B9AA}
-.d-inp{width:100%;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:0.87rem;color:#64748B;background:transparent;resize:none;margin-top:7px;line-height:1.6}
+.d-inp{width:100%;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:0.86rem;color:#64748B;background:transparent;resize:none;margin-top:7px;line-height:1.6}
 .d-inp::placeholder{color:#C4B9AA}
 
-/* SECTION DIVIDER CARD */
-.sec-card{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;margin-bottom:8px;padding:0;position:relative;overflow:hidden;transition:box-shadow 0.2s}
+/* SECTION CARD */
+.sec-card{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;margin-bottom:8px;overflow:hidden;transition:box-shadow 0.2s;position:relative}
 .sec-card:hover{box-shadow:0 3px 14px rgba(15,14,26,0.07)}
-.sec-card.dragging{opacity:0.5;box-shadow:0 8px 24px rgba(15,14,26,0.15)}
+.sec-card.dragging{opacity:0.4}
 .sec-card.drag-over{border-color:#2D1B69;border-style:dashed}
-.sec-bar{height:4px;width:100%}
-.sec-body{padding:12px 14px;display:flex;align-items:center;gap:10px}
-.sec-drag{color:#C4B9AA;font-size:0.85rem;cursor:grab;flex-shrink:0;padding:2px}
-.sec-drag:active{cursor:grabbing;color:#2D1B69}
+.sec-top-bar{height:4px;width:100%}
+.sec-body{padding:11px 13px;display:flex;align-items:center;gap:9px}
+.sec-drag-h{color:#C4B9AA;font-size:0.9rem;cursor:grab;flex-shrink:0}
+.sec-drag-h:active{cursor:grabbing}
 .sec-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .sec-title-inp{flex:1;border:none;outline:none;font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;color:#0F0E1A;background:transparent}
 .sec-title-inp::placeholder{color:#C4B9AA;font-weight:400}
-.sec-subtitle-inp{width:100%;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:0.78rem;color:#64748B;background:transparent;padding:0 14px 10px 38px}
-.sec-subtitle-inp::placeholder{color:#C4B9AA}
-.sec-del{background:none;border:none;cursor:pointer;color:#C4B9AA;font-size:0.85rem;padding:3px;transition:color 0.2s;flex-shrink:0}
-.sec-del:hover{color:#EF4444}
-.sec-mode-row{display:flex;gap:4px;padding:0 14px 10px 38px;flex-wrap:wrap}
-.sec-mode-btn{padding:4px 10px;border-radius:6px;border:1.5px solid #E2DAD0;background:#F5F0E8;font-size:0.68rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;color:#64748B;transition:all 0.15s}
+.sec-sub-inp{width:100%;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:0.76rem;color:#64748B;background:transparent;padding:0 13px 9px 36px}
+.sec-sub-inp::placeholder{color:#C4B9AA}
+.sec-mode-row{display:flex;gap:4px;padding:0 13px 9px 36px;flex-wrap:wrap}
+.sec-mode-btn{padding:3px 9px;border-radius:5px;border:1.5px solid #E2DAD0;background:#F5F0E8;font-size:0.67rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;color:#64748B;transition:all 0.15s}
 .sec-mode-btn.active{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
+.item-btns{display:flex;gap:3px;margin-left:auto;flex-shrink:0}
+.ibtn{width:25px;height:25px;border-radius:5px;border:1.5px solid #E2DAD0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:#64748B;transition:all 0.15s}
+.ibtn:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
+.ibtn.del:hover{border-color:#FECACA;background:#FEF2F2;color:#DC2626}
+.ibtn:disabled{opacity:0.25;cursor:not-allowed}
 
 /* QUESTION CARD */
 .q-card{background:#fff;border-radius:13px;border:1.5px solid #E2DAD0;margin-bottom:8px;overflow:hidden;transition:box-shadow 0.2s,border-color 0.2s;position:relative}
 .q-card:hover{box-shadow:0 3px 16px rgba(15,14,26,0.07)}
-.q-card.focused{border-color:#2D1B69;box-shadow:0 0 0 3px rgba(45,27,105,0.07)}
-.q-card.dragging{opacity:0.45;box-shadow:0 8px 28px rgba(15,14,26,0.18)}
-.q-card.drag-over-top{border-top:3px solid #2D1B69}
-.q-card.drag-over-bot{border-bottom:3px solid #2D1B69}
-.q-card.indented{margin-left:20px}
+.q-card.focused{border-color:#2D1B69;box-shadow:0 0 0 3px rgba(45,27,105,0.06)}
+.q-card.dragging{opacity:0.4}
+.q-card.drag-over{border-color:#2D1B69;border-style:dashed}
+.q-card.indented{margin-left:18px;border-left-width:3px}
 .q-accent{position:absolute;left:0;top:0;bottom:0;width:3px}
 
 /* Q TABS */
-.q-tabs{display:flex;background:#FAFAF7;border-bottom:1px solid #E2DAD0;align-items:center}
-.q-tab{padding:8px 13px;font-size:0.73rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:#64748B;font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap}
+.q-tabs{display:flex;background:#FAFAF7;border-bottom:1px solid #E2DAD0}
+.q-tab{padding:7px 12px;font-size:0.72rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:#64748B;font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap}
 .q-tab.active{color:#2D1B69;border-bottom-color:#2D1B69;background:#fff}
-.q-tab-badge{background:#EF4444;color:#fff;font-size:0.55rem;font-weight:700;padding:1px 4px;border-radius:100px;margin-left:3px}
-.logic-chip{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:100px;background:#EDE9FF;color:#2D1B69;font-size:0.62rem;font-weight:700;border:1px solid #C4B5FD;margin-left:auto;margin-right:8px}
+.logic-on{font-size:0.6rem;background:#EDE9FF;color:#2D1B69;padding:1px 5px;border-radius:3px;margin-left:3px;font-weight:700}
 
-/* Q TOP */
-.q-top{display:flex;align-items:center;gap:7px;padding:11px 13px 0;flex-wrap:wrap}
-.q-drag-handle{color:#C4B9AA;font-size:1rem;cursor:grab;flex-shrink:0;padding:1px 3px;touch-action:none;transition:color 0.15s}
-.q-drag-handle:active{cursor:grabbing;color:#2D1B69}
-.q-num{width:23px;height:23px;border-radius:5px;font-size:0.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-family:'Syne',sans-serif}
-.q-type-sel{padding:4px 8px;border-radius:6px;border:1.5px solid #E2DAD0;background:#F5F0E8;color:#0F0E1A;font-size:0.7rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none;transition:border-color 0.15s}
+/* Q HEADER */
+.q-hdr{display:flex;align-items:center;gap:7px;padding:10px 12px 0;flex-wrap:wrap}
+.q-drag-h{color:#C4B9AA;font-size:1rem;cursor:grab;flex-shrink:0;padding:1px 3px;touch-action:none}
+.q-drag-h:active{cursor:grabbing;color:#2D1B69}
+.q-num{width:22px;height:22px;border-radius:5px;font-size:0.67rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-family:'Syne',sans-serif}
+.q-type-sel{padding:4px 7px;border-radius:6px;border:1.5px solid #E2DAD0;background:#F5F0E8;color:#0F0E1A;font-size:0.69rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none}
 .q-type-sel:focus{border-color:#2D1B69}
-.q-btns{display:flex;gap:3px;margin-left:auto}
-.q-btn{width:26px;height:26px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.72rem;color:#64748B;transition:all 0.15s;flex-shrink:0}
-.q-btn:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
-.q-btn.del:hover{border-color:#FECACA;background:#FEF2F2;color:#DC2626}
-.q-btn:disabled{opacity:0.28;cursor:not-allowed}
+.sec-assign{padding:4px 7px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;color:#64748B;font-size:0.69rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none;max-width:130px}
+.sec-assign:focus{border-color:#D97706}
 
 /* Q BODY */
 .q-body{padding:9px 13px 13px}
 .q-inp{width:100%;border:none;border-bottom:2px solid #E2DAD0;outline:none;padding:5px 0;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;color:#0F0E1A;background:transparent;margin-bottom:11px;transition:border-color 0.2s}
 .q-inp::placeholder{color:#C4B9AA;font-weight:400}
 .q-inp:focus{border-bottom-color:#2D1B69}
-
-/* OPTIONS */
-.opt-row{display:flex;align-items:center;gap:7px;margin-bottom:6px;padding:6px 10px;border-radius:8px;border:1.5px solid #E2DAD0;background:#FAFAF7;transition:border-color 0.15s}
+.opt-row{display:flex;align-items:center;gap:7px;margin-bottom:6px;padding:6px 9px;border-radius:8px;border:1.5px solid #E2DAD0;background:#FAFAF7;transition:border-color 0.15s}
 .opt-row:focus-within{border-color:#2D1B69;background:#fff}
 .opt-letter{width:19px;height:19px;border-radius:4px;background:#EDE9FF;color:#2D1B69;font-size:0.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.opt-inp{flex:1;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:0.83rem;color:#0F0E1A;background:transparent}
+.opt-inp{flex:1;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:0.82rem;color:#0F0E1A;background:transparent}
 .opt-inp::placeholder{color:#C4B9AA}
-.correct-btn{width:18px;height:18px;border-radius:50%;border:2px solid #E2DAD0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.58rem;color:transparent;transition:all 0.15s;flex-shrink:0}
+.correct-btn{width:17px;height:17px;border-radius:50%;border:2px solid #E2DAD0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.55rem;color:transparent;transition:all 0.15s;flex-shrink:0}
 .correct-btn.ok{background:#10B981;border-color:#10B981;color:#fff}
-.opt-del{background:none;border:none;cursor:pointer;color:#C4B9AA;font-size:0.82rem;transition:color 0.15s;flex-shrink:0;padding:1px}
+.opt-del{background:none;border:none;cursor:pointer;color:#C4B9AA;font-size:0.8rem;transition:color 0.15s;flex-shrink:0;padding:1px}
 .opt-del:hover{color:#EF4444}
-.add-opt-btn{background:none;border:none;cursor:pointer;color:#2D1B69;font-size:0.76rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:3px 0;display:flex;align-items:center;gap:4px}
-.preview-chip{background:#F5F0E8;border-radius:7px;padding:8px 11px;font-size:0.78rem;color:#94A3B8;border:1.5px dashed #E2DAD0;font-style:italic}
-
-/* Q FOOTER */
-.q-foot{display:flex;align-items:center;gap:9px;padding-top:9px;border-top:1px solid #F5F0E8;flex-wrap:wrap}
-.tgl{width:31px;height:16px;border-radius:100px;background:#E2DAD0;cursor:pointer;position:relative;transition:background 0.18s;border:none;flex-shrink:0}
+.add-opt-btn{background:none;border:none;cursor:pointer;color:#2D1B69;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:3px 0;display:flex;align-items:center;gap:4px}
+.prev-chip{background:#F5F0E8;border-radius:7px;padding:8px 11px;font-size:0.77rem;color:#94A3B8;border:1.5px dashed #E2DAD0;font-style:italic}
+.q-foot{display:flex;align-items:center;gap:9px;padding-top:8px;border-top:1px solid #F5F0E8;flex-wrap:wrap}
+.tgl{width:30px;height:16px;border-radius:100px;background:#E2DAD0;cursor:pointer;position:relative;transition:background 0.18s;border:none;flex-shrink:0}
 .tgl.on{background:#2D1B69}
 .tgl::after{content:'';position:absolute;width:10px;height:10px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 0.18s}
-.tgl.on::after{transform:translateX(15px)}
+.tgl.on::after{transform:translateX(14px)}
 .tgl-l{font-size:0.7rem;color:#64748B;font-weight:500}
 
-/* LOGIC PANEL */
-.lw{padding:2px 0}
-.l-empty{text-align:center;padding:14px;color:#94A3B8;font-size:0.77rem;line-height:1.6}
-.l-rule{background:#F5F0E8;border-radius:8px;padding:10px;margin-bottom:7px}
-.l-rhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.l-rlbl{font-size:0.7rem;font-weight:700;color:#64748B}
-.l-rdel{background:none;border:none;cursor:pointer;color:#94A3B8;font-size:0.78rem;padding:2px;transition:color 0.15s}
-.l-rdel:hover{color:#EF4444}
-.ls{padding:4px 6px;border-radius:5px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.7rem;font-weight:600;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer}
-.l-cond{display:flex;align-items:center;gap:4px;margin-bottom:5px;flex-wrap:wrap}
-.ct-row{display:flex;gap:4px;margin-bottom:5px}
-.ct-btn{padding:3px 7px;border-radius:4px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.64rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;color:#64748B;transition:all 0.15s}
+/* LOGIC */
+.logic-wrap{padding:4px 0}
+.logic-empty{text-align:center;padding:14px;color:#94A3B8;font-size:0.76rem;line-height:1.6}
+.logic-rule{background:#F5F0E8;border-radius:8px;padding:10px;margin-bottom:7px}
+.logic-rhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.logic-rlbl{font-size:0.69rem;font-weight:700;color:#64748B}
+.logic-rdel{background:none;border:none;cursor:pointer;color:#94A3B8;font-size:0.76rem;padding:2px;transition:color 0.15s}
+.logic-rdel:hover{color:#EF4444}
+.lsel{padding:4px 6px;border-radius:5px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.69rem;font-weight:600;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer}
+.logic-cond-row{display:flex;align-items:center;gap:4px;margin-bottom:5px;flex-wrap:wrap}
+.logic-ctype-row{display:flex;gap:4px;margin-bottom:5px}
+.ct-btn{padding:3px 7px;border-radius:4px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.63rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;color:#64748B;transition:all 0.15s}
 .ct-btn.active{background:#2D1B69;border-color:#2D1B69;color:#fff}
-.acd{background:none;border:none;cursor:pointer;color:#2D1B69;font-size:0.68rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:1px 0;margin-bottom:4px}
-.l-arow{display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding-top:6px;border-top:1px solid #E2DAD0}
-.l-albl{font-size:0.68rem;font-weight:700;color:#0F0E1A}
-.badr{width:100%;padding:6px;border-radius:7px;border:1.5px dashed #C4B5FD;background:transparent;color:#2D1B69;font-size:0.7rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-align:center;margin-top:4px;transition:background 0.15s}
-.badr:hover{background:#EDE9FF}
+.logic-add-cond{background:none;border:none;cursor:pointer;color:#2D1B69;font-size:0.67rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:1px 0;margin-bottom:4px}
+.logic-action-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding-top:6px;border-top:1px solid #E2DAD0}
+.logic-albl{font-size:0.68rem;font-weight:700;color:#0F0E1A}
+.add-rule-btn{width:100%;padding:6px;border-radius:7px;border:1.5px dashed #C4B5FD;background:transparent;color:#2D1B69;font-size:0.69rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-align:center;margin-top:4px;transition:background 0.15s}
+.add-rule-btn:hover{background:#EDE9FF}
 
-/* MEDIA PANEL */
-.media-inp{width:100%;padding:7px 10px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.77rem;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:5px;transition:border-color 0.15s}
-.media-inp:focus{border-color:#2D1B69}
-.media-inp::placeholder{color:#C4B9AA}
+/* MEDIA TAB */
+.media-url-row{display:flex;gap:6px;margin-bottom:8px}
+.media-url-inp{flex:1;padding:7px 10px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.77rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.15s}
+.media-url-inp:focus{border-color:#2D1B69}
+.media-url-inp::placeholder{color:#C4B9AA}
+.media-fetch-btn{padding:7px 13px;border-radius:7px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.75rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:opacity 0.2s}
+.media-fetch-btn:hover{opacity:0.88}
+.media-prev-box{border-radius:9px;overflow:hidden;border:1.5px solid #E2DAD0;background:#F5F0E8;min-height:80px;display:flex;align-items:center;justify-content:center;font-size:0.73rem;color:#C4B9AA;text-align:center;padding:12px;margin-bottom:8px}
+.media-prev-box img,.media-prev-box iframe{width:100%;max-height:160px;object-fit:cover;display:block;border:none}
 .media-layout-row{display:flex;gap:5px;margin-bottom:8px}
-.media-layout-btn{flex:1;padding:5px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.68rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:center;transition:all 0.15s}
-.media-layout-btn.active{background:#EDE9FF;border-color:#2D1B69;color:#2D1B69}
-.media-prev{border-radius:9px;overflow:hidden;border:1.5px solid #E2DAD0;background:#F5F0E8;min-height:70px;display:flex;align-items:center;justify-content:center;font-size:0.73rem;color:#C4B9AA;text-align:center;padding:8px}
-.media-prev img{width:100%;max-height:130px;object-fit:cover;display:block}
+.ml-btn{flex:1;padding:5px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.68rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:center;transition:all 0.15s}
+.ml-btn.active{background:#EDE9FF;border-color:#2D1B69;color:#2D1B69}
+.media-clear-btn{padding:5px 11px;border-radius:6px;border:1.5px solid #FECACA;background:#fff;color:#DC2626;font-size:0.72rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.15s}
+.media-clear-btn:hover{background:#FEF2F2}
 
 /* PAGE PANELS */
 .pt{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:-0.02em;margin-bottom:4px}
 .ps{color:#64748B;font-size:0.82rem;margin-bottom:18px;line-height:1.5}
 .pcard{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:20px;margin-bottom:12px}
-.pcard-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.pcard-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:6px}
 .fl{margin-bottom:13px}
 .fl:last-child{margin-bottom:0}
 .ll{display:block;font-size:0.67rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px}
 .ii{width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.84rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
 .ii:focus{border-color:#2D1B69}
 .ii::placeholder{color:#C4B9AA}
+.ii:disabled{opacity:0.45;cursor:not-allowed;background:#F5F0E8}
 .fh{font-size:0.67rem;color:#94A3B8;margin-top:4px;line-height:1.4}
 .sr{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #E2DAD0}
 .sr:last-child{border-bottom:none}
@@ -219,16 +196,18 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 .url-prev img,.url-prev iframe{width:100%;height:150px;object-fit:cover;display:block;border:none}
 .url-prev-lbl{padding:7px 11px;font-size:0.68rem;color:#64748B;background:#F5F0E8;display:flex;justify-content:space-between}
 
-/* PREMIUM LOCK */
-.p-lock{background:linear-gradient(135deg,#FEF9EE,#FEF3C7);border:1.5px solid #FCD34D;border-radius:12px;padding:18px;text-align:center;margin-bottom:12px}
-.pl-icon{font-size:1.8rem;margin-bottom:8px}
-.pl-title{font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;margin-bottom:4px;color:#92400E}
-.pl-desc{font-size:0.78rem;color:#B45309;line-height:1.5;margin-bottom:12px}
-.pl-btn{display:inline-block;padding:7px 16px;border-radius:8px;background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;font-size:0.78rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border:none;text-decoration:none}
+/* WELCOME TOGGLE */
+.welcome-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#F5F0E8;border-radius:10px;margin-bottom:14px}
+.welcome-toggle-lbl{font-size:0.84rem;font-weight:700}
+.welcome-toggle-desc{font-size:0.71rem;color:#64748B;margin-top:2px}
+.welcome-locked{opacity:0.5;pointer-events:none}
+.upgrade-nudge{background:linear-gradient(135deg,#FEF9EE,#FEF3C7);border:1.5px solid #FCD34D;border-radius:10px;padding:13px 15px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.upgrade-nudge-text{font-size:0.78rem;color:#92400E;line-height:1.45}
+.upgrade-nudge-btn{padding:6px 13px;border-radius:7px;background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;font-size:0.75rem;font-weight:700;font-family:'DM Sans',sans-serif;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0}
 
-/* DISCLAIMER */
+/* PRIZE DISCLAIMER */
 .disc{background:#FEF3C7;border:1.5px solid #FCD34D;border-radius:9px;padding:13px;margin-top:11px}
-.disc-txt{font-size:0.77rem;color:#92400E;line-height:1.6;margin-bottom:9px}
+.disc-txt{font-size:0.76rem;color:#92400E;line-height:1.6;margin-bottom:9px}
 .disc-row{display:flex;align-items:flex-start;gap:7px;cursor:pointer}
 .disc-cb{width:15px;height:15px;border-radius:3px;border:1.5px solid #D97706;background:#fff;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
 .disc-row.checked .disc-cb{background:#D97706;border-color:#D97706}
@@ -244,122 +223,177 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 .csv-drop{border:2px dashed #E2DAD0;border-radius:11px;padding:22px;text-align:center;cursor:pointer;transition:all 0.2s;background:#FAFAF7}
 .csv-drop:hover,.csv-drop.over{border-color:#2D1B69;background:#EDE9FF}
 
+/* FLOATING BUTTONS */
+.float-btns{position:fixed;bottom:24px;right:28px;display:flex;gap:8px;z-index:250}
+.float-btn{padding:10px 18px;border-radius:10px;border:none;font-size:0.8rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 4px 16px rgba(15,14,26,0.15);transition:all 0.2s;white-space:nowrap}
+.float-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(15,14,26,0.2)}
+.float-btn-q{background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff}
+.float-btn-sec{background:#fff;color:#92400E;border:1.5px solid #FCD34D}
+
+/* Q TYPE PICKER POPUP */
+.qpicker-overlay{position:fixed;inset:0;z-index:260;display:none}
+.qpicker-overlay.open{display:block}
+.qpicker-popup{position:fixed;bottom:70px;right:28px;background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:12px;width:280px;box-shadow:0 8px 32px rgba(15,14,26,0.15);z-index:270;animation:popUp 0.15s ease}
+@keyframes popUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.qp-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.qp-sec{font-size:0.59rem;font-weight:700;color:#94A3B8;letter-spacing:0.06em;text-transform:uppercase;padding:6px 4px 2px;grid-column:1/-1}
+.qp-btn{padding:6px 8px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.71rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;color:#0F0E1A;transition:all 0.13s;display:flex;align-items:center;gap:5px;text-align:left}
+.qp-btn:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
+
 /* PREVIEW PANEL */
-.prev-panel{position:fixed;top:56px;right:0;bottom:0;width:380px;background:#fff;border-left:1.5px solid #E2DAD0;z-index:200;transform:translateX(100%);transition:transform 0.3s ease;display:flex;flex-direction:column}
+.prev-panel{position:fixed;top:56px;right:0;bottom:0;width:400px;background:#fff;border-left:1.5px solid #E2DAD0;z-index:200;transform:translateX(100%);transition:transform 0.3s ease;display:flex;flex-direction:column}
 .prev-panel.open{transform:translateX(0)}
 .prev-hdr{padding:12px 15px;border-bottom:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:8px}
 .prev-title{font-family:'Syne',sans-serif;font-weight:800;font-size:0.88rem}
 .prev-tabs{display:flex;gap:3px}
 .prev-tab{padding:4px 11px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.72rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;color:#64748B;transition:all 0.15s}
 .prev-tab.active{background:#2D1B69;border-color:#2D1B69;color:#fff}
-.prev-close{background:none;border:none;cursor:pointer;color:#94A3B8;font-size:0.95rem;padding:3px;transition:color 0.15s}
+.prev-close{background:none;border:none;cursor:pointer;color:#94A3B8;font-size:0.95rem;padding:3px}
 .prev-close:hover{color:#0F0E1A}
-.prev-body{flex:1;overflow-y:auto;padding:16px;background:#F5F0E8}
-.p-card{background:#fff;border-radius:11px;padding:14px;margin-bottom:9px;border:1.5px solid #E2DAD0}
-.p-qnum{font-size:0.65rem;font-weight:700;color:#94A3B8;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em}
-.p-qtext{font-weight:700;font-size:0.86rem;margin-bottom:11px;line-height:1.35}
-.p-opt{padding:7px 11px;border-radius:7px;border:1.5px solid #E2DAD0;margin-bottom:5px;font-size:0.8rem;display:flex;align-items:center;gap:7px;cursor:pointer;transition:all 0.15s}
-.p-opt:hover{border-color:#2D1B69;background:#EDE9FF}
-.p-radio{width:13px;height:13px;border-radius:50%;border:2px solid #C4B9AA;flex-shrink:0}
-.p-inp{width:100%;padding:7px 11px;border-radius:7px;border:1.5px solid #E2DAD0;background:#F5F0E8;font-size:0.8rem;font-family:'DM Sans',sans-serif;color:#94A3B8}
-.p-submit{width:100%;padding:10px;border-radius:8px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.83rem;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;margin-top:10px}
-.p-sec-hdr{display:flex;align-items:center;gap:7px;padding:8px 11px;background:#F5F0E8;border-radius:8px;margin-bottom:9px;border-left:3px solid}
-.p-sec-label{font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem}
-.mob-frame{width:240px;margin:0 auto;background:#fff;border-radius:20px;overflow:hidden;border:6px solid #0F0E1A;box-shadow:0 6px 24px rgba(0,0,0,0.14)}
-.mob-inner{padding:12px;background:#F5F0E8;min-height:420px}
+.prev-body{flex:1;overflow-y:auto;background:#F5F0E8;padding:0}
 
-/* OVERLAYS */
+/* PREVIEW FORM — exactly as respondent sees */
+.pf-wrap{padding:24px 20px;max-width:560px;margin:0 auto}
+.pf-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:-0.03em;margin-bottom:6px;color:#0F0E1A}
+.pf-desc{font-size:0.83rem;color:#64748B;margin-bottom:20px;line-height:1.6}
+.pf-sec-hdr{padding:10px 0 6px;border-bottom:2px solid;margin-bottom:14px;margin-top:10px}
+.pf-sec-title{font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem}
+.pf-sec-sub{font-size:0.75rem;color:#64748B;margin-top:2px}
+.pf-q{margin-bottom:18px}
+.pf-qlbl{font-size:0.88rem;font-weight:600;color:#0F0E1A;margin-bottom:8px;line-height:1.45}
+.pf-qlbl span{color:#EF4444;margin-left:2px}
+.pf-opt{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;border:1.5px solid #E2DAD0;margin-bottom:6px;cursor:pointer;transition:all 0.15s;font-size:0.83rem}
+.pf-opt:hover{border-color:#2D1B69;background:#EDE9FF}
+.pf-radio{width:14px;height:14px;border-radius:50%;border:2px solid #C4B9AA;flex-shrink:0}
+.pf-check{width:14px;height:14px;border-radius:3px;border:2px solid #C4B9AA;flex-shrink:0}
+.pf-inp{width:100%;padding:9px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.83rem;font-family:'DM Sans',sans-serif;color:#0F0E1A;outline:none;transition:border-color 0.2s}
+.pf-inp:focus{border-color:#2D1B69}
+.pf-inp::placeholder{color:#C4B9AA}
+.pf-scale{display:flex;gap:4px;flex-wrap:wrap}
+.pf-scale-n{width:32px;height:32px;border-radius:7px;border:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:600;cursor:pointer;transition:all 0.15s}
+.pf-scale-n:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
+.pf-submit{width:100%;padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.9rem;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;margin-top:8px}
+.mob-frame{width:260px;margin:0 auto;background:#fff;border-radius:22px;overflow:hidden;border:7px solid #0F0E1A;box-shadow:0 6px 24px rgba(0,0,0,0.15)}
+.mob-inner{background:#F5F0E8;min-height:420px;overflow-y:auto}
+
+/* SUCCESS MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:20px;padding:32px;width:100%;max-width:420px;text-align:center}
+.modal-icon{font-size:3rem;margin-bottom:14px;animation:bounceIn 0.5s ease}
+@keyframes bounceIn{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+.modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:8px}
+.modal-sub{font-size:0.85rem;color:#64748B;line-height:1.6;margin-bottom:20px}
+.modal-url{background:#F5F0E8;border-radius:8px;padding:10px 14px;font-size:0.78rem;font-weight:600;color:#2D1B69;margin-bottom:20px;word-break:break-all}
+.modal-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.modal-btn{padding:9px 18px;border-radius:9px;font-size:0.83rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;border:none;transition:all 0.2s}
+.modal-btn-primary{background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff}
+.modal-btn-secondary{background:#F5F0E8;color:#64748B;border:1.5px solid #E2DAD0}
+
+/* MISC */
 .sbo{position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:99;display:none}
 .sbo.open{display:block}
 .prev-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.2);z-index:190;display:none}
 .prev-overlay.open{display:block}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.8rem;font-weight:600;display:none;z-index:999;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.25)}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.8rem;font-weight:600;display:none;z-index:999;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.25)}
 .ls{position:fixed;inset:0;background:#F5F0E8;display:flex;align-items:center;justify-content:center;z-index:900}
 .sp{width:30px;height:30px;border:3px solid rgba(45,27,105,0.15);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-@media(max-width:860px){.sb{position:fixed;top:56px;left:0;bottom:0;transform:translateX(-100%);z-index:200;width:265px}.sb.open{transform:translateX(0)}.hbtn{display:flex}.content{padding:14px 16px}.prev-panel{width:100%}}
-@media(max-width:480px){.nav-title{max-width:70px}.btn-prev-toggle{display:none}}
+@media(max-width:860px){.sb{position:fixed;top:56px;left:0;bottom:0;transform:translateX(-100%);z-index:200;width:260px}.sb.open{transform:translateX(0)}.hbtn{display:flex}.content{padding:14px 16px 100px}.prev-panel{width:100%}.float-btns{right:14px;bottom:16px}}
+@media(max-width:480px){.nav-title{max-width:70px}.btn-prev-toggle,.btn-draft{display:none}}
 </style>
 </head>
 <body>
+
 <div class="ls" id="ls"><div class="sp"></div></div>
 <div class="sbo" id="sbo" onclick="closeSb()"></div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="success-modal">
+  <div class="modal-box">
+    <div class="modal-icon">🎉</div>
+    <div class="modal-title">Survey published!</div>
+    <div class="modal-sub">Your survey is now live and accepting responses.</div>
+    <div class="modal-url" id="modal-url">swoopform.com/survey/...</div>
+    <div class="modal-btns">
+      <a class="modal-btn modal-btn-primary" id="modal-view-btn" href="#" target="_blank">View survey →</a>
+      <button class="modal-btn modal-btn-secondary" onclick="closeSuccessModal()">Back to editor</button>
+      <a class="modal-btn modal-btn-secondary" href="/dashboard">Dashboard</a>
+    </div>
+  </div>
+</div>
+
+<!-- Q TYPE PICKER POPUP -->
+<div class="qpicker-overlay" id="qpicker-overlay" onclick="closeQPicker()"></div>
+<div id="qpicker-popup" style="display:none;position:fixed;bottom:70px;right:28px;background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:12px;width:280px;box-shadow:0 8px 32px rgba(15,14,26,0.15);z-index:270">
+  <div class="qp-grid">
+    <div class="qp-sec">Choice</div>
+    <button class="qp-btn" onclick="addQ('multiple')">◉ Multiple choice</button>
+    <button class="qp-btn" onclick="addQ('checkbox')">☑ Checkboxes</button>
+    <button class="qp-btn" onclick="addQ('dropdown')">▾ Dropdown</button>
+    <button class="qp-btn" onclick="addQ('yesno')">Yes / No</button>
+    <div class="qp-sec">Text</div>
+    <button class="qp-btn" onclick="addQ('text')">Short text</button>
+    <button class="qp-btn" onclick="addQ('textarea')">Long text</button>
+    <button class="qp-btn" onclick="addQ('email')">Email</button>
+    <button class="qp-btn" onclick="addQ('phone')">Phone</button>
+    <button class="qp-btn" onclick="addQ('number')">Number</button>
+    <div class="qp-sec">Scale & Date</div>
+    <button class="qp-btn" onclick="addQ('rating')">Rating 1–5</button>
+    <button class="qp-btn" onclick="addQ('scale')">Scale 1–10</button>
+    <button class="qp-btn" onclick="addQ('date')">Date</button>
+    <div class="qp-sec">Special</div>
+    <button class="qp-btn" onclick="addQ('file')">File URL</button>
+    <button class="qp-btn" onclick="addQ('pledge')">Pledge</button>
+    <button class="qp-btn" onclick="addQ('quiz')">Quiz MCQ</button>
+  </div>
+</div>
 
 <!-- NAV -->
 <div class="nav">
   <div class="nav-l">
     <button class="hbtn" onclick="openSb()"><span></span><span></span><span></span></button>
-    <a href="#" class="logo">S</a>
-    <a href="#" class="nav-back">← Dashboard</a>
+    <a href="/dashboard" class="logo">S</a>
+    <a href="/dashboard" class="nav-back">← Dashboard</a>
     <span class="nav-title" id="nav-title">New Survey</span>
   </div>
   <div class="nav-r">
-    <button class="btn-prev-toggle" onclick="togglePreview()">⬡ Preview</button>
-    <button class="btn-draft" onclick="toast2('Draft saved!')">Save draft</button>
-    <button class="btn-pub" id="pub-btn" onclick="toast2('Published! (Connect Firebase)')">Publish →</button>
+    <button class="btn-prev-toggle" onclick="togglePreview()">Preview</button>
+    <button class="btn-draft" onclick="saveDraft()">Save draft</button>
+    <button class="btn-pub" id="pub-btn" onclick="publishSurvey()">Publish →</button>
   </div>
 </div>
 
 <div class="layout">
   <!-- SIDEBAR -->
   <div class="sb" id="sidebar">
-    <div class="sb-pages">
-      <!-- PAGES GROUP -->
-      <div class="sb-grp">
-        <div class="sb-grp-hdr" onclick="togGrp('pages')">
-          <span class="sb-grp-lbl">Pages</span>
-          <span class="sb-grp-arr" id="arr-pages">▼</span>
-        </div>
-        <div class="sb-grp-body" id="grp-pages" style="max-height:400px">
-          <div class="sb-nav">
-            <button class="sb-item active" id="sn-builder" onclick="sp('builder')"><span class="sb-ico">📋</span><span class="sb-lbl">Form builder</span></button>
-            <button class="sb-item" id="sn-welcome" onclick="sp('welcome')"><span class="sb-ico">🎨</span><span class="sb-lbl">Welcome page</span><span class="premium-pill">Premium</span></button>
-            <button class="sb-item" id="sn-thankyou" onclick="sp('thankyou')"><span class="sb-ico">🙏</span><span class="sb-lbl">Thank you page</span></button>
-            <button class="sb-item" id="sn-prize" onclick="sp('prize')"><span class="sb-ico">🎁</span><span class="sb-lbl">Prize &amp; Incentive</span></button>
-            <button class="sb-item" id="sn-settings" onclick="sp('settings')"><span class="sb-ico">⚙️</span><span class="sb-lbl">Survey settings</span></button>
-            <button class="sb-item" id="sn-seo" onclick="sp('seo')"><span class="sb-ico">🔍</span><span class="sb-lbl">SEO settings</span></button>
-            <button class="sb-item" id="sn-csv" onclick="sp('csv')"><span class="sb-ico">📤</span><span class="sb-lbl">Bulk upload</span></button>
-          </div>
-        </div>
+    <!-- PAGES GROUP -->
+    <div class="sb-grp">
+      <div class="sb-grp-hdr" onclick="togGrp('pages')">
+        <span class="sb-grp-lbl">Pages</span>
+        <span class="sb-grp-arr" id="arr-pages">▼</span>
       </div>
-      <!-- QUESTIONS GROUP -->
-      <div class="sb-grp">
-        <div class="sb-grp-hdr" onclick="togGrp('qs')">
-          <span class="sb-grp-lbl">Questions &amp; Sections <span class="sb-qcount" id="qbadge" style="margin-left:4px">0</span></span>
-          <span class="sb-grp-arr" id="arr-qs">▼</span>
-        </div>
-        <div class="sb-grp-body" id="grp-qs" style="max-height:500px">
-          <div class="sb-qlist" id="sbqlist"></div>
+      <div class="sb-grp-body" id="grp-pages" style="max-height:400px">
+        <div class="sb-nav">
+          <button class="sb-item active" id="sn-builder" onclick="sp('builder')"><span class="sb-ico">📋</span><span class="sb-lbl">Form builder</span></button>
+          <button class="sb-item" id="sn-welcome" onclick="sp('welcome')"><span class="sb-ico">🎨</span><span class="sb-lbl">Welcome page</span><span class="premium-pill">Premium</span></button>
+          <button class="sb-item" id="sn-thankyou" onclick="sp('thankyou')"><span class="sb-ico">🙏</span><span class="sb-lbl">Thank you page</span></button>
+          <button class="sb-item" id="sn-prize" onclick="sp('prize')"><span class="sb-ico">🎁</span><span class="sb-lbl">Prize & Incentive</span></button>
+          <button class="sb-item" id="sn-settings" onclick="sp('settings')"><span class="sb-ico">⚙️</span><span class="sb-lbl">Survey settings</span></button>
+          <button class="sb-item" id="sn-seo" onclick="sp('seo')"><span class="sb-ico">🔍</span><span class="sb-lbl">SEO settings</span></button>
+          <button class="sb-item" id="sn-csv" onclick="sp('csv')"><span class="sb-ico">📤</span><span class="sb-lbl">Bulk upload</span></button>
         </div>
       </div>
     </div>
-    <!-- BOTTOM BUTTONS -->
-    <div class="sb-btm">
-      <button class="btn-addq" onclick="togglePicker()">＋ Add question ▾</button>
-      <button class="btn-addsec" onclick="addSection()">📌 Add section</button>
-      <div class="qpicker" id="picker">
-        <div class="qp-grid">
-          <div class="qp-sec">Choice</div>
-          <button class="qp-btn" onclick="addQ('multiple')">◉ Multiple choice</button>
-          <button class="qp-btn" onclick="addQ('checkbox')">☑ Checkboxes</button>
-          <button class="qp-btn" onclick="addQ('dropdown')">▾ Dropdown</button>
-          <button class="qp-btn" onclick="addQ('yesno')">✓ Yes / No</button>
-          <div class="qp-sec">Text</div>
-          <button class="qp-btn" onclick="addQ('text')">✏️ Short text</button>
-          <button class="qp-btn" onclick="addQ('textarea')">📝 Long text</button>
-          <button class="qp-btn" onclick="addQ('email')">📧 Email</button>
-          <button class="qp-btn" onclick="addQ('phone')">📱 Phone</button>
-          <button class="qp-btn" onclick="addQ('number')">🔢 Number</button>
-          <div class="qp-sec">Scale &amp; Date</div>
-          <button class="qp-btn" onclick="addQ('rating')">⭐ Rating 1–5</button>
-          <button class="qp-btn" onclick="addQ('scale')">📊 Scale 1–10</button>
-          <button class="qp-btn" onclick="addQ('date')">📅 Date</button>
-          <div class="qp-sec">Special</div>
-          <button class="qp-btn" onclick="addQ('file')">📎 File URL</button>
-          <button class="qp-btn" onclick="addQ('pledge')">🤝 Pledge</button>
-          <button class="qp-btn" onclick="addQ('quiz')">🎓 Quiz MCQ</button>
-        </div>
+    <!-- QUESTIONS GROUP -->
+    <div class="sb-grp" style="flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden">
+      <div class="sb-grp-hdr" onclick="togGrp('qs')">
+        <span class="sb-grp-lbl">Questions & Sections <span class="sb-qcount-badge" id="qbadge">0</span></span>
+        <span class="sb-grp-arr" id="arr-qs">▼</span>
+      </div>
+      <div class="sb-grp-body sb-qscroll" id="grp-qs" style="max-height:600px;flex:1">
+        <div class="sb-qlist" id="sbqlist"></div>
       </div>
     </div>
   </div>
@@ -379,42 +413,42 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 
     <!-- WELCOME PAGE -->
     <div class="panel" id="panel-welcome">
-      <div class="pt">🎨 Welcome page</div>
+      <div class="pt">Welcome page</div>
       <p class="ps">The first screen respondents see before starting the survey.</p>
-      <div class="p-lock" id="wlock">
-        <div class="pl-icon">🔒</div>
-        <div class="pl-title">Premium feature</div>
-        <div class="pl-desc">Welcome pages are available on Starter and above, or free for verified Students, Educators and NGOs.</div>
-        <a href="/pricing" class="pl-btn">Upgrade plan →</a>
-        <div style="margin-top:8px;font-size:0.7rem;color:#B45309">Verified? <a href="/settings" style="color:#D97706;font-weight:700">Apply in Settings →</a></div>
+      <div id="welcome-upgrade-nudge" class="upgrade-nudge" style="display:none">
+        <div class="upgrade-nudge-text"><strong>Premium feature</strong> — Welcome pages are available on Starter and above, or free for verified Students, Educators and NGOs.</div>
+        <button class="upgrade-nudge-btn" onclick="window.location.href='/pricing'">Upgrade →</button>
       </div>
-      <div id="wcontent" style="display:none">
-        <div class="pcard">
-          <div class="pcard-t">Branding</div>
+      <div class="pcard">
+        <div class="welcome-toggle-row" id="welcome-toggle-row">
+          <div><div class="sr-n">Enable welcome page</div><div class="sr-d">Show an intro screen before the first question</div></div>
+          <button class="tgl" id="tgl-welcome" onclick="togWelcome()"></button>
+        </div>
+        <div id="welcome-fields" style="display:none">
           <div class="fl"><label class="ll">Logo URL</label><input class="ii" id="w-logo" placeholder="https://yoursite.com/logo.png" oninput="prevURL('logo',this.value)"><div class="fh">Recommended: 200×60px PNG with transparent background</div><div class="url-prev" id="logo-prev"><img id="logo-prev-img" alt="" style="height:80px;object-fit:contain;background:#F5F0E8"><div class="url-prev-lbl"><span>Logo preview</span><span>200×60px</span></div></div></div>
           <div class="fl"><label class="ll">Custom headline</label><input class="ii" id="w-head" placeholder="Leave blank to use survey title"></div>
-          <div class="fl"><label class="ll">Start button text</label><input class="ii" id="w-btn" placeholder="Default: Let's go →"></div>
-        </div>
-        <div class="pcard">
-          <div class="pcard-t">Background media</div>
+          <div class="fl"><label class="ll">Start button text</label><input class="ii" id="w-btn" placeholder="Default: Let's go"></div>
           <div class="fl"><label class="ll">Background color</label><div style="display:flex;gap:8px;align-items:center"><input class="ii" id="w-bgc" placeholder="#0F0E1A" style="flex:1"><input type="color" id="w-bgcp" value="#0F0E1A" oninput="document.getElementById('w-bgc').value=this.value" style="width:38px;height:38px;border-radius:7px;border:1.5px solid #E2DAD0;cursor:pointer;padding:2px;flex-shrink:0"></div></div>
-          <div class="fl"><label class="ll">Background image URL</label><input class="ii" id="w-bgi" placeholder="Paste image URL..." oninput="prevURL('bgi',this.value)"><div class="fh">Recommended: <strong>1920×1080px</strong> — optimised for mobile, tablet and desktop</div><div class="url-prev" id="bgi-prev"><img id="bgi-prev-img" alt=""><div class="url-prev-lbl"><span>Background image preview</span><span>1920×1080px recommended</span></div></div></div>
-          <div class="fl"><label class="ll">Background video (YouTube)</label><input class="ii" id="w-bgv" placeholder="https://youtube.com/watch?v=..." oninput="prevURL('bgv',this.value)"><div class="fh">Auto-plays muted on loop. Overrides image. <strong>1920×1080px 16:9</strong> recommended</div><div class="url-prev" id="bgv-prev"><iframe id="bgv-frame" allowfullscreen style="width:100%;height:150px;border:none"></iframe><div class="url-prev-lbl"><span>Video preview</span><span>16:9 ratio</span></div></div></div>
+          <div class="fl"><label class="ll">Background image URL</label><input class="ii" id="w-bgi" placeholder="Paste image URL..." oninput="prevURL('bgi',this.value)"><div class="fh">Recommended: <strong>1920×1080px</strong></div><div class="url-prev" id="bgi-prev"><img id="bgi-prev-img" alt=""><div class="url-prev-lbl"><span>Background image</span><span>1920×1080px</span></div></div></div>
+          <div class="fl"><label class="ll">Background video (YouTube)</label><input class="ii" id="w-bgv" placeholder="https://youtube.com/watch?v=..." oninput="prevURL('bgv',this.value)"><div class="fh">Auto-plays muted. Overrides image. <strong>16:9</strong> recommended</div><div class="url-prev" id="bgv-prev"><iframe id="bgv-frame" allowfullscreen style="width:100%;height:150px;border:none"></iframe><div class="url-prev-lbl"><span>Video preview</span><span>16:9</span></div></div></div>
         </div>
       </div>
     </div>
 
     <!-- THANK YOU -->
     <div class="panel" id="panel-thankyou">
-      <div class="pt">🙏 Thank you page</div>
+      <div class="pt">Thank you page</div>
       <p class="ps">What respondents see after submitting.</p>
       <div class="pcard">
         <div class="fl"><label class="ll">Custom headline</label><input class="ii" id="ty-h" placeholder="Default: Thank you!"></div>
         <div class="fl"><label class="ll">Custom message</label><input class="ii" id="ty-m" placeholder="Default: Your response has been recorded."></div>
-        <div class="fl">
-          <label class="ll">Redirect URL <span style="font-size:0.6rem;background:#EDE9FF;color:#2D1B69;padding:1px 6px;border-radius:4px;font-weight:700;margin-left:4px">Starter+</span></label>
-          <input class="ii" id="ty-r" placeholder="https://yourwebsite.com" disabled style="opacity:0.5;cursor:not-allowed">
-          <div class="fh">Upgrade to Starter or above to redirect respondents after submission.</div>
+        <div class="sr">
+          <div><div class="sr-n">Redirect after submission <span style="font-size:0.6rem;background:#EDE9FF;color:#2D1B69;padding:1px 6px;border-radius:4px;font-weight:700;margin-left:4px">Starter+</span></div><div class="sr-d">Send respondents to a URL after submitting</div></div>
+          <button class="tgl" id="tgl-redirect" onclick="togRedirect()"></button>
+        </div>
+        <div id="redirect-field" style="display:none;margin-top:10px">
+          <input class="ii" id="ty-r" placeholder="https://yourwebsite.com">
+          <div class="fh">Respondents are sent here immediately after submitting.</div>
         </div>
         <div class="sr" style="border-bottom:none"><div><div class="sr-n">Show social share buttons</div></div><button class="tgl" id="tgl-share" onclick="this.classList.toggle('on')"></button></div>
       </div>
@@ -422,18 +456,18 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 
     <!-- PRIZE -->
     <div class="panel" id="panel-prize">
-      <div class="pt">🎁 Prize &amp; Incentive</div>
-      <p class="ps">Add a prize to boost response rates. All prizes are provided by you, not SwoopForm.</p>
+      <div class="pt">Prize & Incentive</div>
+      <p class="ps">Add a prize to boost response rates. All prizes are your responsibility to fulfil.</p>
       <div class="pcard">
-        <div class="sr"><div><div class="sr-n">Enable prize</div><div class="sr-d">Show prize badge on welcome page</div></div><button class="tgl" id="tgl-prize" onclick="togPrize()"></button></div>
+        <div class="sr"><div><div class="sr-n">Enable prize</div><div class="sr-d">Show prize details on the welcome page</div></div><button class="tgl" id="tgl-prize" onclick="togPrize()"></button></div>
         <div id="prize-f" style="display:none;margin-top:14px">
-          <div class="fl"><label class="ll">Prize description</label><input class="ii" id="p-desc" placeholder="e.g. ₹500 Amazon voucher for 3 lucky winners"></div>
+          <div class="fl"><label class="ll">Prize description</label><input class="ii" id="p-desc" placeholder="e.g. 3 lucky winners get a Rs.500 Amazon voucher"></div>
           <div class="fl"><label class="ll">Number of winners</label><input class="ii" id="p-win" type="number" min="1" placeholder="3" style="max-width:100px"></div>
           <div class="fl"><label class="ll">Winner selection</label><select class="ii" id="p-sel" style="max-width:220px"><option value="random">Random draw</option><option value="first">First N respondents</option><option value="best">Best answer score</option></select></div>
-          <div class="fl"><label class="ll">Leaderboard display</label><select class="ii" id="p-lb" style="max-width:260px"><option value="none">Don't show leaderboard</option><option value="thankyou">Top 3 on thank you page</option><option value="full">Full list in responses dashboard</option><option value="both">Both — thank you + responses</option></select></div>
+          <div class="fl"><label class="ll">Leaderboard display</label><select class="ii" id="p-lb" style="max-width:260px"><option value="none">Don't show leaderboard</option><option value="thankyou">Top 3 on thank you page</option><option value="full">Full list in responses dashboard</option><option value="both">Both</option></select></div>
           <div class="disc">
-            <div class="disc-txt">🎁 <strong>Important:</strong> All prizes and incentives are offered solely by the survey organiser. SwoopForm is not involved in prize fulfilment, selection, delivery, or any disputes. By enabling this feature, you take full responsibility for fulfilling the stated prize to winners.</div>
-            <div class="disc-row" id="disc-row" onclick="this.classList.toggle('checked')"><div class="disc-cb"></div><div class="disc-label">I understand and accept that SwoopForm bears no responsibility for prize fulfilment. I will display this notice to respondents.</div></div>
+            <div class="disc-txt"><strong>Important:</strong> All prizes are offered solely by the survey organiser. SwoopForm is not involved in prize fulfilment, selection, delivery, or any disputes. By enabling this you take full responsibility for fulfilling the stated prize.</div>
+            <div class="disc-row" id="disc-row" onclick="this.classList.toggle('checked')"><div class="disc-cb"></div><div class="disc-label">I understand and accept full responsibility for prize fulfilment. I will display this notice to respondents.</div></div>
           </div>
         </div>
       </div>
@@ -441,24 +475,24 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 
     <!-- SETTINGS -->
     <div class="panel" id="panel-settings">
-      <div class="pt">⚙️ Survey settings</div>
+      <div class="pt">Survey settings</div>
       <p class="ps">Configure how your survey behaves.</p>
       <div class="pcard">
-        <div class="fl"><label class="ll">Category</label><select class="ii" id="s-cat" style="max-width:220px"><option>✦ Other</option><option>🎓 Education</option><option>💼 Business</option><option>🏥 Health</option><option>🔬 Research</option><option>🤝 Community</option><option>📅 Events</option><option>💬 Feedback</option><option>👥 HR</option><option>⭐ Customer</option></select></div>
-        <div class="sr"><div><div class="sr-n">Display style</div><div class="sr-d">How questions show to respondents</div></div><select class="ii" style="max-width:170px;padding:6px 10px"><option>One at a time</option><option>All on one page</option></select></div>
-        <div class="sr"><div><div class="sr-n">Public survey</div><div class="sr-d">Show in SwoopForm Discover</div></div><button class="tgl" onclick="this.classList.toggle('on')"></button></div>
-        <div class="sr"><div><div class="sr-n">Collect email addresses</div></div><button class="tgl" onclick="this.classList.toggle('on')"></button></div>
-        <div class="sr"><div><div class="sr-n">One response per person</div></div><button class="tgl" onclick="this.classList.toggle('on')"></button></div>
-        <div class="sr" style="border-bottom:none"><div><div class="sr-n">Survey status</div><div class="sr-d">Close to stop accepting responses</div></div><select class="ii" style="max-width:150px;padding:6px 10px"><option>Draft</option><option>Active (open)</option><option>Closed</option></select></div>
+        <div class="fl"><label class="ll">Category</label><select class="ii" id="s-cat" style="max-width:220px"><option>Other</option><option>Education</option><option>Business</option><option>Health</option><option>Research</option><option>Community</option><option>Events</option><option>Feedback</option><option>HR</option><option>Customer</option></select></div>
+        <div class="sr"><div><div class="sr-n">Display style</div><div class="sr-d">How questions are presented to respondents</div></div><select class="ii" id="s-style" style="max-width:170px;padding:6px 10px"><option value="one">One at a time</option><option value="all">All on one page</option></select></div>
+        <div class="sr"><div><div class="sr-n">Public survey</div><div class="sr-d">Show in SwoopForm Discover</div></div><button class="tgl" id="tgl-public" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-n">Collect email addresses</div><div class="sr-d">Ask respondents for email before starting</div></div><button class="tgl" id="tgl-email" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-n">One response per person</div><div class="sr-d">Prevent duplicate submissions</div></div><button class="tgl" id="tgl-once" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr" style="border-bottom:none"><div><div class="sr-n">Survey status</div></div><select class="ii" id="s-status" style="max-width:150px;padding:6px 10px"><option value="draft">Draft</option><option value="active">Active</option><option value="closed">Closed</option></select></div>
       </div>
     </div>
 
     <!-- SEO -->
     <div class="panel" id="panel-seo">
-      <div class="pt">🔍 SEO Settings</div>
-      <p class="ps">Control how your survey appears in search engines.</p>
+      <div class="pt">SEO settings</div>
+      <p class="ps">Control how your survey appears in search engines and social sharing.</p>
       <div class="pcard">
-        <div class="fl"><label class="ll">URL Slug</label><div class="slug-row"><span class="slug-pre">swoopform.com/survey/</span><input class="ii" id="seo-slug" placeholder="my-survey" oninput="valSlug(this)" style="flex:1"><button onclick="autoSlug()" style="padding:8px 11px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.73rem;font-weight:600;cursor:pointer;flex-shrink:0">Auto</button></div><div class="slug-st" id="slug-st"></div></div>
+        <div class="fl"><label class="ll">URL Slug</label><div class="slug-row"><span class="slug-pre">swoopform.com/survey/</span><input class="ii" id="seo-slug" placeholder="my-survey" oninput="valSlug(this)" style="flex:1"><button onclick="autoSlug()" style="padding:8px 11px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.73rem;font-weight:600;cursor:pointer;flex-shrink:0;font-family:'DM Sans',sans-serif">Auto</button></div><div class="slug-st" id="slug-st"></div></div>
         <div class="fl"><label class="ll">SEO Title</label><input class="ii" id="seo-title" placeholder="Leave blank to use survey title" maxlength="60"></div>
         <div class="fl"><label class="ll">SEO Description</label><textarea class="ii" id="seo-desc" placeholder="Brief description for search engines..." rows="3" maxlength="160" style="resize:vertical"></textarea></div>
       </div>
@@ -466,194 +500,239 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 
     <!-- CSV -->
     <div class="panel" id="panel-csv">
-      <div class="pt">📤 Bulk upload questions</div>
+      <div class="pt">Bulk upload questions</div>
       <p class="ps">Upload a CSV to add multiple questions at once.</p>
-      <div class="pcard"><div class="pcard-t">Download sample CSV</div><p style="font-size:0.82rem;color:#64748B;margin-bottom:12px;line-height:1.6">Download the template, fill it in with your questions, then upload below.</p><button onclick="dlCSV()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 15px;border-radius:8px;border:1.5px solid #2D1B69;background:#EDE9FF;color:#2D1B69;font-size:0.77rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer">⬇ Download sample CSV</button><div style="margin-top:12px;font-size:0.73rem;color:#94A3B8;line-height:1.7"><strong style="color:#64748B">Columns:</strong> type, question, option1, option2, option3, option4, correct, required<br><strong style="color:#64748B">Types:</strong> multiple, checkbox, text, textarea, email, phone, number, rating, scale, date, yesno, quiz</div></div>
-      <div class="pcard"><div class="pcard-t">Upload CSV</div><div class="csv-drop" id="csv-drop" onclick="document.getElementById('csvf').click()" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="csvDrop(event)"><div style="font-size:1.8rem;margin-bottom:7px">📂</div><div style="font-size:0.84rem;font-weight:600;color:#64748B;margin-bottom:3px">Click to upload or drag &amp; drop</div><div style="font-size:0.7rem;color:#94A3B8">CSV files only · Max 500 questions</div></div><input type="file" id="csvf" accept=".csv" style="display:none" onchange="handleCSV(this)"><div id="csv-res" style="margin-top:9px;font-size:0.8rem;color:#64748B"></div></div>
+      <div class="pcard"><div class="pcard-t">Download sample CSV</div><p style="font-size:0.82rem;color:#64748B;margin-bottom:12px;line-height:1.6">Download the template, fill it in, then upload below.</p><button onclick="dlCSV()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 15px;border-radius:8px;border:1.5px solid #2D1B69;background:#EDE9FF;color:#2D1B69;font-size:0.77rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer">Download sample CSV</button><div style="margin-top:12px;font-size:0.73rem;color:#94A3B8;line-height:1.7"><strong style="color:#64748B">Columns:</strong> type, question, option1, option2, option3, option4, correct, required<br><strong style="color:#64748B">Types:</strong> multiple, checkbox, text, textarea, email, phone, number, rating, scale, date, yesno, quiz</div></div>
+      <div class="pcard"><div class="pcard-t">Upload CSV</div><div class="csv-drop" id="csv-drop" onclick="document.getElementById('csvf').click()" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="csvDrop(event)"><div style="font-size:1.8rem;margin-bottom:7px">📂</div><div style="font-size:0.84rem;font-weight:600;color:#64748B;margin-bottom:3px">Click to upload or drag & drop</div><div style="font-size:0.7rem;color:#94A3B8">CSV files only</div></div><input type="file" id="csvf" accept=".csv" style="display:none" onchange="handleCSV(this)"><div id="csv-res" style="margin-top:9px;font-size:0.8rem;color:#64748B"></div></div>
     </div>
 
   </div><!-- end content -->
 </div><!-- end layout -->
 
+<!-- FLOATING BUTTONS -->
+<div class="float-btns" id="float-btns">
+  <button class="float-btn float-btn-sec" onclick="addSection()">+ Add section</button>
+  <button class="float-btn float-btn-q" onclick="toggleQPicker()">+ Add question</button>
+</div>
+
 <!-- PREVIEW PANEL -->
 <div class="prev-overlay" id="prev-overlay" onclick="closePreview()"></div>
 <div class="prev-panel" id="prev-panel">
   <div class="prev-hdr">
-    <span class="prev-title">👁 Live Preview</span>
+    <span class="prev-title">Live Preview</span>
     <div class="prev-tabs">
       <button class="prev-tab active" id="ptab-d" onclick="setPM('desktop')">Desktop</button>
       <button class="prev-tab" id="ptab-m" onclick="setPM('mobile')">Mobile</button>
     </div>
     <button class="prev-close" onclick="closePreview()">✕</button>
   </div>
-  <div class="prev-body" id="prev-body"><div style="text-align:center;color:#94A3B8;font-size:0.8rem;padding:20px">Add questions to see a preview</div></div>
+  <div class="prev-body" id="prev-body"></div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<script>
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,collection,addDoc,doc,updateDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
 // ── CONSTANTS ─────────────────────────────────────────
 const COLORS=['#2D1B69','#D97706','#0D9B8A','#DC2626','#2563EB','#7C3AED','#047857','#B45309'];
 const LETTERS=['A','B','C','D','E','F','G','H'];
-const QTYPES={multiple:'◉ Multiple choice',checkbox:'☑ Checkboxes',dropdown:'▾ Dropdown',yesno:'✓ Yes / No',text:'✏️ Short text',textarea:'📝 Long text',email:'📧 Email',phone:'📱 Phone',number:'🔢 Number',rating:'⭐ Rating 1–5',scale:'📊 Scale 1–10',date:'📅 Date',file:'📎 File URL',pledge:'🤝 Pledge',quiz:'🎓 Quiz MCQ'};
-const PH={multiple:'e.g. How satisfied are you with our service?',checkbox:'e.g. Which features do you use regularly?',dropdown:'e.g. Which country are you from?',yesno:'e.g. Would you recommend us to a friend?',text:'e.g. What is your full name?',textarea:'e.g. Describe your experience in detail',email:'e.g. What is your email address?',phone:'e.g. What is your phone number?',number:'e.g. How many employees does your company have?',rating:'e.g. Rate your overall experience (1=Poor, 5=Excellent)',scale:'e.g. How likely are you to recommend us? (1=Not likely, 10=Very likely)',date:'e.g. What is your date of birth?',file:'e.g. Paste a link to your portfolio or file',pledge:'e.g. I pledge to reduce my plastic usage by 50% this year',quiz:'e.g. What is the capital of India?'};
+const QTYPES={multiple:'Multiple choice',checkbox:'Checkboxes',dropdown:'Dropdown',yesno:'Yes / No',text:'Short text',textarea:'Long text',email:'Email',phone:'Phone',number:'Number',rating:'Rating 1–5',scale:'Scale 1–10',date:'Date',file:'File URL',pledge:'Pledge',quiz:'Quiz MCQ'};
+const PH={multiple:'e.g. How satisfied are you with our service?',checkbox:'e.g. Which features do you use regularly?',dropdown:'e.g. Which country are you from?',yesno:'e.g. Would you recommend us to a friend?',text:'e.g. What is your full name?',textarea:'e.g. Describe your experience in detail',email:'e.g. What is your email address?',phone:'e.g. What is your phone number?',number:'e.g. How many employees does your company have?',rating:'e.g. Rate your overall experience (1=Poor, 5=Excellent)',scale:'e.g. How likely are you to recommend us? (1=Not likely, 10=Very likely)',date:'e.g. What is your date of birth?',file:'e.g. Paste a link to your portfolio or resume',pledge:'e.g. I pledge to reduce my plastic usage by 50% this year',quiz:'e.g. What is the capital of India?'};
 
 // ── STATE ─────────────────────────────────────────────
-// items array — each item is either {kind:'sec',...} or {kind:'q',...}
-// Sections act as dividers — questions after a section belong to it visually
-let items = [];
-let prevOpen = false;
-let prevMode = 'desktop';
-let pickerOpen = false;
-let grpOpen = {pages:true, qs:true};
-let dragSrc = null; // index being dragged
-let userPlan = 'free'; // change to 'starter' to test premium features
+let items=[];
+let U=null;
+let SID=null;
+let prevOpen=false;
+let prevMode='desktop';
+let qPickerOpen=false;
+let grpOpen={pages:true,qs:true};
+let dragSrc=null;
+let userPlan='free';
+let welcomeOn=false;
+let redirectOn=false;
 
-// ── INIT ──────────────────────────────────────────────
-window.onload = function(){
-  if(userPlan !== 'free'){
-    document.getElementById('wlock').style.display = 'none';
-    document.getElementById('wcontent').style.display = 'block';
-    const r = document.getElementById('ty-r');
-    r.disabled = false; r.style.opacity = '1'; r.style.cursor = 'text';
-  }
-  // Start with one empty MCQ question
+// ── AUTH ──────────────────────────────────────────────
+onAuthStateChanged(auth,u=>{
+  if(!u){window.location.href='/login';return}
+  U=u;
+  setupWelcomeForPlan();
   items.push(mkQ('multiple'));
   renderAll();
-  document.getElementById('ls').style.display = 'none';
-};
+  document.getElementById('ls').style.display='none';
+});
+
+function setupWelcomeForPlan(){
+  const isPaid=userPlan!=='free';
+  const row=document.getElementById('welcome-toggle-row');
+  const nudge=document.getElementById('welcome-upgrade-nudge');
+  if(!isPaid){
+    row.classList.add('welcome-locked');
+    nudge.style.display='flex';
+  }
+}
 
 // ── ITEM FACTORIES ────────────────────────────────────
 function mkQ(type){
-  return{kind:'q',id:'q'+Date.now()+Math.random().toString(36).slice(2,5),type,text:'',options:['',''],correctIndex:-1,required:false,hint:'',logic:[],mediaUrl:'',mediaLayout:'top'};
+  return{kind:'q',id:'q'+Date.now()+Math.random().toString(36).slice(2,5),type,text:'',options:['',''],correctIndex:-1,required:false,sectionId:null,mediaUrl:'',mediaLayout:'top',logic:[]};
 }
 function mkSec(){
-  const colorIdx = items.filter(i=>i.kind==='sec').length % COLORS.length;
-  return{kind:'sec',id:'s'+Date.now()+Math.random().toString(36).slice(2,4),title:'',subtitle:'',color:COLORS[colorIdx],mode:'one'};
+  const ci=items.filter(i=>i.kind==='sec').length%COLORS.length;
+  return{kind:'sec',id:'s'+Date.now()+Math.random().toString(36).slice(2,4),title:'',subtitle:'',color:COLORS[ci],mode:'one'};
 }
 
 // ── PANEL NAV ─────────────────────────────────────────
-window.sp = function(p){
+window.sp=function(p){
   syncDOM();
   document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(x=>x.classList.remove('active'));
   document.getElementById('panel-'+p).classList.add('active');
-  const sn = document.getElementById('sn-'+p);
-  if(sn) sn.classList.add('active');
+  document.getElementById('sn-'+p)?.classList.add('active');
+  // Show/hide float buttons only on builder
+  document.getElementById('float-btns').style.display=p==='builder'?'flex':'none';
   closeSb();
 };
-window.togGrp = function(g){
-  grpOpen[g] = !grpOpen[g];
-  const body = document.getElementById('grp-'+g);
-  const arr = document.getElementById('arr-'+g);
-  if(!body||!arr) return;
-  body.style.maxHeight = grpOpen[g] ? (g==='qs'?'500px':'400px') : '0';
-  arr.classList.toggle('closed', !grpOpen[g]);
+window.togGrp=function(g){
+  grpOpen[g]=!grpOpen[g];
+  const body=document.getElementById('grp-'+g);
+  const arr=document.getElementById('arr-'+g);
+  if(!body||!arr)return;
+  body.style.maxHeight=grpOpen[g]?(g==='qs'?'600px':'400px'):'0px';
+  arr.classList.toggle('closed',!grpOpen[g]);
 };
-window.openSb = ()=>{document.getElementById('sidebar').classList.add('open');document.getElementById('sbo').classList.add('open')};
-window.closeSb = ()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('sbo').classList.remove('open')};
+window.openSb=()=>{document.getElementById('sidebar').classList.add('open');document.getElementById('sbo').classList.add('open')};
+window.closeSb=()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('sbo').classList.remove('open')};
 
-// ── PICKER ────────────────────────────────────────────
-window.togglePicker = function(){
-  pickerOpen = !pickerOpen;
-  document.getElementById('picker').classList.toggle('open', pickerOpen);
+// ── Q PICKER ──────────────────────────────────────────
+window.toggleQPicker=function(){
+  qPickerOpen=!qPickerOpen;
+  const popup=document.getElementById('qpicker-popup');
+  const overlay=document.getElementById('qpicker-overlay');
+  popup.style.display=qPickerOpen?'block':'none';
+  overlay.classList.toggle('open',qPickerOpen);
+};
+window.closeQPicker=function(){
+  qPickerOpen=false;
+  document.getElementById('qpicker-popup').style.display='none';
+  document.getElementById('qpicker-overlay').classList.remove('open');
 };
 
-// ── ADD / DELETE ──────────────────────────────────────
-window.addQ = function(type){
-  pickerOpen = false;
-  document.getElementById('picker').classList.remove('open');
-  const q = mkQ(type);
+// ── ADD ITEMS ─────────────────────────────────────────
+window.addQ=function(type){
+  closeQPicker();
+  const q=mkQ(type);
   items.push(q);
-  renderAll(); sp('builder');
+  renderAll();sp('builder');
   setTimeout(()=>{const el=document.getElementById('qi-'+q.id);if(el){el.focus();el.scrollIntoView({behavior:'smooth',block:'center'})}},90);
 };
-window.addSection = function(){
-  const s = mkSec();
+window.addSection=function(){
+  const s=mkSec();
   items.push(s);
-  renderAll(); sp('builder');
+  renderAll();sp('builder');
   setTimeout(()=>{const el=document.getElementById('sti-'+s.id);if(el){el.focus();el.scrollIntoView({behavior:'smooth',block:'center'})}},90);
 };
-window.delItem = function(id){
+window.delItem=function(id){
   syncDOM();
-  const qs = items.filter(i=>i.kind==='q');
-  if(qs.length <= 1 && items.find(i=>i.id===id)?.kind==='q'){toast2('Need at least 1 question');return}
-  items = items.filter(i=>i.id!==id);
+  const qs=items.filter(i=>i.kind==='q');
+  if(qs.length<=1&&items.find(i=>i.id===id)?.kind==='q'){toast2('Need at least 1 question');return}
+  items=items.filter(i=>i.id!==id);
   renderAll();
 };
-
-// ── CHANGE Q TYPE ─────────────────────────────────────
-window.chType = function(id, type){
+window.moveItem=function(id,dir){
   syncDOM();
-  const q = items.find(i=>i.id===id);
-  if(q){q.type=type;if(!q.options?.length)q.options=['',''];renderAll()}
-};
-
-// ── MOVE UP / DOWN ────────────────────────────────────
-window.moveItem = function(id, dir){
-  syncDOM();
-  const idx = items.findIndex(i=>i.id===id);
-  if(dir==='up' && idx>0){[items[idx],items[idx-1]]=[items[idx-1],items[idx]]}
-  else if(dir==='down' && idx<items.length-1){[items[idx],items[idx+1]]=[items[idx+1],items[idx]]}
+  const idx=items.findIndex(i=>i.id===id);
+  if(dir==='up'&&idx>0)[items[idx],items[idx-1]]=[items[idx-1],items[idx]];
+  else if(dir==='down'&&idx<items.length-1)[items[idx],items[idx+1]]=[items[idx+1],items[idx]];
   renderAll();
   setTimeout(()=>{const el=document.getElementById('qcard-'+id)||document.getElementById('seccard-'+id);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'})},80);
 };
 
-// ── OPTIONS ───────────────────────────────────────────
-window.addOpt = function(id){
+// ── SECTION ASSIGN ────────────────────────────────────
+window.assignSec=function(qid,secId){
   syncDOM();
-  const q=items.find(i=>i.id===id);
-  if(q && q.options.length<8){q.options.push('');renderAll();setTimeout(()=>{const os=document.querySelectorAll('.oi-'+id);if(os.length)os[os.length-1].focus()},60)}
-};
-window.rmOpt = function(id, i){
-  syncDOM();
-  const q=items.find(i2=>i2.id===id);
-  if(q && q.options.length>2){q.options.splice(i,1);if(q.correctIndex===i)q.correctIndex=-1;renderAll()}
-  else toast2('Need at least 2 options');
-};
-window.mkOK = function(id, i){
-  syncDOM();
-  const q=items.find(i2=>i2.id===id);
-  if(q){q.correctIndex=q.correctIndex===i?-1:i;renderAll()}
-};
-window.togReq = function(id){
-  const q=items.find(i=>i.id===id);
-  if(q){q.required=!q.required;document.getElementById('req-'+id)?.classList.toggle('on',q.required)}
+  const q=items.find(i=>i.id===qid);
+  if(!q)return;
+  q.sectionId=secId==='none'?null:secId;
+  renderAll();
 };
 
+// ── OPTIONS ───────────────────────────────────────────
+window.addOpt=function(id){syncDOM();const q=items.find(i=>i.id===id);if(q&&q.options.length<8){q.options.push('');renderAll();setTimeout(()=>{const os=document.querySelectorAll('.oi-'+id);if(os.length)os[os.length-1].focus()},60)}};
+window.rmOpt=function(id,i){syncDOM();const q=items.find(i2=>i2.id===id);if(q&&q.options.length>2){q.options.splice(i,1);if(q.correctIndex===i)q.correctIndex=-1;renderAll()}else toast2('Need at least 2 options')};
+window.mkOK=function(id,i){syncDOM();const q=items.find(i2=>i2.id===id);if(q){q.correctIndex=q.correctIndex===i?-1:i;renderAll()}};
+window.togReq=function(id){const q=items.find(i=>i.id===id);if(q){q.required=!q.required;document.getElementById('req-'+id)?.classList.toggle('on',q.required)}};
+window.chType=function(id,type){syncDOM();const q=items.find(i=>i.id===id);if(q){q.type=type;if(!q.options?.length)q.options=['',''];renderAll()}};
+
 // ── SECTION MODE ──────────────────────────────────────
-window.setSecMode = function(id, mode){
+window.setSecMode=function(id,mode){
   const s=items.find(i=>i.id===id);if(!s)return;s.mode=mode;
   const card=document.getElementById('seccard-'+id);
   if(card)card.querySelectorAll('.sec-mode-btn').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
 };
 
+// ── Q TABS ────────────────────────────────────────────
+window.showQTab=function(id,tab){
+  const card=document.getElementById('qcard-'+id);if(!card)return;
+  card.querySelectorAll('.q-tab').forEach(t=>t.classList.remove('active'));
+  card.querySelectorAll('.qtab-p').forEach(p=>{p.style.display='none'});
+  card.querySelector(`.q-tab[data-tab="${tab}"]`)?.classList.add('active');
+  const tp=card.querySelector(`.qtab-p[data-tab="${tab}"]`);if(tp)tp.style.display='block';
+};
+
 // ── LOGIC ─────────────────────────────────────────────
-window.addRule = function(id){syncDOM();const q=items.find(i=>i.id===id);if(q){q.logic.push({id:'r'+Date.now(),condType:'ALL',conditions:[{qid:id,op:'is',val:''}],action:'skip',target:''});renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
-window.delRule = function(id,rid){syncDOM();const q=items.find(i=>i.id===id);if(q){q.logic=q.logic.filter(r=>r.id!==rid);renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
-window.setCondType = function(id,rid,ct){const q=items.find(i=>i.id===id);const r=q&&q.logic.find(r=>r.id===rid);if(r){r.condType=ct;renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
-window.addCond = function(id,rid){syncDOM();const q=items.find(i=>i.id===id);const r=q&&q.logic.find(r=>r.id===rid);if(r){r.conditions.push({qid:id,op:'is',val:''});renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
-window.rmCond = function(id,rid,ci){syncDOM();const q=items.find(i=>i.id===id);const r=q&&q.logic.find(r=>r.id===rid);if(r&&r.conditions.length>1){r.conditions.splice(ci,1);renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
-window.showQTab = function(id, tab){const c=document.getElementById('qcard-'+id);if(!c)return;c.querySelectorAll('.q-tab').forEach(t=>t.classList.remove('active'));c.querySelectorAll('.qtab-panel').forEach(p=>p.classList.remove('active'));c.querySelector('.q-tab[data-tab="'+tab+'"]')?.classList.add('active');c.querySelector('.qtab-panel[data-tab="'+tab+'"]')?.classList.add('active')};
+window.addRule=function(id){syncDOM();const q=items.find(i=>i.id===id);if(q){q.logic.push({id:'r'+Date.now(),condType:'ALL',conditions:[{qid:'',op:'is',val:''}],action:'skip',target:''});renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
+window.delRule=function(id,rid){syncDOM();const q=items.find(i=>i.id===id);if(q){q.logic=q.logic.filter(r=>r.id!==rid);renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
+window.setCondType=function(id,rid,ct){const q=items.find(i=>i.id===id);const r=q?.logic.find(r=>r.id===rid);if(r){r.condType=ct;renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
+window.addCond=function(id,rid){syncDOM();const q=items.find(i=>i.id===id);const r=q?.logic.find(r=>r.id===rid);if(r){r.conditions.push({qid:'',op:'is',val:''});renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
+window.rmCond=function(id,rid,ci){syncDOM();const q=items.find(i=>i.id===id);const r=q?.logic.find(r=>r.id===rid);if(r&&r.conditions.length>1){r.conditions.splice(ci,1);renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
 
 // ── MEDIA ─────────────────────────────────────────────
-window.prevMedia = function(id, url){
-  const q=items.find(i=>i.id===id);if(!q)return;q.mediaUrl=url;
-  const el=document.getElementById('mprev-'+id);if(!el)return;
-  if(!url){el.innerHTML='No media added';return}
-  if(url.includes('youtube')||url.includes('youtu.be')){const m=url.match(/(?:v=|youtu\.be\/)([^&\s]+)/);if(m)el.innerHTML=`<img src="https://img.youtube.com/vi/${m[1]}/0.jpg" style="width:100%;max-height:120px;object-fit:cover">`}
-  else el.innerHTML=`<img src="${url}" style="width:100%;max-height:120px;object-fit:cover" onerror="this.parentElement.innerHTML='Could not load image'">`;
+window.fetchMedia=function(id){
+  const inp=document.getElementById('murl-'+id);if(!inp)return;
+  const url=inp.value.trim();
+  const q=items.find(i=>i.id===id);if(q)q.mediaUrl=url;
+  const box=document.getElementById('mprev-'+id);if(!box)return;
+  if(!url){box.innerHTML='<span style="color:#C4B9AA;font-size:0.8rem">No media added</span>';return}
+  if(url.includes('youtube.com')||url.includes('youtu.be')){
+    const m=url.match(/(?:v=|youtu\.be\/)([^&\s]+)/);
+    if(m)box.innerHTML=`<iframe src="https://www.youtube.com/embed/${m[1]}" allowfullscreen style="width:100%;height:160px;border:none"></iframe>`;
+    else box.innerHTML='<span style="color:#EF4444;font-size:0.8rem">Could not parse YouTube URL</span>';
+  } else {
+    box.innerHTML=`<img src="${url}" style="width:100%;max-height:160px;object-fit:cover" onerror="this.parentElement.innerHTML='<span style=color:#EF4444;font-size:0.8rem>Could not load image</span>'">`;
+  }
 };
-window.setML = function(id, layout, btn){
-  const q=items.find(i=>i.id===id);if(!q)return;q.mediaLayout=layout;
-  btn.closest('.media-layout-row').querySelectorAll('.media-layout-btn').forEach(b=>b.classList.remove('active'));
+window.clearMedia=function(id){
+  const q=items.find(i=>i.id===id);if(q)q.mediaUrl='';
+  const inp=document.getElementById('murl-'+id);if(inp)inp.value='';
+  const box=document.getElementById('mprev-'+id);if(box)box.innerHTML='<span style="color:#C4B9AA;font-size:0.8rem">No media added</span>';
+  toast2('Media removed');
+};
+window.setML=function(id,layout,btn){
+  const q=items.find(i=>i.id===id);if(q)q.mediaLayout=layout;
+  btn.closest('.media-layout-row').querySelectorAll('.ml-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
 };
-window.clearMedia = function(id){
-  const q=items.find(i=>i.id===id);if(!q)return;q.mediaUrl='';
-  const inp=document.getElementById('murl-'+id);if(inp)inp.value='';
-  const el=document.getElementById('mprev-'+id);if(el)el.innerHTML='No media added';
-  toast2('Media removed');
+
+// ── WELCOME / REDIRECT TOGGLES ────────────────────────
+window.togWelcome=function(){
+  if(userPlan==='free'){toast2('Upgrade to enable welcome page');return}
+  welcomeOn=!welcomeOn;
+  document.getElementById('tgl-welcome').classList.toggle('on',welcomeOn);
+  document.getElementById('welcome-fields').style.display=welcomeOn?'block':'none';
+};
+window.togRedirect=function(){
+  redirectOn=!redirectOn;
+  document.getElementById('tgl-redirect').classList.toggle('on',redirectOn);
+  document.getElementById('redirect-field').style.display=redirectOn?'block':'none';
+  if(redirectOn&&userPlan==='free'){toast2('Upgrade to Starter to use redirect');redirectOn=false;document.getElementById('tgl-redirect').classList.remove('on');document.getElementById('redirect-field').style.display='none'}
 };
 
 // ── SYNC DOM → STATE ──────────────────────────────────
@@ -663,15 +742,15 @@ function syncDOM(){
       const a=document.getElementById('qi-'+item.id);if(a)item.text=a.value;
       const os=document.querySelectorAll('.oi-'+item.id);if(os.length)item.options=Array.from(os).map(e=>e.value);
       const mu=document.getElementById('murl-'+item.id);if(mu)item.mediaUrl=mu.value;
-      // sync logic
+      // sync logic dropdowns
       item.logic.forEach(rule=>{
         rule.conditions.forEach((c,ci)=>{
-          const qa=document.getElementById('cq-'+rule.id+'-'+ci);if(qa)c.qid=qa.value;
-          const ob=document.getElementById('co-'+rule.id+'-'+ci);if(ob)c.op=ob.value;
-          const ov=document.getElementById('cv-'+rule.id+'-'+ci);if(ov)c.val=ov.value;
+          const qa=document.getElementById('lcq-'+rule.id+'-'+ci);if(qa)c.qid=qa.value;
+          const ob=document.getElementById('lco-'+rule.id+'-'+ci);if(ob)c.op=ob.value;
+          const ov=document.getElementById('lcv-'+rule.id+'-'+ci);if(ov)c.val=ov.value;
         });
-        const act=document.getElementById('act-'+rule.id);if(act)rule.action=act.value;
-        const tgt=document.getElementById('tgt-'+rule.id);if(tgt)rule.target=tgt.value;
+        const act=document.getElementById('lact-'+rule.id);if(act)rule.action=act.value;
+        const tgt=document.getElementById('ltgt-'+rule.id);if(tgt)rule.target=tgt.value;
       });
     }
     if(item.kind==='sec'){
@@ -683,125 +762,79 @@ function syncDOM(){
 
 // ── DRAG AND DROP ─────────────────────────────────────
 function setupDrag(){
-  const cards = document.querySelectorAll('.q-card[draggable], .sec-card[draggable]');
-  cards.forEach(card=>{
-    card.addEventListener('dragstart',e=>{
-      dragSrc = card.dataset.id;
-      card.classList.add('dragging');
-      e.dataTransfer.effectAllowed='move';
-      e.dataTransfer.setData('text/plain', card.dataset.id);
-    });
-    card.addEventListener('dragend',()=>{
-      card.classList.remove('dragging');
-      document.querySelectorAll('.drag-over-top,.drag-over-bot').forEach(el=>{el.classList.remove('drag-over-top','drag-over-bot')});
-      dragSrc = null;
-    });
-    card.addEventListener('dragover',e=>{
-      e.preventDefault();
-      if(!dragSrc || dragSrc === card.dataset.id) return;
-      const rect = card.getBoundingClientRect();
-      const mid = rect.top + rect.height/2;
-      document.querySelectorAll('.drag-over-top,.drag-over-bot').forEach(el=>{el.classList.remove('drag-over-top','drag-over-bot')});
-      if(e.clientY < mid) card.classList.add('drag-over-top');
-      else card.classList.add('drag-over-bot');
-    });
-    card.addEventListener('dragleave',()=>{
-      card.classList.remove('drag-over-top','drag-over-bot');
-    });
+  document.querySelectorAll('[draggable="true"]').forEach(card=>{
+    card.addEventListener('dragstart',e=>{dragSrc=card.dataset.id;card.classList.add('dragging');e.dataTransfer.effectAllowed='move'});
+    card.addEventListener('dragend',()=>{card.classList.remove('dragging');document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));dragSrc=null});
+    card.addEventListener('dragover',e=>{e.preventDefault();if(dragSrc&&dragSrc!==card.dataset.id){document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));card.classList.add('drag-over')}});
+    card.addEventListener('dragleave',()=>card.classList.remove('drag-over'));
     card.addEventListener('drop',e=>{
-      e.preventDefault();
-      if(!dragSrc || dragSrc === card.dataset.id) return;
-      const rect = card.getBoundingClientRect();
-      const mid = rect.top + rect.height/2;
-      const insertBefore = e.clientY < mid;
+      e.preventDefault();card.classList.remove('drag-over');
+      if(!dragSrc||dragSrc===card.dataset.id)return;
       syncDOM();
-      const fromIdx = items.findIndex(i=>i.id===dragSrc);
-      const toIdx = items.findIndex(i=>i.id===card.dataset.id);
-      if(fromIdx<0||toIdx<0) return;
-      const [moved] = items.splice(fromIdx,1);
-      const newIdx = items.findIndex(i=>i.id===card.dataset.id);
-      items.splice(insertBefore ? newIdx : newIdx+1, 0, moved);
-      card.classList.remove('drag-over-top','drag-over-bot');
+      const fi=items.findIndex(i=>i.id===dragSrc);
+      const ti=items.findIndex(i=>i.id===card.dataset.id);
+      if(fi<0||ti<0)return;
+      const [moved]=items.splice(fi,1);
+      const ni=items.findIndex(i=>i.id===card.dataset.id);
+      const rect=card.getBoundingClientRect();
+      items.splice(e.clientY<rect.top+rect.height/2?ni:ni+1,0,moved);
       renderAll();
     });
   });
 }
 
-// ── RENDER SIDEBAR Q LIST ─────────────────────────────
+// ── RENDER SIDEBAR ────────────────────────────────────
 function renderSB(){
-  let qn = 0;
-  let currentSecColor = null;
-  const html = items.map((item,idx)=>{
+  let qn=0;
+  const secs=items.filter(i=>i.kind==='sec');
+  document.getElementById('qbadge').textContent=items.filter(i=>i.kind==='q').length;
+  document.getElementById('sbqlist').innerHTML=items.map(item=>{
     if(item.kind==='sec'){
-      currentSecColor = item.color;
-      return `<div class="sb-section-item" onclick="goItem('${item.id}')">
-        <span class="sb-drag" style="color:#C4B9AA;font-size:0.72rem">⠿</span>
-        <div class="sb-secdot" style="background:${item.color}"></div>
-        <span class="sb-sectext">${eh(item.title)||'New Section'}</span>
-      </div>`;
+      return `<div class="sb-secrow" onclick="goItem('${item.id}')"><div class="sb-secdot" style="background:${item.color}"></div><span class="sb-sectext">${eh(item.title)||'New Section'}</span></div>`;
     } else {
       qn++;
-      const color = currentSecColor||'#64748B';
-      return `<div class="sb-qitem" onclick="goItem('${item.id}')">
-        <span class="sb-drag">⠿</span>
-        <div class="sb-qnum" style="background:${color}">${qn}</div>
-        <div class="sb-qtext">${eh(item.text)||'Untitled'}</div>
-        <span class="sb-qtype">${item.type}</span>
-      </div>`;
+      const sec=secs.find(s=>s.id===item.sectionId);
+      const color=sec?sec.color:'#94A3B8';
+      const indent=sec?'margin-left:12px;':'';
+      return `<div class="sb-qitem" style="${indent}" onclick="goItem('${item.id}')"><span class="sb-drag">⠿</span><div class="sb-qnum" style="background:${color}">${qn}</div><div class="sb-qtext">${eh(item.text)||'Untitled'}</div><span class="sb-qtype">${item.type}</span></div>`;
     }
   }).join('');
-  document.getElementById('sbqlist').innerHTML = html;
-  document.getElementById('qbadge').textContent = qn;
 }
-window.goItem = function(id){
-  sp('builder');
-  setTimeout(()=>{
-    const el = document.getElementById('qcard-'+id)||document.getElementById('seccard-'+id);
-    if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
-  },80);
-  closeSb();
-};
+window.goItem=function(id){sp('builder');setTimeout(()=>{const el=document.getElementById('qcard-'+id)||document.getElementById('seccard-'+id);if(el)el.scrollIntoView({behavior:'smooth',block:'center'})},80);closeSb()};
 
-// ── RENDER MAIN CARDS ─────────────────────────────────
+// ── RENDER CARDS ──────────────────────────────────────
 function renderCards(){
-  let qn = 0;
-  let currentSecColor = null;
-  const allQs = items.filter(i=>i.kind==='q');
+  const secs=items.filter(i=>i.kind==='sec');
+  const allQs=items.filter(i=>i.kind==='q');
+  let qn=0;
 
-  const html = items.map((item, idx)=>{
-    const isFirst = idx===0;
-    const isLast = idx===items.length-1;
-
-    if(item.kind==='sec'){
-      currentSecColor = item.color;
-      return renderSecCard(item, isFirst, isLast);
-    } else {
-      qn++;
-      const color = currentSecColor||'#64748B';
-      const indented = currentSecColor !== null;
-      return renderQCard(item, qn, color, isFirst, isLast, indented, allQs);
-    }
+  document.getElementById('qrender').innerHTML=items.map((item,idx)=>{
+    const isFirst=idx===0,isLast=idx===items.length-1;
+    if(item.kind==='sec') return renderSecCard(item,isFirst,isLast);
+    qn++;
+    const sec=secs.find(s=>s.id===item.sectionId);
+    const color=sec?sec.color:'#94A3B8';
+    const indented=!!sec;
+    return renderQCard(item,qn,color,isFirst,isLast,indented,allQs,secs);
   }).join('');
-
-  document.getElementById('qrender').innerHTML = html;
   setupDrag();
 }
 
-function renderSecCard(s, isFirst, isLast){
+function renderSecCard(s,isFirst,isLast){
   return `<div class="sec-card" id="seccard-${s.id}" data-id="${s.id}" draggable="true">
-    <div class="sec-bar" style="background:${s.color}"></div>
+    <div class="sec-top-bar" style="background:${s.color}"></div>
     <div class="sec-body">
-      <span class="sec-drag">⠿</span>
+      <span class="sec-drag-h">⠿</span>
       <div class="sec-dot" style="background:${s.color}"></div>
       <input class="sec-title-inp" id="sti-${s.id}" value="${eh(s.title)}" placeholder="Section title e.g. Personal Information"
         oninput="items.find(i=>i.id==='${s.id}').title=this.value">
-      <div class="q-btns">
-        <button class="q-btn" onclick="moveItem('${s.id}','up')" ${isFirst?'disabled':''} title="Move up">↑</button>
-        <button class="q-btn" onclick="moveItem('${s.id}','down')" ${isLast?'disabled':''} title="Move down">↓</button>
-        <button class="q-btn del" onclick="delItem('${s.id}')" title="Delete section">✕</button>
+      <div class="item-btns">
+        <button class="ibtn" onclick="moveItem('${s.id}','up')" ${isFirst?'disabled':''}>↑</button>
+        <button class="ibtn" onclick="moveItem('${s.id}','down')" ${isLast?'disabled':''}>↓</button>
+        <button class="ibtn del" onclick="delItem('${s.id}')">✕</button>
       </div>
     </div>
-    <input class="sec-subtitle-inp" id="ssi-${s.id}" value="${eh(s.subtitle||'')}" placeholder="Subtitle (optional)">
+    <input class="sec-sub-inp" id="ssi-${s.id}" value="${eh(s.subtitle||'')}" placeholder="Subtitle (optional)">
     <div class="sec-mode-row">
       <button class="sec-mode-btn${s.mode==='one'?' active':''}" data-mode="one" onclick="setSecMode('${s.id}','one')">One at a time</button>
       <button class="sec-mode-btn${s.mode==='all'?' active':''}" data-mode="all" onclick="setSecMode('${s.id}','all')">All on one page</button>
@@ -810,24 +843,26 @@ function renderSecCard(s, isFirst, isLast){
   </div>`;
 }
 
-function renderQCard(q, qn, color, isFirst, isLast, indented, allQs){
-  const hasO = ['multiple','checkbox','dropdown','quiz'].includes(q.type);
-  const hasLogic = q.logic && q.logic.length > 0;
-  const hasMedia = !!q.mediaUrl;
+function renderQCard(q,qn,color,isFirst,isLast,indented,allQs,secs){
+  const hasO=['multiple','checkbox','dropdown','quiz'].includes(q.type);
+  const hasLogic=q.logic&&q.logic.length>0;
 
-  // Build answer area
-  let ansHtml = '';
+  // Section assign dropdown
+  const secOptions=`<option value="none"${!q.sectionId?' selected':''}>No section</option>`+
+    secs.map(s=>`<option value="${s.id}"${q.sectionId===s.id?' selected':''}>${eh(s.title)||'Untitled section'}</option>`).join('');
+
+  // Answer area
+  let ansHtml='';
   if(hasO){
-    const isQuiz = q.type==='quiz';
-    ansHtml = `<div style="margin-bottom:7px">${(q.options||[]).map((o,oi)=>`
+    ansHtml=`<div style="margin-bottom:7px">${(q.options||[]).map((o,oi)=>`
       <div class="opt-row">
         <div class="opt-letter">${LETTERS[oi]}</div>
         <input class="opt-inp oi-${q.id}" value="${eh(o)}" placeholder="Option ${LETTERS[oi]}"
           oninput="items.find(x=>x.id==='${q.id}').options[${oi}]=this.value;upPrev()">
-        ${isQuiz?`<button class="correct-btn${q.correctIndex===oi?' ok':''}" onclick="mkOK('${q.id}',${oi})" title="Mark correct">✓</button>`:''}
-        ${(q.options||[]).length>2?`<button class="opt-del" onclick="rmOpt('${q.id}',${oi})">✕</button>`:''}
+        ${q.type==='quiz'?`<button class="correct-btn${q.correctIndex===oi?' ok':''}" onclick="mkOK('${q.id}',${oi})" title="Mark correct">✓</button>`:''}
+        ${q.options.length>2?`<button class="opt-del" onclick="rmOpt('${q.id}',${oi})">✕</button>`:''}
       </div>`).join('')}</div>
-      <button class="add-opt-btn" onclick="addOpt('${q.id}')">＋ Add option</button>`;
+      <button class="add-opt-btn" onclick="addOpt('${q.id}')">+ Add option</button>`;
   } else if(q.type==='yesno'){
     ansHtml=`<div style="display:flex;gap:8px"><div style="padding:7px 15px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600;background:#F5F0E8">Yes</div><div style="padding:7px 15px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600;background:#F5F0E8">No</div></div>`;
   } else if(q.type==='rating'){
@@ -838,61 +873,92 @@ function renderQCard(q, qn, color, isFirst, isLast, indented, allQs){
     ansHtml=`<div style="background:#EDE9FF;border-radius:8px;padding:11px;border:1.5px solid rgba(45,27,105,0.15)"><div style="font-size:0.8rem;color:#2D1B69;line-height:1.6;margin-bottom:7px;font-style:italic">"${eh(q.text)||'Your pledge statement...'}"</div><div style="display:flex;align-items:center;gap:6px;font-size:0.74rem;color:#64748B"><div style="width:13px;height:13px;border-radius:3px;border:1.5px solid #C4B9AA;flex-shrink:0"></div>I agree and commit to this pledge</div></div>`;
   } else {
     const ph={text:'Short answer...',textarea:'Long answer...',email:'email@example.com',phone:'+91 98765 43210',number:'0',date:'DD-MM-YYYY',file:'https://...'};
-    ansHtml=`<div class="preview-chip">${ph[q.type]||'Answer here...'}</div>`;
+    ansHtml=`<div class="prev-chip">${ph[q.type]||'Answer here...'}</div>`;
   }
 
   // Logic panel
-  const otherQs = allQs.filter(x=>x.id!==q.id);
-  let logicHtml = '<div class="lw">';
-  if(!q.logic||!q.logic.length) logicHtml+=`<div class="l-empty">No logic rules yet.<br>Add a rule to skip, show or hide questions based on answers.</div>`;
+  const otherQs=allQs.filter(x=>x.id!==q.id);
+  let logicHtml='<div class="logic-wrap">';
+  if(!q.logic||!q.logic.length){
+    logicHtml+=`<div class="logic-empty">No logic rules yet.<br>Add a rule to skip, show or hide questions based on answers.</div>`;
+  }
   (q.logic||[]).forEach((rule,ri)=>{
-    logicHtml+=`<div class="l-rule"><div class="l-rhdr"><span class="l-rlbl">Rule ${ri+1}</span><button class="l-rdel" onclick="delRule('${q.id}','${rule.id}')">Delete</button></div>`;
-    if(rule.conditions.length>1) logicHtml+=`<div class="ct-row"><button class="ct-btn${rule.condType==='ALL'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ALL')">ALL</button><button class="ct-btn${rule.condType==='ANY'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ANY')">ANY</button></div>`;
+    logicHtml+=`<div class="logic-rule"><div class="logic-rhdr"><span class="logic-rlbl">Rule ${ri+1}</span><button class="logic-rdel" onclick="delRule('${q.id}','${rule.id}')">Delete rule</button></div>`;
+    if(rule.conditions.length>1){
+      logicHtml+=`<div class="logic-ctype-row"><button class="ct-btn${rule.condType==='ALL'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ALL')">Match ALL</button><button class="ct-btn${rule.condType==='ANY'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ANY')">Match ANY</button></div>`;
+    }
     rule.conditions.forEach((c,ci)=>{
-      logicHtml+=`<div class="l-cond"><select class="ls" id="cq-${rule.id}-${ci}"><option value="${q.id}"${c.qid===q.id?' selected':''}>This question</option>${otherQs.map(aq=>`<option value="${aq.id}"${c.qid===aq.id?' selected':''}>${(aq.text||'Untitled').slice(0,22)}</option>`).join('')}</select><select class="ls" id="co-${rule.id}-${ci}"><option value="is"${c.op==='is'?' selected':''}>is</option><option value="is_not"${c.op==='is_not'?' selected':''}>is not</option><option value="contains"${c.op==='contains'?' selected':''}>contains</option><option value="filled"${c.op==='filled'?' selected':''}>is filled</option><option value="empty"${c.op==='empty'?' selected':''}>is empty</option></select><input class="ls" id="cv-${rule.id}-${ci}" value="${eh(c.val)}" placeholder="value" style="min-width:55px">${ci>0?`<button class="l-rdel" onclick="rmCond('${q.id}','${rule.id}',${ci})">✕</button>`:''}</div>`;
+      logicHtml+=`<div class="logic-cond-row">
+        <select class="lsel" id="lcq-${rule.id}-${ci}">
+          <option value="${q.id}"${c.qid===q.id||!c.qid?' selected':''}>Q${qn} (this question)</option>
+          ${otherQs.map((aq,aqi)=>`<option value="${aq.id}"${c.qid===aq.id?' selected':''}>Q${allQs.indexOf(aq)+1} — ${(aq.text||'Untitled').slice(0,20)}</option>`).join('')}
+        </select>
+        <select class="lsel" id="lco-${rule.id}-${ci}">
+          <option value="is"${c.op==='is'?' selected':''}>is</option>
+          <option value="is_not"${c.op==='is_not'?' selected':''}>is not</option>
+          <option value="contains"${c.op==='contains'?' selected':''}>contains</option>
+          <option value="filled"${c.op==='filled'?' selected':''}>is filled</option>
+          <option value="empty"${c.op==='empty'?' selected':''}>is empty</option>
+        </select>
+        <input class="lsel" id="lcv-${rule.id}-${ci}" value="${eh(c.val)}" placeholder="value" style="min-width:60px">
+        ${ci>0?`<button class="logic-rdel" onclick="rmCond('${q.id}','${rule.id}',${ci})">✕</button>`:''}
+      </div>`;
     });
-    logicHtml+=`<button class="acd" onclick="addCond('${q.id}','${rule.id}')">+ Add condition</button><div class="l-arow"><span class="l-albl">THEN</span><select class="ls" id="act-${rule.id}"><option value="skip"${rule.action==='skip'?' selected':''}>Skip to question</option><option value="show"${rule.action==='show'?' selected':''}>Show question</option><option value="hide"${rule.action==='hide'?' selected':''}>Hide question</option><option value="end"${rule.action==='end'?' selected':''}>End survey</option></select>`;
-    if(['skip','show','hide'].includes(rule.action)) logicHtml+=`<select class="ls" id="tgt-${rule.id}">${otherQs.map(aq=>`<option value="${aq.id}"${rule.target===aq.id?' selected':''}>${(aq.text||'Untitled').slice(0,18)}</option>`).join('')}</select>`;
-    else logicHtml+=`<span id="tgt-${rule.id}" style="display:none"></span>`;
-    logicHtml+=`</div></div>`;
+    logicHtml+=`<button class="logic-add-cond" onclick="addCond('${q.id}','${rule.id}')">+ Add condition</button>
+    <div class="logic-action-row">
+      <span class="logic-albl">THEN</span>
+      <select class="lsel" id="lact-${rule.id}" onchange="updateActionTarget(this,'${rule.id}')">
+        <option value="skip"${rule.action==='skip'?' selected':''}>Skip to question</option>
+        <option value="show"${rule.action==='show'?' selected':''}>Show question</option>
+        <option value="hide"${rule.action==='hide'?' selected':''}>Hide question</option>
+        <option value="end"${rule.action==='end'?' selected':''}>End survey</option>
+      </select>
+      ${['skip','show','hide'].includes(rule.action)?`<select class="lsel" id="ltgt-${rule.id}">
+        ${otherQs.map(aq=>`<option value="${aq.id}"${rule.target===aq.id?' selected':''}>Q${allQs.indexOf(aq)+1} — ${(aq.text||'Untitled').slice(0,18)}</option>`).join('')}
+      </select>`:`<span id="ltgt-${rule.id}"></span>`}
+    </div></div>`;
   });
-  logicHtml+=`<button class="badr" onclick="addRule('${q.id}')">+ Add logic rule</button></div>`;
+  logicHtml+=`<button class="add-rule-btn" onclick="addRule('${q.id}')">+ Add logic rule</button></div>`;
 
   // Media panel
-  const mediaPanelHtml = `<div class="q-body">
-    <div style="font-size:0.73rem;color:#64748B;margin-bottom:9px">Add an image or video URL to this question.</div>
-    <label class="ll">Media URL</label>
-    <input class="media-inp" id="murl-${q.id}" value="${eh(q.mediaUrl||'')}" placeholder="Paste image or YouTube URL..." oninput="prevMedia('${q.id}',this.value)">
-    <div style="font-size:0.66rem;color:#94A3B8;margin-bottom:8px">Supports JPG, PNG, GIF, YouTube links</div>
-    <label class="ll">Layout</label>
-    <div class="media-layout-row">
-      <button class="media-layout-btn${(q.mediaLayout||'top')==='top'?' active':''}" onclick="setML('${q.id}','top',this)">⬆ Top</button>
-      <button class="media-layout-btn${(q.mediaLayout||'top')==='left'?' active':''}" onclick="setML('${q.id}','left',this)">⬅ Left</button>
-      <button class="media-layout-btn${(q.mediaLayout||'top')==='right'?' active':''}" onclick="setML('${q.id}','right',this)">➡ Right</button>
+  const mediaPanelHtml=`<div class="q-body">
+    <div style="font-size:0.72rem;color:#64748B;margin-bottom:9px;line-height:1.5">Add an image or YouTube video to show alongside this question.</div>
+    <label style="display:block;font-size:0.67rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px">Media URL</label>
+    <div class="media-url-row">
+      <input class="media-url-inp" id="murl-${q.id}" value="${eh(q.mediaUrl||'')}" placeholder="Paste image or YouTube URL...">
+      <button class="media-fetch-btn" onclick="fetchMedia('${q.id}')">Fetch</button>
     </div>
-    <div class="media-prev" id="mprev-${q.id}">${q.mediaUrl?`<img src="${eh(q.mediaUrl)}" style="width:100%;max-height:120px;object-fit:cover">`:'No media added'}</div>
-    <button onclick="clearMedia('${q.id}')" style="margin-top:7px;padding:5px 11px;border-radius:6px;border:1.5px solid #FECACA;background:#fff;color:#DC2626;font-size:0.73rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">Remove media</button>
+    <div class="media-prev-box" id="mprev-${q.id}">${q.mediaUrl?`<img src="${eh(q.mediaUrl)}" style="width:100%;max-height:160px;object-fit:cover">`:'<span style="color:#C4B9AA;font-size:0.8rem">No media added</span>'}</div>
+    <label style="display:block;font-size:0.67rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px">Layout</label>
+    <div class="media-layout-row">
+      <button class="ml-btn${(q.mediaLayout||'top')==='top'?' active':''}" onclick="setML('${q.id}','top',this)">Top</button>
+      <button class="ml-btn${(q.mediaLayout||'top')==='left'?' active':''}" onclick="setML('${q.id}','left',this)">Left</button>
+      <button class="ml-btn${(q.mediaLayout||'top')==='right'?' active':''}" onclick="setML('${q.id}','right',this)">Right</button>
+    </div>
+    <button class="media-clear-btn" onclick="clearMedia('${q.id}')">Remove media</button>
   </div>`;
 
-  return `<div class="q-card${indented?' indented':''}" id="qcard-${q.id}" data-id="${q.id}" draggable="true">
+  return `<div class="q-card${indented?' indented':''}" id="qcard-${q.id}" data-id="${q.id}" draggable="true" style="${indented?'border-left-color:'+color:''}">
     <div class="q-accent" style="background:${color}"></div>
     <div class="q-tabs">
       <button class="q-tab active" data-tab="question" onclick="showQTab('${q.id}','question')">Question</button>
-      <button class="q-tab" data-tab="logic" onclick="showQTab('${q.id}','logic')">Logic${hasLogic?`<span class="q-tab-badge">${q.logic.length}</span>`:''}</button>
-      <button class="q-tab" data-tab="media" onclick="showQTab('${q.id}','media')">Media${hasMedia?' 🖼':''}</button>
-      ${hasLogic?`<span class="logic-chip">🔀 Logic</span>`:''}
+      <button class="q-tab" data-tab="logic" onclick="showQTab('${q.id}','logic')">Logic${hasLogic?`<span class="logic-on">${q.logic.length}</span>`:''}</button>
+      <button class="q-tab" data-tab="media" onclick="showQTab('${q.id}','media')">Media${q.mediaUrl?' •':''}</button>
     </div>
-    <div class="qtab-panel active" data-tab="question">
-      <div class="q-top">
-        <span class="q-drag-handle" title="Drag to reorder">⠿</span>
+    <div class="qtab-p active" data-tab="question" style="display:block">
+      <div class="q-hdr">
+        <span class="q-drag-h">⠿</span>
         <div class="q-num" style="background:${color}">${qn}</div>
         <select class="q-type-sel" onchange="chType('${q.id}',this.value)">
           ${Object.entries(QTYPES).map(([k,v])=>`<option value="${k}"${q.type===k?' selected':''}>${v}</option>`).join('')}
         </select>
-        <div class="q-btns">
-          <button class="q-btn" onclick="moveItem('${q.id}','up')" ${isFirst?'disabled':''} title="Move up">↑</button>
-          <button class="q-btn" onclick="moveItem('${q.id}','down')" ${isLast?'disabled':''} title="Move down">↓</button>
-          <button class="q-btn del" onclick="delItem('${q.id}')" title="Delete">✕</button>
+        <select class="sec-assign" onchange="assignSec('${q.id}',this.value)" title="Assign to section">
+          ${secOptions}
+        </select>
+        <div class="item-btns">
+          <button class="ibtn" onclick="moveItem('${q.id}','up')" ${isFirst?'disabled':''}>↑</button>
+          <button class="ibtn" onclick="moveItem('${q.id}','down')" ${isLast?'disabled':''}>↓</button>
+          <button class="ibtn del" onclick="delItem('${q.id}')">✕</button>
         </div>
       </div>
       <div class="q-body">
@@ -901,133 +967,162 @@ function renderQCard(q, qn, color, isFirst, isLast, indented, allQs){
         ${ansHtml}
         <div class="q-foot">
           <button class="tgl${q.required?' on':''}" id="req-${q.id}" onclick="togReq('${q.id}')"></button>
-          <span class="tgl-l">${q.type==='pledge'?'Must agree':'Required'}</span>
+          <span class="tgl-l">Required</span>
         </div>
       </div>
     </div>
-    <div class="qtab-panel" data-tab="logic" style="display:none"><div class="q-body">${logicHtml}</div></div>
-    <div class="qtab-panel" data-tab="media" style="display:none">${mediaPanelHtml}</div>
+    <div class="qtab-p" data-tab="logic" style="display:none"><div class="q-body">${logicHtml}</div></div>
+    <div class="qtab-p" data-tab="media" style="display:none">${mediaPanelHtml}</div>
   </div>`;
 }
+
+window.updateActionTarget=function(sel,rid){
+  // re-render after action change so target dropdown shows/hides
+  syncDOM();
+  renderAll();
+  setTimeout(()=>showQTab(sel.closest('.q-card')?.id?.replace('qcard-',''),'logic'),60);
+};
 
 function renderAll(){renderSB();renderCards();upPrev()}
 
 // ── PREVIEW ───────────────────────────────────────────
-window.togglePreview = function(){
-  prevOpen = !prevOpen;
-  document.getElementById('prev-panel').classList.toggle('open', prevOpen);
-  document.getElementById('prev-overlay').classList.toggle('open', prevOpen);
-  if(prevOpen) upPrev();
-};
-window.closePreview = function(){
-  prevOpen = false;
-  document.getElementById('prev-panel').classList.remove('open');
-  document.getElementById('prev-overlay').classList.remove('open');
-};
-window.setPM = function(m){
-  prevMode = m;
-  document.getElementById('ptab-d').classList.toggle('active', m==='desktop');
-  document.getElementById('ptab-m').classList.toggle('active', m==='mobile');
-  upPrev();
-};
-window.upPrev = function(){
-  if(!prevOpen) return;
-  const title = document.getElementById('s-title')?.value||'Untitled Survey';
-  const body = document.getElementById('prev-body');
-  const qs = items.filter(i=>i.kind==='q');
-  if(!qs.length){body.innerHTML='<div style="text-align:center;color:#94A3B8;font-size:0.8rem;padding:20px">Add questions to see preview</div>';return}
+window.togglePreview=function(){prevOpen=!prevOpen;document.getElementById('prev-panel').classList.toggle('open',prevOpen);document.getElementById('prev-overlay').classList.toggle('open',prevOpen);if(prevOpen)upPrev()};
+window.closePreview=function(){prevOpen=false;document.getElementById('prev-panel').classList.remove('open');document.getElementById('prev-overlay').classList.remove('open')};
+window.setPM=function(m){prevMode=m;document.getElementById('ptab-d').classList.toggle('active',m==='desktop');document.getElementById('ptab-m').classList.toggle('active',m==='mobile');upPrev()};
 
-  let qn = 0;
-  let currentSec = null;
-  let content = `<div style="background:#fff;border-radius:11px;padding:14px;margin-bottom:10px;border:1.5px solid #E2DAD0"><div style="font-family:Syne,sans-serif;font-weight:800;font-size:0.97rem;margin-bottom:3px">${eh(title)}</div><div style="font-size:0.77rem;color:#64748B">${eh(document.getElementById('s-desc')?.value||'')}</div></div>`;
+window.upPrev=function(){
+  if(!prevOpen)return;
+  const title=document.getElementById('s-title')?.value||'Untitled Survey';
+  const desc=document.getElementById('s-desc')?.value||'';
+  const body=document.getElementById('prev-body');
+  const allQs=items.filter(i=>i.kind==='q');
+  const secs=items.filter(i=>i.kind==='sec');
+
+  let html=`<div class="pf-wrap">
+    <div class="pf-title">${eh(title)}</div>
+    ${desc?`<div class="pf-desc">${eh(desc)}</div>`:''}`;
+
+  let qn=0;
+  let lastSecId=null;
 
   items.forEach(item=>{
     if(item.kind==='sec'){
-      currentSec = item;
-      content += `<div class="p-sec-hdr" style="border-color:${item.color}"><div class="p-sec-label" style="color:${item.color}">${eh(item.title)||'Section'}</div>${item.subtitle?`<div style="font-size:0.72rem;color:#64748B;margin-left:auto">${eh(item.subtitle)}</div>`:''}</div>`;
+      lastSecId=item.id;
+      html+=`<div class="pf-sec-hdr" style="border-color:${item.color}">
+        <div class="pf-sec-title" style="color:${item.color}">${eh(item.title)||'Section'}</div>
+        ${item.subtitle?`<div class="pf-sec-sub">${eh(item.subtitle)}</div>`:''}
+      </div>`;
     } else {
       qn++;
-      let ah = '';
-      if(['multiple','dropdown','quiz'].includes(item.type)){ah=(item.options||[]).filter(o=>o.trim()).map(o=>`<div class="p-opt"><div class="p-radio"></div>${eh(o)}</div>`).join('')}
-      else if(item.type==='checkbox'){ah=(item.options||[]).filter(o=>o.trim()).map(o=>`<div class="p-opt"><div style="width:13px;height:13px;border-radius:3px;border:2px solid #C4B9AA;flex-shrink:0"></div>${eh(o)}</div>`).join('')}
-      else if(item.type==='yesno'){ah=`<div style="display:flex;gap:7px"><div class="p-opt" style="flex:1;justify-content:center">Yes</div><div class="p-opt" style="flex:1;justify-content:center">No</div></div>`}
-      else if(item.type==='rating'){ah=`<div style="display:flex;gap:4px">${[1,2,3,4,5].map(n=>`<div style="width:28px;height:28px;border-radius:6px;border:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:600;color:#64748B">${n}</div>`).join('')}</div>`}
-      else if(item.type==='scale'){ah=`<div style="display:flex;gap:3px;flex-wrap:wrap">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<div style="width:22px;height:22px;border-radius:4px;border:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:center;font-size:0.62rem;font-weight:600;color:#64748B">${n}</div>`).join('')}</div>`}
-      else{ah=`<input class="p-inp" placeholder="${item.type==='email'?'email@example.com':item.type==='phone'?'+91 98765 43210':'Your answer...'}" disabled>`}
-      content += `<div class="p-card"><div class="p-qnum" style="color:${currentSec?currentSec.color:'#94A3B8'}">Question ${qn}</div><div class="p-qtext">${eh(item.text)||'Untitled'} ${item.required?'<span style="color:#EF4444">*</span>':''}</div>${ah}</div>`;
+      let ans='';
+      if(['multiple','dropdown','quiz'].includes(item.type)){
+        ans=(item.options||[]).filter(o=>o.trim()).map(o=>`<div class="pf-opt"><div class="pf-radio"></div>${eh(o)}</div>`).join('');
+      } else if(item.type==='checkbox'){
+        ans=(item.options||[]).filter(o=>o.trim()).map(o=>`<div class="pf-opt"><div class="pf-check"></div>${eh(o)}</div>`).join('');
+      } else if(item.type==='yesno'){
+        ans=`<div style="display:flex;gap:8px"><div class="pf-opt" style="flex:1;justify-content:center;font-weight:600">Yes</div><div class="pf-opt" style="flex:1;justify-content:center;font-weight:600">No</div></div>`;
+      } else if(item.type==='rating'){
+        ans=`<div class="pf-scale">${[1,2,3,4,5].map(n=>`<div class="pf-scale-n">${n}</div>`).join('')}</div>`;
+      } else if(item.type==='scale'){
+        ans=`<div class="pf-scale">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="pf-scale-n" style="width:28px;height:28px;font-size:0.72rem">${n}</div>`).join('')}</div>`;
+      } else if(item.type==='pledge'){
+        ans=`<div style="background:#EDE9FF;border-radius:8px;padding:10px;border:1.5px solid rgba(45,27,105,0.15)"><div style="font-size:0.82rem;color:#2D1B69;font-style:italic;margin-bottom:7px">"${eh(item.text)||'Pledge statement'}"</div><div style="display:flex;align-items:center;gap:6px;font-size:0.78rem;color:#64748B"><div style="width:14px;height:14px;border-radius:3px;border:2px solid #C4B9AA;flex-shrink:0"></div>I agree and commit to this pledge</div></div>`;
+      } else if(item.type==='textarea'){
+        ans=`<textarea class="pf-inp" rows="3" placeholder="Your answer..." style="resize:vertical" disabled></textarea>`;
+      } else if(item.type==='date'){
+        ans=`<input class="pf-inp" type="date" disabled>`;
+      } else {
+        const ph={text:'Your answer',email:'email@example.com',phone:'+91 98765 43210',number:'0',file:'https://...'};
+        ans=`<input class="pf-inp" placeholder="${ph[item.type]||'Your answer'}" disabled>`;
+      }
+      html+=`<div class="pf-q"><div class="pf-qlbl">${eh(item.text)||'Untitled question'}${item.required?'<span>*</span>':''}</div>${ans}</div>`;
     }
   });
-  content += `<button class="p-submit">Submit →</button>`;
 
-  if(prevMode==='mobile'){body.innerHTML=`<div class="mob-frame"><div class="mob-inner">${content}</div></div>`}
-  else{body.innerHTML=content}
+  html+=`<button class="pf-submit">Submit</button></div>`;
+
+  const finalHtml=prevMode==='mobile'?`<div class="mob-frame"><div class="mob-inner">${html}</div></div>`:html;
+  body.innerHTML=finalHtml;
 };
 
-// ── URL PREVIEW ───────────────────────────────────────
-window.prevURL = function(type, url){
+// ── URL PREVIEWS (WELCOME) ────────────────────────────
+window.prevURL=function(type,url){
   const map={logo:['logo-prev','logo-prev-img'],bgi:['bgi-prev','bgi-prev-img']};
   if(map[type]){const[wid,iid]=map[type];const w=document.getElementById(wid);const img=document.getElementById(iid);if(url){w.classList.add('show');img.src=url;img.onerror=()=>w.classList.remove('show')}else w.classList.remove('show')}
   if(type==='bgv'){const w=document.getElementById('bgv-prev');const f=document.getElementById('bgv-frame');if(url&&(url.includes('youtube')||url.includes('youtu.be'))){const m=url.match(/(?:v=|youtu\.be\/)([^&\s]+)/);if(m){w.classList.add('show');f.src='https://www.youtube.com/embed/'+m[1]+'?mute=1'}}else w.classList.remove('show')}
 };
 
 // ── PRIZE ─────────────────────────────────────────────
-window.togPrize = function(){
-  const on = document.getElementById('tgl-prize').classList.toggle('on');
-  document.getElementById('prize-f').style.display = on?'block':'none';
-};
+window.togPrize=function(){const on=document.getElementById('tgl-prize').classList.toggle('on');document.getElementById('prize-f').style.display=on?'block':'none'};
 
 // ── SEO ───────────────────────────────────────────────
-window.autoSlug = function(){
-  const t=document.getElementById('s-title').value.trim();if(!t){toast2('Add a title first');return}
-  const s=t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60);
-  document.getElementById('seo-slug').value=s;
-  const st=document.getElementById('slug-st');st.textContent='✓ swoopform.com/survey/'+s;st.style.color='#10B981';
-};
-window.valSlug = function(inp){
-  inp.value=inp.value.replace(/[^a-z0-9-]/g,'');
-  const st=document.getElementById('slug-st');
-  if(inp.value.length>3){st.textContent='✓ swoopform.com/survey/'+inp.value;st.style.color='#10B981'}
-  else if(inp.value.length){st.textContent='Too short';st.style.color='#EF4444'}
-  else st.textContent='';
+window.autoSlug=function(){const t=document.getElementById('s-title').value.trim();if(!t){toast2('Add a title first');return}const s=t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60);document.getElementById('seo-slug').value=s;const st=document.getElementById('slug-st');st.textContent='✓ swoopform.com/survey/'+s;st.style.color='#10B981'};
+window.valSlug=function(inp){inp.value=inp.value.replace(/[^a-z0-9-]/g,'');const st=document.getElementById('slug-st');if(inp.value.length>3){st.textContent='✓ swoopform.com/survey/'+inp.value;st.style.color='#10B981'}else if(inp.value.length){st.textContent='Too short';st.style.color='#EF4444'}else st.textContent=''};
+
+// ── SAVE / PUBLISH ────────────────────────────────────
+window.saveDraft=async function(){
+  if(!U){toast2('Not logged in');return}
+  const data=buildSaveData('draft');if(!data)return;
+  try{
+    if(SID){await updateDoc(doc(db,'surveys',SID),{...data,updatedAt:serverTimestamp()});toast2('Draft saved!')}
+    else{const ref=await addDoc(collection(db,'surveys'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});SID=ref.id;toast2('Draft saved!')}
+  }catch(e){console.error(e);toast2('Error saving')}
 };
 
-// ── CSV ───────────────────────────────────────────────
-window.dlCSV = function(){
-  const rows=[['type','question','option1','option2','option3','option4','correct','required'],['multiple','How satisfied are you?','Very satisfied','Satisfied','Neutral','Dissatisfied','','yes'],['quiz','Capital of India?','Mumbai','Delhi','Chennai','Kolkata','Delhi','yes'],['text','Your full name?','','','','','','yes'],['rating','Rate our service','','','','','','no'],['yesno','Would you recommend us?','','','','','','no']];
-  const csv=rows.map(r=>r.map(v=>'"'+v+'"').join(',')).join('\n');
-  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='swoopform-sample.csv';a.click();toast2('Sample CSV downloaded!');
+window.publishSurvey=async function(){
+  if(!U){toast2('Not logged in');return}
+  const data=buildSaveData('active');if(!data)return;
+  const btn=document.getElementById('pub-btn');btn.disabled=true;btn.textContent='Publishing...';
+  try{
+    if(SID){await updateDoc(doc(db,'surveys',SID),{...data,updatedAt:serverTimestamp()})}
+    else{const ref=await addDoc(collection(db,'surveys'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});SID=ref.id}
+    // show success modal
+    const slug=document.getElementById('seo-slug').value.trim()||SID;
+    const url=`swoopform.com/survey/${slug}`;
+    document.getElementById('modal-url').textContent=url;
+    document.getElementById('modal-view-btn').href=`/survey/?id=${SID}`;
+    document.getElementById('success-modal').classList.add('open');
+    btn.disabled=false;btn.textContent='Publish →';
+  }catch(e){console.error(e);toast2('Error publishing');btn.disabled=false;btn.textContent='Publish →'}
 };
-window.csvDrop = function(e){e.preventDefault();e.currentTarget.classList.remove('over');const f=e.dataTransfer.files[0];if(f)parseCSV(f)};
-window.handleCSV = function(inp){if(inp.files[0])parseCSV(inp.files[0])};
-function parseCSV(file){
-  const r=new FileReader();r.onload=e=>{
-    const lines=e.target.result.split('\n').filter(l=>l.trim());if(lines.length<2)return;
-    const headers=lines[0].split(',').map(h=>h.replace(/"/g,'').trim().toLowerCase());
-    let added=0;
-    for(let i=1;i<lines.length;i++){
-      const vals=lines[i].split(',').map(v=>v.replace(/^"|"$/g,'').trim());
-      const row={};headers.forEach((h,idx)=>row[h]=vals[idx]||'');
-      const type=row.type?.trim()||'text';const question=row.question?.trim();if(!question)continue;
-      const q=mkQ(type);q.text=question;q.required=row.required?.trim()==='yes';
-      if(['multiple','checkbox','dropdown','quiz'].includes(type)){
-        const opts=[row.option1,row.option2,row.option3,row.option4].filter(o=>o?.trim());
-        if(opts.length>=2)q.options=opts;
-        if(type==='quiz'&&row.correct){const ci=opts.findIndex(o=>o.trim()===row.correct.trim());if(ci>=0)q.correctIndex=ci}
-      }
-      items.push(q);added++;
-    }
-    renderAll();document.getElementById('csv-res').innerHTML=`<span style="color:#10B981">Added ${added} question${added!==1?'s':''}.</span>`;
-    sp('builder');toast2(added+' questions added!');
-  };r.readAsText(file);
+
+window.closeSuccessModal=function(){document.getElementById('success-modal').classList.remove('open')};
+
+function buildSaveData(status){
+  syncDOM();
+  const title=document.getElementById('s-title').value.trim();
+  if(!title){toast2('Please add a survey title');sp('builder');return null}
+  const hasQ=items.some(i=>i.kind==='q');
+  if(!hasQ){toast2('Please add at least one question');return null}
+  return{
+    title,
+    description:document.getElementById('s-desc').value.trim(),
+    items:items.map(item=>{
+      if(item.kind==='sec')return{kind:'sec',id:item.id,title:item.title,subtitle:item.subtitle,color:item.color,mode:item.mode};
+      return{kind:'q',id:item.id,type:item.type,text:item.text,options:item.options,correctIndex:item.correctIndex,required:item.required,sectionId:item.sectionId,mediaUrl:item.mediaUrl,mediaLayout:item.mediaLayout,logic:item.logic};
+    }),
+    slug:document.getElementById('seo-slug').value.trim()||null,
+    seo:{title:document.getElementById('seo-title').value.trim(),description:document.getElementById('seo-desc').value.trim()},
+    settings:{category:document.getElementById('s-cat').value,style:document.getElementById('s-style').value,isPublic:document.getElementById('tgl-public').classList.contains('on'),collectEmail:document.getElementById('tgl-email').classList.contains('on'),oneResponse:document.getElementById('tgl-once').classList.contains('on')},
+    welcome:{enabled:welcomeOn,logo:document.getElementById('w-logo')?.value.trim()||'',headline:document.getElementById('w-head')?.value.trim()||'',btnText:document.getElementById('w-btn')?.value.trim()||'',bgColor:document.getElementById('w-bgc')?.value.trim()||'',bgImage:document.getElementById('w-bgi')?.value.trim()||'',bgVideo:document.getElementById('w-bgv')?.value.trim()||''},
+    thankyou:{headline:document.getElementById('ty-h').value.trim(),message:document.getElementById('ty-m').value.trim(),redirect:redirectOn?document.getElementById('ty-r').value.trim():'',showShare:document.getElementById('tgl-share').classList.contains('on')},
+    prize:{enabled:document.getElementById('tgl-prize').classList.contains('on'),description:document.getElementById('p-desc')?.value.trim()||'',winners:parseInt(document.getElementById('p-win')?.value)||1,selection:document.getElementById('p-sel')?.value||'random',leaderboard:document.getElementById('p-lb')?.value||'none',disclaimerAccepted:document.getElementById('disc-row')?.classList.contains('checked')||false},
+    status,userId:U.uid
+  };
 }
+
+// ── CSV ───────────────────────────────────────────────
+window.dlCSV=function(){const rows=[['type','question','option1','option2','option3','option4','correct','required'],['multiple','How satisfied are you?','Very satisfied','Satisfied','Neutral','Dissatisfied','','yes'],['quiz','Capital of India?','Mumbai','Delhi','Chennai','Kolkata','Delhi','yes'],['text','Your full name?','','','','','','yes'],['rating','Rate our service','','','','','','no'],['yesno','Would you recommend us?','','','','','','no']];const csv=rows.map(r=>r.map(v=>'"'+v+'"').join(',')).join('\n');const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='swoopform-sample.csv';a.click();toast2('Sample CSV downloaded!')};
+window.csvDrop=function(e){e.preventDefault();e.currentTarget.classList.remove('over');const f=e.dataTransfer.files[0];if(f)parseCSV(f)};
+window.handleCSV=function(inp){if(inp.files[0])parseCSV(inp.files[0])};
+function parseCSV(file){const r=new FileReader();r.onload=e=>{const lines=e.target.result.split('\n').filter(l=>l.trim());if(lines.length<2)return;const headers=lines[0].split(',').map(h=>h.replace(/"/g,'').trim().toLowerCase());let added=0;for(let i=1;i<lines.length;i++){const vals=lines[i].split(',').map(v=>v.replace(/^"|"$/g,'').trim());const row={};headers.forEach((h,idx)=>row[h]=vals[idx]||'');const type=row.type?.trim()||'text';const question=row.question?.trim();if(!question)continue;const q=mkQ(type);q.text=question;q.required=row.required?.trim()==='yes';if(['multiple','checkbox','dropdown','quiz'].includes(type)){const opts=[row.option1,row.option2,row.option3,row.option4].filter(o=>o?.trim());if(opts.length>=2)q.options=opts;if(type==='quiz'&&row.correct){const ci=opts.findIndex(o=>o.trim()===row.correct.trim());if(ci>=0)q.correctIndex=ci}}items.push(q);added++}renderAll();document.getElementById('csv-res').innerHTML=`<span style="color:#10B981">Added ${added} question${added!==1?'s':''}.</span>`;sp('builder');toast2(added+' questions added!')};r.readAsText(file)}
 
 // ── UTILS ─────────────────────────────────────────────
 function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
-window.toast2 = function(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2500)};
+window.toast2=function(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2500)};
 
-// Close picker on outside click
+// Click outside to close
 document.addEventListener('click',e=>{
-  if(!e.target.closest('.sb-btm')&&pickerOpen){pickerOpen=false;document.getElementById('picker').classList.remove('open')}
   if(!e.target.closest('.q-card'))document.querySelectorAll('.q-card').forEach(c=>c.classList.remove('focused'));
 });
 </script>
