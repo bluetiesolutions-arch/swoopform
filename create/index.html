@@ -1,3 +1,4 @@
+cat > /home/claude/create-index.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,29 +9,22 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A}
-
-/* NAV */
 .nav{height:56px;background:#fff;border-bottom:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:fixed;top:0;left:0;right:0;z-index:300;gap:10px}
 .nav-l{display:flex;align-items:center;gap:8px;min-width:0;flex-shrink:1}
 .logo{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none;flex-shrink:0}
-.nav-back{padding:6px 11px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#64748B;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;text-decoration:none;transition:all 0.2s}
+.nav-back{padding:6px 11px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#64748B;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;text-decoration:none}
 .nav-back:hover{border-color:#2D1B69;color:#2D1B69}
 .nav-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.92rem;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .nav-r{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.btn-prev-toggle{padding:7px 13px;border-radius:8px;border:1.5px solid #2D1B69;background:#EDE9FF;color:#2D1B69;font-size:0.8rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer}
 .btn-draft{padding:7px 13px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#64748B;font-size:0.8rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer}
 .btn-pub{padding:7px 16px;border-radius:8px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.8rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer}
 .btn-pub:disabled{opacity:0.5;cursor:not-allowed}
 .hbtn{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px;flex-shrink:0}
 .hbtn span{display:block;width:20px;height:2px;background:#0F0E1A;border-radius:2px}
-
-/* LAYOUT */
 .layout{position:fixed;top:56px;left:0;right:0;bottom:0;display:flex}
-
-/* SIDEBAR */
-.sb{width:252px;height:100%;background:#fff;border-right:1.5px solid #E2DAD0;display:flex;flex-direction:column;flex-shrink:0;z-index:100;transition:transform 0.3s ease;overflow:hidden}
-.sb-grp{border-bottom:1px solid #E2DAD0;flex-shrink:0}
-.sb-grp-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;cursor:pointer;user-select:none;transition:background 0.15s}
+.sb{width:252px;height:100%;background:#fff;border-right:1.5px solid #E2DAD0;display:flex;flex-direction:column;flex-shrink:0;z-index:100;overflow:hidden;transition:transform 0.3s ease}
+.sb-grp{border-bottom:1px solid #E2DAD0}
+.sb-grp-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;cursor:pointer;user-select:none}
 .sb-grp-hdr:hover{background:#F5F0E8}
 .sb-grp-lbl{font-size:0.63rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
 .sb-grp-arr{font-size:0.65rem;color:#C4B9AA;transition:transform 0.2s}
@@ -55,21 +49,15 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 .sb-secdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .sb-sectext{font-size:0.73rem;font-weight:700;color:#0F0E1A;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sb-qcount-badge{font-size:0.62rem;font-weight:700;background:#EDE9FF;color:#2D1B69;padding:1px 6px;border-radius:100px}
-
-/* CONTENT */
 .content{flex:1;height:100%;overflow-y:auto;padding:20px 24px 100px;min-width:0}
 .panel{display:none}
 .panel.active{display:block;animation:fi 0.18s ease}
 @keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
-
-/* TITLE CARD */
 .title-card{background:#fff;border-radius:16px;border:1.5px solid #E2DAD0;padding:22px 24px;margin-bottom:14px}
 .t-inp{width:100%;border:none;outline:none;font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-0.03em;color:#0F0E1A;background:transparent;line-height:1.2}
 .t-inp::placeholder{color:#C4B9AA}
 .d-inp{width:100%;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:0.86rem;color:#64748B;background:transparent;resize:none;margin-top:7px;line-height:1.6}
 .d-inp::placeholder{color:#C4B9AA}
-
-/* SECTION CARD */
 .sec-card{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;margin-bottom:8px;overflow:hidden;transition:box-shadow 0.2s;position:relative}
 .sec-card:hover{box-shadow:0 3px 14px rgba(15,14,26,0.07)}
 .sec-card.dragging{opacity:0.4}
@@ -91,8 +79,6 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 .ibtn:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
 .ibtn.del:hover{border-color:#FECACA;background:#FEF2F2;color:#DC2626}
 .ibtn:disabled{opacity:0.25;cursor:not-allowed}
-
-/* QUESTION CARD */
 .q-card{background:#fff;border-radius:13px;border:1.5px solid #E2DAD0;margin-bottom:8px;overflow:hidden;transition:box-shadow 0.2s,border-color 0.2s;position:relative}
 .q-card:hover{box-shadow:0 3px 16px rgba(15,14,26,0.07)}
 .q-card.focused{border-color:#2D1B69;box-shadow:0 0 0 3px rgba(45,27,105,0.06)}
@@ -100,24 +86,18 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 .q-card.drag-over{border-color:#2D1B69;border-style:dashed}
 .q-card.indented{margin-left:18px;border-left-width:3px}
 .q-accent{position:absolute;left:0;top:0;bottom:0;width:3px}
-
-/* Q TABS */
 .q-tabs{display:flex;background:#FAFAF7;border-bottom:1px solid #E2DAD0}
 .q-tab{padding:7px 12px;font-size:0.72rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:#64748B;font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap}
 .q-tab.active{color:#2D1B69;border-bottom-color:#2D1B69;background:#fff}
 .logic-on{font-size:0.6rem;background:#EDE9FF;color:#2D1B69;padding:1px 5px;border-radius:3px;margin-left:3px;font-weight:700}
-
-/* Q HEADER */
 .q-hdr{display:flex;align-items:center;gap:7px;padding:10px 12px 0;flex-wrap:wrap}
-.q-drag-h{color:#C4B9AA;font-size:1rem;cursor:grab;flex-shrink:0;padding:1px 3px;touch-action:none}
+.q-drag-h{color:#C4B9AA;font-size:1rem;cursor:grab;flex-shrink:0;padding:1px 3px}
 .q-drag-h:active{cursor:grabbing;color:#2D1B69}
 .q-num{width:22px;height:22px;border-radius:5px;font-size:0.67rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-family:'Syne',sans-serif}
 .q-type-sel{padding:4px 7px;border-radius:6px;border:1.5px solid #E2DAD0;background:#F5F0E8;color:#0F0E1A;font-size:0.69rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none}
 .q-type-sel:focus{border-color:#2D1B69}
-.sec-assign{padding:4px 7px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;color:#64748B;font-size:0.69rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none;max-width:130px}
+.sec-assign{padding:4px 7px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;color:#64748B;font-size:0.69rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none;max-width:120px}
 .sec-assign:focus{border-color:#D97706}
-
-/* Q BODY */
 .q-body{padding:9px 13px 13px}
 .q-inp{width:100%;border:none;border-bottom:2px solid #E2DAD0;outline:none;padding:5px 0;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;color:#0F0E1A;background:transparent;margin-bottom:11px;transition:border-color 0.2s}
 .q-inp::placeholder{color:#C4B9AA;font-weight:400}
@@ -133,14 +113,27 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 .opt-del:hover{color:#EF4444}
 .add-opt-btn{background:none;border:none;cursor:pointer;color:#2D1B69;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:3px 0;display:flex;align-items:center;gap:4px}
 .prev-chip{background:#F5F0E8;border-radius:7px;padding:8px 11px;font-size:0.77rem;color:#94A3B8;border:1.5px dashed #E2DAD0;font-style:italic}
-.q-foot{display:flex;align-items:center;gap:9px;padding-top:8px;border-top:1px solid #F5F0E8;flex-wrap:wrap}
+.q-foot{display:flex;align-items:center;gap:10px;padding-top:8px;border-top:1px solid #F5F0E8;flex-wrap:wrap}
 .tgl{width:30px;height:16px;border-radius:100px;background:#E2DAD0;cursor:pointer;position:relative;transition:background 0.18s;border:none;flex-shrink:0}
 .tgl.on{background:#2D1B69}
 .tgl::after{content:'';position:absolute;width:10px;height:10px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 0.18s}
 .tgl.on::after{transform:translateX(14px)}
 .tgl-l{font-size:0.7rem;color:#64748B;font-weight:500}
-
-/* LOGIC */
+.timer-inp{width:52px;padding:3px 6px;border-radius:5px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;color:#0F0E1A;outline:none;text-align:center}
+.timer-inp:focus{border-color:#2D1B69}
+.choice-limit-row{display:flex;align-items:center;gap:6px;margin-top:8px;padding:7px 10px;background:#F5F0E8;border-radius:7px;flex-wrap:wrap}
+.cl-lbl{font-size:0.72rem;color:#64748B;font-weight:600}
+.cl-inp{width:44px;padding:3px 6px;border-radius:5px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;color:#0F0E1A;outline:none;text-align:center}
+.cl-inp:focus{border-color:#2D1B69}
+.fitb-wrap{margin-bottom:8px}
+.fitb-preview{background:#F5F0E8;border-radius:8px;padding:10px 12px;font-size:0.85rem;color:#0F0E1A;line-height:1.7;border:1.5px dashed #E2DAD0}
+.fitb-preview .blank{display:inline-block;min-width:80px;border-bottom:2px solid #2D1B69;margin:0 3px;background:transparent;color:#C4B9AA;font-size:0.82rem;font-style:italic}
+.fitb-hint{font-size:0.67rem;color:#94A3B8;margin-top:4px;line-height:1.4}
+.eo-row{display:flex;gap:8px}
+.eo-inp-wrap{flex:1;position:relative}
+.eo-badge{position:absolute;top:8px;left:8px;font-size:0.6rem;font-weight:700;color:#fff;background:#2D1B69;padding:1px 5px;border-radius:3px}
+.eo-inp{width:100%;padding:8px 8px 8px 48px;border-radius:8px;border:1.5px solid #E2DAD0;background:#F5F0E8;font-size:0.84rem;font-family:'DM Sans',sans-serif;color:#0F0E1A;outline:none;font-weight:600}
+.eo-inp:focus{border-color:#2D1B69}
 .logic-wrap{padding:4px 0}
 .logic-empty{text-align:center;padding:14px;color:#94A3B8;font-size:0.76rem;line-height:1.6}
 .logic-rule{background:#F5F0E8;border-radius:8px;padding:10px;margin-bottom:7px}
@@ -156,25 +149,19 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 .logic-add-cond{background:none;border:none;cursor:pointer;color:#2D1B69;font-size:0.67rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:1px 0;margin-bottom:4px}
 .logic-action-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding-top:6px;border-top:1px solid #E2DAD0}
 .logic-albl{font-size:0.68rem;font-weight:700;color:#0F0E1A}
-.add-rule-btn{width:100%;padding:6px;border-radius:7px;border:1.5px dashed #C4B5FD;background:transparent;color:#2D1B69;font-size:0.69rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-align:center;margin-top:4px;transition:background 0.15s}
+.add-rule-btn{width:100%;padding:6px;border-radius:7px;border:1.5px dashed #C4B5FD;background:transparent;color:#2D1B69;font-size:0.69rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-align:center;margin-top:4px}
 .add-rule-btn:hover{background:#EDE9FF}
-
-/* MEDIA TAB */
 .media-url-row{display:flex;gap:6px;margin-bottom:8px}
-.media-url-inp{flex:1;padding:7px 10px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.77rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.15s}
+.media-url-inp{flex:1;padding:7px 10px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.77rem;font-family:'DM Sans',sans-serif;outline:none}
 .media-url-inp:focus{border-color:#2D1B69}
 .media-url-inp::placeholder{color:#C4B9AA}
-.media-fetch-btn{padding:7px 13px;border-radius:7px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.75rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:opacity 0.2s}
-.media-fetch-btn:hover{opacity:0.88}
+.media-fetch-btn{padding:7px 13px;border-radius:7px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.75rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0}
 .media-prev-box{border-radius:9px;overflow:hidden;border:1.5px solid #E2DAD0;background:#F5F0E8;min-height:80px;display:flex;align-items:center;justify-content:center;font-size:0.73rem;color:#C4B9AA;text-align:center;padding:12px;margin-bottom:8px}
 .media-prev-box img,.media-prev-box iframe{width:100%;max-height:160px;object-fit:cover;display:block;border:none}
 .media-layout-row{display:flex;gap:5px;margin-bottom:8px}
 .ml-btn{flex:1;padding:5px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.68rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:center;transition:all 0.15s}
 .ml-btn.active{background:#EDE9FF;border-color:#2D1B69;color:#2D1B69}
-.media-clear-btn{padding:5px 11px;border-radius:6px;border:1.5px solid #FECACA;background:#fff;color:#DC2626;font-size:0.72rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.15s}
-.media-clear-btn:hover{background:#FEF2F2}
-
-/* PAGE PANELS */
+.media-clear-btn{padding:5px 11px;border-radius:6px;border:1.5px solid #FECACA;background:#fff;color:#DC2626;font-size:0.72rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
 .pt{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:-0.02em;margin-bottom:4px}
 .ps{color:#64748B;font-size:0.82rem;margin-bottom:18px;line-height:1.5}
 .pcard{background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:20px;margin-bottom:12px}
@@ -195,17 +182,14 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 .url-prev.show{display:block}
 .url-prev img,.url-prev iframe{width:100%;height:150px;object-fit:cover;display:block;border:none}
 .url-prev-lbl{padding:7px 11px;font-size:0.68rem;color:#64748B;background:#F5F0E8;display:flex;justify-content:space-between}
-
-/* WELCOME TOGGLE */
 .welcome-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#F5F0E8;border-radius:10px;margin-bottom:14px}
-.welcome-toggle-lbl{font-size:0.84rem;font-weight:700}
-.welcome-toggle-desc{font-size:0.71rem;color:#64748B;margin-top:2px}
-.welcome-locked{opacity:0.5;pointer-events:none}
-.upgrade-nudge{background:linear-gradient(135deg,#FEF9EE,#FEF3C7);border:1.5px solid #FCD34D;border-radius:10px;padding:13px 15px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.upgrade-nudge-text{font-size:0.78rem;color:#92400E;line-height:1.45}
-.upgrade-nudge-btn{padding:6px 13px;border-radius:7px;background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;font-size:0.75rem;font-weight:700;font-family:'DM Sans',sans-serif;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0}
-
-/* PRIZE DISCLAIMER */
+.upgrade-nudge{background:linear-gradient(135deg,#FEF9EE,#FEF3C7);border:1.5px solid #FCD34D;border-radius:10px;padding:13px 15px;margin-bottom:14px}
+.upgrade-nudge-title{font-size:0.82rem;font-weight:700;color:#92400E;margin-bottom:6px}
+.upgrade-nudge-desc{font-size:0.75rem;color:#B45309;line-height:1.5;margin-bottom:10px}
+.upgrade-feat-list{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.upgrade-feat{display:flex;align-items:center;gap:6px;font-size:0.75rem;color:#92400E}
+.upgrade-feat::before{content:'✓';color:#D97706;font-weight:700;flex-shrink:0}
+.upgrade-nudge-btn{display:inline-block;padding:7px 16px;border-radius:8px;background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;font-size:0.78rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border:none;text-decoration:none}
 .disc{background:#FEF3C7;border:1.5px solid #FCD34D;border-radius:9px;padding:13px;margin-top:11px}
 .disc-txt{font-size:0.76rem;color:#92400E;line-height:1.6;margin-bottom:9px}
 .disc-row{display:flex;align-items:flex-start;gap:7px;cursor:pointer}
@@ -213,75 +197,27 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 .disc-row.checked .disc-cb{background:#D97706;border-color:#D97706}
 .disc-row.checked .disc-cb::after{content:'✓';color:#fff;font-size:0.58rem;font-weight:700}
 .disc-label{font-size:0.73rem;color:#92400E;font-weight:600;line-height:1.4}
-
-/* SLUG */
 .slug-row{display:flex;gap:7px;align-items:center}
 .slug-pre{font-size:0.7rem;color:#64748B;white-space:nowrap;flex-shrink:0}
 .slug-st{font-size:0.7rem;margin-top:3px}
-
-/* CSV */
 .csv-drop{border:2px dashed #E2DAD0;border-radius:11px;padding:22px;text-align:center;cursor:pointer;transition:all 0.2s;background:#FAFAF7}
 .csv-drop:hover,.csv-drop.over{border-color:#2D1B69;background:#EDE9FF}
-
-/* FLOATING BUTTONS */
 .float-btns{position:fixed;bottom:24px;right:28px;display:flex;gap:8px;z-index:250}
 .float-btn{padding:10px 18px;border-radius:10px;border:none;font-size:0.8rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 4px 16px rgba(15,14,26,0.15);transition:all 0.2s;white-space:nowrap}
 .float-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(15,14,26,0.2)}
 .float-btn-q{background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff}
 .float-btn-sec{background:#fff;color:#92400E;border:1.5px solid #FCD34D}
-
-/* Q TYPE PICKER POPUP */
 .qpicker-overlay{position:fixed;inset:0;z-index:260;display:none}
 .qpicker-overlay.open{display:block}
-.qpicker-popup{position:fixed;bottom:70px;right:28px;background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:12px;width:280px;box-shadow:0 8px 32px rgba(15,14,26,0.15);z-index:270;animation:popUp 0.15s ease}
-@keyframes popUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.qpicker-popup{display:none;position:fixed;bottom:70px;right:28px;background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:12px;width:290px;box-shadow:0 8px 32px rgba(15,14,26,0.15);z-index:270}
 .qp-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
 .qp-sec{font-size:0.59rem;font-weight:700;color:#94A3B8;letter-spacing:0.06em;text-transform:uppercase;padding:6px 4px 2px;grid-column:1/-1}
 .qp-btn{padding:6px 8px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.71rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;color:#0F0E1A;transition:all 0.13s;display:flex;align-items:center;gap:5px;text-align:left}
 .qp-btn:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
-
-/* PREVIEW PANEL */
-.prev-panel{position:fixed;top:56px;right:0;bottom:0;width:400px;background:#fff;border-left:1.5px solid #E2DAD0;z-index:200;transform:translateX(100%);transition:transform 0.3s ease;display:flex;flex-direction:column}
-.prev-panel.open{transform:translateX(0)}
-.prev-hdr{padding:12px 15px;border-bottom:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:8px}
-.prev-title{font-family:'Syne',sans-serif;font-weight:800;font-size:0.88rem}
-.prev-tabs{display:flex;gap:3px}
-.prev-tab{padding:4px 11px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.72rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;color:#64748B;transition:all 0.15s}
-.prev-tab.active{background:#2D1B69;border-color:#2D1B69;color:#fff}
-.prev-close{background:none;border:none;cursor:pointer;color:#94A3B8;font-size:0.95rem;padding:3px}
-.prev-close:hover{color:#0F0E1A}
-.prev-body{flex:1;overflow-y:auto;background:#F5F0E8;padding:0}
-
-/* PREVIEW FORM — exactly as respondent sees */
-.pf-wrap{padding:24px 20px;max-width:560px;margin:0 auto}
-.pf-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:-0.03em;margin-bottom:6px;color:#0F0E1A}
-.pf-desc{font-size:0.83rem;color:#64748B;margin-bottom:20px;line-height:1.6}
-.pf-sec-hdr{padding:10px 0 6px;border-bottom:2px solid;margin-bottom:14px;margin-top:10px}
-.pf-sec-title{font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem}
-.pf-sec-sub{font-size:0.75rem;color:#64748B;margin-top:2px}
-.pf-q{margin-bottom:18px}
-.pf-qlbl{font-size:0.88rem;font-weight:600;color:#0F0E1A;margin-bottom:8px;line-height:1.45}
-.pf-qlbl span{color:#EF4444;margin-left:2px}
-.pf-opt{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;border:1.5px solid #E2DAD0;margin-bottom:6px;cursor:pointer;transition:all 0.15s;font-size:0.83rem}
-.pf-opt:hover{border-color:#2D1B69;background:#EDE9FF}
-.pf-radio{width:14px;height:14px;border-radius:50%;border:2px solid #C4B9AA;flex-shrink:0}
-.pf-check{width:14px;height:14px;border-radius:3px;border:2px solid #C4B9AA;flex-shrink:0}
-.pf-inp{width:100%;padding:9px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.83rem;font-family:'DM Sans',sans-serif;color:#0F0E1A;outline:none;transition:border-color 0.2s}
-.pf-inp:focus{border-color:#2D1B69}
-.pf-inp::placeholder{color:#C4B9AA}
-.pf-scale{display:flex;gap:4px;flex-wrap:wrap}
-.pf-scale-n{width:32px;height:32px;border-radius:7px;border:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:600;cursor:pointer;transition:all 0.15s}
-.pf-scale-n:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
-.pf-submit{width:100%;padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.9rem;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;margin-top:8px}
-.mob-frame{width:260px;margin:0 auto;background:#fff;border-radius:22px;overflow:hidden;border:7px solid #0F0E1A;box-shadow:0 6px 24px rgba(0,0,0,0.15)}
-.mob-inner{background:#F5F0E8;min-height:420px;overflow-y:auto}
-
-/* SUCCESS MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
 .modal-overlay.open{display:flex}
 .modal-box{background:#fff;border-radius:20px;padding:32px;width:100%;max-width:420px;text-align:center}
-.modal-icon{font-size:3rem;margin-bottom:14px;animation:bounceIn 0.5s ease}
-@keyframes bounceIn{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+.modal-icon{font-size:3rem;margin-bottom:14px}
 .modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:8px}
 .modal-sub{font-size:0.85rem;color:#64748B;line-height:1.6;margin-bottom:20px}
 .modal-url{background:#F5F0E8;border-radius:8px;padding:10px 14px;font-size:0.78rem;font-weight:600;color:#2D1B69;margin-bottom:20px;word-break:break-all}
@@ -289,23 +225,17 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 .modal-btn{padding:9px 18px;border-radius:9px;font-size:0.83rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;border:none;transition:all 0.2s}
 .modal-btn-primary{background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff}
 .modal-btn-secondary{background:#F5F0E8;color:#64748B;border:1.5px solid #E2DAD0}
-
-/* MISC */
 .sbo{position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:99;display:none}
 .sbo.open{display:block}
-.prev-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.2);z-index:190;display:none}
-.prev-overlay.open{display:block}
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.8rem;font-weight:600;display:none;z-index:999;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.25)}
 .ls{position:fixed;inset:0;background:#F5F0E8;display:flex;align-items:center;justify-content:center;z-index:900}
 .sp{width:30px;height:30px;border:3px solid rgba(45,27,105,0.15);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-@media(max-width:860px){.sb{position:fixed;top:56px;left:0;bottom:0;transform:translateX(-100%);z-index:200;width:260px}.sb.open{transform:translateX(0)}.hbtn{display:flex}.content{padding:14px 16px 100px}.prev-panel{width:100%}.float-btns{right:14px;bottom:16px}}
-@media(max-width:480px){.nav-title{max-width:70px}.btn-prev-toggle,.btn-draft{display:none}}
+@media(max-width:860px){.sb{position:fixed;top:56px;left:0;bottom:0;transform:translateX(-100%);z-index:200;width:260px}.sb.open{transform:translateX(0)}.hbtn{display:flex}.content{padding:14px 16px 100px}.float-btns{right:14px;bottom:16px}}
+@media(max-width:480px){.nav-title{max-width:70px}.btn-draft{display:none}}
 </style>
 </head>
 <body>
-
 <div class="ls" id="ls"><div class="sp"></div></div>
 <div class="sbo" id="sbo" onclick="closeSb()"></div>
 
@@ -317,25 +247,28 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
     <div class="modal-sub">Your survey is now live and accepting responses.</div>
     <div class="modal-url" id="modal-url">swoopform.com/survey/...</div>
     <div class="modal-btns">
-      <a class="modal-btn modal-btn-primary" id="modal-view-btn" href="#" target="_blank">View survey →</a>
+      <a class="modal-btn modal-btn-primary" id="modal-view-btn" href="#" target="_blank">View survey</a>
       <button class="modal-btn modal-btn-secondary" onclick="closeSuccessModal()">Back to editor</button>
       <a class="modal-btn modal-btn-secondary" href="/dashboard">Dashboard</a>
     </div>
   </div>
 </div>
 
-<!-- Q TYPE PICKER POPUP -->
+<!-- Q TYPE PICKER -->
 <div class="qpicker-overlay" id="qpicker-overlay" onclick="closeQPicker()"></div>
-<div id="qpicker-popup" style="display:none;position:fixed;bottom:70px;right:28px;background:#fff;border-radius:14px;border:1.5px solid #E2DAD0;padding:12px;width:280px;box-shadow:0 8px 32px rgba(15,14,26,0.15);z-index:270">
+<div class="qpicker-popup" id="qpicker-popup">
   <div class="qp-grid">
     <div class="qp-sec">Choice</div>
-    <button class="qp-btn" onclick="addQ('multiple')">◉ Multiple choice</button>
-    <button class="qp-btn" onclick="addQ('checkbox')">☑ Checkboxes</button>
-    <button class="qp-btn" onclick="addQ('dropdown')">▾ Dropdown</button>
+    <button class="qp-btn" onclick="addQ('single')">Single choice</button>
+    <button class="qp-btn" onclick="addQ('multiple')">Multiple choice</button>
+    <button class="qp-btn" onclick="addQ('checkbox')">Checkboxes</button>
+    <button class="qp-btn" onclick="addQ('dropdown')">Dropdown</button>
     <button class="qp-btn" onclick="addQ('yesno')">Yes / No</button>
+    <button class="qp-btn" onclick="addQ('eitheror')">Either / Or</button>
     <div class="qp-sec">Text</div>
     <button class="qp-btn" onclick="addQ('text')">Short text</button>
     <button class="qp-btn" onclick="addQ('textarea')">Long text</button>
+    <button class="qp-btn" onclick="addQ('fitb')">Fill in blank</button>
     <button class="qp-btn" onclick="addQ('email')">Email</button>
     <button class="qp-btn" onclick="addQ('phone')">Phone</button>
     <button class="qp-btn" onclick="addQ('number')">Number</button>
@@ -359,7 +292,6 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
     <span class="nav-title" id="nav-title">New Survey</span>
   </div>
   <div class="nav-r">
-    <button class="btn-prev-toggle" onclick="togglePreview()">Preview</button>
     <button class="btn-draft" onclick="saveDraft()">Save draft</button>
     <button class="btn-pub" id="pub-btn" onclick="publishSurvey()">Publish →</button>
   </div>
@@ -368,7 +300,6 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 <div class="layout">
   <!-- SIDEBAR -->
   <div class="sb" id="sidebar">
-    <!-- PAGES GROUP -->
     <div class="sb-grp">
       <div class="sb-grp-hdr" onclick="togGrp('pages')">
         <span class="sb-grp-lbl">Pages</span>
@@ -386,7 +317,6 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
         </div>
       </div>
     </div>
-    <!-- QUESTIONS GROUP -->
     <div class="sb-grp" style="flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden">
       <div class="sb-grp-hdr" onclick="togGrp('qs')">
         <span class="sb-grp-lbl">Questions & Sections <span class="sb-qcount-badge" id="qbadge">0</span></span>
@@ -405,7 +335,7 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
     <div class="panel active" id="panel-builder">
       <div class="title-card">
         <input class="t-inp" id="s-title" placeholder="Survey title e.g. Customer Satisfaction 2024" maxlength="120"
-          oninput="document.getElementById('nav-title').textContent=this.value||'New Survey';upPrev()">
+          oninput="document.getElementById('nav-title').textContent=this.value||'New Survey'">
         <textarea class="d-inp" id="s-desc" placeholder="Description (optional)" rows="2"></textarea>
       </div>
       <div id="qrender"></div>
@@ -415,12 +345,21 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
     <div class="panel" id="panel-welcome">
       <div class="pt">Welcome page</div>
       <p class="ps">The first screen respondents see before starting the survey.</p>
-      <div id="welcome-upgrade-nudge" class="upgrade-nudge" style="display:none">
-        <div class="upgrade-nudge-text"><strong>Premium feature</strong> — Welcome pages are available on Starter and above, or free for verified Students, Educators and NGOs.</div>
-        <button class="upgrade-nudge-btn" onclick="window.location.href='/pricing'">Upgrade →</button>
+      <div class="upgrade-nudge" id="welcome-upgrade-nudge" style="display:none">
+        <div class="upgrade-nudge-title">Premium feature — unlock welcome page</div>
+        <div class="upgrade-nudge-desc">Welcome pages are available on Starter and above, or free for verified Students, Educators and NGOs.</div>
+        <div class="upgrade-feat-list">
+          <div class="upgrade-feat">Your logo displayed on the welcome screen</div>
+          <div class="upgrade-feat">Custom headline and start button text</div>
+          <div class="upgrade-feat">Background image (1920×1080px recommended)</div>
+          <div class="upgrade-feat">Background video (YouTube, auto-plays muted)</div>
+          <div class="upgrade-feat">Full colour customisation</div>
+        </div>
+        <a href="/pricing" class="upgrade-nudge-btn">Upgrade to Starter →</a>
+        <div style="margin-top:8px;font-size:0.7rem;color:#B45309">Student, Educator or NGO? <a href="/settings" style="color:#D97706;font-weight:700">Apply for free access →</a></div>
       </div>
       <div class="pcard">
-        <div class="welcome-toggle-row" id="welcome-toggle-row">
+        <div class="welcome-toggle-row">
           <div><div class="sr-n">Enable welcome page</div><div class="sr-d">Show an intro screen before the first question</div></div>
           <button class="tgl" id="tgl-welcome" onclick="togWelcome()"></button>
         </div>
@@ -430,7 +369,7 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
           <div class="fl"><label class="ll">Start button text</label><input class="ii" id="w-btn" placeholder="Default: Let's go"></div>
           <div class="fl"><label class="ll">Background color</label><div style="display:flex;gap:8px;align-items:center"><input class="ii" id="w-bgc" placeholder="#0F0E1A" style="flex:1"><input type="color" id="w-bgcp" value="#0F0E1A" oninput="document.getElementById('w-bgc').value=this.value" style="width:38px;height:38px;border-radius:7px;border:1.5px solid #E2DAD0;cursor:pointer;padding:2px;flex-shrink:0"></div></div>
           <div class="fl"><label class="ll">Background image URL</label><input class="ii" id="w-bgi" placeholder="Paste image URL..." oninput="prevURL('bgi',this.value)"><div class="fh">Recommended: <strong>1920×1080px</strong></div><div class="url-prev" id="bgi-prev"><img id="bgi-prev-img" alt=""><div class="url-prev-lbl"><span>Background image</span><span>1920×1080px</span></div></div></div>
-          <div class="fl"><label class="ll">Background video (YouTube)</label><input class="ii" id="w-bgv" placeholder="https://youtube.com/watch?v=..." oninput="prevURL('bgv',this.value)"><div class="fh">Auto-plays muted. Overrides image. <strong>16:9</strong> recommended</div><div class="url-prev" id="bgv-prev"><iframe id="bgv-frame" allowfullscreen style="width:100%;height:150px;border:none"></iframe><div class="url-prev-lbl"><span>Video preview</span><span>16:9</span></div></div></div>
+          <div class="fl"><label class="ll">Background video (YouTube)</label><input class="ii" id="w-bgv" placeholder="https://youtube.com/watch?v=..." oninput="prevURL('bgv',this.value)"><div class="fh">Auto-plays muted on loop. Overrides image. <strong>16:9</strong></div><div class="url-prev" id="bgv-prev"><iframe id="bgv-frame" allowfullscreen style="width:100%;height:150px;border:none"></iframe><div class="url-prev-lbl"><span>Video preview</span><span>16:9</span></div></div></div>
         </div>
       </div>
     </div>
@@ -448,7 +387,7 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
         </div>
         <div id="redirect-field" style="display:none;margin-top:10px">
           <input class="ii" id="ty-r" placeholder="https://yourwebsite.com">
-          <div class="fh">Respondents are sent here immediately after submitting.</div>
+          <div class="fh">Respondents are redirected here immediately after submitting.</div>
         </div>
         <div class="sr" style="border-bottom:none"><div><div class="sr-n">Show social share buttons</div></div><button class="tgl" id="tgl-share" onclick="this.classList.toggle('on')"></button></div>
       </div>
@@ -481,8 +420,8 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
         <div class="fl"><label class="ll">Category</label><select class="ii" id="s-cat" style="max-width:220px"><option>Other</option><option>Education</option><option>Business</option><option>Health</option><option>Research</option><option>Community</option><option>Events</option><option>Feedback</option><option>HR</option><option>Customer</option></select></div>
         <div class="sr"><div><div class="sr-n">Display style</div><div class="sr-d">How questions are presented to respondents</div></div><select class="ii" id="s-style" style="max-width:170px;padding:6px 10px"><option value="one">One at a time</option><option value="all">All on one page</option></select></div>
         <div class="sr"><div><div class="sr-n">Public survey</div><div class="sr-d">Show in SwoopForm Discover</div></div><button class="tgl" id="tgl-public" onclick="this.classList.toggle('on')"></button></div>
-        <div class="sr"><div><div class="sr-n">Collect email addresses</div><div class="sr-d">Ask respondents for email before starting</div></div><button class="tgl" id="tgl-email" onclick="this.classList.toggle('on')"></button></div>
-        <div class="sr"><div><div class="sr-n">One response per person</div><div class="sr-d">Prevent duplicate submissions</div></div><button class="tgl" id="tgl-once" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-n">Collect email addresses</div></div><button class="tgl" id="tgl-email" onclick="this.classList.toggle('on')"></button></div>
+        <div class="sr"><div><div class="sr-n">One response per person</div></div><button class="tgl" id="tgl-once" onclick="this.classList.toggle('on')"></button></div>
         <div class="sr" style="border-bottom:none"><div><div class="sr-n">Survey status</div></div><select class="ii" id="s-status" style="max-width:150px;padding:6px 10px"><option value="draft">Draft</option><option value="active">Active</option><option value="closed">Closed</option></select></div>
       </div>
     </div>
@@ -490,11 +429,11 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
     <!-- SEO -->
     <div class="panel" id="panel-seo">
       <div class="pt">SEO settings</div>
-      <p class="ps">Control how your survey appears in search engines and social sharing.</p>
+      <p class="ps">Control how your survey appears in search engines.</p>
       <div class="pcard">
         <div class="fl"><label class="ll">URL Slug</label><div class="slug-row"><span class="slug-pre">swoopform.com/survey/</span><input class="ii" id="seo-slug" placeholder="my-survey" oninput="valSlug(this)" style="flex:1"><button onclick="autoSlug()" style="padding:8px 11px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.73rem;font-weight:600;cursor:pointer;flex-shrink:0;font-family:'DM Sans',sans-serif">Auto</button></div><div class="slug-st" id="slug-st"></div></div>
         <div class="fl"><label class="ll">SEO Title</label><input class="ii" id="seo-title" placeholder="Leave blank to use survey title" maxlength="60"></div>
-        <div class="fl"><label class="ll">SEO Description</label><textarea class="ii" id="seo-desc" placeholder="Brief description for search engines..." rows="3" maxlength="160" style="resize:vertical"></textarea></div>
+        <div class="fl"><label class="ll">SEO Description</label><textarea class="ii" id="seo-desc" placeholder="Brief description..." rows="3" maxlength="160" style="resize:vertical"></textarea></div>
       </div>
     </div>
 
@@ -502,31 +441,17 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
     <div class="panel" id="panel-csv">
       <div class="pt">Bulk upload questions</div>
       <p class="ps">Upload a CSV to add multiple questions at once.</p>
-      <div class="pcard"><div class="pcard-t">Download sample CSV</div><p style="font-size:0.82rem;color:#64748B;margin-bottom:12px;line-height:1.6">Download the template, fill it in, then upload below.</p><button onclick="dlCSV()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 15px;border-radius:8px;border:1.5px solid #2D1B69;background:#EDE9FF;color:#2D1B69;font-size:0.77rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer">Download sample CSV</button><div style="margin-top:12px;font-size:0.73rem;color:#94A3B8;line-height:1.7"><strong style="color:#64748B">Columns:</strong> type, question, option1, option2, option3, option4, correct, required<br><strong style="color:#64748B">Types:</strong> multiple, checkbox, text, textarea, email, phone, number, rating, scale, date, yesno, quiz</div></div>
+      <div class="pcard"><div class="pcard-t">Download sample CSV</div><button onclick="dlCSV()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 15px;border-radius:8px;border:1.5px solid #2D1B69;background:#EDE9FF;color:#2D1B69;font-size:0.77rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer">Download sample CSV</button><div style="margin-top:12px;font-size:0.73rem;color:#94A3B8;line-height:1.7"><strong style="color:#64748B">Columns:</strong> type, question, option1, option2, option3, option4, correct, required<br><strong style="color:#64748B">Types:</strong> single, multiple, checkbox, text, textarea, fitb, email, phone, number, rating, scale, date, yesno, eitheror, quiz</div></div>
       <div class="pcard"><div class="pcard-t">Upload CSV</div><div class="csv-drop" id="csv-drop" onclick="document.getElementById('csvf').click()" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="csvDrop(event)"><div style="font-size:1.8rem;margin-bottom:7px">📂</div><div style="font-size:0.84rem;font-weight:600;color:#64748B;margin-bottom:3px">Click to upload or drag & drop</div><div style="font-size:0.7rem;color:#94A3B8">CSV files only</div></div><input type="file" id="csvf" accept=".csv" style="display:none" onchange="handleCSV(this)"><div id="csv-res" style="margin-top:9px;font-size:0.8rem;color:#64748B"></div></div>
     </div>
 
-  </div><!-- end content -->
-</div><!-- end layout -->
-
-<!-- FLOATING BUTTONS -->
-<div class="float-btns" id="float-btns">
-  <button class="float-btn float-btn-sec" onclick="addSection()">+ Add section</button>
-  <button class="float-btn float-btn-q" onclick="toggleQPicker()">+ Add question</button>
+  </div>
 </div>
 
-<!-- PREVIEW PANEL -->
-<div class="prev-overlay" id="prev-overlay" onclick="closePreview()"></div>
-<div class="prev-panel" id="prev-panel">
-  <div class="prev-hdr">
-    <span class="prev-title">Live Preview</span>
-    <div class="prev-tabs">
-      <button class="prev-tab active" id="ptab-d" onclick="setPM('desktop')">Desktop</button>
-      <button class="prev-tab" id="ptab-m" onclick="setPM('mobile')">Mobile</button>
-    </div>
-    <button class="prev-close" onclick="closePreview()">✕</button>
-  </div>
-  <div class="prev-body" id="prev-body"></div>
+<!-- FLOATING BUTTONS (builder only) -->
+<div class="float-btns" id="float-btns">
+  <button class="float-btn float-btn-sec" onclick="addSection()">+ Add section</button>
+  <button class="float-btn float-btn-q" onclick="toggleQPicker()">+ Add question ▾</button>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -541,21 +466,16 @@ const app=initializeApp(FB);
 const auth=getAuth(app);
 const db=getFirestore(app);
 
-// ── CONSTANTS ─────────────────────────────────────────
 const COLORS=['#2D1B69','#D97706','#0D9B8A','#DC2626','#2563EB','#7C3AED','#047857','#B45309'];
 const LETTERS=['A','B','C','D','E','F','G','H'];
-const QTYPES={multiple:'Multiple choice',checkbox:'Checkboxes',dropdown:'Dropdown',yesno:'Yes / No',text:'Short text',textarea:'Long text',email:'Email',phone:'Phone',number:'Number',rating:'Rating 1–5',scale:'Scale 1–10',date:'Date',file:'File URL',pledge:'Pledge',quiz:'Quiz MCQ'};
-const PH={multiple:'e.g. How satisfied are you with our service?',checkbox:'e.g. Which features do you use regularly?',dropdown:'e.g. Which country are you from?',yesno:'e.g. Would you recommend us to a friend?',text:'e.g. What is your full name?',textarea:'e.g. Describe your experience in detail',email:'e.g. What is your email address?',phone:'e.g. What is your phone number?',number:'e.g. How many employees does your company have?',rating:'e.g. Rate your overall experience (1=Poor, 5=Excellent)',scale:'e.g. How likely are you to recommend us? (1=Not likely, 10=Very likely)',date:'e.g. What is your date of birth?',file:'e.g. Paste a link to your portfolio or resume',pledge:'e.g. I pledge to reduce my plastic usage by 50% this year',quiz:'e.g. What is the capital of India?'};
+const QTYPES={single:'Single choice',multiple:'Multiple choice',checkbox:'Checkboxes',dropdown:'Dropdown',yesno:'Yes / No',eitheror:'Either / Or',text:'Short text',textarea:'Long text',fitb:'Fill in blank',email:'Email',phone:'Phone',number:'Number',rating:'Rating 1–5',scale:'Scale 1–10',date:'Date',file:'File URL',pledge:'Pledge',quiz:'Quiz MCQ'};
+const PH={single:'e.g. Which option best describes you?',multiple:'e.g. How satisfied are you with our service?',checkbox:'e.g. Which features do you use regularly?',dropdown:'e.g. Which country are you from?',yesno:'e.g. Would you recommend us to a friend?',eitheror:'e.g. Which do you prefer?',text:'e.g. What is your full name?',textarea:'e.g. Describe your experience in detail',fitb:'e.g. The capital of India is ___ and it is known for ___',email:'e.g. What is your email address?',phone:'e.g. What is your phone number?',number:'e.g. How many employees does your company have?',rating:'e.g. Rate your overall experience (1=Poor, 5=Excellent)',scale:'e.g. How likely are you to recommend us? (1=Not likely, 10=Very likely)',date:'e.g. What is your date of birth?',file:'e.g. Paste a link to your portfolio or resume',pledge:'e.g. I pledge to reduce my plastic usage by 50% this year',quiz:'e.g. What is the capital of India?'};
 
-// ── STATE ─────────────────────────────────────────────
 let items=[];
-let U=null;
-let SID=null;
-let prevOpen=false;
-let prevMode='desktop';
-let qPickerOpen=false;
+let U=null,SID=null;
 let grpOpen={pages:true,qs:true};
 let dragSrc=null;
+let qPickerOpen=false;
 let userPlan='free';
 let welcomeOn=false;
 let redirectOn=false;
@@ -564,39 +484,33 @@ let redirectOn=false;
 onAuthStateChanged(auth,u=>{
   if(!u){window.location.href='/login';return}
   U=u;
-  setupWelcomeForPlan();
+  if(userPlan==='free'){
+    document.getElementById('welcome-upgrade-nudge').style.display='block';
+    document.getElementById('tgl-welcome').disabled=true;
+    document.getElementById('tgl-welcome').style.opacity='0.4';
+    document.getElementById('tgl-welcome').style.cursor='not-allowed';
+  }
   items.push(mkQ('multiple'));
   renderAll();
   document.getElementById('ls').style.display='none';
 });
 
-function setupWelcomeForPlan(){
-  const isPaid=userPlan!=='free';
-  const row=document.getElementById('welcome-toggle-row');
-  const nudge=document.getElementById('welcome-upgrade-nudge');
-  if(!isPaid){
-    row.classList.add('welcome-locked');
-    nudge.style.display='flex';
-  }
-}
-
-// ── ITEM FACTORIES ────────────────────────────────────
+// ── FACTORIES ─────────────────────────────────────────
 function mkQ(type){
-  return{kind:'q',id:'q'+Date.now()+Math.random().toString(36).slice(2,5),type,text:'',options:['',''],correctIndex:-1,required:false,sectionId:null,mediaUrl:'',mediaLayout:'top',logic:[]};
+  return{kind:'q',id:'q'+Date.now()+Math.random().toString(36).slice(2,6),type,text:'',options:type==='eitheror'?['Option A','Option B']:['',''],correctIndex:-1,required:false,sectionId:null,mediaUrl:'',mediaLayout:'top',logic:[],timerEnabled:false,timerSeconds:30,choiceMin:null,choiceMax:null,choiceExact:null};
 }
 function mkSec(){
   const ci=items.filter(i=>i.kind==='sec').length%COLORS.length;
-  return{kind:'sec',id:'s'+Date.now()+Math.random().toString(36).slice(2,4),title:'',subtitle:'',color:COLORS[ci],mode:'one'};
+  return{kind:'sec',id:'s'+Date.now()+Math.random().toString(36).slice(2,5),title:'',subtitle:'',color:COLORS[ci],mode:'one'};
 }
 
-// ── PANEL NAV ─────────────────────────────────────────
+// ── PANELS ────────────────────────────────────────────
 window.sp=function(p){
-  syncDOM();
+  syncAll();
   document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(x=>x.classList.remove('active'));
   document.getElementById('panel-'+p).classList.add('active');
   document.getElementById('sn-'+p)?.classList.add('active');
-  // Show/hide float buttons only on builder
   document.getElementById('float-btns').style.display=p==='builder'?'flex':'none';
   closeSb();
 };
@@ -614,10 +528,8 @@ window.closeSb=()=>{document.getElementById('sidebar').classList.remove('open');
 // ── Q PICKER ──────────────────────────────────────────
 window.toggleQPicker=function(){
   qPickerOpen=!qPickerOpen;
-  const popup=document.getElementById('qpicker-popup');
-  const overlay=document.getElementById('qpicker-overlay');
-  popup.style.display=qPickerOpen?'block':'none';
-  overlay.classList.toggle('open',qPickerOpen);
+  document.getElementById('qpicker-popup').style.display=qPickerOpen?'block':'none';
+  document.getElementById('qpicker-overlay').classList.toggle('open',qPickerOpen);
 };
 window.closeQPicker=function(){
   qPickerOpen=false;
@@ -625,8 +537,9 @@ window.closeQPicker=function(){
   document.getElementById('qpicker-overlay').classList.remove('open');
 };
 
-// ── ADD ITEMS ─────────────────────────────────────────
+// ── ADD / DELETE ──────────────────────────────────────
 window.addQ=function(type){
+  syncAll(); // SAVE EVERYTHING before adding new question
   closeQPicker();
   const q=mkQ(type);
   items.push(q);
@@ -634,20 +547,21 @@ window.addQ=function(type){
   setTimeout(()=>{const el=document.getElementById('qi-'+q.id);if(el){el.focus();el.scrollIntoView({behavior:'smooth',block:'center'})}},90);
 };
 window.addSection=function(){
+  syncAll();
   const s=mkSec();
   items.push(s);
   renderAll();sp('builder');
   setTimeout(()=>{const el=document.getElementById('sti-'+s.id);if(el){el.focus();el.scrollIntoView({behavior:'smooth',block:'center'})}},90);
 };
 window.delItem=function(id){
-  syncDOM();
+  syncAll();
   const qs=items.filter(i=>i.kind==='q');
   if(qs.length<=1&&items.find(i=>i.id===id)?.kind==='q'){toast2('Need at least 1 question');return}
   items=items.filter(i=>i.id!==id);
   renderAll();
 };
 window.moveItem=function(id,dir){
-  syncDOM();
+  syncAll();
   const idx=items.findIndex(i=>i.id===id);
   if(dir==='up'&&idx>0)[items[idx],items[idx-1]]=[items[idx-1],items[idx]];
   else if(dir==='down'&&idx<items.length-1)[items[idx],items[idx+1]]=[items[idx+1],items[idx]];
@@ -655,21 +569,32 @@ window.moveItem=function(id,dir){
   setTimeout(()=>{const el=document.getElementById('qcard-'+id)||document.getElementById('seccard-'+id);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'})},80);
 };
 
-// ── SECTION ASSIGN ────────────────────────────────────
-window.assignSec=function(qid,secId){
-  syncDOM();
-  const q=items.find(i=>i.id===qid);
-  if(!q)return;
-  q.sectionId=secId==='none'?null:secId;
-  renderAll();
+// ── OPTIONS ───────────────────────────────────────────
+window.addOpt=function(id){syncAll();const q=items.find(i=>i.id===id);if(q&&q.options.length<8){q.options.push('');renderAll();setTimeout(()=>{const os=document.querySelectorAll('.oi-'+id);if(os.length)os[os.length-1].focus()},60)}};
+window.rmOpt=function(id,i){syncAll();const q=items.find(i2=>i2.id===id);if(q&&q.options.length>2){q.options.splice(i,1);if(q.correctIndex===i)q.correctIndex=-1;renderAll()}else toast2('Need at least 2 options')};
+window.mkOK=function(id,i){syncAll();const q=items.find(i2=>i2.id===id);if(q){q.correctIndex=q.correctIndex===i?-1:i;renderAll()}};
+window.chType=function(id,type){syncAll();const q=items.find(i=>i.id===id);if(q){q.type=type;if(!q.options?.length||q.type==='eitheror')q.options=type==='eitheror'?['Option A','Option B']:['',''];renderAll()}};
+window.togReq=function(id){const q=items.find(i=>i.id===id);if(q){q.required=!q.required;document.getElementById('req-'+id)?.classList.toggle('on',q.required)}};
+window.assignSec=function(qid,secId){syncAll();const q=items.find(i=>i.id===qid);if(q){q.sectionId=secId==='none'?null:secId;renderAll()}};
+
+// ── TIMER ─────────────────────────────────────────────
+window.togTimer=function(id){
+  const q=items.find(i=>i.id===id);if(!q)return;
+  q.timerEnabled=!q.timerEnabled;
+  document.getElementById('tmr-'+id)?.classList.toggle('on',q.timerEnabled);
+  const tinp=document.getElementById('tsec-'+id);
+  if(tinp)tinp.style.display=q.timerEnabled?'inline-block':'none';
+};
+window.setTimerSec=function(id,val){
+  const q=items.find(i=>i.id===id);
+  if(q)q.timerSeconds=parseInt(val)||30;
 };
 
-// ── OPTIONS ───────────────────────────────────────────
-window.addOpt=function(id){syncDOM();const q=items.find(i=>i.id===id);if(q&&q.options.length<8){q.options.push('');renderAll();setTimeout(()=>{const os=document.querySelectorAll('.oi-'+id);if(os.length)os[os.length-1].focus()},60)}};
-window.rmOpt=function(id,i){syncDOM();const q=items.find(i2=>i2.id===id);if(q&&q.options.length>2){q.options.splice(i,1);if(q.correctIndex===i)q.correctIndex=-1;renderAll()}else toast2('Need at least 2 options')};
-window.mkOK=function(id,i){syncDOM();const q=items.find(i2=>i2.id===id);if(q){q.correctIndex=q.correctIndex===i?-1:i;renderAll()}};
-window.togReq=function(id){const q=items.find(i=>i.id===id);if(q){q.required=!q.required;document.getElementById('req-'+id)?.classList.toggle('on',q.required)}};
-window.chType=function(id,type){syncDOM();const q=items.find(i=>i.id===id);if(q){q.type=type;if(!q.options?.length)q.options=['',''];renderAll()}};
+// ── CHOICE LIMITS ─────────────────────────────────────
+window.setChoiceLimit=function(id,field,val){
+  const q=items.find(i=>i.id===id);
+  if(q)q[field]=val?parseInt(val):null;
+};
 
 // ── SECTION MODE ──────────────────────────────────────
 window.setSecMode=function(id,mode){
@@ -688,11 +613,11 @@ window.showQTab=function(id,tab){
 };
 
 // ── LOGIC ─────────────────────────────────────────────
-window.addRule=function(id){syncDOM();const q=items.find(i=>i.id===id);if(q){q.logic.push({id:'r'+Date.now(),condType:'ALL',conditions:[{qid:'',op:'is',val:''}],action:'skip',target:''});renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
-window.delRule=function(id,rid){syncDOM();const q=items.find(i=>i.id===id);if(q){q.logic=q.logic.filter(r=>r.id!==rid);renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
+window.addRule=function(id){syncAll();const q=items.find(i=>i.id===id);if(q){q.logic.push({id:'r'+Date.now(),condType:'ALL',conditions:[{qid:'',op:'is',val:''}],action:'skip',target:''});renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
+window.delRule=function(id,rid){syncAll();const q=items.find(i=>i.id===id);if(q){q.logic=q.logic.filter(r=>r.id!==rid);renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
 window.setCondType=function(id,rid,ct){const q=items.find(i=>i.id===id);const r=q?.logic.find(r=>r.id===rid);if(r){r.condType=ct;renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
-window.addCond=function(id,rid){syncDOM();const q=items.find(i=>i.id===id);const r=q?.logic.find(r=>r.id===rid);if(r){r.conditions.push({qid:'',op:'is',val:''});renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
-window.rmCond=function(id,rid,ci){syncDOM();const q=items.find(i=>i.id===id);const r=q?.logic.find(r=>r.id===rid);if(r&&r.conditions.length>1){r.conditions.splice(ci,1);renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
+window.addCond=function(id,rid){syncAll();const q=items.find(i=>i.id===id);const r=q?.logic.find(r=>r.id===rid);if(r){r.conditions.push({qid:'',op:'is',val:''});renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
+window.rmCond=function(id,rid,ci){syncAll();const q=items.find(i=>i.id===id);const r=q?.logic.find(r=>r.id===rid);if(r&&r.conditions.length>1){r.conditions.splice(ci,1);renderAll();setTimeout(()=>showQTab(id,'logic'),60)}};
 
 // ── MEDIA ─────────────────────────────────────────────
 window.fetchMedia=function(id){
@@ -721,7 +646,7 @@ window.setML=function(id,layout,btn){
   btn.classList.add('active');
 };
 
-// ── WELCOME / REDIRECT TOGGLES ────────────────────────
+// ── WELCOME / REDIRECT ────────────────────────────────
 window.togWelcome=function(){
   if(userPlan==='free'){toast2('Upgrade to enable welcome page');return}
   welcomeOn=!welcomeOn;
@@ -729,20 +654,37 @@ window.togWelcome=function(){
   document.getElementById('welcome-fields').style.display=welcomeOn?'block':'none';
 };
 window.togRedirect=function(){
+  if(!redirectOn&&userPlan==='free'){toast2('Upgrade to Starter to use redirect');return}
   redirectOn=!redirectOn;
   document.getElementById('tgl-redirect').classList.toggle('on',redirectOn);
   document.getElementById('redirect-field').style.display=redirectOn?'block':'none';
-  if(redirectOn&&userPlan==='free'){toast2('Upgrade to Starter to use redirect');redirectOn=false;document.getElementById('tgl-redirect').classList.remove('on');document.getElementById('redirect-field').style.display='none'}
 };
+window.togPrize=function(){const on=document.getElementById('tgl-prize').classList.toggle('on');document.getElementById('prize-f').style.display=on?'block':'none'};
 
-// ── SYNC DOM → STATE ──────────────────────────────────
-function syncDOM(){
+// ── SYNC ALL DOM → STATE (the key fix) ────────────────
+function syncAll(){
   items.forEach(item=>{
     if(item.kind==='q'){
+      // Question text — save from input
       const a=document.getElementById('qi-'+item.id);if(a)item.text=a.value;
-      const os=document.querySelectorAll('.oi-'+item.id);if(os.length)item.options=Array.from(os).map(e=>e.value);
+      // Options
+      const os=document.querySelectorAll('.oi-'+item.id);
+      if(os.length)item.options=Array.from(os).map(e=>e.value);
+      // Either/or options
+      const eo1=document.getElementById('eo1-'+item.id);
+      const eo2=document.getElementById('eo2-'+item.id);
+      if(eo1&&eo2)item.options=[eo1.value||'Option A',eo2.value||'Option B'];
+      // Fill in blank text
+      const fitb=document.getElementById('fitb-inp-'+item.id);if(fitb)item.text=fitb.value;
+      // Media
       const mu=document.getElementById('murl-'+item.id);if(mu)item.mediaUrl=mu.value;
-      // sync logic dropdowns
+      // Timer
+      const ts=document.getElementById('tsec-'+item.id);if(ts)item.timerSeconds=parseInt(ts.value)||30;
+      // Choice limits
+      const cmin=document.getElementById('cmin-'+item.id);if(cmin)item.choiceMin=cmin.value?parseInt(cmin.value):null;
+      const cmax=document.getElementById('cmax-'+item.id);if(cmax)item.choiceMax=cmax.value?parseInt(cmax.value):null;
+      const cexact=document.getElementById('cexact-'+item.id);if(cexact)item.choiceExact=cexact.value?parseInt(cexact.value):null;
+      // Logic
       item.logic.forEach(rule=>{
         rule.conditions.forEach((c,ci)=>{
           const qa=document.getElementById('lcq-'+rule.id+'-'+ci);if(qa)c.qid=qa.value;
@@ -770,7 +712,7 @@ function setupDrag(){
     card.addEventListener('drop',e=>{
       e.preventDefault();card.classList.remove('drag-over');
       if(!dragSrc||dragSrc===card.dataset.id)return;
-      syncDOM();
+      syncAll();
       const fi=items.findIndex(i=>i.id===dragSrc);
       const ti=items.findIndex(i=>i.id===card.dataset.id);
       if(fi<0||ti<0)return;
@@ -785,19 +727,17 @@ function setupDrag(){
 
 // ── RENDER SIDEBAR ────────────────────────────────────
 function renderSB(){
-  let qn=0;
   const secs=items.filter(i=>i.kind==='sec');
+  let qn=0;
   document.getElementById('qbadge').textContent=items.filter(i=>i.kind==='q').length;
   document.getElementById('sbqlist').innerHTML=items.map(item=>{
     if(item.kind==='sec'){
       return `<div class="sb-secrow" onclick="goItem('${item.id}')"><div class="sb-secdot" style="background:${item.color}"></div><span class="sb-sectext">${eh(item.title)||'New Section'}</span></div>`;
-    } else {
-      qn++;
-      const sec=secs.find(s=>s.id===item.sectionId);
-      const color=sec?sec.color:'#94A3B8';
-      const indent=sec?'margin-left:12px;':'';
-      return `<div class="sb-qitem" style="${indent}" onclick="goItem('${item.id}')"><span class="sb-drag">⠿</span><div class="sb-qnum" style="background:${color}">${qn}</div><div class="sb-qtext">${eh(item.text)||'Untitled'}</div><span class="sb-qtype">${item.type}</span></div>`;
     }
+    qn++;
+    const sec=secs.find(s=>s.id===item.sectionId);
+    const color=sec?sec.color:'#94A3B8';
+    return `<div class="sb-qitem" style="${sec?'margin-left:10px':''}" onclick="goItem('${item.id}')"><span class="sb-drag">⠿</span><div class="sb-qnum" style="background:${color}">${qn}</div><div class="sb-qtext">${eh(item.text)||'Untitled'}</div><span class="sb-qtype">${item.type}</span></div>`;
   }).join('');
 }
 window.goItem=function(id){sp('builder');setTimeout(()=>{const el=document.getElementById('qcard-'+id)||document.getElementById('seccard-'+id);if(el)el.scrollIntoView({behavior:'smooth',block:'center'})},80);closeSb()};
@@ -807,15 +747,13 @@ function renderCards(){
   const secs=items.filter(i=>i.kind==='sec');
   const allQs=items.filter(i=>i.kind==='q');
   let qn=0;
-
   document.getElementById('qrender').innerHTML=items.map((item,idx)=>{
     const isFirst=idx===0,isLast=idx===items.length-1;
-    if(item.kind==='sec') return renderSecCard(item,isFirst,isLast);
+    if(item.kind==='sec')return renderSecCard(item,isFirst,isLast);
     qn++;
     const sec=secs.find(s=>s.id===item.sectionId);
     const color=sec?sec.color:'#94A3B8';
-    const indented=!!sec;
-    return renderQCard(item,qn,color,isFirst,isLast,indented,allQs,secs);
+    return renderQCard(item,qn,color,isFirst,isLast,!!sec,allQs,secs);
   }).join('');
   setupDrag();
 }
@@ -844,27 +782,48 @@ function renderSecCard(s,isFirst,isLast){
 }
 
 function renderQCard(q,qn,color,isFirst,isLast,indented,allQs,secs){
-  const hasO=['multiple','checkbox','dropdown','quiz'].includes(q.type);
+  const hasO=['single','multiple','checkbox','dropdown','quiz'].includes(q.type);
   const hasLogic=q.logic&&q.logic.length>0;
 
-  // Section assign dropdown
-  const secOptions=`<option value="none"${!q.sectionId?' selected':''}>No section</option>`+
+  // Section dropdown
+  const secOpts=`<option value="none"${!q.sectionId?' selected':''}>No section</option>`+
     secs.map(s=>`<option value="${s.id}"${q.sectionId===s.id?' selected':''}>${eh(s.title)||'Untitled section'}</option>`).join('');
 
   // Answer area
   let ansHtml='';
-  if(hasO){
+  if(q.type==='fitb'){
+    // Fill in the blank — show question with blanks highlighted
+    const preview=(q.text||'e.g. The capital of India is ___').replace(/___/g,'<span class="blank">___</span>');
+    ansHtml=`<div class="fitb-wrap">
+      <div class="fitb-hint">Use ___ (triple underscore) to mark blanks in your question above.</div>
+      <div style="margin-top:8px;font-size:0.72rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:4px">Preview</div>
+      <div class="fitb-preview">${preview}</div>
+    </div>`;
+  } else if(q.type==='eitheror'){
+    ansHtml=`<div class="eo-row">
+      <div class="eo-inp-wrap"><div class="eo-badge">A</div><input class="eo-inp" id="eo1-${q.id}" value="${eh(q.options[0]||'Option A')}" placeholder="Option A" onblur="syncAll()"></div>
+      <div style="display:flex;align-items:center;font-size:0.72rem;font-weight:700;color:#94A3B8;flex-shrink:0">OR</div>
+      <div class="eo-inp-wrap"><div class="eo-badge" style="background:#D97706">B</div><input class="eo-inp" id="eo2-${q.id}" value="${eh(q.options[1]||'Option B')}" placeholder="Option B" onblur="syncAll()"></div>
+    </div>`;
+  } else if(q.type==='yesno'){
+    ansHtml=`<div style="display:flex;gap:8px"><div style="padding:7px 15px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600;background:#F5F0E8">Yes</div><div style="padding:7px 15px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600;background:#F5F0E8">No</div></div>`;
+  } else if(hasO){
+    const isQuiz=q.type==='quiz';
     ansHtml=`<div style="margin-bottom:7px">${(q.options||[]).map((o,oi)=>`
       <div class="opt-row">
         <div class="opt-letter">${LETTERS[oi]}</div>
-        <input class="opt-inp oi-${q.id}" value="${eh(o)}" placeholder="Option ${LETTERS[oi]}"
-          oninput="items.find(x=>x.id==='${q.id}').options[${oi}]=this.value;upPrev()">
-        ${q.type==='quiz'?`<button class="correct-btn${q.correctIndex===oi?' ok':''}" onclick="mkOK('${q.id}',${oi})" title="Mark correct">✓</button>`:''}
+        <input class="opt-inp oi-${q.id}" value="${eh(o)}" placeholder="Option ${LETTERS[oi]}" onblur="syncAll()">
+        ${isQuiz?`<button class="correct-btn${q.correctIndex===oi?' ok':''}" onclick="mkOK('${q.id}',${oi})" title="Mark correct">✓</button>`:''}
         ${q.options.length>2?`<button class="opt-del" onclick="rmOpt('${q.id}',${oi})">✕</button>`:''}
       </div>`).join('')}</div>
-      <button class="add-opt-btn" onclick="addOpt('${q.id}')">+ Add option</button>`;
-  } else if(q.type==='yesno'){
-    ansHtml=`<div style="display:flex;gap:8px"><div style="padding:7px 15px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600;background:#F5F0E8">Yes</div><div style="padding:7px 15px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600;background:#F5F0E8">No</div></div>`;
+      <button class="add-opt-btn" onclick="addOpt('${q.id}')">+ Add option</button>
+      ${['multiple','checkbox'].includes(q.type)?`<div class="choice-limit-row">
+        <span class="cl-lbl">${q.type==='multiple'?'Allow exactly:':'Min:'}</span>
+        ${q.type==='multiple'?
+          `<input class="cl-inp" id="cexact-${q.id}" type="number" min="1" value="${q.choiceExact||''}" placeholder="1" oninput="setChoiceLimit('${q.id}','choiceExact',this.value)"><span class="cl-lbl">answer(s)</span>`:
+          `<input class="cl-inp" id="cmin-${q.id}" type="number" min="1" value="${q.choiceMin||''}" placeholder="1" oninput="setChoiceLimit('${q.id}','choiceMin',this.value)"><span class="cl-lbl">Max:</span><input class="cl-inp" id="cmax-${q.id}" type="number" min="1" value="${q.choiceMax||''}" placeholder="any" oninput="setChoiceLimit('${q.id}','choiceMax',this.value)"><span class="cl-lbl">answers</span>`
+        }
+      </div>`:``}`;
   } else if(q.type==='rating'){
     ansHtml=`<div style="display:flex;gap:5px">${[1,2,3,4,5].map(n=>`<div style="width:34px;height:34px;border-radius:7px;border:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:600;color:#64748B;background:#F5F0E8">${n}</div>`).join('')}</div>`;
   } else if(q.type==='scale'){
@@ -879,19 +838,15 @@ function renderQCard(q,qn,color,isFirst,isLast,indented,allQs,secs){
   // Logic panel
   const otherQs=allQs.filter(x=>x.id!==q.id);
   let logicHtml='<div class="logic-wrap">';
-  if(!q.logic||!q.logic.length){
-    logicHtml+=`<div class="logic-empty">No logic rules yet.<br>Add a rule to skip, show or hide questions based on answers.</div>`;
-  }
+  if(!q.logic?.length)logicHtml+=`<div class="logic-empty">No logic rules yet.<br>Add a rule to skip or show questions based on answers.</div>`;
   (q.logic||[]).forEach((rule,ri)=>{
-    logicHtml+=`<div class="logic-rule"><div class="logic-rhdr"><span class="logic-rlbl">Rule ${ri+1}</span><button class="logic-rdel" onclick="delRule('${q.id}','${rule.id}')">Delete rule</button></div>`;
-    if(rule.conditions.length>1){
-      logicHtml+=`<div class="logic-ctype-row"><button class="ct-btn${rule.condType==='ALL'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ALL')">Match ALL</button><button class="ct-btn${rule.condType==='ANY'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ANY')">Match ANY</button></div>`;
-    }
+    logicHtml+=`<div class="logic-rule"><div class="logic-rhdr"><span class="logic-rlbl">Rule ${ri+1}</span><button class="logic-rdel" onclick="delRule('${q.id}','${rule.id}')">Delete</button></div>`;
+    if(rule.conditions.length>1)logicHtml+=`<div class="logic-ctype-row"><button class="ct-btn${rule.condType==='ALL'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ALL')">Match ALL</button><button class="ct-btn${rule.condType==='ANY'?' active':''}" onclick="setCondType('${q.id}','${rule.id}','ANY')">Match ANY</button></div>`;
     rule.conditions.forEach((c,ci)=>{
       logicHtml+=`<div class="logic-cond-row">
         <select class="lsel" id="lcq-${rule.id}-${ci}">
-          <option value="${q.id}"${c.qid===q.id||!c.qid?' selected':''}>Q${qn} (this question)</option>
-          ${otherQs.map((aq,aqi)=>`<option value="${aq.id}"${c.qid===aq.id?' selected':''}>Q${allQs.indexOf(aq)+1} — ${(aq.text||'Untitled').slice(0,20)}</option>`).join('')}
+          <option value="${q.id}"${!c.qid||c.qid===q.id?' selected':''}>Q${qn} (this)</option>
+          ${otherQs.map(aq=>`<option value="${aq.id}"${c.qid===aq.id?' selected':''}>Q${allQs.indexOf(aq)+1} — ${eh((aq.text||'Untitled').slice(0,20))}</option>`).join('')}
         </select>
         <select class="lsel" id="lco-${rule.id}-${ci}">
           <option value="is"${c.op==='is'?' selected':''}>is</option>
@@ -907,14 +862,14 @@ function renderQCard(q,qn,color,isFirst,isLast,indented,allQs,secs){
     logicHtml+=`<button class="logic-add-cond" onclick="addCond('${q.id}','${rule.id}')">+ Add condition</button>
     <div class="logic-action-row">
       <span class="logic-albl">THEN</span>
-      <select class="lsel" id="lact-${rule.id}" onchange="updateActionTarget(this,'${rule.id}')">
-        <option value="skip"${rule.action==='skip'?' selected':''}>Skip to question</option>
-        <option value="show"${rule.action==='show'?' selected':''}>Show question</option>
-        <option value="hide"${rule.action==='hide'?' selected':''}>Hide question</option>
+      <select class="lsel" id="lact-${rule.id}">
+        <option value="skip"${rule.action==='skip'?' selected':''}>Skip to</option>
+        <option value="show"${rule.action==='show'?' selected':''}>Show</option>
+        <option value="hide"${rule.action==='hide'?' selected':''}>Hide</option>
         <option value="end"${rule.action==='end'?' selected':''}>End survey</option>
       </select>
       ${['skip','show','hide'].includes(rule.action)?`<select class="lsel" id="ltgt-${rule.id}">
-        ${otherQs.map(aq=>`<option value="${aq.id}"${rule.target===aq.id?' selected':''}>Q${allQs.indexOf(aq)+1} — ${(aq.text||'Untitled').slice(0,18)}</option>`).join('')}
+        ${otherQs.map(aq=>`<option value="${aq.id}"${rule.target===aq.id?' selected':''}>Q${allQs.indexOf(aq)+1} — ${eh((aq.text||'Untitled').slice(0,18))}</option>`).join('')}
       </select>`:`<span id="ltgt-${rule.id}"></span>`}
     </div></div>`;
   });
@@ -922,7 +877,7 @@ function renderQCard(q,qn,color,isFirst,isLast,indented,allQs,secs){
 
   // Media panel
   const mediaPanelHtml=`<div class="q-body">
-    <div style="font-size:0.72rem;color:#64748B;margin-bottom:9px;line-height:1.5">Add an image or YouTube video to show alongside this question.</div>
+    <div style="font-size:0.72rem;color:#64748B;margin-bottom:9px">Add an image or YouTube video to this question.</div>
     <label style="display:block;font-size:0.67rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px">Media URL</label>
     <div class="media-url-row">
       <input class="media-url-inp" id="murl-${q.id}" value="${eh(q.mediaUrl||'')}" placeholder="Paste image or YouTube URL...">
@@ -938,7 +893,12 @@ function renderQCard(q,qn,color,isFirst,isLast,indented,allQs,secs){
     <button class="media-clear-btn" onclick="clearMedia('${q.id}')">Remove media</button>
   </div>`;
 
-  return `<div class="q-card${indented?' indented':''}" id="qcard-${q.id}" data-id="${q.id}" draggable="true" style="${indented?'border-left-color:'+color:''}">
+  // Question body — special case for fitb uses a textarea instead
+  const qInputHtml = q.type==='fitb'
+    ? `<textarea class="q-inp" id="qi-${q.id}" rows="2" style="resize:vertical;padding:5px 0" placeholder="${PH.fitb}" onblur="syncAll()">${eh(q.text)}</textarea>`
+    : `<input class="q-inp" id="qi-${q.id}" value="${eh(q.text)}" placeholder="${PH[q.type]||'Type your question...'}" onblur="syncAll()">`;
+
+  return `<div class="q-card${indented?' indented':''}" id="qcard-${q.id}" data-id="${q.id}" draggable="true"${indented?` style="border-left-color:${color}"`:''}">
     <div class="q-accent" style="background:${color}"></div>
     <div class="q-tabs">
       <button class="q-tab active" data-tab="question" onclick="showQTab('${q.id}','question')">Question</button>
@@ -952,9 +912,7 @@ function renderQCard(q,qn,color,isFirst,isLast,indented,allQs,secs){
         <select class="q-type-sel" onchange="chType('${q.id}',this.value)">
           ${Object.entries(QTYPES).map(([k,v])=>`<option value="${k}"${q.type===k?' selected':''}>${v}</option>`).join('')}
         </select>
-        <select class="sec-assign" onchange="assignSec('${q.id}',this.value)" title="Assign to section">
-          ${secOptions}
-        </select>
+        <select class="sec-assign" onchange="assignSec('${q.id}',this.value)" title="Assign to section">${secOpts}</select>
         <div class="item-btns">
           <button class="ibtn" onclick="moveItem('${q.id}','up')" ${isFirst?'disabled':''}>↑</button>
           <button class="ibtn" onclick="moveItem('${q.id}','down')" ${isLast?'disabled':''}>↓</button>
@@ -962,12 +920,16 @@ function renderQCard(q,qn,color,isFirst,isLast,indented,allQs,secs){
         </div>
       </div>
       <div class="q-body">
-        <input class="q-inp" id="qi-${q.id}" value="${eh(q.text)}" placeholder="${PH[q.type]||'Type your question...'}"
-          oninput="items.find(x=>x.id==='${q.id}').text=this.value;upPrev()">
+        ${qInputHtml}
         ${ansHtml}
         <div class="q-foot">
           <button class="tgl${q.required?' on':''}" id="req-${q.id}" onclick="togReq('${q.id}')"></button>
           <span class="tgl-l">Required</span>
+          <div style="width:1px;height:14px;background:#E2DAD0;margin:0 2px"></div>
+          <button class="tgl${q.timerEnabled?' on':''}" id="tmr-${q.id}" onclick="togTimer('${q.id}')"></button>
+          <span class="tgl-l">Timer</span>
+          <input class="timer-inp" id="tsec-${q.id}" type="number" min="5" max="300" value="${q.timerSeconds||30}" style="display:${q.timerEnabled?'inline-block':'none'}" oninput="setTimerSec('${q.id}',this.value)">
+          ${q.timerEnabled?`<span class="tgl-l">sec</span>`:''}
         </div>
       </div>
     </div>
@@ -976,155 +938,77 @@ function renderQCard(q,qn,color,isFirst,isLast,indented,allQs,secs){
   </div>`;
 }
 
-window.updateActionTarget=function(sel,rid){
-  // re-render after action change so target dropdown shows/hides
-  syncDOM();
-  renderAll();
-  setTimeout(()=>showQTab(sel.closest('.q-card')?.id?.replace('qcard-',''),'logic'),60);
-};
+function renderAll(){renderSB();renderCards()}
 
-function renderAll(){renderSB();renderCards();upPrev()}
-
-// ── PREVIEW ───────────────────────────────────────────
-window.togglePreview=function(){prevOpen=!prevOpen;document.getElementById('prev-panel').classList.toggle('open',prevOpen);document.getElementById('prev-overlay').classList.toggle('open',prevOpen);if(prevOpen)upPrev()};
-window.closePreview=function(){prevOpen=false;document.getElementById('prev-panel').classList.remove('open');document.getElementById('prev-overlay').classList.remove('open')};
-window.setPM=function(m){prevMode=m;document.getElementById('ptab-d').classList.toggle('active',m==='desktop');document.getElementById('ptab-m').classList.toggle('active',m==='mobile');upPrev()};
-
-window.upPrev=function(){
-  if(!prevOpen)return;
-  const title=document.getElementById('s-title')?.value||'Untitled Survey';
-  const desc=document.getElementById('s-desc')?.value||'';
-  const body=document.getElementById('prev-body');
-  const allQs=items.filter(i=>i.kind==='q');
-  const secs=items.filter(i=>i.kind==='sec');
-
-  let html=`<div class="pf-wrap">
-    <div class="pf-title">${eh(title)}</div>
-    ${desc?`<div class="pf-desc">${eh(desc)}</div>`:''}`;
-
-  let qn=0;
-  let lastSecId=null;
-
-  items.forEach(item=>{
-    if(item.kind==='sec'){
-      lastSecId=item.id;
-      html+=`<div class="pf-sec-hdr" style="border-color:${item.color}">
-        <div class="pf-sec-title" style="color:${item.color}">${eh(item.title)||'Section'}</div>
-        ${item.subtitle?`<div class="pf-sec-sub">${eh(item.subtitle)}</div>`:''}
-      </div>`;
-    } else {
-      qn++;
-      let ans='';
-      if(['multiple','dropdown','quiz'].includes(item.type)){
-        ans=(item.options||[]).filter(o=>o.trim()).map(o=>`<div class="pf-opt"><div class="pf-radio"></div>${eh(o)}</div>`).join('');
-      } else if(item.type==='checkbox'){
-        ans=(item.options||[]).filter(o=>o.trim()).map(o=>`<div class="pf-opt"><div class="pf-check"></div>${eh(o)}</div>`).join('');
-      } else if(item.type==='yesno'){
-        ans=`<div style="display:flex;gap:8px"><div class="pf-opt" style="flex:1;justify-content:center;font-weight:600">Yes</div><div class="pf-opt" style="flex:1;justify-content:center;font-weight:600">No</div></div>`;
-      } else if(item.type==='rating'){
-        ans=`<div class="pf-scale">${[1,2,3,4,5].map(n=>`<div class="pf-scale-n">${n}</div>`).join('')}</div>`;
-      } else if(item.type==='scale'){
-        ans=`<div class="pf-scale">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="pf-scale-n" style="width:28px;height:28px;font-size:0.72rem">${n}</div>`).join('')}</div>`;
-      } else if(item.type==='pledge'){
-        ans=`<div style="background:#EDE9FF;border-radius:8px;padding:10px;border:1.5px solid rgba(45,27,105,0.15)"><div style="font-size:0.82rem;color:#2D1B69;font-style:italic;margin-bottom:7px">"${eh(item.text)||'Pledge statement'}"</div><div style="display:flex;align-items:center;gap:6px;font-size:0.78rem;color:#64748B"><div style="width:14px;height:14px;border-radius:3px;border:2px solid #C4B9AA;flex-shrink:0"></div>I agree and commit to this pledge</div></div>`;
-      } else if(item.type==='textarea'){
-        ans=`<textarea class="pf-inp" rows="3" placeholder="Your answer..." style="resize:vertical" disabled></textarea>`;
-      } else if(item.type==='date'){
-        ans=`<input class="pf-inp" type="date" disabled>`;
-      } else {
-        const ph={text:'Your answer',email:'email@example.com',phone:'+91 98765 43210',number:'0',file:'https://...'};
-        ans=`<input class="pf-inp" placeholder="${ph[item.type]||'Your answer'}" disabled>`;
-      }
-      html+=`<div class="pf-q"><div class="pf-qlbl">${eh(item.text)||'Untitled question'}${item.required?'<span>*</span>':''}</div>${ans}</div>`;
-    }
-  });
-
-  html+=`<button class="pf-submit">Submit</button></div>`;
-
-  const finalHtml=prevMode==='mobile'?`<div class="mob-frame"><div class="mob-inner">${html}</div></div>`:html;
-  body.innerHTML=finalHtml;
-};
-
-// ── URL PREVIEWS (WELCOME) ────────────────────────────
+// ── WELCOME URL PREVIEW ───────────────────────────────
 window.prevURL=function(type,url){
   const map={logo:['logo-prev','logo-prev-img'],bgi:['bgi-prev','bgi-prev-img']};
   if(map[type]){const[wid,iid]=map[type];const w=document.getElementById(wid);const img=document.getElementById(iid);if(url){w.classList.add('show');img.src=url;img.onerror=()=>w.classList.remove('show')}else w.classList.remove('show')}
   if(type==='bgv'){const w=document.getElementById('bgv-prev');const f=document.getElementById('bgv-frame');if(url&&(url.includes('youtube')||url.includes('youtu.be'))){const m=url.match(/(?:v=|youtu\.be\/)([^&\s]+)/);if(m){w.classList.add('show');f.src='https://www.youtube.com/embed/'+m[1]+'?mute=1'}}else w.classList.remove('show')}
 };
 
-// ── PRIZE ─────────────────────────────────────────────
-window.togPrize=function(){const on=document.getElementById('tgl-prize').classList.toggle('on');document.getElementById('prize-f').style.display=on?'block':'none'};
-
 // ── SEO ───────────────────────────────────────────────
 window.autoSlug=function(){const t=document.getElementById('s-title').value.trim();if(!t){toast2('Add a title first');return}const s=t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60);document.getElementById('seo-slug').value=s;const st=document.getElementById('slug-st');st.textContent='✓ swoopform.com/survey/'+s;st.style.color='#10B981'};
 window.valSlug=function(inp){inp.value=inp.value.replace(/[^a-z0-9-]/g,'');const st=document.getElementById('slug-st');if(inp.value.length>3){st.textContent='✓ swoopform.com/survey/'+inp.value;st.style.color='#10B981'}else if(inp.value.length){st.textContent='Too short';st.style.color='#EF4444'}else st.textContent=''};
 
 // ── SAVE / PUBLISH ────────────────────────────────────
+function buildData(status){
+  syncAll();
+  const title=document.getElementById('s-title').value.trim();
+  if(!title){toast2('Please add a survey title');sp('builder');return null}
+  if(!items.some(i=>i.kind==='q')){toast2('Please add at least one question');return null}
+  return{
+    title,
+    description:document.getElementById('s-desc')?.value.trim()||'',
+    items:items.map(item=>{
+      if(item.kind==='sec')return{kind:'sec',id:item.id,title:item.title,subtitle:item.subtitle,color:item.color,mode:item.mode};
+      return{kind:'q',id:item.id,type:item.type,text:item.text,options:item.options,correctIndex:item.correctIndex,required:item.required,sectionId:item.sectionId,mediaUrl:item.mediaUrl,mediaLayout:item.mediaLayout,logic:item.logic,timerEnabled:item.timerEnabled,timerSeconds:item.timerSeconds,choiceMin:item.choiceMin,choiceMax:item.choiceMax,choiceExact:item.choiceExact};
+    }),
+    slug:document.getElementById('seo-slug')?.value.trim()||null,
+    seo:{title:document.getElementById('seo-title')?.value.trim()||'',description:document.getElementById('seo-desc')?.value.trim()||''},
+    settings:{category:document.getElementById('s-cat')?.value||'',style:document.getElementById('s-style')?.value||'one',isPublic:document.getElementById('tgl-public')?.classList.contains('on')||false,collectEmail:document.getElementById('tgl-email')?.classList.contains('on')||false,oneResponse:document.getElementById('tgl-once')?.classList.contains('on')||false},
+    welcome:{enabled:welcomeOn,logo:document.getElementById('w-logo')?.value.trim()||'',headline:document.getElementById('w-head')?.value.trim()||'',btnText:document.getElementById('w-btn')?.value.trim()||'',bgColor:document.getElementById('w-bgc')?.value.trim()||'',bgImage:document.getElementById('w-bgi')?.value.trim()||'',bgVideo:document.getElementById('w-bgv')?.value.trim()||''},
+    thankyou:{headline:document.getElementById('ty-h')?.value.trim()||'',message:document.getElementById('ty-m')?.value.trim()||'',redirect:redirectOn?document.getElementById('ty-r')?.value.trim()||'':'',showShare:document.getElementById('tgl-share')?.classList.contains('on')||false},
+    prize:{enabled:document.getElementById('tgl-prize')?.classList.contains('on')||false,description:document.getElementById('p-desc')?.value.trim()||'',winners:parseInt(document.getElementById('p-win')?.value)||1,selection:document.getElementById('p-sel')?.value||'random',leaderboard:document.getElementById('p-lb')?.value||'none',disclaimerAccepted:document.getElementById('disc-row')?.classList.contains('checked')||false},
+    formType:'survey',status,userId:U.uid
+  };
+}
+
 window.saveDraft=async function(){
-  if(!U){toast2('Not logged in');return}
-  const data=buildSaveData('draft');if(!data)return;
+  const data=buildData('draft');if(!data)return;
   try{
-    if(SID){await updateDoc(doc(db,'surveys',SID),{...data,updatedAt:serverTimestamp()});toast2('Draft saved!')}
-    else{const ref=await addDoc(collection(db,'surveys'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});SID=ref.id;toast2('Draft saved!')}
+    if(SID){await updateDoc(doc(db,'surveys',SID),{...data,updatedAt:serverTimestamp()})}
+    else{const ref=await addDoc(collection(db,'surveys'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});SID=ref.id}
+    toast2('Draft saved!');
   }catch(e){console.error(e);toast2('Error saving')}
 };
 
 window.publishSurvey=async function(){
-  if(!U){toast2('Not logged in');return}
-  const data=buildSaveData('active');if(!data)return;
+  const data=buildData('active');if(!data)return;
   const btn=document.getElementById('pub-btn');btn.disabled=true;btn.textContent='Publishing...';
   try{
     if(SID){await updateDoc(doc(db,'surveys',SID),{...data,updatedAt:serverTimestamp()})}
     else{const ref=await addDoc(collection(db,'surveys'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});SID=ref.id}
-    // show success modal
-    const slug=document.getElementById('seo-slug').value.trim()||SID;
-    const url=`swoopform.com/survey/${slug}`;
-    document.getElementById('modal-url').textContent=url;
-    document.getElementById('modal-view-btn').href=`/survey/?id=${SID}`;
+    const slug=document.getElementById('seo-slug')?.value.trim()||SID;
+    document.getElementById('modal-url').textContent='swoopform.com/survey/'+slug;
+    document.getElementById('modal-view-btn').href='/survey/?id='+SID;
     document.getElementById('success-modal').classList.add('open');
     btn.disabled=false;btn.textContent='Publish →';
   }catch(e){console.error(e);toast2('Error publishing');btn.disabled=false;btn.textContent='Publish →'}
 };
-
 window.closeSuccessModal=function(){document.getElementById('success-modal').classList.remove('open')};
 
-function buildSaveData(status){
-  syncDOM();
-  const title=document.getElementById('s-title').value.trim();
-  if(!title){toast2('Please add a survey title');sp('builder');return null}
-  const hasQ=items.some(i=>i.kind==='q');
-  if(!hasQ){toast2('Please add at least one question');return null}
-  return{
-    title,
-    description:document.getElementById('s-desc').value.trim(),
-    items:items.map(item=>{
-      if(item.kind==='sec')return{kind:'sec',id:item.id,title:item.title,subtitle:item.subtitle,color:item.color,mode:item.mode};
-      return{kind:'q',id:item.id,type:item.type,text:item.text,options:item.options,correctIndex:item.correctIndex,required:item.required,sectionId:item.sectionId,mediaUrl:item.mediaUrl,mediaLayout:item.mediaLayout,logic:item.logic};
-    }),
-    slug:document.getElementById('seo-slug').value.trim()||null,
-    seo:{title:document.getElementById('seo-title').value.trim(),description:document.getElementById('seo-desc').value.trim()},
-    settings:{category:document.getElementById('s-cat').value,style:document.getElementById('s-style').value,isPublic:document.getElementById('tgl-public').classList.contains('on'),collectEmail:document.getElementById('tgl-email').classList.contains('on'),oneResponse:document.getElementById('tgl-once').classList.contains('on')},
-    welcome:{enabled:welcomeOn,logo:document.getElementById('w-logo')?.value.trim()||'',headline:document.getElementById('w-head')?.value.trim()||'',btnText:document.getElementById('w-btn')?.value.trim()||'',bgColor:document.getElementById('w-bgc')?.value.trim()||'',bgImage:document.getElementById('w-bgi')?.value.trim()||'',bgVideo:document.getElementById('w-bgv')?.value.trim()||''},
-    thankyou:{headline:document.getElementById('ty-h').value.trim(),message:document.getElementById('ty-m').value.trim(),redirect:redirectOn?document.getElementById('ty-r').value.trim():'',showShare:document.getElementById('tgl-share').classList.contains('on')},
-    prize:{enabled:document.getElementById('tgl-prize').classList.contains('on'),description:document.getElementById('p-desc')?.value.trim()||'',winners:parseInt(document.getElementById('p-win')?.value)||1,selection:document.getElementById('p-sel')?.value||'random',leaderboard:document.getElementById('p-lb')?.value||'none',disclaimerAccepted:document.getElementById('disc-row')?.classList.contains('checked')||false},
-    status,userId:U.uid
-  };
-}
-
 // ── CSV ───────────────────────────────────────────────
-window.dlCSV=function(){const rows=[['type','question','option1','option2','option3','option4','correct','required'],['multiple','How satisfied are you?','Very satisfied','Satisfied','Neutral','Dissatisfied','','yes'],['quiz','Capital of India?','Mumbai','Delhi','Chennai','Kolkata','Delhi','yes'],['text','Your full name?','','','','','','yes'],['rating','Rate our service','','','','','','no'],['yesno','Would you recommend us?','','','','','','no']];const csv=rows.map(r=>r.map(v=>'"'+v+'"').join(',')).join('\n');const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='swoopform-sample.csv';a.click();toast2('Sample CSV downloaded!')};
+window.dlCSV=function(){const rows=[['type','question','option1','option2','option3','option4','correct','required'],['multiple','How satisfied are you?','Very satisfied','Satisfied','Neutral','Dissatisfied','','yes'],['quiz','Capital of India?','Mumbai','Delhi','Chennai','Kolkata','Delhi','yes'],['text','Your full name?','','','','','','yes'],['rating','Rate our service','','','','','','no'],['yesno','Would you recommend us?','','','','','','no'],['fitb','The capital of India is ___ and its PM is ___','','','','','','no'],['eitheror','Which do you prefer?','Coffee','Tea','','','','no']];const csv=rows.map(r=>r.map(v=>'"'+v+'"').join(',')).join('\n');const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='swoopform-sample.csv';a.click();toast2('Sample CSV downloaded!')};
 window.csvDrop=function(e){e.preventDefault();e.currentTarget.classList.remove('over');const f=e.dataTransfer.files[0];if(f)parseCSV(f)};
 window.handleCSV=function(inp){if(inp.files[0])parseCSV(inp.files[0])};
-function parseCSV(file){const r=new FileReader();r.onload=e=>{const lines=e.target.result.split('\n').filter(l=>l.trim());if(lines.length<2)return;const headers=lines[0].split(',').map(h=>h.replace(/"/g,'').trim().toLowerCase());let added=0;for(let i=1;i<lines.length;i++){const vals=lines[i].split(',').map(v=>v.replace(/^"|"$/g,'').trim());const row={};headers.forEach((h,idx)=>row[h]=vals[idx]||'');const type=row.type?.trim()||'text';const question=row.question?.trim();if(!question)continue;const q=mkQ(type);q.text=question;q.required=row.required?.trim()==='yes';if(['multiple','checkbox','dropdown','quiz'].includes(type)){const opts=[row.option1,row.option2,row.option3,row.option4].filter(o=>o?.trim());if(opts.length>=2)q.options=opts;if(type==='quiz'&&row.correct){const ci=opts.findIndex(o=>o.trim()===row.correct.trim());if(ci>=0)q.correctIndex=ci}}items.push(q);added++}renderAll();document.getElementById('csv-res').innerHTML=`<span style="color:#10B981">Added ${added} question${added!==1?'s':''}.</span>`;sp('builder');toast2(added+' questions added!')};r.readAsText(file)}
+function parseCSV(file){const r=new FileReader();r.onload=e=>{const lines=e.target.result.split('\n').filter(l=>l.trim());if(lines.length<2)return;const headers=lines[0].split(',').map(h=>h.replace(/"/g,'').trim().toLowerCase());let added=0;for(let i=1;i<lines.length;i++){const vals=lines[i].split(',').map(v=>v.replace(/^"|"$/g,'').trim());const row={};headers.forEach((h,idx)=>row[h]=vals[idx]||'');const type=row.type?.trim()||'text';const question=row.question?.trim();if(!question)continue;const q=mkQ(type);q.text=question;q.required=row.required?.trim()==='yes';if(['single','multiple','checkbox','dropdown','quiz'].includes(type)){const opts=[row.option1,row.option2,row.option3,row.option4].filter(o=>o?.trim());if(opts.length>=2)q.options=opts;if(type==='quiz'&&row.correct){const ci=opts.findIndex(o=>o.trim()===row.correct.trim());if(ci>=0)q.correctIndex=ci}}if(type==='eitheror'){q.options=[row.option1||'Option A',row.option2||'Option B']}items.push(q);added++}renderAll();document.getElementById('csv-res').innerHTML=`<span style="color:#10B981">Added ${added} question${added!==1?'s':''}.</span>`;sp('builder');toast2(added+' questions added!')};r.readAsText(file)}
 
 // ── UTILS ─────────────────────────────────────────────
 function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
 window.toast2=function(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2500)};
-
-// Click outside to close
-document.addEventListener('click',e=>{
-  if(!e.target.closest('.q-card'))document.querySelectorAll('.q-card').forEach(c=>c.classList.remove('focused'));
-});
 </script>
 </body>
 </html>
+HTMLEOF
+echo "Done - $(wc -c < /home/claude/create-index.html) bytes"
