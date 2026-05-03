@@ -150,6 +150,10 @@ async function init(){
     if(!snap){showError('Survey not found','This survey may have been removed or the link is incorrect.');return}
 
     survey=snap.data?snap.data():snap;
+    const dbg=document.createElement('div');
+    dbg.style.cssText='position:fixed;top:50px;left:0;right:0;background:red;color:#fff;padding:10px;font-size:11px;z-index:9999;word-break:break-all';
+    dbg.textContent='KEYS:'+Object.keys(survey).join(',')+'|items:'+(survey.items||[]).length+'|questions:'+(survey.questions||[]).length;
+    document.body.appendChild(dbg);
     if(survey.status==='closed'){showError('Survey closed','This survey is no longer accepting responses.');return}
 
     // ── LOAD QUESTIONS ────────────────────────────────
