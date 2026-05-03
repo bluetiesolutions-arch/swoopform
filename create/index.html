@@ -528,7 +528,7 @@ onAuthStateChanged(auth,u=>{
 
 // ── FACTORIES ─────────────────────────────────────────
 function mkQ(type){
-  return{kind:'q',id:'q'+Date.now()+Math.random().toString(36).slice(2,6),type,text:'',options:type==='eitheror'?['Option A','Option B']:['',''],correctIndex:-1,required:false,sectionId:null,mediaUrl:'',mediaLayout:'top',logic:[],timerEnabled:false,timerSeconds:30,choiceMin:null,choiceMax:null,choiceExact:null};
+  return{kind:'q',id:'q'+Date.now()+Math.random().toString(36).slice(2,6),type,text:'',options:type==='eitheror'?['','']:['',''],correctIndex:-1,required:false,sectionId:null,mediaUrl:'',mediaLayout:'top',logic:[],timerEnabled:false,timerSeconds:30,choiceMin:null,choiceMax:null,choiceExact:null};
 }
 function mkSec(){
   const ci=items.filter(i=>i.kind==='sec').length%COLORS.length;
@@ -604,7 +604,7 @@ window.moveItem=function(id,dir){
 window.addOpt=function(id){syncAll();const q=items.find(i=>i.id===id);if(q&&q.options.length<8){q.options.push('');renderAll();setTimeout(()=>{const os=document.querySelectorAll('.oi-'+id);if(os.length)os[os.length-1].focus()},60)}};
 window.rmOpt=function(id,i){syncAll();const q=items.find(i2=>i2.id===id);if(q&&q.options.length>2){q.options.splice(i,1);if(q.correctIndex===i)q.correctIndex=-1;renderAll()}else toast2('Need at least 2 options')};
 window.mkOK=function(id,i){syncAll();const q=items.find(i2=>i2.id===id);if(q){q.correctIndex=q.correctIndex===i?-1:i;renderAll()}};
-window.chType=function(id,type){syncAll();const q=items.find(i=>i.id===id);if(q){q.type=type;if(!q.options?.length||q.type==='eitheror')q.options=type==='eitheror'?['Option A','Option B']:['',''];renderAll()}};
+window.chType=function(id,type){syncAll();const q=items.find(i=>i.id===id);if(q){q.type=type;if(!q.options?.length||q.type==='eitheror')q.options=type==='eitheror'?['','']:['',''];renderAll()}};
 window.togReq=function(id){const q=items.find(i=>i.id===id);if(q){q.required=!q.required;document.getElementById('req-'+id)?.classList.toggle('on',q.required)}};
 window.assignSec=function(qid,secId){syncAll();const q=items.find(i=>i.id===qid);if(q){q.sectionId=secId==='none'?null:secId;renderAll()}};
 
@@ -832,9 +832,9 @@ function renderQCard(q,qn,color,isFirst,isLast,indented,allQs,secs){
     </div>`;
   } else if(q.type==='eitheror'){
     ansHtml=`<div class="eo-row">
-      <div class="eo-inp-wrap"><div class="eo-badge">A</div><input class="eo-inp" id="eo1-${q.id}" value="${eh(q.options[0]==='Option A'?'':q.options[0]||'')}" placeholder="Option A" onblur="syncAll()"></div>
+      <div class="eo-inp-wrap"><div class="eo-badge">A</div><input class="eo-inp" id="eo1-${q.id}" value="${eh(q.options[0]||'')}" placeholder="Option A" onblur="syncAll()"></div>
       <div style="display:flex;align-items:center;font-size:0.72rem;font-weight:700;color:#94A3B8;flex-shrink:0">OR</div>
-      <div class="eo-inp-wrap"><div class="eo-badge" style="background:#D97706">B</div><input class="eo-inp" id="eo2-${q.id}" value="${eh(q.options[1]==='Option B'?'':q.options[1]||'')}" placeholder="Option B" onblur="syncAll()"></div>
+      <div class="eo-inp-wrap"><div class="eo-badge" style="background:#D97706">B</div><input class="eo-inp" id="eo2-${q.id}" value="${eh(q.options[1]||'')}" placeholder="Option B" onblur="syncAll()"></div>
     </div>`;
   } else if(q.type==='yesno'){
     ansHtml=`<div style="display:flex;gap:8px"><div style="padding:7px 15px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600;background:#F5F0E8">Yes</div><div style="padding:7px 15px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600;background:#F5F0E8">No</div></div>`;
