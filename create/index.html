@@ -233,6 +233,36 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:860px){.sb{position:fixed;top:56px;left:0;bottom:0;transform:translateX(-100%);z-index:200;width:260px}.sb.open{transform:translateX(0)}.hbtn{display:flex}.content{padding:14px 16px 100px}.float-btns{right:14px;bottom:16px}}
 @media(max-width:480px){.nav-title{max-width:70px}.btn-draft{display:none}}
+
+.btn-prev-toggle{padding:7px 13px;border-radius:8px;border:1.5px solid #2D1B69;background:#EDE9FF;color:#2D1B69;font-size:0.8rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer}
+.prev-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.2);z-index:190;display:none}
+.prev-overlay.open{display:block}
+.prev-panel{position:fixed;top:56px;right:0;bottom:0;width:420px;background:#fff;border-left:1.5px solid #E2DAD0;z-index:200;transform:translateX(100%);transition:transform 0.3s ease;display:flex;flex-direction:column}
+.prev-panel.open{transform:translateX(0)}
+.prev-hdr{padding:12px 15px;border-bottom:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:8px}
+.prev-title{font-family:'Syne',sans-serif;font-weight:800;font-size:0.88rem}
+.prev-tabs{display:flex;gap:3px}
+.prev-tab{padding:4px 11px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.72rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;color:#64748B}
+.prev-tab.active{background:#2D1B69;border-color:#2D1B69;color:#fff}
+.prev-close{background:none;border:none;cursor:pointer;color:#94A3B8;font-size:0.95rem;padding:3px}
+.prev-body{flex:1;overflow-y:auto;background:#F5F0E8}
+.pf-wrap{padding:24px 20px;max-width:560px;margin:0 auto}
+.pf-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:-0.03em;margin-bottom:6px;color:#0F0E1A}
+.pf-desc{font-size:0.83rem;color:#64748B;margin-bottom:20px;line-height:1.6}
+.pf-q{margin-bottom:18px}
+.pf-qlbl{font-size:0.88rem;font-weight:600;color:#0F0E1A;margin-bottom:8px}
+.pf-qlbl span{color:#EF4444;margin-left:2px}
+.pf-opt{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;border:1.5px solid #E2DAD0;margin-bottom:6px;cursor:pointer;font-size:0.83rem}
+.pf-opt:hover{border-color:#2D1B69;background:#EDE9FF}
+.pf-radio{width:14px;height:14px;border-radius:50%;border:2px solid #C4B9AA;flex-shrink:0}
+.pf-check{width:14px;height:14px;border-radius:3px;border:2px solid #C4B9AA;flex-shrink:0}
+.pf-inp{width:100%;padding:9px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.83rem;font-family:'DM Sans',sans-serif;color:#0F0E1A;outline:none}
+.pf-scale{display:flex;gap:4px;flex-wrap:wrap}
+.pf-scale-n{width:32px;height:32px;border-radius:7px;border:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:600;cursor:pointer}
+.pf-scale-n:hover{border-color:#2D1B69;background:#EDE9FF}
+.pf-submit{width:100%;padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.9rem;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;margin-top:8px}
+.mob-frame{width:260px;margin:0 auto;background:#fff;border-radius:22px;overflow:hidden;border:7px solid #0F0E1A;box-shadow:0 6px 24px rgba(0,0,0,0.15)}
+.mob-inner{background:#F5F0E8;min-height:420px;overflow-y:auto}
 </style>
 </head>
 <body>
@@ -292,6 +322,7 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
     <span class="nav-title" id="nav-title">New Survey</span>
   </div>
   <div class="nav-r">
+    <button class="btn-prev-toggle" onclick="togglePreview()">Preview</button>
     <button class="btn-draft" onclick="saveDraft()">Save draft</button>
     <button class="btn-pub" id="pub-btn" onclick="publishSurvey()">Publish →</button>
   </div>
@@ -974,6 +1005,38 @@ function buildData(status){
   };
 }
 
+
+// PREVIEW
+let prevOpen=false,prevMode='desktop';
+window.togglePreview=function(){prevOpen=!prevOpen;document.getElementById('prev-panel').classList.toggle('open',prevOpen);document.getElementById('prev-overlay').classList.toggle('open',prevOpen);if(prevOpen)upPrev()};
+window.closePreview=function(){prevOpen=false;document.getElementById('prev-panel').classList.remove('open');document.getElementById('prev-overlay').classList.remove('open')};
+window.setPM=function(m){prevMode=m;document.getElementById('ptab-d').classList.toggle('active',m==='desktop');document.getElementById('ptab-m').classList.toggle('active',m==='mobile');upPrev()};
+window.upPrev=function(){
+  if(!prevOpen)return;
+  const title=document.getElementById('s-title')?.value||'Untitled Survey';
+  const desc=document.getElementById('s-desc')?.value||'';
+  const body=document.getElementById('prev-body');
+  let html=`<div class="pf-wrap"><div class="pf-title">${eh(title)}</div>${desc?`<div class="pf-desc">${eh(desc)}</div>`:''}`;
+  let qn=0;
+  items.forEach(item=>{
+    if(item.kind==='sec'){html+=`<div style="padding:10px 0 6px;border-bottom:2px solid ${item.color};margin-bottom:14px;margin-top:10px"><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:${item.color}">${eh(item.title)||'Section'}</div>${item.subtitle?`<div style="font-size:0.75rem;color:#64748B;margin-top:2px">${eh(item.subtitle)}</div>`:''}</div>`;return}
+    qn++;let ans='';
+    if(['single','multiple','dropdown','quiz'].includes(item.type)){ans=(item.options||[]).filter(o=>o.trim()).map(o=>`<div class="pf-opt"><div class="pf-radio"></div>${eh(o)}</div>`).join('')}
+    else if(item.type==='checkbox'){ans=(item.options||[]).filter(o=>o.trim()).map(o=>`<div class="pf-opt"><div class="pf-check"></div>${eh(o)}</div>`).join('')}
+    else if(item.type==='yesno'){ans=`<div style="display:flex;gap:8px"><div class="pf-opt" style="flex:1;justify-content:center;font-weight:600">Yes</div><div class="pf-opt" style="flex:1;justify-content:center;font-weight:600">No</div></div>`}
+    else if(item.type==='rating'){ans=`<div class="pf-scale">${[1,2,3,4,5].map(n=>`<div class="pf-scale-n">${n}</div>`).join('')}</div>`}
+    else if(item.type==='scale'){ans=`<div class="pf-scale">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="pf-scale-n" style="width:28px;height:28px;font-size:0.72rem">${n}</div>`).join('')}</div>`}
+    else if(item.type==='eitheror'){ans=`<div style="display:flex;gap:8px">${(item.options||['A','B']).map(o=>`<div class="pf-opt" style="flex:1;justify-content:center;font-weight:700">${eh(o)}</div>`).join('')}</div>`}
+    else if(item.type==='fitb'){const prev=(item.text||'').replace(/___/g,'<span style="display:inline-block;min-width:60px;border-bottom:2px solid #2D1B69;margin:0 3px"></span>');ans=`<div style="font-size:0.88rem;line-height:1.8;padding:8px 0">${prev}</div>`}
+    else if(item.type==='textarea'){ans=`<textarea class="pf-inp" rows="3" disabled placeholder="Your answer..."></textarea>`}
+    else if(item.type==='date'){ans=`<input class="pf-inp" type="date" disabled>`}
+    else{const ph={text:'Your answer',email:'email@example.com',phone:'+91 98765 43210',number:'0',file:'https://...'};ans=`<input class="pf-inp" placeholder="${ph[item.type]||'Your answer'}" disabled>`}
+    html+=`<div class="pf-q"><div class="pf-qlbl">${eh(item.text)||'Untitled question'}${item.required?'<span>*</span>':''}</div>${ans}</div>`;
+  });
+  html+=`<button class="pf-submit">Submit</button></div>`;
+  body.innerHTML=prevMode==='mobile'?`<div class="mob-frame"><div class="mob-inner">${html}</div></div>`:html;
+};
+
 window.saveDraft=async function(){
   const data=buildData('draft');if(!data)return;
   try{
@@ -1008,6 +1071,20 @@ function parseCSV(file){const r=new FileReader();r.onload=e=>{const lines=e.targ
 function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
 window.toast2=function(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2500)};
 </script>
+
+<!-- PREVIEW OVERLAY -->
+<div class="prev-overlay" id="prev-overlay" onclick="closePreview()"></div>
+<div class="prev-panel" id="prev-panel">
+  <div class="prev-hdr">
+    <span class="prev-title">Live Preview</span>
+    <div class="prev-tabs">
+      <button class="prev-tab active" id="ptab-d" onclick="setPM('desktop')">Desktop</button>
+      <button class="prev-tab" id="ptab-m" onclick="setPM('mobile')">Mobile</button>
+    </div>
+    <button class="prev-close" onclick="closePreview()">✕</button>
+  </div>
+  <div class="prev-body" id="prev-body"></div>
+</div>
 </body>
 </html>
 HTMLEOF
