@@ -192,7 +192,10 @@ async function loadData(){
     survey={id:snap.id,...snap.data()};
     document.getElementById('nav-title').textContent=survey.title||'Responses';
     document.getElementById('survey-link-btn').href='/s/?id='+surveyId;
-    questions=(survey.questions||[]).filter(q=>q.type!=='heading').sort((a,b)=>(a.go||a.globalOrder||0)-(b.go||b.globalOrder||0));
+    const rawItems=survey.items||survey.questions||[];
+    questions=rawItems.filter(i=>i.kind==='q'||i.type).filter(q=>q.type!=='heading').map(i=>({
+      id:i.id,type:i.type,text:i.text||i.question||'',options:i.options||[]
+    }));
 
     const q2=query(collection(db,'responses'),where('surveyId','==',surveyId));
     const rSnap=await getDocs(q2);

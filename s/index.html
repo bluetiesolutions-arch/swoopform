@@ -562,6 +562,12 @@ async function showThankyou(){
 // ── ANSWER HANDLERS ───────────────────────────────────
 function saveCurrentAnswer(){} // answers saved inline via oninput/onclick
 
+window.updateFitbAnswer=function(qid,inp){
+  const blanks=document.querySelectorAll('.fitb-blank');
+  const vals=Array.from(blanks).map(b=>b.value);
+  answers[qid]=vals.length===1?vals[0]:vals;
+};
+
 window.selectChoice=function(qid,val,el,isCheckbox){
   answers[qid]=val;
   el.closest('.choice-list').querySelectorAll('.choice-btn').forEach(b=>b.classList.remove('selected'));
