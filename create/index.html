@@ -832,9 +832,9 @@ function renderQCard(q,qn,color,isFirst,isLast,indented,allQs,secs){
     </div>`;
   } else if(q.type==='eitheror'){
     ansHtml=`<div class="eo-row">
-      <div class="eo-inp-wrap"><div class="eo-badge">A</div><input class="eo-inp" id="eo1-${q.id}" value="${eh(q.options[0]||'Option A')}" placeholder="Option A" onblur="syncAll()"></div>
+      <div class="eo-inp-wrap"><div class="eo-badge">A</div><input class="eo-inp" id="eo1-${q.id}" value="${eh(q.options[0]==='Option A'?'':q.options[0]||'')}" placeholder="Option A" onblur="syncAll()"></div>
       <div style="display:flex;align-items:center;font-size:0.72rem;font-weight:700;color:#94A3B8;flex-shrink:0">OR</div>
-      <div class="eo-inp-wrap"><div class="eo-badge" style="background:#D97706">B</div><input class="eo-inp" id="eo2-${q.id}" value="${eh(q.options[1]||'Option B')}" placeholder="Option B" onblur="syncAll()"></div>
+      <div class="eo-inp-wrap"><div class="eo-badge" style="background:#D97706">B</div><input class="eo-inp" id="eo2-${q.id}" value="${eh(q.options[1]==='Option B'?'':q.options[1]||'')}" placeholder="Option B" onblur="syncAll()"></div>
     </div>`;
   } else if(q.type==='yesno'){
     ansHtml=`<div style="display:flex;gap:8px"><div style="padding:7px 15px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600;background:#F5F0E8">Yes</div><div style="padding:7px 15px;border-radius:7px;border:1.5px solid #E2DAD0;font-size:0.8rem;font-weight:600;background:#F5F0E8">No</div></div>`;
