@@ -150,10 +150,7 @@ async function init(){
     if(!snap){showError('Survey not found','This survey may have been removed or the link is incorrect.');return}
 
     survey=snap.data?snap.data():snap;
-    const dbg=document.createElement('div');
-    dbg.style.cssText='position:fixed;top:50px;left:0;right:0;background:red;color:#fff;padding:10px;font-size:11px;z-index:9999;word-break:break-all';
-    dbg.textContent='KEYS:'+Object.keys(survey).join(',')+'|items:'+(survey.items||[]).length+'|questions:'+(survey.questions||[]).length;
-    document.body.appendChild(dbg);
+
     if(survey.status==='closed'){showError('Survey closed','This survey is no longer accepting responses.');return}
 
     // ── LOAD QUESTIONS ────────────────────────────────
@@ -175,14 +172,7 @@ async function init(){
     }));
     sections=rawItems.filter(i=>i.kind==='sec');
 
-    console.log('SURVEY DATA:', JSON.stringify({
-      hasItems: !!(survey.items),
-      itemsLen: (survey.items||[]).length,
-      hasQuestions: !!(survey.questions),
-      questionsLen: (survey.questions||[]).length,
-      keys: Object.keys(survey),
-      firstItem: survey.items?.[0]||survey.questions?.[0]
-    }));
+
     // Show debug on screen
     const dbgEl=document.createElement('div');
     dbgEl.style.cssText='position:fixed;top:60px;left:10px;right:10px;background:#fff;border:2px solid red;padding:10px;font-size:11px;z-index:9999;border-radius:8px;word-break:break-all';
