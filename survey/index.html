@@ -219,7 +219,7 @@ async function init(){
       if(survey.status==='closed'){showError('Closed','This survey is no longer accepting responses.');return}
     }
     injectSEO(survey);
-    sections=survey.sections||[];
+    // sections loaded from items below
     // Support both old format (questions array) and new format (items array)
     const rawItems=survey.items||survey.questions||[];
     questions=rawItems.filter(i=>!i.kind||i.kind==='q').map(i=>({
