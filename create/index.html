@@ -989,10 +989,9 @@ window.publishSurvey=async function(){
   try{
     if(SID){await updateDoc(doc(db,'surveys',SID),{...data,updatedAt:serverTimestamp()})}
     else{const ref=await addDoc(collection(db,'surveys'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});SID=ref.id}
-    const slug=document.getElementById('seo-slug')?.value.trim()||SID;
-    document.getElementById('modal-url').textContent='swoopform.com/survey/'+slug;
     const slug=document.getElementById('seo-slug')?.value.trim();
-document.getElementById('modal-view-btn').href=slug?'/engage/'+slug:'/survey/?id='+SID;
+    document.getElementById('modal-url').textContent='swoopform.com/'+(slug?'survey/'+slug:'survey/?id='+SID);
+    document.getElementById('modal-view-btn').href=slug?'/engage/'+slug:'/survey/?id='+SID;
     document.getElementById('success-modal').classList.add('open');
     btn.disabled=false;btn.textContent='Publish →';
   }catch(e){console.error(e);toast2('Error publishing');btn.disabled=false;btn.textContent='Publish →'}
