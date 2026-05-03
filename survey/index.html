@@ -150,6 +150,7 @@ async function init(){
     if(!snap){showError('Survey not found','This survey may have been removed or the link is incorrect.');return}
 
     survey=snap.data?snap.data():snap;
+
     if(survey.status==='closed'){showError('Survey closed','This survey is no longer accepting responses.');return}
 
     // ── LOAD QUESTIONS ────────────────────────────────
@@ -171,19 +172,8 @@ async function init(){
     }));
     sections=rawItems.filter(i=>i.kind==='sec');
 
-    console.log('SURVEY DATA:', JSON.stringify({
-      hasItems: !!(survey.items),
-      itemsLen: (survey.items||[]).length,
-      hasQuestions: !!(survey.questions),
-      questionsLen: (survey.questions||[]).length,
-      keys: Object.keys(survey),
-      firstItem: survey.items?.[0]||survey.questions?.[0]
-    }));
-    // Show debug on screen
-    const dbgEl=document.createElement('div');
-    dbgEl.style.cssText='position:fixed;top:60px;left:10px;right:10px;background:#fff;border:2px solid red;padding:10px;font-size:11px;z-index:9999;border-radius:8px;word-break:break-all';
-    dbgEl.innerHTML='<b>DEBUG:</b><br>Keys: '+Object.keys(survey).join(', ')+'<br>items: '+(survey.items||[]).length+'<br>questions: '+(survey.questions||[]).length+'<br>First item: '+JSON.stringify((survey.items||survey.questions||[])[0]||{}).slice(0,200);
-    document.body.appendChild(dbgEl);
+
+    
     buildSteps();
     document.getElementById('ls').style.display='none';
 
@@ -571,6 +561,12 @@ async function showThankyou(){
 
 // ── ANSWER HANDLERS ───────────────────────────────────
 function saveCurrentAnswer(){} // answers saved inline via oninput/onclick
+
+window.updateFitbAnswer=function(qid,inp){
+  const blanks=document.querySelectorAll('.fitb-blank');
+  const vals=Array.from(blanks).map(b=>b.value);
+  answers[qid]=vals.length===1?vals[0]:vals;
+};
 
 window.selectChoice=function(qid,val,el,isCheckbox){
   answers[qid]=val;
