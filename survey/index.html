@@ -171,6 +171,14 @@ async function init(){
     }));
     sections=rawItems.filter(i=>i.kind==='sec');
 
+    console.log('SURVEY DATA:', JSON.stringify({
+      hasItems: !!(survey.items),
+      itemsLen: (survey.items||[]).length,
+      hasQuestions: !!(survey.questions),
+      questionsLen: (survey.questions||[]).length,
+      keys: Object.keys(survey),
+      firstItem: survey.items?.[0]||survey.questions?.[0]
+    }));
     buildSteps();
     document.getElementById('ls').style.display='none';
 
