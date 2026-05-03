@@ -222,6 +222,9 @@ async function init(){
     // sections loaded from items below
     // Support both old format (questions array) and new format (items array)
     const rawItems=survey.items||survey.questions||[];
+    console.log('DEBUG survey keys:', Object.keys(survey));
+    console.log('DEBUG rawItems length:', rawItems.length);
+    console.log('DEBUG first item:', JSON.stringify(rawItems[0]));
     questions=rawItems.filter(i=>!i.kind||i.kind==='q').map(i=>({
       ...i,
       text:i.text||i.question||'',
