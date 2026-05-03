@@ -1008,9 +1008,19 @@ function buildData(status){
 
 // PREVIEW
 let prevOpen=false,prevMode='desktop';
-window.togglePreview=function(){prevOpen=!prevOpen;document.getElementById('prev-panel').classList.toggle('open',prevOpen);document.getElementById('prev-overlay').classList.toggle('open',prevOpen);if(prevOpen)upPrev()};
-window.closePreview=function(){prevOpen=false;document.getElementById('prev-panel').classList.remove('open');document.getElementById('prev-overlay').classList.remove('open')};
-window.setPM=function(m){prevMode=m;document.getElementById('ptab-d').classList.toggle('active',m==='desktop');document.getElementById('ptab-m').classList.toggle('active',m==='mobile');upPrev()};
+window.togglePreview=async function(){
+  const data=buildData('draft');if(!data)return;
+  toast2('Saving draft...');
+  try{
+    if(SID){await updateDoc(doc(db,'surveys',SID),{...data,updatedAt:serverTimestamp()})}
+    else{const ref=await addDoc(collection(db,'surveys'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});SID=ref.id}
+    const slug=document.getElementById('seo-slug')?.value.trim();
+    const url=slug?'/survey/'+slug:'/survey/?id='+SID;
+    window.open(url,'_blank');
+  }catch(e){console.error(e);toast2('Error saving preview')}
+};
+window.closePreview=function(){};
+window.setPM=function(m){};
 window.upPrev=function(){
   if(!prevOpen)return;
   const title=document.getElementById('s-title')?.value||'Untitled Survey';
