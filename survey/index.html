@@ -384,6 +384,18 @@ function renderOneQuestion(step){
   if(['multiple','quiz'].includes(q.type)){inp=`${wrapOpen}<div class="choices">${(q.options||[]).map((o,i)=>`<div class="choice${ans===o?' selected':''}" onclick="selectChoice('${q.id}','${esc(o)}',this)"><div class="choice-key">${letters[i]||i+1}</div><span>${o}</span></div>`).join('')}</div>${wrapMedia}`}
   else if(q.type==='checkbox'){inp=`${wrapOpen}<div class="choices">${(q.options||[]).map(o=>`<div class="choice${(ans||[]).includes(o)?' selected':''}" onclick="toggleCb('${q.id}','${esc(o)}',this)"><div class="choice-cb"></div><span>${o}</span></div>`).join('')}</div><div style="display:flex;align-items:center;margin-top:8px"><button class="next-btn" id="next-btn" onclick="nextStep()">${isLast?'Submit ✓':'OK →'}</button></div>${wrapMedia}`}
   else if(q.type==='yesno'){inp=`${wrapOpen}<div class="yesno-group"><button class="yesno-btn${ans==='Yes'?' selected':''}" onclick="selectYN('${q.id}','Yes',this)">👍 Yes</button><button class="yesno-btn${ans==='No'?' selected':''}" onclick="selectYN('${q.id}','No',this)">👎 No</button></div>${wrapMedia}`}
+  else if(q.type==='eitheror'){
+    const eoOpts=q.options&&q.options.length>=2?q.options:['Option A','Option B'];
+    inp=`${wrapOpen}<div style="display:flex;gap:12px;width:100%;max-width:500px">
+      ${eoOpts.map((o,i)=>`
+        <button onclick="selectEO('${q.id}','${o.replace(/'/g,\"\\'\")}',this)"
+          style="flex:1;padding:20px 12px;border-radius:12px;border:2px solid ${ans===o?'#2D1B69':'#E2DAD0'};background:${ans===o?'#EDE9FF':'#fff'};font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:all 0.2s;color:${ans===o?'#2D1B69':'#0F0E1A'}">
+          <div style="font-size:0.65rem;font-weight:700;color:${ans===o?'#2D1B69':'#94A3B8'};letter-spacing:0.08em;margin-bottom:6px">${i===0?'A':'B'}</div>
+          ${eh(o)}
+        </button>
+      `).join('<div style="display:flex;align-items:center;font-size:0.75rem;font-weight:700;color:#94A3B8;padding:0 4px">OR</div>')}
+    </div>${wrapMedia}`
+  }
   else if(q.type==='rating'){inp=`${wrapOpen}<div class="rating-group">${[1,2,3,4,5].map(n=>`<button class="rating-btn${ans==n?' selected':''}" onclick="selectRating('${q.id}',${n},this)">${n}</button>`).join('')}</div><div class="rating-labels"><span>Not at all</span><span>Extremely</span></div>${wrapMedia}`}
   else if(q.type==='scale'){inp=`${wrapOpen}<div class="scale-group">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<button class="scale-btn${ans==n?' selected':''}" onclick="selectScale('${q.id}',${n},this)">${n}</button>`).join('')}</div>${wrapMedia}`}
   else if(q.type==='pledge'){inp=`${wrapOpen}<div class="pledge-statement"><div class="pledge-text">${q.text}</div><div class="pledge-agree${ans==='agreed'?' agreed':''}" onclick="togglePledge('${q.id}',this)"><div class="pledge-checkbox"></div><div class="pledge-agree-text" style="font-size:0.95rem;font-weight:600">I agree and commit to this pledge</div></div></div><div style="margin-top:8px"><button class="next-btn" id="next-btn" onclick="nextStep()">${isLast?'Submit ✓':'OK →'}</button></div>${wrapMedia}`}
@@ -402,6 +414,14 @@ function isLastReal(){for(let i=currentStep+1;i<steps.length;i++){const s=steps[
 window.selectChoice=function(qid,val,el){answers[qid]=val;document.querySelectorAll('.choice').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');setTimeout(()=>nextStep(),600)}
 window.toggleCb=function(qid,val,el){if(!answers[qid])answers[qid]=[];const arr=answers[qid],idx=arr.indexOf(val);if(idx>-1)arr.splice(idx,1);else arr.push(val);el.classList.toggle('selected',arr.includes(val));const cb=el.querySelector('.choice-cb');if(cb)cb.classList.toggle('selected',arr.includes(val))}
 window.selectYN=function(qid,val,el){answers[qid]=val;document.querySelectorAll('.yesno-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');setTimeout(()=>nextStep(),600)}
+window.selectEO=function(qid,val,el){
+  answers[qid]=val;
+  el.closest('div').querySelectorAll('button').forEach(b=>{
+    b.style.borderColor='#E2DAD0';b.style.background='#fff';b.style.color='#0F0E1A';
+  });
+  el.style.borderColor='#2D1B69';el.style.background='#EDE9FF';el.style.color='#2D1B69';
+  setTimeout(()=>nextStep(),600);
+}
 window.selectRating=function(qid,val,el){answers[qid]=val;document.querySelectorAll('.rating-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');setTimeout(()=>nextStep(),400)}
 window.selectScale=function(qid,val,el){answers[qid]=val;document.querySelectorAll('.scale-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');setTimeout(()=>nextStep(),400)}
 window.togglePledge=function(qid,el){el.classList.toggle('agreed');answers[qid]=el.classList.contains('agreed')?'agreed':null}
