@@ -248,18 +248,18 @@ function buildSteps(){
   steps=[];
   steps.push({type:'welcome'});
   const items=[];
-  sections.forEach(s=>items.push({kind:'sec',item:s,order:s.go||s.globalOrder||0}));
-  questions.filter(q=>!q.sectionId).forEach(q=>items.push({kind:'q',item:q,order:q.go||q.globalOrder||0}));
+  sections.forEach(s=>items.push({kind:'sec',item:s,order:s.globalOrder||0}));
+  questions.filter(q=>!q.sectionId).forEach(q=>items.push({kind:'q',item:q,order:q.globalOrder||0}));
   items.sort((a,b)=>a.order-b.order);
   items.forEach(entry=>{
     if(entry.kind==='sec'){
-      const s=entry.item;
+      const s=entry.item||entry;
       const secQs=questions.filter(q=>q.sectionId===s.id).sort((a,b)=>(a.go||0)-(b.go||0));
       if(!secQs.length)return;
       if(s.displayMode==='fullscreen'){steps.push({type:'section-intro',section:s,questions:secQs});secQs.forEach(q=>steps.push({type:'question',question:q,section:s}))}
       else if(s.displayMode==='all'){steps.push({type:'all-page',section:s,questions:secQs})}
       else{secQs.forEach(q=>steps.push({type:'question',question:q,section:s}))}
-    } else steps.push({type:'question',question:entry.item,section:null});
+    } else steps.push({type:'question',question:entry.item||entry,section:null});
   });
 }
 
