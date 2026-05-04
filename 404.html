@@ -53,5 +53,15 @@
   </div>
 </div>
 <div class="sf-brand"><div class="sf-brand-logo">S</div><div class="sf-brand-text">SwoopForm</div></div>
+<script>
+// If path starts with /engage/, redirect to engage router
+const path = window.location.pathname;
+if(path.startsWith('/engage/')){
+  const slug = path.replace('/engage/','').split('/')[0];
+  if(slug){
+    window.location.replace('/engage/?slug='+slug);
+  }
+}
+</script>
 </body>
 </html>

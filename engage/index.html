@@ -41,7 +41,9 @@ const db=getFirestore(app);
 
 // Extract slug from URL: /engage/my-slug
 const pathParts=window.location.pathname.split('/').filter(Boolean);
-const slug=pathParts[1];
+const slugFromPath=pathParts[1];
+const slugFromParam=new URLSearchParams(window.location.search).get('slug');
+const slug=slugFromPath||slugFromParam;
 const params=window.location.search; // preserve ?preview=1 etc
 
 // Collections to search in order
