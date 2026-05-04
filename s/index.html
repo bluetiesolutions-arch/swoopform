@@ -442,19 +442,25 @@ function showQuestion(q,section){
     <button class="next-btn" onclick="nextStep()">${isLast?'Submit ✓':'OK →'}</button>`;
   }
   else if(q.type==='fitb'){
-    const preview=(q.text||'').replace(/___/g,`<span style="display:inline-block;min-width:80px;border-bottom:2px solid var(--accent);margin:0 4px"></span>`);
-    inp=`${media}<div style="font-size:1rem;line-height:2;margin-bottom:16px">${preview}</div>
-    <input class="text-ans" type="text" placeholder="Fill in the blank..." value="${ans||''}" oninput="answers['${q.id}']=this.value" onkeydown="if(event.key==='Enter')nextStep()">
-    <button class="next-btn" onclick="nextStep()">${isLast?'Submit ✓':'OK →'}</button>`;
+    const parts=(q.text||'').split('___');
+    const blankCount=parts.length-1;
+    const blankVals=Array.isArray(ans)?ans:(ans?[ans]:new Array(Math.max(blankCount,1)).fill(''));
+    let sentence=media+'<div style="font-size:1.15rem;line-height:2.8;margin-bottom:24px">';
+    parts.forEach((part,pi)=>{
+      sentence+=`<span>${eh(part)}</span>`;
+      if(pi<parts.length-1){
+        sentence+=`<span id="fitb-live-${q.id}-${pi}" style="display:inline-block;min-width:100px;border-bottom:2.5px solid var(--accent);color:var(--accent);font-weight:700;padding:0 8px;margin:0 4px;text-align:center;vertical-align:bottom;transition:all 0.2s">${eh(blankVals[pi]||'')}</span>`;
+      }
+    });
+    sentence+='</div>';
+    let inputs='<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">';
+    for(let pi=0;pi<Math.max(blankCount,1);pi++){
+      inputs+=`<input class="text-ans" type="text" placeholder="${blankCount>1?'Blank '+(pi+1)+'...':'Type your answer...'}" value="${eh(blankVals[pi]||'')}" oninput="updateFitbLive('${q.id}',${pi},this.value)" onkeydown="if(event.key==='Enter'&&${pi}===${Math.max(blankCount,1)-1})nextStep()">`;
+    }
+    inputs+='</div>';
+    inp=sentence+inputs+`<div style="display:flex;align-items:center;gap:10px"><button class="next-btn" onclick="nextStep()">${isLast?'Submit ✓':'OK →'}</button><span class="next-hint">or press Enter</span></div>`;
   }
-  else if(q.type==='quiz'){
-    inp=`${media}<div class="choice-list">${(q.options||[]).map((o,i)=>`
-      <button class="choice-btn${ans===o?' selected':''}" onclick="selectChoice('${q.id}','${esc(o)}',this,false)">
-        <div class="choice-key">${String.fromCharCode(65+i)}</div>
-        <span>${eh(o)}</span>
-      </button>`).join('')}</div>`;
-  }
-  else if(q.type==='pledge'){
+    else if(q.type==='pledge'){
     inp=`${media}<div style="background:#EDE9FF;border-radius:10px;padding:16px;margin-bottom:16px;font-style:italic;color:var(--accent);line-height:1.6">"${eh(q.text)}"</div>
     <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:0.9rem;margin-bottom:16px">
       <input type="checkbox" ${ans?'checked':''} onchange="answers['${q.id}']=this.checked?'agreed':''"> I agree to this pledge
