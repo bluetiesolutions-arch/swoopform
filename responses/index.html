@@ -215,7 +215,7 @@ async function loadData(){
     renderStats();
     renderSummary();
     renderAllResponses();
-  }catch(e){console.error(e);toast('Error loading responses')}
+  }catch(e){console.error(e);toast('Error: '+e.message);document.getElementById('tab-all').innerHTML='<div style="padding:20px;color:red">Error: '+e.message+'</div>';}
 }
 
 function renderStats(){
