@@ -197,7 +197,7 @@ async function loadData(){
       id:i.id,type:i.type,text:i.text||i.question||'',options:i.options||[]
     }));
 
-    const q2=query(collection(db,'responses'),where('surveyId','==',surveyId));
+    const q2=query(collection(db,'surveyResponses'),where('surveyId','==',surveyId));
     const rSnap=await getDocs(q2);
     responses=rSnap.docs.map(d=>({id:d.id,...d.data()}));
     responses.sort((a,b)=>{

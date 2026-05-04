@@ -238,7 +238,7 @@ function updateProgress(){
 }
 
 // ── NAVIGATION ────────────────────────────────────────
-window.nextStep=function(){
+window.nextStep=function(){stopTimer();
   saveCurrentAnswer();
   // Check required
   const step=steps[currentStep];
@@ -267,7 +267,7 @@ window.nextStep=function(){
   renderStep();
 };
 
-window.prevStep=function(){
+window.prevStep=function(){stopTimer();
   saveCurrentAnswer();
   let prev=currentStep-1;
   while(prev>0){
@@ -493,6 +493,11 @@ function showQuestion(q,section){
     const inp=document.querySelector('.text-ans');
     if(inp)inp.focus();
   },100);
+
+  // Start timer if enabled
+  if(q.timerEnabled&&q.timerSeconds>0){
+    startTimer(q.id,q.timerSeconds);
+  }
 }
 
 // ── ALL ON ONE PAGE ───────────────────────────────────
@@ -655,6 +660,40 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowUp')prevStep();
   if(e.key==='ArrowDown')nextStep();
 });
+
+// ── TIMER ─────────────────────────────────────────────
+let timerInterval=null;
+function startTimer(qid,seconds){
+  clearInterval(timerInterval);
+  // Remove existing timer
+  const existing=document.getElementById('q-timer');
+  if(existing)existing.remove();
+  // Add timer display
+  const wrap=document.querySelector('.q-wrap');
+  if(!wrap)return;
+  const timerEl=document.createElement('div');
+  timerEl.id='q-timer';
+  timerEl.style.cssText='position:fixed;top:60px;right:20px;background:var(--accent);color:#fff;padding:6px 14px;border-radius:100px;font-family:"Syne",sans-serif;font-weight:800;font-size:0.9rem;z-index:200;transition:background 0.3s';
+  document.body.appendChild(timerEl);
+  let left=seconds;
+  function tick(){
+    timerEl.textContent=left+'s';
+    if(left<=5)timerEl.style.background='#DC2626';
+    if(left<=0){
+      clearInterval(timerInterval);
+      timerEl.textContent='Time up!';
+      setTimeout(()=>nextStep(),800);
+    }
+    left--;
+  }
+  tick();
+  timerInterval=setInterval(tick,1000);
+}
+function stopTimer(){
+  clearInterval(timerInterval);
+  const el=document.getElementById('q-timer');
+  if(el)el.remove();
+}
 
 init();
 </script>

@@ -71,7 +71,12 @@ async function route(){
           return;
         }
         // Redirect to the correct response page
-        const dest=col.path+slug+params;
+        let dest;
+        if(col.name==='surveys'){
+          dest='/s/?id='+doc.id+(params?'&'+params.slice(1):'');
+        } else {
+          dest=col.path+slug+params;
+        }
         window.location.replace(dest);
         return;
       }
