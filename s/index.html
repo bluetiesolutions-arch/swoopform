@@ -484,7 +484,7 @@ function showQuestion(q,section){
         <div class="q-num-badge">${qNum}</div>
         ${section?`<span style="color:${section.color||'var(--accent)'}">${eh(section.title||'')}</span>`:''}
       </div>
-      <div class="q-text">${eh(q.text||'Untitled question')}${q.required?'<span class="req">*</span>':''}</div>
+      <div class="q-text">${q.type==='fitb'?'':eh(q.text||'Untitled question')}${q.required?'<span class="req">*</span>':''}</div>
       ${inp}
     </div>`;
 
