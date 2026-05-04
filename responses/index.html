@@ -186,8 +186,16 @@ onAuthStateChanged(auth,async u=>{
 });
 
 async function loadData(){
+  // Show debug
+  const dbg=document.createElement('div');
+  dbg.id='resp-debug';
+  dbg.style.cssText='position:fixed;top:60px;left:0;right:0;background:orange;color:#000;padding:10px;font-size:11px;z-index:9999;word-break:break-all';
+  dbg.textContent='Loading... surveyId='+surveyId;
+  document.body.appendChild(dbg);
   try{
-    const snap=await getDoc(doc(db,'surveys',surveyId));
+    document.getElementById('resp-debug').textContent+=' | fetching survey...';
+  const snap=await getDoc(doc(db,'surveys',surveyId));
+  document.getElementById('resp-debug').textContent+=' | snap.exists='+snap.exists();
     if(!snap.exists()){window.location.href='/dashboard';return}
     survey={id:snap.id,...snap.data()};
     document.getElementById('nav-title').textContent=survey.title||'Responses';
