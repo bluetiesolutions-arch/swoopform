@@ -197,11 +197,15 @@ async function loadData(){
       id:i.id,type:i.type,text:i.text||i.question||'',options:i.options||[]
     }));
 
+    // Check both collections
     const q2=query(collection(db,'surveyResponses'),where('surveyId','==',surveyId));
     const rSnap=await getDocs(q2);
-    console.log('Responses fetched:', rSnap.size, 'surveyId:', surveyId);
-    responses=rSnap.docs.map(d=>({id:d.id,...d.data()}));
-    console.log('First response:', JSON.stringify(responses[0]));
+    const q3=query(collection(db,'responses'),where('surveyId','==',surveyId));
+    const rSnap2=await getDocs(q3);
+    responses=[
+      ...rSnap.docs.map(d=>({id:d.id,...d.data()})),
+      ...rSnap2.docs.map(d=>({id:d.id,...d.data()}))
+    ];
     responses.sort((a,b)=>{
       const ta=a.submittedAt?.toMillis?a.submittedAt.toMillis():0;
       const tb=b.submittedAt?.toMillis?b.submittedAt.toMillis():0;
