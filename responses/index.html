@@ -130,6 +130,12 @@
   </style>
 </head>
 <body>
+<div id="top-debug" style="position:fixed;top:0;left:0;right:0;background:red;color:#fff;padding:8px;font-size:11px;z-index:99999">
+Loading responses page...
+</div>
+<script>
+document.getElementById('top-debug').textContent='URL: '+window.location.href+' | id param: '+new URLSearchParams(window.location.search).get('id');
+</script>
 <div class="loading-screen" id="ls"><div class="spinner"></div></div>
 <div id="app" style="display:none">
   <nav>
