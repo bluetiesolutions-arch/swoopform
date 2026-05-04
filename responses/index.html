@@ -229,7 +229,7 @@ function renderStats(){
   // Avg questions answered
   if(total>0&&questions.length>0){
     const avgAnswered=responses.reduce((sum,r)=>{
-      const ans=(r.answers||[]).filter(a=>a.answer&&a.answer.trim()).length;
+      const ans=Object.values(r.answers||{}).filter(a=>a!==undefined&&a!==null&&a!=='').length;
       return sum+ans;
     },0)/total;
     document.getElementById('stat-completion').textContent=avgAnswered.toFixed(1);
@@ -246,7 +246,7 @@ function renderSummary(){
   let html='';
   questions.forEach((q,qi)=>{
     const answersForQ=responses.map(r=>{
-      const a=(r.answers||[]).find(a=>a.question===q.text||(r.answers||[])[qi]?.question===q.text);
+      const a={answer:(r.answers||{})[q.id]};
       return a?a.answer:'';
     }).filter(a=>a&&a.trim());
     const answered=answersForQ.length;
@@ -348,7 +348,9 @@ window.toggleChart=function(type,qi,btn){
   btn.classList.add('active');
   const q=questions[qi];
   const answersForQ=responses.map(r=>{
-    const a=(r.answers||[]).find(a=>a.question===q.text||(r.answers||[])[qi]?.question===q.text);
+    // answers is saved as object {qid: value}
+    const answersObj=r.answers||{};
+    const a={answer:answersObj[q.id]};
     return a?a.answer:'';
   }).filter(a=>a&&a.trim());
   const container=document.getElementById('chart-'+qi);
@@ -381,7 +383,7 @@ function renderAllResponses(){
       <td style="color:#94A3B8;font-size:0.75rem">${responses.length-ri}</td>
       <td style="color:#64748B;font-size:0.78rem;white-space:nowrap">${date}</td>
       ${questions.map(q=>{
-        const a=(r.answers||[]).find(a=>a.question===q.text);
+        const a={answer:(r.answers||{})[q.id]};
         const val=a?a.answer:'—';
         return`<td title="${val}">${val.slice?val.slice(0,40):val}${val.length>40?'...':''}</td>`;
       }).join('')}
@@ -418,7 +420,7 @@ window.exportCSV=function(){
   const rows=responses.map((r,ri)=>{
     const date=r.submittedAt?.toDate?r.submittedAt.toDate().toLocaleDateString('en-IN'):'';
     const answers=questions.map(q=>{
-      const a=(r.answers||[]).find(a=>a.question===q.text);
+      const a={answer:(r.answers||{})[q.id]};
       return a?`"${(a.answer||'').replace(/"/g,'""')}"`:''
     });
     return[responses.length-ri,`"${date}"`,...answers].join(',');
