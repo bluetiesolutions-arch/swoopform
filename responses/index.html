@@ -267,7 +267,8 @@ function renderSummary(){
   questions.forEach((q,qi)=>{
     const answersForQ=responses.map(r=>{
       const a={answer:(r.answers||{})[q.id]};
-      return a?a.answer:'';
+      const rawA=(r.answers||{})[q.id];
+    return rawA===undefined||rawA===null?'':(Array.isArray(rawA)?rawA.join(', '):String(rawA));
     }).filter(a=>a&&a.trim());
     const answered=answersForQ.length;
     html+=`<div class="q-block"><div class="q-block-header"><div><div class="q-block-title">${qi+1}. ${q.text||'Untitled'}</div><div class="q-block-count">${answered} of ${responses.length} answered</div></div><div style="display:flex;align-items:center;gap:8px"><span class="q-block-type">${getTypeLabel(q.type)}</span>${['multiple','checkbox','dropdown','yesno','quiz'].includes(q.type)?`<div class="chart-toggle"><button class="chart-toggle-btn active" onclick="toggleChart('bar','${qi}',this)">Bar</button><button class="chart-toggle-btn" onclick="toggleChart('donut','${qi}',this)">Donut</button></div>`:''}</div></div>`;
@@ -371,7 +372,8 @@ window.toggleChart=function(type,qi,btn){
     // answers is saved as object {qid: value}
     const answersObj=r.answers||{};
     const a={answer:answersObj[q.id]};
-    return a?a.answer:'';
+    const rawA=(r.answers||{})[q.id];
+    return rawA===undefined||rawA===null?'':(Array.isArray(rawA)?rawA.join(', '):String(rawA));
   }).filter(a=>a&&a.trim());
   const container=document.getElementById('chart-'+qi);
   container.innerHTML=renderQuestionChart(q,answersForQ,qi,type);
@@ -403,9 +405,10 @@ function renderAllResponses(){
       <td style="color:#94A3B8;font-size:0.75rem">${responses.length-ri}</td>
       <td style="color:#64748B;font-size:0.78rem;white-space:nowrap">${date}</td>
       ${questions.map(q=>{
-        const a={answer:(r.answers||{})[q.id]};
-        const val=a?a.answer:'—';
-        return`<td title="${val}">${val.slice?val.slice(0,40):val}${val.length>40?'...':''}</td>`;
+        const rawAns=(r.answers||{})[q.id];
+        const val=rawAns===undefined||rawAns===null?'—':(Array.isArray(rawAns)?rawAns.join(', '):String(rawAns));
+        const display=val.length>40?val.slice(0,40)+'...':val;
+        return`<td title="${val}">${display}</td>`;
       }).join('')}
     </tr>`;
   });
