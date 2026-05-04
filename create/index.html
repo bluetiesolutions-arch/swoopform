@@ -322,7 +322,6 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
     <span class="nav-title" id="nav-title">New Survey</span>
   </div>
   <div class="nav-r">
-    <button class="btn-prev-toggle" onclick="togglePreview()">Preview</button>
     <button class="btn-draft" onclick="saveDraft()">Save draft</button>
     <button class="btn-pub" id="pub-btn" onclick="publishSurvey()">Publish →</button>
   </div>
@@ -1016,17 +1015,7 @@ function buildData(status){
 
 // PREVIEW
 let prevOpen=false,prevMode='desktop';
-window.togglePreview=async function(){
-  const data=buildData('draft');if(!data)return;
-  toast2('Saving draft...');
-  try{
-    if(SID){await updateDoc(doc(db,'surveys',SID),{...data,updatedAt:serverTimestamp()})}
-    else{const ref=await addDoc(collection(db,'surveys'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});SID=ref.id}
-    const slug=document.getElementById('seo-slug')?.value.trim();
-    const url=slug?'/s/'+slug:'/s/?id='+SID;
-    window.open(url,'_blank');
-  }catch(e){console.error(e);toast2('Error saving preview')}
-};
+
 window.closePreview=function(){};
 window.setPM=function(m){};
 window.upPrev=function(){
