@@ -559,12 +559,21 @@ async function showThankyou(){
 
   // Save response
   try{
+    console.log('Saving answers:', JSON.stringify(answers), 'surveyId:', surveyId);
     await addDoc(collection(db,'surveyResponses'),{
       surveyId,surveySlug:survey.slug||null,
       answers,submittedAt:serverTimestamp(),
       quizScore:quizTotal>0?quizScore:null,quizTotal:quizTotal>0?quizTotal:null
     });
-  }catch(e){console.error('Save response error:',e)}
+  }catch(e){
+    console.error('Save response error:',e);
+    // Show error on page
+    const errEl=document.createElement('div');
+    errEl.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#DC2626;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;z-index:999';
+    errEl.textContent='Error saving: '+e.message;
+    document.body.appendChild(errEl);
+    setTimeout(()=>errEl.remove(),5000);
+  }
 
   // Redirect if set
   if(ty.redirect){setTimeout(()=>window.location.href=ty.redirect,2000)}
