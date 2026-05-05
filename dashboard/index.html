@@ -356,7 +356,7 @@ window.renderItems=function(){
   wrap.innerHTML=filtered.map(item=>viewMode==='grid'?renderCard(item):renderListRow(item)).join('');
 }
 
-function getTitle(item){return item.title||item.question||'Untitled'}
+function getTitle(item){return item.title||item.job?.title||(item.job&&item.job.title)||item.question||'Untitled'}
 function getResponseCount(item){return item.responseCount||item.totalVotes||item.totalPledges||0}
 function getViewUrl(item){
   const m=TYPE_META[item._col];if(!m)return'#';
