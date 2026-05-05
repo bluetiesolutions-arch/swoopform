@@ -263,12 +263,12 @@
   <div class="sidebar">
     <div class="sidebar-section">
       <div class="sidebar-label">Sections</div>
-      <div class="sidebar-nav-item active" onclick="scrollTo('sec-job')"><span class="icon">💼</span> Job Details</div>
-      <div class="sidebar-nav-item" onclick="scrollTo('sec-company')"><span class="icon">🏢</span> Company Info</div>
-      <div class="sidebar-nav-item" onclick="scrollTo('sec-fixed')"><span class="icon">📋</span> Fixed Fields</div>
-      <div class="sidebar-nav-item" onclick="scrollTo('sec-custom')"><span class="icon">⚙️</span> Custom Fields</div>
-      <div class="sidebar-nav-item" onclick="scrollTo('sec-settings')"><span class="icon">🔧</span> Form Settings</div>
-      <div class="sidebar-nav-item" onclick="scrollTo('sec-seo')"><span class="icon">🔍</span> SEO & Sharing</div>
+      <div class="sidebar-nav-item active" id="snav-job" onclick="goToSection(1,'sec-job','snav-job')"><span class="icon">💼</span> Job Details</div>
+      <div class="sidebar-nav-item" id="snav-company" onclick="goToSection(1,'sec-company','snav-company')"><span class="icon">🏢</span> Company Info</div>
+      <div class="sidebar-nav-item" id="snav-fixed" onclick="goToSection(2,'sec-fixed','snav-fixed')"><span class="icon">📋</span> Fixed Fields</div>
+      <div class="sidebar-nav-item" id="snav-custom" onclick="goToSection(2,'sec-custom','snav-custom')"><span class="icon">⚙️</span> Custom Fields</div>
+      <div class="sidebar-nav-item" id="snav-settings" onclick="goToSection(3,'sec-settings','snav-settings')"><span class="icon">🔧</span> Form Settings</div>
+      <div class="sidebar-nav-item" id="snav-seo" onclick="goToSection(3,'sec-seo','snav-seo')"><span class="icon">🔍</span> SEO & Sharing</div>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-label">Fixed Fields <span class="badge badge-blue">Always Included</span></div>
@@ -1013,6 +1013,19 @@
     setTimeout(() => t.style.display = 'none', 2500);
   }
 
+
+  function goToSection(step, sectionId, navId) {
+    // Switch to correct step
+    setStep(step);
+    // Highlight sidebar item
+    document.querySelectorAll('.sidebar-nav-item').forEach(i => i.classList.remove('active'));
+    document.getElementById(navId).classList.add('active');
+    // Scroll to section after short delay
+    setTimeout(() => {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
   // Init
   updatePreview();
 </script>
