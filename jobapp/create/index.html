@@ -986,8 +986,8 @@
     setTimeout(() => {
       JID = 'ja_' + Math.random().toString(36).substr(2, 8);
       const slug = document.getElementById('seo-slug').value.trim();
-      document.getElementById('modal-url').textContent = 'swoopform.com/apply/' + (slug || JID);
-      document.getElementById('modal-view-btn').href = '/apply/?id=' + JID;
+      document.getElementById('modal-url').textContent = 'swoopform.com/jobapp/?id=' + (slug || JID);
+      document.getElementById('modal-view-btn').href = '/jobapp/?id=' + JID;
       document.getElementById('success-modal').classList.add('open');
       btn.disabled = false;
       btn.textContent = '🚀 Publish';
