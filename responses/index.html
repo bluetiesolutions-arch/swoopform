@@ -130,12 +130,7 @@
   </style>
 </head>
 <body>
-<div id="top-debug" style="position:fixed;top:0;left:0;right:0;background:red;color:#fff;padding:8px;font-size:11px;z-index:99999">
-Loading responses page...
-</div>
-<script>
-document.getElementById('top-debug').textContent='URL: '+window.location.href+' | id param: '+new URLSearchParams(window.location.search).get('id');
-</script>
+
 <div class="loading-screen" id="ls"><div class="spinner"></div></div>
 <div id="app" style="display:none">
   <nav>
@@ -194,14 +189,11 @@ onAuthStateChanged(auth,async u=>{
 async function loadData(){
   // Show debug
   const dbg=document.createElement('div');
-  dbg.id='resp-debug';
-  dbg.style.cssText='position:fixed;top:60px;left:0;right:0;background:orange;color:#000;padding:10px;font-size:11px;z-index:9999;word-break:break-all';
-  dbg.textContent='Loading... surveyId='+surveyId;
-  document.body.appendChild(dbg);
+  
   try{
-    document.getElementById('resp-debug').textContent+=' | fetching survey...';
+    
   const snap=await getDoc(doc(db,'surveys',surveyId));
-  document.getElementById('resp-debug').textContent+=' | snap.exists='+snap.exists();
+  
     if(!snap.exists()){window.location.href='/dashboard';return}
     survey={id:snap.id,...snap.data()};
     document.getElementById('nav-title').textContent=survey.title||'Responses';
