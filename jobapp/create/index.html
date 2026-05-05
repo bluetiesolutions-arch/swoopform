@@ -580,7 +580,7 @@
             <div class="field-row">
               <div class="field-label">Custom URL Slug</div>
               <input class="field-input" id="seo-slug" placeholder="senior-product-designer-acme" oninput="updateSlug()">
-              <div class="slug-preview" id="slug-preview">swoopform.com/apply/senior-product-designer-acme</div>
+              <div class="slug-preview" id="slug-preview">swoopform.com/jobapp/?id=senior-product-designer-acme</div>
             </div>
             <div class="field-row">
               <div class="field-label">SEO Title</div>
@@ -769,7 +769,7 @@
     <div style="font-size:40px;margin-bottom:12px;">🚀</div>
     <div class="modal-title" style="margin-bottom:8px;">Job Application Published!</div>
     <div style="font-size:13px;color:var(--muted);margin-bottom:20px;">Your form is now live and accepting applications.</div>
-    <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:16px;font-family:var(--mono);font-size:12px;color:var(--accent2);" id="modal-url">swoopform.com/apply/...</div>
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:16px;font-family:var(--mono);font-size:12px;color:var(--accent2);" id="modal-url">swoopform.com/jobapp/?id=...</div>
     <div style="display:flex;gap:10px;justify-content:center;">
       <button class="btn-ghost" onclick="copyUrl()">📋 Copy Link</button>
       <a id="modal-view-btn" href="#" target="_blank"><button class="btn-primary">View Form →</button></a>
@@ -835,7 +835,7 @@
 
   function updateSlug() {
     const slug = document.getElementById('seo-slug').value.toLowerCase().replace(/[^a-z0-9-]/g, '-');
-    document.getElementById('slug-preview').textContent = slug ? `swoopform.com/apply/${slug}` : 'swoopform.com/apply/your-slug';
+    document.getElementById('slug-preview').textContent = slug ? `swoopform.com/jobapp/?id=${slug}` : 'swoopform.com/jobapp/?id=your-slug';
   }
 
   function countChars(fieldId, countId, max) {
@@ -996,7 +996,7 @@
 
   function previewForm() {
     toast('Opening preview...');
-    setTimeout(() => window.open('/apply/?preview=1', '_blank'), 500);
+    setTimeout(() => window.open('/jobapp/?preview=1', '_blank'), 500);
   }
 
   function closeModal() {
