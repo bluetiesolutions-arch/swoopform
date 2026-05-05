@@ -75,7 +75,7 @@ async function route(){
         // Redirect to the correct response page
         let dest;
         if(col.name==='surveys'){
-          dest='/s/?id='+doc.id+(params?'&'+params.slice(1):'');
+          dest='/s/?id='+doc.id;
         } else {
           dest=col.path+slug+params;
         }
