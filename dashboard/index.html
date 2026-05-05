@@ -201,7 +201,7 @@
         <a href="/create/?template=feedback" class="cp-item"><div class="cp-icon" style="background:#DCFCE7">💬</div><div><div class="cp-label">Feedback Form</div><div class="cp-desc">Ratings and comments</div></div></a>
         <a href="/create/?template=lead" class="cp-item"><div class="cp-icon" style="background:#EEF2FF">📥</div><div><div class="cp-label">Lead Generation</div><div class="cp-desc">Capture names and emails</div></div></a>
         <a href="/create/?template=registration" class="cp-item"><div class="cp-icon" style="background:#FFF7ED">📝</div><div><div class="cp-label">Registration</div><div class="cp-desc">Event or course signup</div></div></a>
-        <a href="/create/?template=jobapp" class="cp-item"><div class="cp-icon" style="background:#F0FDF4">💼</div><div><div class="cp-label">Job Application</div><div class="cp-desc">Split-view with job description</div></div></a>
+        <a href="/jobapp/create/" class="cp-item"><div class="cp-icon" style="background:#F0FDF4">💼</div><div><div class="cp-label">Job Application</div><div class="cp-desc">Split-view with job description</div></div></a>
         <a href="/create/?template=employee" class="cp-item"><div class="cp-icon" style="background:#FDF4FF">👥</div><div><div class="cp-label">Employee Engagement</div><div class="cp-desc">Internal team pulse</div></div></a>
         <a href="/create/?template=product" class="cp-item"><div class="cp-icon" style="background:#F0F9FF">📦</div><div><div class="cp-label">Product Recommendation</div><div class="cp-desc">Quiz-style product finder</div></div></a>
         <div class="cp-divider"></div>
@@ -301,6 +301,7 @@ const TYPE_META={
   votings:{label:'Voting',icon:'🗳️',color:'#D97706',bg:'#FEF3C7',editPath:'/voting/edit/?id=',viewPath:'/voting/',responsesPath:'/voting/responses/?id='},
   pledges:{label:'Pledge & Support',icon:'🤝',color:'#10B981',bg:'#DCFCE7',editPath:'/pledge/edit/?id=',viewPath:'/pledge/',responsesPath:'/pledge/responses/?id='},
   riddles:{label:'Riddle',icon:'🧩',color:'#A855F7',bg:'#F3E8FF',editPath:'/riddle/edit/?id=',viewPath:'/riddle/',responsesPath:'/riddle/responses/?id='},
+  jobapps:{label:'Job Application',icon:'💼',color:'#059669',bg:'#D1FAE5',editPath:'/jobapp/create/?id=',viewPath:'/jobapp/?id=',responsesPath:'/jobapp/responses/?id='},
 };
 
 let U=null,allItems=[],activeFilter='all',viewMode='grid',ctxItem=null;
@@ -360,6 +361,7 @@ function getResponseCount(item){return item.responseCount||item.totalVotes||item
 function getViewUrl(item){
   const m=TYPE_META[item._col];if(!m)return'#';
   if(item._col==='surveys')return item.slug?'/survey/'+item.slug:'/s/?id='+item.id;
+  if(item._col==='jobapps')return '/jobapp/?id='+item.id;
   return item.slug?'/engage/'+item.slug:'#';
 }
 function getEditUrl(item){return(TYPE_META[item._col]?.editPath||'#')+item.id}
