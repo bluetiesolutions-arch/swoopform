@@ -971,8 +971,10 @@ window.toast=function(msg){
   setTimeout(()=>t.style.display='none',2500);
 };
 
-updatePreview();
-setStep(1);
+document.addEventListener("DOMContentLoaded", function(){
+  updatePreview();
+  setStep(1);
+});
 </script>
 </body>
 </html>
