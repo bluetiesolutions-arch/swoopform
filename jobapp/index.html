@@ -263,14 +263,14 @@ function renderJob(data){
   if(job.reqs){document.getElementById('sec-reqs').style.display='block';document.getElementById('job-reqs').innerHTML=job.reqs.split('\n').filter(l=>l.trim()).map(l=>`<li>${l.replace(/^[•\-→]\s*/,'')}</li>`).join('');}
   if(job.perks){document.getElementById('sec-perks').style.display='block';document.getElementById('job-perks').innerHTML=job.perks.split('\n').filter(l=>l.trim()).map(l=>`<li>${l.replace(/^[•\-→]\s*/,'')}</li>`).join('');}
   if(co.about){document.getElementById('sec-about').style.display='block';document.getElementById('co-about').textContent=co.about;}
-  if(s.linkedin)document.getElementById('wrap-linkedin').style.display='block';
-  if(s.portfolio)document.getElementById('wrap-portfolio').style.display='block';
-  if(s.coverLetter)document.getElementById('wrap-cover').style.display='block';
-  if(s.salary||s.location||s.education){
+  if(s.linkedin===true)document.getElementById('wrap-linkedin').style.display='block';
+  if(s.portfolio===true)document.getElementById('wrap-portfolio').style.display='block';
+  if(s.coverLetter===true)document.getElementById('wrap-cover').style.display='block';
+  if(s.salary===true||s.location===true||s.education===true){
     document.getElementById('wrap-optional').style.display='block';
-    if(s.salary)document.getElementById('wrap-salary').style.display='block';
-    if(s.location)document.getElementById('wrap-location').style.display='block';
-    if(s.education)document.getElementById('wrap-edu').style.display='block';
+    if(s.salary===true)document.getElementById('wrap-salary').style.display='block';
+    if(s.location===true)document.getElementById('wrap-location').style.display='block';
+    if(s.education===true)document.getElementById('wrap-edu').style.display='block';
   }
   if(data.thankYou?.message)document.getElementById('ty-msg').textContent=data.thankYou.message;
   if(s.redirectUrl)document.getElementById('redirect-note').textContent='You will be redirected shortly...';
@@ -334,7 +334,7 @@ window.submitApplication=async function(){
     if(redirectUrl&&delay>0)setTimeout(()=>window.location.href=redirectUrl,delay*1000);
   }catch(e){
     console.error(e);btn.disabled=false;btn.textContent='Submit Application →';
-    alert('Something went wrong. Please try again.');
+    alert('Error: ' + e.code + ' — ' + e.message);
   }
 };
 
