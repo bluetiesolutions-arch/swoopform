@@ -780,7 +780,89 @@
 
 <div class="toast" id="toast"></div>
 
-<script>
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,doc,getDoc,setDoc,updateDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+let currentUser=null;
+let existingJobId=null;
+
+// Check auth
+onAuthStateChanged(auth,u=>{
+  if(!u){window.location.href='/login/';return;}
+  currentUser=u;
+  // Check if editing existing job
+  const params=new URLSearchParams(window.location.search);
+  existingJobId=params.get('id');
+  if(existingJobId)loadExistingJob(existingJobId);
+});
+
+// Load existing job data for editing
+async function loadExistingJob(id){
+  try{
+    const snap=await getDoc(doc(db,'jobapps',id));
+    if(!snap.exists())return;
+    const data=snap.data();
+    const job=data.job||{};
+    const co=data.company||{};
+    const s=data.settings||{};
+    const seo=data.seo||{};
+    const ty=data.thankYou||{};
+
+    // Fill job fields
+    if(job.title)document.getElementById('job-title').value=job.title;
+    if(job.type)document.getElementById('job-type').value=job.type;
+    if(job.mode)document.getElementById('job-mode').value=job.mode;
+    if(job.location)document.getElementById('job-location').value=job.location;
+    if(job.dept)document.getElementById('job-dept').value=job.dept;
+    if(job.salary)document.getElementById('job-salary').value=job.salary;
+    if(job.exp)document.getElementById('job-exp').value=job.exp;
+    if(job.deadline)document.getElementById('job-deadline').value=job.deadline;
+    if(job.desc)document.getElementById('job-desc').value=job.desc;
+    if(job.reqs)document.getElementById('job-reqs').value=job.reqs;
+    if(job.perks)document.getElementById('job-perks').value=job.perks;
+
+    // Fill company fields
+    if(co.name)document.getElementById('co-name').value=co.name;
+    if(co.website)document.getElementById('co-website').value=co.website;
+    if(co.industry)document.getElementById('co-industry').value=co.industry;
+    if(co.size)document.getElementById('co-size').value=co.size;
+    if(co.founded)document.getElementById('co-founded').value=co.founded;
+    if(co.about)document.getElementById('co-about').value=co.about;
+
+    // Fill settings toggles
+    if(s.linkedin!==undefined)s.linkedin?document.getElementById('tgl-linkedin').classList.add('on'):document.getElementById('tgl-linkedin').classList.remove('on');
+    if(s.portfolio!==undefined)s.portfolio?document.getElementById('tgl-portfolio').classList.add('on'):document.getElementById('tgl-portfolio').classList.remove('on');
+    if(s.coverLetter!==undefined)s.coverLetter?document.getElementById('tgl-cover').classList.add('on'):document.getElementById('tgl-cover').classList.remove('on');
+    if(s.salary!==undefined)s.salary?document.getElementById('tgl-salary').classList.add('on'):document.getElementById('tgl-salary').classList.remove('on');
+    if(s.location!==undefined)s.location?document.getElementById('tgl-location').classList.add('on'):document.getElementById('tgl-location').classList.remove('on');
+    if(s.education!==undefined)s.education?document.getElementById('tgl-edu').classList.add('on'):document.getElementById('tgl-edu').classList.remove('on');
+    if(s.accepting!==undefined)s.accepting?document.getElementById('tgl-open').classList.add('on'):document.getElementById('tgl-open').classList.remove('on');
+    if(s.notify!==undefined)s.notify?document.getElementById('tgl-notify').classList.add('on'):document.getElementById('tgl-notify').classList.remove('on');
+    if(s.showCount!==undefined)s.showCount?document.getElementById('tgl-count').classList.add('on'):document.getElementById('tgl-count').classList.remove('on');
+    if(s.redirectUrl)document.getElementById('redirect-url').value=s.redirectUrl;
+
+    // Fill SEO
+    if(seo.slug)document.getElementById('seo-slug').value=seo.slug;
+    if(seo.title)document.getElementById('seo-title').value=seo.title;
+    if(seo.description)document.getElementById('seo-desc').value=seo.description;
+
+    // Fill thank you
+    if(ty.heading)document.getElementById('ty-heading').value=ty.heading;
+    if(ty.message)document.getElementById('ty-message').value=ty.message;
+    if(ty.delay)document.getElementById('ty-delay').value=ty.delay;
+
+    updatePreview();
+    toast('Job loaded for editing');
+  }catch(e){console.error(e);}
+}
+
   let currentStep = 1;
   let customFields = [];
   let fieldCount = 0;
@@ -969,29 +1051,80 @@
     };
   }
 
-  function saveDraft() {
+  async function saveDraft() {
     const data = buildData('draft');
     if (!data) return;
-    toast('✅ Draft saved!');
+    if (!currentUser) { toast('Please log in first'); return; }
+    try {
+      const { addDoc, collection } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+      const payload = {
+        ...data,
+        userId: currentUser.uid,
+        userEmail: currentUser.email,
+        status: 'draft',
+        responseCount: 0,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      };
+      if (existingJobId) {
+        await updateDoc(doc(db, 'jobapps', existingJobId), {...payload, createdAt: undefined});
+        toast('✅ Draft updated!');
+      } else {
+        const colRef = collection(db, 'jobapps');
+        const newDoc = await addDoc(colRef, payload);
+        existingJobId = newDoc.id;
+        window.history.replaceState({}, '', '/jobapp/create/?id=' + newDoc.id);
+        toast('✅ Draft saved!');
+      }
+    } catch(e) {
+      console.error(e);
+      toast('Error saving draft: ' + e.message);
+    }
   }
 
   let JID = null;
-  function publish() {
+  async function publish() {
     const data = buildData('active');
     if (!data) return;
+    if (!currentUser) { toast('Please log in first'); return; }
     const btn = document.getElementById('btn-next');
     btn.disabled = true;
     btn.textContent = 'Publishing...';
-
-    setTimeout(() => {
-      JID = 'ja_' + Math.random().toString(36).substr(2, 8);
+    try {
       const slug = document.getElementById('seo-slug').value.trim();
-      document.getElementById('modal-url').textContent = 'swoopform.com/jobapp/?id=' + (slug || JID);
+      const payload = {
+        ...data,
+        userId: currentUser.uid,
+        userEmail: currentUser.email,
+        status: 'active',
+        responseCount: 0,
+        updatedAt: serverTimestamp(),
+      };
+      if (existingJobId) {
+        // UPDATE existing job
+        payload.updatedAt = serverTimestamp();
+        delete payload.responseCount; // dont reset count on edit
+        await updateDoc(doc(db, 'jobapps', existingJobId), payload);
+        JID = existingJobId;
+      } else {
+        // CREATE new job
+        payload.createdAt = serverTimestamp();
+        const newRef = doc(db.collection ? db.collection('jobapps').doc() : doc(db, 'jobapps', 'ja_' + Math.random().toString(36).substr(2,8)));
+        // Use setDoc with auto id
+        const { addDoc, collection } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+        const colRef = collection(db, 'jobapps');
+        const newDoc = await addDoc(colRef, payload);
+        JID = newDoc.id;
+      }
+      document.getElementById('modal-url').textContent = 'swoopform.com/jobapp/?id=' + JID;
       document.getElementById('modal-view-btn').href = '/jobapp/?id=' + JID;
       document.getElementById('success-modal').classList.add('open');
-      btn.disabled = false;
-      btn.textContent = '🚀 Publish';
-    }, 1200);
+    } catch(e) {
+      console.error(e);
+      toast('Error saving: ' + e.message);
+    }
+    btn.disabled = false;
+    btn.textContent = '🚀 Publish';
   }
 
   function previewForm() {
