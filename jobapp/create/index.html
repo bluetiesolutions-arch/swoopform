@@ -985,11 +985,12 @@ async function loadExistingJob(id){
 
 // ── AUTH ──
 onAuthStateChanged(auth,async u=>{
-  if(!u){window.location.href='/login/';return;}
   currentUser=u;
-  const params=new URLSearchParams(window.location.search);
-  existingJobId=params.get('id');
-  if(existingJobId)await loadExistingJob(existingJobId);
+  if(u){
+    const params=new URLSearchParams(window.location.search);
+    existingJobId=params.get('id');
+    if(existingJobId)await loadExistingJob(existingJobId);
+  }
 });
 
 // ── INIT (runs immediately) ──
