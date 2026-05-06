@@ -252,9 +252,9 @@
   <div class="nav-sep"></div>
   <div class="nav-title">Job Application Builder</div>
   <div class="nav-right">
-    <button class="btn-ghost" onclick="previewForm()">👁 Preview</button>
-    <button class="btn-ghost" onclick="saveDraft()">Save Draft</button>
-    <button class="btn-success" onclick="publish()">Publish →</button>
+    <button class="btn-ghost" onclick="window.previewForm()">👁 Preview</button>
+    <button class="btn-ghost" onclick="window.saveDraft()">Save Draft</button>
+    <button class="btn-success" onclick="window.publish()">Publish →</button>
   </div>
 </nav>
 
@@ -265,12 +265,12 @@
   <div class="sidebar">
     <div class="sidebar-section">
       <div class="sidebar-label">Sections</div>
-      <div class="sidebar-nav-item active" id="snav-job" onclick="goToSection(1,'sec-job','snav-job')"><span class="icon">💼</span> Job Details</div>
-      <div class="sidebar-nav-item" id="snav-company" onclick="goToSection(1,'sec-company','snav-company')"><span class="icon">🏢</span> Company Info</div>
-      <div class="sidebar-nav-item" id="snav-fixed" onclick="goToSection(2,'sec-fixed','snav-fixed')"><span class="icon">📋</span> Fixed Fields</div>
-      <div class="sidebar-nav-item" id="snav-custom" onclick="goToSection(2,'sec-custom','snav-custom')"><span class="icon">⚙️</span> Custom Fields</div>
-      <div class="sidebar-nav-item" id="snav-settings" onclick="goToSection(3,'sec-settings','snav-settings')"><span class="icon">🔧</span> Form Settings</div>
-      <div class="sidebar-nav-item" id="snav-seo" onclick="goToSection(3,'sec-seo','snav-seo')"><span class="icon">🔍</span> SEO & Sharing</div>
+      <div class="sidebar-nav-item active" id="snav-job" onclick="window.goToSection(1,'sec-job','snav-job')"><span class="icon">💼</span> Job Details</div>
+      <div class="sidebar-nav-item" id="snav-company" onclick="window.goToSection(1,'sec-company','snav-company')"><span class="icon">🏢</span> Company Info</div>
+      <div class="sidebar-nav-item" id="snav-fixed" onclick="window.goToSection(2,'sec-fixed','snav-fixed')"><span class="icon">📋</span> Fixed Fields</div>
+      <div class="sidebar-nav-item" id="snav-custom" onclick="window.goToSection(2,'sec-custom','snav-custom')"><span class="icon">⚙️</span> Custom Fields</div>
+      <div class="sidebar-nav-item" id="snav-settings" onclick="window.goToSection(3,'sec-settings','snav-settings')"><span class="icon">🔧</span> Form Settings</div>
+      <div class="sidebar-nav-item" id="snav-seo" onclick="window.goToSection(3,'sec-seo','snav-seo')"><span class="icon">🔍</span> SEO & Sharing</div>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-label">Fixed Fields <span class="badge badge-blue">Always Included</span></div>
@@ -283,16 +283,16 @@
     </div>
     <div class="sidebar-section">
       <div class="sidebar-label">Add Custom Fields</div>
-      <div class="field-type-btn" onclick="addCustomField('short_text')"><span>📝</span> Short Text <span class="ftag">text</span></div>
-      <div class="field-type-btn" onclick="addCustomField('long_text')"><span>📄</span> Long Text <span class="ftag">textarea</span></div>
-      <div class="field-type-btn" onclick="addCustomField('dropdown')"><span>🔽</span> Dropdown <span class="ftag">select</span></div>
-      <div class="field-type-btn" onclick="addCustomField('mcq')"><span>⚪</span> MCQ <span class="ftag">radio</span></div>
-      <div class="field-type-btn" onclick="addCustomField('checkbox')"><span>☑️</span> Checkboxes <span class="ftag">multi</span></div>
-      <div class="field-type-btn" onclick="addCustomField('number')"><span>🔢</span> Number <span class="ftag">number</span></div>
-      <div class="field-type-btn" onclick="addCustomField('date')"><span>📅</span> Date <span class="ftag">date</span></div>
-      <div class="field-type-btn" onclick="addCustomField('url')"><span>🔗</span> URL / Link <span class="ftag">url</span></div>
-      <div class="field-type-btn" onclick="addCustomField('rating')"><span>⭐</span> Rating <span class="ftag">1-5</span></div>
-      <div class="field-type-btn" onclick="addCustomField('yesno')"><span>✅</span> Yes / No <span class="ftag">bool</span></div>
+      <div class="field-type-btn" onclick="window.addCustomField('short_text')"><span>📝</span> Short Text <span class="ftag">text</span></div>
+      <div class="field-type-btn" onclick="window.addCustomField('long_text')"><span>📄</span> Long Text <span class="ftag">textarea</span></div>
+      <div class="field-type-btn" onclick="window.addCustomField('dropdown')"><span>🔽</span> Dropdown <span class="ftag">select</span></div>
+      <div class="field-type-btn" onclick="window.addCustomField('mcq')"><span>⚪</span> MCQ <span class="ftag">radio</span></div>
+      <div class="field-type-btn" onclick="window.addCustomField('checkbox')"><span>☑️</span> Checkboxes <span class="ftag">multi</span></div>
+      <div class="field-type-btn" onclick="window.addCustomField('number')"><span>🔢</span> Number <span class="ftag">number</span></div>
+      <div class="field-type-btn" onclick="window.addCustomField('date')"><span>📅</span> Date <span class="ftag">date</span></div>
+      <div class="field-type-btn" onclick="window.addCustomField('url')"><span>🔗</span> URL / Link <span class="ftag">url</span></div>
+      <div class="field-type-btn" onclick="window.addCustomField('rating')"><span>⭐</span> Rating <span class="ftag">1-5</span></div>
+      <div class="field-type-btn" onclick="window.addCustomField('yesno')"><span>✅</span> Yes / No <span class="ftag">bool</span></div>
     </div>
   </div>
 
@@ -302,10 +302,10 @@
 
       <!-- STEP TABS -->
       <div class="step-tabs">
-        <button class="step-tab active done" onclick="setStep(1)"><span class="step-num">✓</span> Job Details</button>
-        <button class="step-tab" onclick="setStep(2)"><span class="step-num">2</span> Application Form</button>
-        <button class="step-tab" onclick="setStep(3)"><span class="step-num">3</span> Settings & SEO</button>
-        <button class="step-tab" onclick="setStep(4)"><span class="step-num">4</span> Thank You Page</button>
+        <button class="step-tab active done" onclick="window.setStep(1)"><span class="step-num">✓</span> Job Details</button>
+        <button class="step-tab" onclick="window.setStep(2)"><span class="step-num">2</span> Application Form</button>
+        <button class="step-tab" onclick="window.setStep(3)"><span class="step-num">3</span> Settings & SEO</button>
+        <button class="step-tab" onclick="window.setStep(4)"><span class="step-num">4</span> Thank You Page</button>
       </div>
 
       <!-- ===== STEP 1: JOB DETAILS ===== -->
@@ -321,12 +321,12 @@
           <div class="section-body">
             <div class="field-row">
               <div class="field-label">Job Title <span class="req">*</span></div>
-              <input class="field-input" id="job-title" placeholder="e.g. Senior Product Designer" oninput="updatePreview()">
+              <input class="field-input" id="job-title" placeholder="e.g. Senior Product Designer" oninput="window.updatePreview()">
             </div>
             <div class="field-grid">
               <div class="field-row">
                 <div class="field-label">Job Type</div>
-                <select class="field-input" id="job-type" onchange="updatePreview()">
+                <select class="field-input" id="job-type" onchange="window.updatePreview()">
                   <option>Full-time</option>
                   <option>Part-time</option>
                   <option>Contract</option>
@@ -336,7 +336,7 @@
               </div>
               <div class="field-row">
                 <div class="field-label">Work Mode</div>
-                <select class="field-input" id="job-mode" onchange="updatePreview()">
+                <select class="field-input" id="job-mode" onchange="window.updatePreview()">
                   <option>On-site</option>
                   <option>Remote</option>
                   <option>Hybrid</option>
@@ -346,38 +346,38 @@
             <div class="field-grid">
               <div class="field-row">
                 <div class="field-label">Location</div>
-                <input class="field-input" id="job-location" placeholder="e.g. Bangalore, India" oninput="updatePreview()">
+                <input class="field-input" id="job-location" placeholder="e.g. Bangalore, India" oninput="window.updatePreview()">
               </div>
               <div class="field-row">
                 <div class="field-label">Department</div>
-                <input class="field-input" id="job-dept" placeholder="e.g. Product Design" oninput="updatePreview()">
+                <input class="field-input" id="job-dept" placeholder="e.g. Product Design" oninput="window.updatePreview()">
               </div>
             </div>
             <div class="field-grid">
               <div class="field-row">
                 <div class="field-label">Salary Range</div>
-                <input class="field-input" id="job-salary" placeholder="e.g. ₹12–18 LPA" oninput="updatePreview()">
+                <input class="field-input" id="job-salary" placeholder="e.g. ₹12–18 LPA" oninput="window.updatePreview()">
               </div>
               <div class="field-row">
                 <div class="field-label">Experience Required</div>
-                <input class="field-input" id="job-exp" placeholder="e.g. 2–4 years" oninput="updatePreview()">
+                <input class="field-input" id="job-exp" placeholder="e.g. 2–4 years" oninput="window.updatePreview()">
               </div>
             </div>
             <div class="field-row">
               <div class="field-label">Application Deadline</div>
-              <input type="date" class="field-input" id="job-deadline" oninput="updatePreview()">
+              <input type="date" class="field-input" id="job-deadline" oninput="window.updatePreview()">
             </div>
             <div class="field-row">
               <div class="field-label">Job Description <span class="req">*</span></div>
-              <textarea class="field-input" id="job-desc" placeholder="Describe the role, what you'll be doing day-to-day..." rows="5" oninput="updatePreview()"></textarea>
+              <textarea class="field-input" id="job-desc" placeholder="Describe the role, what you'll be doing day-to-day..." rows="5" oninput="window.updatePreview()"></textarea>
             </div>
             <div class="field-row">
               <div class="field-label">Requirements</div>
-              <textarea class="field-input" id="job-reqs" placeholder="• 2+ years of product design experience&#10;• Proficiency in Figma&#10;• Strong portfolio..." rows="4" oninput="updatePreview()"></textarea>
+              <textarea class="field-input" id="job-reqs" placeholder="• 2+ years of product design experience&#10;• Proficiency in Figma&#10;• Strong portfolio..." rows="4" oninput="window.updatePreview()"></textarea>
             </div>
             <div class="field-row">
               <div class="field-label">Perks & Benefits</div>
-              <textarea class="field-input" id="job-perks" placeholder="• Flexible working hours&#10;• Health insurance&#10;• Annual retreat..." rows="3" oninput="updatePreview()"></textarea>
+              <textarea class="field-input" id="job-perks" placeholder="• Flexible working hours&#10;• Health insurance&#10;• Annual retreat..." rows="3" oninput="window.updatePreview()"></textarea>
             </div>
           </div>
         </div>
@@ -393,11 +393,11 @@
             <div class="field-grid">
               <div class="field-row">
                 <div class="field-label">Company Name <span class="req">*</span></div>
-                <input class="field-input" id="co-name" placeholder="e.g. Acme Corp" oninput="updatePreview()">
+                <input class="field-input" id="co-name" placeholder="e.g. Acme Corp" oninput="window.updatePreview()">
               </div>
               <div class="field-row">
                 <div class="field-label">Company Website</div>
-                <input class="field-input" id="co-website" placeholder="https://acme.com" oninput="updatePreview()">
+                <input class="field-input" id="co-website" placeholder="https://acme.com" oninput="window.updatePreview()">
               </div>
             </div>
             <div class="field-grid">
@@ -432,7 +432,7 @@
             </div>
             <div class="field-row">
               <div class="field-label">About Company</div>
-              <textarea class="field-input" id="co-about" placeholder="Brief description of what your company does..." rows="3" oninput="updatePreview()"></textarea>
+              <textarea class="field-input" id="co-about" placeholder="Brief description of what your company does..." rows="3" oninput="window.updatePreview()"></textarea>
             </div>
           </div>
         </div>
@@ -527,7 +527,7 @@
           </div>
           <div class="section-body">
             <div id="custom-fields-container"></div>
-            <button class="add-field-btn" onclick="openFieldModal()">+ Add Custom Field</button>
+            <button class="add-field-btn" onclick="window.openFieldModal()">+ Add Custom Field</button>
           </div>
         </div>
 
@@ -579,17 +579,17 @@
           <div class="section-body">
             <div class="field-row">
               <div class="field-label">Custom URL Slug</div>
-              <input class="field-input" id="seo-slug" placeholder="senior-product-designer-acme" oninput="updateSlug()">
+              <input class="field-input" id="seo-slug" placeholder="senior-product-designer-acme" oninput="window.updateSlug()">
               <div class="slug-preview" id="slug-preview">swoopform.com/jobapp/?id=senior-product-designer-acme</div>
             </div>
             <div class="field-row">
               <div class="field-label">SEO Title</div>
-              <input class="field-input" id="seo-title" placeholder="Senior Product Designer at Acme Corp — Apply Now" oninput="countChars('seo-title', 'seo-title-count', 60)">
+              <input class="field-input" id="seo-title" placeholder="Senior Product Designer at Acme Corp — Apply Now" oninput="window.countChars('seo-title', 'seo-title-count', 60)">
               <div class="char-count" id="seo-title-count">0 / 60</div>
             </div>
             <div class="field-row">
               <div class="field-label">Meta Description</div>
-              <textarea class="field-input" id="seo-desc" rows="3" placeholder="We're hiring a Senior Product Designer to shape our core product experience..." oninput="countChars('seo-desc', 'seo-desc-count', 160)"></textarea>
+              <textarea class="field-input" id="seo-desc" rows="3" placeholder="We're hiring a Senior Product Designer to shape our core product experience..." oninput="window.countChars('seo-desc', 'seo-desc-count', 160)"></textarea>
               <div class="char-count" id="seo-desc-count">0 / 160</div>
             </div>
             <div class="field-row">
@@ -644,8 +644,8 @@
 
       <!-- NAV BUTTONS -->
       <div style="display:flex;justify-content:space-between;margin-top:8px;">
-        <button class="btn-ghost" id="btn-prev" onclick="prevStep()" style="visibility:hidden">← Previous</button>
-        <button class="btn-primary" id="btn-next" onclick="nextStep()">Next: Application Form →</button>
+        <button class="btn-ghost" id="btn-prev" onclick="window.prevStep()" style="visibility:hidden">← Previous</button>
+        <button class="btn-primary" id="btn-next" onclick="window.nextStep()">Next: Application Form →</button>
       </div>
 
     </div>
@@ -705,56 +705,56 @@
 <!-- FIELD PICKER MODAL -->
 <div class="modal-overlay" id="field-modal">
   <div class="modal">
-    <button class="modal-close" onclick="closeFieldModal()">×</button>
+    <button class="modal-close" onclick="window.closeFieldModal()">×</button>
     <div class="modal-title">Add Custom Field</div>
     <div class="modal-sub">Choose the type of field to add to your application form</div>
     <div class="field-type-grid">
-      <div class="field-type-option" onclick="addCustomField('short_text');closeFieldModal()">
+      <div class="field-type-option" onclick="window.addCustomField('short_text');closeFieldModal()">
         <div class="fto-icon">📝</div>
         <div class="fto-name">Short Text</div>
         <div class="fto-desc">Single line answer</div>
       </div>
-      <div class="field-type-option" onclick="addCustomField('long_text');closeFieldModal()">
+      <div class="field-type-option" onclick="window.addCustomField('long_text');closeFieldModal()">
         <div class="fto-icon">📄</div>
         <div class="fto-name">Long Text</div>
         <div class="fto-desc">Multi-line paragraph</div>
       </div>
-      <div class="field-type-option" onclick="addCustomField('dropdown');closeFieldModal()">
+      <div class="field-type-option" onclick="window.addCustomField('dropdown');closeFieldModal()">
         <div class="fto-icon">🔽</div>
         <div class="fto-name">Dropdown</div>
         <div class="fto-desc">Select one option</div>
       </div>
-      <div class="field-type-option" onclick="addCustomField('mcq');closeFieldModal()">
+      <div class="field-type-option" onclick="window.addCustomField('mcq');closeFieldModal()">
         <div class="fto-icon">⚪</div>
         <div class="fto-name">MCQ / Radio</div>
         <div class="fto-desc">One from multiple options</div>
       </div>
-      <div class="field-type-option" onclick="addCustomField('checkbox');closeFieldModal()">
+      <div class="field-type-option" onclick="window.addCustomField('checkbox');closeFieldModal()">
         <div class="fto-icon">☑️</div>
         <div class="fto-name">Checkboxes</div>
         <div class="fto-desc">Select multiple options</div>
       </div>
-      <div class="field-type-option" onclick="addCustomField('number');closeFieldModal()">
+      <div class="field-type-option" onclick="window.addCustomField('number');closeFieldModal()">
         <div class="fto-icon">🔢</div>
         <div class="fto-name">Number</div>
         <div class="fto-desc">Numeric input</div>
       </div>
-      <div class="field-type-option" onclick="addCustomField('date');closeFieldModal()">
+      <div class="field-type-option" onclick="window.addCustomField('date');closeFieldModal()">
         <div class="fto-icon">📅</div>
         <div class="fto-name">Date</div>
         <div class="fto-desc">Date picker</div>
       </div>
-      <div class="field-type-option" onclick="addCustomField('url');closeFieldModal()">
+      <div class="field-type-option" onclick="window.addCustomField('url');closeFieldModal()">
         <div class="fto-icon">🔗</div>
         <div class="fto-name">URL / Link</div>
         <div class="fto-desc">Web address input</div>
       </div>
-      <div class="field-type-option" onclick="addCustomField('rating');closeFieldModal()">
+      <div class="field-type-option" onclick="window.addCustomField('rating');closeFieldModal()">
         <div class="fto-icon">⭐</div>
         <div class="fto-name">Rating</div>
         <div class="fto-desc">1–5 star rating</div>
       </div>
-      <div class="field-type-option" onclick="addCustomField('yesno');closeFieldModal()">
+      <div class="field-type-option" onclick="window.addCustomField('yesno');closeFieldModal()">
         <div class="fto-icon">✅</div>
         <div class="fto-name">Yes / No</div>
         <div class="fto-desc">Boolean toggle</div>
@@ -771,9 +771,9 @@
     <div style="font-size:13px;color:var(--muted);margin-bottom:20px;">Your form is now live and accepting applications.</div>
     <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:16px;font-family:var(--mono);font-size:12px;color:var(--accent2);" id="modal-url">swoopform.com/jobapp/?id=...</div>
     <div style="display:flex;gap:10px;justify-content:center;">
-      <button class="btn-ghost" onclick="copyUrl()">📋 Copy Link</button>
+      <button class="btn-ghost" onclick="window.copyUrl()">📋 Copy Link</button>
       <a id="modal-view-btn" href="#" target="_blank"><button class="btn-primary">View Form →</button></a>
-      <button class="btn-ghost" onclick="closeModal()">Close</button>
+      <button class="btn-ghost" onclick="window.closeModal()">Close</button>
     </div>
   </div>
 </div>
