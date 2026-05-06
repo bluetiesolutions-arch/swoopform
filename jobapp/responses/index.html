@@ -6,403 +6,195 @@
 <title>Applications — SwoopForm</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0b0d11;
-    --surface: #13161d;
-    --surface2: #1a1e28;
-    --border: #222636;
-    --accent: #4f8ef7;
-    --green: #34d399;
-    --yellow: #fbbf24;
-    --red: #f87171;
-    --purple: #a78bfa;
-    --text: #e2e6f0;
-    --muted: #64748b;
-    --muted2: #334155;
-    --font: 'Sora', sans-serif;
-    --mono: 'JetBrains Mono', monospace;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:var(--bg); color:var(--text); font-family:var(--font); min-height:100vh; }
-
-  /* NAV */
-  nav {
-    height:54px; background:rgba(11,13,17,0.95); backdrop-filter:blur(16px);
-    border-bottom:1px solid var(--border); display:flex; align-items:center;
-    padding:0 24px; position:sticky; top:0; z-index:100; gap:16px;
-  }
-  .brand { font-size:15px; font-weight:700; color:var(--accent); }
-  .brand span { color:var(--green); }
-  .nav-sep { width:1px; height:18px; background:var(--border); }
-  .nav-crumb { font-size:12px; color:var(--muted); display:flex; align-items:center; gap:8px; }
-  .nav-crumb a { color:var(--muted); text-decoration:none; }
-  .nav-crumb a:hover { color:var(--text); }
-  .nav-right { margin-left:auto; display:flex; gap:10px; align-items:center; }
-  .btn { padding:7px 14px; border-radius:8px; font-family:var(--font); font-size:12px; font-weight:500; cursor:pointer; transition:all .15s; border:none; }
-  .btn-ghost { background:none; border:1px solid var(--border); color:var(--muted); }
-  .btn-ghost:hover { border-color:var(--muted2); color:var(--text); }
-  .btn-primary { background:var(--accent); color:#fff; }
-  .btn-primary:hover { background:#6ba3fa; }
-  .btn-green { background:var(--green); color:#052e16; font-weight:600; }
-  .btn-green:hover { background:#6ee7b7; }
-
-  /* LAYOUT */
-  .layout { display:flex; height:calc(100vh - 54px); }
-
-  /* SIDEBAR */
-  .sidebar {
-    width:220px; min-width:220px; background:var(--surface);
-    border-right:1px solid var(--border); padding:16px 12px;
-    display:flex; flex-direction:column; gap:4px;
-  }
-  .sidebar-label { font-size:10px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; color:var(--muted); padding:8px 10px 6px; }
-  .sidebar-item {
-    display:flex; align-items:center; gap:9px;
-    padding:8px 10px; border-radius:8px; cursor:pointer;
-    font-size:12px; color:var(--muted); transition:all .15s;
-  }
-  .sidebar-item:hover { background:var(--surface2); color:var(--text); }
-  .sidebar-item.active { background:rgba(79,142,247,0.1); color:var(--accent); }
-  .sidebar-item .count { margin-left:auto; font-size:10px; font-family:var(--mono); background:var(--surface2); padding:1px 6px; border-radius:10px; }
-  .sidebar-item.active .count { background:rgba(79,142,247,0.2); color:var(--accent); }
-
-  /* MAIN */
-  .main { flex:1; overflow:hidden; display:flex; flex-direction:column; }
-
-  /* TOP BAR */
-  .topbar {
-    padding:16px 24px; border-bottom:1px solid var(--border);
-    display:flex; align-items:center; gap:12px; flex-shrink:0;
-    background:var(--surface);
-  }
-  .job-info .job-title { font-size:16px; font-weight:700; }
-  .job-info .job-meta { font-size:11px; color:var(--muted); margin-top:2px; }
-  .topbar-right { margin-left:auto; display:flex; gap:10px; align-items:center; }
-
-  /* STATS ROW */
-  .stats-row {
-    display:flex; gap:1px; background:var(--border); flex-shrink:0;
-  }
-  .stat-card {
-    flex:1; background:var(--surface); padding:14px 20px;
-    display:flex; align-items:center; gap:12px;
-  }
-  .stat-icon { font-size:18px; }
-  .stat-val { font-size:20px; font-weight:700; font-family:var(--mono); }
-  .stat-label { font-size:11px; color:var(--muted); margin-top:1px; }
-
-  /* FILTER BAR */
-  .filter-bar {
-    padding:12px 24px; border-bottom:1px solid var(--border);
-    display:flex; align-items:center; gap:10px; flex-shrink:0;
-    background:var(--bg);
-  }
-  .search-wrap { position:relative; flex:1; max-width:320px; }
-  .search-wrap input {
-    width:100%; padding:8px 12px 8px 34px;
-    background:var(--surface); border:1px solid var(--border);
-    border-radius:8px; color:var(--text); font-family:var(--font); font-size:12px;
-    outline:none; transition:border-color .2s;
-  }
-  .search-wrap input:focus { border-color:var(--accent); }
-  .search-wrap input::placeholder { color:var(--muted); }
-  .search-icon { position:absolute; left:10px; top:50%; transform:translateY(-50%); font-size:13px; color:var(--muted); }
-  .filter-btn {
-    padding:7px 14px; border-radius:8px; font-family:var(--font); font-size:12px;
-    background:var(--surface); border:1px solid var(--border); color:var(--muted);
-    cursor:pointer; transition:all .15s; display:flex; align-items:center; gap:6px;
-  }
-  .filter-btn:hover { border-color:var(--muted2); color:var(--text); }
-  .filter-btn.active { border-color:var(--accent); color:var(--accent); background:rgba(79,142,247,0.08); }
-  .filter-sep { width:1px; height:20px; background:var(--border); }
-  .sort-select {
-    padding:7px 12px; background:var(--surface); border:1px solid var(--border);
-    border-radius:8px; color:var(--muted); font-family:var(--font); font-size:12px;
-    outline:none; cursor:pointer;
-  }
-
-  /* TABLE */
-  .table-wrap { flex:1; overflow-y:auto; }
-  table { width:100%; border-collapse:collapse; }
-  thead { position:sticky; top:0; z-index:10; }
-  thead tr { background:var(--surface2); border-bottom:1px solid var(--border); }
-  th {
-    padding:10px 16px; font-size:10px; font-weight:600;
-    letter-spacing:1px; text-transform:uppercase; color:var(--muted);
-    text-align:left; white-space:nowrap;
-  }
-  th:first-child { padding-left:20px; }
-  th input[type=checkbox] { accent-color:var(--accent); cursor:pointer; }
-
-  tbody tr {
-    border-bottom:1px solid var(--border);
-    transition:background .12s; cursor:pointer;
-  }
-  tbody tr:hover { background:var(--surface); }
-  tbody tr.selected-row { background:rgba(79,142,247,0.06); }
-  td { padding:13px 16px; font-size:12px; vertical-align:middle; }
-  td:first-child { padding-left:20px; }
-
-  /* APPLICANT CELL */
-  .applicant-cell { display:flex; align-items:center; gap:10px; }
-  .avatar {
-    width:34px; height:34px; border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    font-size:13px; font-weight:700; flex-shrink:0; color:#fff;
-  }
-  .applicant-name { font-size:13px; font-weight:600; }
-  .applicant-email { font-size:11px; color:var(--muted); margin-top:1px; }
-
-  /* STATUS BADGE */
-  .status-badge {
-    display:inline-flex; align-items:center; gap:5px;
-    padding:4px 10px; border-radius:20px; font-size:11px; font-weight:500;
-    cursor:pointer; transition:all .15s;
-  }
-  .status-badge.new { background:rgba(79,142,247,0.12); color:var(--accent); }
-  .status-badge.reviewing { background:rgba(251,191,36,0.12); color:var(--yellow); }
-  .status-badge.shortlisted { background:rgba(52,211,153,0.12); color:var(--green); }
-  .status-badge.rejected { background:rgba(248,113,113,0.12); color:var(--red); }
-  .status-badge.hired { background:rgba(167,139,250,0.12); color:var(--purple); }
-  .status-dot { width:6px; height:6px; border-radius:50%; background:currentColor; }
-
-  /* SCORE */
-  .score-pill {
-    font-family:var(--mono); font-size:11px; font-weight:500;
-    padding:3px 8px; border-radius:6px;
-  }
-  .score-high { background:rgba(52,211,153,0.15); color:var(--green); }
-  .score-mid { background:rgba(251,191,36,0.15); color:var(--yellow); }
-  .score-low { background:rgba(248,113,113,0.15); color:var(--red); }
-
-  /* ACTION BUTTONS */
-  .action-btns { display:flex; gap:6px; opacity:0; transition:opacity .15s; }
-  tbody tr:hover .action-btns { opacity:1; }
-  .action-btn {
-    padding:5px 10px; border-radius:6px; font-size:11px; border:1px solid var(--border);
-    background:var(--surface2); color:var(--muted); cursor:pointer; transition:all .15s;
-    font-family:var(--font);
-  }
-  .action-btn:hover { border-color:var(--accent); color:var(--accent); }
-  .action-btn.danger:hover { border-color:var(--red); color:var(--red); }
-
-  /* BULK BAR */
-  .bulk-bar {
-    position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
-    background:var(--surface2); border:1px solid var(--border);
-    border-radius:12px; padding:12px 20px;
-    display:flex; align-items:center; gap:14px;
-    box-shadow:0 8px 32px rgba(0,0,0,0.5);
-    display:none; z-index:200;
-  }
-  .bulk-bar.show { display:flex; }
-  .bulk-count { font-size:13px; font-weight:600; }
-  .bulk-sep { width:1px; height:20px; background:var(--border); }
-
-  /* DRAWER */
-  .drawer-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:150; display:none; }
-  .drawer-overlay.open { display:block; }
-  .drawer {
-    position:fixed; top:0; right:-520px; width:520px; height:100vh;
-    background:var(--surface); border-left:1px solid var(--border);
-    z-index:160; transition:right .3s cubic-bezier(.4,0,.2,1);
-    display:flex; flex-direction:column; overflow:hidden;
-  }
-  .drawer.open { right:0; }
-  .drawer-header {
-    padding:20px 24px; border-bottom:1px solid var(--border);
-    display:flex; align-items:center; gap:12px; flex-shrink:0;
-  }
-  .drawer-close { margin-left:auto; background:none; border:none; color:var(--muted); font-size:20px; cursor:pointer; padding:4px 8px; border-radius:6px; transition:all .15s; }
-  .drawer-close:hover { background:var(--surface2); color:var(--text); }
-  .drawer-body { flex:1; overflow-y:auto; padding:24px; }
-  .drawer-section { margin-bottom:24px; }
-  .drawer-section-title { font-size:10px; font-weight:600; letter-spacing:1.2px; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
-  .detail-row { display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid var(--border); }
-  .detail-row:last-child { border-bottom:none; }
-  .detail-key { font-size:12px; color:var(--muted); width:120px; flex-shrink:0; }
-  .detail-val { font-size:12px; flex:1; line-height:1.6; }
-  .detail-val a { color:var(--accent); text-decoration:none; }
-  .detail-val a:hover { text-decoration:underline; }
-  .cover-letter-box {
-    background:var(--bg); border:1px solid var(--border); border-radius:10px;
-    padding:14px; font-size:12px; line-height:1.8; color:var(--muted);
-    white-space:pre-line;
-  }
-  .drawer-actions { padding:16px 24px; border-top:1px solid var(--border); display:flex; gap:10px; flex-shrink:0; }
-  .drawer-actions .btn { flex:1; padding:10px; font-size:13px; text-align:center; }
-
-  /* STATUS DROPDOWN */
-  .status-menu {
-    position:absolute; background:var(--surface2); border:1px solid var(--border);
-    border-radius:10px; padding:6px; z-index:300; min-width:160px;
-    box-shadow:0 8px 24px rgba(0,0,0,0.4); display:none;
-  }
-  .status-menu.open { display:block; }
-  .status-option {
-    display:flex; align-items:center; gap:8px;
-    padding:8px 10px; border-radius:7px; cursor:pointer; font-size:12px;
-    transition:background .12s;
-  }
-  .status-option:hover { background:var(--border); }
-
-  /* EMPTY STATE */
-  .empty-state { text-align:center; padding:80px 40px; }
-  .empty-icon { font-size:48px; margin-bottom:16px; opacity:0.5; }
-  .empty-title { font-size:16px; font-weight:600; margin-bottom:8px; }
-  .empty-msg { font-size:13px; color:var(--muted); }
-
-  /* TOAST */
-  .toast {
-    position:fixed; bottom:24px; left:24px;
-    background:var(--surface2); border:1px solid var(--border);
-    padding:10px 16px; border-radius:9px; font-size:12px;
-    box-shadow:0 6px 20px rgba(0,0,0,0.4); z-index:400; display:none;
-  }
-
-  ::-webkit-scrollbar { width:4px; }
-  ::-webkit-scrollbar-track { background:transparent; }
-  ::-webkit-scrollbar-thumb { background:var(--muted2); border-radius:2px; }
+:root{--bg:#0b0d11;--surface:#13161d;--surface2:#1a1e28;--border:#222636;--accent:#4f8ef7;--green:#34d399;--yellow:#fbbf24;--red:#f87171;--purple:#a78bfa;--text:#e2e6f0;--muted:#64748b;--muted2:#334155;--font:'Sora',sans-serif;--mono:'JetBrains Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;}
+nav{height:54px;background:rgba(11,13,17,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;position:sticky;top:0;z-index:100;gap:16px;}
+.brand{font-size:15px;font-weight:700;color:var(--accent);}
+.brand span{color:var(--green);}
+.nav-sep{width:1px;height:18px;background:var(--border);}
+.nav-crumb{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;}
+.nav-crumb a{color:var(--muted);text-decoration:none;}
+.nav-crumb a:hover{color:var(--text);}
+.nav-right{margin-left:auto;display:flex;gap:10px;align-items:center;}
+.btn{padding:7px 14px;border-radius:8px;font-family:var(--font);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;border:none;}
+.btn-ghost{background:none;border:1px solid var(--border);color:var(--muted);}
+.btn-ghost:hover{border-color:var(--muted2);color:var(--text);}
+.btn-green{background:var(--green);color:#052e16;font-weight:600;}
+.btn-green:hover{background:#6ee7b7;}
+.layout{display:flex;height:calc(100vh - 54px);}
+.sidebar{width:220px;min-width:220px;background:var(--surface);border-right:1px solid var(--border);padding:16px 12px;display:flex;flex-direction:column;gap:4px;overflow-y:auto;}
+.sidebar-label{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);padding:8px 10px 6px;}
+.sidebar-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .15s;text-decoration:none;border:none;background:none;width:100%;font-family:var(--font);}
+.sidebar-item:hover{background:var(--surface2);color:var(--text);}
+.sidebar-item.active{background:rgba(79,142,247,0.1);color:var(--accent);}
+.sidebar-item .count{margin-left:auto;font-size:10px;font-family:var(--mono);background:var(--surface2);padding:1px 6px;border-radius:10px;}
+.sidebar-item.active .count{background:rgba(79,142,247,0.2);color:var(--accent);}
+.main{flex:1;overflow:hidden;display:flex;flex-direction:column;}
+.topbar{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0;background:var(--surface);}
+.job-info .job-title-text{font-size:16px;font-weight:700;}
+.job-info .job-meta-text{font-size:11px;color:var(--muted);margin-top:2px;}
+.topbar-right{margin-left:auto;display:flex;gap:10px;align-items:center;}
+.accepting-dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;margin-right:4px;}
+.stats-row{display:flex;gap:1px;background:var(--border);flex-shrink:0;}
+.stat-card{flex:1;background:var(--surface);padding:14px 20px;display:flex;align-items:center;gap:12px;}
+.stat-icon{font-size:18px;}
+.stat-val{font-size:20px;font-weight:700;font-family:var(--mono);}
+.stat-label{font-size:11px;color:var(--muted);margin-top:1px;}
+.filter-bar{padding:12px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0;background:var(--bg);}
+.search-wrap{position:relative;flex:1;max-width:320px;}
+.search-wrap input{width:100%;padding:8px 12px 8px 34px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font);font-size:12px;outline:none;transition:border-color .2s;}
+.search-wrap input:focus{border-color:var(--accent);}
+.search-wrap input::placeholder{color:var(--muted);}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted);}
+.filter-sep{width:1px;height:20px;background:var(--border);}
+.filter-btn{padding:7px 14px;border-radius:8px;font-family:var(--font);font-size:12px;background:var(--surface);border:1px solid var(--border);color:var(--muted);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px;}
+.filter-btn:hover{border-color:var(--muted2);color:var(--text);}
+.filter-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(79,142,247,0.08);}
+.sort-select{padding:7px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-family:var(--font);font-size:12px;outline:none;cursor:pointer;}
+.table-wrap{flex:1;overflow-y:auto;}
+table{width:100%;border-collapse:collapse;}
+thead{position:sticky;top:0;z-index:10;}
+thead tr{background:var(--surface2);border-bottom:1px solid var(--border);}
+th{padding:10px 16px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:left;white-space:nowrap;}
+th:first-child{padding-left:20px;}
+tbody tr{border-bottom:1px solid var(--border);transition:background .12s;cursor:pointer;}
+tbody tr:hover{background:var(--surface);}
+tbody tr.selected-row{background:rgba(79,142,247,0.06);}
+td{padding:13px 16px;font-size:12px;vertical-align:middle;}
+td:first-child{padding-left:20px;}
+.applicant-cell{display:flex;align-items:center;gap:10px;}
+.avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;color:#fff;}
+.applicant-name{font-size:13px;font-weight:600;}
+.applicant-email{font-size:11px;color:var(--muted);margin-top:1px;}
+.status-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s;}
+.status-badge.new{background:rgba(79,142,247,0.12);color:var(--accent);}
+.status-badge.reviewing{background:rgba(251,191,36,0.12);color:var(--yellow);}
+.status-badge.shortlisted{background:rgba(52,211,153,0.12);color:var(--green);}
+.status-badge.rejected{background:rgba(248,113,113,0.12);color:var(--red);}
+.status-badge.hired{background:rgba(167,139,250,0.12);color:var(--purple);}
+.status-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+.action-btns{display:flex;gap:6px;opacity:0;transition:opacity .15s;}
+tbody tr:hover .action-btns{opacity:1;}
+.action-btn{padding:5px 10px;border-radius:6px;font-size:11px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);cursor:pointer;transition:all .15s;font-family:var(--font);}
+.action-btn:hover{border-color:var(--accent);color:var(--accent);}
+.bulk-bar{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px 20px;display:none;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:200;}
+.bulk-bar.show{display:flex;}
+.bulk-sep{width:1px;height:20px;background:var(--border);}
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:150;display:none;}
+.drawer-overlay.open{display:block;}
+.drawer{position:fixed;top:0;right:-520px;width:520px;height:100vh;background:var(--surface);border-left:1px solid var(--border);z-index:160;transition:right .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;}
+.drawer.open{right:0;}
+.drawer-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.drawer-close{margin-left:auto;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s;}
+.drawer-close:hover{background:var(--surface2);color:var(--text);}
+.drawer-body{flex:1;overflow-y:auto;padding:24px;}
+.drawer-section{margin-bottom:24px;}
+.drawer-section-title{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.detail-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.detail-row:last-child{border-bottom:none;}
+.detail-key{font-size:12px;color:var(--muted);width:120px;flex-shrink:0;}
+.detail-val{font-size:12px;flex:1;line-height:1.6;}
+.detail-val a{color:var(--accent);text-decoration:none;}
+.detail-val a:hover{text-decoration:underline;}
+.cover-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:12px;line-height:1.8;color:var(--muted);white-space:pre-line;}
+.drawer-actions{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;flex-shrink:0;}
+.drawer-actions .btn{flex:1;padding:10px;font-size:13px;text-align:center;}
+.status-menu{position:fixed;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:6px;z-index:300;min-width:160px;box-shadow:0 8px 24px rgba(0,0,0,0.4);display:none;}
+.status-menu.open{display:block;}
+.status-option{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:12px;transition:background .12s;}
+.status-option:hover{background:var(--border);}
+.empty-state{text-align:center;padding:80px 40px;}
+.empty-icon{font-size:48px;margin-bottom:16px;opacity:0.5;}
+.empty-title{font-size:16px;font-weight:600;margin-bottom:8px;}
+.empty-msg{font-size:13px;color:var(--muted);}
+.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:24px;left:24px;background:var(--surface2);border:1px solid var(--border);padding:10px 16px;border-radius:9px;font-size:12px;box-shadow:0 6px 20px rgba(0,0,0,0.4);z-index:400;display:none;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--muted2);border-radius:2px;}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
+<div class="loading-screen" id="loading-screen">
+  <div class="spinner"></div>
+  <div style="font-size:13px;color:var(--muted);">Loading applications...</div>
+</div>
+
+<div id="main-wrap" style="display:none;">
 <nav>
   <div class="brand">Swoop<span>Form</span></div>
   <div class="nav-sep"></div>
   <div class="nav-crumb">
-    <a href="/dashboard">Dashboard</a> › <a href="/jobapp/create">Job Apps</a> › Responses
+    <a href="/dashboard/">Dashboard</a> › <a href="/jobapp/create/">Job Apps</a> › <span id="nav-job-title">Responses</span>
   </div>
   <div class="nav-right">
     <button class="btn btn-ghost" onclick="exportCSV()">⬇ Export CSV</button>
-    <button class="btn btn-green" onclick="window.open('/jobapp/','_blank')">🔗 View Form</button>
+    <button class="btn btn-green" id="btn-view-form" onclick="viewForm()">🔗 View Form</button>
   </div>
 </nav>
 
 <div class="layout">
-
-  <!-- SIDEBAR -->
   <div class="sidebar">
-    <div class="sidebar-label">Views</div>
-    <div class="sidebar-item active" onclick="filterStatus('all',this)">
-      <span>📋</span> All Applications
-      <span class="count" id="cnt-all">12</span>
-    </div>
-    <div class="sidebar-item" onclick="filterStatus('new',this)">
-      <span>🆕</span> New
-      <span class="count" id="cnt-new">4</span>
-    </div>
-    <div class="sidebar-item" onclick="filterStatus('reviewing',this)">
-      <span>👀</span> Reviewing
-      <span class="count" id="cnt-reviewing">3</span>
-    </div>
-    <div class="sidebar-item" onclick="filterStatus('shortlisted',this)">
-      <span>✅</span> Shortlisted
-      <span class="count" id="cnt-shortlisted">3</span>
-    </div>
-    <div class="sidebar-item" onclick="filterStatus('rejected',this)">
-      <span>❌</span> Rejected
-      <span class="count" id="cnt-rejected">1</span>
-    </div>
-    <div class="sidebar-item" onclick="filterStatus('hired',this)">
-      <span>🎉</span> Hired
-      <span class="count" id="cnt-hired">1</span>
-    </div>
-
+    <div class="sidebar-label">Filter by Status</div>
+    <button class="sidebar-item active" id="sbar-all" onclick="filterStatus('all',this)"><span>📋</span> All Applications <span class="count" id="cnt-all">0</span></button>
+    <button class="sidebar-item" id="sbar-new" onclick="filterStatus('new',this)"><span>🆕</span> New <span class="count" id="cnt-new">0</span></button>
+    <button class="sidebar-item" id="sbar-reviewing" onclick="filterStatus('reviewing',this)"><span>👀</span> Reviewing <span class="count" id="cnt-reviewing">0</span></button>
+    <button class="sidebar-item" id="sbar-shortlisted" onclick="filterStatus('shortlisted',this)"><span>✅</span> Shortlisted <span class="count" id="cnt-shortlisted">0</span></button>
+    <button class="sidebar-item" id="sbar-rejected" onclick="filterStatus('rejected',this)"><span>❌</span> Rejected <span class="count" id="cnt-rejected">0</span></button>
+    <button class="sidebar-item" id="sbar-hired" onclick="filterStatus('hired',this)"><span>🎉</span> Hired <span class="count" id="cnt-hired">0</span></button>
     <div class="sidebar-label" style="margin-top:12px;">Actions</div>
-    <div class="sidebar-item" onclick="exportCSV()"><span>⬇</span> Export CSV</div>
-    <div class="sidebar-item" onclick="alert('Email feature coming soon!')"><span>📧</span> Email All</div>
-    <div class="sidebar-item" onclick="window.location.href='/jobapp/create/'"><span>✏️</span> Edit Job Form</div>
+    <button class="sidebar-item" onclick="exportCSV()"><span>⬇</span> Export CSV</button>
+    <button class="sidebar-item" onclick="window.location.href='/jobapp/create/?id='+jobId"><span>✏️</span> Edit Job Form</button>
+    <button class="sidebar-item" onclick="window.location.href='/dashboard/'"><span>🏠</span> Dashboard</button>
   </div>
 
-  <!-- MAIN -->
   <div class="main">
-
-    <!-- TOP BAR -->
     <div class="topbar">
       <div class="job-info">
-        <div class="job-title">Senior Product Designer</div>
-        <div class="job-meta">Acme Corp · Bangalore · Hybrid · Opened Apr 15, 2026 · Closes May 30, 2026</div>
+        <div class="job-title-text" id="top-job-title">Loading...</div>
+        <div class="job-meta-text" id="top-job-meta"></div>
       </div>
       <div class="topbar-right">
-        <span style="font-size:12px;color:var(--green);">● Accepting</span>
-        <button class="btn btn-ghost" onclick="toggleAccepting()">Pause Applications</button>
+        <span style="font-size:12px;" id="accepting-status"></span>
+        <button class="btn btn-ghost" id="btn-toggle-accepting" onclick="toggleAccepting()">Pause Applications</button>
       </div>
     </div>
 
-    <!-- STATS -->
     <div class="stats-row">
-      <div class="stat-card">
-        <span class="stat-icon">👥</span>
-        <div>
-          <div class="stat-val" style="color:var(--accent);">12</div>
-          <div class="stat-label">Total Applications</div>
-        </div>
-      </div>
-      <div class="stat-card">
-        <span class="stat-icon">✅</span>
-        <div>
-          <div class="stat-val" style="color:var(--green);">3</div>
-          <div class="stat-label">Shortlisted</div>
-        </div>
-      </div>
-      <div class="stat-card">
-        <span class="stat-icon">👀</span>
-        <div>
-          <div class="stat-val" style="color:var(--yellow);">3</div>
-          <div class="stat-label">Under Review</div>
-        </div>
-      </div>
-      <div class="stat-card">
-        <span class="stat-icon">🎉</span>
-        <div>
-          <div class="stat-val" style="color:var(--purple);">1</div>
-          <div class="stat-label">Hired</div>
-        </div>
-      </div>
-      <div class="stat-card">
-        <span class="stat-icon">📅</span>
-        <div>
-          <div class="stat-val">25</div>
-          <div class="stat-label">Days Left</div>
-        </div>
-      </div>
+      <div class="stat-card"><span class="stat-icon">👥</span><div><div class="stat-val" id="stat-total" style="color:var(--accent);">0</div><div class="stat-label">Total</div></div></div>
+      <div class="stat-card"><span class="stat-icon">✅</span><div><div class="stat-val" id="stat-shortlisted" style="color:var(--green);">0</div><div class="stat-label">Shortlisted</div></div></div>
+      <div class="stat-card"><span class="stat-icon">👀</span><div><div class="stat-val" id="stat-reviewing" style="color:var(--yellow);">0</div><div class="stat-label">Reviewing</div></div></div>
+      <div class="stat-card"><span class="stat-icon">🎉</span><div><div class="stat-val" id="stat-hired" style="color:var(--purple);">0</div><div class="stat-label">Hired</div></div></div>
+      <div class="stat-card"><span class="stat-icon">❌</span><div><div class="stat-val" id="stat-rejected" style="color:var(--red);">0</div><div class="stat-label">Rejected</div></div></div>
     </div>
 
-    <!-- FILTER BAR -->
     <div class="filter-bar">
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
-        <input type="text" id="search-input" placeholder="Search by name, email..." oninput="searchApplicants()">
+        <input type="text" id="search-input" placeholder="Search by name or email..." oninput="applyFilters()">
       </div>
       <div class="filter-sep"></div>
-      <button class="filter-btn active" onclick="filterExp('all',this)">All Experience</button>
-      <button class="filter-btn" onclick="filterExp('0-2',this)">0–2 yrs</button>
-      <button class="filter-btn" onclick="filterExp('2-5',this)">2–5 yrs</button>
-      <button class="filter-btn" onclick="filterExp('5+',this)">5+ yrs</button>
-      <div class="filter-sep"></div>
-      <select class="sort-select" onchange="sortApplicants(this.value)">
+      <select class="sort-select" onchange="applyFilters()" id="sort-select">
         <option value="newest">Newest First</option>
         <option value="oldest">Oldest First</option>
-        <option value="score-high">Score: High to Low</option>
-        <option value="score-low">Score: Low to High</option>
         <option value="name">Name A–Z</option>
       </select>
     </div>
 
-    <!-- TABLE -->
     <div class="table-wrap">
-      <table id="applicants-table">
+      <table id="main-table" style="display:none;">
         <thead>
           <tr>
-            <th><input type="checkbox" id="select-all" onchange="toggleSelectAll()"></th>
+            <th><input type="checkbox" id="select-all" onchange="toggleSelectAll()" style="accent-color:var(--accent);cursor:pointer;"></th>
             <th>Applicant</th>
             <th>Applied</th>
-            <th>Experience</th>
-            <th>Score</th>
             <th>Status</th>
             <th>Resume</th>
+            <th>LinkedIn</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -410,366 +202,374 @@
       </table>
       <div class="empty-state" id="empty-state" style="display:none;">
         <div class="empty-icon">📭</div>
-        <div class="empty-title">No applications found</div>
-        <div class="empty-msg">Try adjusting your filters or search query</div>
+        <div class="empty-title" id="empty-title">No applications yet</div>
+        <div class="empty-msg" id="empty-msg">Share your job form link to start receiving applications</div>
       </div>
     </div>
-
   </div>
 </div>
+</div>
 
-<!-- BULK ACTION BAR -->
 <div class="bulk-bar" id="bulk-bar">
-  <span class="bulk-count"><span id="bulk-count-num">0</span> selected</span>
+  <span style="font-size:13px;font-weight:600;"><span id="bulk-count-num">0</span> selected</span>
   <div class="bulk-sep"></div>
   <button class="btn btn-ghost" onclick="bulkStatus('shortlisted')">✅ Shortlist</button>
-  <button class="btn btn-ghost" onclick="bulkStatus('reviewing')">👀 Mark Reviewing</button>
+  <button class="btn btn-ghost" onclick="bulkStatus('reviewing')">👀 Reviewing</button>
   <button class="btn btn-ghost" onclick="bulkStatus('rejected')" style="color:var(--red);">❌ Reject</button>
   <div class="bulk-sep"></div>
   <button class="btn btn-ghost" onclick="exportSelected()">⬇ Export</button>
-  <button class="btn btn-ghost" onclick="clearSelection()" style="color:var(--muted);">✕ Clear</button>
+  <button class="btn btn-ghost" onclick="clearSelection()">✕ Clear</button>
 </div>
 
-<!-- DETAIL DRAWER -->
 <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
 <div class="drawer" id="drawer">
   <div class="drawer-header">
-    <div class="avatar" id="d-avatar" style="width:42px;height:42px;font-size:16px;"></div>
+    <div class="avatar" id="d-avatar" style="width:42px;height:42px;font-size:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;"></div>
     <div>
       <div style="font-size:15px;font-weight:700;" id="d-name"></div>
-      <div style="font-size:11px;color:var(--muted);margin-top:2px;" id="d-email"></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px;" id="d-email-top"></div>
     </div>
-    <div id="d-status-badge" style="margin-left:12px;"></div>
+    <div id="d-status-wrap" style="margin-left:12px;"></div>
     <button class="drawer-close" onclick="closeDrawer()">×</button>
   </div>
   <div class="drawer-body">
     <div class="drawer-section">
       <div class="drawer-section-title">Contact & Links</div>
-      <div class="detail-row"><div class="detail-key">📧 Email</div><div class="detail-val" id="d-email2"></div></div>
+      <div class="detail-row"><div class="detail-key">📧 Email</div><div class="detail-val" id="d-email"></div></div>
       <div class="detail-row"><div class="detail-key">📱 Phone</div><div class="detail-val" id="d-phone"></div></div>
       <div class="detail-row"><div class="detail-key">🔗 Resume</div><div class="detail-val" id="d-resume"></div></div>
-      <div class="detail-row"><div class="detail-key">💼 LinkedIn</div><div class="detail-val" id="d-linkedin"></div></div>
-      <div class="detail-row"><div class="detail-key">🌐 Portfolio</div><div class="detail-val" id="d-portfolio"></div></div>
+      <div class="detail-row" id="d-row-linkedin"><div class="detail-key">💼 LinkedIn</div><div class="detail-val" id="d-linkedin"></div></div>
+      <div class="detail-row" id="d-row-portfolio"><div class="detail-key">🌐 Portfolio</div><div class="detail-val" id="d-portfolio"></div></div>
     </div>
     <div class="drawer-section">
       <div class="drawer-section-title">Application Details</div>
       <div class="detail-row"><div class="detail-key">📅 Applied</div><div class="detail-val" id="d-date"></div></div>
-      <div class="detail-row"><div class="detail-key">🕐 Experience</div><div class="detail-val" id="d-exp"></div></div>
-      <div class="detail-row"><div class="detail-key">💰 Expected CTC</div><div class="detail-val" id="d-ctc"></div></div>
-      <div class="detail-row"><div class="detail-key">📍 Location</div><div class="detail-val" id="d-location"></div></div>
-      <div class="detail-row"><div class="detail-key">🤝 Open to Relocate</div><div class="detail-val" id="d-relocate"></div></div>
+      <div class="detail-row" id="d-row-salary"><div class="detail-key">💰 Expected CTC</div><div class="detail-val" id="d-salary"></div></div>
+      <div class="detail-row" id="d-row-location"><div class="detail-key">📍 Location</div><div class="detail-val" id="d-location"></div></div>
+      <div class="detail-row" id="d-row-edu"><div class="detail-key">🎓 Education</div><div class="detail-val" id="d-edu"></div></div>
+      <div class="detail-row"><div class="detail-key">🆔 App ID</div><div class="detail-val" id="d-appid" style="font-family:var(--mono);font-size:11px;"></div></div>
     </div>
-    <div class="drawer-section">
+    <div class="drawer-section" id="d-section-cover" style="display:none;">
       <div class="drawer-section-title">Cover Letter</div>
-      <div class="cover-letter-box" id="d-cover"></div>
+      <div class="cover-box" id="d-cover"></div>
     </div>
     <div class="drawer-section">
       <div class="drawer-section-title">Change Status</div>
       <div style="display:flex;flex-wrap:wrap;gap:8px;">
-        <button class="filter-btn" onclick="changeStatus(currentApplicant,'new')">🆕 New</button>
-        <button class="filter-btn" onclick="changeStatus(currentApplicant,'reviewing')">👀 Reviewing</button>
-        <button class="filter-btn" onclick="changeStatus(currentApplicant,'shortlisted')">✅ Shortlist</button>
-        <button class="filter-btn" onclick="changeStatus(currentApplicant,'rejected')">❌ Reject</button>
-        <button class="filter-btn" onclick="changeStatus(currentApplicant,'hired')">🎉 Hired</button>
+        <button class="filter-btn" onclick="changeStatusDrawer('new')">🆕 New</button>
+        <button class="filter-btn" onclick="changeStatusDrawer('reviewing')">👀 Reviewing</button>
+        <button class="filter-btn" onclick="changeStatusDrawer('shortlisted')">✅ Shortlist</button>
+        <button class="filter-btn" onclick="changeStatusDrawer('rejected')">❌ Reject</button>
+        <button class="filter-btn" onclick="changeStatusDrawer('hired')">🎉 Hired</button>
       </div>
     </div>
     <div class="drawer-section">
-      <div class="drawer-section-title">Notes</div>
-      <textarea style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:12px;color:var(--text);font-family:var(--font);font-size:12px;resize:vertical;min-height:80px;outline:none;" placeholder="Add private notes about this applicant..." id="d-notes"></textarea>
+      <div class="drawer-section-title">Private Notes</div>
+      <textarea id="d-notes" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:12px;color:var(--text);font-family:var(--font);font-size:12px;resize:vertical;min-height:80px;outline:none;" placeholder="Add private notes..."></textarea>
       <button class="btn btn-ghost" style="margin-top:8px;font-size:12px;" onclick="saveNote()">Save Note</button>
     </div>
   </div>
   <div class="drawer-actions">
-    <button class="btn btn-ghost" onclick="window.open(applicants[currentApplicant]?.resume,'_blank')">📄 View Resume</button>
-    <button class="btn btn-primary" onclick="changeStatus(currentApplicant,'shortlisted');closeDrawer()">✅ Shortlist</button>
-    <button class="btn btn-ghost" style="color:var(--red);" onclick="changeStatus(currentApplicant,'rejected');closeDrawer()">❌ Reject</button>
+    <button class="btn btn-ghost" onclick="openResume()">📄 Resume</button>
+    <button class="btn btn-green" onclick="changeStatusDrawer('shortlisted');closeDrawer()">✅ Shortlist</button>
+    <button class="btn btn-ghost" style="color:var(--red);" onclick="changeStatusDrawer('rejected');closeDrawer()">❌ Reject</button>
   </div>
 </div>
 
-<!-- STATUS MENU -->
 <div class="status-menu" id="status-menu">
-  <div class="status-option" onclick="setStatusFromMenu('new')"><span style="color:var(--accent)">●</span> New</div>
-  <div class="status-option" onclick="setStatusFromMenu('reviewing')"><span style="color:var(--yellow)">●</span> Reviewing</div>
-  <div class="status-option" onclick="setStatusFromMenu('shortlisted')"><span style="color:var(--green)">●</span> Shortlisted</div>
-  <div class="status-option" onclick="setStatusFromMenu('rejected')"><span style="color:var(--red)">●</span> Rejected</div>
-  <div class="status-option" onclick="setStatusFromMenu('hired')"><span style="color:var(--purple)">●</span> Hired</div>
+  <div class="status-option" onclick="setStatusMenu('new')"><span style="color:var(--accent);">●</span> New</div>
+  <div class="status-option" onclick="setStatusMenu('reviewing')"><span style="color:var(--yellow);">●</span> Reviewing</div>
+  <div class="status-option" onclick="setStatusMenu('shortlisted')"><span style="color:var(--green);">●</span> Shortlisted</div>
+  <div class="status-option" onclick="setStatusMenu('rejected')"><span style="color:var(--red);">●</span> Rejected</div>
+  <div class="status-option" onclick="setStatusMenu('hired')"><span style="color:var(--purple);">●</span> Hired</div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<script>
-// ── SAMPLE DATA ──────────────────────────────────────────────
-const COLORS = ['#4f8ef7','#34d399','#fbbf24','#f87171','#a78bfa','#fb923c','#22d3ee','#e879f9'];
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,doc,getDoc,getDocs,collection,updateDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-let applicants = [
-  { id:'APP-001', name:'Priya Sharma', email:'priya.sharma@gmail.com', phone:'+91 98765 43210', applied:'May 1, 2026', exp:'3–5 years', score:92, status:'shortlisted', resume:'https://drive.google.com/priya-cv', linkedin:'https://linkedin.com/in/priyasharma', portfolio:'https://priya.design', ctc:'₹22 LPA', location:'Bangalore', relocate:'Yes', cover:'I have been designing digital products for 4 years, with a focus on complex B2B workflows. At my last role at Razorpay, I led the redesign of the merchant dashboard which improved task completion by 38%.\n\nI am particularly excited about Acme Corp because of the scale at which your product operates. I believe my experience with design systems and user research would make me an immediate contributor to your team.' },
-  { id:'APP-002', name:'Arjun Mehta', email:'arjun.m@outlook.com', phone:'+91 87654 32109', applied:'May 2, 2026', exp:'1–2 years', score:74, status:'reviewing', resume:'https://drive.google.com/arjun-cv', linkedin:'https://linkedin.com/in/arjunmehta', portfolio:'', ctc:'₹14 LPA', location:'Mumbai', relocate:'Yes', cover:'I recently graduated from NID Ahmedabad and have been working as a junior designer at a startup. I am looking to grow into a senior role and believe Acme Corp is the perfect place for that.' },
-  { id:'APP-003', name:'Sneha Iyer', email:'sneha.iyer@yahoo.com', phone:'+91 76543 21098', applied:'May 2, 2026', exp:'5+ years', score:88, status:'shortlisted', resume:'https://drive.google.com/sneha-cv', linkedin:'https://linkedin.com/in/snehaiyer', portfolio:'https://sneha.works', ctc:'₹28 LPA', location:'Hyderabad', relocate:'No', cover:'Five years of product design across fintech and healthtech. I have built and maintained design systems used by teams of 30+ designers. Looking for a senior IC role where I can do my best design work.' },
-  { id:'APP-004', name:'Rahul Gupta', email:'rahulg@protonmail.com', phone:'+91 65432 10987', applied:'May 3, 2026', exp:'2–4 years', score:61, status:'new', resume:'https://drive.google.com/rahul-cv', linkedin:'', portfolio:'https://rahulgupta.in', ctc:'₹16 LPA', location:'Delhi', relocate:'Yes', cover:'I am a product designer with 3 years of experience primarily in e-commerce. I love creating clean, functional interfaces.' },
-  { id:'APP-005', name:'Kavya Nair', email:'kavya.nair@gmail.com', phone:'+91 54321 09876', applied:'May 3, 2026', exp:'3–5 years', score:95, status:'shortlisted', resume:'https://drive.google.com/kavya-cv', linkedin:'https://linkedin.com/in/kavyanair', portfolio:'https://kavya.design', ctc:'₹24 LPA', location:'Kochi', relocate:'Yes', cover:'I specialize in research-led product design. I have run over 200 user interviews and translated insights into features used by millions. My portfolio includes work for Swiggy, CRED, and two early-stage startups.\n\nI would love to bring this research-first mindset to Acme Corp.' },
-  { id:'APP-006', name:'Vikram Singh', email:'vikramsingh@hotmail.com', phone:'+91 43210 98765', applied:'May 4, 2026', exp:'1–2 years', score:55, status:'rejected', resume:'https://drive.google.com/vikram-cv', linkedin:'https://linkedin.com/in/vikramsingh', portfolio:'', ctc:'₹10 LPA', location:'Jaipur', relocate:'Yes', cover:'I am a fresher with some internship experience. Hoping to get a chance to grow at your company.' },
-  { id:'APP-007', name:'Ananya Bose', email:'ananya.bose@gmail.com', phone:'+91 32109 87654', applied:'May 4, 2026', exp:'5+ years', score:83, status:'reviewing', resume:'https://drive.google.com/ananya-cv', linkedin:'https://linkedin.com/in/ananyabose', portfolio:'https://ananyabose.co', ctc:'₹30 LPA', location:'Kolkata', relocate:'No', cover:'10 years of total design experience, last 5 as a product designer. Built design teams from scratch at two startups. Looking for an IC role at a product-led company.' },
-  { id:'APP-008', name:'Kiran Patel', email:'kiran.patel@icloud.com', phone:'+91 21098 76543', applied:'May 4, 2026', exp:'2–4 years', score:78, status:'reviewing', resume:'https://drive.google.com/kiran-cv', linkedin:'https://linkedin.com/in/kiranpatel', portfolio:'https://kiranux.com', ctc:'₹19 LPA', location:'Ahmedabad', relocate:'Yes', cover:'I focus on interaction design and motion. My work has been featured on Awwwards twice. I am looking for a team that values craft.' },
-  { id:'APP-009', name:'Divya Rao', email:'divya.rao@gmail.com', phone:'+91 10987 65432', applied:'May 5, 2026', exp:'3–5 years', score:70, status:'new', resume:'https://drive.google.com/divya-cv', linkedin:'https://linkedin.com/in/divyarao', portfolio:'', ctc:'₹20 LPA', location:'Chennai', relocate:'Yes', cover:'I have been leading design for a SaaS startup for 3 years. We grew from 0 to 50k users and I owned the product design end-to-end.' },
-  { id:'APP-010', name:'Rohan Kapoor', email:'rohan.kapoor@gmail.com', phone:'+91 09876 54321', applied:'May 5, 2026', exp:'1–2 years', score:66, status:'new', resume:'https://drive.google.com/rohan-cv', linkedin:'https://linkedin.com/in/rohankapoor', portfolio:'https://rohandesigns.io', ctc:'₹13 LPA', location:'Pune', relocate:'Yes', cover:'Recent graduate, strong Figma skills, love building clean interfaces. Looking for my first full-time role.' },
-  { id:'APP-011', name:'Meera Joshi', email:'meera.j@gmail.com', phone:'+91 98765 11111', applied:'May 5, 2026', exp:'5+ years', score:90, status:'hired', resume:'https://drive.google.com/meera-cv', linkedin:'https://linkedin.com/in/meerajoshi', portfolio:'https://meerajoshi.com', ctc:'₹25 LPA', location:'Bangalore', relocate:'N/A', cover:'8 years of product design at top-tier companies. Former lead designer at Flipkart. Excited about the opportunity to build something meaningful at a scale-up.' },
-  { id:'APP-012', name:'Siddharth Das', email:'siddharth.das@outlook.com', phone:'+91 87651 22222', applied:'May 5, 2026', exp:'2–4 years', score:72, status:'new', resume:'https://drive.google.com/sid-cv', linkedin:'https://linkedin.com/in/siddharthdas', portfolio:'', ctc:'₹17 LPA', location:'Bhubaneswar', relocate:'Yes', cover:'Worked across product and marketing design. Looking to focus purely on product.' },
-];
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-let filteredApplicants = [...applicants];
-let selectedIds = new Set();
-let currentApplicant = null;
-let statusMenuTarget = null;
+const params=new URLSearchParams(window.location.search);
+window.jobId=params.get('id');
+let jobData=null;
+let allResponses=[];
+let filtered=[];
+let selectedIds=new Set();
+let currentDocId=null;
+let statusMenuDocId=null;
+const COLORS=['#4f8ef7','#34d399','#fbbf24','#f87171','#a78bfa','#fb923c','#22d3ee','#e879f9'];
 
-// ── RENDER ────────────────────────────────────────────────────
-function render() {
-  const tbody = document.getElementById('applicants-body');
-  const empty = document.getElementById('empty-state');
+onAuthStateChanged(auth,async u=>{
+  if(!u){window.location.href='/login/';return;}
+  if(!jobId){showFatalError('No job ID in URL. Go back to dashboard.');return;}
+  await loadJobAndResponses();
+});
 
-  if (filteredApplicants.length === 0) {
-    tbody.innerHTML = '';
-    empty.style.display = 'block';
-    return;
+async function loadJobAndResponses(){
+  try{
+    const jobSnap=await getDoc(doc(db,'jobapps',jobId));
+    if(!jobSnap.exists()){showFatalError('Job not found.');return;}
+    jobData=jobSnap.data();
+    renderJobHeader(jobData);
+
+    const respSnap=await getDocs(collection(db,'jobapps',jobId,'responses'));
+    allResponses=respSnap.docs.map(d=>({_docId:d.id,...d.data()}));
+    allResponses.sort((a,b)=>(b.submittedAt?.seconds||0)-(a.submittedAt?.seconds||0));
+
+    document.getElementById('loading-screen').style.display='none';
+    document.getElementById('main-wrap').style.display='block';
+    applyFilters();
+    updateCounts();
+  }catch(e){
+    console.error(e);
+    showFatalError('Failed to load. Please try again.');
   }
-  empty.style.display = 'none';
-
-  tbody.innerHTML = filteredApplicants.map((a, i) => {
-    const idx = applicants.indexOf(a);
-    const color = COLORS[a.name.charCodeAt(0) % COLORS.length];
-    const initials = a.name.split(' ').map(n=>n[0]).join('').substring(0,2);
-    const isSelected = selectedIds.has(a.id);
-    return `
-      <tr onclick="openDrawer(${idx})" class="${isSelected?'selected-row':''}" id="row-${a.id}">
-        <td onclick="event.stopPropagation()">
-          <input type="checkbox" ${isSelected?'checked':''} onchange="toggleSelect('${a.id}',this)" style="accent-color:var(--accent);cursor:pointer;">
-        </td>
-        <td>
-          <div class="applicant-cell">
-            <div class="avatar" style="background:${color}">${initials}</div>
-            <div>
-              <div class="applicant-name">${a.name}</div>
-              <div class="applicant-email">${a.email}</div>
-            </div>
-          </div>
-        </td>
-        <td style="color:var(--muted);font-size:11px;">${a.applied}</td>
-        <td style="font-size:11px;">${a.exp}</td>
-        <td>
-          <span class="score-pill ${a.score>=85?'score-high':a.score>=65?'score-mid':'score-low'}">${a.score}</span>
-        </td>
-        <td onclick="event.stopPropagation()">
-          <span class="status-badge ${a.status}" onclick="openStatusMenu(event,${idx})"
-            style="position:relative;">
-            <span class="status-dot"></span>
-            ${a.status.charAt(0).toUpperCase()+a.status.slice(1)}
-            ▾
-          </span>
-        </td>
-        <td>
-          ${a.resume ? `<a href="${a.resume}" target="_blank" onclick="event.stopPropagation()" style="color:var(--accent);font-size:11px;text-decoration:none;">View →</a>` : '<span style="color:var(--muted);font-size:11px;">—</span>'}
-        </td>
-        <td>
-          <div class="action-btns" onclick="event.stopPropagation()">
-            <button class="action-btn" onclick="changeStatus(${idx},'shortlisted')">✅</button>
-            <button class="action-btn" onclick="changeStatus(${idx},'rejected')" class="danger">❌</button>
-            <button class="action-btn" onclick="openDrawer(${idx})">👁</button>
-          </div>
-        </td>
-      </tr>`;
-  }).join('');
-  updateCounts();
 }
 
-// ── COUNTS ────────────────────────────────────────────────────
-function updateCounts() {
-  const statuses = ['new','reviewing','shortlisted','rejected','hired'];
-  document.getElementById('cnt-all').textContent = applicants.length;
-  statuses.forEach(s => {
-    document.getElementById('cnt-'+s).textContent = applicants.filter(a=>a.status===s).length;
+function renderJobHeader(data){
+  const job=data.job||{};
+  const co=data.company||{};
+  const title=job.title||'Job Opening';
+  document.getElementById('nav-job-title').textContent=title;
+  document.getElementById('top-job-title').textContent=title;
+  document.getElementById('top-job-meta').textContent=[co.name,job.location,job.type].filter(Boolean).join(' · ');
+  document.title=title+' — Applications — SwoopForm';
+  const accepting=data.settings?.accepting!==false;
+  document.getElementById('accepting-status').innerHTML=accepting
+    ?'<span class="accepting-dot"></span><span style="color:var(--green);font-size:12px;">Accepting</span>'
+    :'<span style="color:var(--red);font-size:12px;">● Paused</span>';
+  document.getElementById('btn-toggle-accepting').textContent=accepting?'Pause Applications':'Resume Applications';
+}
+
+function updateCounts(){
+  const statuses=['new','reviewing','shortlisted','rejected','hired'];
+  document.getElementById('cnt-all').textContent=allResponses.length;
+  document.getElementById('stat-total').textContent=allResponses.length;
+  statuses.forEach(s=>{
+    const c=allResponses.filter(r=>r.status===s||(!r.status&&s==='new')).length;
+    const el=document.getElementById('cnt-'+s);
+    if(el)el.textContent=c;
+    const sel=document.getElementById('stat-'+s);
+    if(sel)sel.textContent=c;
   });
 }
 
-// ── FILTER / SEARCH ───────────────────────────────────────────
-let activeStatus = 'all';
-let activeExp = 'all';
+window.applyFilters=function(){
+  const q=(document.getElementById('search-input').value||'').toLowerCase();
+  const sort=document.getElementById('sort-select').value;
+  let list=allResponses.filter(r=>{
+    const matchStatus=window._activeStatus==='all'||(r.status||'new')===window._activeStatus;
+    const matchSearch=!q||(r.name||'').toLowerCase().includes(q)||(r.email||'').toLowerCase().includes(q);
+    return matchStatus&&matchSearch;
+  });
+  if(sort==='oldest')list.sort((a,b)=>(a.submittedAt?.seconds||0)-(b.submittedAt?.seconds||0));
+  else if(sort==='name')list.sort((a,b)=>(a.name||'').localeCompare(b.name||''));
+  else list.sort((a,b)=>(b.submittedAt?.seconds||0)-(a.submittedAt?.seconds||0));
+  filtered=list;
+  renderTable();
+};
+window._activeStatus='all';
 
-function filterStatus(status, el) {
-  activeStatus = status;
+window.filterStatus=function(status,el){
+  window._activeStatus=status;
   document.querySelectorAll('.sidebar-item').forEach(i=>i.classList.remove('active'));
   el.classList.add('active');
   applyFilters();
-}
+};
 
-function filterExp(exp, el) {
-  activeExp = exp;
-  document.querySelectorAll('.filter-bar .filter-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-  applyFilters();
-}
-
-function searchApplicants() { applyFilters(); }
-
-function applyFilters() {
-  const q = document.getElementById('search-input').value.toLowerCase();
-  filteredApplicants = applicants.filter(a => {
-    const matchStatus = activeStatus === 'all' || a.status === activeStatus;
-    const matchSearch = !q || a.name.toLowerCase().includes(q) || a.email.toLowerCase().includes(q);
-    const matchExp = activeExp === 'all' ||
-      (activeExp === '0-2' && (a.exp === '1–2 years' || a.exp === 'Less than 1 year')) ||
-      (activeExp === '2-5' && (a.exp === '2–4 years' || a.exp === '3–5 years')) ||
-      (activeExp === '5+' && a.exp === '5+ years');
-    return matchStatus && matchSearch && matchExp;
-  });
-  render();
-}
-
-function sortApplicants(val) {
-  const arr = [...filteredApplicants];
-  if (val === 'newest') arr.sort((a,b) => applicants.indexOf(b)-applicants.indexOf(a));
-  else if (val === 'oldest') arr.sort((a,b) => applicants.indexOf(a)-applicants.indexOf(b));
-  else if (val === 'score-high') arr.sort((a,b)=>b.score-a.score);
-  else if (val === 'score-low') arr.sort((a,b)=>a.score-b.score);
-  else if (val === 'name') arr.sort((a,b)=>a.name.localeCompare(b.name));
-  filteredApplicants = arr;
-  render();
-}
-
-// ── STATUS ────────────────────────────────────────────────────
-function changeStatus(idx, status) {
-  applicants[idx].status = status;
-  applyFilters();
-  toast(`Status updated to ${status}`);
-  if (currentApplicant === idx) {
-    document.getElementById('d-status-badge').innerHTML = statusBadgeHTML(status);
+function renderTable(){
+  const tbody=document.getElementById('applicants-body');
+  const table=document.getElementById('main-table');
+  const empty=document.getElementById('empty-state');
+  if(filtered.length===0){
+    table.style.display='none';
+    empty.style.display='block';
+    if(allResponses.length===0){
+      document.getElementById('empty-title').textContent='No applications yet';
+      document.getElementById('empty-msg').textContent='Share your job form link to start receiving applications';
+    }else{
+      document.getElementById('empty-title').textContent='No results found';
+      document.getElementById('empty-msg').textContent='Try adjusting your search or filter';
+    }
+    return;
   }
+  empty.style.display='none';
+  table.style.display='table';
+  tbody.innerHTML=filtered.map(r=>{
+    const color=COLORS[(r.name||'?').charCodeAt(0)%COLORS.length];
+    const initials=(r.name||'?').split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+    const status=r.status||'new';
+    const date=r.submittedAt?.seconds?new Date(r.submittedAt.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—';
+    const isSel=selectedIds.has(r._docId);
+    return`<tr onclick="openDrawer('${r._docId}')" id="row-${r._docId}" class="${isSel?'selected-row':''}">
+      <td onclick="event.stopPropagation()"><input type="checkbox" ${isSel?'checked':''} onchange="toggleSelect('${r._docId}',this)" style="accent-color:var(--accent);cursor:pointer;"></td>
+      <td><div class="applicant-cell"><div class="avatar" style="background:${color}">${initials}</div><div><div class="applicant-name">${esc(r.name||'Unknown')}</div><div class="applicant-email">${esc(r.email||'')}</div></div></div></td>
+      <td style="color:var(--muted);font-size:11px;">${date}</td>
+      <td onclick="event.stopPropagation()"><span class="status-badge ${status}" onclick="openStatusMenu(event,'${r._docId}')"><span class="status-dot"></span>${cap(status)} ▾</span></td>
+      <td>${r.resume?`<a href="${r.resume}" target="_blank" onclick="event.stopPropagation()" style="color:var(--accent);font-size:11px;text-decoration:none;">View →</a>`:'<span style="color:var(--muted);font-size:11px;">—</span>'}</td>
+      <td>${r.linkedin?`<a href="${r.linkedin}" target="_blank" onclick="event.stopPropagation()" style="color:var(--accent);font-size:11px;text-decoration:none;">View →</a>`:'<span style="color:var(--muted);font-size:11px;">—</span>'}</td>
+      <td><div class="action-btns" onclick="event.stopPropagation()">
+        <button class="action-btn" onclick="changeStatus('${r._docId}','shortlisted')">✅</button>
+        <button class="action-btn" onclick="changeStatus('${r._docId}','rejected')">❌</button>
+        <button class="action-btn" onclick="openDrawer('${r._docId}')">👁</button>
+      </div></td>
+    </tr>`;
+  }).join('');
 }
 
-let statusMenuIdx = null;
-function openStatusMenu(e, idx) {
-  statusMenuIdx = idx;
-  const menu = document.getElementById('status-menu');
-  menu.style.top = (e.clientY + 8) + 'px';
-  menu.style.left = e.clientX + 'px';
-  menu.classList.add('open');
-  e.stopPropagation();
-}
-function setStatusFromMenu(status) {
-  if (statusMenuIdx !== null) changeStatus(statusMenuIdx, status);
-  document.getElementById('status-menu').classList.remove('open');
-}
-document.addEventListener('click', () => document.getElementById('status-menu').classList.remove('open'));
-
-function statusBadgeHTML(status) {
-  return `<span class="status-badge ${status}"><span class="status-dot"></span>${status.charAt(0).toUpperCase()+status.slice(1)}</span>`;
-}
-
-// ── DRAWER ────────────────────────────────────────────────────
-function openDrawer(idx) {
-  const a = applicants[idx];
-  currentApplicant = idx;
-  const color = COLORS[a.name.charCodeAt(0) % COLORS.length];
-  const initials = a.name.split(' ').map(n=>n[0]).join('').substring(0,2);
-
-  document.getElementById('d-avatar').textContent = initials;
-  document.getElementById('d-avatar').style.background = color;
-  document.getElementById('d-name').textContent = a.name;
-  document.getElementById('d-email').textContent = a.email;
-  document.getElementById('d-email2').textContent = a.email;
-  document.getElementById('d-phone').textContent = a.phone;
-  document.getElementById('d-resume').innerHTML = a.resume ? `<a href="${a.resume}" target="_blank">View Resume →</a>` : '—';
-  document.getElementById('d-linkedin').innerHTML = a.linkedin ? `<a href="${a.linkedin}" target="_blank">View Profile →</a>` : '—';
-  document.getElementById('d-portfolio').innerHTML = a.portfolio ? `<a href="${a.portfolio}" target="_blank">View Portfolio →</a>` : '—';
-  document.getElementById('d-date').textContent = a.applied;
-  document.getElementById('d-exp').textContent = a.exp;
-  document.getElementById('d-ctc').textContent = a.ctc || '—';
-  document.getElementById('d-location').textContent = a.location || '—';
-  document.getElementById('d-relocate').textContent = a.relocate || '—';
-  document.getElementById('d-cover').textContent = a.cover;
-  document.getElementById('d-status-badge').innerHTML = statusBadgeHTML(a.status);
-  document.getElementById('d-notes').value = a.notes || '';
-
+window.openDrawer=function(docId){
+  const r=allResponses.find(x=>x._docId===docId);
+  if(!r)return;
+  currentDocId=docId;
+  const color=COLORS[(r.name||'?').charCodeAt(0)%COLORS.length];
+  const initials=(r.name||'?').split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+  const date=r.submittedAt?.seconds?new Date(r.submittedAt.seconds*1000).toLocaleString('en-IN'):'—';
+  document.getElementById('d-avatar').style.background=color;
+  document.getElementById('d-avatar').textContent=initials;
+  document.getElementById('d-name').textContent=r.name||'Unknown';
+  document.getElementById('d-email-top').textContent=r.email||'';
+  document.getElementById('d-email').textContent=r.email||'—';
+  document.getElementById('d-phone').textContent=r.phone||'—';
+  document.getElementById('d-resume').innerHTML=r.resume?`<a href="${r.resume}" target="_blank">View Resume →</a>`:'—';
+  document.getElementById('d-row-linkedin').style.display=r.linkedin?'flex':'none';
+  document.getElementById('d-linkedin').innerHTML=r.linkedin?`<a href="${r.linkedin}" target="_blank">View Profile →</a>`:'';
+  document.getElementById('d-row-portfolio').style.display=r.portfolio?'flex':'none';
+  document.getElementById('d-portfolio').innerHTML=r.portfolio?`<a href="${r.portfolio}" target="_blank">View Portfolio →</a>`:'';
+  document.getElementById('d-date').textContent=date;
+  document.getElementById('d-row-salary').style.display=r.salary?'flex':'none';
+  document.getElementById('d-salary').textContent=r.salary||'';
+  document.getElementById('d-row-location').style.display=r.location?'flex':'none';
+  document.getElementById('d-location').textContent=r.location||'';
+  document.getElementById('d-row-edu').style.display=r.education?'flex':'none';
+  document.getElementById('d-edu').textContent=r.education||'';
+  document.getElementById('d-appid').textContent=r.appId||r._docId;
+  if(r.cover){document.getElementById('d-section-cover').style.display='block';document.getElementById('d-cover').textContent=r.cover;}
+  else{document.getElementById('d-section-cover').style.display='none';}
+  document.getElementById('d-notes').value=r._notes||'';
+  document.getElementById('d-status-wrap').innerHTML=statusBadge(r.status||'new');
   document.getElementById('drawer').classList.add('open');
   document.getElementById('drawer-overlay').classList.add('open');
-}
+};
 
-function closeDrawer() {
+window.closeDrawer=function(){
   document.getElementById('drawer').classList.remove('open');
   document.getElementById('drawer-overlay').classList.remove('open');
-}
+};
 
-function saveNote() {
-  if (currentApplicant !== null) {
-    applicants[currentApplicant].notes = document.getElementById('d-notes').value;
+window.openResume=function(){
+  const r=allResponses.find(x=>x._docId===currentDocId);
+  if(r?.resume)window.open(r.resume,'_blank');
+};
+
+async function changeStatus(docId,status){
+  try{
+    await updateDoc(doc(db,'jobapps',jobId,'responses',docId),{status,updatedAt:serverTimestamp()});
+    const r=allResponses.find(x=>x._docId===docId);
+    if(r)r.status=status;
+    updateCounts();applyFilters();
+    toast('Status → '+cap(status));
+    if(currentDocId===docId)document.getElementById('d-status-wrap').innerHTML=statusBadge(status);
+  }catch(e){toast('Error updating status');}
+}
+window.changeStatus=changeStatus;
+
+window.changeStatusDrawer=function(status){
+  if(currentDocId)changeStatus(currentDocId,status);
+};
+
+let statusMenuDocIdLocal=null;
+window.openStatusMenu=function(e,docId){
+  statusMenuDocIdLocal=docId;
+  const menu=document.getElementById('status-menu');
+  menu.style.top=(e.clientY+8)+'px';
+  menu.style.left=e.clientX+'px';
+  menu.classList.add('open');
+  e.stopPropagation();
+};
+window.setStatusMenu=function(status){
+  if(statusMenuDocIdLocal)changeStatus(statusMenuDocIdLocal,status);
+  document.getElementById('status-menu').classList.remove('open');
+};
+document.addEventListener('click',()=>document.getElementById('status-menu').classList.remove('open'));
+
+window.saveNote=async function(){
+  if(!currentDocId)return;
+  const note=document.getElementById('d-notes').value;
+  try{
+    await updateDoc(doc(db,'jobapps',jobId,'responses',currentDocId),{_notes:note,updatedAt:serverTimestamp()});
+    const r=allResponses.find(x=>x._docId===currentDocId);
+    if(r)r._notes=note;
     toast('Note saved!');
-  }
-}
+  }catch(e){toast('Error saving note');}
+};
 
-// ── SELECT / BULK ─────────────────────────────────────────────
-function toggleSelect(id, checkbox) {
-  if (checkbox.checked) selectedIds.add(id);
-  else selectedIds.delete(id);
-  document.getElementById('row-'+id)?.classList.toggle('selected-row', checkbox.checked);
+window.toggleSelect=function(docId,cb){
+  if(cb.checked)selectedIds.add(docId);else selectedIds.delete(docId);
+  document.getElementById('row-'+docId)?.classList.toggle('selected-row',cb.checked);
   updateBulkBar();
+};
+window.toggleSelectAll=function(){
+  const checked=document.getElementById('select-all').checked;
+  filtered.forEach(r=>{if(checked)selectedIds.add(r._docId);else selectedIds.delete(r._docId);});
+  renderTable();updateBulkBar();
+};
+function updateBulkBar(){
+  document.getElementById('bulk-count-num').textContent=selectedIds.size;
+  document.getElementById('bulk-bar').classList.toggle('show',selectedIds.size>0);
 }
+window.clearSelection=function(){selectedIds.clear();document.getElementById('select-all').checked=false;renderTable();updateBulkBar();};
+window.bulkStatus=async function(status){
+  const ids=[...selectedIds];
+  await Promise.all(ids.map(id=>updateDoc(doc(db,'jobapps',jobId,'responses',id),{status,updatedAt:serverTimestamp()})));
+  ids.forEach(id=>{const r=allResponses.find(x=>x._docId===id);if(r)r.status=status;});
+  clearSelection();updateCounts();applyFilters();
+  toast(ids.length+' applicants → '+cap(status));
+};
 
-function toggleSelectAll() {
-  const checked = document.getElementById('select-all').checked;
-  filteredApplicants.forEach(a => {
-    if (checked) selectedIds.add(a.id);
-    else selectedIds.delete(a.id);
+window.toggleAccepting=async function(){
+  const current=jobData?.settings?.accepting!==false;
+  const newVal=!current;
+  try{
+    await updateDoc(doc(db,'jobapps',jobId),{'settings.accepting':newVal});
+    if(!jobData.settings)jobData.settings={};
+    jobData.settings.accepting=newVal;
+    renderJobHeader(jobData);
+    toast(newVal?'Applications resumed':'Applications paused');
+  }catch(e){toast('Error updating');}
+};
+
+window.viewForm=function(){window.open('/jobapp/?id='+jobId,'_blank');};
+
+window.exportCSV=function(){
+  const list=selectedIds.size>0?allResponses.filter(r=>selectedIds.has(r._docId)):allResponses;
+  const rows=[['App ID','Name','Email','Phone','Status','Applied','Resume','LinkedIn','Portfolio','Salary','Location','Education','Cover Letter']];
+  list.forEach(r=>{
+    const date=r.submittedAt?.seconds?new Date(r.submittedAt.seconds*1000).toLocaleDateString():'';
+    rows.push([r.appId||r._docId,r.name||'',r.email||'',r.phone||'',r.status||'new',date,r.resume||'',r.linkedin||'',r.portfolio||'',r.salary||'',r.location||'',r.education||'',(r.cover||'').replace(/\n/g,' ')]);
   });
-  render();
-  updateBulkBar();
-}
-
-function updateBulkBar() {
-  const bar = document.getElementById('bulk-bar');
-  document.getElementById('bulk-count-num').textContent = selectedIds.size;
-  bar.classList.toggle('show', selectedIds.size > 0);
-}
-
-function clearSelection() {
-  selectedIds.clear();
-  document.getElementById('select-all').checked = false;
-  render();
-  updateBulkBar();
-}
-
-function bulkStatus(status) {
-  selectedIds.forEach(id => {
-    const idx = applicants.findIndex(a=>a.id===id);
-    if (idx !== -1) applicants[idx].status = status;
-  });
-  clearSelection();
-  applyFilters();
-  toast(`Updated ${selectedIds.size || 'selected'} applicants to ${status}`);
-}
-
-// ── EXPORT ────────────────────────────────────────────────────
-function exportCSV() {
-  const rows = [['ID','Name','Email','Phone','Applied','Experience','Score','Status','Resume','LinkedIn','Portfolio','CTC','Location','Relocate']];
-  const list = selectedIds.size > 0 ? applicants.filter(a=>selectedIds.has(a.id)) : applicants;
-  list.forEach(a => rows.push([a.id,a.name,a.email,a.phone,a.applied,a.exp,a.score,a.status,a.resume,a.linkedin,a.portfolio,a.ctc,a.location,a.relocate]));
-  const csv = rows.map(r=>r.map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`).join(',')).join('\n');
-  const blob = new Blob([csv], {type:'text/csv'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href=url; a.download='applications.csv'; a.click();
+  const csv=rows.map(r=>r.map(v=>'"'+(v||'').toString().replace(/"/g,'""')+'"').join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='applications.csv';a.click();
   toast('CSV downloaded!');
+};
+window.exportSelected=window.exportCSV;
+
+function showFatalError(msg){
+  document.getElementById('loading-screen').innerHTML=`<div style="text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">😕</div><div style="font-size:16px;font-weight:700;margin-bottom:8px;">${msg}</div><a href="/dashboard/" style="display:inline-block;margin-top:16px;padding:10px 20px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-size:13px;">Go to Dashboard</a></div>`;
 }
 
-function exportSelected() { exportCSV(); }
-
-// ── MISC ──────────────────────────────────────────────────────
-function toggleAccepting() { toast('Applications paused. Toggle in form settings.'); }
-
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.style.display='block';
-  setTimeout(()=>t.style.display='none', 2500);
-}
-
-// ── INIT ──────────────────────────────────────────────────────
-render();
+function statusBadge(status){return`<span class="status-badge ${status}"><span class="status-dot"></span>${cap(status)}</span>`;}
+function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):'';}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2500);}
 </script>
 </body>
 </html>
