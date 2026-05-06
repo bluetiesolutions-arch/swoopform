@@ -796,115 +796,41 @@ let currentStep=1;
 let customFields=[];
 let fieldCount=0;
 
-onAuthStateChanged(auth,async u=>{
-  if(!u){window.location.href='/login/';return;}
-  currentUser=u;
-  const params=new URLSearchParams(window.location.search);
-  existingJobId=params.get('id');
-  if(existingJobId)await loadExistingJob(existingJobId);
-});
-
-async function loadExistingJob(id){
-  try{
-    const snap=await getDoc(doc(db,'jobapps',id));
-    if(!snap.exists()){toast('Job not found');return;}
-    const d=snap.data();
-    const job=d.job||{};const co=d.company||{};const s=d.settings||{};const seo=d.seo||{};const ty=d.thankYou||{};
-    const set=(id,val)=>{const el=document.getElementById(id);if(el&&val!==undefined&&val!==null)el.value=val;};
-    set('job-title',job.title);set('job-type',job.type);set('job-mode',job.mode);
-    set('job-location',job.location);set('job-dept',job.dept);set('job-salary',job.salary);
-    set('job-exp',job.exp);set('job-deadline',job.deadline);set('job-desc',job.desc);
-    set('job-reqs',job.reqs);set('job-perks',job.perks);
-    set('co-name',co.name);set('co-website',co.website);set('co-industry',co.industry);
-    set('co-size',co.size);set('co-founded',co.founded);set('co-about',co.about);
-    set('redirect-url',s.redirectUrl);set('seo-slug',seo.slug);
-    set('seo-title',seo.title);set('seo-desc',seo.description);
-    set('ty-heading',ty.heading);set('ty-message',ty.message);set('ty-delay',ty.delay);
-    const tog=(id,val)=>{if(val===undefined)return;const el=document.getElementById(id);if(!el)return;val?el.classList.add('on'):el.classList.remove('on');};
-    tog('tgl-linkedin',s.linkedin);tog('tgl-portfolio',s.portfolio);tog('tgl-cover',s.coverLetter);
-    tog('tgl-salary',s.salary);tog('tgl-location',s.location);tog('tgl-edu',s.education);
-    tog('tgl-open',s.accepting);tog('tgl-notify',s.notify);tog('tgl-count',s.showCount);
-    updatePreview();toast('Loaded for editing');
-  }catch(e){console.error(e);toast('Error loading: '+e.message);}
-}
-
-function buildData(status){
-  const title=document.getElementById('job-title').value.trim();
-  const company=document.getElementById('co-name').value.trim();
-  if(!title||!company){toast('Job title and company name are required!');return null;}
-  return{
-    status,
-    job:{title,type:document.getElementById('job-type').value,mode:document.getElementById('job-mode').value,location:document.getElementById('job-location').value.trim(),dept:document.getElementById('job-dept').value.trim(),salary:document.getElementById('job-salary').value.trim(),exp:document.getElementById('job-exp').value.trim(),deadline:document.getElementById('job-deadline').value,desc:document.getElementById('job-desc').value.trim(),reqs:document.getElementById('job-reqs').value.trim(),perks:document.getElementById('job-perks').value.trim()},
-    company:{name:company,website:document.getElementById('co-website').value.trim(),industry:document.getElementById('co-industry').value,size:document.getElementById('co-size').value,founded:document.getElementById('co-founded').value.trim(),about:document.getElementById('co-about').value.trim()},
-    settings:{redirectUrl:document.getElementById('redirect-url').value.trim(),showCount:document.getElementById('tgl-count').classList.contains('on'),accepting:document.getElementById('tgl-open').classList.contains('on'),notify:document.getElementById('tgl-notify').classList.contains('on'),linkedin:document.getElementById('tgl-linkedin').classList.contains('on'),portfolio:document.getElementById('tgl-portfolio').classList.contains('on'),coverLetter:document.getElementById('tgl-cover').classList.contains('on'),salary:document.getElementById('tgl-salary').classList.contains('on'),location:document.getElementById('tgl-location').classList.contains('on'),education:document.getElementById('tgl-edu').classList.contains('on')},
-    seo:{slug:document.getElementById('seo-slug').value.trim(),title:document.getElementById('seo-title').value.trim(),description:document.getElementById('seo-desc').value.trim()},
-    thankYou:{heading:document.getElementById('ty-heading').value.trim(),message:document.getElementById('ty-message').value.trim(),delay:document.getElementById('ty-delay').value}
-  };
-}
-
-window.saveDraft=async function(){
-  const data=buildData('draft');
-  if(!data)return;
-  if(!currentUser){toast('Please log in first');return;}
-  try{
-    const payload={...data,userId:currentUser.uid,userEmail:currentUser.email,updatedAt:serverTimestamp()};
-    if(existingJobId){
-      await updateDoc(doc(db,'jobapps',existingJobId),payload);
-      toast('Draft updated!');
-    }else{
-      payload.createdAt=serverTimestamp();payload.responseCount=0;
-      const ref=await addDoc(collection(db,'jobapps'),payload);
-      existingJobId=ref.id;
-      window.history.replaceState({},'','/jobapp/create/?id='+ref.id);
-      toast('Draft saved!');
-    }
-  }catch(e){console.error(e);toast('Error: '+e.message);}
-};
-
-window.publish=async function(){
-  const data=buildData('active');
-  if(!data)return;
-  if(!currentUser){toast('Please log in first');return;}
-  const btn=document.getElementById('btn-next');
-  btn.disabled=true;btn.textContent='Publishing...';
-  try{
-    const payload={...data,userId:currentUser.uid,userEmail:currentUser.email,status:'active',updatedAt:serverTimestamp()};
-    let JID;
-    if(existingJobId){
-      await updateDoc(doc(db,'jobapps',existingJobId),payload);
-      JID=existingJobId;
-    }else{
-      payload.createdAt=serverTimestamp();payload.responseCount=0;
-      const ref=await addDoc(collection(db,'jobapps'),payload);
-      JID=ref.id;existingJobId=JID;
-      window.history.replaceState({},'','/jobapp/create/?id='+JID);
-    }
-    document.getElementById('modal-url').textContent='swoopform.com/jobapp/?id='+JID;
-    document.getElementById('modal-view-btn').href='/jobapp/?id='+JID;
-    document.getElementById('success-modal').classList.add('open');
-  }catch(e){console.error(e);toast('Error: '+e.message);}
-  btn.disabled=false;btn.textContent='Publish';
-};
+// ── UI FUNCTIONS (available immediately, no auth needed) ──
 
 window.setStep=function(n){
   document.querySelectorAll('[id^="step-"]').forEach(s=>s.style.display='none');
-  document.getElementById('step-'+n).style.display='block';
-  document.querySelectorAll('.step-tab').forEach((t,i)=>{t.classList.remove('active');if(i<n-1)t.classList.add('done');else t.classList.remove('done');});
-  document.querySelectorAll('.step-tab')[n-1].classList.add('active');
+  const stepEl=document.getElementById('step-'+n);
+  if(stepEl)stepEl.style.display='block';
+  document.querySelectorAll('.step-tab').forEach((t,i)=>{
+    t.classList.remove('active');
+    if(i<n-1)t.classList.add('done');
+    else t.classList.remove('done');
+  });
+  const activeTab=document.querySelectorAll('.step-tab')[n-1];
+  if(activeTab)activeTab.classList.add('active');
   currentStep=n;
-  document.getElementById('btn-prev').style.visibility=n>1?'visible':'hidden';
+  const prevBtn=document.getElementById('btn-prev');
+  if(prevBtn)prevBtn.style.visibility=n>1?'visible':'hidden';
   const nextBtn=document.getElementById('btn-next');
-  if(n===4){nextBtn.textContent='Publish';nextBtn.onclick=window.publish;}
-  else{const labels=['','Next: Application Form','Next: Settings & SEO','Next: Thank You Page'];nextBtn.textContent=labels[n];nextBtn.onclick=window.nextStep;}
+  if(nextBtn){
+    if(n===4){nextBtn.textContent='Publish';nextBtn.onclick=window.publish;}
+    else{
+      const labels=['','Next: Application Form','Next: Settings & SEO','Next: Thank You Page'];
+      nextBtn.textContent=labels[n];
+      nextBtn.onclick=window.nextStep;
+    }
+  }
 };
-window.nextStep=function(){if(currentStep<4)setStep(currentStep+1);};
-window.prevStep=function(){if(currentStep>1)setStep(currentStep-1);};
+
+window.nextStep=function(){if(currentStep<4)window.setStep(currentStep+1);};
+window.prevStep=function(){if(currentStep>1)window.setStep(currentStep-1);};
 
 window.goToSection=function(step,sectionId,navId){
-  setStep(step);
+  window.setStep(step);
   document.querySelectorAll('.sidebar-nav-item').forEach(i=>i.classList.remove('active'));
   const el=document.getElementById(navId);if(el)el.classList.add('active');
-  setTimeout(()=>{const s=document.getElementById(sectionId);if(s)s.scrollIntoView({behavior:'smooth',block:'start'});},100);
+  setTimeout(()=>{const s=document.getElementById(sectionId);if(s)s.scrollIntoView({behavior:'smooth',block:'start'});},150);
 };
 
 window.updatePreview=function(){
@@ -947,22 +873,18 @@ window.addCustomField=function(type){
   const hasOptions=['dropdown','mcq','checkbox'].includes(type);
   const div=document.createElement('div');
   div.className='custom-field-item';div.id='field-'+id;
-  div.innerHTML='<span class="custom-field-drag">⠿</span><div class="custom-field-body"><div class="custom-field-header"><span>'+t.icon+'</span><span class="custom-field-type-badge">'+t.label+'</span></div><div class="field-grid"><div class="field-row"><div class="field-label">Question</div><input class="field-input" placeholder="e.g. Years of experience?" style="font-size:12px;padding:8px 10px;"></div><div class="field-row"><div class="field-label">Placeholder</div><input class="field-input" placeholder="Enter your answer" style="font-size:12px;padding:8px 10px;"></div></div>'+(hasOptions?'<div class="field-row"><div class="field-label">Options (one per line)</div><textarea class="field-input" rows="3" placeholder="Option 1" style="font-size:12px;padding:8px 10px;min-height:70px;"></textarea></div>':'')+'<div style="margin-top:8px;"><label style="font-size:12px;cursor:pointer;color:var(--muted);display:flex;align-items:center;gap:6px;"><input type="checkbox"> Required</label></div></div><button class="custom-field-remove" onclick="removeField('field-'+id+'')">×</button>';
+  div.innerHTML='<span class="custom-field-drag">⠿</span><div class="custom-field-body"><div class="custom-field-header"><span>'+t.icon+'</span><span class="custom-field-type-badge">'+t.label+'</span></div><div class="field-grid"><div class="field-row"><div class="field-label">Question</div><input class="field-input" placeholder="e.g. Years of experience?" style="font-size:12px;padding:8px 10px;"></div><div class="field-row"><div class="field-label">Placeholder</div><input class="field-input" placeholder="Enter your answer" style="font-size:12px;padding:8px 10px;"></div></div>'+(hasOptions?'<div class="field-row"><div class="field-label">Options (one per line)</div><textarea class="field-input" rows="3" placeholder="Option 1" style="font-size:12px;padding:8px 10px;min-height:70px;"></textarea></div>':'')+'<div style="margin-top:8px;"><label style="font-size:12px;cursor:pointer;color:var(--muted);display:flex;align-items:center;gap:6px;"><input type="checkbox"> Required</label></div></div><button class="custom-field-remove" onclick="window.removeField('field-'+id+'')">x</button>';
   document.getElementById('custom-fields-container').appendChild(div);
   customFields.push({id,type});
-  toast('Field added!');
+  window.toast('Field added!');
 };
 
 window.removeField=function(id){const el=document.getElementById(id);if(el)el.remove();};
 
-window.previewForm=function(){
-  if(existingJobId)window.open('/jobapp/?id='+existingJobId,'_blank');
-  else toast('Save draft first to preview');
-};
 window.closeModal=function(){document.getElementById('success-modal').classList.remove('open');};
 window.copyUrl=function(){
   const url=document.getElementById('modal-url').textContent;
-  navigator.clipboard.writeText(url).then(()=>toast('Link copied!'));
+  navigator.clipboard.writeText(url).then(()=>window.toast('Link copied!'));
 };
 
 window.toast=function(msg){
@@ -971,10 +893,108 @@ window.toast=function(msg){
   setTimeout(()=>t.style.display='none',2500);
 };
 
-document.addEventListener("DOMContentLoaded", function(){
-  updatePreview();
-  setStep(1);
+window.previewForm=function(){
+  if(existingJobId)window.open('/jobapp/?id='+existingJobId,'_blank');
+  else window.toast('Save draft first to preview');
+};
+
+// ── FIREBASE FUNCTIONS (need auth) ──
+
+function buildData(status){
+  const title=document.getElementById('job-title').value.trim();
+  const company=document.getElementById('co-name').value.trim();
+  if(!title||!company){window.toast('Job title and company name are required!');return null;}
+  return{
+    status,
+    job:{title,type:document.getElementById('job-type').value,mode:document.getElementById('job-mode').value,location:document.getElementById('job-location').value.trim(),dept:document.getElementById('job-dept').value.trim(),salary:document.getElementById('job-salary').value.trim(),exp:document.getElementById('job-exp').value.trim(),deadline:document.getElementById('job-deadline').value,desc:document.getElementById('job-desc').value.trim(),reqs:document.getElementById('job-reqs').value.trim(),perks:document.getElementById('job-perks').value.trim()},
+    company:{name:company,website:document.getElementById('co-website').value.trim(),industry:document.getElementById('co-industry').value,size:document.getElementById('co-size').value,founded:document.getElementById('co-founded').value.trim(),about:document.getElementById('co-about').value.trim()},
+    settings:{redirectUrl:document.getElementById('redirect-url').value.trim(),showCount:document.getElementById('tgl-count').classList.contains('on'),accepting:document.getElementById('tgl-open').classList.contains('on'),notify:document.getElementById('tgl-notify').classList.contains('on'),linkedin:document.getElementById('tgl-linkedin').classList.contains('on'),portfolio:document.getElementById('tgl-portfolio').classList.contains('on'),coverLetter:document.getElementById('tgl-cover').classList.contains('on'),salary:document.getElementById('tgl-salary').classList.contains('on'),location:document.getElementById('tgl-location').classList.contains('on'),education:document.getElementById('tgl-edu').classList.contains('on')},
+    seo:{slug:document.getElementById('seo-slug').value.trim(),title:document.getElementById('seo-title').value.trim(),description:document.getElementById('seo-desc').value.trim()},
+    thankYou:{heading:document.getElementById('ty-heading').value.trim(),message:document.getElementById('ty-message').value.trim(),delay:document.getElementById('ty-delay').value}
+  };
+}
+
+window.saveDraft=async function(){
+  const data=buildData('draft');
+  if(!data)return;
+  if(!currentUser){window.toast('Please log in first');return;}
+  try{
+    const payload={...data,userId:currentUser.uid,userEmail:currentUser.email,updatedAt:serverTimestamp()};
+    if(existingJobId){
+      await updateDoc(doc(db,'jobapps',existingJobId),payload);
+      window.toast('Draft updated!');
+    }else{
+      payload.createdAt=serverTimestamp();payload.responseCount=0;
+      const ref=await addDoc(collection(db,'jobapps'),payload);
+      existingJobId=ref.id;
+      window.history.replaceState({},'','/jobapp/create/?id='+ref.id);
+      window.toast('Draft saved!');
+    }
+  }catch(e){console.error(e);window.toast('Error: '+e.message);}
+};
+
+window.publish=async function(){
+  const data=buildData('active');
+  if(!data)return;
+  if(!currentUser){window.toast('Please log in first');return;}
+  const btn=document.getElementById('btn-next');
+  btn.disabled=true;btn.textContent='Publishing...';
+  try{
+    const payload={...data,userId:currentUser.uid,userEmail:currentUser.email,status:'active',updatedAt:serverTimestamp()};
+    let JID;
+    if(existingJobId){
+      await updateDoc(doc(db,'jobapps',existingJobId),payload);
+      JID=existingJobId;
+    }else{
+      payload.createdAt=serverTimestamp();payload.responseCount=0;
+      const ref=await addDoc(collection(db,'jobapps'),payload);
+      JID=ref.id;existingJobId=JID;
+      window.history.replaceState({},'','/jobapp/create/?id='+JID);
+    }
+    document.getElementById('modal-url').textContent='swoopform.com/jobapp/?id='+JID;
+    document.getElementById('modal-view-btn').href='/jobapp/?id='+JID;
+    document.getElementById('success-modal').classList.add('open');
+  }catch(e){console.error(e);window.toast('Error: '+e.message);}
+  btn.disabled=false;btn.textContent='Publish';
+};
+
+async function loadExistingJob(id){
+  try{
+    const snap=await getDoc(doc(db,'jobapps',id));
+    if(!snap.exists()){window.toast('Job not found');return;}
+    const d=snap.data();
+    const job=d.job||{};const co=d.company||{};const s=d.settings||{};const seo=d.seo||{};const ty=d.thankYou||{};
+    const setVal=(id,val)=>{const el=document.getElementById(id);if(el&&val!==undefined&&val!==null)el.value=val;};
+    setVal('job-title',job.title);setVal('job-type',job.type);setVal('job-mode',job.mode);
+    setVal('job-location',job.location);setVal('job-dept',job.dept);setVal('job-salary',job.salary);
+    setVal('job-exp',job.exp);setVal('job-deadline',job.deadline);setVal('job-desc',job.desc);
+    setVal('job-reqs',job.reqs);setVal('job-perks',job.perks);
+    setVal('co-name',co.name);setVal('co-website',co.website);setVal('co-industry',co.industry);
+    setVal('co-size',co.size);setVal('co-founded',co.founded);setVal('co-about',co.about);
+    setVal('redirect-url',s.redirectUrl);setVal('seo-slug',seo.slug);
+    setVal('seo-title',seo.title);setVal('seo-desc',seo.description);
+    setVal('ty-heading',ty.heading);setVal('ty-message',ty.message);setVal('ty-delay',ty.delay);
+    const tog=(id,val)=>{if(val===undefined)return;const el=document.getElementById(id);if(!el)return;val?el.classList.add('on'):el.classList.remove('on');};
+    tog('tgl-linkedin',s.linkedin);tog('tgl-portfolio',s.portfolio);tog('tgl-cover',s.coverLetter);
+    tog('tgl-salary',s.salary);tog('tgl-location',s.location);tog('tgl-edu',s.education);
+    tog('tgl-open',s.accepting);tog('tgl-notify',s.notify);tog('tgl-count',s.showCount);
+    window.updatePreview();
+    window.toast('Loaded for editing');
+  }catch(e){console.error(e);window.toast('Error loading: '+e.message);}
+}
+
+// ── AUTH ──
+onAuthStateChanged(auth,async u=>{
+  if(!u){window.location.href='/login/';return;}
+  currentUser=u;
+  const params=new URLSearchParams(window.location.search);
+  existingJobId=params.get('id');
+  if(existingJobId)await loadExistingJob(existingJobId);
 });
+
+// ── INIT (runs immediately) ──
+window.updatePreview();
+window.setStep(1);
 </script>
 </body>
 </html>
