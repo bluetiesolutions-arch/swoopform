@@ -449,20 +449,19 @@ function buildData(status){
     customFields:(()=>{
       const fields=[];
       document.querySelectorAll('.custom-field-item').forEach(item=>{
-        const inputs=item.querySelectorAll('input[type=text],input[type=number],input[type=url]');
+        const allInputs=item.querySelectorAll('input');
         const textarea=item.querySelector('textarea');
         const badge=item.querySelector('.custom-field-type-badge');
-        const typeText=badge?badge.textContent.trim().toLowerCase().replace(/[^a-z_]/g,' ').trim().replace(/\s+/g,'_'):'short_text';
-        const typeMap={'short_text':'short_text','long_text':'long_text','dropdown':'dropdown','mcq':'mcq','checkboxes':'checkbox','checkbox':'checkbox','number':'number','date':'date','url':'url','rating':'rating','yes_no':'yesno','yes':'yesno'};
-        const checkbox=item.querySelector('input[type=checkbox]');
-        fields.push({
-          type:typeMap[typeText]||'short_text',
-          label:inputs[0]?inputs[0].value.trim():'',
-          placeholder:inputs[1]?inputs[1].value.trim():'',
-          options:textarea?textarea.value.trim():'',
-          optionsArr:textarea?textarea.value.split('\n').map(o=>o.trim()).filter(o=>o):[],
-          required:checkbox?checkbox.checked:false
-        });
+        const typeRaw=badge?badge.textContent.replace(/[^a-zA-Z\/\s]/g,'').trim().toLowerCase():'short text';
+        const typeMap={'short text':'short_text','long text':'long_text','dropdown':'dropdown','mcq':'mcq','mcq  radio':'mcq','checkboxes':'checkbox','number':'number','date':'date','url':'url','url  link':'url','rating':'rating','yes no':'yesno','yes  no':'yesno'};
+        let type='short_text';
+        for(const key of Object.keys(typeMap)){if(typeRaw.includes(key.split(' ')[0])){type=typeMap[key];break;}}
+        const reqCheckbox=item.querySelector('input[type=checkbox]');
+        const textInputs=[...allInputs].filter(i=>i.type!=='checkbox');
+        const label=textInputs[0]?textInputs[0].value.trim():'';
+        const placeholder=textInputs[1]?textInputs[1].value.trim():'';
+        const optionsArr=textarea?textarea.value.split('\n').map(o=>o.trim()).filter(Boolean):[];
+        fields.push({type,label,placeholder,optionsArr,required:reqCheckbox?reqCheckbox.checked:false});
       });
       return fields;
     })()

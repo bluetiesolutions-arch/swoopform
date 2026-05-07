@@ -297,9 +297,7 @@ function renderJob(data){
 
   // Render custom fields
   const customFields = data.customFields || [];
-  // DEBUG - show raw data
-  const dbg = document.getElementById('custom-fields-wrap');
-  if(dbg) dbg.innerHTML = '<div style="background:#fff3cd;padding:12px;border-radius:8px;font-size:11px;margin-bottom:12px;word-break:break-all;"><strong>DEBUG:</strong> ' + JSON.stringify(customFields) + '</div>';
+
   const wrap = document.getElementById('custom-fields-wrap');
   if(wrap && customFields.length > 0){
     wrap.innerHTML = '';
@@ -379,6 +377,15 @@ window.selectYesNo=function(el,val,groupId,fid){
   });
   el.classList.add('selected');
   const inp=document.getElementById(fid);
+  if(inp)inp.value=val;
+};
+
+window.setCfRating=function(idx,val){
+  document.querySelectorAll('#stars_'+idx+' .star').forEach((s,i)=>s.classList.toggle('active',i<val));
+  const labels=['','Poor','Fair','Good','Great','Excellent'];
+  const lbl=document.getElementById('starlbl_'+idx);
+  if(lbl)lbl.textContent=labels[val];
+  const inp=document.getElementById('cf_'+idx);
   if(inp)inp.value=val;
 };
 
