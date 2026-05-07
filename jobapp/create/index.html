@@ -477,13 +477,13 @@ window.saveDraft=async function(){
     const p={...data,userId:currentUser.uid,userEmail:currentUser.email,updatedAt:serverTimestamp()};
     if(existingJobId){
       await updateDoc(doc(db,'jobapps',existingJobId),p);
-      window.toast('✅ Draft updated!');
+      window.toast('✅ Draft updated! Custom fields: '+(p.customFields?p.customFields.length:0));
     }else{
       p.createdAt=serverTimestamp();p.responseCount=0;
       const ref=await addDoc(collection(db,'jobapps'),p);
       existingJobId=ref.id;
       window.history.replaceState({},'','/jobapp/create/?id='+ref.id);
-      window.toast('✅ Draft saved!');
+      window.toast('✅ Saved! Custom fields: '+(p.customFields?p.customFields.length:0));
     }
   }catch(e){console.error(e);window.toast('Error: '+e.message);}
 };
