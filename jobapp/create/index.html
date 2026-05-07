@@ -452,8 +452,8 @@ function buildData(status){
         const inputs=item.querySelectorAll('input[type=text],input[type=number],input[type=url]');
         const textarea=item.querySelector('textarea');
         const badge=item.querySelector('.custom-field-type-badge');
-        const typeText=badge?badge.textContent.trim().toLowerCase().replace(/[^a-z]/g,'_'):'short_text';
-        const typeMap={'short_text':'short_text','long_text':'long_text','dropdown':'dropdown','mcq':'mcq','checkboxes':'checkbox','number':'number','date':'date','url':'url','rating':'rating','yes_no':'yesno'};
+        const typeText=badge?badge.textContent.trim().toLowerCase().replace(/[^a-z_]/g,' ').trim().replace(/\s+/g,'_'):'short_text';
+        const typeMap={'short_text':'short_text','long_text':'long_text','dropdown':'dropdown','mcq':'mcq','checkboxes':'checkbox','checkbox':'checkbox','number':'number','date':'date','url':'url','rating':'rating','yes_no':'yesno','yes':'yesno'};
         const checkbox=item.querySelector('input[type=checkbox]');
         fields.push({
           type:typeMap[typeText]||'short_text',
@@ -469,6 +469,7 @@ function buildData(status){
 }
 
 window.saveDraft=async function(){
+  console.log('buildData customFields:', buildData('draft')?.customFields);
   const data=buildData('draft');if(!data)return;
   if(!currentUser){window.toast('Please log in first');return;}
   try{
