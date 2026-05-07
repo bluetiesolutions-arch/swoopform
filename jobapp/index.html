@@ -292,6 +292,52 @@ function renderJob(data){
     if(s.education)document.getElementById('wrap-edu').style.display='block';
   }
   if(data.thankYou?.message)document.getElementById('ty-msg').textContent=data.thankYou.message;
+
+  // Render custom fields
+  const customFields = data.customFields || [];
+  const wrap = document.getElementById('custom-fields-wrap');
+  if(wrap && customFields.length > 0){
+    wrap.innerHTML = '';
+    const card = document.createElement('div');
+    card.className = 'form-card';
+    card.innerHTML = '<div class="form-card-title">Additional Questions</div>';
+    customFields.forEach((field, i) => {
+      const fg = document.createElement('div');
+      fg.className = 'field-group';
+      const label = field.label || field.question || 'Question';
+      const placeholder = field.placeholder || '';
+      const required = field.required ? '<span class="req">*</span>' : '<span class="opt">(optional)</span>';
+      const fid = 'custom_'+i;
+      let input = '';
+      if(field.type === 'long_text'){
+        input = `<textarea class="field-input" id="${fid}" placeholder="${placeholder}" rows="4"></textarea>`;
+      } else if(field.type === 'dropdown'){
+        const opts = (field.options||'').split('\n').filter(o=>o.trim()).map(o=>`<option>${o.trim()}</option>`).join('');
+        input = `<select class="field-input" id="${fid}"><option value="">Select...</option>${opts}</select>`;
+      } else if(field.type === 'mcq'){
+        const opts = (field.options||'').split('\n').filter(o=>o.trim()).map((o,j)=>`<div class="radio-option" onclick="this.querySelectorAll('input').forEach(x=>x.checked=false);this.querySelector('input').checked=true;document.querySelectorAll('[name=mcq_${i}]').forEach(x=>x.closest('.radio-option').classList.remove('selected'));this.classList.add('selected')"><input type="radio" name="mcq_${i}" id="${fid}_${j}"><label for="${fid}_${j}">${o.trim()}</label></div>`).join('');
+        input = `<div class="radio-group">${opts}</div>`;
+      } else if(field.type === 'checkbox'){
+        const opts = (field.options||'').split('\n').filter(o=>o.trim()).map((o,j)=>`<div class="check-option" onclick="this.classList.toggle('selected');this.querySelector('input').checked=!this.querySelector('input').checked"><input type="checkbox" id="${fid}_${j}"><label for="${fid}_${j}">${o.trim()}</label></div>`).join('');
+        input = `<div class="check-group">${opts}</div>`;
+      } else if(field.type === 'rating'){
+        input = `<div class="star-group" id="stars_${i}">${[1,2,3,4,5].map(n=>`<span class="star" onclick="setRating(${i},${n})">★</span>`).join('')}</div><div class="field-hint" id="star_label_${i}">Click to rate</div><input type="hidden" id="${fid}" value="">`;
+      } else if(field.type === 'yesno'){
+        input = `<div class="yesno-group"><button type="button" class="yesno-btn yes" onclick="selectYesNo(this,'yes','yesno_${i}','${fid}')">✅ Yes</button><button type="button" class="yesno-btn no" onclick="selectYesNo(this,'no','yesno_${i}','${fid}')">❌ No</button></div><input type="hidden" id="${fid}" value="">`;
+      } else if(field.type === 'date'){
+        input = `<input class="field-input" id="${fid}" type="date">`;
+      } else if(field.type === 'number'){
+        input = `<input class="field-input" id="${fid}" type="number" placeholder="${placeholder}">`;
+      } else if(field.type === 'url'){
+        input = `<input class="field-input" id="${fid}" type="url" placeholder="${placeholder||'https://'}">`;
+      } else {
+        input = `<input class="field-input" id="${fid}" type="text" placeholder="${placeholder}">`;
+      }
+      fg.innerHTML = `<div class="field-label">${label} ${required}</div>${input}`;
+      card.appendChild(fg);
+    });
+    wrap.appendChild(card);
+  }
   if(s.redirectUrl)document.getElementById('redirect-note').textContent='You will be redirected shortly...';
 }
 
@@ -308,6 +354,27 @@ window.updateProgress=function(){
 
 window.countCover=function(){
   document.getElementById('cover-count').textContent=document.getElementById('f-cover').value.length+' / 1500';
+};
+
+window.setRating=function(idx,val){
+  const stars=document.querySelectorAll('#stars_'+idx+' .star');
+  const labels=['','Beginner','Basic','Intermediate','Advanced','Expert'];
+  stars.forEach((s,i)=>s.classList.toggle('active',i<val));
+  const lbl=document.getElementById('star_label_'+idx);
+  if(lbl)lbl.textContent=labels[val]||val+' stars';
+  const inp=document.getElementById('custom_'+idx);
+  if(inp)inp.value=val;
+};
+
+window.selectYesNo=function(el,val,groupId,fid){
+  document.querySelectorAll('.yesno-btn').forEach(b=>{
+    if(b.closest('.yesno-group')===el.closest('.yesno-group')){
+      b.classList.remove('selected');
+    }
+  });
+  el.classList.add('selected');
+  const inp=document.getElementById(fid);
+  if(inp)inp.value=val;
 };
 
 window.submitApplication=async function(){
@@ -341,6 +408,17 @@ window.submitApplication=async function(){
       salary:document.getElementById('f-salary')?.value||'',
       location:document.getElementById('f-location')?.value||'',
       education:document.getElementById('f-edu')?.value||'',
+      customAnswers: (()=>{
+        const answers={};
+        const wrap=document.getElementById('custom-fields-wrap');
+        if(wrap){
+          wrap.querySelectorAll('[id^="custom_"]').forEach(el=>{
+            const key=el.id;
+            answers[key]=el.value||'';
+          });
+        }
+        return answers;
+      })(),
       submittedAt:serverTimestamp(),
       status:'new'
     });
