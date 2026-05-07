@@ -156,7 +156,26 @@ textarea.field-input{resize:vertical;min-height:100px;line-height:1.6;}
         </div>
         <div class="field-group">
           <div class="field-label">Phone Number <span class="req">*</span></div>
-          <input class="field-input" id="f-phone" type="tel" placeholder="+91 98765 43210" oninput="updateProgress()">
+          <div style="display:flex;gap:0;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;background:var(--white);" id="phone-wrap" onfocusin="this.style.borderColor='var(--accent)'" onfocusout="this.style.borderColor='var(--border)'">
+            <select id="f-phone-code" style="padding:11px 10px;border:none;background:var(--accent-light);color:var(--accent);font-family:var(--font);font-size:13px;font-weight:600;outline:none;cursor:pointer;border-right:1.5px solid var(--border);">
+              <option value="+91">🇮🇳 +91</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+44">🇬🇧 +44</option>
+              <option value="+61">🇦🇺 +61</option>
+              <option value="+971">🇦🇪 +971</option>
+              <option value="+65">🇸🇬 +65</option>
+              <option value="+60">🇲🇾 +60</option>
+              <option value="+880">🇧🇩 +880</option>
+              <option value="+92">🇵🇰 +92</option>
+              <option value="+94">🇱🇰 +94</option>
+              <option value="+977">🇳🇵 +977</option>
+              <option value="+49">🇩🇪 +49</option>
+              <option value="+33">🇫🇷 +33</option>
+              <option value="+81">🇯🇵 +81</option>
+              <option value="+86">🇨🇳 +86</option>
+            </select>
+            <input style="flex:1;padding:11px 14px;border:none;background:transparent;color:var(--text);font-family:var(--font);font-size:13px;outline:none;" id="f-phone" type="tel" placeholder="98765 43210" oninput="updateProgress()">
+          </div>
           <div class="field-error" id="err-phone">Please enter your phone number</div>
         </div>
       </div>
@@ -265,12 +284,12 @@ function renderJob(data){
   if(co.about){document.getElementById('sec-about').style.display='block';document.getElementById('co-about').textContent=co.about;}
   if(s.linkedin===true)document.getElementById('wrap-linkedin').style.display='block';
   if(s.portfolio===true)document.getElementById('wrap-portfolio').style.display='block';
-  if(s.coverLetter===true)document.getElementById('wrap-cover').style.display='block';
-  if(s.salary===true||s.location===true||s.education===true){
+  if(s.coverLetter===true||s.cover===true)document.getElementById('wrap-cover').style.display='block';
+  if(s.salary||s.location||s.education){
     document.getElementById('wrap-optional').style.display='block';
-    if(s.salary===true)document.getElementById('wrap-salary').style.display='block';
-    if(s.location===true)document.getElementById('wrap-location').style.display='block';
-    if(s.education===true)document.getElementById('wrap-edu').style.display='block';
+    if(s.salary)document.getElementById('wrap-salary').style.display='block';
+    if(s.location)document.getElementById('wrap-location').style.display='block';
+    if(s.education)document.getElementById('wrap-edu').style.display='block';
   }
   if(data.thankYou?.message)document.getElementById('ty-msg').textContent=data.thankYou.message;
   if(s.redirectUrl)document.getElementById('redirect-note').textContent='You will be redirected shortly...';
@@ -314,7 +333,7 @@ window.submitApplication=async function(){
       jobId,appId,
       name:document.getElementById('f-name').value,
       email:document.getElementById('f-email').value,
-      phone:document.getElementById('f-phone').value,
+      phone:(document.getElementById('f-phone-code')?.value||'+91')+' '+document.getElementById('f-phone').value,
       resume:document.getElementById('f-resume').value,
       linkedin:document.getElementById('f-linkedin')?.value||'',
       portfolio:document.getElementById('f-portfolio')?.value||'',

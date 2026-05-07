@@ -164,10 +164,10 @@ select.field-input{cursor:pointer;}
     <div class="canvas-inner">
 
       <div class="step-tabs">
-        <button class="step-tab active" id="stab-1" onclick="window.setStep(1)"><span class="step-num" id="snum-1">1</span> Job Details</button>
-        <button class="step-tab" id="stab-2" onclick="window.setStep(2)"><span class="step-num" id="snum-2">2</span> Application Form</button>
-        <button class="step-tab" id="stab-3" onclick="window.setStep(3)"><span class="step-num" id="snum-3">3</span> Settings & SEO</button>
-        <button class="step-tab" id="stab-4" onclick="window.setStep(4)"><span class="step-num" id="snum-4">4</span> Thank You Page</button>
+        <button class="step-tab active" id="stab-1" onclick="event.stopPropagation();window.setStep(1)"><span class="step-num" id="snum-1">1</span> Job Details</button>
+        <button class="step-tab" id="stab-2" onclick="event.stopPropagation();window.setStep(2)"><span class="step-num" id="snum-2">2</span> Application Form</button>
+        <button class="step-tab" id="stab-3" onclick="event.stopPropagation();window.setStep(3)"><span class="step-num" id="snum-3">3</span> Settings & SEO</button>
+        <button class="step-tab" id="stab-4" onclick="event.stopPropagation();window.setStep(4)"><span class="step-num" id="snum-4">4</span> Thank You Page</button>
       </div>
 
       <div id="step-1">
