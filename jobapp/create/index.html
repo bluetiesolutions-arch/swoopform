@@ -469,7 +469,8 @@ function buildData(status){
 }
 
 window.saveDraft=async function(){
-  console.log('buildData customFields:', buildData('draft')?.customFields);
+  const debugData=buildData('draft');
+  if(debugData)window.toast('Fields found: '+debugData.customFields.length+' custom fields');
   const data=buildData('draft');if(!data)return;
   if(!currentUser){window.toast('Please log in first');return;}
   try{
