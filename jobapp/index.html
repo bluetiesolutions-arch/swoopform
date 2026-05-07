@@ -306,7 +306,7 @@ function renderJob(data){
     customFields.forEach((field, i) => {
       const fg = document.createElement('div');
       fg.className = 'field-group';
-      const label = field.label || field.question || 'Question';
+      const label = (field.label && field.label.trim()) ? field.label.trim() : ((field.question && field.question.trim()) ? field.question.trim() : 'Question');
       const placeholder = field.placeholder || '';
       const required = field.required ? '<span class="req">*</span>' : '<span class="opt">(optional)</span>';
       const fid = 'custom_'+i;
