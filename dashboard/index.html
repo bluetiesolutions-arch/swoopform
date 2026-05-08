@@ -256,6 +256,7 @@
       <button class="filter-btn" id="flt-pledges" onclick="setFilter('pledges',this)">🤝 Pledges</button>
       <button class="filter-btn" id="flt-riddles" onclick="setFilter('riddles',this)">🧩 Riddles</button>
 <button class="filter-btn" id="flt-jobapps" onclick="setFilter('jobapps',this)">💼 Job Apps</button>
+<button class="filter-btn" id="flt-assessments" onclick="setFilter('assessments',this)">📝 Assessments</button>
       <div class="filters-right">
         <input class="search-inp" id="search-inp" placeholder="🔍 Search..." oninput="renderItems()">
         <div class="view-btns">
@@ -302,7 +303,7 @@ const TYPE_META={
   votings:{label:'Voting',icon:'🗳️',color:'#D97706',bg:'#FEF3C7',editPath:'/voting/edit/?id=',viewPath:'/voting/',responsesPath:'/voting/responses/?id='},
   pledges:{label:'Pledge & Support',icon:'🤝',color:'#10B981',bg:'#DCFCE7',editPath:'/pledge/edit/?id=',viewPath:'/pledge/',responsesPath:'/pledge/responses/?id='},
   riddles:{label:'Riddle',icon:'🧩',color:'#A855F7',bg:'#F3E8FF',editPath:'/riddle/edit/?id=',viewPath:'/riddle/',responsesPath:'/riddle/responses/?id='},
-  jobapps:{label:'Job Application',icon:'💼',color:'#059669',bg:'#D1FAE5',editPath:'/jobapp/create/?id=',viewPath:'/jobapp/?id=',responsesPath:'/jobapp/responses/?id='},
+  jobapps:{label:'Job Application',icon:'💼',color:'#059669',bg:'#D1FAE5',editPath:'/jobapp/create/?id=',viewPath:'/jobapp/?id=',responsesPath:'/jobapp/responses/?id='},assessments:{label:'Assessment',icon:'📝',color:'#7c3aed',bg:'#ede9fe',editPath:'/assessment/create/?id=',viewPath:'/assessment/?id=',responsesPath:'/assessment/responses/?id='},
 };
 
 let U=null,allItems=[],activeFilter='all',viewMode='grid',ctxItem=null;
