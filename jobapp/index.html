@@ -183,11 +183,11 @@ textarea.field-input{resize:vertical;min-height:100px;line-height:1.6;}
         </div>
         <div class="field-group" id="wrap-linkedin" style="display:none;">
           <div class="field-label">LinkedIn Profile <span class="opt">(optional)</span></div>
-          <input class="field-input" id="f-linkedin" type="url" placeholder="https://linkedin.com/in/yourname">
+          <div class="url-wrap"><span class="url-prefix">https://</span><input class="url-input" id="f-linkedin" type="text" placeholder="linkedin.com/in/yourname"></div>
         </div>
         <div class="field-group" id="wrap-portfolio" style="display:none;">
           <div class="field-label">Portfolio / Website <span class="opt">(optional)</span></div>
-          <input class="field-input" id="f-portfolio" type="url" placeholder="https://yourportfolio.com">
+          <div class="url-wrap"><span class="url-prefix">https://</span><input class="url-input" id="f-portfolio" type="text" placeholder="yourportfolio.com"></div>
         </div>
       </div>
 
@@ -422,9 +422,9 @@ window.submitApplication=async function(){
       name:document.getElementById('f-name').value,
       email:document.getElementById('f-email').value,
       phone:(phoneCode?phoneCode.value:'+91')+' '+document.getElementById('f-phone').value,
-      resume:document.getElementById('f-resume').value,
-      linkedin:document.getElementById('f-linkedin')?document.getElementById('f-linkedin').value:'',
-      portfolio:document.getElementById('f-portfolio')?document.getElementById('f-portfolio').value:'',
+      resume:(function(){var v=document.getElementById('f-resume').value;return v&&!v.startsWith('http')?'https://'+v:v;})(),
+      linkedin:(function(){var v=document.getElementById('f-linkedin')?document.getElementById('f-linkedin').value:'';return v&&!v.startsWith('http')?'https://'+v:v;})(),
+      portfolio:(function(){var v=document.getElementById('f-portfolio')?document.getElementById('f-portfolio').value:'';return v&&!v.startsWith('http')?'https://'+v:v;})(),
       cover:document.getElementById('f-cover')?document.getElementById('f-cover').value:'',
       salary:document.getElementById('f-salary')?document.getElementById('f-salary').value:'',
       location:document.getElementById('f-location')?document.getElementById('f-location').value:'',
