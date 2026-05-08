@@ -6,13 +6,7 @@
 <title>Job Application — SwoopForm</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#f7f6f2;--white:#ffffff;--border:#e4e1d8;
-  --accent:#2563eb;--accent-hover:#1d4ed8;--accent-light:#eff6ff;
-  --text:#1a1a2e;--muted:#6b7280;--muted2:#9ca3af;
-  --danger:#ef4444;--success:#10b981;--tag-bg:#f0ede6;
-  --font:'Sora',sans-serif;--serif:'DM Serif Display',serif;
-}
+:root{--bg:#f7f6f2;--white:#ffffff;--border:#e4e1d8;--accent:#2563eb;--accent-hover:#1d4ed8;--accent-light:#eff6ff;--text:#1a1a2e;--muted:#6b7280;--muted2:#9ca3af;--danger:#ef4444;--success:#10b981;--tag-bg:#f0ede6;--font:'Sora',sans-serif;--serif:'DM Serif Display',serif;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;}
 header{height:52px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:50;}
@@ -51,8 +45,8 @@ header{height:52px;background:var(--white);border-bottom:1px solid var(--border)
 .field-group{margin-bottom:16px;}
 .field-group:last-child{margin-bottom:0;}
 .field-label{font-size:13px;font-weight:500;margin-bottom:7px;display:flex;align-items:center;gap:4px;}
-.field-label .req{color:var(--danger);}
-.field-label .opt{font-size:10px;color:var(--muted2);font-weight:400;}
+.req{color:var(--danger);}
+.opt{font-size:10px;color:var(--muted2);font-weight:400;}
 .field-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--white);color:var(--text);font-family:var(--font);font-size:13px;outline:none;transition:border-color .2s;}
 .field-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,0.08);}
 .field-input::placeholder{color:var(--muted2);}
@@ -61,10 +55,24 @@ header{height:52px;background:var(--white);border-bottom:1px solid var(--border)
 .field-hint{font-size:11px;color:var(--muted2);margin-top:5px;}
 textarea.field-input{resize:vertical;min-height:100px;line-height:1.6;}
 .char-count{font-size:11px;color:var(--muted2);text-align:right;margin-top:4px;}
+.cf-option{display:flex;align-items:center;gap:12px;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;font-size:13px;margin-bottom:8px;}
+.cf-option:hover{border-color:var(--accent);background:var(--accent-light);}
+.cf-option.selected{border-color:var(--accent);background:var(--accent-light);}
+.cf-option input{accent-color:var(--accent);width:16px;height:16px;flex-shrink:0;}
+.cf-star{font-size:30px;cursor:pointer;color:#e2ddd6;transition:all .15s;line-height:1;}
+.cf-star.on{color:#f59e0b;}
+.yesno-wrap{display:flex;gap:12px;}
+.yesno-btn{flex:1;padding:14px;border:1.5px solid var(--border);border-radius:12px;background:none;font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;text-align:center;}
+.yesno-btn.yes-selected{border-color:var(--success);background:#f0fdf4;color:var(--success);}
+.yesno-btn.no-selected{border-color:var(--danger);background:#fef2f2;color:var(--danger);}
+.url-wrap{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .2s;}
+.url-wrap:focus-within{border-color:var(--accent);}
+.url-prefix{padding:11px 12px;background:var(--accent-light);color:var(--accent);font-size:12px;border-right:1px solid var(--border);white-space:nowrap;}
+.url-input{flex:1;padding:11px 12px;border:none;background:transparent;font-family:var(--font);font-size:13px;outline:none;color:var(--text);}
 .submit-btn{width:100%;padding:15px;background:var(--accent);border:none;border-radius:12px;color:white;font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
 .submit-btn:hover{background:var(--accent-hover);transform:translateY(-1px);box-shadow:0 4px 16px rgba(37,99,235,0.3);}
 .submit-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
-.submit-note{text-align:center;font-size:11px;color:var(--muted2);margin-top:10px;line-height:1.6;}
+.submit-note{text-align:center;font-size:11px;color:var(--muted2);margin-top:10px;}
 .thankyou-screen{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;padding:40px;}
 .thankyou-icon{font-size:64px;margin-bottom:20px;animation:pop .5s ease;}
 @keyframes pop{0%{transform:scale(0.5);opacity:0}80%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
@@ -75,7 +83,7 @@ textarea.field-input{resize:vertical;min-height:100px;line-height:1.6;}
 .loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:768px){.split-layout{flex-direction:column;height:auto;}.job-panel,.form-panel{width:100%;}.job-panel{max-height:45vh;}}
+@media(max-width:768px){.split-layout{flex-direction:column;height:auto;}.job-panel,.form-panel{width:100%;}.job-panel{max-height:50vh;}}
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
@@ -111,37 +119,22 @@ textarea.field-input{resize:vertical;min-height:100px;line-height:1.6;}
     <div class="job-title-block">
       <div class="job-title" id="job-title">Loading...</div>
       <div class="job-tags" id="job-tags"></div>
-      <div class="apply-count" id="apply-count" style="display:none;">
-        👥 <strong id="apply-count-num">0</strong>&nbsp;people have applied so far
-      </div>
+      <div class="apply-count" id="apply-count" style="display:none;">👥 <strong id="apply-count-num">0</strong>&nbsp;people have applied</div>
     </div>
-    <div class="job-section" id="sec-desc" style="display:none;">
-      <div class="job-section-title">About the role</div>
-      <div class="job-desc-text" id="job-desc"></div>
-    </div>
-    <div class="job-section" id="sec-reqs" style="display:none;">
-      <div class="job-section-title">Requirements</div>
-      <ul class="bullet-list" id="job-reqs"></ul>
-    </div>
-    <div class="job-section" id="sec-perks" style="display:none;">
-      <div class="job-section-title">Perks & Benefits</div>
-      <ul class="bullet-list" id="job-perks"></ul>
-    </div>
-    <div class="job-section" id="sec-about" style="display:none;">
-      <div class="job-section-title">About the company</div>
-      <div class="job-desc-text" id="co-about"></div>
-    </div>
+    <div class="job-section" id="sec-desc" style="display:none;"><div class="job-section-title">About the role</div><div class="job-desc-text" id="job-desc"></div></div>
+    <div class="job-section" id="sec-reqs" style="display:none;"><div class="job-section-title">Requirements</div><ul class="bullet-list" id="job-reqs"></ul></div>
+    <div class="job-section" id="sec-perks" style="display:none;"><div class="job-section-title">Perks & Benefits</div><ul class="bullet-list" id="job-perks"></ul></div>
+    <div class="job-section" id="sec-about" style="display:none;"><div class="job-section-title">About the company</div><div class="job-desc-text" id="co-about"></div></div>
   </div>
 
-  <div class="form-panel" id="form-panel">
-    <div class="form-inner">
+  <div class="form-panel">
+    <div class="form-inner" id="form-inner">
       <div class="form-heading">
         <h2>Apply for this role</h2>
         <p>All fields marked <strong style="color:var(--danger)">*</strong> are required</p>
       </div>
-      <div class="progress-bar-wrap">
-        <div class="progress-bar" id="progress-bar" style="width:0%"></div>
-      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+
       <div class="form-card">
         <div class="form-card-title">Basic Information</div>
         <div class="field-group">
@@ -156,7 +149,7 @@ textarea.field-input{resize:vertical;min-height:100px;line-height:1.6;}
         </div>
         <div class="field-group">
           <div class="field-label">Phone Number <span class="req">*</span></div>
-          <div style="display:flex;gap:0;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;background:var(--white);" id="phone-wrap" onfocusin="this.style.borderColor='var(--accent)'" onfocusout="this.style.borderColor='var(--border)'">
+          <div style="display:flex;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;" id="phone-wrap" onfocusin="this.style.borderColor='var(--accent)'" onfocusout="this.style.borderColor='var(--border)'">
             <select id="f-phone-code" style="padding:11px 10px;border:none;background:var(--accent-light);color:var(--accent);font-family:var(--font);font-size:13px;font-weight:600;outline:none;cursor:pointer;border-right:1.5px solid var(--border);">
               <option value="+91">🇮🇳 +91</option>
               <option value="+1">🇺🇸 +1</option>
@@ -179,6 +172,7 @@ textarea.field-input{resize:vertical;min-height:100px;line-height:1.6;}
           <div class="field-error" id="err-phone">Please enter your phone number</div>
         </div>
       </div>
+
       <div class="form-card">
         <div class="form-card-title">Application Materials</div>
         <div class="field-group">
@@ -196,14 +190,16 @@ textarea.field-input{resize:vertical;min-height:100px;line-height:1.6;}
           <input class="field-input" id="f-portfolio" type="url" placeholder="https://yourportfolio.com">
         </div>
       </div>
+
       <div class="form-card" id="wrap-cover" style="display:none;">
         <div class="form-card-title">Tell Us About Yourself</div>
         <div class="field-group">
           <div class="field-label">Cover Letter <span class="req">*</span></div>
-          <textarea class="field-input" id="f-cover" placeholder="Tell us why you're excited about this role..." rows="6" oninput="updateProgress();countCover()"></textarea>
+          <textarea class="field-input" id="f-cover" placeholder="Tell us why you're excited about this role..." rows="6" oninput="updateProgress();document.getElementById('cover-count').textContent=this.value.length+' / 1500'"></textarea>
           <div class="char-count" id="cover-count">0 / 1500</div>
         </div>
       </div>
+
       <div class="form-card" id="wrap-optional" style="display:none;">
         <div class="form-card-title">Additional Info</div>
         <div class="field-group" id="wrap-salary" style="display:none;">
@@ -219,6 +215,7 @@ textarea.field-input{resize:vertical;min-height:100px;line-height:1.6;}
           <input class="field-input" id="f-edu" type="text" placeholder="e.g. B.Tech Computer Science">
         </div>
       </div>
+
       <div id="custom-fields-wrap"></div>
 
       <div style="margin-top:8px;">
@@ -226,6 +223,7 @@ textarea.field-input{resize:vertical;min-height:100px;line-height:1.6;}
         <div class="submit-note">Your data is encrypted and stored securely.</div>
       </div>
     </div>
+
     <div class="thankyou-screen" id="thankyou-screen">
       <div class="thankyou-icon">🎉</div>
       <div class="thankyou-title">Application Submitted!</div>
@@ -254,7 +252,7 @@ async function loadJob(){
     const snap=await getDoc(doc(db,'jobapps',jobId));
     if(!snap.exists()){showError('Job posting not found.');return;}
     jobData=snap.data();
-    if(jobData.settings?.accepting===false){showError('This job is no longer accepting applications.');return;}
+    if(jobData.settings&&jobData.settings.accepting===false){showError('This job is no longer accepting applications.');return;}
     renderJob(jobData);
     document.getElementById('loading-screen').style.display='none';
     document.getElementById('main-wrap').style.display='block';
@@ -278,87 +276,180 @@ function renderJob(data){
   if(job.dept)tags.push({l:'🎯 '+job.dept});
   if(job.salary)tags.push({l:'💰 '+job.salary});
   if(job.exp)tags.push({l:'🕐 '+job.exp});
-  document.getElementById('job-tags').innerHTML=tags.map(t=>`<span class="job-tag${t.h?' highlight':''}">${t.l}</span>`).join('');
+  document.getElementById('job-tags').innerHTML=tags.map(function(t){return '<span class="job-tag'+(t.h?' highlight':'')+'">'+t.l+'</span>';}).join('');
   if(s.showCount&&data.responseCount>0){document.getElementById('apply-count').style.display='flex';document.getElementById('apply-count-num').textContent=data.responseCount||0;}
   if(job.desc){document.getElementById('sec-desc').style.display='block';document.getElementById('job-desc').textContent=job.desc;}
-  if(job.reqs){document.getElementById('sec-reqs').style.display='block';document.getElementById('job-reqs').innerHTML=job.reqs.split('\n').filter(l=>l.trim()).map(l=>`<li>${l.replace(/^[•\-→]\s*/,'')}</li>`).join('');}
-  if(job.perks){document.getElementById('sec-perks').style.display='block';document.getElementById('job-perks').innerHTML=job.perks.split('\n').filter(l=>l.trim()).map(l=>`<li>${l.replace(/^[•\-→]\s*/,'')}</li>`).join('');}
+  if(job.reqs){document.getElementById('sec-reqs').style.display='block';document.getElementById('job-reqs').innerHTML=job.reqs.split('\n').filter(function(l){return l.trim();}).map(function(l){return '<li>'+l.replace(/^[•\-→]\s*/,'')+'</li>';}).join('');}
+  if(job.perks){document.getElementById('sec-perks').style.display='block';document.getElementById('job-perks').innerHTML=job.perks.split('\n').filter(function(l){return l.trim();}).map(function(l){return '<li>'+l.replace(/^[•\-→]\s*/,'')+'</li>';}).join('');}
   if(co.about){document.getElementById('sec-about').style.display='block';document.getElementById('co-about').textContent=co.about;}
-  if(s.linkedin===true)document.getElementById('wrap-linkedin').style.display='block';
-  if(s.portfolio===true)document.getElementById('wrap-portfolio').style.display='block';
-  if(s.coverLetter===true||s.cover===true)document.getElementById('wrap-cover').style.display='block';
+  if(s.linkedin)document.getElementById('wrap-linkedin').style.display='block';
+  if(s.portfolio)document.getElementById('wrap-portfolio').style.display='block';
+  if(s.coverLetter)document.getElementById('wrap-cover').style.display='block';
   if(s.salary||s.location||s.education){
     document.getElementById('wrap-optional').style.display='block';
     if(s.salary)document.getElementById('wrap-salary').style.display='block';
     if(s.location)document.getElementById('wrap-location').style.display='block';
     if(s.education)document.getElementById('wrap-edu').style.display='block';
   }
-  if(data.thankYou?.message)document.getElementById('ty-msg').textContent=data.thankYou.message;
+  if(data.thankYou&&data.thankYou.message)document.getElementById('ty-msg').textContent=data.thankYou.message;
+  if(s.redirectUrl)document.getElementById('redirect-note').textContent='You will be redirected shortly...';
+  renderCustomFields(data.customFields||[]);
+}
 
-  // Render custom fields
-  const customFields = data.customFields || [];
-  const cfWrap = document.getElementById('custom-fields-wrap');
-  if(cfWrap){
-    cfWrap.innerHTML = '';
-    if(customFields.length > 0){
-      const card = document.createElement('div');
-      card.className = 'form-card';
-      card.innerHTML = '<div class="form-card-title">Additional Questions</div>';
-      customFields.forEach(function(field, i){
-        const fg = document.createElement('div');
-        fg.className = 'field-group';
-        const label = (field.label && field.label.trim()) ? field.label.trim() : 'Question '+(i+1);
-        const req = field.required;
-        const fid = 'cf_'+i;
-        const opts = (field.optionsArr && field.optionsArr.length) ? field.optionsArr : (field.options ? field.options.split('\n').filter(function(o){return o.trim();}) : []);
-        const labelHtml = '<div class="field-label">'+label+(req?' <span class="req">*</span>':' <span class="opt">(optional)</span>')+'</div>';
-        let inputHtml = '';
-
-        if(field.type==='long_text'){
-          inputHtml = '<textarea class="field-input" id="'+fid+'" placeholder="'+(field.placeholder||'Type your answer here...')+'" rows="4"></textarea>';
-
-        } else if(field.type==='dropdown'){
-          inputHtml = '<select class="field-input" id="'+fid+'"><option value="">— Select an option —</option>'+opts.map(function(o){return '<option value="'+o+'">'+o+'</option>';}).join('')+'</select>';
-
-        } else if(field.type==='mcq'){
-          inputHtml = '<div style="display:flex;flex-direction:column;gap:8px;">'+opts.map(function(o,j){
-            return '<label style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;font-size:13px;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='var(--border)'">'
-            +'<input type="radio" name="mcq_'+i+'" value="'+o+'" style="accent-color:var(--accent);width:16px;height:16px;" onchange="document.getElementById(''+fid+'').value=''+o+'';document.querySelectorAll('[name=mcq_'+i+']').forEach(function(r){r.closest('label').style.borderColor=r.checked?'var(--accent)':' var(--border)';r.closest('label').style.background=r.checked?'var(--accent-light)':'';});"> <span>'+o+'</span>'
-            +'</label>';
-          }).join('')+'</div><input type="hidden" id="'+fid+'" value="">';
-
-        } else if(field.type==='checkbox'){
-          inputHtml = '<div style="display:flex;flex-direction:column;gap:8px;">'+opts.map(function(o,j){
-            return '<label style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;font-size:13px;" onclick="const cb=this.querySelector('input');cb.checked=!cb.checked;this.style.borderColor=cb.checked?'var(--accent)':' var(--border)';this.style.background=cb.checked?'var(--accent-light)':'';event.preventDefault();">'
-            +'<input type="checkbox" value="'+o+'" style="accent-color:var(--accent);width:16px;height:16px;"> <span>'+o+'</span>'
-            +'</label>';
-          }).join('')+'</div>';
-
-        } else if(field.type==='date'){
-          inputHtml = '<input class="field-input" id="'+fid+'" type="date">';
-
-        } else if(field.type==='number'){
-          inputHtml = '<input class="field-input" id="'+fid+'" type="number" placeholder="'+(field.placeholder||'Enter a number')+'">';
-
-        } else if(field.type==='url'){
-          inputHtml = '<div style="display:flex;align-items:center;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;" onfocusin="this.style.borderColor='var(--accent)'" onfocusout="this.style.borderColor='var(--border)'"><span style="padding:11px 12px;background:var(--accent-light);color:var(--accent);font-size:12px;border-right:1px solid var(--border);white-space:nowrap;">https://</span><input style="flex:1;padding:11px 12px;border:none;background:transparent;font-family:var(--font);font-size:13px;outline:none;" id="'+fid+'" type="text" placeholder="'+(field.placeholder||'yourwebsite.com')+'"></div>';
-
-        } else if(field.type==='rating'){
-          inputHtml = '<div style="display:flex;gap:8px;margin-bottom:6px;" id="stars_'+i+'">'+[1,2,3,4,5].map(function(n){return '<span style="font-size:32px;cursor:pointer;color:#e2ddd6;transition:all .15s;" onclick="window.setCfRating('+i+','+n+')">★</span>';}).join('')+'</div><div style="font-size:12px;color:var(--muted2);" id="starlbl_'+i+'">Tap a star to rate</div><input type="hidden" id="'+fid+'" value="">';
-
-        } else if(field.type==='yesno'){
-          inputHtml = '<div style="display:flex;gap:12px;">'
-          +'<button type="button" id="'+fid+'_yes" style="flex:1;padding:14px;border:1.5px solid var(--border);border-radius:12px;background:none;font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;" onclick="document.getElementById(''+fid+'_yes').style.borderColor='var(--success)';document.getElementById(''+fid+'_yes').style.background='#f0fdf4';document.getElementById(''+fid+'_yes').style.color='var(--success)';document.getElementById(''+fid+'_no').style.borderColor='var(--border)';document.getElementById(''+fid+'_no').style.background='none';document.getElementById(''+fid+'_no').style.color='inherit';document.getElementById(''+fid+'').value='yes';">👍 Yes</button>'
-          +'<button type="button" id="'+fid+'_no" style="flex:1;padding:14px;border:1.5px solid var(--border);border-radius:12px;background:none;font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;" onclick="document.getElementById(''+fid+'_no').style.borderColor='var(--danger)';document.getElementById(''+fid+'_no').style.background='#fef2f2';document.getElementById(''+fid+'_no').style.color='var(--danger)';document.getElementById(''+fid+'_yes').style.borderColor='var(--border)';document.getElementById(''+fid+'_yes').style.background='none';document.getElementById(''+fid+'_yes').style.color='inherit';document.getElementById(''+fid+'').value='no';">👎 No</button>'
-          +'</div><input type="hidden" id="'+fid+'" value="">';
-
-        } else {
-          inputHtml = '<input class="field-input" id="'+fid+'" type="text" placeholder="'+(field.placeholder||'Type your answer...')+'">';
-        }
-
-        fg.innerHTML = labelHtml + inputHtml;
-        card.appendChild(fg);
-      });
-      cfWrap.appendChild(card);
+function renderCustomFields(fields){
+  const wrap=document.getElementById('custom-fields-wrap');
+  if(!wrap||fields.length===0)return;
+  wrap.innerHTML='';
+  const card=document.createElement('div');
+  card.className='form-card';
+  card.innerHTML='<div class="form-card-title">Additional Questions</div>';
+  fields.forEach(function(field,i){
+    const fg=document.createElement('div');
+    fg.className='field-group';
+    const label=(field.label&&field.label.trim())?field.label.trim():'Question '+(i+1);
+    const req=field.required;
+    const fid='cf_'+i;
+    const opts=(field.optionsArr&&field.optionsArr.length)?field.optionsArr:(field.options?field.options.split('\n').filter(function(o){return o.trim();}):[] );
+    let html='<div class="field-label">'+label+(req?' <span class="req">*</span>':' <span class="opt">(optional)</span>')+'</div>';
+    var t=field.type;
+    if(t==='long_text'){
+      html+='<textarea class="field-input" id="'+fid+'" placeholder="'+(field.placeholder||'Type your answer...')+'" rows="4"></textarea>';
+    }else if(t==='dropdown'){
+      html+='<select class="field-input" id="'+fid+'"><option value="">— Select an option —</option>'+opts.map(function(o){return '<option value="'+o+'">'+o+'</option>';}).join('')+'</select>';
+    }else if(t==='mcq'){
+      html+='<div id="rg_'+i+'" style="display:flex;flex-direction:column;gap:8px;">'+opts.map(function(o,j){return '<div class="cf-option" id="mcq_'+i+'_'+j+'" onclick="selectMCQ('+i+','+j+',\''+o.replace(/'/g,"\\'")+'\')">'+'<input type="radio" name="mcq_'+i+'" style="accent-color:var(--accent);width:16px;height:16px;flex-shrink:0;"> <span>'+o+'</span></div>';}).join('')+'</div><input type="hidden" id="'+fid+'" value="">';
+    }else if(t==='checkbox'){
+      html+='<div style="display:flex;flex-direction:column;gap:8px;">'+opts.map(function(o,j){return '<div class="cf-option" id="chk_'+i+'_'+j+'" onclick="toggleCheck(this,\''+o.replace(/'/g,"\\'")+'\')">'+'<input type="checkbox" style="accent-color:var(--accent);width:16px;height:16px;flex-shrink:0;pointer-events:none;"> <span>'+o+'</span></div>';}).join('')+'</div><input type="hidden" id="'+fid+'" value="">';
+    }else if(t==='date'){
+      html+='<input class="field-input" id="'+fid+'" type="date">';
+    }else if(t==='number'){
+      html+='<input class="field-input" id="'+fid+'" type="number" placeholder="'+(field.placeholder||'Enter number')+'">';
+    }else if(t==='url'){
+      html+='<div class="url-wrap"><span class="url-prefix">https://</span><input class="url-input" id="'+fid+'" type="text" placeholder="'+(field.placeholder||'yourwebsite.com')+'"></div>';
+    }else if(t==='rating'){
+      html+='<div style="display:flex;gap:6px;margin-bottom:6px;" id="stars_'+i+'">'+[1,2,3,4,5].map(function(n){return '<span class="cf-star" onclick="setCfRating('+i+','+n+')">★</span>';}).join('')+'</div><div class="field-hint" id="starlbl_'+i+'">Tap a star to rate</div><input type="hidden" id="'+fid+'" value="">';
+    }else if(t==='yesno'){
+      html+='<div class="yesno-wrap"><button type="button" class="yesno-btn" id="yn_yes_'+i+'" onclick="setYesNo('+i+',\'yes\')">👍 Yes</button><button type="button" class="yesno-btn" id="yn_no_'+i+'" onclick="setYesNo('+i+',\'no\')">👎 No</button></div><input type="hidden" id="'+fid+'" value="">';
+    }else{
+      html+='<input class="field-input" id="'+fid+'" type="text" placeholder="'+(field.placeholder||'Type your answer...')+'">';
     }
-  }>
+    fg.innerHTML=html;
+    card.appendChild(fg);
+  });
+  wrap.appendChild(card);
+}
+
+window.selectMCQ=function(i,j,val){
+  document.querySelectorAll('[id^="mcq_'+i+'_"]').forEach(function(el){el.classList.remove('selected');el.querySelector('input').checked=false;});
+  var el=document.getElementById('mcq_'+i+'_'+j);
+  if(el){el.classList.add('selected');el.querySelector('input').checked=true;}
+  var inp=document.getElementById('cf_'+i);
+  if(inp)inp.value=val;
+};
+
+window.toggleCheck=function(el,val){
+  el.classList.toggle('selected');
+  var cb=el.querySelector('input');
+  if(cb)cb.checked=el.classList.contains('selected');
+  var fid=el.closest('.field-group').querySelector('input[type=hidden]');
+  if(fid){
+    var checked=[];
+    el.closest('div').querySelectorAll('.cf-option.selected span').forEach(function(s){checked.push(s.textContent);});
+    fid.value=checked.join(', ');
+  }
+};
+
+window.setCfRating=function(i,val){
+  document.querySelectorAll('#stars_'+i+' .cf-star').forEach(function(s,idx){s.classList.toggle('on',idx<val);});
+  var labels=['','Poor','Fair','Good','Great','Excellent'];
+  var lbl=document.getElementById('starlbl_'+i);
+  if(lbl)lbl.textContent=labels[val]+' ('+val+'/5)';
+  var inp=document.getElementById('cf_'+i);
+  if(inp)inp.value=val;
+};
+
+window.setYesNo=function(i,val){
+  var yes=document.getElementById('yn_yes_'+i);
+  var no=document.getElementById('yn_no_'+i);
+  if(yes&&no){
+    yes.className='yesno-btn'+(val==='yes'?' yes-selected':'');
+    no.className='yesno-btn'+(val==='no'?' no-selected':'');
+  }
+  var inp=document.getElementById('cf_'+i);
+  if(inp)inp.value=val;
+};
+
+window.updateProgress=function(){
+  var fields=['f-name','f-email','f-phone','f-resume'];
+  var hasCover=document.getElementById('wrap-cover').style.display!=='none';
+  if(hasCover)fields.push('f-cover');
+  var filled=fields.filter(function(id){var el=document.getElementById(id);return el&&el.value.trim().length>0;}).length;
+  document.getElementById('progress-bar').style.width=Math.round((filled/fields.length)*100)+'%';
+};
+
+function showError(msg){
+  document.getElementById('loading-screen').innerHTML='<div style="text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">😕</div><div style="font-size:18px;font-weight:700;margin-bottom:8px;">Oops!</div><div style="font-size:14px;color:#6b7280;">'+msg+'</div><a href="/dashboard/" style="display:inline-block;margin-top:20px;padding:10px 20px;background:#2563eb;color:#fff;border-radius:8px;text-decoration:none;font-size:13px;">Go to Dashboard</a></div>';
+}
+
+window.submitApplication=async function(){
+  var valid=true;
+  var checks=[
+    {id:'f-name',err:'err-name',fn:function(v){return v.trim().length>=2;}},
+    {id:'f-email',err:'err-email',fn:function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}},
+    {id:'f-phone',err:'err-phone',fn:function(v){return v.trim().length>=7;}},
+    {id:'f-resume',err:'err-resume',fn:function(v){return v.trim().length>0;}}
+  ];
+  var hasCover=document.getElementById('wrap-cover').style.display!=='none';
+  if(hasCover)checks.push({id:'f-cover',err:null,fn:function(v){return v.trim().length>=10;}});
+  checks.forEach(function(c){
+    var el=document.getElementById(c.id);
+    if(!el)return;
+    if(!c.fn(el.value)){el.classList.add('error');if(c.err)document.getElementById(c.err).style.display='block';valid=false;}
+    else{el.classList.remove('error');if(c.err)document.getElementById(c.err).style.display='none';}
+  });
+  if(!valid){document.querySelector('.field-input.error').scrollIntoView({behavior:'smooth',block:'center'});return;}
+  var btn=document.getElementById('submit-btn');
+  btn.disabled=true;btn.textContent='Submitting...';
+  try{
+    var appId='APP-'+Date.now().toString(36).toUpperCase();
+    var customAnswers={};
+    document.querySelectorAll('#custom-fields-wrap [id^="cf_"]').forEach(function(el){
+      if(el.value)customAnswers[el.id]=el.value;
+    });
+    var phoneCode=document.getElementById('f-phone-code');
+    await addDoc(collection(db,'jobapps',jobId,'responses'),{
+      jobId:jobId,appId:appId,
+      name:document.getElementById('f-name').value,
+      email:document.getElementById('f-email').value,
+      phone:(phoneCode?phoneCode.value:'+91')+' '+document.getElementById('f-phone').value,
+      resume:document.getElementById('f-resume').value,
+      linkedin:document.getElementById('f-linkedin')?document.getElementById('f-linkedin').value:'',
+      portfolio:document.getElementById('f-portfolio')?document.getElementById('f-portfolio').value:'',
+      cover:document.getElementById('f-cover')?document.getElementById('f-cover').value:'',
+      salary:document.getElementById('f-salary')?document.getElementById('f-salary').value:'',
+      location:document.getElementById('f-location')?document.getElementById('f-location').value:'',
+      education:document.getElementById('f-edu')?document.getElementById('f-edu').value:'',
+      customAnswers:customAnswers,
+      submittedAt:serverTimestamp(),
+      status:'new'
+    });
+    document.getElementById('app-id-val').textContent=appId;
+    document.getElementById('form-inner').style.display='none';
+    document.getElementById('thankyou-screen').style.display='flex';
+    var redirectUrl=jobData&&jobData.settings&&jobData.settings.redirectUrl?jobData.settings.redirectUrl:'';
+    var delay=jobData&&jobData.thankYou&&jobData.thankYou.delay?parseInt(jobData.thankYou.delay):3;
+    if(redirectUrl&&delay>0){
+      if(!redirectUrl.startsWith('http'))redirectUrl='https://'+redirectUrl;
+      setTimeout(function(){window.location.href=redirectUrl;},delay*1000);
+    }
+  }catch(e){
+    console.error(e);
+    btn.disabled=false;btn.textContent='Submit Application →';
+    alert('Error: '+e.code+' — '+e.message);
+  }
+};
+
+loadJob();
+</script>
+</body>
+</html>
