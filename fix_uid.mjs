@@ -13,18 +13,17 @@ const FB = {
 const app = initializeApp(FB);
 const db = getFirestore(app);
 
-const ids = [
-  "geH52tKVpIXngpnPxwHY",
-  "1cHMSskRjaK9PC54K7cA",
-  "kvT9UmgurDfvzOA8BJA1"
-];
-
 async function fix() {
+  const ids = [
+    "geH52tKVpIXngpnPxwHY",
+    "1cHMSskRjaK9PC54K7cA",
+    "kvT9UmgurDfvzOA8BJA1"
+  ];
   for (const id of ids) {
     await updateDoc(doc(db, 'assessments', id), {
       userId: "7WPJK6ZuaEb3lgevyUbbU87umuH3"
     });
-    console.log("✅ Updated:", id);
+    console.log("Fixed:", id);
   }
   console.log("All done!");
   process.exit(0);
