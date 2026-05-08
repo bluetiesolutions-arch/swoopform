@@ -127,11 +127,11 @@ select.field-input{cursor:pointer;}
   <div class="sidebar">
     <div class="sidebar-section">
       <div class="sidebar-label">Sections</div>
-      <div class="sidebar-item active" onclick="scrollTo('sec-info')">📋 Assessment Info</div>
-      <div class="sidebar-item" onclick="scrollTo('sec-questions')">❓ Questions</div>
-      <div class="sidebar-item" onclick="scrollTo('sec-scoring')">🏆 Scoring & Grades</div>
-      <div class="sidebar-item" onclick="scrollTo('sec-settings')">⚙️ Settings</div>
-      <div class="sidebar-item" onclick="scrollTo('sec-thankyou')">🎉 Result Page</div>
+      <div class="sidebar-item active" onclick="window.goSection('sec-info')">📋 Assessment Info</div>
+      <div class="sidebar-item" onclick="window.goSection('sec-questions')">❓ Questions</div>
+      <div class="sidebar-item" onclick="window.goSection('sec-scoring')">🏆 Scoring & Grades</div>
+      <div class="sidebar-item" onclick="window.goSection('sec-settings')">⚙️ Settings</div>
+      <div class="sidebar-item" onclick="window.goSection('sec-thankyou')">🎉 Result Page</div>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-label">Add Question</div>
@@ -207,7 +207,7 @@ select.field-input{cursor:pointer;}
             <div class="field-label">Negative Marking</div>
             <div class="toggle-row" style="border:none;padding:6px 0;">
               <div><div class="toggle-name" style="font-size:13px;">Deduct marks for wrong answers</div></div>
-              <div class="toggle" id="tgl-negative" onclick="this.classList.toggle('on');toggleNegative()"></div>
+              <div class="toggle" id="tgl-negative" onclick="this.classList.toggle('on');window.toggleNegative()"></div>
             </div>
             <div id="negative-wrap" style="display:none;margin-top:10px;">
               <div class="field-label">Marks deducted per wrong answer</div>
@@ -223,7 +223,7 @@ select.field-input{cursor:pointer;}
               <div class="score-band"><input type="number" value="40" placeholder="From%"> <span class="score-band-label">to 59% →</span> <input type="text" value="C" placeholder="Grade"> <input type="text" value="Keep practicing!" placeholder="Message" style="flex:2;width:auto;"></div>
               <div class="score-band"><input type="number" value="0" placeholder="From%"> <span class="score-band-label">to 39% →</span> <input type="text" value="F" placeholder="Grade"> <input type="text" value="Better luck next time!" placeholder="Message" style="flex:2;width:auto;"></div>
             </div>
-            <button class="add-option-btn" onclick="addGradeBand()" style="margin-top:8px;">+ Add Grade Band</button>
+            <button class="add-option-btn" onclick="window.addGradeBand()" style="margin-top:8px;">+ Add Grade Band</button>
           </div>
         </div>
       </div>
@@ -567,7 +567,7 @@ window.publish=async function(){
 window.openQModal=function(){document.getElementById('q-modal').classList.add('open');};
 window.closeQModal=function(){document.getElementById('q-modal').classList.remove('open');};
 window.copyUrl=function(){navigator.clipboard.writeText(document.getElementById('modal-url').textContent).then(function(){toast('Copied!');});};
-window.scrollTo=function(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});};
+window.goSection=function(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});document.querySelectorAll('.sidebar-item').forEach(function(i){i.classList.remove('active');});event.currentTarget.classList.add('active');};
 
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
 
