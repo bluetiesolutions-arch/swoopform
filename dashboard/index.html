@@ -364,6 +364,7 @@ function getViewUrl(item){
   const m=TYPE_META[item._col];if(!m)return'#';
   if(item._col==='surveys')return item.slug?'/survey/'+item.slug:'/s/?id='+item.id;
   if(item._col==='jobapps')return '/jobapp/?id='+item.id;
+    if(item._col==='assessments')return '/assessment/?id='+item.id;
   return item.slug?'/engage/'+item.slug:'#';
 }
 function getEditUrl(item){return(TYPE_META[item._col]?.editPath||'#')+item.id}
