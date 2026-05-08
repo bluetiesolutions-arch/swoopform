@@ -297,157 +297,68 @@ function renderJob(data){
 
   // Render custom fields
   const customFields = data.customFields || [];
+  const cfWrap = document.getElementById('custom-fields-wrap');
+  if(cfWrap){
+    cfWrap.innerHTML = '';
+    if(customFields.length > 0){
+      const card = document.createElement('div');
+      card.className = 'form-card';
+      card.innerHTML = '<div class="form-card-title">Additional Questions</div>';
+      customFields.forEach(function(field, i){
+        const fg = document.createElement('div');
+        fg.className = 'field-group';
+        const label = (field.label && field.label.trim()) ? field.label.trim() : 'Question '+(i+1);
+        const req = field.required;
+        const fid = 'cf_'+i;
+        const opts = (field.optionsArr && field.optionsArr.length) ? field.optionsArr : (field.options ? field.options.split('\n').filter(function(o){return o.trim();}) : []);
+        const labelHtml = '<div class="field-label">'+label+(req?' <span class="req">*</span>':' <span class="opt">(optional)</span>')+'</div>';
+        let inputHtml = '';
 
-  const wrap = document.getElementById('custom-fields-wrap');
-  if(wrap && customFields.length > 0){
-    wrap.innerHTML = '';
-    const card = document.createElement('div');
-    card.className = 'form-card';
-    card.innerHTML = '<div class="form-card-title">Additional Questions</div>';
-    customFields.forEach((field, i) => {
-      const fg = document.createElement('div');
-      fg.className = 'field-group';
-      const label = (field.label && field.label.trim()) ? field.label.trim() : ((field.question && field.question.trim()) ? field.question.trim() : 'Question');
-      const placeholder = field.placeholder || '';
-      const required = field.required ? '<span class="req">*</span>' : '<span class="opt">(optional)</span>';
-      const fid = 'custom_'+i;
-      let input = '';
-      if(field.type === 'long_text'){
-        input = `<textarea class="field-input" id="${fid}" placeholder="${placeholder}" rows="4"></textarea>`;
-      } else if(field.type === 'dropdown'){
-        const opts = (field.options||'').split('\n').filter(o=>o.trim()).map(o=>`<option>${o.trim()}</option>`).join('');
-        input = `<select class="field-input" id="${fid}"><option value="">Select...</option>${opts}</select>`;
-      } else if(field.type === 'mcq'){
-        const opts = (field.options||'').split('\n').filter(o=>o.trim()).map((o,j)=>`<div class="radio-option" onclick="this.querySelectorAll('input').forEach(x=>x.checked=false);this.querySelector('input').checked=true;document.querySelectorAll('[name=mcq_${i}]').forEach(x=>x.closest('.radio-option').classList.remove('selected'));this.classList.add('selected')"><input type="radio" name="mcq_${i}" id="${fid}_${j}"><label for="${fid}_${j}">${o.trim()}</label></div>`).join('');
-        input = `<div class="radio-group">${opts}</div>`;
-      } else if(field.type === 'checkbox'){
-        const opts = (field.options||'').split('\n').filter(o=>o.trim()).map((o,j)=>`<div class="check-option" onclick="this.classList.toggle('selected');this.querySelector('input').checked=!this.querySelector('input').checked"><input type="checkbox" id="${fid}_${j}"><label for="${fid}_${j}">${o.trim()}</label></div>`).join('');
-        input = `<div class="check-group">${opts}</div>`;
-      } else if(field.type === 'rating'){
-        input = `<div class="star-group" id="stars_${i}">${[1,2,3,4,5].map(n=>`<span class="star" onclick="setRating(${i},${n})">★</span>`).join('')}</div><div class="field-hint" id="star_label_${i}">Click to rate</div><input type="hidden" id="${fid}" value="">`;
-      } else if(field.type === 'yesno'){
-        input = `<div class="yesno-group"><button type="button" class="yesno-btn yes" onclick="selectYesNo(this,'yes','yesno_${i}','${fid}')">✅ Yes</button><button type="button" class="yesno-btn no" onclick="selectYesNo(this,'no','yesno_${i}','${fid}')">❌ No</button></div><input type="hidden" id="${fid}" value="">`;
-      } else if(field.type === 'date'){
-        input = `<input class="field-input" id="${fid}" type="date">`;
-      } else if(field.type === 'number'){
-        input = `<input class="field-input" id="${fid}" type="number" placeholder="${placeholder}">`;
-      } else if(field.type === 'url'){
-        input = `<input class="field-input" id="${fid}" type="url" placeholder="${placeholder||'https://'}">`;
-      } else {
-        input = `<input class="field-input" id="${fid}" type="text" placeholder="${placeholder}">`;
-      }
-      fg.innerHTML = `<div class="field-label">${label} ${required}</div>${input}`;
-      card.appendChild(fg);
-    });
-    wrap.appendChild(card);
-  }
-  if(s.redirectUrl)document.getElementById('redirect-note').textContent='You will be redirected shortly...';
-}
+        if(field.type==='long_text'){
+          inputHtml = '<textarea class="field-input" id="'+fid+'" placeholder="'+(field.placeholder||'Type your answer here...')+'" rows="4"></textarea>';
 
-function showError(msg){
-  document.getElementById('loading-screen').innerHTML=`<div style="text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">😕</div><div style="font-size:18px;font-weight:700;margin-bottom:8px;">Oops!</div><div style="font-size:14px;color:#6b7280;">${msg}</div><a href="/dashboard" style="display:inline-block;margin-top:20px;padding:10px 20px;background:#2563eb;color:#fff;border-radius:8px;text-decoration:none;font-size:13px;">Go to Dashboard</a></div>`;
-}
+        } else if(field.type==='dropdown'){
+          inputHtml = '<select class="field-input" id="'+fid+'"><option value="">— Select an option —</option>'+opts.map(function(o){return '<option value="'+o+'">'+o+'</option>';}).join('')+'</select>';
 
-window.updateProgress=function(){
-  const fields=['f-name','f-email','f-phone','f-resume'];
-  if(document.getElementById('wrap-cover').style.display!=='none')fields.push('f-cover');
-  const filled=fields.filter(id=>document.getElementById(id)?.value.trim().length>0).length;
-  document.getElementById('progress-bar').style.width=Math.round((filled/fields.length)*100)+'%';
-};
+        } else if(field.type==='mcq'){
+          inputHtml = '<div style="display:flex;flex-direction:column;gap:8px;">'+opts.map(function(o,j){
+            return '<label style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;font-size:13px;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='var(--border)'">'
+            +'<input type="radio" name="mcq_'+i+'" value="'+o+'" style="accent-color:var(--accent);width:16px;height:16px;" onchange="document.getElementById(''+fid+'').value=''+o+'';document.querySelectorAll('[name=mcq_'+i+']').forEach(function(r){r.closest('label').style.borderColor=r.checked?'var(--accent)':' var(--border)';r.closest('label').style.background=r.checked?'var(--accent-light)':'';});"> <span>'+o+'</span>'
+            +'</label>';
+          }).join('')+'</div><input type="hidden" id="'+fid+'" value="">';
 
-window.countCover=function(){
-  document.getElementById('cover-count').textContent=document.getElementById('f-cover').value.length+' / 1500';
-};
+        } else if(field.type==='checkbox'){
+          inputHtml = '<div style="display:flex;flex-direction:column;gap:8px;">'+opts.map(function(o,j){
+            return '<label style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;font-size:13px;" onclick="const cb=this.querySelector('input');cb.checked=!cb.checked;this.style.borderColor=cb.checked?'var(--accent)':' var(--border)';this.style.background=cb.checked?'var(--accent-light)':'';event.preventDefault();">'
+            +'<input type="checkbox" value="'+o+'" style="accent-color:var(--accent);width:16px;height:16px;"> <span>'+o+'</span>'
+            +'</label>';
+          }).join('')+'</div>';
 
-window.setRating=function(idx,val){
-  const stars=document.querySelectorAll('#stars_'+idx+' .star');
-  const labels=['','Beginner','Basic','Intermediate','Advanced','Expert'];
-  stars.forEach((s,i)=>s.classList.toggle('active',i<val));
-  const lbl=document.getElementById('star_label_'+idx);
-  if(lbl)lbl.textContent=labels[val]||val+' stars';
-  const inp=document.getElementById('custom_'+idx);
-  if(inp)inp.value=val;
-};
+        } else if(field.type==='date'){
+          inputHtml = '<input class="field-input" id="'+fid+'" type="date">';
 
-window.selectYesNo=function(el,val,groupId,fid){
-  document.querySelectorAll('.yesno-btn').forEach(b=>{
-    if(b.closest('.yesno-group')===el.closest('.yesno-group')){
-      b.classList.remove('selected');
-    }
-  });
-  el.classList.add('selected');
-  const inp=document.getElementById(fid);
-  if(inp)inp.value=val;
-};
+        } else if(field.type==='number'){
+          inputHtml = '<input class="field-input" id="'+fid+'" type="number" placeholder="'+(field.placeholder||'Enter a number')+'">';
 
-window.setCfRating=function(idx,val){
-  document.querySelectorAll('#stars_'+idx+' .star').forEach((s,i)=>s.classList.toggle('active',i<val));
-  const labels=['','Poor','Fair','Good','Great','Excellent'];
-  const lbl=document.getElementById('starlbl_'+idx);
-  if(lbl)lbl.textContent=labels[val];
-  const inp=document.getElementById('cf_'+idx);
-  if(inp)inp.value=val;
-};
+        } else if(field.type==='url'){
+          inputHtml = '<div style="display:flex;align-items:center;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;" onfocusin="this.style.borderColor='var(--accent)'" onfocusout="this.style.borderColor='var(--border)'"><span style="padding:11px 12px;background:var(--accent-light);color:var(--accent);font-size:12px;border-right:1px solid var(--border);white-space:nowrap;">https://</span><input style="flex:1;padding:11px 12px;border:none;background:transparent;font-family:var(--font);font-size:13px;outline:none;" id="'+fid+'" type="text" placeholder="'+(field.placeholder||'yourwebsite.com')+'"></div>';
 
-window.submitApplication=async function(){
-  let valid=true;
-  const checks=[
-    {id:'f-name',err:'err-name',fn:v=>v.trim().length>=2},
-    {id:'f-email',err:'err-email',fn:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)},
-    {id:'f-phone',err:'err-phone',fn:v=>v.trim().length>=7},
-    {id:'f-resume',err:'err-resume',fn:v=>v.trim().length>0},
-  ];
-  if(document.getElementById('wrap-cover').style.display!=='none')checks.push({id:'f-cover',err:null,fn:v=>v.trim().length>=10});
-  checks.forEach(({id,err,fn})=>{
-    const el=document.getElementById(id);if(!el)return;
-    if(!fn(el.value)){el.classList.add('error');if(err)document.getElementById(err).style.display='block';valid=false;}
-    else{el.classList.remove('error');if(err)document.getElementById(err).style.display='none';}
-  });
-  if(!valid){document.querySelector('.field-input.error')?.scrollIntoView({behavior:'smooth',block:'center'});return;}
-  const btn=document.getElementById('submit-btn');
-  btn.disabled=true;btn.textContent='Submitting...';
-  try{
-    const appId='APP-'+Date.now().toString(36).toUpperCase();
-    await addDoc(collection(db,'jobapps',jobId,'responses'),{
-      jobId,appId,
-      name:document.getElementById('f-name').value,
-      email:document.getElementById('f-email').value,
-      phone:(document.getElementById('f-phone-code')?.value||'+91')+' '+document.getElementById('f-phone').value,
-      resume:document.getElementById('f-resume').value,
-      linkedin:document.getElementById('f-linkedin')?.value||'',
-      portfolio:document.getElementById('f-portfolio')?.value||'',
-      cover:document.getElementById('f-cover')?.value||'',
-      salary:document.getElementById('f-salary')?.value||'',
-      location:document.getElementById('f-location')?.value||'',
-      education:document.getElementById('f-edu')?.value||'',
-      customAnswers: (()=>{
-        const answers={};
-        const wrap=document.getElementById('custom-fields-wrap');
-        if(wrap){
-          wrap.querySelectorAll('[id^="custom_"]').forEach(el=>{
-            const key=el.id;
-            answers[key]=el.value||'';
-          });
+        } else if(field.type==='rating'){
+          inputHtml = '<div style="display:flex;gap:8px;margin-bottom:6px;" id="stars_'+i+'">'+[1,2,3,4,5].map(function(n){return '<span style="font-size:32px;cursor:pointer;color:#e2ddd6;transition:all .15s;" onclick="window.setCfRating('+i+','+n+')">★</span>';}).join('')+'</div><div style="font-size:12px;color:var(--muted2);" id="starlbl_'+i+'">Tap a star to rate</div><input type="hidden" id="'+fid+'" value="">';
+
+        } else if(field.type==='yesno'){
+          inputHtml = '<div style="display:flex;gap:12px;">'
+          +'<button type="button" id="'+fid+'_yes" style="flex:1;padding:14px;border:1.5px solid var(--border);border-radius:12px;background:none;font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;" onclick="document.getElementById(''+fid+'_yes').style.borderColor='var(--success)';document.getElementById(''+fid+'_yes').style.background='#f0fdf4';document.getElementById(''+fid+'_yes').style.color='var(--success)';document.getElementById(''+fid+'_no').style.borderColor='var(--border)';document.getElementById(''+fid+'_no').style.background='none';document.getElementById(''+fid+'_no').style.color='inherit';document.getElementById(''+fid+'').value='yes';">👍 Yes</button>'
+          +'<button type="button" id="'+fid+'_no" style="flex:1;padding:14px;border:1.5px solid var(--border);border-radius:12px;background:none;font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;" onclick="document.getElementById(''+fid+'_no').style.borderColor='var(--danger)';document.getElementById(''+fid+'_no').style.background='#fef2f2';document.getElementById(''+fid+'_no').style.color='var(--danger)';document.getElementById(''+fid+'_yes').style.borderColor='var(--border)';document.getElementById(''+fid+'_yes').style.background='none';document.getElementById(''+fid+'_yes').style.color='inherit';document.getElementById(''+fid+'').value='no';">👎 No</button>'
+          +'</div><input type="hidden" id="'+fid+'" value="">';
+
+        } else {
+          inputHtml = '<input class="field-input" id="'+fid+'" type="text" placeholder="'+(field.placeholder||'Type your answer...')+'">';
         }
-        return answers;
-      })(),
-      submittedAt:serverTimestamp(),
-      status:'new'
-    });
-    // responseCount updated server-side
-    document.getElementById('app-id-val').textContent=appId;
-    document.querySelector('.form-inner').style.display='none';
-    document.getElementById('thankyou-screen').style.display='flex';
-    const redirectUrl=jobData?.settings?.redirectUrl;
-    const delay=parseInt(jobData?.thankYou?.delay||'3');
-    if(redirectUrl&&delay>0)setTimeout(()=>window.location.href=redirectUrl,delay*1000);
-  }catch(e){
-    console.error(e);btn.disabled=false;btn.textContent='Submit Application →';
-    alert('Error: ' + e.code + ' — ' + e.message);
-  }
-};
 
-loadJob();
-</script>
-</body>
-</html>
+        fg.innerHTML = labelHtml + inputHtml;
+        card.appendChild(fg);
+      });
+      cfWrap.appendChild(card);
+    }
+  }>
