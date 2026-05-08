@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assessment — SwoopForm</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f4f0;--white:#fff;--border:#e2ddd6;--accent:#3b6ef5;--accent-light:#eff6ff;--success:#10b981;--danger:#ef4444;--warn:#f59e0b;--text:#1c1c2e;--muted:#7a7a8c;--muted2:#c5c0b8;--font:'Sora',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;}
+header{height:52px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:50;}
+.brand{font-size:15px;font-weight:700;color:var(--accent);}
+.brand span{color:var(--text);}
+.timer-badge{background:#fef3c7;color:#92400e;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;font-family:var(--font);}
+.timer-badge.warn{background:#fee2e2;color:#dc2626;animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.7}}
+.main{max-width:720px;margin:0 auto;padding:32px 20px;}
+
+/* INFO SCREEN */
+.info-card{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:36px;text-align:center;margin-bottom:20px;}
+.info-icon{font-size:52px;margin-bottom:16px;}
+.info-title{font-size:24px;font-weight:700;margin-bottom:8px;}
+.info-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:480px;margin-left:auto;margin-right:auto;}
+.info-meta{display:flex;justify-content:center;gap:24px;margin-bottom:28px;flex-wrap:wrap;}
+.info-meta-item{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.info-meta-val{font-size:20px;font-weight:700;color:var(--accent);}
+.info-meta-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;}
+.instructions-box{background:var(--bg);border-radius:12px;padding:16px;font-size:13px;color:var(--muted);line-height:1.8;text-align:left;margin-bottom:24px;}
+
+/* COLLECT INFO */
+.collect-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:20px;}
+.field-group{margin-bottom:16px;}
+.field-label{font-size:13px;font-weight:500;margin-bottom:7px;}
+.req{color:var(--danger);}
+.field-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--white);color:var(--text);font-family:var(--font);font-size:13px;outline:none;transition:border-color .2s;}
+.field-input:focus{border-color:var(--accent);}
+.field-input::placeholder{color:var(--muted2);}
+
+/* PROGRESS */
+.progress-wrap{margin-bottom:24px;}
+.progress-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:8px;}
+.progress-bar-bg{height:6px;background:var(--border);border-radius:6px;}
+.progress-bar{height:6px;background:var(--accent);border-radius:6px;transition:width .4s;}
+.q-counter{font-size:12px;color:var(--muted);text-align:center;margin-bottom:4px;}
+
+/* QUESTION */
+.question-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:16px;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.q-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.q-num-badge{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.q-marks-badge{font-size:11px;color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:20px;font-weight:600;margin-left:auto;}
+.q-type-label{font-size:11px;color:var(--muted);background:var(--bg);padding:3px 8px;border-radius:5px;}
+.q-text{font-size:15px;font-weight:600;line-height:1.6;margin-bottom:20px;}
+.q-hint{font-size:12px;color:var(--muted);margin-bottom:14px;font-style:italic;}
+
+/* OPTIONS */
+.options{display:flex;flex-direction:column;gap:10px;}
+.opt-btn{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid var(--border);border-radius:12px;cursor:pointer;transition:all .2s;background:var(--white);text-align:left;font-family:var(--font);font-size:13px;width:100%;}
+.opt-btn:hover{border-color:var(--accent);background:var(--accent-light);}
+.opt-btn.selected{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
+.opt-btn.correct{border-color:var(--success);background:#f0fdf4;color:var(--success);}
+.opt-btn.wrong{border-color:var(--danger);background:#fef2f2;color:var(--danger);}
+.opt-btn.missed{border-color:var(--success);background:#f0fdf4;color:var(--success);opacity:0.7;}
+.opt-circle{width:20px;height:20px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;}
+.opt-check{width:20px;height:20px;border-radius:5px;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;}
+.opt-explanation{margin-top:12px;padding:12px;background:#f0fdf4;border-radius:8px;font-size:12px;color:#166534;line-height:1.6;}
+.opt-explanation.wrong-exp{background:#fef2f2;color:#dc2626;}
+
+/* NAV BUTTONS */
+.nav-btns{display:flex;justify-content:space-between;align-items:center;margin-top:20px;}
+.btn{padding:12px 24px;border-radius:10px;font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;border:none;}
+.btn-ghost{background:none;border:1.5px solid var(--border);color:var(--muted);}
+.btn-ghost:hover{border-color:var(--muted2);color:var(--text);}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:#5a84f8;transform:translateY(-1px);}
+.btn-success{background:var(--success);color:#fff;}
+.btn-success:hover{background:#0d8a5e;}
+.btn-danger{background:var(--danger);color:#fff;}
+
+/* ANSWER INPUT */
+.ans-input{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;background:var(--white);color:var(--text);font-family:var(--font);font-size:14px;outline:none;transition:border-color .2s;}
+.ans-input:focus{border-color:var(--accent);}
+textarea.ans-input{resize:vertical;min-height:120px;line-height:1.6;}
+
+/* QUESTION NAVIGATOR */
+.q-nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.q-nav-btn{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--border);background:var(--white);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;}
+.q-nav-btn.answered{background:var(--accent);border-color:var(--accent);color:#fff;}
+.q-nav-btn.current{border-color:var(--accent);color:var(--accent);}
+.q-nav-btn.correct-nav{background:var(--success);border-color:var(--success);color:#fff;}
+.q-nav-btn.wrong-nav{background:var(--danger);border-color:var(--danger);color:#fff;}
+
+/* RESULT SCREEN */
+.result-card{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:36px;text-align:center;margin-bottom:20px;}
+.result-emoji{font-size:64px;margin-bottom:16px;animation:pop .5s ease;}
+@keyframes pop{0%{transform:scale(0.5);opacity:0}80%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+.result-title{font-size:26px;font-weight:700;margin-bottom:8px;}
+.result-score{font-size:52px;font-weight:800;margin:16px 0;color:var(--accent);}
+.result-grade{display:inline-block;padding:8px 20px;border-radius:20px;font-size:16px;font-weight:700;margin-bottom:12px;}
+.result-message{font-size:14px;color:var(--muted);margin-bottom:24px;}
+.result-stats{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:24px;}
+.result-stat{text-align:center;padding:16px 20px;background:var(--bg);border-radius:12px;min-width:100px;}
+.result-stat-val{font-size:22px;font-weight:700;}
+.result-stat-lbl{font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:0.8px;}
+.review-toggle{background:none;border:1.5px solid var(--border);border-radius:10px;padding:10px 20px;font-family:var(--font);font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;margin-bottom:20px;}
+.review-toggle:hover{border-color:var(--accent);color:var(--accent);}
+
+/* LOADING */
+.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<div class="loading-screen" id="loading-screen">
+  <div class="spinner"></div>
+  <div style="font-size:13px;color:var(--muted);">Loading assessment...</div>
+</div>
+
+<div id="app" style="display:none;">
+  <header>
+    <div class="brand">Swoop<span>Form</span></div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div id="timer-wrap" style="display:none;"><div class="timer-badge" id="timer">30:00</div></div>
+      <span style="font-size:12px;color:var(--muted);">Powered by SwoopForm</span>
+    </div>
+  </header>
+
+  <!-- INFO SCREEN -->
+  <div id="screen-info" class="main">
+    <div class="info-card">
+      <div class="info-icon">📝</div>
+      <div class="info-title" id="info-title">Assessment</div>
+      <div class="info-desc" id="info-desc"></div>
+      <div class="info-meta">
+        <div class="info-meta-item"><div class="info-meta-val" id="info-questions">0</div><div class="info-meta-lbl">Questions</div></div>
+        <div class="info-meta-item"><div class="info-meta-val" id="info-marks">0</div><div class="info-meta-lbl">Total Marks</div></div>
+        <div class="info-meta-item"><div class="info-meta-val" id="info-time">∞</div><div class="info-meta-lbl">Minutes</div></div>
+        <div class="info-meta-item"><div class="info-meta-val" id="info-pass">60%</div><div class="info-meta-lbl">Pass Mark</div></div>
+      </div>
+      <div class="instructions-box" id="info-instructions" style="display:none;"></div>
+      <button class="btn btn-primary" onclick="startAssessment()" style="padding:14px 40px;font-size:15px;border-radius:12px;">Start Assessment →</button>
+    </div>
+  </div>
+
+  <!-- COLLECT INFO SCREEN -->
+  <div id="screen-collect" class="main" style="display:none;">
+    <div class="collect-card">
+      <div style="font-size:20px;font-weight:700;margin-bottom:6px;">Before you begin</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:20px;">Please enter your details to continue</div>
+      <div class="field-group">
+        <div class="field-label">Full Name <span class="req">*</span></div>
+        <input class="field-input" id="p-name" type="text" placeholder="Your full name">
+      </div>
+      <div class="field-group">
+        <div class="field-label">Email Address <span class="req">*</span></div>
+        <input class="field-input" id="p-email" type="email" placeholder="your@email.com">
+      </div>
+      <div class="field-group">
+        <div class="field-label">Organization / Institution <span style="font-size:11px;color:var(--muted2);font-weight:400;">(optional)</span></div>
+        <input class="field-input" id="p-org" type="text" placeholder="e.g. Acme Corp or IIT Delhi">
+      </div>
+      <button class="btn btn-primary" onclick="beginQuestions()" style="width:100%;padding:14px;font-size:15px;margin-top:8px;">Begin Assessment →</button>
+    </div>
+  </div>
+
+  <!-- QUESTION SCREEN -->
+  <div id="screen-questions" class="main" style="display:none;">
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span id="progress-label">Question 1 of 10</span>
+        <span id="progress-answered">0 answered</span>
+      </div>
+      <div class="progress-bar-bg"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+    </div>
+    <div class="q-nav" id="q-nav"></div>
+    <div id="question-display"></div>
+    <div class="nav-btns">
+      <button class="btn btn-ghost" id="btn-prev" onclick="prevQ()" style="visibility:hidden;">← Previous</button>
+      <button class="btn btn-primary" id="btn-next" onclick="nextQ()">Next →</button>
+    </div>
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div id="screen-result" class="main" style="display:none;">
+    <div class="result-card">
+      <div class="result-emoji" id="result-emoji">🎉</div>
+      <div class="result-title" id="result-title">Assessment Complete!</div>
+      <div class="result-score" id="result-score">0/0</div>
+      <div class="result-grade" id="result-grade">A+</div>
+      <div class="result-message" id="result-message"></div>
+      <div class="result-stats">
+        <div class="result-stat"><div class="result-stat-val" id="rs-correct" style="color:var(--success);">0</div><div class="result-stat-lbl">Correct</div></div>
+        <div class="result-stat"><div class="result-stat-val" id="rs-wrong" style="color:var(--danger);">0</div><div class="result-stat-lbl">Wrong</div></div>
+        <div class="result-stat"><div class="result-stat-val" id="rs-skipped" style="color:var(--muted);">0</div><div class="result-stat-lbl">Skipped</div></div>
+        <div class="result-stat"><div class="result-stat-val" id="rs-pct" style="color:var(--accent);">0%</div><div class="result-stat-lbl">Score %</div></div>
+      </div>
+    </div>
+    <button class="review-toggle" id="review-btn" onclick="toggleReview()">👁 Review Answers</button>
+    <div id="review-section" style="display:none;"></div>
+  </div>
+</div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getFirestore,doc,getDoc,addDoc,collection,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);
+const db=getFirestore(app);
+
+const params=new URLSearchParams(window.location.search);
+const AID=params.get('id');
+let aData=null;
+let questions=[];
+let answers={};
+let currentQ=0;
+let timerInterval=null;
+let timeLeft=0;
+let participantInfo={};
+let reviewed=false;
+
+async function init(){
+  if(!AID){showError('No assessment ID in URL.');return;}
+  try{
+    const snap=await getDoc(doc(db,'assessments',AID));
+    if(!snap.exists()){showError('Assessment not found.');return;}
+    aData=snap.data();
+    if(aData.accepting===false){showError('This assessment is closed.');return;}
+    questions=aData.questions||[];
+    if(aData.shuffleQuestions)questions=shuffle(questions);
+    if(aData.shuffleOptions){
+      questions=questions.map(function(q){
+        if(q.options&&q.options.length)q.options=shuffle(q.options);
+        return q;
+      });
+    }
+    renderInfo();
+    document.getElementById('loading-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+  }catch(e){console.error(e);showError('Failed to load assessment.');}
+}
+
+function renderInfo(){
+  document.getElementById('info-title').textContent=aData.title||'Assessment';
+  document.getElementById('info-desc').textContent=aData.description||'';
+  document.getElementById('info-questions').textContent=questions.length;
+  document.getElementById('info-marks').textContent=aData.totalMarks||questions.reduce(function(s,q){return s+(q.marks||1);},0);
+  document.getElementById('info-time').textContent=aData.timeLimit>0?aData.timeLimit:'∞';
+  document.getElementById('info-pass').textContent=(aData.passPct||60)+'%';
+  if(aData.instructions){document.getElementById('info-instructions').style.display='block';document.getElementById('info-instructions').textContent=aData.instructions;}
+  document.title=(aData.title||'Assessment')+' — SwoopForm';
+}
+
+window.startAssessment=function(){
+  document.getElementById('screen-info').style.display='none';
+  if(aData.collectInfo!==false){
+    document.getElementById('screen-collect').style.display='block';
+  }else{
+    beginQuestions();
+  }
+};
+
+window.beginQuestions=function(){
+  const name=document.getElementById('p-name');
+  const email=document.getElementById('p-email');
+  if(aData.collectInfo!==false){
+    if(!name||!name.value.trim()){alert('Please enter your name');return;}
+    if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)){alert('Please enter a valid email');return;}
+    participantInfo={name:name.value.trim(),email:email.value.trim(),org:document.getElementById('p-org')?document.getElementById('p-org').value.trim():''};
+  }
+  document.getElementById('screen-collect').style.display='none';
+  document.getElementById('screen-questions').style.display='block';
+  if(aData.timeLimit>0){
+    timeLeft=aData.timeLimit*60;
+    document.getElementById('timer-wrap').style.display='block';
+    startTimer();
+  }
+  buildQNav();
+  renderQuestion(0);
+};
+
+function startTimer(){
+  updateTimerDisplay();
+  timerInterval=setInterval(function(){
+    timeLeft--;
+    updateTimerDisplay();
+    if(timeLeft<=60)document.getElementById('timer').className='timer-badge warn';
+    if(timeLeft<=0){clearInterval(timerInterval);submitAssessment();}
+  },1000);
+}
+
+function updateTimerDisplay(){
+  const m=Math.floor(timeLeft/60);
+  const s=timeLeft%60;
+  document.getElementById('timer').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+}
+
+function buildQNav(){
+  const nav=document.getElementById('q-nav');
+  nav.innerHTML=questions.map(function(q,i){
+    return '<button class="q-nav-btn" id="qnav_'+i+'" onclick="jumpToQ('+i+')">'+(i+1)+'</button>';
+  }).join('');
+}
+
+function updateQNav(){
+  questions.forEach(function(q,i){
+    const btn=document.getElementById('qnav_'+i);
+    if(!btn)return;
+    btn.className='q-nav-btn'+(i===currentQ?' current':'')+(answers[i]!==undefined&&answers[i]!==''?' answered':'');
+  });
+}
+
+function renderQuestion(idx){
+  currentQ=idx;
+  const q=questions[idx];
+  const total=questions.length;
+  document.getElementById('progress-label').textContent='Question '+(idx+1)+' of '+total;
+  const answered=Object.keys(answers).filter(function(k){return answers[k]!==undefined&&answers[k]!=='';}).length;
+  document.getElementById('progress-answered').textContent=answered+' answered';
+  document.getElementById('progress-bar').style.width=Math.round(((idx)/total)*100)+'%';
+  document.getElementById('btn-prev').style.visibility=idx>0?'visible':'hidden';
+  const nextBtn=document.getElementById('btn-next');
+  nextBtn.textContent=idx===total-1?'Submit Assessment ✓':'Next →';
+  nextBtn.className=idx===total-1?'btn btn-success':'btn btn-primary';
+  nextBtn.onclick=idx===total-1?submitAssessment:nextQ;
+  updateQNav();
+
+  const typeLabels={mcq:'Single Answer',multi:'Multiple Answers',truefalse:'True or False',short:'Short Answer',long:'Long Answer',number:'Number Answer',fillblank:'Fill in the Blank'};
+  const typeHints={mcq:'Select one option',multi:'Select all that apply',truefalse:'Select True or False',short:'Type your answer',long:'Write your answer',number:'Enter the correct number',fillblank:'Complete the blank'};
+
+  let optionsHtml='';
+  if(q.type==='mcq'||q.type==='truefalse'){
+    const opts=q.type==='truefalse'?[{text:'True'},{text:'False'}]:q.options||[];
+    optionsHtml='<div class="options">'+opts.map(function(o,i){
+      const sel=answers[idx]===o.text;
+      return '<button class="opt-btn'+(sel?' selected':'')+'" onclick="selectMCQ('+i+',\''+o.text.replace(/'/g,"\\'")+'\')"><span class="opt-circle">'+(sel?'●':'')+'</span>'+o.text+'</button>';
+    }).join('')+'</div>';
+  }else if(q.type==='multi'){
+    const sel=answers[idx]||[];
+    optionsHtml='<div class="options">'+(q.options||[]).map(function(o,i){
+      const checked=sel.includes(o.text);
+      return '<button class="opt-btn'+(checked?' selected':'')+'" onclick="toggleMulti('+i+',\''+o.text.replace(/'/g,"\\'")+'\')"><span class="opt-check">'+(checked?'✓':'')+'</span>'+o.text+'</button>';
+    }).join('')+'</div>';
+  }else if(q.type==='number'){
+    optionsHtml='<input class="ans-input" id="ans_num" type="number" placeholder="Enter your answer" value="'+(answers[idx]||'')+'" oninput="answers['+idx+']=this.value">';
+  }else if(q.type==='fillblank'){
+    optionsHtml='<input class="ans-input" id="ans_fill" type="text" placeholder="Fill in the blank..." value="'+(answers[idx]||'')+'" oninput="answers['+idx+']=this.value">';
+  }else{
+    const isLong=q.type==='long';
+    optionsHtml='<textarea class="ans-input" '+(isLong?'rows="8"':'rows="3"')+' id="ans_text" placeholder="Type your answer here..." oninput="answers['+idx+']=this.value">'+(answers[idx]||'')+'</textarea>';
+  }
+
+  document.getElementById('question-display').innerHTML=
+    '<div class="question-card">'
+    +'<div class="q-header"><div class="q-num-badge">'+(idx+1)+'</div><span class="q-type-label">'+typeLabels[q.type]+'</span><span class="q-marks-badge">'+q.marks+' mark'+(q.marks!==1?'s':'')+'</span></div>'
+    +'<div class="q-text">'+q.text+'</div>'
+    +'<div class="q-hint">'+typeHints[q.type]+'</div>'
+    +optionsHtml
+    +'</div>';
+}
+
+window.selectMCQ=function(optIdx,val){
+  answers[currentQ]=val;
+  renderQuestion(currentQ);
+};
+
+window.toggleMulti=function(optIdx,val){
+  if(!answers[currentQ])answers[currentQ]=[];
+  const arr=answers[currentQ];
+  const i=arr.indexOf(val);
+  if(i===-1)arr.push(val);else arr.splice(i,1);
+  renderQuestion(currentQ);
+};
+
+window.jumpToQ=function(idx){renderQuestion(idx);};
+window.nextQ=function(){if(currentQ<questions.length-1)renderQuestion(currentQ+1);};
+window.prevQ=function(){if(currentQ>0)renderQuestion(currentQ-1);};
+
+window.submitAssessment=async function(){
+  if(timerInterval)clearInterval(timerInterval);
+  if(!confirm('Submit assessment? You cannot change answers after submission.'))return;
+
+  // GRADE
+  let earned=0;let correct=0;let wrong=0;let skipped=0;
+  const results=questions.map(function(q,i){
+    const ans=answers[i];
+    let isCorrect=false;let isSkipped=false;
+    if(ans===undefined||ans===''||(Array.isArray(ans)&&ans.length===0)){isSkipped=true;skipped++;}
+    else if(q.type==='mcq'||q.type==='truefalse'){
+      const correctOpt=q.type==='truefalse'?q.correctAnswer:(q.options||[]).find(function(o){return o.correct;});
+      const correctText=q.type==='truefalse'?correctOpt:(correctOpt?correctOpt.text:'');
+      isCorrect=ans===correctText;
+    }else if(q.type==='multi'){
+      const correctOpts=(q.options||[]).filter(function(o){return o.correct;}).map(function(o){return o.text;}).sort();
+      const userOpts=(Array.isArray(ans)?ans:[]).sort();
+      isCorrect=JSON.stringify(correctOpts)===JSON.stringify(userOpts);
+    }else if(q.type==='number'){
+      isCorrect=parseFloat(ans)===parseFloat(q.correctAnswer);
+    }else if(q.type==='fillblank'){
+      const validAnswers=q.correctAnswer.split(',').map(function(a){return a.trim().toLowerCase();});
+      isCorrect=validAnswers.includes((ans||'').trim().toLowerCase());
+    }else{
+      isSkipped=!ans;if(!isSkipped)skipped++;
+    }
+    if(!isSkipped){
+      if(isCorrect){earned+=q.marks;correct++;}
+      else{wrong++;if(aData.negativeMarking)earned-=(aData.negativeMarks||0.25);}
+    }
+    return{q,ans,isCorrect,isSkipped};
+  });
+
+  const totalMarks=aData.totalMarks||questions.reduce(function(s,q){return s+(q.marks||1);},0);
+  const pct=totalMarks>0?Math.round((earned/totalMarks)*100):0;
+  const passed=pct>=(aData.passPct||60);
+
+  // Find grade
+  const grades=aData.grades||[];
+  let grade={grade:'—',message:''};
+  for(const g of grades){if(pct>=g.from){grade=g;break;}}
+
+  // Save to Firebase
+  try{
+    await addDoc(collection(db,'assessments',AID,'responses'),{
+      assessmentId:AID,assessmentTitle:aData.title,
+      participant:participantInfo,answers,results:results.map(function(r){return{correct:r.isCorrect,skipped:r.isSkipped,answer:r.ans};}),
+      earned,totalMarks,pct,passed,grade:grade.grade,
+      correct,wrong,skipped,submittedAt:serverTimestamp()
+    });
+  }catch(e){console.error('Save error:',e);}
+
+  // Show result
+  document.getElementById('screen-questions').style.display='none';
+  document.getElementById('screen-result').style.display='block';
+  document.getElementById('timer-wrap').style.display='none';
+
+  document.getElementById('result-emoji').textContent=passed?'🎉':'😔';
+  document.getElementById('result-title').textContent=passed?(aData.passMessage||'Congratulations! You passed!'):(aData.failMessage||'Better luck next time!');
+  document.getElementById('result-score').textContent=Math.max(0,earned)+' / '+totalMarks;
+  document.getElementById('result-grade').textContent=grade.grade||'—';
+  document.getElementById('result-grade').style.background=passed?'#dcfce7':'#fee2e2';
+  document.getElementById('result-grade').style.color=passed?'#166534':'#dc2626';
+  document.getElementById('result-message').textContent=grade.message||'';
+  document.getElementById('rs-correct').textContent=correct;
+  document.getElementById('rs-wrong').textContent=wrong;
+  document.getElementById('rs-skipped').textContent=skipped;
+  document.getElementById('rs-pct').textContent=pct+'%';
+
+  if(!aData.showAnswers)document.getElementById('review-btn').style.display='none';
+
+  // Build review
+  if(aData.showAnswers){
+    const reviewHtml=results.map(function(r,i){
+      const q=r.q;
+      let answerDisplay='Skipped';
+      if(!r.isSkipped){
+        if(Array.isArray(r.ans))answerDisplay=r.ans.join(', ');
+        else answerDisplay=r.ans||'—';
+      }
+      let correctDisplay='—';
+      if(q.type==='mcq'||q.type==='truefalse'){
+        const c=q.type==='truefalse'?q.correctAnswer:(q.options||[]).find(function(o){return o.correct;});
+        correctDisplay=q.type==='truefalse'?c:(c?c.text:'—');
+      }else if(q.type==='multi'){
+        correctDisplay=(q.options||[]).filter(function(o){return o.correct;}).map(function(o){return o.text;}).join(', ');
+      }else if(q.type==='number'||q.type==='fillblank'){
+        correctDisplay=q.correctAnswer||'—';
+      }else{correctDisplay='Manually graded';}
+      const color=r.isSkipped?'var(--muted)':r.isCorrect?'var(--success)':'var(--danger)';
+      const icon=r.isSkipped?'⏭':r.isCorrect?'✅':'❌';
+      return '<div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:12px;">'
+        +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">'
+        +'<div style="width:28px;height:28px;border-radius:50%;background:'+color+';color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;">'+(i+1)+'</div>'
+        +'<span style="font-size:16px;">'+icon+'</span>'
+        +'<span style="font-size:12px;color:'+color+';font-weight:600;">'+(r.isSkipped?'Skipped':r.isCorrect?'Correct':'Wrong')+'</span>'
+        +'<span style="margin-left:auto;font-size:12px;color:var(--muted);">'+q.marks+' mark'+(q.marks!==1?'s':'')+'</span>'
+        +'</div>'
+        +'<div style="font-size:14px;font-weight:600;margin-bottom:10px;">'+q.text+'</div>'
+        +'<div style="font-size:12px;color:var(--muted);margin-bottom:4px;">Your answer: <strong style="color:var(--text);">'+answerDisplay+'</strong></div>'
+        +(r.isCorrect?'':'<div style="font-size:12px;color:var(--success);margin-bottom:4px;">Correct answer: <strong>'+correctDisplay+'</strong></div>')
+        +(q.explanation?'<div style="margin-top:10px;padding:10px;background:#f0fdf4;border-radius:8px;font-size:12px;color:#166534;">💡 '+q.explanation+'</div>':'')
+        +'</div>';
+    }).join('');
+    document.getElementById('review-section').innerHTML=reviewHtml;
+  }
+
+  // Redirect
+  if(aData.redirectUrl&&aData.resultDelay>0){
+    let url=aData.redirectUrl;
+    if(!url.startsWith('http'))url='https://'+url;
+    setTimeout(function(){window.location.href=url;},parseInt(aData.resultDelay)*1000);
+  }
+};
+
+window.toggleReview=function(){
+  const sec=document.getElementById('review-section');
+  const btn=document.getElementById('review-btn');
+  reviewed=!reviewed;
+  sec.style.display=reviewed?'block':'none';
+  btn.textContent=reviewed?'🔼 Hide Answers':'👁 Review Answers';
+};
+
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+function showError(msg){
+  document.getElementById('loading-screen').innerHTML='<div style="text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">😕</div><div style="font-size:18px;font-weight:700;margin-bottom:8px;">Oops!</div><div style="font-size:14px;color:#6b7280;">'+msg+'</div><a href="/dashboard/" style="display:inline-block;margin-top:20px;padding:10px 20px;background:#3b6ef5;color:#fff;border-radius:8px;text-decoration:none;font-size:13px;">Go to Dashboard</a></div>';
+}
+
+init();
+</script>
+</body>
+</html>
