@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assessment Results — SwoopForm</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0d11;--surface:#13161d;--surface2:#1a1e28;--border:#222636;--accent:#4f8ef7;--green:#34d399;--yellow:#fbbf24;--red:#f87171;--purple:#a78bfa;--text:#e2e6f0;--muted:#64748b;--muted2:#334155;--font:'Sora',sans-serif;--mono:'JetBrains Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;}
+nav{height:54px;background:rgba(11,13,17,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;position:sticky;top:0;z-index:100;gap:16px;}
+.brand{font-size:15px;font-weight:700;color:var(--accent);}
+.brand span{color:var(--green);}
+.nav-sep{width:1px;height:18px;background:var(--border);}
+.nav-crumb{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;}
+.nav-crumb a{color:var(--muted);text-decoration:none;}
+.nav-crumb a:hover{color:var(--text);}
+.nav-right{margin-left:auto;display:flex;gap:10px;align-items:center;}
+.btn{padding:7px 14px;border-radius:8px;font-family:var(--font);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;border:none;}
+.btn-ghost{background:none;border:1px solid var(--border);color:var(--muted);}
+.btn-ghost:hover{border-color:var(--muted2);color:var(--text);}
+.btn-green{background:var(--green);color:#052e16;font-weight:600;}
+.layout{display:flex;height:calc(100vh - 54px);}
+.sidebar{width:220px;min-width:220px;background:var(--surface);border-right:1px solid var(--border);padding:16px 12px;display:flex;flex-direction:column;gap:4px;overflow-y:auto;}
+.sidebar-label{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);padding:8px 10px 6px;}
+.sidebar-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .15s;border:none;background:none;width:100%;font-family:var(--font);}
+.sidebar-item:hover{background:var(--surface2);color:var(--text);}
+.sidebar-item.active{background:rgba(79,142,247,0.1);color:var(--accent);}
+.sidebar-item .count{margin-left:auto;font-size:10px;font-family:var(--mono);background:var(--surface2);padding:1px 6px;border-radius:10px;}
+.sidebar-item.active .count{background:rgba(79,142,247,0.2);color:var(--accent);}
+.main{flex:1;overflow:hidden;display:flex;flex-direction:column;}
+.topbar{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0;background:var(--surface);}
+.topbar-title{font-size:16px;font-weight:700;}
+.topbar-meta{font-size:11px;color:var(--muted);margin-top:2px;}
+.topbar-right{margin-left:auto;display:flex;gap:10px;align-items:center;}
+.stats-row{display:flex;gap:1px;background:var(--border);flex-shrink:0;}
+.stat-card{flex:1;background:var(--surface);padding:14px 20px;display:flex;align-items:center;gap:10px;}
+.stat-val{font-size:20px;font-weight:700;font-family:var(--mono);}
+.stat-label{font-size:11px;color:var(--muted);margin-top:1px;}
+.filter-bar{padding:12px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0;background:var(--bg);}
+.search-wrap{position:relative;flex:1;max-width:300px;}
+.search-wrap input{width:100%;padding:8px 12px 8px 34px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font);font-size:12px;outline:none;}
+.search-wrap input:focus{border-color:var(--accent);}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted);}
+.sort-select{padding:7px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-family:var(--font);font-size:12px;outline:none;cursor:pointer;}
+.filter-sep{width:1px;height:20px;background:var(--border);}
+.table-wrap{flex:1;overflow-y:auto;}
+table{width:100%;border-collapse:collapse;}
+thead{position:sticky;top:0;z-index:10;}
+thead tr{background:var(--surface2);border-bottom:1px solid var(--border);}
+th{padding:10px 16px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:left;white-space:nowrap;}
+tbody tr{border-bottom:1px solid var(--border);transition:background .12s;cursor:pointer;}
+tbody tr:hover{background:var(--surface);}
+td{padding:12px 16px;font-size:12px;vertical-align:middle;}
+.participant-cell{display:flex;align-items:center;gap:10px;}
+.avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;color:#fff;}
+.p-name{font-size:13px;font-weight:600;}
+.p-email{font-size:11px;color:var(--muted);margin-top:1px;}
+.score-bar-wrap{display:flex;align-items:center;gap:8px;}
+.score-bar-bg{width:80px;height:6px;background:var(--surface2);border-radius:6px;overflow:hidden;}
+.score-bar-fill{height:6px;border-radius:6px;}
+.grade-badge{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;font-size:12px;font-weight:700;}
+.pass-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;}
+.pass-badge.pass{background:rgba(52,211,153,0.12);color:var(--green);}
+.pass-badge.fail{background:rgba(248,113,113,0.12);color:var(--red);}
+
+/* DRAWER */
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:150;display:none;}
+.drawer-overlay.open{display:block;}
+.drawer{position:fixed;top:0;right:-580px;width:580px;height:100vh;background:var(--surface);border-left:1px solid var(--border);z-index:160;transition:right .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden;}
+.drawer.open{right:0;}
+.drawer-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.drawer-close{margin-left:auto;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:4px 8px;border-radius:6px;}
+.drawer-close:hover{background:var(--surface2);color:var(--text);}
+.drawer-body{flex:1;overflow-y:auto;padding:20px 24px;}
+.drawer-section{margin-bottom:24px;}
+.drawer-section-title{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.detail-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.detail-row:last-child{border-bottom:none;}
+.detail-key{font-size:12px;color:var(--muted);width:120px;flex-shrink:0;}
+.detail-val{font-size:12px;flex:1;}
+
+/* QUESTION REVIEW */
+.review-q{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;}
+.review-q-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.review-q-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;}
+.review-q-text{font-size:13px;font-weight:500;margin-bottom:8px;line-height:1.5;}
+.review-ans{font-size:12px;padding:6px 10px;border-radius:6px;margin-bottom:4px;}
+.review-ans.correct{background:rgba(52,211,153,0.1);color:var(--green);}
+.review-ans.wrong{background:rgba(248,113,113,0.1);color:var(--red);}
+.review-ans.skipped{background:var(--surface2);color:var(--muted);}
+
+/* ANALYTICS */
+.analytics-wrap{padding:20px 24px;overflow-y:auto;display:none;}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px;}
+.chart-title{font-size:13px;font-weight:600;margin-bottom:16px;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.bar-label{font-size:12px;color:var(--muted);width:100px;flex-shrink:0;text-align:right;}
+.bar-wrap{flex:1;height:24px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;}
+.bar-fill{height:100%;border-radius:6px;transition:width .6s;}
+.bar-val{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:11px;font-family:var(--mono);color:var(--text);}
+.dist-row{display:flex;gap:8px;margin-bottom:8px;}
+.dist-cell{flex:1;text-align:center;padding:10px;background:var(--surface2);border-radius:8px;}
+.dist-val{font-size:18px;font-weight:700;font-family:var(--mono);}
+.dist-lbl{font-size:10px;color:var(--muted);margin-top:2px;}
+
+.empty-state{text-align:center;padding:80px 40px;}
+.empty-icon{font-size:48px;margin-bottom:16px;opacity:0.5;}
+.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:24px;left:24px;background:var(--surface2);border:1px solid var(--border);padding:10px 16px;border-radius:9px;font-size:12px;z-index:400;display:none;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--muted2);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<div class="loading-screen" id="loading-screen">
+  <div class="spinner"></div>
+  <div style="font-size:13px;color:var(--muted);">Loading results...</div>
+</div>
+
+<div id="main-wrap" style="display:none;">
+<nav>
+  <div class="brand">Swoop<span>Form</span></div>
+  <div class="nav-sep"></div>
+  <div class="nav-crumb">
+    <a href="/dashboard/">Dashboard</a> ›
+    <a href="/assessment/create/">Assessments</a> ›
+    <span id="nav-title">Results</span>
+  </div>
+  <div class="nav-right">
+    <button class="btn btn-ghost" onclick="exportCSV()">⬇ Export CSV</button>
+    <button class="btn btn-green" onclick="viewAssessment()">🔗 View Assessment</button>
+  </div>
+</nav>
+
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-label">Views</div>
+    <button class="sidebar-item active" id="sbar-all" onclick="filterPass('all',this)"><span>📋</span> All Attempts <span class="count" id="cnt-all">0</span></button>
+    <button class="sidebar-item" id="sbar-pass" onclick="filterPass('pass',this)"><span>✅</span> Passed <span class="count" id="cnt-pass">0</span></button>
+    <button class="sidebar-item" id="sbar-fail" onclick="filterPass('fail',this)"><span>❌</span> Failed <span class="count" id="cnt-fail">0</span></button>
+    <div class="sidebar-label" style="margin-top:8px;">Actions</div>
+    <button class="sidebar-item" onclick="showView('table')"><span>📋</span> Responses Table</button>
+    <button class="sidebar-item" onclick="showView('analytics')"><span>📊</span> Analytics</button>
+    <button class="sidebar-item" onclick="exportCSV()"><span>⬇</span> Export CSV</button>
+    <button class="sidebar-item" onclick="window.location.href='/assessment/create/?id='+AID"><span>✏️</span> Edit Assessment</button>
+    <button class="sidebar-item" onclick="window.location.href='/dashboard/'"><span>🏠</span> Dashboard</button>
+  </div>
+
+  <div class="main" id="main-panel">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title" id="top-title">Loading...</div>
+        <div class="topbar-meta" id="top-meta"></div>
+      </div>
+      <div class="topbar-right">
+        <span style="font-size:12px;color:var(--green);" id="accepting-status"></span>
+        <button class="btn btn-ghost" onclick="toggleAccepting()">Pause</button>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><span style="font-size:18px;">👥</span><div><div class="stat-val" id="stat-total" style="color:var(--accent);">0</div><div class="stat-label">Attempts</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">✅</span><div><div class="stat-val" id="stat-pass" style="color:var(--green);">0</div><div class="stat-label">Passed</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">📊</span><div><div class="stat-val" id="stat-avg" style="color:var(--yellow);">0%</div><div class="stat-label">Avg Score</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">🏆</span><div><div class="stat-val" id="stat-top" style="color:var(--purple);">0%</div><div class="stat-label">Top Score</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">📉</span><div><div class="stat-val" id="stat-pass-rate" style="color:var(--green);">0%</div><div class="stat-label">Pass Rate</div></div></div>
+    </div>
+
+    <div class="filter-bar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Search by name or email..." oninput="applyFilters()">
+      </div>
+      <div class="filter-sep"></div>
+      <select class="sort-select" onchange="applyFilters()" id="sort-select">
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+        <option value="score-high">Score: High to Low</option>
+        <option value="score-low">Score: Low to High</option>
+        <option value="name">Name A–Z</option>
+      </select>
+    </div>
+
+    <div class="table-wrap" id="table-wrap">
+      <table id="main-table" style="display:none;">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Participant</th>
+            <th>Submitted</th>
+            <th>Score</th>
+            <th>Grade</th>
+            <th>Result</th>
+            <th>Time Taken</th>
+          </tr>
+        </thead>
+        <tbody id="results-body"></tbody>
+      </table>
+      <div class="empty-state" id="empty-state" style="display:none;">
+        <div class="empty-icon">📭</div>
+        <div style="font-size:16px;font-weight:600;margin-bottom:8px;">No results yet</div>
+        <div style="font-size:13px;color:var(--muted);">Share your assessment link to start collecting responses</div>
+      </div>
+    </div>
+
+    <!-- ANALYTICS VIEW -->
+    <div class="analytics-wrap" id="analytics-wrap">
+      <div class="chart-card">
+        <div class="chart-title">Score Distribution</div>
+        <div class="dist-row" id="score-dist"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Question Performance — % answered correctly</div>
+        <div id="q-performance"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Grade Distribution</div>
+        <div id="grade-dist"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- DRAWER -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div class="avatar" id="d-avatar" style="width:40px;height:40px;font-size:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;"></div>
+    <div>
+      <div style="font-size:15px;font-weight:700;" id="d-name"></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px;" id="d-email"></div>
+    </div>
+    <div id="d-result-badge" style="margin-left:12px;"></div>
+    <button class="drawer-close" onclick="closeDrawer()">×</button>
+  </div>
+  <div class="drawer-body">
+    <div class="drawer-section">
+      <div class="drawer-section-title">Result Summary</div>
+      <div class="detail-row"><div class="detail-key">📊 Score</div><div class="detail-val" id="d-score"></div></div>
+      <div class="detail-row"><div class="detail-key">🏆 Grade</div><div class="detail-val" id="d-grade"></div></div>
+      <div class="detail-row"><div class="detail-key">📅 Submitted</div><div class="detail-val" id="d-date"></div></div>
+      <div class="detail-row"><div class="detail-key">✅ Correct</div><div class="detail-val" id="d-correct"></div></div>
+      <div class="detail-row"><div class="detail-key">❌ Wrong</div><div class="detail-val" id="d-wrong"></div></div>
+      <div class="detail-row"><div class="detail-key">⏭ Skipped</div><div class="detail-val" id="d-skipped"></div></div>
+      <div class="detail-row"><div class="detail-key">🏢 Org</div><div class="detail-val" id="d-org"></div></div>
+    </div>
+    <div class="drawer-section">
+      <div class="drawer-section-title">Answer Review</div>
+      <div id="d-answers"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,doc,getDoc,getDocs,updateDoc,collection,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+const params=new URLSearchParams(window.location.search);
+window.AID=params.get('id');
+let aData=null;
+let allResponses=[];
+let filtered=[];
+let activeFilter='all';
+
+onAuthStateChanged(auth,async function(u){
+  if(!u){window.location.href='/login/';return;}
+  if(!AID){showFatal('No assessment ID in URL.');return;}
+  await loadData();
+});
+
+async function loadData(){
+  try{
+    const snap=await getDoc(doc(db,'assessments',AID));
+    if(!snap.exists()){showFatal('Assessment not found.');return;}
+    aData=snap.data();
+    renderHeader();
+    const rSnap=await getDocs(collection(db,'assessments',AID,'responses'));
+    allResponses=rSnap.docs.map(function(d){return Object.assign({_id:d.id},d.data());});
+    allResponses.sort(function(a,b){return(b.submittedAt&&b.submittedAt.seconds?b.submittedAt.seconds:0)-(a.submittedAt&&a.submittedAt.seconds?a.submittedAt.seconds:0);});
+    document.getElementById('loading-screen').style.display='none';
+    document.getElementById('main-wrap').style.display='block';
+    updateStats();
+    applyFilters();
+    renderAnalytics();
+  }catch(e){console.error(e);showFatal('Failed to load.');}
+}
+
+function renderHeader(){
+  const title=aData.title||'Assessment';
+  document.getElementById('nav-title').textContent=title;
+  document.getElementById('top-title').textContent=title;
+  document.getElementById('top-meta').textContent=[aData.subject,aData.difficulty,(aData.passPct||60)+'% pass mark'].filter(Boolean).join(' · ');
+  document.title=title+' — Results — SwoopForm';
+  const acc=aData.accepting!==false;
+  document.getElementById('accepting-status').innerHTML=acc?'<span style="color:var(--green);">● Accepting</span>':'<span style="color:var(--red);">● Closed</span>';
+}
+
+function updateStats(){
+  const pass=allResponses.filter(function(r){return r.passed;}).length;
+  const avgPct=allResponses.length?Math.round(allResponses.reduce(function(s,r){return s+(r.pct||0);},0)/allResponses.length):0;
+  const topPct=allResponses.length?Math.max.apply(null,allResponses.map(function(r){return r.pct||0;})):0;
+  document.getElementById('stat-total').textContent=allResponses.length;
+  document.getElementById('stat-pass').textContent=pass;
+  document.getElementById('stat-avg').textContent=avgPct+'%';
+  document.getElementById('stat-top').textContent=topPct+'%';
+  document.getElementById('stat-pass-rate').textContent=allResponses.length?Math.round(pass/allResponses.length*100)+'%':'0%';
+  document.getElementById('cnt-all').textContent=allResponses.length;
+  document.getElementById('cnt-pass').textContent=pass;
+  document.getElementById('cnt-fail').textContent=allResponses.length-pass;
+}
+
+window.applyFilters=function(){
+  const q=(document.getElementById('search-input').value||'').toLowerCase();
+  const sort=document.getElementById('sort-select').value;
+  filtered=allResponses.filter(function(r){
+    const matchFilter=activeFilter==='all'||(activeFilter==='pass'&&r.passed)||(activeFilter==='fail'&&!r.passed);
+    const name=(r.participant&&r.participant.name?r.participant.name:'').toLowerCase();
+    const email=(r.participant&&r.participant.email?r.participant.email:'').toLowerCase();
+    const matchSearch=!q||name.includes(q)||email.includes(q);
+    return matchFilter&&matchSearch;
+  });
+  if(sort==='oldest')filtered.sort(function(a,b){return(a.submittedAt&&a.submittedAt.seconds?a.submittedAt.seconds:0)-(b.submittedAt&&b.submittedAt.seconds?b.submittedAt.seconds:0);});
+  else if(sort==='score-high')filtered.sort(function(a,b){return(b.pct||0)-(a.pct||0);});
+  else if(sort==='score-low')filtered.sort(function(a,b){return(a.pct||0)-(b.pct||0);});
+  else if(sort==='name')filtered.sort(function(a,b){return(a.participant&&a.participant.name?a.participant.name:'').localeCompare(b.participant&&b.participant.name?b.participant.name:'');});
+  else filtered.sort(function(a,b){return(b.submittedAt&&b.submittedAt.seconds?b.submittedAt.seconds:0)-(a.submittedAt&&a.submittedAt.seconds?a.submittedAt.seconds:0);});
+  renderTable();
+};
+
+window.filterPass=function(type,el){
+  activeFilter=type;
+  document.querySelectorAll('.sidebar-item').forEach(function(i){i.classList.remove('active');});
+  el.classList.add('active');
+  applyFilters();
+};
+
+const COLORS=['#4f8ef7','#34d399','#fbbf24','#f87171','#a78bfa','#fb923c','#22d3ee'];
+
+function renderTable(){
+  const tbody=document.getElementById('results-body');
+  const table=document.getElementById('main-table');
+  const empty=document.getElementById('empty-state');
+  if(filtered.length===0){table.style.display='none';empty.style.display='block';return;}
+  empty.style.display='none';table.style.display='table';
+  tbody.innerHTML=filtered.map(function(r,i){
+    const name=(r.participant&&r.participant.name?r.participant.name:'Anonymous');
+    const email=(r.participant&&r.participant.email?r.participant.email:'');
+    const color=COLORS[name.charCodeAt(0)%COLORS.length];
+    const initials=name.split(' ').map(function(n){return n[0];}).join('').substring(0,2).toUpperCase();
+    const date=r.submittedAt&&r.submittedAt.seconds?new Date(r.submittedAt.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—';
+    const pct=r.pct||0;
+    const barColor=pct>=75?'var(--green)':pct>=60?'var(--yellow)':'var(--red)';
+    const grade=r.grade||'—';
+    return '<tr onclick="openDrawer(\''+r._id+'\')"><td style="color:var(--muted);font-size:11px;font-family:var(--mono);">#'+(i+1)+'</td>'
+      +'<td><div class="participant-cell"><div class="avatar" style="background:'+color+'">'+initials+'</div><div><div class="p-name">'+name+'</div><div class="p-email">'+email+'</div></div></div></td>'
+      +'<td style="color:var(--muted);font-size:11px;">'+date+'</td>'
+      +'<td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:'+pct+'%;background:'+barColor+'"></div></div><span style="font-size:11px;font-family:var(--mono);color:'+barColor+'">'+pct+'%</span></div></td>'
+      +'<td><div class="grade-badge" style="background:rgba(79,142,247,0.12);color:var(--accent);">'+grade+'</div></td>'
+      +'<td><span class="pass-badge '+(r.passed?'pass':'fail')+'">'+(r.passed?'✅ Pass':'❌ Fail')+'</span></td>'
+      +'<td style="color:var(--muted);font-size:11px;">—</td>'
+      +'</tr>';
+  }).join('');
+}
+
+window.openDrawer=function(id){
+  const r=allResponses.find(function(x){return x._id===id;});
+  if(!r)return;
+  const name=(r.participant&&r.participant.name?r.participant.name:'Anonymous');
+  const email=(r.participant&&r.participant.email?r.participant.email:'');
+  const color=COLORS[name.charCodeAt(0)%COLORS.length];
+  const initials=name.split(' ').map(function(n){return n[0];}).join('').substring(0,2).toUpperCase();
+  document.getElementById('d-avatar').style.background=color;
+  document.getElementById('d-avatar').textContent=initials;
+  document.getElementById('d-name').textContent=name;
+  document.getElementById('d-email').textContent=email;
+  document.getElementById('d-score').textContent=(r.earned||0)+' / '+(r.totalMarks||0)+' ('+( r.pct||0)+'%)';
+  document.getElementById('d-grade').textContent=r.grade||'—';
+  document.getElementById('d-date').textContent=r.submittedAt&&r.submittedAt.seconds?new Date(r.submittedAt.seconds*1000).toLocaleString('en-IN'):'—';
+  document.getElementById('d-correct').textContent=r.correct||0;
+  document.getElementById('d-wrong').textContent=r.wrong||0;
+  document.getElementById('d-skipped').textContent=r.skipped||0;
+  document.getElementById('d-org').textContent=(r.participant&&r.participant.org?r.participant.org:'—');
+  document.getElementById('d-result-badge').innerHTML='<span class="pass-badge '+(r.passed?'pass':'fail')+'">'+(r.passed?'✅ Passed':'❌ Failed')+'</span>';
+
+  // Answer review
+  const questions=aData.questions||[];
+  const results=r.results||[];
+  document.getElementById('d-answers').innerHTML=questions.map(function(q,i){
+    const res=results[i]||{};
+    const ans=r.answers&&r.answers[i]!==undefined?r.answers[i]:'—';
+    const ansText=Array.isArray(ans)?ans.join(', '):String(ans);
+    const isCorrect=res.correct;
+    const isSkipped=res.skipped;
+    const color=isSkipped?'var(--muted)':isCorrect?'var(--green)':'var(--red)';
+    const icon=isSkipped?'⏭':isCorrect?'✅':'❌';
+    return '<div class="review-q"><div class="review-q-header">'
+      +'<div class="review-q-num" style="background:'+color+'">'+(i+1)+'</div>'
+      +'<span style="font-size:14px;">'+icon+'</span>'
+      +'<span style="font-size:11px;color:'+color+';font-weight:600;">'+(isSkipped?'Skipped':isCorrect?'Correct (+'+q.marks+')':'Wrong')+'</span>'
+      +'</div>'
+      +'<div class="review-q-text">'+q.text+'</div>'
+      +'<div class="review-ans '+(isSkipped?'skipped':isCorrect?'correct':'wrong')+'">Your answer: '+ansText+'</div>'
+      +(q.explanation&&!isCorrect?'<div style="font-size:11px;color:var(--green);margin-top:4px;">💡 '+q.explanation+'</div>':'')
+      +'</div>';
+  }).join('');
+
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+};
+
+window.closeDrawer=function(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawer-overlay').classList.remove('open');
+};
+
+function renderAnalytics(){
+  // Score distribution
+  const bands=[{label:'90-100%',min:90},{label:'75-89%',min:75},{label:'60-74%',min:60},{label:'40-59%',min:40},{label:'0-39%',min:0}];
+  const colors=['var(--green)','var(--green)','var(--yellow)','var(--yellow)','var(--red)'];
+  document.getElementById('score-dist').innerHTML=bands.map(function(b,i){
+    const count=allResponses.filter(function(r){return(r.pct||0)>=b.min&&(i===0||(r.pct||0)<bands[i-1].min);}).length;
+    return '<div class="dist-cell"><div class="dist-val" style="color:'+colors[i]+'">'+count+'</div><div class="dist-lbl">'+b.label+'</div></div>';
+  }).join('');
+
+  // Question performance
+  const questions=aData.questions||[];
+  document.getElementById('q-performance').innerHTML=questions.map(function(q,i){
+    const total=allResponses.length;
+    const correct=total?allResponses.filter(function(r){return r.results&&r.results[i]&&r.results[i].correct;}).length:0;
+    const pct=total?Math.round(correct/total*100):0;
+    const color=pct>=75?'var(--green)':pct>=50?'var(--yellow)':'var(--red)';
+    return '<div class="bar-row"><div class="bar-label">Q'+(i+1)+': '+q.text.substring(0,20)+(q.text.length>20?'...':'')+'</div><div class="bar-wrap"><div class="bar-fill" style="width:'+pct+'%;background:'+color+'"></div><span class="bar-val">'+pct+'%</span></div></div>';
+  }).join('');
+
+  // Grade distribution
+  const grades={};
+  allResponses.forEach(function(r){const g=r.grade||'—';grades[g]=(grades[g]||0)+1;});
+  document.getElementById('grade-dist').innerHTML=Object.keys(grades).map(function(g){
+    const pct=Math.round(grades[g]/allResponses.length*100);
+    return '<div class="bar-row"><div class="bar-label">'+g+'</div><div class="bar-wrap"><div class="bar-fill" style="width:'+pct+'%;background:var(--accent)"></div><span class="bar-val">'+grades[g]+' ('+pct+'%)</span></div></div>';
+  }).join('');
+}
+
+window.showView=function(view){
+  document.getElementById('table-wrap').style.display=view==='table'?'flex':'none';
+  document.getElementById('analytics-wrap').style.display=view==='analytics'?'block':'none';
+};
+
+window.toggleAccepting=async function(){
+  const current=aData.accepting!==false;
+  try{
+    await updateDoc(doc(db,'assessments',AID),{'accepting':!current,updatedAt:serverTimestamp()});
+    aData.accepting=!current;
+    renderHeader();
+    toast(current?'Assessment closed':'Assessment reopened');
+  }catch(e){toast('Error');}
+};
+
+window.viewAssessment=function(){window.open('/assessment/?id='+AID,'_blank');};
+
+window.exportCSV=function(){
+  const rows=[['Name','Email','Org','Score %','Earned','Total','Grade','Passed','Correct','Wrong','Skipped','Submitted']];
+  allResponses.forEach(function(r){
+    const date=r.submittedAt&&r.submittedAt.seconds?new Date(r.submittedAt.seconds*1000).toLocaleDateString():'';
+    rows.push([
+      r.participant&&r.participant.name?r.participant.name:'Anonymous',
+      r.participant&&r.participant.email?r.participant.email:'',
+      r.participant&&r.participant.org?r.participant.org:'',
+      r.pct||0,r.earned||0,r.totalMarks||0,r.grade||'',r.passed?'Yes':'No',
+      r.correct||0,r.wrong||0,r.skipped||0,date
+    ]);
+  });
+  const csv=rows.map(function(r){return r.map(function(v){return '"'+(v||'').toString().replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='assessment-results.csv';a.click();
+  toast('CSV downloaded!');
+};
+
+function showFatal(msg){document.getElementById('loading-screen').innerHTML='<div style="text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">😕</div><div style="font-size:16px;font-weight:700;margin-bottom:8px;">'+msg+'</div><a href="/dashboard/" style="display:inline-block;margin-top:16px;padding:10px 20px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-size:13px;">Go to Dashboard</a></div>';}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+</script>
+</body>
+</html>
