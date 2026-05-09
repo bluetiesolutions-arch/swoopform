@@ -304,8 +304,8 @@ const db=getFirestore(app);
 
 const TYPE_META={
   surveys:{label:'Survey',icon:'📋',color:'#2D1B69',bg:'#EDE9FF',editPath:'/edit/?id=',viewPath:'/survey/',responsesPath:'/responses/?id='},
-  polls:{label:'Poll',icon:'📊',color:'#4F46E5',bg:'#EEF2FF',editPath:'/poll/edit/?id=',viewPath:'/poll/',responsesPath:'/poll/responses/?id='},
-  votings:{label:'Voting',icon:'🗳️',color:'#D97706',bg:'#FEF3C7',editPath:'/voting/edit/?id=',viewPath:'/voting/',responsesPath:'/voting/responses/?id='},
+  polls:{label:'Poll',icon:'📊',color:'#4F46E5',bg:'#EEF2FF',editPath:'/poll/create/?id=',viewPath:'/poll/?id=',responsesPath:'/poll/responses/?id='},
+  votings:{label:'Voting',icon:'🗳️',color:'#D97706',bg:'#FEF3C7',editPath:'/voting/create/?id=',viewPath:'/voting/?id=',responsesPath:'/voting/responses/?id='},
   pledges:{label:'Pledge & Support',icon:'🤝',color:'#10B981',bg:'#DCFCE7',editPath:'/pledge/edit/?id=',viewPath:'/pledge/',responsesPath:'/pledge/responses/?id='},
   riddles:{label:'Riddle',icon:'🧩',color:'#A855F7',bg:'#F3E8FF',editPath:'/riddle/edit/?id=',viewPath:'/riddle/',responsesPath:'/riddle/responses/?id='},
   jobapps:{label:'Job Application',icon:'💼',color:'#059669',bg:'#D1FAE5',editPath:'/jobapp/create/?id=',viewPath:'/jobapp/?id=',responsesPath:'/jobapp/responses/?id='},assessments:{label:'Assessment',icon:'📝',color:'#7c3aed',bg:'#ede9fe',editPath:'/assessment/create/?id=',viewPath:'/assessment/?id=',responsesPath:'/assessment/responses/?id='},feedbacks:{label:'Feedback Form',icon:'💬',color:'#0ea5e9',bg:'#f0f9ff',editPath:'/feedback/create/?id=',viewPath:'/feedback/?id=',responsesPath:'/feedback/responses/?id='},leads:{label:'Lead Form',icon:'📥',color:'#e85d26',bg:'#fff4ef',editPath:'/lead/create/?id=',viewPath:'/lead/?id=',responsesPath:'/lead/responses/?id='},registrations:{label:'Registration',icon:'🎟️',color:'#7c3aed',bg:'#f5f3ff',editPath:'/registration/create/?id=',viewPath:'/registration/?id=',responsesPath:'/registration/responses/?id='},employees:{label:'Employee Survey',icon:'👥',color:'#0ea5e9',bg:'#f0f9ff',editPath:'/employee/create/?id=',viewPath:'/employee/?id=',responsesPath:'/employee/responses/?id='},products:{label:'Product Quiz',icon:'📦',color:'#ec4899',bg:'#fdf2f8',editPath:'/product/create/?id=',viewPath:'/product/?id=',responsesPath:'/product/responses/?id='},
@@ -368,6 +368,8 @@ function getResponseCount(item){return item.responseCount||item.totalVotes||item
 function getViewUrl(item){
   const m=TYPE_META[item._col];if(!m)return'#';
   if(item._col==='surveys')return item.slug?'/survey/'+item.slug:'/s/?id='+item.id;
+    if(item._col==='polls')return '/poll/?id='+item.id;
+    if(item._col==='votings')return '/voting/?id='+item.id;
   if(item._col==='jobapps')return '/jobapp/?id='+item.id;
     if(item._col==='assessments')return '/assessment/?id='+item.id;
     if(item._col==='feedbacks')return '/feedback/?id='+item.id;
