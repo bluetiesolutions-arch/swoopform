@@ -237,7 +237,7 @@ textarea.field-input{resize:vertical;min-height:100px;line-height:1.6;}
 
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import{getFirestore,doc,getDoc,addDoc,collection,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getFirestore,doc,getDoc,addDoc,updateDoc,collection,increment,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
 const app=initializeApp(FB);
@@ -433,6 +433,7 @@ window.submitApplication=async function(){
       submittedAt:serverTimestamp(),
       status:'new'
     });
+    try{await updateDoc(doc(db,'jobapps',jobId),{responseCount:increment(1)});}catch(e){}
     document.getElementById('app-id-val').textContent=appId;
     document.getElementById('form-inner').style.display='none';
     document.getElementById('thankyou-screen').style.display='flex';

@@ -209,7 +209,7 @@ textarea.ans-input{resize:vertical;min-height:120px;line-height:1.6;}
 
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import{getFirestore,doc,getDoc,addDoc,collection,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getFirestore,doc,getDoc,addDoc,updateDoc,collection,increment,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
 const app=initializeApp(FB);
@@ -433,6 +433,7 @@ window.submitAssessment=async function(){
       earned,totalMarks,pct,passed,grade:grade.grade,
       correct,wrong,skipped,submittedAt:serverTimestamp()
     });
+  try{await updateDoc(doc(db,'assessments',AID),{responseCount:increment(1)});}catch(e){}
   }catch(e){console.error('Save error:',e);}
 
   // Show result
