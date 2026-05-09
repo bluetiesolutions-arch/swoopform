@@ -250,13 +250,20 @@ let allResponses=[];
 let filtered=[];
 const COLORS=['#3b6ef5','#12a872','#d97706','#e5484d','#7c3aed','#0ea5e9','#ec4899'];
 
+// Timeout if auth takes too long
+const authTimeout=setTimeout(function(){
+  showFatal('Session expired. Please log in again.');
+  setTimeout(function(){window.location.href='/login/';},2000);
+},8000);
+
 onAuthStateChanged(auth,async function(u){
+  clearTimeout(authTimeout);
   if(!u){window.location.href='/login/';return;}
-  if(!FID){showFatal('No form ID in URL. Go back to dashboard and click Results.');return;}
+  if(!FID){showFatal('No form ID found in URL.');return;}
   try{
     await loadData();
   }catch(e){
-    showFatal('Error loading: '+e.message);
+    showFatal('Error: '+e.message);
   }
 });
 
