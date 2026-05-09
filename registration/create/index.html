@@ -472,11 +472,11 @@ function collectFields(){
     const type=card.dataset.type;
     const id=card.id.replace('fc_','');
     fields.push({
-      fieldType:type,
-      label:document.getElementById('fl_'+id)?document.getElementById('fl_'+id).value.trim():'',
-      placeholder:document.getElementById('fp_'+id)?document.getElementById('fp_'+id).value.trim():'',
+      fieldType:type||'text',
+      label:document.getElementById('fl_'+id)?document.getElementById('fl_'+id).value.trim()||'':'' ,
+      placeholder:document.getElementById('fp_'+id)?document.getElementById('fp_'+id).value.trim()||'':'',
       required:document.getElementById('fr_'+id)?document.getElementById('fr_'+id).checked:false,
-      options:document.getElementById('fo_'+id)?document.getElementById('fo_'+id).value.trim():''
+      options:document.getElementById('fo_'+id)?document.getElementById('fo_'+id).value.trim()||'':''
     });
   });
   return fields;
@@ -504,13 +504,7 @@ function buildPayload(status){
 }
 
 function cleanPayload(obj){
-  const clean={};
-  Object.keys(obj).forEach(function(k){
-    if(obj[k]!==undefined&&obj[k]!==null)clean[k]=obj[k];
-    else if(obj[k]===null){}
-    else clean[k]='';
-  });
-  return clean;
+  return JSON.parse(JSON.stringify(obj,function(k,v){return v===undefined?null:v;}));
 }
 
 window.saveDraft=async function(){
