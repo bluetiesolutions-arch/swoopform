@@ -253,7 +253,7 @@ function updateProgress(){
 window.submitSurvey=async function(){
   const qs=eData.questions||[];
   let valid=true;
-  qs.forEach(function(q,i){if(q.required&&(answers[i]===undefined||answers[i]===''){valid=false;}});
+  qs.forEach(function(q,i){if(q.required&&(answers[i]===undefined||answers[i]===''))valid=false;});
   if(!valid){alert('Please answer all required questions.');return;}
   const btn=document.getElementById('submit-btn');
   btn.disabled=true;btn.textContent='Submitting...';
