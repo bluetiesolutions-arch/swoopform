@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Award Results — SwoopForm</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f4f0;--surface:#fff;--surface2:#f0eeea;--border:#e2ddd6;--accent:#f59e0b;--green:#12a872;--red:#e5484d;--purple:#7c3aed;--text:#1c1c2e;--muted:#7a7a8c;--muted2:#c5c0b8;--font:'Sora',sans-serif;--mono:'JetBrains Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;}
+nav{height:54px;background:rgba(245,244,240,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;position:sticky;top:0;z-index:100;gap:16px;}
+.brand{font-size:15px;font-weight:700;color:var(--accent);}
+.nav-sep{width:1px;height:18px;background:var(--border);}
+.nav-crumb{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;}
+.nav-crumb a{color:var(--accent);text-decoration:none;}
+.nav-right{margin-left:auto;display:flex;gap:10px;}
+.btn{padding:7px 14px;border-radius:8px;font-family:var(--font);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;border:none;}
+.btn-ghost{background:none;border:1px solid var(--border);color:var(--muted);}
+.btn-ghost:hover{border-color:var(--muted2);color:var(--text);}
+.btn-accent{background:var(--accent);color:#fff;font-weight:600;}
+.layout{display:flex;height:calc(100vh - 54px);}
+.sidebar{width:220px;min-width:220px;background:var(--surface);border-right:1px solid var(--border);padding:16px 12px;display:flex;flex-direction:column;gap:4px;overflow-y:auto;}
+.sidebar-label{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);padding:8px 10px 6px;}
+.sidebar-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .15s;border:none;background:none;width:100%;font-family:var(--font);}
+.sidebar-item:hover{background:var(--surface2);color:var(--text);}
+.sidebar-item.active{background:rgba(245,158,11,0.1);color:var(--accent);}
+.main{flex:1;overflow:hidden;display:flex;flex-direction:column;}
+.topbar{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0;background:var(--surface);}
+.topbar-title{font-size:16px;font-weight:700;}
+.topbar-meta{font-size:11px;color:var(--muted);margin-top:2px;}
+.topbar-right{margin-left:auto;display:flex;gap:10px;align-items:center;}
+.stats-row{display:flex;gap:1px;background:var(--border);flex-shrink:0;}
+.stat-card{flex:1;background:var(--surface);padding:14px 20px;display:flex;align-items:center;gap:10px;}
+.stat-val{font-size:20px;font-weight:700;font-family:var(--mono);}
+.stat-label{font-size:11px;color:var(--muted);margin-top:1px;}
+.content-area{flex:1;overflow-y:auto;padding:24px;}
+.live-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;background:rgba(18,168,114,0.1);color:var(--green);font-size:12px;font-weight:600;margin-bottom:20px;}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.leaderboard-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;}
+.lb-row{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;transition:all .2s;}
+.lb-row.top{background:rgba(245,158,11,0.05);border-color:var(--accent);}
+.lb-rank{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0;}
+.lb-name{font-size:15px;font-weight:700;flex:1;}
+.lb-bar-wrap{flex:2;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;}
+.lb-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,#f59e0b,#ef4444);transition:width .6s;}
+.lb-score{font-size:18px;font-weight:800;font-family:var(--mono);color:var(--accent);min-width:60px;text-align:right;}
+.lb-count{font-size:11px;color:var(--muted);min-width:50px;text-align:right;}
+.responses-table{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+table{width:100%;border-collapse:collapse;}
+thead tr{background:var(--surface2);border-bottom:1px solid var(--border);}
+th{padding:10px 16px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:left;}
+tbody tr{border-bottom:1px solid var(--border);cursor:pointer;}
+tbody tr:hover{background:#faf9f7;}
+td{padding:12px 16px;font-size:12px;}
+.nom-pills{display:flex;flex-wrap:wrap;gap:4px;}
+.nom-pill{padding:3px 8px;border-radius:10px;background:rgba(245,158,11,0.1);color:#92400e;font-size:11px;font-weight:500;}
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:150;display:none;}
+.drawer-overlay.open{display:block;}
+.drawer{position:fixed;top:0;right:-540px;width:540px;height:100vh;background:var(--surface);border-left:1px solid var(--border);z-index:160;transition:right .3s;display:flex;flex-direction:column;overflow:hidden;}
+.drawer.open{right:0;}
+.drawer-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.drawer-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;}
+.drawer-body{flex:1;overflow-y:auto;padding:20px 24px;}
+.rank-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:10px;margin-bottom:8px;}
+.rank-emoji{font-size:20px;width:32px;text-align:center;}
+.rank-info{flex:1;}
+.rank-nom{font-size:14px;font-weight:600;}
+.rank-pts{font-size:12px;color:var(--muted);}
+.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:24px;left:24px;background:var(--text);color:#fff;padding:10px 16px;border-radius:9px;font-size:12px;z-index:400;display:none;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<div class="loading-screen" id="loading-screen">
+  <div class="spinner"></div>
+  <div style="font-size:13px;color:var(--muted);">Loading results...</div>
+</div>
+
+<div id="main-wrap" style="display:none;">
+<nav>
+  <div class="brand">SwoopForm</div>
+  <div class="nav-sep"></div>
+  <div class="nav-crumb">
+    <a href="/dashboard/">Dashboard</a> ›
+    <span id="nav-title">Award Results</span>
+  </div>
+  <div class="nav-right">
+    <button class="btn btn-ghost" onclick="exportCSV()">⬇ Export</button>
+    <button class="btn btn-accent" onclick="window.open('/award/?id='+AID,'_blank')">🔗 View Award</button>
+  </div>
+</nav>
+
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-label">Views</div>
+    <button class="sidebar-item active" id="sbar-lb" onclick="showView('leaderboard',this)"><span>🏆</span> Leaderboard</button>
+    <button class="sidebar-item" id="sbar-resp" onclick="showView('responses',this)"><span>📋</span> All Responses</button>
+    <div class="sidebar-label" style="margin-top:8px;">Actions</div>
+    <button class="sidebar-item" onclick="exportCSV()"><span>⬇</span> Export CSV</button>
+    <button class="sidebar-item" onclick="window.location.href='/award/create/?id='+AID"><span>✏️</span> Edit Award</button>
+    <button class="sidebar-item" onclick="toggleAccepting()"><span>🔓</span> Toggle Award</button>
+    <button class="sidebar-item" onclick="window.location.href='/dashboard/'"><span>🏠</span> Dashboard</button>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title" id="top-title">Loading...</div>
+        <div class="topbar-meta" id="top-meta"></div>
+      </div>
+      <div class="topbar-right">
+        <span id="accepting-status"></span>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><span style="font-size:18px;">📝</span><div><div class="stat-val" id="stat-responses" style="color:var(--accent);">0</div><div class="stat-label">Submissions</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">🏆</span><div><div class="stat-val" id="stat-nominations" style="color:var(--green);">0</div><div class="stat-label">Unique Nominees</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">🥇</span><div><div class="stat-val" id="stat-winner" style="color:var(--accent);font-size:13px;">—</div><div class="stat-label">Current Leader</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">📅</span><div><div class="stat-val" id="stat-today" style="color:var(--purple);">0</div><div class="stat-label">Today</div></div></div>
+    </div>
+
+    <!-- LEADERBOARD VIEW -->
+    <div class="content-area" id="lb-view">
+      <div class="live-badge"><span class="live-dot"></span>Live Leaderboard</div>
+      <div class="leaderboard-card">
+        <div id="lb-wrap"></div>
+      </div>
+    </div>
+
+    <!-- RESPONSES VIEW -->
+    <div class="content-area" id="resp-view" style="display:none;">
+      <div class="responses-table">
+        <table id="resp-table" style="display:none;">
+          <thead><tr><th>#</th><th>Name</th><th>Nominations</th><th>Submitted</th><th></th></tr></thead>
+          <tbody id="resp-body"></tbody>
+        </table>
+        <div id="empty-state" style="display:none;text-align:center;padding:60px 40px;">
+          <div style="font-size:48px;margin-bottom:16px;opacity:0.4;">📭</div>
+          <div style="font-size:16px;font-weight:600;">No submissions yet</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div style="font-size:14px;font-weight:700;" id="d-name">Response</div>
+    <button class="drawer-close" onclick="closeDrawer()">×</button>
+  </div>
+  <div class="drawer-body" id="drawer-body"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,doc,getDoc,getDocs,updateDoc,collection,onSnapshot,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+const params=new URLSearchParams(window.location.search);
+window.AID=params.get('id');
+let aData=null;
+let allResponses=[];
+
+onAuthStateChanged(auth,async function(u){
+  if(!u){window.location.href='/login/';return;}
+  if(!AID){showFatal('No award ID.');return;}
+  await loadData();
+});
+
+async function loadData(){
+  try{
+    const snap=await getDoc(doc(db,'awards',AID));
+    if(!snap.exists()){showFatal('Award not found.');return;}
+    aData=snap.data();
+    renderHeader(aData);
+    const rSnap=await getDocs(collection(db,'awards',AID,'responses'));
+    allResponses=rSnap.docs.map(function(d){return Object.assign({_id:d.id},d.data());});
+    allResponses.sort(function(a,b){return(b.submittedAt?.seconds||0)-(a.submittedAt?.seconds||0);});
+    document.getElementById('loading-screen').style.display='none';
+    document.getElementById('main-wrap').style.display='block';
+    updateStats(aData);
+    renderLeaderboard(aData.scores||{});
+    renderResponsesTable();
+    // Live updates
+    onSnapshot(doc(db,'awards',AID),function(snap){
+      if(snap.exists()){
+        aData=snap.data();
+        renderHeader(aData);
+        updateStats(aData);
+        renderLeaderboard(aData.scores||{});
+      }
+    });
+  }catch(e){console.error(e);showFatal('Failed to load.');}
+}
+
+function renderHeader(d){
+  const t=d.title||'Award';
+  document.getElementById('nav-title').textContent=t;
+  document.getElementById('top-title').textContent=t;
+  document.getElementById('top-meta').textContent=[d.category,d.deadline?'Closes '+d.deadline:''].filter(Boolean).join(' · ');
+  document.title=t+' — Results';
+  const acc=d.accepting!==false;
+  document.getElementById('accepting-status').innerHTML=acc?'<span style="color:var(--green);font-size:12px;">● Accepting</span>':'<span style="color:var(--red);font-size:12px;">● Closed</span>';
+}
+
+function updateStats(d){
+  const scores=d.scores||{};
+  const nominations=Object.keys(scores).length;
+  const today=new Date().toDateString();
+  const todayCount=allResponses.filter(function(r){return r.submittedAt?.seconds&&new Date(r.submittedAt.seconds*1000).toDateString()===today;}).length;
+  const sorted=Object.entries(scores).sort(function(a,b){return b[1]-a[1];});
+  document.getElementById('stat-responses').textContent=d.responseCount||allResponses.length;
+  document.getElementById('stat-nominations').textContent=nominations;
+  document.getElementById('stat-winner').textContent=sorted[0]?sorted[0][0].substring(0,14):'—';
+  document.getElementById('stat-today').textContent=todayCount;
+}
+
+function renderLeaderboard(scores){
+  const entries=Object.entries(scores).sort(function(a,b){return b[1]-a[1];});
+  const wrap=document.getElementById('lb-wrap');
+  if(entries.length===0){wrap.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted);">No nominations yet. Share the award link!</div>';return;}
+  const maxScore=entries[0][1]||1;
+  const rankEmojis=['🥇','🥈','🥉'];
+  const rankColors=['#f59e0b','#9ca3af','#b45309'];
+  wrap.innerHTML=entries.map(function(e,i){
+    const pct=Math.round(e[1]/maxScore*100);
+    // Count how many times nominated
+    const nominationCount=allResponses.filter(function(r){return(r.nominations||[]).some(function(n){return n.nomination===e[0];});}).length;
+    return '<div class="lb-row'+(i===0?' top':'')+'">'
+      +'<div class="lb-rank" style="background:'+(rankColors[i]||'var(--surface2)')+';color:'+(i<3?'#fff':'var(--muted)')+';">'+(rankEmojis[i]||i+1)+'</div>'
+      +'<div class="lb-name">'+e[0]+'</div>'
+      +'<div class="lb-bar-wrap"><div class="lb-bar" style="width:'+pct+'%"></div></div>'
+      +'<div class="lb-count">'+nominationCount+'x</div>'
+      +'<div class="lb-score">'+e[1]+' pts</div>'
+      +'</div>';
+  }).join('');
+}
+
+function renderResponsesTable(){
+  const tbody=document.getElementById('resp-body');
+  const table=document.getElementById('resp-table');
+  const empty=document.getElementById('empty-state');
+  if(allResponses.length===0){table.style.display='none';empty.style.display='block';return;}
+  empty.style.display='none';table.style.display='table';
+  tbody.innerHTML=allResponses.map(function(r,i){
+    const name=r.name||'Anonymous';
+    const date=r.submittedAt?.seconds?new Date(r.submittedAt.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—';
+    const noms=(r.nominations||[]).filter(function(n){return n.nomination;}).map(function(n){return '<span class="nom-pill">'+n.rank+'. '+n.nomination+'</span>';}).join('');
+    return '<tr onclick="openDrawer(\''+r._id+'\')">'
+      +'<td style="color:var(--muted);font-family:var(--mono);font-size:11px;">#'+(i+1)+'</td>'
+      +'<td style="font-weight:600;">'+name+'<div style="font-size:11px;color:var(--muted);">'+(r.email||'')+'</div></td>'
+      +'<td><div class="nom-pills">'+noms+'</div></td>'
+      +'<td style="color:var(--muted);font-size:11px;">'+date+'</td>'
+      +'<td><button class="btn btn-ghost" onclick="event.stopPropagation();openDrawer(\''+r._id+'\')">View</button></td>'
+      +'</tr>';
+  }).join('');
+}
+
+window.openDrawer=function(id){
+  const r=allResponses.find(function(x){return x._id===id;});
+  if(!r)return;
+  document.getElementById('d-name').textContent=r.name||'Anonymous';
+  const date=r.submittedAt?.seconds?new Date(r.submittedAt.seconds*1000).toLocaleString('en-IN'):'—';
+  const rankEmojis={1:'🥇',2:'🥈',3:'🥉'};
+  document.getElementById('drawer-body').innerHTML=
+    '<div style="font-size:12px;color:var(--muted);margin-bottom:16px;">Submitted: '+date+(r.email?' · '+r.email:'')+'</div>'
+    +'<div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">NOMINATIONS</div>'
+    +(r.nominations||[]).map(function(n){
+      return '<div class="rank-item"><div class="rank-emoji">'+(rankEmojis[n.rank]||'#'+n.rank)+'</div><div class="rank-info"><div class="rank-nom">'+(n.nomination||'—')+'</div><div class="rank-pts">'+n.label+' · '+n.points+' pts</div></div></div>';
+    }).join('');
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+};
+
+window.closeDrawer=function(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawer-overlay').classList.remove('open');
+};
+
+window.showView=function(view,el){
+  document.querySelectorAll('.sidebar-item').forEach(function(i){i.classList.remove('active');});
+  if(el)el.classList.add('active');
+  document.getElementById('lb-view').style.display=view==='leaderboard'?'block':'none';
+  document.getElementById('resp-view').style.display=view==='responses'?'block':'none';
+};
+
+window.toggleAccepting=async function(){
+  const current=aData.accepting!==false;
+  try{
+    await updateDoc(doc(db,'awards',AID),{accepting:!current,updatedAt:serverTimestamp()});
+    toast(current?'Award closed':'Award reopened');
+  }catch(e){toast('Error');}
+};
+
+window.exportCSV=function(){
+  const ranks=aData.ranks||[];
+  const headers=['Name','Email','Submitted',...ranks.map(function(r){return r.label||'Rank '+r.rank;})];
+  const rows=[headers];
+  allResponses.forEach(function(r){
+    const date=r.submittedAt?.seconds?new Date(r.submittedAt.seconds*1000).toLocaleDateString():'';
+    rows.push([r.name||'',r.email||'',date,...ranks.map(function(rank,i){return(r.nominations||[])[i]?.nomination||'';})]);
+  });
+  const csv=rows.map(function(r){return r.map(function(v){return '"'+String(v||'').replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='award-nominations.csv';a.click();
+  toast('CSV downloaded!');
+};
+
+function showFatal(msg){document.getElementById('loading-screen').innerHTML='<div style="text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">😕</div><div style="font-size:16px;font-weight:700;margin-bottom:8px;">'+msg+'</div><a href="/dashboard/" style="display:inline-block;margin-top:16px;padding:10px 20px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-size:13px;">Go to Dashboard</a></div>';}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+</script>
+</body>
+</html>
