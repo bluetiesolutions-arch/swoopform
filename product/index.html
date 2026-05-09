@@ -243,7 +243,7 @@ window.prevQ=function(){
 function showEmailCapture(){
   document.getElementById('question-display').innerHTML='<div class="email-capture"><div style="font-size:48px;margin-bottom:16px;">🎁</div><h3>Almost there!</h3><p>Enter your email to see your personalized product recommendations.</p><input class="email-inp" type="email" id="email-inp" placeholder="your@email.com"><button class="btn btn-primary" onclick="submitEmail()" style="width:100%;padding:14px;">See My Results →</button><div style="font-size:11px;color:var(--muted2);margin-top:10px;">We\'ll never spam you.</div></div>';
   document.getElementById('btn-prev').style.visibility='visible';
-  document.getElementById('btn-next').style.display='none';
+  const bn2=document.getElementById('btn-next');if(bn2)bn2.style.display='none';
   document.getElementById('progress-label').textContent='Almost done!';
 }
 
@@ -257,8 +257,8 @@ window.submitEmail=function(){
 
 window.showResults=async function(){
   document.getElementById('question-display').innerHTML='<div style="text-align:center;padding:20px;"><div class="spinner" style="margin:0 auto;"></div><div style="margin-top:12px;font-size:13px;color:var(--muted);">Calculating your results...</div></div>';
-  document.getElementById('btn-next').style.display='none';
-  document.getElementById('btn-prev').style.display='none';
+  const bn=document.getElementById('btn-next');if(bn)bn.style.display='none';
+  const bp=document.getElementById('btn-prev');if(bp)bp.style.display='none';
 
   try{
     const tags=[];
@@ -302,7 +302,7 @@ window.showResults=async function(){
       await updateDoc(doc(db,'products',PID),{responseCount:increment(1)});
     }catch(saveErr){console.error('Save error:',saveErr);}
 
-    document.getElementById('progress-wrap').style.display='none';
+    const pw=document.getElementById('progress-wrap');if(pw)pw.style.display='none';
 
     const showTop=pData.showTop3?Math.min(3,scored.length):1;
     const topResults=scored.slice(0,showTop);
