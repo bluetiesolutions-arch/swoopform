@@ -169,7 +169,7 @@ function updateProgress(idx){
   nextBtn.textContent=idx===total-1?'See My Results →':'Next →';
 }
 
-function renderQuestion(idx){
+window.renderQuestion=function(idx){
   currentQ=idx;
   updateProgress(idx);
   const q=questions[idx];
@@ -193,7 +193,7 @@ function renderQuestion(idx){
   }
   html+='</div>';
   document.getElementById('question-display').innerHTML=html;
-}
+};
 
 window.selectSingle=function(idx,j){
   const q=questions[idx];
@@ -224,7 +224,7 @@ window.setSlider=function(idx,val){
 window.nextQ=function(){
   console.log('nextQ called, currentQ:',currentQ,'total:',questions.length);
   if(currentQ<questions.length-1){
-    renderQuestion(currentQ+1);
+    window.renderQuestion(currentQ+1);
   }else{
     if(pData.collectEmail){
       showEmailCapture();
@@ -237,7 +237,7 @@ window.nextQ=function(){
 };
 
 window.prevQ=function(){
-  if(currentQ>0)renderQuestion(currentQ-1);
+  if(currentQ>0)window.renderQuestion(currentQ-1);
 };
 
 function showEmailCapture(){
