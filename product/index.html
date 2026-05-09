@@ -222,13 +222,16 @@ window.setSlider=function(idx,val){
 };
 
 window.nextQ=function(){
+  console.log('nextQ called, currentQ:',currentQ,'total:',questions.length);
   if(currentQ<questions.length-1){
     renderQuestion(currentQ+1);
   }else{
     if(pData.collectEmail){
       showEmailCapture();
     }else{
-      window.showResults();
+      console.log('Calling showResults...');
+      document.getElementById('question-display').innerHTML='<div style="text-align:center;padding:20px;"><b>Loading results...</b></div>';
+      setTimeout(function(){window.showResults();},100);
     }
   }
 };
