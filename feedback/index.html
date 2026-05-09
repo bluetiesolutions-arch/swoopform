@@ -225,6 +225,50 @@ function render(){
 
   // Render questions
   renderQuestions(d.questions||[]);
+
+  // One at a time layout
+  if(d.layout==='one'){
+    setupOneAtATime(d.questions||[]);
+  }
+}
+
+function setupOneAtATime(questions){
+  window._oneMode=true;
+  window._currentQ=0;
+  const wrap=document.getElementById('questions-wrap');
+  const allGroups=wrap.querySelectorAll('.field-group');
+  allGroups.forEach(function(g,i){g.style.display=i===0?'block':'none';});
+
+  // Replace submit button with Next button
+  const submitBtn=document.getElementById('submit-btn');
+  submitBtn.textContent='Next →';
+  submitBtn.onclick=function(){nextOneAtATime(questions.length);};
+  updateOneProgress(0,questions.length);
+}
+
+window.nextOneAtATime=function(total){
+  const wrap=document.getElementById('questions-wrap');
+  const allGroups=wrap.querySelectorAll('.field-group');
+  const current=window._currentQ;
+  if(current<total-1){
+    allGroups[current].style.display='none';
+    allGroups[current+1].style.display='block';
+    window._currentQ=current+1;
+    updateOneProgress(current+1,total);
+    if(current+1===total-1){
+      const btn=document.getElementById('submit-btn');
+      btn.textContent='Submit Feedback 🙏';
+      btn.onclick=submitFeedback;
+    }
+  }
+};
+
+function updateOneProgress(current,total){
+  const pct=Math.round(((current+1)/total)*100);
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('progress-pct').textContent=pct+'%';
+  document.getElementById('progress-label').textContent='Question '+(current+1)+' of '+total;
+  document.getElementById('progress-wrap').style.display='block';
 }
 
 function updateProgress(answered,total){
