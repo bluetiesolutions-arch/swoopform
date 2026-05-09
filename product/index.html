@@ -161,12 +161,12 @@ function render(){
 function updateProgress(idx){
   const total=questions.length;
   const pct=total?Math.round(((idx)/total)*100):0;
-  document.getElementById('progress-fill').style.width=pct+'%';
-  document.getElementById('progress-pct').textContent=pct+'%';
-  document.getElementById('progress-label').textContent='Question '+(idx+1)+' of '+total;
-  document.getElementById('btn-prev').style.visibility=idx>0?'visible':'hidden';
+  const pf=document.getElementById('progress-fill');if(pf)pf.style.width=pct+'%';
+  const pp=document.getElementById('progress-pct');if(pp)pp.textContent=pct+'%';
+  const pl=document.getElementById('progress-label');if(pl)pl.textContent='Question '+(idx+1)+' of '+total;
+  const bprev=document.getElementById('btn-prev');if(bprev)bprev.style.visibility=idx>0?'visible':'hidden';
   const nextBtn=document.getElementById('btn-next');
-  nextBtn.textContent=idx===total-1?'See My Results →':'Next →';
+  if(nextBtn)nextBtn.textContent=idx===total-1?'See My Results →':'Next →';
 }
 
 window.renderQuestion=function(idx){
@@ -229,9 +229,7 @@ window.nextQ=function(){
     if(pData.collectEmail){
       showEmailCapture();
     }else{
-      console.log('Calling showResults...');
-      document.getElementById('question-display').innerHTML='<div style="text-align:center;padding:20px;"><b>Loading results...</b></div>';
-      setTimeout(function(){window.showResults();},100);
+      window.showResults();
     }
   }
 };
