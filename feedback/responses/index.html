@@ -268,14 +268,19 @@ onAuthStateChanged(auth,async function(u){
 });
 
 async function loadData(){
+  showMsg('Step 1: Connecting to database...');
   try{
+    showMsg('Step 2: Loading form data...');
     const snap=await getDoc(doc(db,'feedbacks',FID));
+    showMsg('Step 3: Form found, loading responses...');
     if(!snap.exists()){showFatal('Form not found.');return;}
     fData=snap.data();
     renderHeader();
+    showMsg('Step 4: Fetching responses...');
     const rSnap=await getDocs(collection(db,'feedbacks',FID,'responses'));
     allResponses=rSnap.docs.map(function(d){return Object.assign({_id:d.id},d.data());});
     allResponses.sort(function(a,b){return(b.submittedAt&&b.submittedAt.seconds?b.submittedAt.seconds:0)-(a.submittedAt&&a.submittedAt.seconds?a.submittedAt.seconds:0);});
+    showMsg('Step 5: Rendering...');
     document.getElementById('loading-screen').style.display='none';
     document.getElementById('main-wrap').style.display='block';
     updateStats();
@@ -581,6 +586,13 @@ window.exportCSV=function(){
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='feedback-responses.csv';a.click();
   toast('CSV downloaded!');
 };
+
+function showMsg(msg){
+  const el=document.getElementById('loading-screen');
+  const p=el.querySelector('div');
+  if(p)p.textContent=msg;
+  else el.innerHTML+='<div style="font-size:13px;color:#7a7a8c;">'+msg+'</div>';
+}
 
 function showFatal(msg){document.getElementById('loading-screen').innerHTML='<div style="text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">😕</div><div style="font-size:16px;font-weight:700;margin-bottom:8px;">'+msg+'</div><a href="/dashboard/" style="display:inline-block;margin-top:16px;padding:10px 20px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-size:13px;">Go to Dashboard</a></div>';}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
