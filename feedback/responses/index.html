@@ -252,8 +252,12 @@ const COLORS=['#3b6ef5','#12a872','#d97706','#e5484d','#7c3aed','#0ea5e9','#ec48
 
 onAuthStateChanged(auth,async function(u){
   if(!u){window.location.href='/login/';return;}
-  if(!FID){showFatal('No form ID in URL.');return;}
-  await loadData();
+  if(!FID){showFatal('No form ID in URL. Go back to dashboard and click Results.');return;}
+  try{
+    await loadData();
+  }catch(e){
+    showFatal('Error loading: '+e.message);
+  }
 });
 
 async function loadData(){
