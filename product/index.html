@@ -253,75 +253,85 @@ window.submitEmail=function(){
 };
 
 window.showResults=async function(){
-  // Collect all tags from answers
-  const tags=[];
-  questions.forEach(function(q,i){
-    const ans=answers[i];
-    if(q.type==='single'||q.type==='image'){
-      const opt=(q.options||[]).find(function(o){return o.text===ans;});
-      if(opt&&opt.tag)tags.push(opt.tag);
-    }else if(q.type==='multi'){
-      const arr=Array.isArray(ans)?ans:[];
-      arr.forEach(function(val){
-        const opt=(q.options||[]).find(function(o){return o.text===val;});
-        if(opt&&opt.tag)tags.push(opt.tag);
-      });
-    }else if(q.type==='yesno'){
-      if(ans==='yes'&&q.yesTag)tags.push(q.yesTag);
-      if(ans==='no'&&q.noTag)tags.push(q.noTag);
-    }
-  });
-  collectedTags=tags;
-
-  // Score products
-  const products=pData.products||[];
-  const scored=products.map(function(p){
-    const ptags=p.tags||[];
-    const matches=tags.filter(function(t){return ptags.includes(t);}).length;
-    const pct=ptags.length?Math.round((matches/Math.max(tags.length,ptags.length))*100):0;
-    return Object.assign({},p,{matches,pct});
-  }).sort(function(a,b){return b.matches-a.matches;});
-
-  // Save to Firebase
-  try{
-    // Convert numeric answer keys to strings for Firestore
-    const answersStr={};
-    Object.keys(answers).forEach(function(k){answersStr['q'+k]=Array.isArray(answers[k])?answers[k].join(', '):String(answers[k]);});
-    await addDoc(collection(db,'products',PID,'responses'),{
-      formId:PID,formTitle:pData.title,answers:answersStr,tags,
-      email:userEmail||'',topProduct:scored[0]?scored[0].name:'',
-      submittedAt:serverTimestamp()
-    });
-    await updateDoc(doc(db,'products',PID),{responseCount:increment(1)});
-  }catch(e){console.error(e);}
-
-  // Show results
-  document.getElementById('progress-wrap').style.display='none';
-  document.getElementById('btn-prev').style.display='none';
+  document.getElementById('question-display').innerHTML='<div style="text-align:center;padding:20px;"><div class="spinner" style="margin:0 auto;"></div><div style="margin-top:12px;font-size:13px;color:var(--muted);">Calculating your results...</div></div>';
   document.getElementById('btn-next').style.display='none';
+  document.getElementById('btn-prev').style.display='none';
 
-  const showTop=pData.showTop3?Math.min(3,scored.length):1;
-  const topResults=scored.slice(0,showTop);
+  try{
+    const tags=[];
+    questions.forEach(function(q,i){
+      const ans=answers[i];
+      if(q.type==='single'||q.type==='image'){
+        const opt=(q.options||[]).find(function(o){return o.text===ans;});
+        if(opt&&opt.tag)tags.push(opt.tag);
+      }else if(q.type==='multi'){
+        const arr=Array.isArray(ans)?ans:[];
+        arr.forEach(function(val){
+          const opt=(q.options||[]).find(function(o){return o.text===val;});
+          if(opt&&opt.tag)tags.push(opt.tag);
+        });
+      }else if(q.type==='yesno'){
+        if(ans==='yes'&&q.yesTag)tags.push(q.yesTag);
+        if(ans==='no'&&q.noTag)tags.push(q.noTag);
+      }
+    });
 
-  let html='<div class="results-wrap"><div class="result-heading">'+(pData.resultHeading||'Your Perfect Match! 🎉')+'</div><div class="result-sub">'+(pData.resultSub||'Based on your answers, we recommend:')+'</div>';
+    const products=pData.products||[];
+    const scored=products.map(function(p){
+      const ptags=p.tags||[];
+      const matches=tags.filter(function(t){return ptags.includes(t);}).length;
+      const total=Math.max(tags.length,ptags.length,1);
+      const pct=Math.round((matches/total)*100);
+      return Object.assign({},p,{matches,pct});
+    }).sort(function(a,b){return b.matches-a.matches;});
 
-  topResults.forEach(function(p,i){
-    const isTop=i===0;
-    const link=p.link?(p.link.startsWith('http')?p.link:'https://'+p.link):'#';
-    html+='<div class="product-card'+(isTop?' top':'')+'">'
-      +'<div class="product-banner">'+(p.image?'<img src="'+p.image+'" onerror="this.style.display=\'none\'">':'<span>📦</span>')+(isTop?'<div class="top-badge">⭐ Best Match</div>':'')+'</div>'
-      +'<div class="product-body">'
-      +(pData.showPct?'<div class="product-match">'+p.pct+'% Match</div>':'')
-      +'<div class="product-name">'+p.name+'</div>'
-      +(p.price?'<div class="product-price">'+p.price+'</div>':'')
-      +(p.description?'<div class="product-desc">'+p.description+'</div>':'')
-      +(p.tags&&p.tags.length?'<div class="product-tags">'+p.tags.map(function(t){return '<span class="product-tag">'+t+'</span>';}).join('')+'</div>':'')
-      +(link!=='#'?'<a class="shop-btn" href="'+link+'" target="_blank">'+(pData.ctaText||'Shop Now →')+'</a>':'')
-      +'</div></div>';
-  });
+    try{
+      const answersStr={};
+      Object.keys(answers).forEach(function(k){
+        answersStr['q'+k]=Array.isArray(answers[k])?answers[k].join(', '):String(answers[k]||'');
+      });
+      await addDoc(collection(db,'products',PID,'responses'),{
+        formId:PID,formTitle:pData.title||'',answers:answersStr,
+        tags:tags,email:userEmail||'',
+        topProduct:scored[0]?scored[0].name:'',
+        submittedAt:serverTimestamp()
+      });
+      await updateDoc(doc(db,'products',PID),{responseCount:increment(1)});
+    }catch(saveErr){console.error('Save error:',saveErr);}
 
-  html+='<button class="retry-btn" onclick="window.location.reload()">🔄 Retake Quiz</button></div>';
-  document.getElementById('question-display').innerHTML=html;
+    document.getElementById('progress-wrap').style.display='none';
+
+    const showTop=pData.showTop3?Math.min(3,scored.length):1;
+    const topResults=scored.slice(0,showTop);
+
+    let html='<div class="results-wrap"><div class="result-heading">'+(pData.resultHeading||'Your Perfect Match! 🎉')+'</div><div class="result-sub">'+(pData.resultSub||'Based on your answers, we recommend:')+'</div>';
+
+    if(topResults.length===0){
+      html+='<div style="text-align:center;padding:20px;color:var(--muted);">No matching products found. Try different answers!</div>';
+    }else{
+      topResults.forEach(function(p,i){
+        const isTop=i===0;
+        const link=p.link?(p.link.startsWith('http')?p.link:'https://'+p.link):'';
+        html+='<div class="product-card'+(isTop?' top':'')+'">'
+          +'<div class="product-banner">'+(p.image?'<img src="'+p.image+'" onerror="this.style.display='none'">':'<span>📦</span>')+(isTop?'<div class="top-badge">⭐ Best Match</div>':'')+'</div>'
+          +'<div class="product-body">'
+          +(pData.showPct?'<div class="product-match">'+p.pct+'% Match</div>':'')
+          +'<div class="product-name">'+(p.name||'Product')+'</div>'
+          +(p.price?'<div class="product-price">'+p.price+'</div>':'')
+          +(p.description?'<div class="product-desc">'+p.description+'</div>':'')
+          +(p.tags&&p.tags.length?'<div class="product-tags">'+p.tags.map(function(t){return '<span class="product-tag">'+t+'</span>';}).join('')+'</div>':'')
+          +(link?'<a class="shop-btn" href="'+link+'" target="_blank">'+(pData.ctaText||'Shop Now →')+'</a>':'')
+          +'</div></div>';
+      });
+    }
+
+    html+='<button class="retry-btn" onclick="window.location.reload()">🔄 Retake Quiz</button></div>';
+    document.getElementById('question-display').innerHTML=html;
+
+  }catch(err){
+    console.error('showResults error:',err);
+    document.getElementById('question-display').innerHTML='<div style="text-align:center;padding:30px;"><div style="font-size:48px;margin-bottom:16px;">😕</div><div style="font-size:16px;font-weight:700;margin-bottom:8px;">Something went wrong</div><div style="font-size:13px;color:#7a7a8c;">'+err.message+'</div><button onclick="window.location.reload()" style="margin-top:16px;padding:10px 20px;background:#ec4899;color:#fff;border:none;border-radius:8px;font-family:var(--font);cursor:pointer;">Try Again</button></div>';
+  }
 };
 
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
