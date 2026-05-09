@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Survey — SwoopForm</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f4f0;--white:#fff;--border:#e2ddd6;--accent:#0ea5e9;--accent-light:#f0f9ff;--success:#12a872;--danger:#e5484d;--text:#1c1c2e;--muted:#7a7a8c;--muted2:#c5c0b8;--font:'Sora',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;}
+header{height:52px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:50;}
+.brand{font-size:15px;font-weight:700;color:var(--accent);}
+.brand span{color:var(--text);}
+.main{max-width:680px;margin:0 auto;padding:36px 20px;}
+.survey-card{background:var(--white);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);}
+.survey-hero{padding:32px;background:linear-gradient(135deg,#0ea5e9,#12a872);color:#fff;}
+.survey-tag{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;opacity:0.8;margin-bottom:10px;}
+.survey-title{font-size:24px;font-weight:700;margin-bottom:8px;}
+.survey-meta{font-size:13px;opacity:0.8;line-height:1.6;}
+.survey-body{padding:28px;}
+.progress-wrap{margin-bottom:24px;}
+.progress-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:8px;}
+.progress-bg{height:4px;background:var(--border);border-radius:4px;}
+.progress-fill{height:4px;border-radius:4px;transition:width .4s;}
+.anon-badge{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--accent-light);border-radius:10px;font-size:12px;color:var(--accent);margin-bottom:20px;border:1px solid rgba(14,165,233,0.2);}
+.field-group{margin-bottom:24px;}
+.field-label{font-size:14px;font-weight:600;line-height:1.5;margin-bottom:4px;}
+.field-category{font-size:11px;color:var(--muted);margin-bottom:10px;}
+.req{color:var(--danger);}
+.field-input{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;background:var(--white);color:var(--text);font-family:var(--font);font-size:14px;outline:none;transition:border-color .2s;}
+.field-input:focus{border-color:var(--accent);}
+.field-input::placeholder{color:var(--muted2);}
+textarea.field-input{resize:vertical;min-height:100px;line-height:1.6;}
+.scale-group{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px;}
+.scale-btn{width:44px;height:44px;border-radius:8px;border:1.5px solid var(--border);background:var(--white);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;font-family:var(--font);}
+.scale-btn:hover{border-color:var(--accent);}
+.scale-btn.selected{color:#fff;}
+.star-group{display:flex;gap:8px;margin-top:8px;}
+.star-btn{font-size:36px;cursor:pointer;color:#e2ddd6;transition:all .15s;background:none;border:none;padding:0;line-height:1;}
+.star-btn.active{color:#f59e0b;}
+.star-btn:hover{transform:scale(1.2);}
+.emoji-group{display:flex;gap:12px;margin-top:8px;}
+.emoji-btn{font-size:36px;cursor:pointer;border:2px solid transparent;border-radius:12px;padding:8px;transition:all .2s;background:none;line-height:1;}
+.emoji-btn:hover{border-color:var(--border);transform:scale(1.15);}
+.emoji-btn.selected{border-color:var(--accent);background:var(--accent-light);}
+.nps-group{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px;}
+.nps-btn{width:44px;height:44px;border-radius:8px;border:1.5px solid var(--border);background:var(--white);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;font-family:var(--font);}
+.nps-btn.detractor{background:#ef4444;border-color:#ef4444;color:#fff;}
+.nps-btn.passive{background:#f59e0b;border-color:#f59e0b;color:#fff;}
+.nps-btn.promoter{background:#10b981;border-color:#10b981;color:#fff;}
+.nps-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px;}
+.options-group{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+.opt-btn{display:flex;align-items:center;gap:12px;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;font-size:13px;background:var(--white);text-align:left;width:100%;font-family:var(--font);transition:all .15s;}
+.opt-btn:hover{border-color:var(--accent);background:var(--accent-light);}
+.opt-btn.selected{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
+.opt-circle{width:18px;height:18px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;}
+.opt-square{width:18px;height:18px;border-radius:4px;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;}
+.yesno-group{display:flex;gap:12px;margin-top:8px;}
+.yesno-btn{flex:1;padding:14px;border:1.5px solid var(--border);border-radius:12px;background:var(--white);font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;text-align:center;}
+.yesno-btn.yes-sel{border-color:var(--success);background:#f0fdf4;color:var(--success);}
+.yesno-btn.no-sel{border-color:var(--danger);background:#fef2f2;color:var(--danger);}
+.submit-btn{width:100%;padding:15px;border:none;border-radius:12px;color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:20px;}
+.submit-btn:hover{transform:translateY(-1px);opacity:0.9;}
+.submit-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+.thankyou{display:none;text-align:center;padding:52px 32px;}
+.ty-icon{font-size:64px;margin-bottom:20px;animation:pop .5s ease;}
+@keyframes pop{0%{transform:scale(0.5);opacity:0}80%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+.ty-title{font-size:26px;font-weight:700;margin-bottom:12px;}
+.ty-msg{font-size:14px;color:var(--muted);line-height:1.7;max-width:400px;margin:0 auto;}
+.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:600px){.survey-hero,.survey-body{padding:20px;}.main{padding:20px 16px;}}
+</style>
+</head>
+<body>
+
+<div class="loading-screen" id="loading-screen">
+  <div class="spinner"></div>
+  <div style="font-size:13px;color:var(--muted);">Loading survey...</div>
+</div>
+
+<div id="app" style="display:none;">
+  <header>
+    <div class="brand">Swoop<span>Form</span></div>
+    <span style="font-size:12px;color:var(--muted);">Confidential & Secure</span>
+  </header>
+  <div class="main">
+    <div class="survey-card">
+      <div class="survey-hero" id="survey-hero">
+        <div class="survey-tag" id="s-tag">Employee Survey</div>
+        <div class="survey-title" id="s-title">Loading...</div>
+        <div class="survey-meta" id="s-meta"></div>
+      </div>
+      <div class="survey-body" id="survey-body">
+        <div class="anon-badge" id="anon-badge" style="display:none;">🔒 This survey is completely anonymous. Your responses cannot be traced back to you.</div>
+        <div class="progress-wrap" id="progress-wrap" style="display:none;">
+          <div class="progress-top"><span id="progress-label">0 of 0 answered</span><span id="progress-pct">0%</span></div>
+          <div class="progress-bg"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+        </div>
+        <div id="questions-wrap"></div>
+        <button class="submit-btn" id="submit-btn" onclick="submitSurvey()" style="background:linear-gradient(135deg,#0ea5e9,#12a872);">Submit Survey 🙏</button>
+      </div>
+      <div class="thankyou" id="thankyou">
+        <div class="ty-icon">🙏</div>
+        <div class="ty-title" id="ty-title">Thank you!</div>
+        <div class="ty-msg" id="ty-msg">Your feedback helps us improve.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getFirestore,doc,getDoc,addDoc,updateDoc,collection,increment,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);
+const db=getFirestore(app);
+
+const params=new URLSearchParams(window.location.search);
+const EID=params.get('id');
+let eData=null;
+let answers={};
+
+async function init(){
+  if(!EID){showError('No survey ID in URL.');return;}
+  try{
+    const snap=await getDoc(doc(db,'employees',EID));
+    if(!snap.exists()){showError('Survey not found.');return;}
+    eData=snap.data();
+    if(eData.accepting===false){showError('This survey is closed.');return;}
+    render();
+    document.getElementById('loading-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+  }catch(e){console.error(e);showError('Failed to load.');}
+}
+
+function render(){
+  const d=eData;
+  const color1='#0ea5e9';const color2='#12a872';
+  document.title=(d.title||'Survey')+' — SwoopForm';
+  document.getElementById('s-tag').textContent=[d.department,d.period].filter(Boolean).join(' · ')||'Employee Survey';
+  document.getElementById('s-title').textContent=d.title||'Employee Survey';
+  const meta=[];
+  if(d.company)meta.push('📍 '+d.company);
+  if(d.conductedBy)meta.push('👤 By '+d.conductedBy);
+  if(d.deadline)meta.push('📅 Deadline: '+d.deadline);
+  if(d.description)meta.push(d.description);
+  document.getElementById('s-meta').textContent=meta.join(' · ');
+  if(d.anonymous)document.getElementById('anon-badge').style.display='flex';
+  document.getElementById('progress-wrap').style.display='block';
+  document.getElementById('ty-title').textContent=d.thankYouHeading||'Thank you!';
+  document.getElementById('ty-msg').textContent=d.thankYouMessage||'Your feedback helps us improve.';
+  const qs=d.shuffleQuestions?shuffle(d.questions||[]):d.questions||[];
+  renderQuestions(qs);
+}
+
+function renderQuestions(questions){
+  const wrap=document.getElementById('questions-wrap');
+  wrap.innerHTML='';
+  questions.forEach(function(q,i){
+    const fg=document.createElement('div');
+    fg.className='field-group';
+    const fid='ans_'+i;
+    const label='<div class="field-label">'+q.text+(q.required?' <span class="req">*</span>':'')+'</div>'+(q.category?'<div class="field-category">'+q.category+'</div>':'');
+    let input='';
+
+    if(q.type==='rating_scale'){
+      input='<div class="scale-group">'+[1,2,3,4,5,6,7,8,9,10].map(function(n){return '<button class="scale-btn" onclick="setScale('+i+','+n+')" id="scale_'+i+'_'+n+'">'+n+'</button>';}).join('')+'</div><input type="hidden" id="'+fid+'" value="">';
+    }else if(q.type==='rating_stars'){
+      input='<div class="star-group">'+[1,2,3,4,5].map(function(n){return '<button class="star-btn" onclick="setStar('+i+','+n+')" id="star_'+i+'_'+n+'">★</button>';}).join('')+'</div><div style="font-size:12px;color:var(--muted);margin-top:6px;" id="starlbl_'+i+'">Tap to rate</div><input type="hidden" id="'+fid+'" value="">';
+    }else if(q.type==='rating_emoji'){
+      const emojis=['😡','😕','😐','😊','😍'];
+      const labels=['Very Dissatisfied','Dissatisfied','Neutral','Satisfied','Very Satisfied'];
+      input='<div class="emoji-group">'+emojis.map(function(e,j){return '<button class="emoji-btn" onclick="setEmoji('+i+','+j+',\''+e+'\')" title="'+labels[j]+'">'+e+'</button>';}).join('')+'</div><input type="hidden" id="'+fid+'" value="">';
+    }else if(q.type==='nps'){
+      input='<div class="nps-group">'+[0,1,2,3,4,5,6,7,8,9,10].map(function(n){const cls=n<=6?'detractor':n<=8?'passive':'promoter';return '<button class="nps-btn" onclick="setNPS('+i+','+n+',\''+cls+'\')" id="nps_'+i+'_'+n+'">'+n+'</button>';}).join('')+'</div><div class="nps-labels"><span>Not likely</span><span>Extremely likely</span></div><input type="hidden" id="'+fid+'" value="">';
+    }else if(q.type==='mcq'){
+      input='<div class="options-group">'+(q.options||[]).map(function(o,j){return '<button class="opt-btn" onclick="setMCQ('+i+','+j+',\''+o.replace(/'/g,"\\'")+'\')" id="mcq_'+i+'_'+j+'"><span class="opt-circle"></span>'+o+'</button>';}).join('')+'</div><input type="hidden" id="'+fid+'" value="">';
+    }else if(q.type==='checkbox'){
+      input='<div class="options-group">'+(q.options||[]).map(function(o,j){return '<button class="opt-btn" onclick="toggleChk('+i+','+j+',\''+o.replace(/'/g,"\\'")+'\')" id="chk_'+i+'_'+j+'"><span class="opt-square"></span>'+o+'</button>';}).join('')+'</div><input type="hidden" id="'+fid+'" value="">';
+    }else if(q.type==='yesno'){
+      input='<div class="yesno-group"><button class="yesno-btn" onclick="setYN('+i+',\'yes\')" id="yn_'+i+'_yes">👍 Yes</button><button class="yesno-btn" onclick="setYN('+i+',\'no\')" id="yn_'+i+'_no">👎 No</button></div><input type="hidden" id="'+fid+'" value="">';
+    }else if(q.type==='long_text'){
+      input='<textarea class="field-input" id="'+fid+'" rows="4" placeholder="Share your thoughts..." oninput="answers['+i+']=this.value;updateProgress()"></textarea>';
+    }else{
+      input='<input class="field-input" id="'+fid+'" type="text" placeholder="Your answer..." oninput="answers['+i+']=this.value;updateProgress()">';
+    }
+    fg.innerHTML=label+input;
+    wrap.appendChild(fg);
+  });
+  updateProgress();
+}
+
+window.setScale=function(i,val){
+  const color=val<=3?'#ef4444':val<=6?'#f59e0b':val<=8?'#0ea5e9':'#10b981';
+  document.querySelectorAll('[id^="scale_'+i+'_"]').forEach(function(b){b.classList.remove('selected');b.style.background='';b.style.color='';b.style.borderColor='';});
+  const b=document.getElementById('scale_'+i+'_'+val);
+  if(b){b.classList.add('selected');b.style.background=color;b.style.color='#fff';b.style.borderColor=color;}
+  document.getElementById('ans_'+i).value=val;answers[i]=val;updateProgress();
+};
+window.setStar=function(i,val){
+  for(let n=1;n<=5;n++){const b=document.getElementById('star_'+i+'_'+n);if(b)b.className='star-btn'+(n<=val?' active':'');}
+  const labels=['','Poor','Fair','Good','Great','Excellent!'];
+  const lbl=document.getElementById('starlbl_'+i);if(lbl)lbl.textContent=labels[val]+' ('+val+'/5)';
+  document.getElementById('ans_'+i).value=val;answers[i]=val;updateProgress();
+};
+window.setEmoji=function(i,j,val){
+  document.querySelectorAll('[id^="emoji_"] , .emoji-btn').forEach(function(){});
+  document.querySelectorAll('.emoji-group')[i]&&document.querySelectorAll('.emoji-group')[i].querySelectorAll('.emoji-btn').forEach(function(b){b.classList.remove('selected');});
+  const groups=document.querySelectorAll('.emoji-group');
+  if(groups[i])groups[i].querySelectorAll('.emoji-btn')[j]&&groups[i].querySelectorAll('.emoji-btn')[j].classList.add('selected');
+  document.getElementById('ans_'+i).value=val;answers[i]=val;updateProgress();
+};
+window.setNPS=function(i,val,cls){
+  document.querySelectorAll('[id^="nps_'+i+'_"]').forEach(function(b){b.className='nps-btn';});
+  const b=document.getElementById('nps_'+i+'_'+val);if(b)b.className='nps-btn '+cls;
+  document.getElementById('ans_'+i).value=val;answers[i]=val;updateProgress();
+};
+window.setMCQ=function(i,j,val){
+  document.querySelectorAll('[id^="mcq_'+i+'_"]').forEach(function(b){b.classList.remove('selected');b.querySelector('.opt-circle').textContent='';});
+  const b=document.getElementById('mcq_'+i+'_'+j);if(b){b.classList.add('selected');b.querySelector('.opt-circle').textContent='●';}
+  document.getElementById('ans_'+i).value=val;answers[i]=val;updateProgress();
+};
+window.toggleChk=function(i,j,val){
+  const b=document.getElementById('chk_'+i+'_'+j);if(!b)return;
+  b.classList.toggle('selected');
+  b.querySelector('.opt-square').textContent=b.classList.contains('selected')?'✓':'';
+  if(!answers[i])answers[i]=[];
+  const arr=answers[i];const idx=arr.indexOf(val);
+  if(idx===-1)arr.push(val);else arr.splice(idx,1);
+  document.getElementById('ans_'+i).value=arr.join(', ');updateProgress();
+};
+window.setYN=function(i,val){
+  const yes=document.getElementById('yn_'+i+'_yes');const no=document.getElementById('yn_'+i+'_no');
+  if(yes)yes.className='yesno-btn'+(val==='yes'?' yes-sel':'');
+  if(no)no.className='yesno-btn'+(val==='no'?' no-sel':'');
+  document.getElementById('ans_'+i).value=val;answers[i]=val;updateProgress();
+};
+
+function updateProgress(){
+  const total=eData&&eData.questions?eData.questions.length:0;
+  const answered=Object.keys(answers).filter(function(k){const v=answers[k];return v!==undefined&&v!==''&&!(Array.isArray(v)&&v.length===0);}).length;
+  const pct=total?Math.round(answered/total*100):0;
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('progress-fill').style.background='linear-gradient(90deg,#0ea5e9,#12a872)';
+  document.getElementById('progress-pct').textContent=pct+'%';
+  document.getElementById('progress-label').textContent=answered+' of '+total+' answered';
+}
+
+window.submitSurvey=async function(){
+  const qs=eData.questions||[];
+  let valid=true;
+  qs.forEach(function(q,i){if(q.required&&(answers[i]===undefined||answers[i]===''){valid=false;}});
+  if(!valid){alert('Please answer all required questions.');return;}
+  const btn=document.getElementById('submit-btn');
+  btn.disabled=true;btn.textContent='Submitting...';
+  try{
+    await addDoc(collection(db,'employees',EID,'responses'),{
+      formId:EID,formTitle:eData.title,answers,submittedAt:serverTimestamp()
+    });
+    try{await updateDoc(doc(db,'employees',EID),{responseCount:increment(1)});}catch(e){}
+    document.getElementById('survey-body').style.display='none';
+    document.getElementById('thankyou').style.display='block';
+  }catch(e){console.error(e);btn.disabled=false;btn.textContent='Submit Survey 🙏';alert('Error: '+e.message);}
+};
+
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function showError(msg){document.getElementById('loading-screen').innerHTML='<div style="text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">😕</div><div style="font-size:18px;font-weight:700;margin-bottom:8px;">Oops!</div><div style="font-size:14px;color:#7a7a8c;">'+msg+'</div><a href="/dashboard/" style="display:inline-block;margin-top:20px;padding:10px 20px;background:#0ea5e9;color:#fff;border-radius:8px;text-decoration:none;font-size:13px;">Go to Dashboard</a></div>';}
+init();
+</script>
+</body>
+</html>

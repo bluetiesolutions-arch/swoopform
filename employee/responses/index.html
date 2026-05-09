@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Survey Results — SwoopForm</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f4f0;--surface:#ffffff;--surface2:#f0eeea;--border:#e2ddd6;--accent:#0ea5e9;--green:#12a872;--yellow:#d97706;--red:#e5484d;--purple:#7c3aed;--text:#1c1c2e;--muted:#7a7a8c;--muted2:#c5c0b8;--font:'Sora',sans-serif;--mono:'JetBrains Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;}
+nav{height:54px;background:rgba(245,244,240,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;position:sticky;top:0;z-index:100;gap:16px;}
+.brand{font-size:15px;font-weight:700;color:var(--accent);}
+.nav-sep{width:1px;height:18px;background:var(--border);}
+.nav-crumb{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;}
+.nav-crumb a{color:var(--accent);text-decoration:none;}
+.nav-right{margin-left:auto;display:flex;gap:10px;}
+.btn{padding:7px 14px;border-radius:8px;font-family:var(--font);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;border:none;}
+.btn-ghost{background:none;border:1px solid var(--border);color:var(--muted);}
+.btn-ghost:hover{border-color:var(--muted2);color:var(--text);}
+.btn-accent{background:var(--accent);color:#fff;font-weight:600;}
+.layout{display:flex;height:calc(100vh - 54px);}
+.sidebar{width:220px;min-width:220px;background:var(--surface);border-right:1px solid var(--border);padding:16px 12px;display:flex;flex-direction:column;gap:4px;overflow-y:auto;}
+.sidebar-label{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);padding:8px 10px 6px;}
+.sidebar-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .15s;border:none;background:none;width:100%;font-family:var(--font);}
+.sidebar-item:hover{background:var(--surface2);color:var(--text);}
+.sidebar-item.active{background:rgba(14,165,233,0.1);color:var(--accent);}
+.main{flex:1;overflow:hidden;display:flex;flex-direction:column;}
+.topbar{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0;background:var(--surface);}
+.topbar-title{font-size:16px;font-weight:700;}
+.topbar-meta{font-size:11px;color:var(--muted);margin-top:2px;}
+.topbar-right{margin-left:auto;display:flex;gap:10px;align-items:center;}
+.stats-row{display:flex;gap:1px;background:var(--border);flex-shrink:0;}
+.stat-card{flex:1;background:var(--surface);padding:14px 20px;display:flex;align-items:center;gap:10px;}
+.stat-val{font-size:20px;font-weight:700;font-family:var(--mono);}
+.stat-label{font-size:11px;color:var(--muted);margin-top:1px;}
+.content-area{flex:1;overflow-y:auto;padding:24px;}
+
+/* ANALYTICS */
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;}
+.chart-card.full{grid-column:1/-1;}
+.chart-title{font-size:13px;font-weight:600;margin-bottom:4px;}
+.chart-category{font-size:11px;color:var(--muted);margin-bottom:14px;}
+.big-number{font-size:48px;font-weight:800;font-family:var(--mono);text-align:center;margin:8px 0;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.bar-label{font-size:12px;color:var(--muted);width:80px;flex-shrink:0;text-align:right;}
+.bar-wrap{flex:1;height:28px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;}
+.bar-fill{height:100%;border-radius:6px;transition:width .6s;}
+.bar-val{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:11px;font-family:var(--mono);}
+.emoji-dist{display:flex;gap:8px;justify-content:center;margin:12px 0;}
+.emoji-dist-item{text-align:center;flex:1;}
+.emoji-dist-emoji{font-size:28px;margin-bottom:4px;}
+.emoji-dist-val{font-size:16px;font-weight:700;font-family:var(--mono);}
+.emoji-dist-lbl{font-size:10px;color:var(--muted);}
+.nps-gauge{display:flex;height:16px;border-radius:8px;overflow:hidden;gap:2px;margin:12px 0;}
+.response-list{display:flex;flex-direction:column;gap:8px;}
+.response-item{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:13px;color:var(--muted);line-height:1.5;}
+.filter-bar{padding:12px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0;background:var(--surface2);}
+.search-wrap{position:relative;flex:1;max-width:300px;}
+.search-wrap input{width:100%;padding:8px 12px 8px 34px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font);font-size:12px;outline:none;}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted);}
+table{width:100%;border-collapse:collapse;}
+thead tr{background:var(--surface2);border-bottom:1px solid var(--border);}
+th{padding:10px 16px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:left;}
+tbody tr{border-bottom:1px solid var(--border);cursor:pointer;}
+tbody tr:hover{background:#faf9f7;}
+td{padding:12px 16px;font-size:12px;}
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:150;display:none;}
+.drawer-overlay.open{display:block;}
+.drawer{position:fixed;top:0;right:-560px;width:560px;height:100vh;background:var(--surface);border-left:1px solid var(--border);z-index:160;transition:right .3s;display:flex;flex-direction:column;overflow:hidden;}
+.drawer.open{right:0;}
+.drawer-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.drawer-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;}
+.drawer-body{flex:1;overflow-y:auto;padding:20px 24px;}
+.answer-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;}
+.answer-q{font-size:13px;font-weight:600;margin-bottom:4px;}
+.answer-cat{font-size:11px;color:var(--muted);margin-bottom:8px;}
+.answer-val{font-size:13px;color:var(--muted);}
+.empty-state{text-align:center;padding:80px 40px;}
+.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:24px;left:24px;background:var(--text);color:#fff;padding:10px 16px;border-radius:9px;font-size:12px;z-index:400;display:none;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<div class="loading-screen" id="loading-screen">
+  <div class="spinner"></div>
+  <div style="font-size:13px;color:var(--muted);">Loading results...</div>
+</div>
+
+<div id="main-wrap" style="display:none;">
+<nav>
+  <div class="brand" style="color:var(--accent);">SwoopForm</div>
+  <div class="nav-sep"></div>
+  <div class="nav-crumb">
+    <a href="/dashboard/">Dashboard</a> ›
+    <span id="nav-title">Survey Results</span>
+  </div>
+  <div class="nav-right">
+    <button class="btn btn-ghost" onclick="exportCSV()">⬇ Export CSV</button>
+    <button class="btn btn-accent" onclick="viewSurvey()">🔗 View Survey</button>
+  </div>
+</nav>
+
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-label">Views</div>
+    <button class="sidebar-item active" onclick="showView('analytics',this)"><span>📊</span> Analytics</button>
+    <button class="sidebar-item" onclick="showView('responses',this)"><span>📋</span> All Responses</button>
+    <div class="sidebar-label" style="margin-top:8px;">Filter by Category</div>
+    <button class="sidebar-item active-cat" id="cat-all" onclick="filterCat('all',this)"><span>🌐</span> All Questions</button>
+    <div id="cat-list"></div>
+    <div class="sidebar-label" style="margin-top:8px;">Actions</div>
+    <button class="sidebar-item" onclick="exportCSV()"><span>⬇</span> Export CSV</button>
+    <button class="sidebar-item" onclick="window.location.href='/employee/create/?id='+EID"><span>✏️</span> Edit Survey</button>
+    <button class="sidebar-item" onclick="toggleAccepting()"><span>🔓</span> Toggle Survey</button>
+    <button class="sidebar-item" onclick="window.location.href='/dashboard/'"><span>🏠</span> Dashboard</button>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title" id="top-title">Loading...</div>
+        <div class="topbar-meta" id="top-meta"></div>
+      </div>
+      <div class="topbar-right">
+        <span id="accepting-status"></span>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><span style="font-size:18px;">👥</span><div><div class="stat-val" id="stat-total" style="color:var(--accent);">0</div><div class="stat-label">Responses</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">📊</span><div><div class="stat-val" id="stat-enps" style="color:var(--green);">—</div><div class="stat-label">eNPS Score</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">⭐</span><div><div class="stat-val" id="stat-avg" style="color:var(--yellow);">—</div><div class="stat-label">Avg Rating</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">📅</span><div><div class="stat-val" id="stat-today" style="color:var(--purple);">0</div><div class="stat-label">Today</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">✅</span><div><div class="stat-val" id="stat-completion" style="color:var(--green);">0%</div><div class="stat-label">Completion</div></div></div>
+    </div>
+
+    <!-- ANALYTICS VIEW -->
+    <div class="content-area" id="analytics-view">
+      <div class="analytics-grid" id="analytics-grid"></div>
+    </div>
+
+    <!-- RESPONSES VIEW -->
+    <div style="display:none;flex:1;overflow:hidden;flex-direction:column;" id="responses-view">
+      <div class="filter-bar">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search responses..." oninput="applyFilters()">
+        </div>
+      </div>
+      <div style="flex:1;overflow-y:auto;">
+        <table id="resp-table" style="display:none;">
+          <thead><tr><th>#</th><th>Submitted</th><th>Answered</th><th>Actions</th></tr></thead>
+          <tbody id="resp-body"></tbody>
+        </table>
+        <div class="empty-state" id="empty-state" style="display:none;">
+          <div style="font-size:48px;margin-bottom:16px;opacity:0.4;">📭</div>
+          <div style="font-size:16px;font-weight:600;margin-bottom:8px;">No responses yet</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div style="font-size:14px;font-weight:700;">Response Details</div>
+    <button class="drawer-close" onclick="closeDrawer()">×</button>
+  </div>
+  <div class="drawer-body" id="drawer-body"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,doc,getDoc,getDocs,updateDoc,collection,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+const params=new URLSearchParams(window.location.search);
+window.EID=params.get('id');
+let eData=null;
+let allResponses=[];
+let filtered=[];
+let activeCat='all';
+const COLORS=['#0ea5e9','#12a872','#d97706','#e5484d','#7c3aed','#ec4899'];
+
+onAuthStateChanged(auth,async function(u){
+  if(!u){window.location.href='/login/';return;}
+  if(!EID){showFatal('No survey ID.');return;}
+  await loadData();
+});
+
+async function loadData(){
+  try{
+    const snap=await getDoc(doc(db,'employees',EID));
+    if(!snap.exists()){showFatal('Survey not found.');return;}
+    eData=snap.data();
+    renderHeader();
+    const rSnap=await getDocs(collection(db,'employees',EID,'responses'));
+    allResponses=rSnap.docs.map(function(d){return Object.assign({_id:d.id},d.data());});
+    allResponses.sort(function(a,b){return(b.submittedAt&&b.submittedAt.seconds?b.submittedAt.seconds:0)-(a.submittedAt&&a.submittedAt.seconds?a.submittedAt.seconds:0);});
+    document.getElementById('loading-screen').style.display='none';
+    document.getElementById('main-wrap').style.display='block';
+    updateStats();
+    renderAnalytics();
+    renderResponsesTable();
+    renderCategoryFilter();
+  }catch(e){console.error(e);showFatal('Failed to load.');}
+}
+
+function renderHeader(){
+  const t=eData.title||'Employee Survey';
+  document.getElementById('nav-title').textContent=t;
+  document.getElementById('top-title').textContent=t;
+  document.getElementById('top-meta').textContent=[eData.department,eData.period,eData.company].filter(Boolean).join(' · ');
+  document.title=t+' — Results';
+  const acc=eData.accepting!==false;
+  document.getElementById('accepting-status').innerHTML=acc?'<span style="color:var(--green);font-size:12px;">● Accepting</span>':'<span style="color:var(--red);font-size:12px;">● Closed</span>';
+}
+
+function updateStats(){
+  document.getElementById('stat-total').textContent=allResponses.length;
+  const qs=eData.questions||[];
+  // eNPS
+  const npsQ=qs.findIndex(function(q){return q.type==='nps';});
+  if(npsQ>=0){
+    const scores=allResponses.map(function(r){return parseInt(r.answers&&r.answers[npsQ]);}).filter(function(v){return !isNaN(v);});
+    if(scores.length){
+      const promoters=scores.filter(function(v){return v>=9;}).length;
+      const detractors=scores.filter(function(v){return v<=6;}).length;
+      const enps=Math.round(((promoters-detractors)/scores.length)*100);
+      document.getElementById('stat-enps').textContent=enps;
+      document.getElementById('stat-enps').style.color=enps>=30?'var(--green)':enps>=0?'var(--yellow)':'var(--red)';
+    }
+  }
+  // Avg rating
+  const scaleQs=qs.reduce(function(acc,q,i){if(q.type==='rating_scale'||q.type==='rating_stars')acc.push(i);return acc;},[]);
+  if(scaleQs.length){
+    const all=[];
+    scaleQs.forEach(function(qi){allResponses.forEach(function(r){const v=parseFloat(r.answers&&r.answers[qi]);if(!isNaN(v))all.push(v);});});
+    if(all.length)document.getElementById('stat-avg').textContent=(all.reduce(function(s,v){return s+v;},0)/all.length).toFixed(1);
+  }
+  // Today
+  const today=new Date().toDateString();
+  document.getElementById('stat-today').textContent=allResponses.filter(function(r){return r.submittedAt&&r.submittedAt.seconds&&new Date(r.submittedAt.seconds*1000).toDateString()===today;}).length;
+  // Completion
+  const qs2=eData.questions||[];
+  const avgAnswered=allResponses.length?allResponses.reduce(function(s,r){return s+Object.keys(r.answers||{}).length;},0)/allResponses.length:0;
+  const pct=qs2.length?Math.round(avgAnswered/qs2.length*100):0;
+  document.getElementById('stat-completion').textContent=pct+'%';
+}
+
+function renderCategoryFilter(){
+  const qs=eData.questions||[];
+  const cats=new Set();
+  qs.forEach(function(q){if(q.category)cats.add(q.category);});
+  const list=document.getElementById('cat-list');
+  list.innerHTML=[...cats].map(function(c){return '<button class="sidebar-item" onclick="filterCat(\''+c.replace(/'/g,"\\'")+'\',this)"><span>'+c.split(' ')[0]+'</span> '+c.split(' ').slice(1).join(' ')+'</button>';}).join('');
+}
+
+window.filterCat=function(cat,el){
+  activeCat=cat;
+  document.querySelectorAll('.sidebar-item').forEach(function(i){i.classList.remove('active');});
+  el.classList.add('active');
+  renderAnalytics();
+};
+
+function renderAnalytics(){
+  const qs=eData.questions||[];
+  const grid=document.getElementById('analytics-grid');
+  grid.innerHTML='';
+  const filtered2=activeCat==='all'?qs:qs.filter(function(q){return q.category===activeCat;});
+
+  filtered2.forEach(function(q,qi){
+    const realIdx=qs.indexOf(q);
+    const card=document.createElement('div');
+    card.className='chart-card'+(q.type==='long_text'||q.type==='short_text'?' full':'');
+    const vals=allResponses.map(function(r){return r.answers&&r.answers[realIdx]!==undefined?r.answers[realIdx]:null;}).filter(function(v){return v!==null&&v!=='';});
+    let html='<div class="chart-title">'+q.text+'</div><div class="chart-category">'+(q.category||'')+'</div>';
+
+    if(q.type==='rating_scale'){
+      const avg=vals.length?(vals.reduce(function(s,v){return s+parseFloat(v);},0)/vals.length).toFixed(1):0;
+      const color=parseFloat(avg)>=7?'var(--green)':parseFloat(avg)>=5?'var(--yellow)':'var(--red)';
+      html+='<div class="big-number" style="color:'+color+'">'+avg+'<span style="font-size:20px;color:var(--muted);">/10</span></div>';
+      const dist={};vals.forEach(function(v){dist[v]=(dist[v]||0)+1;});
+      [10,9,8,7,6,5,4,3,2,1].forEach(function(n){if(dist[n]){const pct=Math.round(dist[n]/vals.length*100);const c=n>=8?'var(--green)':n>=5?'var(--yellow)':'var(--red)';html+='<div class="bar-row"><div class="bar-label">'+n+'</div><div class="bar-wrap"><div class="bar-fill" style="width:'+pct+'%;background:'+c+'"></div><span class="bar-val">'+dist[n]+'</span></div></div>';}});
+    }else if(q.type==='rating_stars'){
+      const avg=vals.length?(vals.reduce(function(s,v){return s+parseFloat(v);},0)/vals.length).toFixed(1):0;
+      html+='<div class="big-number" style="color:var(--yellow);">'+avg+'<span style="font-size:20px;color:var(--muted);">/5</span></div>';
+      [5,4,3,2,1].forEach(function(n){const count=vals.filter(function(v){return parseInt(v)===n;}).length;const pct=vals.length?Math.round(count/vals.length*100):0;html+='<div class="bar-row"><div class="bar-label">'+n+' ★</div><div class="bar-wrap"><div class="bar-fill" style="width:'+pct+'%;background:var(--yellow)"></div><span class="bar-val">'+count+'</span></div></div>';});
+    }else if(q.type==='rating_emoji'){
+      const emojis=['😡','😕','😐','😊','😍'];
+      const labels=['Terrible','Bad','Neutral','Good','Great'];
+      const dist={};vals.forEach(function(v){dist[v]=(dist[v]||0)+1;});
+      html+='<div class="emoji-dist">';
+      emojis.forEach(function(e,j){const count=dist[e]||0;const pct=vals.length?Math.round(count/vals.length*100):0;html+='<div class="emoji-dist-item"><div class="emoji-dist-emoji">'+e+'</div><div class="emoji-dist-val">'+count+'</div><div class="emoji-dist-lbl">'+pct+'%</div></div>';});
+      html+='</div>';
+    }else if(q.type==='nps'){
+      const det=vals.filter(function(v){return parseInt(v)<=6;}).length;
+      const pas=vals.filter(function(v){return parseInt(v)>=7&&parseInt(v)<=8;}).length;
+      const pro=vals.filter(function(v){return parseInt(v)>=9;}).length;
+      const total=vals.length||1;
+      const enps=Math.round(((pro-det)/total)*100);
+      const color=enps>=30?'var(--green)':enps>=0?'var(--yellow)':'var(--red)';
+      html+='<div class="big-number" style="color:'+color+'">'+enps+'</div>';
+      html+='<div class="nps-gauge"><div style="flex:'+det+';background:#ef4444;border-radius:8px 0 0 8px;"></div><div style="flex:'+pas+';background:#f59e0b;"></div><div style="flex:'+pro+';background:#10b981;border-radius:0 8px 8px 0;"></div></div>';
+      html+='<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);"><span style="color:#ef4444;">Detractors '+det+'</span><span style="color:#f59e0b;">Passive '+pas+'</span><span style="color:#10b981;">Promoters '+pro+'</span></div>';
+    }else if(q.type==='mcq'||q.type==='yesno'){
+      const dist={};vals.forEach(function(v){dist[v]=(dist[v]||0)+1;});
+      Object.keys(dist).sort(function(a,b){return dist[b]-dist[a];}).forEach(function(k,j){const pct=vals.length?Math.round(dist[k]/vals.length*100):0;html+='<div class="bar-row"><div class="bar-label" style="font-size:11px;">'+String(k).substring(0,10)+'</div><div class="bar-wrap"><div class="bar-fill" style="width:'+pct+'%;background:'+COLORS[j%COLORS.length]+'"></div><span class="bar-val">'+dist[k]+'</span></div></div>';});
+    }else if(q.type==='checkbox'){
+      const dist={};vals.forEach(function(v){(Array.isArray(v)?v:String(v).split(',')).forEach(function(item){const t=item.trim();if(t)dist[t]=(dist[t]||0)+1;});});
+      Object.keys(dist).sort(function(a,b){return dist[b]-dist[a];}).forEach(function(k,j){const pct=vals.length?Math.round(dist[k]/vals.length*100):0;html+='<div class="bar-row"><div class="bar-label" style="font-size:11px;">'+String(k).substring(0,10)+'</div><div class="bar-wrap"><div class="bar-fill" style="width:'+pct+'%;background:'+COLORS[j%COLORS.length]+'"></div><span class="bar-val">'+dist[k]+'</span></div></div>';});
+    }else{
+      html+='<div class="response-list">'+vals.slice(0,8).map(function(v){return '<div class="response-item">'+String(v).substring(0,100)+'</div>';}).join('')+'</div>';
+      if(vals.length>8)html+='<div style="font-size:12px;color:var(--muted);margin-top:8px;">+'+( vals.length-8)+' more — export CSV to see all</div>';
+    }
+    card.innerHTML=html;
+    grid.appendChild(card);
+  });
+
+  if(filtered2.length===0)grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);">No questions in this category.</div>';
+}
+
+function renderResponsesTable(){
+  filtered=[...allResponses];
+  const tbody=document.getElementById('resp-body');
+  const table=document.getElementById('resp-table');
+  const empty=document.getElementById('empty-state');
+  if(filtered.length===0){table.style.display='none';empty.style.display='block';return;}
+  empty.style.display='none';table.style.display='table';
+  const qs=eData.questions||[];
+  tbody.innerHTML=filtered.map(function(r,i){
+    const date=r.submittedAt&&r.submittedAt.seconds?new Date(r.submittedAt.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
+    const answered=Object.keys(r.answers||{}).length;
+    return '<tr onclick="openDrawer(\''+r._id+'\')">'
+      +'<td style="color:var(--muted);font-family:var(--mono);font-size:11px;">#'+(i+1)+'</td>'
+      +'<td style="color:var(--muted);font-size:11px;">'+date+'</td>'
+      +'<td><span style="font-size:12px;">'+answered+' / '+qs.length+' questions</span></td>'
+      +'<td><button class="btn btn-ghost" onclick="event.stopPropagation();openDrawer(\''+r._id+'\')">View</button></td>'
+      +'</tr>';
+  }).join('');
+}
+
+window.applyFilters=function(){renderResponsesTable();};
+
+window.openDrawer=function(id){
+  const r=allResponses.find(function(x){return x._id===id;});
+  if(!r)return;
+  const qs=eData.questions||[];
+  const date=r.submittedAt&&r.submittedAt.seconds?new Date(r.submittedAt.seconds*1000).toLocaleString('en-IN'):'—';
+  document.getElementById('drawer-body').innerHTML=
+    '<div style="font-size:12px;color:var(--muted);margin-bottom:16px;">Submitted: '+date+'</div>'
+    +qs.map(function(q,i){
+      const ans=r.answers&&r.answers[i]!==undefined?r.answers[i]:'—';
+      const ansText=Array.isArray(ans)?ans.join(', '):String(ans);
+      let ansHtml=ansText;
+      if(q.type==='rating_scale'||q.type==='nps'){
+        const v=parseInt(ans);const color=v>=8?'var(--green)':v>=5?'var(--yellow)':'var(--red)';
+        ansHtml='<span style="font-size:24px;font-weight:800;font-family:var(--mono);color:'+color+'">'+ans+'</span>';
+      }else if(q.type==='rating_stars'){
+        ansHtml='<span style="color:#f59e0b;font-size:20px;">'+'★'.repeat(parseInt(ans)||0)+'</span> '+ans+'/5';
+      }else if(q.type==='rating_emoji'){
+        ansHtml='<span style="font-size:28px;">'+ans+'</span>';
+      }
+      return '<div class="answer-card"><div class="answer-q">'+q.text+'</div>'+(q.category?'<div class="answer-cat">'+q.category+'</div>':'')+'<div class="answer-val">'+ansHtml+'</div></div>';
+    }).join('');
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+};
+
+window.closeDrawer=function(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawer-overlay').classList.remove('open');
+};
+
+window.showView=function(view,el){
+  document.querySelectorAll('.sidebar-item').forEach(function(i){i.classList.remove('active');});
+  if(el)el.classList.add('active');
+  document.getElementById('analytics-view').style.display=view==='analytics'?'block':'none';
+  const rv=document.getElementById('responses-view');
+  rv.style.display=view==='responses'?'flex':'none';
+};
+
+window.toggleAccepting=async function(){
+  const current=eData.accepting!==false;
+  try{
+    await updateDoc(doc(db,'employees',EID),{accepting:!current,updatedAt:serverTimestamp()});
+    eData.accepting=!current;renderHeader();
+    toast(current?'Survey closed':'Survey reopened');
+  }catch(e){toast('Error');}
+};
+
+window.viewSurvey=function(){window.open('/employee/?id='+EID,'_blank');};
+
+window.exportCSV=function(){
+  const qs=eData.questions||[];
+  const headers=['Submitted',...qs.map(function(q){return q.text;})];
+  const rows=[headers];
+  allResponses.forEach(function(r){
+    const date=r.submittedAt&&r.submittedAt.seconds?new Date(r.submittedAt.seconds*1000).toLocaleDateString():'';
+    rows.push([date,...qs.map(function(q,i){const v=r.answers&&r.answers[i]!==undefined?r.answers[i]:'';return Array.isArray(v)?v.join('; '):String(v);})]);
+  });
+  const csv=rows.map(function(r){return r.map(function(v){return '"'+(v||'').toString().replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='employee-survey.csv';a.click();
+  toast('CSV downloaded!');
+};
+
+function showFatal(msg){document.getElementById('loading-screen').innerHTML='<div style="text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">😕</div><div style="font-size:16px;font-weight:700;margin-bottom:8px;">'+msg+'</div><a href="/dashboard/" style="display:inline-block;margin-top:16px;padding:10px 20px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-size:13px;">Go to Dashboard</a></div>';}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+</script>
+</body>
+</html>

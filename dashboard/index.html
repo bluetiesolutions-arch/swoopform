@@ -201,6 +201,7 @@
 <a href="/feedback/create/" class="cp-item"><div class="cp-icon" style="background:#F0F9FF">💬</div><div><div class="cp-label">Feedback Form</div><div class="cp-desc">Ratings and comments</div></div></a>
 <a href="/lead/create/" class="cp-item"><div class="cp-icon" style="background:#FFF4EF">📥</div><div><div class="cp-label">Lead Generation</div><div class="cp-desc">Capture names and emails</div></div></a>
 <a href="/registration/create/" class="cp-item"><div class="cp-icon" style="background:#F5F3FF">🎟️</div><div><div class="cp-label">Registration</div><div class="cp-desc">Event or course signup</div></div></a>
+<a href="/employee/create/" class="cp-item"><div class="cp-icon" style="background:#F0F9FF">👥</div><div><div class="cp-label">Employee Survey</div><div class="cp-desc">Internal team pulse</div></div></a>
         <a href="/jobapp/create/" class="cp-item"><div class="cp-icon" style="background:#F0FDF4">💼</div><div><div class="cp-label">Job Application</div><div class="cp-desc">Split-view with job description</div></div></a>
         <div class="cp-divider"></div>
         <div class="cp-section-label">Engagement</div>
@@ -258,6 +259,7 @@
 <button class="filter-btn" id="flt-feedbacks" onclick="setFilter('feedbacks',this)">💬 Feedback</button>
 <button class="filter-btn" id="flt-leads" onclick="setFilter('leads',this)">📥 Leads</button>
 <button class="filter-btn" id="flt-registrations" onclick="setFilter('registrations',this)">🎟️ Events</button>
+<button class="filter-btn" id="flt-employees" onclick="setFilter('employees',this)">👥 Employee</button>
       <div class="filters-right">
         <input class="search-inp" id="search-inp" placeholder="🔍 Search..." oninput="renderItems()">
         <div class="view-btns">
@@ -304,7 +306,7 @@ const TYPE_META={
   votings:{label:'Voting',icon:'🗳️',color:'#D97706',bg:'#FEF3C7',editPath:'/voting/edit/?id=',viewPath:'/voting/',responsesPath:'/voting/responses/?id='},
   pledges:{label:'Pledge & Support',icon:'🤝',color:'#10B981',bg:'#DCFCE7',editPath:'/pledge/edit/?id=',viewPath:'/pledge/',responsesPath:'/pledge/responses/?id='},
   riddles:{label:'Riddle',icon:'🧩',color:'#A855F7',bg:'#F3E8FF',editPath:'/riddle/edit/?id=',viewPath:'/riddle/',responsesPath:'/riddle/responses/?id='},
-  jobapps:{label:'Job Application',icon:'💼',color:'#059669',bg:'#D1FAE5',editPath:'/jobapp/create/?id=',viewPath:'/jobapp/?id=',responsesPath:'/jobapp/responses/?id='},assessments:{label:'Assessment',icon:'📝',color:'#7c3aed',bg:'#ede9fe',editPath:'/assessment/create/?id=',viewPath:'/assessment/?id=',responsesPath:'/assessment/responses/?id='},feedbacks:{label:'Feedback Form',icon:'💬',color:'#0ea5e9',bg:'#f0f9ff',editPath:'/feedback/create/?id=',viewPath:'/feedback/?id=',responsesPath:'/feedback/responses/?id='},leads:{label:'Lead Form',icon:'📥',color:'#e85d26',bg:'#fff4ef',editPath:'/lead/create/?id=',viewPath:'/lead/?id=',responsesPath:'/lead/responses/?id='},registrations:{label:'Registration',icon:'🎟️',color:'#7c3aed',bg:'#f5f3ff',editPath:'/registration/create/?id=',viewPath:'/registration/?id=',responsesPath:'/registration/responses/?id='},
+  jobapps:{label:'Job Application',icon:'💼',color:'#059669',bg:'#D1FAE5',editPath:'/jobapp/create/?id=',viewPath:'/jobapp/?id=',responsesPath:'/jobapp/responses/?id='},assessments:{label:'Assessment',icon:'📝',color:'#7c3aed',bg:'#ede9fe',editPath:'/assessment/create/?id=',viewPath:'/assessment/?id=',responsesPath:'/assessment/responses/?id='},feedbacks:{label:'Feedback Form',icon:'💬',color:'#0ea5e9',bg:'#f0f9ff',editPath:'/feedback/create/?id=',viewPath:'/feedback/?id=',responsesPath:'/feedback/responses/?id='},leads:{label:'Lead Form',icon:'📥',color:'#e85d26',bg:'#fff4ef',editPath:'/lead/create/?id=',viewPath:'/lead/?id=',responsesPath:'/lead/responses/?id='},registrations:{label:'Registration',icon:'🎟️',color:'#7c3aed',bg:'#f5f3ff',editPath:'/registration/create/?id=',viewPath:'/registration/?id=',responsesPath:'/registration/responses/?id='},employees:{label:'Employee Survey',icon:'👥',color:'#0ea5e9',bg:'#f0f9ff',editPath:'/employee/create/?id=',viewPath:'/employee/?id=',responsesPath:'/employee/responses/?id='},
 };
 
 let U=null,allItems=[],activeFilter='all',viewMode='grid',ctxItem=null;
@@ -369,6 +371,7 @@ function getViewUrl(item){
     if(item._col==='feedbacks')return '/feedback/?id='+item.id;
     if(item._col==='leads')return '/lead/?id='+item.id;
     if(item._col==='registrations')return '/registration/?id='+item.id;
+    if(item._col==='employees')return '/employee/?id='+item.id;
   return item.slug?'/engage/'+item.slug:'#';
 }
 function getEditUrl(item){return(TYPE_META[item._col]?.editPath||'#')+item.id}
