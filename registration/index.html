@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration — SwoopForm</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f4f0;--white:#fff;--border:#e2ddd6;--accent:#7c3aed;--accent-light:#f5f3ff;--success:#12a872;--danger:#e5484d;--text:#1c1c2e;--muted:#7a7a8c;--muted2:#c5c0b8;--font:'Sora',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;}
+header{height:52px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:50;}
+.brand{font-size:15px;font-weight:700;color:var(--accent);}
+.brand span{color:var(--text);}
+.main{max-width:680px;margin:0 auto;padding:36px 20px;}
+.event-card{background:var(--white);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);margin-bottom:20px;}
+.event-banner{height:180px;background:linear-gradient(135deg,#7c3aed,#12a872);display:flex;align-items:center;justify-content:center;font-size:64px;position:relative;overflow:hidden;}
+.event-banner img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+.event-banner-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.3);}
+.event-body{padding:28px;}
+.event-type-badge{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.event-title{font-size:24px;font-weight:700;line-height:1.3;margin-bottom:12px;}
+.event-meta{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.event-meta-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);}
+.event-meta-icon{font-size:16px;width:20px;text-align:center;}
+.event-desc{font-size:14px;color:var(--muted);line-height:1.7;}
+.seat-info{margin-top:16px;padding:12px 16px;background:var(--accent-light);border-radius:10px;border:1px solid rgba(124,58,237,0.2);}
+.seat-info-text{font-size:13px;color:var(--accent);font-weight:500;margin-bottom:6px;}
+.seat-bar{height:6px;background:rgba(124,58,237,0.2);border-radius:3px;overflow:hidden;}
+.seat-fill{height:100%;border-radius:3px;background:var(--accent);transition:width .4s;}
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);}
+.form-header{padding:24px 28px;border-bottom:1px solid var(--border);}
+.form-header h2{font-size:18px;font-weight:700;margin-bottom:4px;}
+.form-header p{font-size:13px;color:var(--muted);}
+.form-body{padding:28px;}
+.field-group{margin-bottom:18px;}
+.field-label{font-size:13px;font-weight:500;margin-bottom:7px;display:flex;align-items:center;gap:4px;}
+.req{color:var(--danger);}
+.opt{font-size:10px;color:var(--muted2);font-weight:400;}
+.field-input{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;background:var(--white);color:var(--text);font-family:var(--font);font-size:14px;outline:none;transition:border-color .2s;}
+.field-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(124,58,237,0.08);}
+.field-input::placeholder{color:var(--muted2);}
+.field-input.error{border-color:var(--danger);}
+.field-error{font-size:11px;color:var(--danger);margin-top:4px;display:none;}
+textarea.field-input{resize:vertical;min-height:100px;line-height:1.6;}
+.phone-wrap{display:flex;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .2s;}
+.phone-wrap:focus-within{border-color:var(--accent);}
+.phone-code{padding:12px 10px;border:none;background:var(--accent-light);color:var(--accent);font-family:var(--font);font-size:13px;font-weight:600;outline:none;cursor:pointer;border-right:1.5px solid var(--border);}
+.phone-input{flex:1;padding:12px 14px;border:none;background:transparent;font-family:var(--font);font-size:14px;outline:none;color:var(--text);}
+.checkbox-wrap{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;}
+.checkbox-wrap:hover{border-color:var(--accent);background:var(--accent-light);}
+.checkbox-wrap.checked{border-color:var(--accent);background:var(--accent-light);}
+.checkbox-wrap input{accent-color:var(--accent);width:16px;height:16px;flex-shrink:0;margin-top:2px;}
+.ticket-group{display:flex;flex-direction:column;gap:10px;margin-top:4px;}
+.ticket-opt{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1.5px solid var(--border);border-radius:12px;cursor:pointer;transition:all .15s;}
+.ticket-opt:hover{border-color:var(--accent);}
+.ticket-opt.selected{border-color:var(--accent);background:var(--accent-light);}
+.ticket-radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;transition:all .15s;display:flex;align-items:center;justify-content:center;}
+.ticket-opt.selected .ticket-radio{border-color:var(--accent);background:var(--accent);}
+.ticket-opt.selected .ticket-radio::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff;}
+.ticket-name{font-size:14px;font-weight:600;flex:1;}
+.ticket-price{font-size:14px;font-weight:700;color:var(--accent);}
+.ticket-desc{font-size:11px;color:var(--muted);margin-top:2px;}
+.submit-btn{width:100%;padding:15px;border:none;border-radius:12px;color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);}
+.submit-btn:hover{background:#6d28d9;transform:translateY(-1px);box-shadow:0 4px 16px rgba(124,58,237,0.3);}
+.submit-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+.submit-note{text-align:center;font-size:12px;color:var(--muted2);margin-top:10px;}
+.thankyou{display:none;text-align:center;padding:52px 36px;}
+.ty-icon{font-size:64px;margin-bottom:20px;animation:pop .5s ease;}
+@keyframes pop{0%{transform:scale(0.5);opacity:0}80%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+.ty-title{font-size:26px;font-weight:700;margin-bottom:12px;}
+.ty-msg{font-size:14px;color:var(--muted);line-height:1.7;max-width:380px;margin:0 auto 24px;}
+.reg-id{background:var(--accent-light);border:1px solid rgba(124,58,237,0.2);border-radius:10px;padding:12px 20px;font-size:13px;margin-bottom:20px;}
+.reg-id span{font-weight:700;color:var(--accent);font-family:monospace;}
+.cal-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;border:1.5px solid var(--border);background:var(--white);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;text-decoration:none;color:var(--text);}
+.cal-btn:hover{border-color:var(--accent);color:var(--accent);}
+.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:600px){.event-body,.form-body,.form-header{padding:20px;}.main{padding:20px 16px;}}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<div class="loading-screen" id="loading-screen">
+  <div class="spinner"></div>
+  <div style="font-size:13px;color:var(--muted);">Loading event...</div>
+</div>
+
+<div id="app" style="display:none;">
+  <header>
+    <div class="brand">Swoop<span>Form</span></div>
+    <span style="font-size:12px;color:var(--muted);">Powered by SwoopForm</span>
+  </header>
+  <div class="main">
+    <div class="event-card">
+      <div class="event-banner" id="event-banner">
+        <span style="position:relative;z-index:1;">🎪</span>
+      </div>
+      <div class="event-body">
+        <div class="event-type-badge" id="event-type"></div>
+        <div class="event-title" id="event-title">Loading...</div>
+        <div class="event-meta" id="event-meta"></div>
+        <div class="event-desc" id="event-desc"></div>
+        <div class="seat-info" id="seat-info" style="display:none;">
+          <div class="seat-info-text" id="seat-text"></div>
+          <div class="seat-bar"><div class="seat-fill" id="seat-fill" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-header">
+        <h2>Register for this event</h2>
+        <p>All fields marked <strong style="color:var(--danger)">*</strong> are required</p>
+      </div>
+      <div class="form-body" id="form-body">
+        <div id="fields-wrap"></div>
+        <button class="submit-btn" id="submit-btn" onclick="submitRegistration()">Register Now →</button>
+        <div class="submit-note">🔒 Your information is secure and will only be used for this event.</div>
+      </div>
+      <div class="thankyou" id="thankyou">
+        <div class="ty-icon">🎟️</div>
+        <div class="ty-title" id="ty-title">You're registered!</div>
+        <div class="ty-msg" id="ty-msg">Thank you for registering. We'll send you a confirmation email with all the details.</div>
+        <div class="reg-id">Your Registration ID: <span id="reg-id-val"></span></div>
+        <div id="cal-wrap" style="display:none;margin-bottom:16px;">
+          <a class="cal-btn" id="cal-link" href="#" target="_blank">📅 Add to Calendar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getFirestore,doc,getDoc,addDoc,updateDoc,collection,increment,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);
+const db=getFirestore(app);
+
+const params=new URLSearchParams(window.location.search);
+const RID=params.get('id');
+let rData=null;
+
+async function init(){
+  if(!RID){showError('No registration form ID in URL.');return;}
+  try{
+    const snap=await getDoc(doc(db,'registrations',RID));
+    if(!snap.exists()){showError('Registration form not found.');return;}
+    rData=snap.data();
+    if(rData.accepting===false){showError('Registrations are closed for this event.');return;}
+    if(rData.limitSeats&&rData.totalSeats>0&&(rData.responseCount||0)>= rData.totalSeats){showError('Sorry, this event is fully booked!');return;}
+    render();
+    document.getElementById('loading-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+  }catch(e){console.error(e);showError('Failed to load.');}
+}
+
+function render(){
+  const d=rData;
+  const color=d.accentColor||'#7c3aed';
+  document.documentElement.style.setProperty('--accent',color);
+  document.documentElement.style.setProperty('--accent-light',color+'15');
+  document.title=(d.eventName||'Event')+' — Register — SwoopForm';
+
+  // Banner
+  if(d.coverImage){
+    const banner=document.getElementById('event-banner');
+    banner.innerHTML='<img src="'+d.coverImage+'" onerror="this.style.display=\'none\'"><div class="event-banner-overlay"></div>';
+  }
+
+  // Event info
+  document.getElementById('event-type').textContent=d.eventType||'Event';
+  document.getElementById('event-title').textContent=d.eventName||'Event';
+  document.getElementById('event-desc').textContent=d.description||'';
+
+  // Meta
+  const meta=[];
+  if(d.eventDate)meta.push({icon:'📅',text:formatDate(d.eventDate)+(d.eventTime?' at '+formatTime(d.eventTime):'')});
+  if(d.endDate)meta.push({icon:'🏁',text:'Ends '+formatDate(d.endDate)+(d.endTime?' at '+formatTime(d.endTime):'')});
+  if(d.venue)meta.push({icon:'📍',text:d.venue+(d.location?' — '+d.location:'')});
+  if(d.mode)meta.push({icon:'💻',text:d.mode});
+  if(d.organizer)meta.push({icon:'👤',text:'Organized by '+d.organizer});
+  document.getElementById('event-meta').innerHTML=meta.map(function(m){return '<div class="event-meta-item"><span class="event-meta-icon">'+m.icon+'</span><span>'+m.text+'</span></div>';}).join('');
+
+  // Seats
+  if(d.limitSeats&&d.totalSeats>0){
+    const taken=d.responseCount||0;
+    const pct=Math.min(100,Math.round(taken/d.totalSeats*100));
+    const left=d.totalSeats-taken;
+    document.getElementById('seat-info').style.display='block';
+    document.getElementById('seat-text').textContent=left+' of '+d.totalSeats+' seats remaining';
+    document.getElementById('seat-fill').style.width=pct+'%';
+  }
+
+  // Submit button
+  document.getElementById('submit-btn').style.background=color;
+
+  // Thank you
+  document.getElementById('ty-title').textContent=d.confirmHeading||'You\'re registered!';
+  document.getElementById('ty-msg').textContent=d.confirmMessage||'Thank you for registering!';
+
+  // Calendar button
+  if(d.showCalendarBtn&&d.eventDate){
+    document.getElementById('cal-wrap').style.display='block';
+    const calUrl=buildCalendarUrl(d);
+    document.getElementById('cal-link').href=calUrl;
+  }
+
+  renderFields(d.fields||[]);
+}
+
+function formatDate(d){if(!d)return '';const dt=new Date(d+'T00:00:00');return dt.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
+function formatTime(t){if(!t)return '';const [h,m]=t.split(':');const hr=parseInt(h);return (hr>12?hr-12:hr||12)+':'+m+' '+(hr>=12?'PM':'AM');}
+
+function buildCalendarUrl(d){
+  const title=encodeURIComponent(d.eventName||'Event');
+  const details=encodeURIComponent(d.description||'');
+  const location=encodeURIComponent(d.venue||'');
+  const start=d.eventDate?(d.eventDate.replace(/-/g,'')+'T'+(d.eventTime||'000000').replace(':','')+'00'):'';
+  const end=d.endDate?(d.endDate.replace(/-/g,'')+'T'+(d.endTime||'235900').replace(':','')+'00'):start;
+  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+title+'&details='+details+'&location='+location+'&dates='+start+'/'+end;
+}
+
+function renderFields(fields){
+  const wrap=document.getElementById('fields-wrap');
+  wrap.innerHTML='';
+  fields.forEach(function(f,i){
+    const fg=document.createElement('div');
+    fg.className='field-group';
+    const fid='field_'+i;
+    const req=f.required;
+    const label='<div class="field-label">'+f.label+(req?' <span class="req">*</span>':' <span class="opt">(optional)</span>')+'</div>';
+    let input='';
+
+    if(f.fieldType==='message'){
+      input='<textarea class="field-input" id="'+fid+'" placeholder="'+(f.placeholder||'')+'" rows="4"></textarea>';
+    }else if(f.fieldType==='phone'){
+      input='<div class="phone-wrap"><select class="phone-code"><option>🇮🇳 +91</option><option>🇺🇸 +1</option><option>🇬🇧 +44</option><option>🇦🇺 +61</option><option>🇦🇪 +971</option><option>🇸🇬 +65</option></select><input class="phone-input" id="'+fid+'" type="tel" placeholder="'+(f.placeholder||'98765 43210')+'"></div>';
+    }else if(f.fieldType==='checkbox'){
+      input='<div class="checkbox-wrap" id="cbwrap_'+i+'" onclick="toggleCb('+i+')"><input type="checkbox" id="'+fid+'"><label style="font-size:13px;cursor:pointer;">'+f.label+'</label></div>';
+      fg.innerHTML=input+'<div class="field-error" id="err_'+i+'">This field is required</div>';
+      wrap.appendChild(fg);return;
+    }else if(f.fieldType==='dropdown'||f.fieldType==='dietary'||f.fieldType==='tshirt'){
+      const opts=(f.options||'').split('\n').filter(function(o){return o.trim();}).map(function(o){return '<option value="'+o.trim()+'">'+o.trim()+'</option>';}).join('');
+      input='<select class="field-input" id="'+fid+'"><option value="">— Select —</option>'+opts+'</select>';
+    }else{
+      const inputType=f.fieldType==='email'?'email':f.fieldType==='phone'?'tel':'text';
+      input='<input class="field-input" id="'+fid+'" type="'+inputType+'" placeholder="'+(f.placeholder||'')+'">';
+    }
+    fg.innerHTML=label+input+'<div class="field-error" id="err_'+i+'">This field is required</div>';
+    wrap.appendChild(fg);
+  });
+}
+
+window.toggleCb=function(i){
+  const cb=document.getElementById('field_'+i);
+  const wrap=document.getElementById('cbwrap_'+i);
+  if(cb){cb.checked=!cb.checked;wrap.classList.toggle('checked',cb.checked);}
+};
+
+window.submitRegistration=async function(){
+  const fields=rData.fields||[];
+  let valid=true;
+  const data={};
+
+  fields.forEach(function(f,i){
+    const fid='field_'+i;
+    const errEl=document.getElementById('err_'+i);
+    let val='';
+
+    if(f.fieldType==='phone'){
+      const code=document.querySelector('.phone-code');
+      const inp=document.getElementById(fid);
+      val=(code?code.value:'+91')+' '+(inp?inp.value.trim():'');
+      if(f.required&&!(inp&&inp.value.trim())){if(errEl)errEl.style.display='block';valid=false;return;}
+    }else if(f.fieldType==='checkbox'){
+      const cb=document.getElementById(fid);
+      val=cb?cb.checked:false;
+      if(f.required&&!val){if(errEl)errEl.style.display='block';valid=false;return;}
+    }else{
+      const el=document.getElementById(fid);
+      val=el?el.value.trim():'';
+      if(f.required&&!val){if(el)el.classList.add('error');if(errEl)errEl.style.display='block';valid=false;return;}
+      if(el)el.classList.remove('error');
+    }
+    if(errEl)errEl.style.display='none';
+    data[f.label||f.fieldType]=val;
+  });
+
+  if(!valid)return;
+
+  const btn=document.getElementById('submit-btn');
+  btn.disabled=true;btn.textContent='Registering...';
+
+  try{
+    const regId='REG-'+Date.now().toString(36).toUpperCase();
+    await addDoc(collection(db,'registrations',RID,'responses'),{
+      formId:RID,eventName:rData.eventName,regId,
+      data,status:'confirmed',submittedAt:serverTimestamp()
+    });
+    try{await updateDoc(doc(db,'registrations',RID),{responseCount:increment(1)});}catch(e){}
+    document.getElementById('reg-id-val').textContent=regId;
+    document.getElementById('form-body').style.display='none';
+    document.getElementById('thankyou').style.display='block';
+    if(rData.redirectUrl){
+      const url=rData.redirectUrl.startsWith('http')?rData.redirectUrl:'https://'+rData.redirectUrl;
+      setTimeout(function(){window.location.href=url;},3000);
+    }
+  }catch(e){
+    console.error(e);btn.disabled=false;btn.textContent='Register Now →';
+    alert('Error: '+e.message);
+  }
+};
+
+function showError(msg){
+  document.getElementById('loading-screen').innerHTML='<div style="text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">😕</div><div style="font-size:18px;font-weight:700;margin-bottom:8px;">Oops!</div><div style="font-size:14px;color:#7a7a8c;">'+msg+'</div><a href="/dashboard/" style="display:inline-block;margin-top:20px;padding:10px 20px;background:#7c3aed;color:#fff;border-radius:8px;text-decoration:none;font-size:13px;">Go to Dashboard</a></div>';
+}
+
+init();
+</script>
+</body>
+</html>
