@@ -492,22 +492,33 @@ function buildPayload(status){
     description:g('e-desc'),eventType:g('e-type'),mode:g('e-mode'),
     eventDate:g('e-date'),eventTime:g('e-time'),endDate:g('e-end-date'),endTime:g('e-end-time'),
     venue:g('e-venue'),location:g('e-location'),organizer:g('e-organizer'),organizerEmail:g('e-org-email'),
-    coverImage:g('e-image'),totalSeats:parseInt(g('e-total-seats'))||0,
+    coverImage:g('e-image'),totalSeats:parseInt(g('e-total-seats'))||null,
     registrationDeadline:g('e-reg-deadline'),redirectUrl:g('e-redirect'),
     enableTickets:tog('tgl-tickets'),limitSeats:tog('tgl-seats'),
     sendConfirmation:tog('tgl-confirm'),notifyOrganizer:tog('tgl-notify'),
     showCount:tog('tgl-count'),accepting:tog('tgl-accepting'),
     requireApproval:tog('tgl-approval'),showCalendarBtn:tog('tgl-calendar'),
     confirmHeading:g('ty-heading'),confirmMessage:g('ty-message'),
-    fields:collectFields(),title:eventName
+    fields:collectFields(),title:eventName,responseCount:0
   };
 }
 
+function cleanPayload(obj){
+  const clean={};
+  Object.keys(obj).forEach(function(k){
+    if(obj[k]!==undefined&&obj[k]!==null)clean[k]=obj[k];
+    else if(obj[k]===null){}
+    else clean[k]='';
+  });
+  return clean;
+}
+
 window.saveDraft=async function(){
+
   const data=buildPayload('draft');if(!data)return;
   if(!currentUser){toast('Please log in');return;}
   try{
-    const p=Object.assign({},data,{userId:currentUser.uid,userEmail:currentUser.email,updatedAt:serverTimestamp()});
+    const p=cleanPayload(Object.assign({},data,{userId:currentUser.uid,userEmail:currentUser.email,updatedAt:serverTimestamp()}));
     if(RID){await updateDoc(doc(db,'registrations',RID),p);toast('✅ Draft updated!');}
     else{p.createdAt=serverTimestamp();p.responseCount=0;const ref=await addDoc(collection(db,'registrations'),p);RID=ref.id;window.history.replaceState({},'','/registration/create/?id='+RID);toast('✅ Draft saved!');}
   }catch(e){console.error(e);toast('Error: '+e.message);}
@@ -517,7 +528,7 @@ window.publish=async function(){
   const data=buildPayload('active');if(!data)return;
   if(!currentUser){toast('Please log in');return;}
   try{
-    const p=Object.assign({},data,{userId:currentUser.uid,userEmail:currentUser.email,status:'active',updatedAt:serverTimestamp()});
+    const p=cleanPayload(Object.assign({},data,{userId:currentUser.uid,userEmail:currentUser.email,status:'active',updatedAt:serverTimestamp()}));
     let id;
     if(RID){await updateDoc(doc(db,'registrations',RID),p);id=RID;}
     else{p.createdAt=serverTimestamp();p.responseCount=0;const ref=await addDoc(collection(db,'registrations'),p);id=ref.id;RID=id;window.history.replaceState({},'','/registration/create/?id='+id);}
