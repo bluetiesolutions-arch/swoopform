@@ -3,16 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-  <title>SwoopForm — Settings</title>
-=======
-  <title>Settings — SwoopForm</title>
-  <meta name="robots" content="noindex">
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>SwoopForm — Settings</title>  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-<<<<<<< HEAD
     body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
     nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
     .nav-left{display:flex;align-items:center;gap:12px}
@@ -113,166 +106,17 @@
 
     /* LOADING */
     .ls{position:fixed;inset:0;background:#F5F0E8;display:flex;align-items:center;justify-content:center;z-index:999}
-    .spinner{width:32px;height:32px;border:3px solid rgba(45,27,105,0.2);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite}
-=======
-    body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
-    nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
-    .logo-mk{width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff}
-    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#0F0E1A}
-    .nav-right{display:flex;gap:8px;align-items:center}
-    .nav-btn{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
-    .nav-btn:hover{border-color:#2D1B69;color:#2D1B69}
-
-    .layout{display:flex;min-height:calc(100vh - 56px)}
-
-    /* SIDEBAR */
-    .sidebar{width:220px;background:#fff;border-right:1.5px solid #E2DAD0;padding:16px 10px;flex-shrink:0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}
-    .sb-label{font-size:0.62rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase;padding:6px 10px;margin-bottom:4px}
-    .sb-item{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:9px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:600;color:#64748B;transition:all 0.2s;border-left:3px solid transparent}
-    .sb-item:hover{background:#F5F0E8;color:#0F0E1A}
-    .sb-item.active{background:#EDE9FF;color:#2D1B69;border-left-color:#2D1B69}
-    .sb-item .ico{width:18px;text-align:center}
-
-    /* MAIN */
-    .main{flex:1;padding:28px 32px;max-width:720px}
-    .section-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-0.02em;margin-bottom:4px}
-    .section-sub{font-size:0.83rem;color:#64748B;margin-bottom:24px}
-
-    /* CARDS */
-    .card{background:#fff;border-radius:16px;border:1.5px solid #E2DAD0;padding:24px;margin-bottom:16px}
-    .card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #E2DAD0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-
-    /* FIELDS */
-    .field{margin-bottom:16px}
-    .field:last-child{margin-bottom:0}
-    .field-label{display:block;font-size:0.72rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:6px}
-    .field-input{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
-    .field-input:focus{border-color:#2D1B69}
-    .field-input::placeholder{color:#C4B9AA}
-    .field-input:disabled{opacity:0.5;cursor:not-allowed;background:#F5F0E8}
-    .field-hint{font-size:0.7rem;color:#94A3B8;margin-top:4px;line-height:1.4}
-
-    /* PHONE FIELD */
-    .phone-row{display:flex;gap:8px}
-    .country-code-sel{padding:10px 12px;border-radius:10px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer;flex-shrink:0;min-width:100px}
-    .country-code-sel:focus{border-color:#2D1B69}
-    .phone-number-inp{flex:1;padding:10px 14px;border-radius:10px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
-    .phone-number-inp:focus{border-color:#2D1B69}
-    .phone-number-inp::placeholder{color:#C4B9AA}
-
-    /* AVATAR */
-    .avatar-grid{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px}
-    .avatar-opt{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;cursor:pointer;border:2.5px solid transparent;transition:all 0.2s}
-    .avatar-opt:hover{transform:scale(1.1)}
-    .avatar-opt.selected{border-color:#2D1B69;box-shadow:0 0 0 3px rgba(45,27,105,0.15)}
-
-    /* TOGGLE */
-    .sr{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #E2DAD0}
-    .sr:last-child{border-bottom:none}
-    .sr-label{font-size:0.85rem;font-weight:600}
-    .sr-desc{font-size:0.72px;color:#64748B;margin-top:2px}
-    .tgl{width:36px;height:19px;border-radius:100px;background:#E2DAD0;cursor:pointer;position:relative;transition:background 0.2s;border:none;flex-shrink:0}
-    .tgl.on{background:#2D1B69}
-    .tgl::after{content:'';position:absolute;width:13px;height:13px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 0.2s}
-    .tgl.on::after{transform:translateX(17px)}
-
-    /* PLAN BADGE */
-    .plan-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;font-size:0.72rem;font-weight:700}
-    .plan-free{background:#F1F5F9;color:#64748B;border:1px solid #E2DAD0}
-    .plan-starter{background:#EEF2FF;color:#4F46E5;border:1px solid #C7D2FE}
-    .plan-pro{background:#FEF3C7;color:#D97706;border:1px solid #FCD34D}
-    .plan-business{background:#EDE9FF;color:#2D1B69;border:1px solid #C4B5FD}
-    .plan-student{background:#DCFCE7;color:#166534;border:1px solid #86EFAC}
-    .plan-ngo{background:#F0FDF4;color:#166534;border:1px solid #86EFAC}
-
-    /* UPGRADE CARD */
-    .upgrade-card{background:linear-gradient(135deg,#0F0E1A,#2D1B69);border-radius:16px;padding:24px;margin-bottom:16px;color:#fff}
-    .upgrade-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:6px}
-    .upgrade-sub{font-size:0.82rem;color:rgba(255,255,255,0.5);margin-bottom:20px;line-height:1.6}
-    .upgrade-features{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
-    .upgrade-feat{display:flex;align-items:center;gap:8px;font-size:0.8rem;color:rgba(255,255,255,0.7)}
-    .upgrade-feat::before{content:'✓';color:#10B981;font-weight:700;flex-shrink:0}
-    .upgrade-btn{display:inline-block;padding:11px 24px;border-radius:10px;background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;font-size:0.88rem;font-weight:700;font-family:'Syne',sans-serif;text-decoration:none;cursor:pointer;border:none;transition:opacity 0.2s}
-    .upgrade-btn:hover{opacity:0.9}
-
-    /* VERIFICATION */
-    .verify-status{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;font-size:0.72rem;font-weight:700}
-    .verify-none{background:#F1F5F9;color:#64748B;border:1px solid #E2DAD0}
-    .verify-pending{background:#FEF3C7;color:#D97706;border:1px solid #FCD34D}
-    .verify-approved{background:#DCFCE7;color:#166534;border:1px solid #86EFAC}
-    .verify-rejected{background:#FEE2E2;color:#DC2626;border:1px solid #FECACA}
-    .type-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-    .type-btn{padding:8px 16px;border-radius:9px;border:1.5px solid #E2DAD0;background:#fff;color:#64748B;font-size:0.8rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
-    .type-btn:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
-    .type-btn.active{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
-    .verify-form{background:#F8F9FF;border:1.5px solid #E0E7FF;border-radius:12px;padding:18px;margin-top:12px}
-    .verify-form-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;margin-bottom:12px;color:#2D1B69}
-
-    /* DANGER ZONE */
-    .danger-card{background:#FFF5F5;border:1.5px solid #FECACA;border-radius:16px;padding:24px;margin-bottom:16px}
-    .danger-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#DC2626;margin-bottom:6px}
-    .danger-sub{font-size:0.82rem;color:#64748B;margin-bottom:16px;line-height:1.6}
-    .btn-danger{padding:10px 20px;border-radius:9px;border:none;background:#DC2626;color:#fff;font-size:0.85rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s}
-    .btn-danger:hover{opacity:0.85}
-
-    /* BUTTONS */
-    .btn-primary{padding:10px 22px;border-radius:10px;border:none;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.88rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:opacity 0.2s}
-    .btn-primary:hover{opacity:0.9}
-    .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
-    .btn-ghost{padding:10px 20px;border-radius:10px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.85rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
-    .btn-ghost:hover{border-color:#2D1B69;color:#2D1B69}
-
-    /* SUCCESS / ERROR */
-    .alert{padding:10px 14px;border-radius:9px;font-size:0.82rem;margin-bottom:12px;display:none;line-height:1.4}
-    .alert-success{background:#F0FDF4;border:1px solid #86EFAC;color:#166534}
-    .alert-error{background:#FEF2F2;border:1px solid #FECACA;color:#DC2626}
-
-    .spinner{width:20px;height:20px;border:2px solid rgba(45,27,105,0.15);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite;display:inline-block}
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-    @keyframes spin{to{transform:rotate(360deg)}}
-<<<<<<< HEAD
+    .spinner{width:32px;height:32px;border:3px solid rgba(45,27,105,0.2);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite}    @keyframes spin{to{transform:rotate(360deg)}}
 
     @media(max-width:600px){
       .account-types{grid-template-columns:repeat(2,1fr)}
       .upgrade-grid{grid-template-columns:1fr}
       nav{padding:0 14px}
-      .main{padding:16px 14px}
-=======
-    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;white-space:nowrap}
-    .ls-screen{position:fixed;inset:0;background:#F5F0E8;display:flex;align-items:center;justify-content:center;z-index:900}
-
-    @media(max-width:768px){
-      .layout{flex-direction:column}
-      .sidebar{width:100%;height:auto;position:relative;top:0;border-right:none;border-bottom:1.5px solid #E2DAD0;padding:10px;display:flex;flex-direction:row;overflow-x:auto;gap:4px}
-      .sb-item{white-space:nowrap;border-left:none;border-bottom:2px solid transparent;padding:8px 12px}
-      .sb-item.active{border-left:none;border-bottom-color:#2D1B69}
-      .sb-label{display:none}
-      .main{padding:20px 16px}
-      .phone-row{flex-direction:column}
-      .country-code-sel{width:100%}
-    }
-    @media(max-width:480px){
-      nav{padding:0 14px}
-      .logo-nm{display:none}
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-    }
+      .main{padding:16px 14px}    }
   </style>
 </head>
 <body>
-<<<<<<< HEAD
 <div class="ls" id="ls"><div class="spinner"></div></div>
-=======
-<div class="ls-screen" id="ls"><div class="spinner"></div></div>
-<nav>
-  <a href="/" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
-  <div class="nav-right">
-    <a href="/dashboard" class="nav-btn">← Dashboard</a>
-  </div>
-</nav>
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
-<<<<<<< HEAD
 <nav>
   <div class="nav-left">
     <a href="/dashboard" class="logo-s">S</a>
@@ -280,24 +124,6 @@
   </div>
   <button class="btn-save" id="save-btn" onclick="saveProfile()">Save changes</button>
 </nav>
-=======
-<div class="layout">
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <div class="sb-label">Settings</div>
-    <button class="sb-item active" id="sn-profile" onclick="showSection('profile')"><span class="ico">👤</span>Profile</button>
-    <button class="sb-item" id="sn-account" onclick="showSection('account')"><span class="ico">🔐</span>Account</button>
-    <button class="sb-item" id="sn-plan" onclick="showSection('plan')"><span class="ico">💎</span>Plan</button>
-    <button class="sb-item" id="sn-verify" onclick="showSection('verify')"><span class="ico">✅</span>Verification</button>
-    <button class="sb-item" id="sn-notifications" onclick="showSection('notifications')"><span class="ico">🔔</span>Notifications</button>
-    <button class="sb-item" id="sn-danger" onclick="showSection('danger')"><span class="ico">⚠️</span>Danger zone</button>
-  </div>
-
-  <!-- MAIN -->
-  <div class="main">
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
-<<<<<<< HEAD
 <div class="main">
   <div class="page-title">⚙️ Settings</div>
   <div class="page-sub">Manage your profile, notifications and account preferences</div>
@@ -312,21 +138,7 @@
         <div class="avatar-circle" id="avatar-circle">
           <img id="avatar-img" alt="Profile photo">
           <span id="avatar-initial">U</span>
-        </div>
-=======
-    <!-- ── PROFILE ── -->
-    <div id="sec-profile">
-      <div class="section-title">👤 Profile</div>
-      <div class="section-sub">How you appear on SwoopForm</div>
-      <div class="alert alert-success" id="profile-success"></div>
-      <div class="alert alert-error" id="profile-error"></div>
-      <div class="card">
-        <div class="card-title">Avatar</div>
-        <div class="avatar-grid" id="avatar-grid"></div>
-        <div class="field-hint">Click to select your avatar emoji</div>
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-      </div>
-<<<<<<< HEAD
+        </div>      </div>
       <div class="avatar-info" style="flex:1">
         <div class="avatar-label">Profile photo</div>
         <div class="avatar-url-row">
@@ -341,36 +153,7 @@
             3. Copy link and paste above<br>
             4. Click Fetch to preview<br><br>
             <strong>Direct URL:</strong><br>
-            Any public image URL works (jpg, png, webp)
-=======
-      <div class="card">
-        <div class="card-title">Personal details</div>
-        <div class="field"><label class="field-label">Full name</label><input class="field-input" id="p-name" placeholder="Your full name"></div>
-        <div class="field"><label class="field-label">Email address</label><input class="field-input" id="p-email" placeholder="your@email.com" disabled style="opacity:0.5;cursor:not-allowed"><div class="field-hint">Email cannot be changed. Contact support if needed.</div></div>
-        <div class="field">
-          <label class="field-label">Mobile number</label>
-          <div class="phone-row">
-            <select class="country-code-sel" id="p-countrycode">
-              <option value="+91">🇮🇳 +91</option>
-              <option value="+1">🇺🇸 +1</option>
-              <option value="+44">🇬🇧 +44</option>
-              <option value="+61">🇦🇺 +61</option>
-              <option value="+65">🇸🇬 +65</option>
-              <option value="+971">🇦🇪 +971</option>
-              <option value="+60">🇲🇾 +60</option>
-              <option value="+92">🇵🇰 +92</option>
-              <option value="+880">🇧🇩 +880</option>
-              <option value="+94">🇱🇰 +94</option>
-              <option value="+49">🇩🇪 +49</option>
-              <option value="+33">🇫🇷 +33</option>
-              <option value="+81">🇯🇵 +81</option>
-              <option value="+86">🇨🇳 +86</option>
-              <option value="+82">🇰🇷 +82</option>
-            </select>
-            <input class="phone-number-inp" id="p-phone" type="tel" placeholder="98765 43210" maxlength="15">
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-          </div>
-<<<<<<< HEAD
+            Any public image URL works (jpg, png, webp)          </div>
 =======
           <div class="field-hint">Used for account recovery and notifications only</div>
 >>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
@@ -379,15 +162,9 @@
         <div class="avatar-status" id="avatar-status"></div>
         <div class="crop-indicator" id="crop-indicator">
           ✂️ Your image will be cropped to a <strong>circle</strong>. The centre of the image will be visible. Make sure the main subject is centred.
-        </div>
-=======
-        <div class="field"><label class="field-label">Bio (optional)</label><textarea class="field-input" id="p-bio" placeholder="Tell us a bit about yourself..." rows="2" style="resize:vertical"></textarea></div>
-        <div style="margin-top:4px"><button class="btn-primary" onclick="saveProfile()">Save profile</button></div>
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-      </div>
+        </div>      </div>
     </div>
 
-<<<<<<< HEAD
     <div class="field">
       <label class="field-label">Full name</label>
       <input class="field-input" id="inp-name" type="text" placeholder="Your full name">
@@ -420,25 +197,8 @@
       </button>
       <button class="acc-type-btn" id="acc-business" onclick="selectAccType('business')">
         <span class="acc-type-icon">💼</span>Business
-      </button>
-=======
-    <!-- ── ACCOUNT ── -->
-    <div id="sec-account" style="display:none">
-      <div class="section-title">🔐 Account</div>
-      <div class="section-sub">Manage your login credentials</div>
-      <div class="alert alert-success" id="pw-success"></div>
-      <div class="alert alert-error" id="pw-error"></div>
-      <div class="card">
-        <div class="card-title">Change password</div>
-        <div class="field"><label class="field-label">Current password</label><input class="field-input" id="pw-current" type="password" placeholder="Current password"></div>
-        <div class="field"><label class="field-label">New password</label><input class="field-input" id="pw-new" type="password" placeholder="Min 8 characters"></div>
-        <div class="field"><label class="field-label">Confirm new password</label><input class="field-input" id="pw-confirm" type="password" placeholder="Repeat new password"></div>
-        <div style="margin-top:4px"><button class="btn-primary" onclick="changePassword()">Update password</button></div>
-      </div>
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-    </div>
+      </button>    </div>
 
-<<<<<<< HEAD
     <!-- Student/Educator verification info -->
     <div class="acc-type-modal" id="modal-student">
       <div class="acc-type-modal-title">🎓 Student / Educator — Free Forever</div>
@@ -450,44 +210,9 @@
           <li>Teachers and professors</li>
           <li>Academic researchers</li>
           <li>Educational institution staff</li>
-        </ul>
-=======
-    <!-- ── PLAN ── -->
-    <div id="sec-plan" style="display:none">
-      <div class="section-title">💎 My Plan</div>
-      <div class="section-sub">Your current subscription and usage</div>
-      <div class="card">
-        <div class="card-title">
-          Current plan
-          <span class="plan-badge plan-free" id="plan-badge-display">Free</span>
-        </div>
-        <div id="plan-features" style="margin-bottom:16px">
-          <div style="font-size:0.82rem;color:#64748B;line-height:1.8" id="plan-feature-list"></div>
-        </div>
-        <div style="font-size:0.75rem;color:#94A3B8;margin-bottom:16px" id="plan-limits"></div>
-      </div>
-      <div class="upgrade-card" id="upgrade-card">
-        <div class="upgrade-title">Unlock more with Starter</div>
-        <div class="upgrade-sub">Get more responses, remove branding and access advanced features.</div>
-        <div class="upgrade-features">
-          <div class="upgrade-feat">15 active surveys (vs 3 on Free)</div>
-          <div class="upgrade-feat">1,000 responses per survey</div>
-          <div class="upgrade-feat">Bulk CSV question upload</div>
-          <div class="upgrade-feat">Full analytics & CSV export</div>
-          <div class="upgrade-feat">Email notifications</div>
-          <div class="upgrade-feat">Custom redirect URL</div>
-        </div>
-        <a href="/pricing" class="upgrade-btn">See all plans →</a>
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-      </div>
-<<<<<<< HEAD
+        </ul>      </div>
       <button class="btn-apply" onclick="applyVerification('student')">Apply for verification →</button>
     </div>
-=======
-    </div>
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
-<<<<<<< HEAD
     <!-- NGO verification info -->
     <div class="acc-type-modal" id="modal-ngo">
       <div class="acc-type-modal-title">🤝 NGO — Free Forever</div>
@@ -504,76 +229,13 @@
       <button class="btn-apply" onclick="applyVerification('ngo')">Apply for verification →</button>
     </div>
   </div>
-=======
-    <!-- ── VERIFICATION ── -->
-    <div id="sec-verify" style="display:none">
-      <div class="section-title">✅ Verification</div>
-      <div class="section-sub">Get verified as a Student, Educator or NGO for a free lifetime plan</div>
-      <div class="card">
-        <div class="card-title">
-          Verification status
-          <span class="verify-status verify-none" id="verify-status-badge">Not applied</span>
-        </div>
-        <p style="font-size:0.85rem;color:#64748B;line-height:1.7;margin-bottom:20px">Verified accounts get a <strong>free lifetime plan</strong> with expanded limits. Choose your account type below and submit your verification documents.</p>
-
-        <!-- ACCOUNT TYPE SELECTOR -->
-        <label style="display:block;font-size:0.72rem;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px">I am a</label>
-        <div class="type-btns">
-          <button class="type-btn" id="vtype-student" onclick="selectVerifyType('student')">🎓 Student</button>
-          <button class="type-btn" id="vtype-educator" onclick="selectVerifyType('educator')">📚 Educator</button>
-          <button class="type-btn" id="vtype-ngo" onclick="selectVerifyType('ngo')">🤝 NGO</button>
-        </div>
-
-        <!-- VERIFICATION FORM -->
-        <div class="verify-form" id="verify-form" style="display:none">
-          <div class="verify-form-title" id="verify-form-title">Student Verification</div>
-          <div class="alert alert-success" id="verify-success"></div>
-          <div class="alert alert-error" id="verify-error"></div>
-          <div class="field"><label class="field-label">Full name *</label><input class="field-input" id="v-name" placeholder="Your full name"></div>
-          <div class="field" id="v-institution-wrap"><label class="field-label" id="v-institution-label">Institution name *</label><input class="field-input" id="v-institution" placeholder="e.g. IIT Delhi, Delhi University"></div>
-          <div class="field"><label class="field-label" id="v-doctype-label">Document type</label>
-            <select class="field-input" id="v-doctype">
-              <option value="student_id">Student ID card</option>
-              <option value="enrollment">Enrollment letter</option>
-              <option value="marksheet">Marksheet / Transcript</option>
-            </select>
-          </div>
-          <div class="field">
-            <label class="field-label">Document URL *</label>
-            <input class="field-input" id="v-docurl" placeholder="Paste Google Drive / Dropbox public link">
-            <div class="field-hint">Upload your document to Google Drive, set sharing to "Anyone with link", then paste the link here.</div>
-          </div>
-          <div class="field"><label class="field-label">Additional notes (optional)</label><textarea class="field-input" id="v-notes" placeholder="Any additional information..." rows="2" style="resize:vertical"></textarea></div>
-          <div style="margin-top:4px;display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn-primary" onclick="submitVerification()">Submit for review</button>
-            <button class="btn-ghost" onclick="cancelVerify()">Cancel</button>
-          </div>
-          <div style="font-size:0.72rem;color:#94A3B8;margin-top:10px;line-height:1.5">We review within 24–48 hours. You'll receive a notification when your application is processed.</div>
-        </div>
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
-<<<<<<< HEAD
   <!-- NOTIFICATIONS -->
   <div class="section">
     <div class="section-title">🔔 Email notifications</div>
     <div class="notif-options">
       <div class="notif-option active" id="notif-instant" onclick="selectNotif('instant')">
         <div class="notif-radio"></div>
-        <div><div class="notif-title">Instant notifications</div><div class="notif-desc">Get an email every time someone responds to your survey</div></div>
-=======
-        <!-- PENDING STATE -->
-        <div id="verify-pending-msg" style="display:none;background:#FEF3C7;border:1px solid #FCD34D;border-radius:10px;padding:14px;margin-top:12px">
-          <div style="font-weight:700;font-size:0.88rem;color:#92400E;margin-bottom:4px">⏳ Application under review</div>
-          <div style="font-size:0.8rem;color:#B45309;line-height:1.6">Your verification is being reviewed. We'll notify you within 24–48 hours. No action needed.</div>
-        </div>
-
-        <!-- APPROVED STATE -->
-        <div id="verify-approved-msg" style="display:none;background:#F0FDF4;border:1px solid #86EFAC;border-radius:10px;padding:14px;margin-top:12px">
-          <div style="font-weight:700;font-size:0.88rem;color:#166534;margin-bottom:4px">✅ Verified!</div>
-          <div style="font-size:0.8rem;color:#15803D;line-height:1.6">Your account is verified. You have access to your free lifetime plan.</div>
-        </div>
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-      </div>
+        <div><div class="notif-title">Instant notifications</div><div class="notif-desc">Get an email every time someone responds to your survey</div></div>      </div>
       <div class="notif-option" id="notif-none" onclick="selectNotif('none')">
         <div class="notif-radio"></div>
         <div><div class="notif-title">No notifications</div><div class="notif-desc">Check your responses manually from the dashboard</div></div>
@@ -581,7 +243,6 @@
     </div>
   </div>
 
-<<<<<<< HEAD
   <!-- CHANGE PASSWORD -->
   <div class="section" id="password-section">
     <div class="section-title">🔑 Change password</div>
@@ -615,64 +276,21 @@
       <div class="upgrade-card">
         <div class="upgrade-plan">🚀 Pro</div>
         <div class="upgrade-price">₹1,499 / month</div>
-        <button class="upgrade-btn">Upgrade</button>
-=======
-      <!-- WHAT YOU GET -->
-      <div class="card">
-        <div class="card-title">What verified accounts get</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
-          <div style="text-align:center;padding:16px;background:#F0FDF4;border-radius:12px">
-            <div style="font-size:1.4rem;margin-bottom:6px">🎓</div>
-            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;margin-bottom:4px">Student</div>
-            <div style="font-size:0.7rem;color:#64748B;line-height:1.5">Pro features<br>500 resp/form<br>Lifetime free</div>
-          </div>
-          <div style="text-align:center;padding:16px;background:#EFF6FF;border-radius:12px">
-            <div style="font-size:1.4rem;margin-bottom:6px">📚</div>
-            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;margin-bottom:4px">Educator</div>
-            <div style="font-size:0.7rem;color:#64748B;line-height:1.5">Pro features<br>1,000 resp/form<br>Live Quiz included</div>
-          </div>
-          <div style="text-align:center;padding:16px;background:#DCFCE7;border-radius:12px">
-            <div style="font-size:1.4rem;margin-bottom:6px">🤝</div>
-            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;margin-bottom:4px">NGO</div>
-            <div style="font-size:0.7rem;color:#64748B;line-height:1.5">Business features<br>Unlimited resp<br>3 team seats</div>
-          </div>
-        </div>
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-      </div>
+        <button class="upgrade-btn">Upgrade</button>      </div>
     </div>
     <div style="margin-top:12px;font-size:0.75rem;color:#94A3B8;text-align:center">
       🎓 Student/Educator or NGO? <a href="#" onclick="selectAccType('student');document.getElementById('modal-student').scrollIntoView({behavior:'smooth'})" style="color:#2D1B69;font-weight:600">Apply for free plan →</a>
     </div>
   </div>
 
-<<<<<<< HEAD
   <!-- DANGER ZONE -->
   <div class="danger-section">
     <div class="danger-title">⚠️ Danger zone</div>
     <div class="danger-row">
       <div>
         <div class="danger-name">Delete account</div>
-        <div class="danger-desc">Permanently delete your account and all surveys. Cannot be undone.</div>
-=======
-    <!-- ── NOTIFICATIONS ── -->
-    <div id="sec-notifications" style="display:none">
-      <div class="section-title">🔔 Notifications</div>
-      <div class="section-sub">Control when and how SwoopForm notifies you</div>
-      <div class="card">
-        <div class="card-title">Email notifications</div>
-        <div class="sr"><div><div class="sr-label">New response received</div><div style="font-size:0.72px;color:#64748B;margin-top:2px">Get an email for every new submission</div></div><button class="tgl" id="n-response" onclick="this.classList.toggle('on')"></button></div>
-        <div class="sr"><div><div class="sr-label">Weekly digest</div><div style="font-size:0.72px;color:#64748B;margin-top:2px">Summary of responses every Monday</div></div><button class="tgl on" id="n-digest" onclick="this.classList.toggle('on')"></button></div>
-        <div class="sr"><div><div class="sr-label">Survey milestone</div><div style="font-size:0.72px;color:#64748B;margin-top:2px">When you hit 100, 500, 1000 responses</div></div><button class="tgl on" id="n-milestone" onclick="this.classList.toggle('on')"></button></div>
-        <div class="sr"><div><div class="sr-label">Product updates</div><div style="font-size:0.72px;color:#64748B;margin-top:2px">New features and improvements</div></div><button class="tgl on" id="n-updates" onclick="this.classList.toggle('on')"></button></div>
-        <div class="sr" style="border-bottom:none"><div><div class="sr-label">Marketing emails</div><div style="font-size:0.72px;color:#64748B;margin-top:2px">Tips, guides and case studies</div></div><button class="tgl" id="n-marketing" onclick="this.classList.toggle('on')"></button></div>
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-      </div>
-<<<<<<< HEAD
-      <button class="btn-danger" onclick="deleteAccount()">Delete account</button>
-=======
-      <div style="margin-top:4px"><button class="btn-primary" onclick="saveNotifications()">Save preferences</button></div>
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-    </div>
+        <div class="danger-desc">Permanently delete your account and all surveys. Cannot be undone.</div>      </div>
+      <button class="btn-danger" onclick="deleteAccount()">Delete account</button>    </div>
 
     <!-- ── DANGER ZONE ── -->
     <div id="sec-danger" style="display:none">
@@ -690,37 +308,15 @@
 <div class="toast" id="toast"></div>
 
 <script type="module">
-<<<<<<< HEAD
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getAuth,onAuthStateChanged,updatePassword,reauthenticateWithCredential,EmailAuthProvider,deleteUser,signOut}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 import{getFirestore,doc,getDoc,updateDoc,setDoc,addDoc,collection,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-=======
-import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import{getAuth,onAuthStateChanged,updateProfile,updatePassword,reauthenticateWithCredential,EmailAuthProvider,deleteUser}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getFirestore,doc,getDoc,setDoc,updateDoc,addDoc,collection,serverTimestamp,query,where,getDocs}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
 const app=initializeApp(FB);
 const auth=getAuth(app);
 const db=getFirestore(app);
 
-<<<<<<< HEAD
 let currentUser=null,userProfile=null,selectedAccType='individual',selectedNotif='instant';
-=======
-const AVATARS=['😊','🦊','🐼','🦁','🐯','🐨','🦅','🦋','🌟','🚀','🎯','💡','🎨','🔬','📚','🌍'];
-const PLAN_INFO={
-  free:{label:'Free',badge:'plan-free',features:['3 active surveys','100 responses per survey','16+ question types','Basic logic branching','Google Sheets sync'],limits:'Upgrade to get more responses, remove branding and unlock advanced features.'},
-  starter:{label:'Starter',badge:'plan-starter',features:['15 active surveys','1,000 responses per survey','Full logic branching','Bulk CSV upload','Email notifications','Custom redirect URL','CSV export'],limits:''},
-  pro:{label:'Pro',badge:'plan-pro',features:['Unlimited surveys','Unlimited responses','Remove SwoopForm branding','Custom redirect URL','Priority email support','PDF export','API access'],limits:''},
-  business:{label:'Business',badge:'plan-business',features:['Everything in Pro','5 team seats','Team roles (Admin/Editor/Viewer)','Dedicated account manager','Live Quiz + PulseCheck','Custom domain'],limits:''},
-  student:{label:'Student (Verified)',badge:'plan-student',features:['Pro features free','500 responses per survey','All question types','Logic branching','Lifetime free'],limits:''},
-  educator:{label:'Educator (Verified)',badge:'plan-student',features:['Pro features free','1,000 responses per survey','Live Quiz included','PulseCheck included','Lifetime free'],limits:''},
-  ngo:{label:'NGO (Verified)',badge:'plan-ngo',features:['Business features free','Unlimited responses','3 team seats','Lifetime free'],limits:''},
-};
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
-<<<<<<< HEAD
 onAuthStateChanged(auth,async u=>{
   if(!u){window.location.href='/login';return}
   currentUser=u;
@@ -731,37 +327,6 @@ onAuthStateChanged(auth,async u=>{
     document.getElementById('password-section').style.display='none';
   }
 });
-=======
-let U=null,userData=null,selectedAvatar='😊',selectedVerifyType='student';
-
-onAuthStateChanged(auth,async u=>{
-  if(!u){window.location.href='/login';return}
-  U=u;
-  document.getElementById('p-email').value=u.email||'';
-  document.getElementById('p-name').value=u.displayName||'';
-  // Load user data from Firestore
-  try{
-    const snap=await getDoc(doc(db,'users',u.uid));
-    if(snap.exists()){
-      userData=snap.data();
-      if(userData.avatar)selectedAvatar=userData.avatar;
-      if(userData.phone){
-        const parts=splitPhone(userData.phone);
-        document.getElementById('p-countrycode').value=parts.code||'+91';
-        document.getElementById('p-phone').value=parts.number||'';
-      }
-      if(userData.bio)document.getElementById('p-bio').value=userData.bio;
-      loadPlanInfo(userData.plan||'free');
-      loadVerifyStatus(userData);
-      loadNotifications(userData.notifications||{});
-    }
-  }catch(e){console.error(e)}
-  renderAvatars();
-  document.getElementById('ls').style.display='none';
-});
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
-<<<<<<< HEAD
 async function loadProfile(){
   try{
     const snap=await getDoc(doc(db,'users',currentUser.uid));
@@ -786,15 +351,6 @@ async function loadProfile(){
     updatePlanDisplay(plan);
   }catch(e){console.error(e)}
 }
-=======
-function splitPhone(phone){
-  const codes=['+971','+880','+94','+65','+61','+92','+86','+82','+81','+49','+44','+33','+91','+60','+1'];
-  for(const code of codes){if(phone.startsWith(code))return{code,number:phone.slice(code.length).trim()}}
-  return{code:'+91',number:phone}
-}
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
-<<<<<<< HEAD
 function updatePlanDisplay(plan){
   const names={free:'Free plan',student:'Student/Educator plan',ngo:'NGO plan',starter:'Starter plan',pro:'Pro plan',business:'Business plan'};
   const descs={free:'3 surveys · 100 responses each',student:'Unlimited surveys · Unlimited responses',ngo:'Unlimited surveys · Unlimited responses',starter:'10 surveys · Unlimited responses',pro:'Unlimited surveys · Unlimited responses',business:'Unlimited surveys · Team features'};
@@ -804,15 +360,6 @@ function updatePlanDisplay(plan){
   badge.textContent=plan.charAt(0).toUpperCase()+plan.slice(1);
   badge.className='plan-badge plan-'+(plan||'free');
 }
-=======
-function renderAvatars(){
-  const grid=document.getElementById('avatar-grid');
-  grid.innerHTML=AVATARS.map(a=>`<div class="avatar-opt${a===selectedAvatar?' selected':''}" onclick="selectAvatar('${a}')" style="background:${a===selectedAvatar?'#EDE9FF':'#F5F0E8'}">${a}</div>`).join('');
-}
-window.selectAvatar=function(a){selectedAvatar=a;renderAvatars()}
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
-<<<<<<< HEAD
 // PHOTO FETCH
 window.fetchPhoto=function(){
   let url=document.getElementById('photo-url').value.trim();
@@ -821,42 +368,12 @@ window.fetchPhoto=function(){
   document.getElementById('photo-url').value=url;
   loadPhoto(url,true);
 }
-=======
-function loadPlanInfo(plan){
-  const info=PLAN_INFO[plan]||PLAN_INFO.free;
-  const badge=document.getElementById('plan-badge-display');
-  badge.textContent=info.label;badge.className='plan-badge '+info.badge;
-  document.getElementById('plan-feature-list').innerHTML=info.features.map(f=>`✓ ${f}`).join('<br>');
-  document.getElementById('plan-limits').textContent=info.limits;
-  if(['pro','business','ngo'].includes(plan))document.getElementById('upgrade-card').style.display='none';
-}
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
-<<<<<<< HEAD
 function fixGDriveUrl(url){
   // Convert Google Drive share URL to direct image URL
   const m=url.match(/drive\.google\.com\/file\/d\/([^/]+)/)||url.match(/drive\.google\.com\/open\?id=([^&]+)/)||url.match(/id=([^&]+)/);
   if(m&&m[1])return'https://drive.google.com/uc?export=view&id='+m[1];
   return url;
 }
-=======
-function loadVerifyStatus(data){
-  const status=data.verificationStatus||'none';
-  const badge=document.getElementById('verify-status-badge');
-  const statusMap={none:{text:'Not applied',cls:'verify-none'},pending:{text:'⏳ Pending',cls:'verify-pending'},approved:{text:'✅ Verified',cls:'verify-approved'},rejected:{text:'❌ Rejected',cls:'verify-rejected'}};
-  const s=statusMap[status]||statusMap.none;
-  badge.textContent=s.text;badge.className='verify-status '+s.cls;
-  document.getElementById('verify-pending-msg').style.display=status==='pending'?'block':'none';
-  document.getElementById('verify-approved-msg').style.display=status==='approved'?'block':'none';
-  if(status==='rejected'){
-    const msg=document.getElementById('verify-pending-msg');
-    msg.style.display='block';msg.style.background='#FEF2F2';msg.style.borderColor='#FECACA';
-    msg.innerHTML='<div style="font-weight:700;font-size:0.88rem;color:#DC2626;margin-bottom:4px">❌ Application rejected</div><div style="font-size:0.8rem;color:#B91C1C;line-height:1.6">'+(data.verificationReason||'Your application was not approved. Please reapply with correct documents.')+'</div>';
-  }
-}
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
-<<<<<<< HEAD
 function loadPhoto(url,showStatus){
   const img=document.getElementById('avatar-img');
   const initial=document.getElementById('avatar-initial');
@@ -874,17 +391,6 @@ function loadPhoto(url,showStatus){
   };
   img.src=url;
 }
-=======
-function loadNotifications(notifs){
-  if(notifs.response)document.getElementById('n-response').classList.add('on');
-  if(notifs.digest!==false)document.getElementById('n-digest').classList.add('on');
-  if(notifs.milestone!==false)document.getElementById('n-milestone').classList.add('on');
-  if(notifs.updates!==false)document.getElementById('n-updates').classList.add('on');
-  if(notifs.marketing)document.getElementById('n-marketing').classList.add('on');
-}
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
-<<<<<<< HEAD
 // ACCOUNT TYPE
 window.selectAccType=function(type,silent){
   selectedAccType=type;
@@ -896,17 +402,6 @@ window.selectAccType=function(type,silent){
     document.getElementById('modal-'+type).classList.add('show');
   }
 }
-=======
-// ── SECTIONS ─────────────────────────────────────────
-window.showSection=function(s){
-  ['profile','account','plan','verify','notifications','danger'].forEach(id=>{
-    document.getElementById('sec-'+id).style.display=id===s?'block':'none';
-    document.getElementById('sn-'+id).classList.toggle('active',id===s);
-  });
-}
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
-<<<<<<< HEAD
 // APPLY VERIFICATION
 window.applyVerification=async function(type){
   if(!currentUser)return;
@@ -923,59 +418,12 @@ window.applyVerification=async function(type){
     toast('✅ Verification request submitted! Admin will review within 24 hours.');
   }catch(e){toast('Error submitting request. Please try again.')}
 }
-=======
-// ── VERIFY TYPE ───────────────────────────────────────
-window.selectVerifyType=function(type){
-  selectedVerifyType=type;
-  document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('vtype-'+type).classList.add('active');
-  const form=document.getElementById('verify-form');
-  form.style.display='block';
-  const titles={student:'🎓 Student Verification',educator:'📚 Educator Verification',ngo:'🤝 NGO Verification'};
-  const doctypes={
-    student:'<option value="student_id">Student ID card</option><option value="enrollment">Enrollment letter</option><option value="marksheet">Marksheet / Transcript</option>',
-    educator:'<option value="staff_id">Staff / Faculty ID</option><option value="appointment">Appointment letter</option><option value="certificate">Teaching certificate</option>',
-    ngo:'<option value="reg_cert">Registration certificate</option><option value="12a">12A certificate (India)</option><option value="80g">80G certificate</option><option value="fcra">FCRA registration</option>'
-  };
-  const instLabels={student:'Institution / College / University name *',educator:'Institution / School / College name *',ngo:'Organisation name *'};
-  document.getElementById('verify-form-title').textContent=titles[type];
-  document.getElementById('v-doctype').innerHTML=doctypes[type];
-  document.getElementById('v-institution-label').textContent=instLabels[type];
-  document.getElementById('v-institution').placeholder=type==='ngo'?'e.g. Green Earth Foundation':'e.g. IIT Delhi, Delhi University';
-}
-window.cancelVerify=function(){document.getElementById('verify-form').style.display='none';document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'))}
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
-<<<<<<< HEAD
 // NOTIFICATIONS
 window.selectNotif=function(pref,silent){
   selectedNotif=pref;
   document.querySelectorAll('.notif-option').forEach(o=>o.classList.remove('active'));
   document.getElementById('notif-'+pref).classList.add('active');
 }
-=======
-// ── SAVE PROFILE ──────────────────────────────────────
-window.saveProfile=async function(){
-  const name=document.getElementById('p-name').value.trim();
-  const code=document.getElementById('p-countrycode').value;
-  const phone=document.getElementById('p-phone').value.trim();
-  const bio=document.getElementById('p-bio').value.trim();
-  hideAlerts('profile');
-  if(!name){showAlert('profile-error','Please enter your full name');return}
-  try{
-    await updateProfile(U,{displayName:name});
-    await setDoc(doc(db,'users',U.uid),{
-      name,bio,avatar:selectedAvatar,
-      phone:phone?code+' '+phone:'',
-      updatedAt:serverTimestamp()
-    },{merge:true});
-    showAlert('profile-success','Profile saved successfully!');
-    toast('Profile saved!');
-  }catch(e){showAlert('profile-error','Error saving profile. Please try again.')}
-}
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
-<<<<<<< HEAD
 // SAVE PROFILE
 window.saveProfile=async function(){
   if(!currentUser)return;
@@ -997,36 +445,9 @@ window.saveProfile=async function(){
     if(name)document.getElementById('avatar-initial').textContent=name[0].toUpperCase();
   }catch(e){
     console.error(e);
-    toast('Error saving. Please try again.');
-=======
-// ── CHANGE PASSWORD ───────────────────────────────────
-window.changePassword=async function(){
-  const current=document.getElementById('pw-current').value;
-  const newPw=document.getElementById('pw-new').value;
-  const confirm=document.getElementById('pw-confirm').value;
-  hideAlerts('pw');
-  if(!current||!newPw||!confirm){showAlert('pw-error','Please fill in all fields');return}
-  if(newPw.length<8){showAlert('pw-error','New password must be at least 8 characters');return}
-  if(newPw!==confirm){showAlert('pw-error','New passwords do not match');return}
-  try{
-    const cred=EmailAuthProvider.credential(U.email,current);
-    await reauthenticateWithCredential(U,cred);
-    await updatePassword(U,newPw);
-    showAlert('pw-success','Password updated successfully!');
-    document.getElementById('pw-current').value='';document.getElementById('pw-new').value='';document.getElementById('pw-confirm').value='';
-  }catch(e){
-    const msgs={'auth/wrong-password':'Current password is incorrect.','auth/weak-password':'New password is too weak.'};
-    showAlert('pw-error',msgs[e.code]||'Error updating password. Please try again.');
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-  }
-<<<<<<< HEAD
+    toast('Error saving. Please try again.');  }
   btn.disabled=false;btn.textContent='Save changes';
 }
-=======
-}
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
-<<<<<<< HEAD
 // CHANGE PASSWORD
 window.changePassword=async function(){
   const newPass=document.getElementById('inp-new-pass').value;
@@ -1046,97 +467,19 @@ window.changePassword=async function(){
     }
   }
 }
-=======
-// ── SUBMIT VERIFICATION ───────────────────────────────
-window.submitVerification=async function(){
-  const name=document.getElementById('v-name').value.trim();
-  const institution=document.getElementById('v-institution').value.trim();
-  const doctype=document.getElementById('v-doctype').value;
-  const docurl=document.getElementById('v-docurl').value.trim();
-  const notes=document.getElementById('v-notes').value.trim();
-  const el=document.getElementById('verify-error');el.style.display='none';
-  const sel=document.getElementById('verify-success');sel.style.display='none';
-  if(!name||!institution||!docurl){showAlert('verify-error','Please fill in all required fields');return}
-  if(!docurl.startsWith('http')){showAlert('verify-error','Please paste a valid document URL (Google Drive / Dropbox link)');return}
-  try{
-    await addDoc(collection(db,'verificationRequests'),{
-      userId:U.uid,userEmail:U.email,name,accountType:selectedVerifyType,
-      institution,docType:doctype,docUrl:docurl,notes,
-      status:'pending',createdAt:serverTimestamp()
-    });
-    await updateDoc(doc(db,'users',U.uid),{verificationStatus:'pending',verificationAppliedAt:serverTimestamp()});
-    showAlert('verify-success','Application submitted! We\'ll review within 24–48 hours.');
-    document.getElementById('verify-status-badge').textContent='⏳ Pending';
-    document.getElementById('verify-status-badge').className='verify-status verify-pending';
-    document.getElementById('verify-pending-msg').style.display='block';
-    cancelVerify();
-  }catch(e){showAlert('verify-error','Error submitting. Please try again.')}
-}
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-
-<<<<<<< HEAD
 // DELETE ACCOUNT
 window.deleteAccount=async function(){
   if(!confirm('Are you sure you want to delete your account?\n\nAll your surveys and data will be permanently deleted.\nThis cannot be undone.'))return;
-  if(!confirm('Last warning — this will permanently delete EVERYTHING. Continue?'))return;
-=======
-// ── NOTIFICATIONS ─────────────────────────────────────
-window.saveNotifications=async function(){
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-  try{
-<<<<<<< HEAD
+  if(!confirm('Last warning — this will permanently delete EVERYTHING. Continue?'))return;  try{
     await deleteUser(currentUser);
-    window.location.href='/';
-=======
-    await updateDoc(doc(db,'users',U.uid),{
-      notifications:{
-        response:document.getElementById('n-response').classList.contains('on'),
-        digest:document.getElementById('n-digest').classList.contains('on'),
-        milestone:document.getElementById('n-milestone').classList.contains('on'),
-        updates:document.getElementById('n-updates').classList.contains('on'),
-        marketing:document.getElementById('n-marketing').classList.contains('on'),
-      },updatedAt:serverTimestamp()
-    });
-    toast('Notification preferences saved!');
-  }catch(e){toast('Error saving preferences')}
-}
-
-// ── DELETE ACCOUNT ────────────────────────────────────
-window.confirmDelete=async function(){
-  const input=prompt('Type DELETE to confirm account deletion:');
-  if(input!=='DELETE'){alert('Account deletion cancelled.');return}
-  const pass=prompt('Enter your password to confirm:');
-  if(!pass)return;
-  try{
-    const cred=EmailAuthProvider.credential(U.email,pass);
-    await reauthenticateWithCredential(U,cred);
-    await updateDoc(doc(db,'users',U.uid),{deletedAt:serverTimestamp(),status:'deleted'});
-    await deleteUser(U);
-    window.location.href='/?deleted=1';
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-  }catch(e){
-<<<<<<< HEAD
+    window.location.href='/';  }catch(e){
     if(e.code==='auth/requires-recent-login'){
       toast('Please sign out and sign back in first, then try deleting again.');
     } else {
       toast('Error: '+e.message);
-    }
-=======
-    const msgs={'auth/wrong-password':'Incorrect password.','auth/requires-recent-login':'Please sign out and sign in again before deleting.'};
-    alert(msgs[e.code]||'Error deleting account. Please try again.');
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-  }
+    }  }
 }
-<<<<<<< HEAD
 
-function toast(msg,d=2800){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
-=======
-
-// ── HELPERS ───────────────────────────────────────────
-function showAlert(id,msg){const el=document.getElementById(id);el.textContent=msg;el.style.display='block';setTimeout(()=>{el.style.display='none'},5000)}
-function hideAlerts(...ids){ids.forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none'})}
-function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
->>>>>>> 291fcbefebd4466d9ec6ae2eaeb70102b73b6da3
-</script>
+function toast(msg,d=2800){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}</script>
 </body>
 </html>
