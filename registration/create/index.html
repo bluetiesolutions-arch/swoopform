@@ -492,7 +492,7 @@ function buildPayload(status){
     description:g('e-desc'),eventType:g('e-type'),mode:g('e-mode'),
     eventDate:g('e-date'),eventTime:g('e-time'),endDate:g('e-end-date'),endTime:g('e-end-time'),
     venue:g('e-venue'),location:g('e-location'),organizer:g('e-organizer'),organizerEmail:g('e-org-email'),
-    coverImage:g('e-image'),totalSeats:parseInt(g('e-total-seats'))||null,
+    coverImage:g('e-image'),totalSeats:parseInt(g('e-total-seats'))||0,
     registrationDeadline:g('e-reg-deadline'),redirectUrl:g('e-redirect'),
     enableTickets:tog('tgl-tickets'),limitSeats:tog('tgl-seats'),
     sendConfirmation:tog('tgl-confirm'),notifyOrganizer:tog('tgl-notify'),
@@ -504,7 +504,11 @@ function buildPayload(status){
 }
 
 function cleanPayload(obj){
-  return JSON.parse(JSON.stringify(obj,function(k,v){return v===undefined?null:v;}));
+  const str=JSON.stringify(obj,function(k,v){
+    if(v===undefined||v===null||v!==v)return '';
+    return v;
+  });
+  return JSON.parse(str);
 }
 
 window.saveDraft=async function(){
