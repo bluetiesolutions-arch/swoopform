@@ -198,6 +198,7 @@
         <div class="cp-section-label">Surveys & Forms</div>
         <a href="/create/" class="cp-item"><div class="cp-icon" style="background:#EDE9FF">📋</div><div><div class="cp-label">Survey</div><div class="cp-desc">General survey with logic</div></div></a>
         <a href="/assessment/create/" class="cp-item"><div class="cp-icon" style="background:#EDE9FF">📝</div><div><div class="cp-label">MCQ Assessment</div><div class="cp-desc">Scored test with correct answers</div></div></a>
+<a href="/feedback/create/" class="cp-item"><div class="cp-icon" style="background:#F0F9FF">💬</div><div><div class="cp-label">Feedback Form</div><div class="cp-desc">Ratings and comments</div></div></a>
         <a href="/create/?template=feedback" class="cp-item"><div class="cp-icon" style="background:#DCFCE7">💬</div><div><div class="cp-label">Feedback Form</div><div class="cp-desc">Ratings and comments</div></div></a>
         <a href="/create/?template=lead" class="cp-item"><div class="cp-icon" style="background:#EEF2FF">📥</div><div><div class="cp-label">Lead Generation</div><div class="cp-desc">Capture names and emails</div></div></a>
         <a href="/create/?template=registration" class="cp-item"><div class="cp-icon" style="background:#FFF7ED">📝</div><div><div class="cp-label">Registration</div><div class="cp-desc">Event or course signup</div></div></a>
@@ -257,6 +258,7 @@
       <button class="filter-btn" id="flt-riddles" onclick="setFilter('riddles',this)">🧩 Riddles</button>
 <button class="filter-btn" id="flt-jobapps" onclick="setFilter('jobapps',this)">💼 Job Apps</button>
 <button class="filter-btn" id="flt-assessments" onclick="setFilter('assessments',this)">📝 Assessments</button>
+<button class="filter-btn" id="flt-feedbacks" onclick="setFilter('feedbacks',this)">💬 Feedback</button>
       <div class="filters-right">
         <input class="search-inp" id="search-inp" placeholder="🔍 Search..." oninput="renderItems()">
         <div class="view-btns">
@@ -303,7 +305,7 @@ const TYPE_META={
   votings:{label:'Voting',icon:'🗳️',color:'#D97706',bg:'#FEF3C7',editPath:'/voting/edit/?id=',viewPath:'/voting/',responsesPath:'/voting/responses/?id='},
   pledges:{label:'Pledge & Support',icon:'🤝',color:'#10B981',bg:'#DCFCE7',editPath:'/pledge/edit/?id=',viewPath:'/pledge/',responsesPath:'/pledge/responses/?id='},
   riddles:{label:'Riddle',icon:'🧩',color:'#A855F7',bg:'#F3E8FF',editPath:'/riddle/edit/?id=',viewPath:'/riddle/',responsesPath:'/riddle/responses/?id='},
-  jobapps:{label:'Job Application',icon:'💼',color:'#059669',bg:'#D1FAE5',editPath:'/jobapp/create/?id=',viewPath:'/jobapp/?id=',responsesPath:'/jobapp/responses/?id='},assessments:{label:'Assessment',icon:'📝',color:'#7c3aed',bg:'#ede9fe',editPath:'/assessment/create/?id=',viewPath:'/assessment/?id=',responsesPath:'/assessment/responses/?id='},
+  jobapps:{label:'Job Application',icon:'💼',color:'#059669',bg:'#D1FAE5',editPath:'/jobapp/create/?id=',viewPath:'/jobapp/?id=',responsesPath:'/jobapp/responses/?id='},assessments:{label:'Assessment',icon:'📝',color:'#7c3aed',bg:'#ede9fe',editPath:'/assessment/create/?id=',viewPath:'/assessment/?id=',responsesPath:'/assessment/responses/?id='},feedbacks:{label:'Feedback Form',icon:'💬',color:'#0ea5e9',bg:'#f0f9ff',editPath:'/feedback/create/?id=',viewPath:'/feedback/?id=',responsesPath:'/feedback/responses/?id='},
 };
 
 let U=null,allItems=[],activeFilter='all',viewMode='grid',ctxItem=null;
