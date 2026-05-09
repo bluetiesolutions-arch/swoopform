@@ -316,7 +316,7 @@ window.showResults=async function(){
         const isTop=i===0;
         const link=p.link?(p.link.startsWith('http')?p.link:'https://'+p.link):'';
         html+='<div class="product-card'+(isTop?' top':'')+'">'
-          +'<div class="product-banner">'+(p.image?'<img src="'+p.image+'" onerror="this.style.display='none'">':'<span>📦</span>')+(isTop?'<div class="top-badge">⭐ Best Match</div>':'')+'</div>'
+          +'<div class="product-banner">'+(p.image?'<img src="'+p.image+'" onerror="this.style.display=\'none\'">':'<span>📦</span>')+(isTop?'<div class="top-badge">⭐ Best Match</div>':'')+'</div>'
           +'<div class="product-body">'
           +(pData.showPct?'<div class="product-match">'+p.pct+'% Match</div>':'')
           +'<div class="product-name">'+(p.name||'Product')+'</div>'
