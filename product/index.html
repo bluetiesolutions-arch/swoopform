@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Quiz — SwoopForm</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f4f0;--white:#fff;--border:#e2ddd6;--accent:#ec4899;--accent-light:#fdf2f8;--success:#12a872;--text:#1c1c2e;--muted:#7a7a8c;--muted2:#c5c0b8;--font:'Sora',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;}
+header{height:52px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:50;}
+.brand{font-size:15px;font-weight:700;color:var(--accent);}
+.main{max-width:640px;margin:0 auto;padding:36px 20px;}
+.quiz-card{background:var(--white);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);}
+.quiz-hero{padding:32px;background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;text-align:center;}
+.quiz-tag{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;opacity:0.8;margin-bottom:10px;}
+.quiz-title{font-size:24px;font-weight:700;margin-bottom:8px;}
+.quiz-desc{font-size:14px;opacity:0.85;line-height:1.6;}
+.quiz-body{padding:28px;}
+.progress-wrap{margin-bottom:24px;}
+.progress-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:8px;}
+.progress-bg{height:6px;background:var(--border);border-radius:6px;}
+.progress-fill{height:6px;border-radius:6px;background:linear-gradient(90deg,#ec4899,#8b5cf6);transition:width .4s;}
+.q-card{animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.q-text{font-size:17px;font-weight:700;margin-bottom:20px;line-height:1.5;}
+.q-counter{font-size:12px;color:var(--muted);margin-bottom:8px;}
+.options{display:flex;flex-direction:column;gap:10px;}
+.opt-btn{display:flex;align-items:center;gap:14px;padding:14px 18px;border:2px solid var(--border);border-radius:14px;cursor:pointer;transition:all .2s;background:var(--white);font-family:var(--font);font-size:14px;font-weight:500;text-align:left;width:100%;}
+.opt-btn:hover{border-color:var(--accent);background:var(--accent-light);}
+.opt-btn.selected{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
+.opt-circle{width:22px;height:22px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;}
+.opt-square{width:22px;height:22px;border-radius:6px;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;}
+.yesno-group{display:flex;gap:14px;}
+.yesno-btn{flex:1;padding:16px;border:2px solid var(--border);border-radius:14px;background:var(--white);font-family:var(--font);font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;}
+.yesno-btn.yes-sel{border-color:var(--success);background:#f0fdf4;color:var(--success);}
+.yesno-btn.no-sel{border-color:#e5484d;background:#fef2f2;color:#e5484d;}
+.slider-wrap{margin-top:16px;}
+.slider-inp{width:100%;accent-color:var(--accent);height:6px;cursor:pointer;}
+.slider-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:8px;}
+.text-inp{width:100%;padding:14px 18px;border:2px solid var(--border);border-radius:14px;background:var(--white);font-family:var(--font);font-size:14px;outline:none;transition:border-color .2s;}
+.text-inp:focus{border-color:var(--accent);}
+.nav-btns{display:flex;justify-content:space-between;margin-top:24px;gap:12px;}
+.btn{padding:13px 28px;border-radius:12px;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;border:none;}
+.btn-ghost{background:none;border:2px solid var(--border);color:var(--muted);}
+.btn-ghost:hover{border-color:var(--muted2);color:var(--text);}
+.btn-primary{background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;flex:1;}
+.btn-primary:hover{opacity:0.9;transform:translateY(-1px);}
+.btn-primary:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+
+/* EMAIL CAPTURE */
+.email-capture{text-align:center;padding:8px 0;}
+.email-capture h3{font-size:20px;font-weight:700;margin-bottom:8px;}
+.email-capture p{font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.6;}
+.email-inp{width:100%;padding:14px 18px;border:2px solid var(--border);border-radius:14px;background:var(--white);font-family:var(--font);font-size:14px;outline:none;text-align:center;margin-bottom:12px;}
+.email-inp:focus{border-color:var(--accent);}
+
+/* RESULTS */
+.results-wrap{padding:8px 0;}
+.result-heading{font-size:22px;font-weight:700;margin-bottom:6px;}
+.result-sub{font-size:14px;color:var(--muted);margin-bottom:24px;}
+.product-card{border:2px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:16px;transition:all .2s;}
+.product-card.top{border-color:var(--accent);box-shadow:0 4px 20px rgba(236,72,153,0.15);}
+.product-banner{height:160px;background:linear-gradient(135deg,var(--accent-light),#f5f3ff);display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;overflow:hidden;}
+.product-banner img{width:100%;height:100%;object-fit:cover;}
+.top-badge{position:absolute;top:12px;right:12px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;}
+.product-body{padding:18px;}
+.product-match{font-size:12px;font-weight:600;color:var(--accent);margin-bottom:6px;}
+.product-name{font-size:18px;font-weight:700;margin-bottom:6px;}
+.product-price{font-size:15px;font-weight:700;color:var(--accent);margin-bottom:8px;}
+.product-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px;}
+.product-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+.product-tag{padding:3px 10px;border-radius:20px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:500;}
+.shop-btn{display:block;width:100%;padding:12px;border-radius:10px;background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;font-family:var(--font);font-size:14px;font-weight:700;text-align:center;text-decoration:none;transition:all .2s;border:none;cursor:pointer;}
+.shop-btn:hover{opacity:0.9;transform:translateY(-1px);}
+.retry-btn{display:block;width:100%;padding:12px;border-radius:10px;border:2px solid var(--border);background:var(--white);color:var(--muted);font-family:var(--font);font-size:14px;font-weight:600;text-align:center;cursor:pointer;margin-top:12px;transition:all .2s;}
+.retry-btn:hover{border-color:var(--accent);color:var(--accent);}
+.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:600px){.quiz-hero,.quiz-body{padding:20px;}.main{padding:20px 16px;}}
+</style>
+</head>
+<body>
+
+<div class="loading-screen" id="loading-screen">
+  <div class="spinner"></div>
+  <div style="font-size:13px;color:var(--muted);">Loading quiz...</div>
+</div>
+
+<div id="app" style="display:none;">
+  <header>
+    <div class="brand">SwoopForm</div>
+    <span style="font-size:12px;color:var(--muted);">Product Quiz</span>
+  </header>
+  <div class="main">
+    <div class="quiz-card">
+      <div class="quiz-hero">
+        <div class="quiz-tag" id="q-tag">Product Quiz</div>
+        <div class="quiz-title" id="q-title">Loading...</div>
+        <div class="quiz-desc" id="q-desc"></div>
+      </div>
+      <div class="quiz-body" id="quiz-body">
+        <div class="progress-wrap">
+          <div class="progress-top">
+            <span id="progress-label">Question 1 of 5</span>
+            <span id="progress-pct">0%</span>
+          </div>
+          <div class="progress-bg"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+        </div>
+        <div id="question-display"></div>
+        <div class="nav-btns">
+          <button class="btn btn-ghost" id="btn-prev" onclick="prevQ()" style="visibility:hidden;">← Back</button>
+          <button class="btn btn-primary" id="btn-next" onclick="nextQ()">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getFirestore,doc,getDoc,addDoc,updateDoc,collection,increment,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);
+const db=getFirestore(app);
+
+const params=new URLSearchParams(window.location.search);
+const PID=params.get('id');
+let pData=null;
+let questions=[];
+let currentQ=0;
+let answers={};
+let collectedTags=[];
+let userEmail='';
+
+async function init(){
+  if(!PID){showError('No quiz ID in URL.');return;}
+  try{
+    const snap=await getDoc(doc(db,'products',PID));
+    if(!snap.exists()){showError('Quiz not found.');return;}
+    pData=snap.data();
+    if(pData.accepting===false){showError('This quiz is closed.');return;}
+    questions=pData.shuffleQuestions?shuffle(pData.questions||[]):pData.questions||[];
+    render();
+    document.getElementById('loading-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+    renderQuestion(0);
+  }catch(e){console.error(e);showError('Failed to load.');}
+}
+
+function render(){
+  document.title=(pData.title||'Quiz')+' — SwoopForm';
+  document.getElementById('q-tag').textContent=pData.category||'Product Quiz';
+  document.getElementById('q-title').textContent=pData.title||'Find Your Match';
+  document.getElementById('q-desc').textContent=pData.description||'';
+}
+
+function updateProgress(idx){
+  const total=questions.length;
+  const pct=total?Math.round(((idx)/total)*100):0;
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('progress-pct').textContent=pct+'%';
+  document.getElementById('progress-label').textContent='Question '+(idx+1)+' of '+total;
+  document.getElementById('btn-prev').style.visibility=idx>0?'visible':'hidden';
+  const nextBtn=document.getElementById('btn-next');
+  nextBtn.textContent=idx===total-1?'See My Results →':'Next →';
+}
+
+function renderQuestion(idx){
+  currentQ=idx;
+  updateProgress(idx);
+  const q=questions[idx];
+  if(!q)return;
+  let html='<div class="q-card"><div class="q-counter">Question '+(idx+1)+' of '+questions.length+'</div><div class="q-text">'+q.text+'</div>';
+  const fid='ans_'+idx;
+  const sel=answers[idx];
+
+  if(q.type==='single'){
+    html+='<div class="options">'+(q.options||[]).map(function(o,j){const isSel=sel===o.text;return '<button class="opt-btn'+(isSel?' selected':'')+'" onclick="selectSingle('+idx+','+j+')"><span class="opt-circle">'+(isSel?'●':'')+'</span>'+o.text+'</button>';}).join('')+'</div>';
+  }else if(q.type==='multi'){
+    const selArr=Array.isArray(sel)?sel:[];
+    html+='<div class="options">'+(q.options||[]).map(function(o,j){const isSel=selArr.includes(o.text);return '<button class="opt-btn'+(isSel?' selected':'')+'" onclick="toggleMulti('+idx+','+j+')"><span class="opt-square">'+(isSel?'✓':'')+'</span>'+o.text+'</button>';}).join('')+'</div><div style="font-size:12px;color:var(--muted);margin-top:8px;">Select all that apply</div>';
+  }else if(q.type==='yesno'){
+    html+='<div class="yesno-group"><button class="yesno-btn'+(sel==='yes'?' yes-sel':'')+'" onclick="setYN('+idx+',\'yes\')">👍 Yes</button><button class="yesno-btn'+(sel==='no'?' no-sel':'')+'" onclick="setYN('+idx+',\'no\')">👎 No</button></div>';
+  }else if(q.type==='slider'){
+    const val=sel||5;
+    html+='<div class="slider-wrap"><input class="slider-inp" type="range" min="1" max="10" value="'+val+'" id="slider_'+idx+'" oninput="setSlider('+idx+',this.value)"><div class="slider-labels"><span>'+(q.minLabel||'Low')+'</span><span id="slider_val_'+idx+'">'+val+'</span><span>'+(q.maxLabel||'High')+'</span></div></div>';
+  }else{
+    html+='<input class="text-inp" id="text_'+idx+'" type="text" placeholder="Type your answer..." value="'+(sel||'')+'" oninput="answers['+idx+']=this.value">';
+  }
+  html+='</div>';
+  document.getElementById('question-display').innerHTML=html;
+}
+
+window.selectSingle=function(idx,j){
+  const q=questions[idx];
+  answers[idx]=q.options[j].text;
+  renderQuestion(idx);
+};
+
+window.toggleMulti=function(idx,j){
+  const q=questions[idx];
+  if(!answers[idx])answers[idx]=[];
+  const val=q.options[j].text;
+  const arr=answers[idx];
+  const i=arr.indexOf(val);
+  if(i===-1)arr.push(val);else arr.splice(i,1);
+  renderQuestion(idx);
+};
+
+window.setYN=function(idx,val){
+  answers[idx]=val;renderQuestion(idx);
+};
+
+window.setSlider=function(idx,val){
+  answers[idx]=val;
+  const lbl=document.getElementById('slider_val_'+idx);
+  if(lbl)lbl.textContent=val;
+};
+
+window.nextQ=function(){
+  if(currentQ<questions.length-1){
+    renderQuestion(currentQ+1);
+  }else{
+    if(pData.collectEmail){
+      showEmailCapture();
+    }else{
+      showResults();
+    }
+  }
+};
+
+window.prevQ=function(){
+  if(currentQ>0)renderQuestion(currentQ-1);
+};
+
+function showEmailCapture(){
+  document.getElementById('question-display').innerHTML='<div class="email-capture"><div style="font-size:48px;margin-bottom:16px;">🎁</div><h3>Almost there!</h3><p>Enter your email to see your personalized product recommendations.</p><input class="email-inp" type="email" id="email-inp" placeholder="your@email.com"><button class="btn btn-primary" onclick="submitEmail()" style="width:100%;padding:14px;">See My Results →</button><div style="font-size:11px;color:var(--muted2);margin-top:10px;">We\'ll never spam you.</div></div>';
+  document.getElementById('btn-prev').style.visibility='visible';
+  document.getElementById('btn-next').style.display='none';
+  document.getElementById('progress-label').textContent='Almost done!';
+}
+
+window.submitEmail=function(){
+  const inp=document.getElementById('email-inp');
+  if(!inp||!inp.value.trim()||!inp.value.includes('@')){alert('Please enter a valid email.');return;}
+  userEmail=inp.value.trim();
+  showResults();
+};
+
+async function showResults(){
+  // Collect all tags from answers
+  const tags=[];
+  questions.forEach(function(q,i){
+    const ans=answers[i];
+    if(q.type==='single'||q.type==='image'){
+      const opt=(q.options||[]).find(function(o){return o.text===ans;});
+      if(opt&&opt.tag)tags.push(opt.tag);
+    }else if(q.type==='multi'){
+      const arr=Array.isArray(ans)?ans:[];
+      arr.forEach(function(val){
+        const opt=(q.options||[]).find(function(o){return o.text===val;});
+        if(opt&&opt.tag)tags.push(opt.tag);
+      });
+    }else if(q.type==='yesno'){
+      if(ans==='yes'&&q.yesTag)tags.push(q.yesTag);
+      if(ans==='no'&&q.noTag)tags.push(q.noTag);
+    }
+  });
+  collectedTags=tags;
+
+  // Score products
+  const products=pData.products||[];
+  const scored=products.map(function(p){
+    const ptags=p.tags||[];
+    const matches=tags.filter(function(t){return ptags.includes(t);}).length;
+    const pct=ptags.length?Math.round((matches/Math.max(tags.length,ptags.length))*100):0;
+    return Object.assign({},p,{matches,pct});
+  }).sort(function(a,b){return b.matches-a.matches;});
+
+  // Save to Firebase
+  try{
+    await addDoc(collection(db,'products',PID,'responses'),{
+      formId:PID,formTitle:pData.title,answers,tags,
+      email:userEmail,topProduct:scored[0]?scored[0].name:'',
+      submittedAt:serverTimestamp()
+    });
+    await updateDoc(doc(db,'products',PID),{responseCount:increment(1)});
+  }catch(e){console.error(e);}
+
+  // Show results
+  document.getElementById('progress-wrap').style.display='none';
+  document.getElementById('btn-prev').style.display='none';
+  document.getElementById('btn-next').style.display='none';
+
+  const showTop=pData.showTop3?Math.min(3,scored.length):1;
+  const topResults=scored.slice(0,showTop);
+
+  let html='<div class="results-wrap"><div class="result-heading">'+(pData.resultHeading||'Your Perfect Match! 🎉')+'</div><div class="result-sub">'+(pData.resultSub||'Based on your answers, we recommend:')+'</div>';
+
+  topResults.forEach(function(p,i){
+    const isTop=i===0;
+    const link=p.link?(p.link.startsWith('http')?p.link:'https://'+p.link):'#';
+    html+='<div class="product-card'+(isTop?' top':'')+'">'
+      +'<div class="product-banner">'+(p.image?'<img src="'+p.image+'" onerror="this.style.display=\'none\'">':'<span>📦</span>')+(isTop?'<div class="top-badge">⭐ Best Match</div>':'')+'</div>'
+      +'<div class="product-body">'
+      +(pData.showPct?'<div class="product-match">'+p.pct+'% Match</div>':'')
+      +'<div class="product-name">'+p.name+'</div>'
+      +(p.price?'<div class="product-price">'+p.price+'</div>':'')
+      +(p.description?'<div class="product-desc">'+p.description+'</div>':'')
+      +(p.tags&&p.tags.length?'<div class="product-tags">'+p.tags.map(function(t){return '<span class="product-tag">'+t+'</span>';}).join('')+'</div>':'')
+      +(link!=='#'?'<a class="shop-btn" href="'+link+'" target="_blank">'+(pData.ctaText||'Shop Now →')+'</a>':'')
+      +'</div></div>';
+  });
+
+  html+='<button class="retry-btn" onclick="window.location.reload()">🔄 Retake Quiz</button></div>';
+  document.getElementById('question-display').innerHTML=html;
+}
+
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function showError(msg){document.getElementById('loading-screen').innerHTML='<div style="text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">😕</div><div style="font-size:18px;font-weight:700;margin-bottom:8px;">Oops!</div><div style="font-size:14px;color:#7a7a8c;">'+msg+'</div><a href="/dashboard/" style="display:inline-block;margin-top:20px;padding:10px 20px;background:#ec4899;color:#fff;border-radius:8px;text-decoration:none;font-size:13px;">Go to Dashboard</a></div>';}
+init();
+</script>
+</body>
+</html>
