@@ -228,7 +228,7 @@ window.nextQ=function(){
     if(pData.collectEmail){
       showEmailCapture();
     }else{
-      showResults().catch(function(e){console.error('Results error:',e);alert('Error showing results: '+e.message);});
+      window.showResults();
     }
   }
 };
@@ -284,9 +284,12 @@ window.showResults=async function(){
 
   // Save to Firebase
   try{
+    // Convert numeric answer keys to strings for Firestore
+    const answersStr={};
+    Object.keys(answers).forEach(function(k){answersStr['q'+k]=Array.isArray(answers[k])?answers[k].join(', '):String(answers[k]);});
     await addDoc(collection(db,'products',PID,'responses'),{
-      formId:PID,formTitle:pData.title,answers,tags,
-      email:userEmail,topProduct:scored[0]?scored[0].name:'',
+      formId:PID,formTitle:pData.title,answers:answersStr,tags,
+      email:userEmail||'',topProduct:scored[0]?scored[0].name:'',
       submittedAt:serverTimestamp()
     });
     await updateDoc(doc(db,'products',PID),{responseCount:increment(1)});
