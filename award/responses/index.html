@@ -38,36 +38,37 @@ nav{height:54px;background:rgba(245,244,240,0.95);backdrop-filter:blur(12px);bor
 .live-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;background:rgba(18,168,114,0.1);color:var(--green);font-size:12px;font-weight:600;margin-bottom:20px;}
 .live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-.leaderboard-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;}
-.lb-row{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;transition:all .2s;}
+.cat-leaderboard{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px;}
+.cat-lb-title{font-size:15px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.cat-lb-sub{font-size:12px;color:var(--muted);margin-bottom:16px;}
+.lb-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;}
 .lb-row.top{background:rgba(245,158,11,0.05);border-color:var(--accent);}
-.lb-rank{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0;}
-.lb-name{font-size:15px;font-weight:700;flex:1;}
+.lb-rank{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;}
+.lb-name{font-size:14px;font-weight:700;flex:1;}
 .lb-bar-wrap{flex:2;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;}
 .lb-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,#f59e0b,#ef4444);transition:width .6s;}
-.lb-score{font-size:18px;font-weight:800;font-family:var(--mono);color:var(--accent);min-width:60px;text-align:right;}
-.lb-count{font-size:11px;color:var(--muted);min-width:50px;text-align:right;}
-.responses-table{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+.lb-count{font-size:11px;color:var(--muted);min-width:40px;text-align:right;}
+.lb-score{font-size:16px;font-weight:800;font-family:var(--mono);color:var(--accent);min-width:60px;text-align:right;}
 table{width:100%;border-collapse:collapse;}
 thead tr{background:var(--surface2);border-bottom:1px solid var(--border);}
 th{padding:10px 16px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:left;}
 tbody tr{border-bottom:1px solid var(--border);cursor:pointer;}
 tbody tr:hover{background:#faf9f7;}
-td{padding:12px 16px;font-size:12px;}
-.nom-pills{display:flex;flex-wrap:wrap;gap:4px;}
-.nom-pill{padding:3px 8px;border-radius:10px;background:rgba(245,158,11,0.1);color:#92400e;font-size:11px;font-weight:500;}
+td{padding:12px 16px;font-size:12px;vertical-align:middle;}
+.nom-pill{display:inline-block;padding:2px 8px;border-radius:10px;background:rgba(245,158,11,0.1);color:#92400e;font-size:11px;margin:2px;}
 .drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:150;display:none;}
 .drawer-overlay.open{display:block;}
-.drawer{position:fixed;top:0;right:-540px;width:540px;height:100vh;background:var(--surface);border-left:1px solid var(--border);z-index:160;transition:right .3s;display:flex;flex-direction:column;overflow:hidden;}
+.drawer{position:fixed;top:0;right:-580px;width:580px;height:100vh;background:var(--surface);border-left:1px solid var(--border);z-index:160;transition:right .3s;display:flex;flex-direction:column;overflow:hidden;}
 .drawer.open{right:0;}
 .drawer-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
 .drawer-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;}
 .drawer-body{flex:1;overflow-y:auto;padding:20px 24px;}
-.rank-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:10px;margin-bottom:8px;}
-.rank-emoji{font-size:20px;width:32px;text-align:center;}
-.rank-info{flex:1;}
-.rank-nom{font-size:14px;font-weight:600;}
-.rank-pts{font-size:12px;color:var(--muted);}
+.drawer-cat{margin-bottom:20px;}
+.drawer-cat-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.drawer-nom{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg);border-radius:8px;margin-bottom:6px;}
+.drawer-nom-rank{width:24px;height:24px;border-radius:6px;background:var(--accent);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.drawer-nom-name{font-size:13px;font-weight:600;flex:1;}
+.drawer-nom-pts{font-size:11px;color:var(--muted);}
 .loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;}
 .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -100,8 +101,10 @@ td{padding:12px 16px;font-size:12px;}
 <div class="layout">
   <div class="sidebar">
     <div class="sidebar-label">Views</div>
-    <button class="sidebar-item active" id="sbar-lb" onclick="showView('leaderboard',this)"><span>🏆</span> Leaderboard</button>
-    <button class="sidebar-item" id="sbar-resp" onclick="showView('responses',this)"><span>📋</span> All Responses</button>
+    <button class="sidebar-item active" id="sbar-lb" onclick="showView('lb',this)"><span>🏆</span> Leaderboards</button>
+    <button class="sidebar-item" id="sbar-resp" onclick="showView('resp',this)"><span>📋</span> All Submissions</button>
+    <div class="sidebar-label" style="margin-top:8px;">Categories</div>
+    <div id="cat-sidebar"></div>
     <div class="sidebar-label" style="margin-top:8px;">Actions</div>
     <button class="sidebar-item" onclick="exportCSV()"><span>⬇</span> Export CSV</button>
     <button class="sidebar-item" onclick="window.location.href='/award/create/?id='+AID"><span>✏️</span> Edit Award</button>
@@ -115,34 +118,30 @@ td{padding:12px 16px;font-size:12px;}
         <div class="topbar-title" id="top-title">Loading...</div>
         <div class="topbar-meta" id="top-meta"></div>
       </div>
-      <div class="topbar-right">
-        <span id="accepting-status"></span>
-      </div>
+      <div class="topbar-right"><span id="accepting-status"></span></div>
     </div>
 
     <div class="stats-row">
-      <div class="stat-card"><span style="font-size:18px;">📝</span><div><div class="stat-val" id="stat-responses" style="color:var(--accent);">0</div><div class="stat-label">Submissions</div></div></div>
-      <div class="stat-card"><span style="font-size:18px;">🏆</span><div><div class="stat-val" id="stat-nominations" style="color:var(--green);">0</div><div class="stat-label">Unique Nominees</div></div></div>
-      <div class="stat-card"><span style="font-size:18px;">🥇</span><div><div class="stat-val" id="stat-winner" style="color:var(--accent);font-size:13px;">—</div><div class="stat-label">Current Leader</div></div></div>
-      <div class="stat-card"><span style="font-size:18px;">📅</span><div><div class="stat-val" id="stat-today" style="color:var(--purple);">0</div><div class="stat-label">Today</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">📝</span><div><div class="stat-val" id="stat-submissions" style="color:var(--accent);">0</div><div class="stat-label">Submissions</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">📂</span><div><div class="stat-val" id="stat-categories" style="color:var(--green);">0</div><div class="stat-label">Categories</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">🏆</span><div><div class="stat-val" id="stat-nominees" style="color:var(--purple);">0</div><div class="stat-label">Total Nominees</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">📅</span><div><div class="stat-val" id="stat-today" style="color:var(--muted);">0</div><div class="stat-label">Today</div></div></div>
     </div>
 
     <!-- LEADERBOARD VIEW -->
     <div class="content-area" id="lb-view">
-      <div class="live-badge"><span class="live-dot"></span>Live Leaderboard</div>
-      <div class="leaderboard-card">
-        <div id="lb-wrap"></div>
-      </div>
+      <div class="live-badge"><span class="live-dot"></span>Live Results</div>
+      <div id="lb-wrap"></div>
     </div>
 
     <!-- RESPONSES VIEW -->
     <div class="content-area" id="resp-view" style="display:none;">
-      <div class="responses-table">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
         <table id="resp-table" style="display:none;">
-          <thead><tr><th>#</th><th>Name</th><th>Nominations</th><th>Submitted</th><th></th></tr></thead>
+          <thead><tr><th>#</th><th>Name / Email</th><th>Sample Nominations</th><th>Submitted</th><th></th></tr></thead>
           <tbody id="resp-body"></tbody>
         </table>
-        <div id="empty-state" style="display:none;text-align:center;padding:60px 40px;">
+        <div id="empty-state" style="display:none;text-align:center;padding:60px;">
           <div style="font-size:48px;margin-bottom:16px;opacity:0.4;">📭</div>
           <div style="font-size:16px;font-weight:600;">No submissions yet</div>
         </div>
@@ -155,7 +154,7 @@ td{padding:12px 16px;font-size:12px;}
 <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
 <div class="drawer" id="drawer">
   <div class="drawer-header">
-    <div style="font-size:14px;font-weight:700;" id="d-name">Response</div>
+    <div><div style="font-size:15px;font-weight:700;" id="d-name"></div><div style="font-size:11px;color:var(--muted);" id="d-email"></div></div>
     <button class="drawer-close" onclick="closeDrawer()">×</button>
   </div>
   <div class="drawer-body" id="drawer-body"></div>
@@ -190,22 +189,17 @@ async function loadData(){
     if(!snap.exists()){showFatal('Award not found.');return;}
     aData=snap.data();
     renderHeader(aData);
+    renderCatSidebar(aData.categories||[]);
     const rSnap=await getDocs(collection(db,'awards',AID,'responses'));
     allResponses=rSnap.docs.map(function(d){return Object.assign({_id:d.id},d.data());});
     allResponses.sort(function(a,b){return(b.submittedAt?.seconds||0)-(a.submittedAt?.seconds||0);});
     document.getElementById('loading-screen').style.display='none';
     document.getElementById('main-wrap').style.display='block';
     updateStats(aData);
-    renderLeaderboard(aData.scores||{});
+    renderLeaderboards(aData.scores||{},aData.categories||[]);
     renderResponsesTable();
-    // Live updates
     onSnapshot(doc(db,'awards',AID),function(snap){
-      if(snap.exists()){
-        aData=snap.data();
-        renderHeader(aData);
-        updateStats(aData);
-        renderLeaderboard(aData.scores||{});
-      }
+      if(snap.exists()){aData=snap.data();renderHeader(aData);updateStats(aData);renderLeaderboards(aData.scores||{},aData.categories||[]);}
     });
   }catch(e){console.error(e);showFatal('Failed to load.');}
 }
@@ -214,41 +208,58 @@ function renderHeader(d){
   const t=d.title||'Award';
   document.getElementById('nav-title').textContent=t;
   document.getElementById('top-title').textContent=t;
-  document.getElementById('top-meta').textContent=[d.category,d.deadline?'Closes '+d.deadline:''].filter(Boolean).join(' · ');
+  document.getElementById('top-meta').textContent=[d.edition,d.organizer,d.deadline?'Closes '+d.deadline:''].filter(Boolean).join(' · ');
   document.title=t+' — Results';
   const acc=d.accepting!==false;
   document.getElementById('accepting-status').innerHTML=acc?'<span style="color:var(--green);font-size:12px;">● Accepting</span>':'<span style="color:var(--red);font-size:12px;">● Closed</span>';
 }
 
+function renderCatSidebar(categories){
+  document.getElementById('cat-sidebar').innerHTML=categories.map(function(cat,i){
+    return '<button class="sidebar-item" onclick="scrollToCat(\'cat_lb_'+cat.id+'\')" style="font-size:11px;"><span>📂</span>'+cat.name.substring(0,18)+'</button>';
+  }).join('');
+}
+
+window.scrollToCat=function(id){
+  const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+};
+
 function updateStats(d){
+  const cats=d.categories||[];
   const scores=d.scores||{};
-  const nominations=Object.keys(scores).length;
+  let totalNominees=0;
+  cats.forEach(function(cat){totalNominees+=Object.keys(scores[cat.id]||{}).length;});
   const today=new Date().toDateString();
   const todayCount=allResponses.filter(function(r){return r.submittedAt?.seconds&&new Date(r.submittedAt.seconds*1000).toDateString()===today;}).length;
-  const sorted=Object.entries(scores).sort(function(a,b){return b[1]-a[1];});
-  document.getElementById('stat-responses').textContent=d.responseCount||allResponses.length;
-  document.getElementById('stat-nominations').textContent=nominations;
-  document.getElementById('stat-winner').textContent=sorted[0]?sorted[0][0].substring(0,14):'—';
+  document.getElementById('stat-submissions').textContent=d.responseCount||allResponses.length;
+  document.getElementById('stat-categories').textContent=cats.length;
+  document.getElementById('stat-nominees').textContent=totalNominees;
   document.getElementById('stat-today').textContent=todayCount;
 }
 
-function renderLeaderboard(scores){
-  const entries=Object.entries(scores).sort(function(a,b){return b[1]-a[1];});
+function renderLeaderboards(scores,categories){
   const wrap=document.getElementById('lb-wrap');
-  if(entries.length===0){wrap.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted);">No nominations yet. Share the award link!</div>';return;}
-  const maxScore=entries[0][1]||1;
   const rankEmojis=['🥇','🥈','🥉'];
   const rankColors=['#f59e0b','#9ca3af','#b45309'];
-  wrap.innerHTML=entries.map(function(e,i){
-    const pct=Math.round(e[1]/maxScore*100);
-    // Count how many times nominated
-    const nominationCount=allResponses.filter(function(r){return(r.nominations||[]).some(function(n){return n.nomination===e[0];});}).length;
-    return '<div class="lb-row'+(i===0?' top':'')+'">'
-      +'<div class="lb-rank" style="background:'+(rankColors[i]||'var(--surface2)')+';color:'+(i<3?'#fff':'var(--muted)')+';">'+(rankEmojis[i]||i+1)+'</div>'
-      +'<div class="lb-name">'+e[0]+'</div>'
-      +'<div class="lb-bar-wrap"><div class="lb-bar" style="width:'+pct+'%"></div></div>'
-      +'<div class="lb-count">'+nominationCount+'x</div>'
-      +'<div class="lb-score">'+e[1]+' pts</div>'
+  wrap.innerHTML=categories.map(function(cat){
+    const catScores=scores[cat.id]||{};
+    const entries=Object.entries(catScores).sort(function(a,b){return b[1]-a[1];});
+    const maxScore=entries.length?entries[0][1]:1;
+    return '<div class="cat-leaderboard" id="cat_lb_'+cat.id+'">'
+      +'<div class="cat-lb-title">📂 '+cat.name+'</div>'
+      +'<div class="cat-lb-sub">'+entries.length+' nominee'+(entries.length!==1?'s':'')+' · '+(cat.ranks||[]).length+' rank slots</div>'
+      +(entries.length===0?'<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">No nominations yet</div>'
+      :entries.map(function(e,i){
+        const pct=Math.round(e[1]/maxScore*100);
+        const nominationCount=allResponses.filter(function(r){return(r.categories||[]).some(function(c){return c.categoryId===cat.id&&c.nominations.some(function(n){return n.nomination===e[0];});});}).length;
+        return '<div class="lb-row'+(i===0?' top':'')+'">'
+          +'<div class="lb-rank" style="background:'+(rankColors[i]||'var(--surface2)')+';color:'+(i<3?'#fff':'var(--muted)')+';">'+(rankEmojis[i]||i+1)+'</div>'
+          +'<div class="lb-name">'+e[0]+'</div>'
+          +'<div class="lb-bar-wrap"><div class="lb-bar" style="width:'+pct+'%"></div></div>'
+          +'<div class="lb-count">'+nominationCount+'x</div>'
+          +'<div class="lb-score">'+e[1]+' pts</div>'
+          +'</div>';
+      }).join(''))
       +'</div>';
   }).join('');
 }
@@ -262,11 +273,13 @@ function renderResponsesTable(){
   tbody.innerHTML=allResponses.map(function(r,i){
     const name=r.name||'Anonymous';
     const date=r.submittedAt?.seconds?new Date(r.submittedAt.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—';
-    const noms=(r.nominations||[]).filter(function(n){return n.nomination;}).map(function(n){return '<span class="nom-pill">'+n.rank+'. '+n.nomination+'</span>';}).join('');
+    const sampleNoms=(r.categories||[]).slice(0,2).map(function(cat){
+      return (cat.nominations||[]).filter(function(n){return n.nomination;}).slice(0,2).map(function(n){return '<span class="nom-pill">'+n.nomination+'</span>';}).join('');
+    }).join('');
     return '<tr onclick="openDrawer(\''+r._id+'\')">'
       +'<td style="color:var(--muted);font-family:var(--mono);font-size:11px;">#'+(i+1)+'</td>'
-      +'<td style="font-weight:600;">'+name+'<div style="font-size:11px;color:var(--muted);">'+(r.email||'')+'</div></td>'
-      +'<td><div class="nom-pills">'+noms+'</div></td>'
+      +'<td><div style="font-weight:600;">'+name+'</div><div style="font-size:11px;color:var(--muted);">'+(r.email||'')+'</div></td>'
+      +'<td>'+sampleNoms+'</td>'
       +'<td style="color:var(--muted);font-size:11px;">'+date+'</td>'
       +'<td><button class="btn btn-ghost" onclick="event.stopPropagation();openDrawer(\''+r._id+'\')">View</button></td>'
       +'</tr>';
@@ -277,13 +290,21 @@ window.openDrawer=function(id){
   const r=allResponses.find(function(x){return x._id===id;});
   if(!r)return;
   document.getElementById('d-name').textContent=r.name||'Anonymous';
-  const date=r.submittedAt?.seconds?new Date(r.submittedAt.seconds*1000).toLocaleString('en-IN'):'—';
+  document.getElementById('d-email').textContent=r.email||'';
   const rankEmojis={1:'🥇',2:'🥈',3:'🥉'};
   document.getElementById('drawer-body').innerHTML=
-    '<div style="font-size:12px;color:var(--muted);margin-bottom:16px;">Submitted: '+date+(r.email?' · '+r.email:'')+'</div>'
-    +'<div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">NOMINATIONS</div>'
-    +(r.nominations||[]).map(function(n){
-      return '<div class="rank-item"><div class="rank-emoji">'+(rankEmojis[n.rank]||'#'+n.rank)+'</div><div class="rank-info"><div class="rank-nom">'+(n.nomination||'—')+'</div><div class="rank-pts">'+n.label+' · '+n.points+' pts</div></div></div>';
+    '<div style="font-size:12px;color:var(--muted);margin-bottom:20px;">Submitted: '+(r.submittedAt?.seconds?new Date(r.submittedAt.seconds*1000).toLocaleString('en-IN'):'—')+'</div>'
+    +(r.categories||[]).map(function(cat){
+      return '<div class="drawer-cat">'
+        +'<div class="drawer-cat-title">📂 '+cat.categoryName+'</div>'
+        +(cat.nominations||[]).map(function(n){
+          return n.nomination?'<div class="drawer-nom">'
+            +'<div class="drawer-nom-rank">'+(rankEmojis[n.rank]||n.rank)+'</div>'
+            +'<div class="drawer-nom-name">'+n.nomination+'</div>'
+            +'<div class="drawer-nom-pts">'+n.points+' pts</div>'
+            +'</div>':'';
+        }).join('')
+        +'</div>';
     }).join('');
   document.getElementById('drawer').classList.add('open');
   document.getElementById('drawer-overlay').classList.add('open');
@@ -297,8 +318,8 @@ window.closeDrawer=function(){
 window.showView=function(view,el){
   document.querySelectorAll('.sidebar-item').forEach(function(i){i.classList.remove('active');});
   if(el)el.classList.add('active');
-  document.getElementById('lb-view').style.display=view==='leaderboard'?'block':'none';
-  document.getElementById('resp-view').style.display=view==='responses'?'block':'none';
+  document.getElementById('lb-view').style.display=view==='lb'?'block':'none';
+  document.getElementById('resp-view').style.display=view==='resp'?'block':'none';
 };
 
 window.toggleAccepting=async function(){
@@ -310,12 +331,19 @@ window.toggleAccepting=async function(){
 };
 
 window.exportCSV=function(){
-  const ranks=aData.ranks||[];
-  const headers=['Name','Email','Submitted',...ranks.map(function(r){return r.label||'Rank '+r.rank;})];
+  const categories=aData.categories||[];
+  const rankHeaders=[];
+  categories.forEach(function(cat){(cat.ranks||[]).forEach(function(r){rankHeaders.push(cat.name+' - '+r.label);});});
+  const headers=['Name','Email','Submitted',...rankHeaders];
   const rows=[headers];
   allResponses.forEach(function(r){
     const date=r.submittedAt?.seconds?new Date(r.submittedAt.seconds*1000).toLocaleDateString():'';
-    rows.push([r.name||'',r.email||'',date,...ranks.map(function(rank,i){return(r.nominations||[])[i]?.nomination||'';})]);
+    const vals=[];
+    categories.forEach(function(cat){
+      const catData=(r.categories||[]).find(function(c){return c.categoryId===cat.id;});
+      (cat.ranks||[]).forEach(function(rank,ri){vals.push((catData?.nominations||[])[ri]?.nomination||'');});
+    });
+    rows.push([r.name||'',r.email||'',date,...vals]);
   });
   const csv=rows.map(function(r){return r.map(function(v){return '"'+String(v||'').replace(/"/g,'""')+'"';}).join(',');}).join('\n');
   const blob=new Blob([csv],{type:'text/csv'});

@@ -18,11 +18,12 @@ nav{height:56px;background:var(--surface);border-bottom:1px solid var(--border);
 .btn-ghost:hover{border-color:var(--muted2);color:var(--text);}
 .btn-primary{background:var(--accent);color:#fff;}
 .btn-primary:hover{background:#d97706;}
-.main{max-width:680px;margin:0 auto;padding:36px 20px;}
+.main{max-width:780px;margin:0 auto;padding:36px 20px;}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:20px;overflow:hidden;}
 .card-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
 .card-icon{font-size:16px;}
 .card-title{font-size:14px;font-weight:600;}
+.card-subtitle{font-size:12px;color:var(--muted);margin-left:auto;}
 .card-body{padding:20px;}
 .field-row{margin-bottom:16px;}
 .field-label{font-size:12px;font-weight:500;color:var(--muted);margin-bottom:6px;}
@@ -30,7 +31,7 @@ nav{height:56px;background:var(--surface);border-bottom:1px solid var(--border);
 .field-input{width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font);font-size:13px;outline:none;transition:border-color .2s;}
 .field-input:focus{border-color:var(--accent);}
 .field-input::placeholder{color:var(--muted2);}
-textarea.field-input{resize:vertical;min-height:80px;line-height:1.6;}
+textarea.field-input{resize:vertical;min-height:70px;line-height:1.6;}
 select.field-input{cursor:pointer;}
 .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);}
@@ -41,15 +42,31 @@ select.field-input{cursor:pointer;}
 .toggle.on{background:var(--accent2);}
 .toggle::after{content:'';width:16px;height:16px;background:white;border-radius:50%;position:absolute;top:2px;left:2px;transition:transform .2s;}
 .toggle.on::after{transform:translateX(18px);}
-.rank-row{display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;}
-.rank-badge{width:32px;height:32px;border-radius:8px;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.rank-label{flex:1;font-size:13px;font-weight:500;}
-.rank-pts{width:80px;padding:6px 10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;text-align:center;}
+
+/* CATEGORY CARDS */
+.category-card{background:var(--bg);border:2px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px;position:relative;}
+.category-card:hover{border-color:var(--accent);}
+.category-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.cat-num{width:32px;height:32px;border-radius:10px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cat-name-input{flex:1;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font);font-size:14px;font-weight:600;outline:none;}
+.cat-name-input:focus{border-color:var(--accent);}
+.cat-remove{background:none;border:none;color:var(--muted2);cursor:pointer;font-size:18px;padding:4px;border-radius:6px;}
+.cat-remove:hover{color:var(--danger);}
+.ranks-wrap{border-top:1px solid var(--border);padding-top:14px;margin-top:4px;}
+.ranks-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.rank-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.rank-badge{width:28px;height:28px;border-radius:6px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.rank-inp{flex:1;padding:7px 10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--font);font-size:12px;outline:none;}
+.rank-inp:focus{border-color:var(--accent);}
+.rank-pts{width:70px;padding:7px 10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);font-size:12px;outline:none;text-align:center;}
 .rank-pts:focus{border-color:var(--accent);}
-.add-rank-btn{width:100%;padding:11px;background:none;border:2px dashed var(--border);border-radius:10px;color:var(--muted);font-family:var(--font);font-size:13px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;}
+.rank-remove{background:none;border:none;color:var(--muted2);cursor:pointer;font-size:14px;padding:4px;}
+.rank-remove:hover{color:var(--danger);}
+.add-rank-btn{background:none;border:1px dashed var(--border);border-radius:6px;padding:6px 12px;color:var(--muted);font-family:var(--font);font-size:12px;cursor:pointer;transition:all .15s;margin-top:4px;}
 .add-rank-btn:hover{border-color:var(--accent);color:var(--accent);}
-.remove-rank{background:none;border:none;color:var(--muted2);cursor:pointer;font-size:16px;padding:4px;border-radius:4px;}
-.remove-rank:hover{color:var(--danger);}
+.add-cat-btn{width:100%;padding:14px;background:none;border:2px dashed var(--border);border-radius:14px;color:var(--muted);font-family:var(--font);font-size:13px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.add-cat-btn:hover{border-color:var(--accent);color:var(--accent);}
+
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:200;}
 .modal-overlay.open{display:flex;}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:460px;padding:24px;text-align:center;}
@@ -64,7 +81,7 @@ select.field-input{cursor:pointer;}
   <div class="nav-sep"></div>
   <a href="/dashboard/" style="text-decoration:none;color:var(--muted);font-size:13px;">← Dashboard</a>
   <div class="nav-sep"></div>
-  <div style="font-size:13px;color:var(--muted);">Award / Nomination Builder</div>
+  <div style="font-size:13px;color:var(--muted);">Award Builder</div>
   <div class="nav-right">
     <button class="btn btn-ghost" onclick="window.saveDraft()">Save Draft</button>
     <button class="btn btn-primary" onclick="window.publish()">Publish →</button>
@@ -76,44 +93,41 @@ select.field-input{cursor:pointer;}
   <div class="card">
     <div class="card-header"><span class="card-icon">🏆</span><span class="card-title">Award Info</span></div>
     <div class="card-body">
-      <div class="field-row"><div class="field-label">Title <span class="req">*</span></div><input class="field-input" id="a-title" placeholder="e.g. Best Companies to Work For 2026"></div>
-      <div class="field-row"><div class="field-label">Question / Prompt <span class="req">*</span></div><textarea class="field-input" id="a-question" rows="2" placeholder="e.g. Rank the top 5 companies you'd love to work for"></textarea></div>
-      <div class="field-row"><div class="field-label">Description</div><textarea class="field-input" id="a-desc" rows="2" placeholder="Give respondents some context about this award..."></textarea></div>
+      <div class="field-row"><div class="field-label">Award Title <span class="req">*</span></div><input class="field-input" id="a-title" placeholder="e.g. India's Best Companies 2026"></div>
+      <div class="field-row"><div class="field-label">Description</div><textarea class="field-input" id="a-desc" rows="2" placeholder="Tell nominators what this award is about..."></textarea></div>
       <div class="field-grid">
-        <div class="field-row"><div class="field-label">Category</div>
-          <select class="field-input" id="a-category">
-            <option>Awards</option><option>Best Of</option><option>Rankings</option>
-            <option>Nominations</option><option>Recommendations</option><option>Other</option>
-          </select>
-        </div>
-        <div class="field-row"><div class="field-label">Close Date</div>
-          <input class="field-input" id="a-deadline" type="date">
-        </div>
+        <div class="field-row"><div class="field-label">Edition / Year</div><input class="field-input" id="a-edition" placeholder="e.g. 2026 Edition"></div>
+        <div class="field-row"><div class="field-label">Organizer</div><input class="field-input" id="a-organizer" placeholder="e.g. SwoopForm Awards"></div>
       </div>
-      <div class="field-row"><div class="field-label">Placeholder text for nomination fields</div>
-        <input class="field-input" id="a-placeholder" placeholder="e.g. Type a company name..." value="Type your nomination...">
+      <div class="field-grid">
+        <div class="field-row"><div class="field-label">Close Date</div><input class="field-input" id="a-deadline" type="date"></div>
+        <div class="field-row"><div class="field-label">Nomination placeholder text</div><input class="field-input" id="a-placeholder" value="Type a name..." placeholder="Type a name..."></div>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-header"><span class="card-icon">🥇</span><span class="card-title">Ranking Slots & Points</span></div>
+    <div class="card-header">
+      <span class="card-icon">📂</span>
+      <span class="card-title">Categories & Ranking Slots</span>
+      <span class="card-subtitle" id="cat-count-label">0 categories</span>
+    </div>
     <div class="card-body">
-      <div style="padding:10px 12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:8px;font-size:12px;color:#92400e;margin-bottom:16px;">
-        💡 Each rank gets a score. Rank 1 = highest points. Total scores across all submissions determine the winner.
+      <div style="padding:10px 14px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:8px;font-size:12px;color:#92400e;margin-bottom:16px;">
+        💡 Add one category per award track. Each category has its own ranking slots and points. All categories appear in one form submission.
       </div>
-      <div id="ranks-container"></div>
-      <button class="add-rank-btn" onclick="window.addRank()">+ Add Rank Slot</button>
+      <div id="categories-container"></div>
+      <button class="add-cat-btn" onclick="window.addCategory()">+ Add Category</button>
     </div>
   </div>
 
   <div class="card">
     <div class="card-header"><span class="card-icon">⚙️</span><span class="card-title">Settings</span></div>
     <div class="card-body">
-      <div class="toggle-row"><div><div class="toggle-name">🔒 Anonymous submissions</div><div class="toggle-desc">Don't collect name or email</div></div><div class="toggle" id="tgl-anon" onclick="this.classList.toggle('on')"></div></div>
-      <div class="toggle-row"><div><div class="toggle-name">📊 Show live leaderboard</div><div class="toggle-desc">Respondents see current standings</div></div><div class="toggle on" id="tgl-live" onclick="this.classList.toggle('on')"></div></div>
-      <div class="toggle-row"><div><div class="toggle-name">🔁 Allow duplicate nominations</div><div class="toggle-desc">Same name can appear in multiple slots</div></div><div class="toggle" id="tgl-dupes" onclick="this.classList.toggle('on')"></div></div>
-      <div class="toggle-row"><div><div class="toggle-name">✅ All slots required</div><div class="toggle-desc">Respondents must fill every slot</div></div><div class="toggle" id="tgl-required" onclick="this.classList.toggle('on')"></div></div>
+      <div class="toggle-row"><div><div class="toggle-name">👤 Collect nominator details</div><div class="toggle-desc">Ask for name and email</div></div><div class="toggle on" id="tgl-collect" onclick="this.classList.toggle('on')"></div></div>
+      <div class="toggle-row"><div><div class="toggle-name">📊 Show live leaderboard</div><div class="toggle-desc">Nominators see current standings after submitting</div></div><div class="toggle on" id="tgl-live" onclick="this.classList.toggle('on')"></div></div>
+      <div class="toggle-row"><div><div class="toggle-name">🔁 Allow duplicate nominations</div><div class="toggle-desc">Same name can appear in multiple slots within a category</div></div><div class="toggle" id="tgl-dupes" onclick="this.classList.toggle('on')"></div></div>
+      <div class="toggle-row"><div><div class="toggle-name">✅ All slots required</div><div class="toggle-desc">Every rank slot must be filled</div></div><div class="toggle" id="tgl-required" onclick="this.classList.toggle('on')"></div></div>
       <div class="toggle-row"><div><div class="toggle-name">🔓 Accepting nominations</div><div class="toggle-desc">Turn off to close</div></div><div class="toggle on" id="tgl-accepting" onclick="this.classList.toggle('on')"></div></div>
     </div>
   </div>
@@ -161,7 +175,7 @@ const db=getFirestore(app);
 
 let currentUser=null;
 let AID=null;
-let rankCount=0;
+let catCount=0;
 
 onAuthStateChanged(auth,async function(u){
   if(!u){window.location.href='/login/';return;}
@@ -170,9 +184,8 @@ onAuthStateChanged(auth,async function(u){
   AID=params.get('id');
   if(AID)await loadExisting(AID);
   else{
-    // Default 5 ranks
-    const defaultPts=[10,8,6,4,2];
-    for(let i=0;i<5;i++)window.addRank(i+1,defaultPts[i]);
+    window.addCategory('Best Companies in BFSI');
+    window.addCategory('Best Companies in Consulting');
   }
 });
 
@@ -182,72 +195,111 @@ async function loadExisting(id){
     if(!snap.exists())return;
     const d=snap.data();
     const set=function(eid,val){const el=document.getElementById(eid);if(el&&val!==undefined&&val!==null)el.value=val;};
-    set('a-title',d.title);set('a-question',d.question);set('a-desc',d.description);
-    set('a-category',d.category);set('a-deadline',d.deadline);set('a-placeholder',d.placeholder);
+    set('a-title',d.title);set('a-desc',d.description);set('a-edition',d.edition);
+    set('a-organizer',d.organizer);set('a-deadline',d.deadline);set('a-placeholder',d.placeholder);
     set('ty-heading',d.thankYouHeading);set('ty-message',d.thankYouMessage);
     const tog=function(eid,val){if(val===undefined)return;const el=document.getElementById(eid);if(el){val?el.classList.add('on'):el.classList.remove('on');}};
-    tog('tgl-anon',d.anonymous);tog('tgl-live',d.showLive);tog('tgl-dupes',d.allowDupes);
-    tog('tgl-required',d.allRequired);tog('tgl-accepting',d.accepting);
-    if(d.ranks)d.ranks.forEach(function(r){window.addRank(r.rank,r.points,r.label);});
+    tog('tgl-collect',d.collectInfo);tog('tgl-live',d.showLive);
+    tog('tgl-dupes',d.allowDupes);tog('tgl-required',d.allRequired);tog('tgl-accepting',d.accepting);
+    if(d.categories)d.categories.forEach(function(c){window.addCategory(c.name,c.ranks);});
     toast('Loaded for editing ✏️');
   }catch(e){console.error(e);}
 }
 
-window.addRank=function(rank,points,label){
-  rankCount++;
-  const id='r_'+rankCount;
-  const rankNum=rank||rankCount;
-  const pts=points||Math.max(1,10-((rankNum-1)*2));
-  const rankEmojis={1:'🥇',2:'🥈',3:'🥉'};
-  const rankLabel=label||('Rank #'+rankNum);
+window.addCategory=function(name,ranks){
+  catCount++;
+  const cid='cat_'+catCount;
   const div=document.createElement('div');
-  div.className='rank-row';div.id=id;
-  div.innerHTML='<div class="rank-badge">'+(rankEmojis[rankNum]||'#'+rankNum)+'</div>'
-    +'<input class="field-input" id="rl_'+id+'" value="'+rankLabel+'" placeholder="Rank label" style="flex:1;font-size:12px;padding:7px 10px;">'
-    +'<div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">'
-    +'<span style="font-size:12px;color:var(--muted);">pts:</span>'
-    +'<input class="rank-pts" id="rp_'+id+'" type="number" value="'+pts+'" min="0">'
+  div.className='category-card';div.id=cid;
+  const defaultRanks=ranks||[{label:'Rank 1',points:10},{label:'Rank 2',points:8},{label:'Rank 3',points:6},{label:'Rank 4',points:4},{label:'Rank 5',points:2}];
+  div.innerHTML='<div class="category-header">'
+    +'<div class="cat-num">'+catCount+'</div>'
+    +'<input class="cat-name-input" id="cn_'+cid+'" value="'+(name||'')+'" placeholder="Category name e.g. Best BFSI Companies">'
+    +'<button class="cat-remove" onclick="window.removeCat(\''+cid+'\')">×</button>'
     +'</div>'
-    +'<button class="remove-rank" onclick="window.removeRank(\''+id+'\')">×</button>';
-  document.getElementById('ranks-container').appendChild(div);
+    +'<div class="ranks-wrap">'
+    +'<div class="ranks-label">Ranking Slots & Points</div>'
+    +'<div id="ranks_'+cid+'">'+defaultRanks.map(function(r,i){return buildRankRow(cid,i,r.label,r.points);}).join('')+'</div>'
+    +'<button class="add-rank-btn" onclick="window.addRank(\''+cid+'\')">+ Add Rank Slot</button>'
+    +'</div>';
+  document.getElementById('categories-container').appendChild(div);
+  updateCatCount();
 };
 
-window.removeRank=function(id){
-  const rows=document.querySelectorAll('.rank-row');
+function buildRankRow(cid,idx,label,points){
+  const rankEmojis={0:'🥇',1:'🥈',2:'🥉'};
+  return '<div class="rank-row" id="rr_'+cid+'_'+idx+'">'
+    +'<div class="rank-badge">'+(rankEmojis[idx]||idx+1)+'</div>'
+    +'<input class="rank-inp" id="rl_'+cid+'_'+idx+'" value="'+(label||'Rank '+(idx+1))+'" placeholder="Rank label">'
+    +'<span style="font-size:11px;color:var(--muted);flex-shrink:0;">pts:</span>'
+    +'<input class="rank-pts" id="rp_'+cid+'_'+idx+'" type="number" value="'+(points||1)+'" min="0">'
+    +'<button class="rank-remove" onclick="window.removeRank(\''+cid+'\','+idx+')">×</button>'
+    +'</div>';
+}
+
+window.addRank=function(cid){
+  const container=document.getElementById('ranks_'+cid);
+  const idx=container.querySelectorAll('.rank-row').length;
+  container.insertAdjacentHTML('beforeend',buildRankRow(cid,idx,'Rank '+(idx+1),Math.max(1,10-(idx*2))));
+};
+
+window.removeRank=function(cid,idx){
+  const container=document.getElementById('ranks_'+cid);
+  const rows=container.querySelectorAll('.rank-row');
   if(rows.length<=1){toast('Need at least 1 rank!');return;}
-  const el=document.getElementById(id);if(el)el.remove();
+  const el=document.getElementById('rr_'+cid+'_'+idx);if(el)el.remove();
 };
 
-function collectRanks(){
-  const ranks=[];
-  document.querySelectorAll('.rank-row').forEach(function(row,i){
-    const id=row.id;
-    ranks.push({
-      rank:i+1,
-      label:document.getElementById('rl_'+id)?document.getElementById('rl_'+id).value.trim():'Rank #'+(i+1),
-      points:parseInt(document.getElementById('rp_'+id)?document.getElementById('rp_'+id).value:0)||0
+window.removeCat=function(id){
+  const cards=document.querySelectorAll('.category-card');
+  if(cards.length<=1){toast('Need at least 1 category!');return;}
+  const el=document.getElementById(id);if(el)el.remove();
+  updateCatCount();
+};
+
+function updateCatCount(){
+  const count=document.querySelectorAll('.category-card').length;
+  document.getElementById('cat-count-label').textContent=count+' categor'+(count===1?'y':'ies');
+}
+
+function collectCategories(){
+  const cats=[];
+  document.querySelectorAll('.category-card').forEach(function(card){
+    const cid=card.id;
+    const name=document.getElementById('cn_'+cid)?document.getElementById('cn_'+cid).value.trim():'';
+    const ranks=[];
+    card.querySelectorAll('.rank-row').forEach(function(row,i){
+      const rid=row.id.replace('rr_'+cid+'_','');
+      ranks.push({
+        rank:i+1,
+        label:document.getElementById('rl_'+cid+'_'+rid)?document.getElementById('rl_'+cid+'_'+rid).value.trim():'Rank '+(i+1),
+        points:parseInt(document.getElementById('rp_'+cid+'_'+rid)?document.getElementById('rp_'+cid+'_'+rid).value:0)||0
+      });
     });
+    cats.push({name,ranks,id:cid});
   });
-  return ranks;
+  return cats;
 }
 
 function buildPayload(status){
   const title=document.getElementById('a-title').value.trim();
   if(!title){toast('Title is required!');return null;}
-  const question=document.getElementById('a-question').value.trim();
-  if(!question){toast('Question is required!');return null;}
-  const ranks=collectRanks();
-  if(ranks.length===0){toast('Add at least 1 rank!');return null;}
+  const categories=collectCategories();
+  if(categories.length===0){toast('Add at least 1 category!');return null;}
+  if(categories.some(function(c){return!c.name;})){toast('All categories need a name!');return null;}
   const g=function(id){return document.getElementById(id)?document.getElementById(id).value.trim():'';};
   const tog=function(id){return document.getElementById(id)?document.getElementById(id).classList.contains('on'):false;};
+  // Build empty scores object per category
+  const scores={};
+  categories.forEach(function(c){scores[c.id]={};});
   return{
-    title,question,status,formType:'award',
-    description:g('a-desc'),category:g('a-category'),deadline:g('a-deadline'),
-    placeholder:g('a-placeholder')||'Type your nomination...',
-    anonymous:tog('tgl-anon'),showLive:tog('tgl-live'),allowDupes:tog('tgl-dupes'),
-    allRequired:tog('tgl-required'),accepting:tog('tgl-accepting'),
+    title,status,formType:'award',
+    description:g('a-desc'),edition:g('a-edition'),organizer:g('a-organizer'),
+    deadline:g('a-deadline'),placeholder:g('a-placeholder')||'Type a name...',
+    collectInfo:tog('tgl-collect'),showLive:tog('tgl-live'),
+    allowDupes:tog('tgl-dupes'),allRequired:tog('tgl-required'),accepting:tog('tgl-accepting'),
     thankYouHeading:g('ty-heading'),thankYouMessage:g('ty-message'),
-    ranks,rankCount:ranks.length
+    categories,scores
   };
 }
 
@@ -274,6 +326,7 @@ window.publish=async function(){
 };
 
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+updateCatCount();
 </script>
 </body>
 </html>
