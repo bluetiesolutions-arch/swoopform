@@ -3,161 +3,336 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Award Results — SwoopForm</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Pledge Builder — SwoopForm</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f5f4f0;--surface:#fff;--surface2:#f0eeea;--border:#e2ddd6;--accent:#f59e0b;--green:#12a872;--red:#e5484d;--purple:#7c3aed;--text:#1c1c2e;--muted:#7a7a8c;--muted2:#c5c0b8;--font:'Sora',sans-serif;--mono:'JetBrains Mono',monospace;}
+:root{--bg:#f0faf5;--surface:#fff;--border:#d1ede0;--accent:#1a7a4a;--accent2:#10b981;--danger:#ef4444;--text:#0f0e1a;--muted:#64748b;--muted2:#94a3b8;--font:'Sora',sans-serif;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;}
-nav{height:54px;background:rgba(245,244,240,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;position:sticky;top:0;z-index:100;gap:16px;}
-.brand{font-size:15px;font-weight:700;color:var(--accent);}
-.nav-sep{width:1px;height:18px;background:var(--border);}
-.nav-crumb{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;}
-.nav-crumb a{color:var(--accent);text-decoration:none;}
-.nav-right{margin-left:auto;display:flex;gap:10px;}
-.btn{padding:7px 14px;border-radius:8px;font-family:var(--font);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;border:none;}
-.btn-ghost{background:none;border:1px solid var(--border);color:var(--muted);}
-.btn-ghost:hover{border-color:var(--muted2);color:var(--text);}
-.btn-accent{background:var(--accent);color:#fff;font-weight:600;}
-.layout{display:flex;height:calc(100vh - 54px);}
-.sidebar{width:220px;min-width:220px;background:var(--surface);border-right:1px solid var(--border);padding:16px 12px;display:flex;flex-direction:column;gap:4px;overflow-y:auto;}
-.sidebar-label{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);padding:8px 10px 6px;}
-.sidebar-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .15s;border:none;background:none;width:100%;font-family:var(--font);}
-.sidebar-item:hover{background:var(--surface2);color:var(--text);}
-.sidebar-item.active{background:rgba(245,158,11,0.1);color:var(--accent);}
-.main{flex:1;overflow:hidden;display:flex;flex-direction:column;}
-.topbar{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0;background:var(--surface);}
-.topbar-title{font-size:16px;font-weight:700;}
-.topbar-meta{font-size:11px;color:var(--muted);margin-top:2px;}
-.topbar-right{margin-left:auto;display:flex;gap:10px;align-items:center;}
-.stats-row{display:flex;gap:1px;background:var(--border);flex-shrink:0;}
-.stat-card{flex:1;background:var(--surface);padding:14px 20px;display:flex;align-items:center;gap:10px;}
-.stat-val{font-size:20px;font-weight:700;font-family:var(--mono);}
-.stat-label{font-size:11px;color:var(--muted);margin-top:1px;}
-.content-area{flex:1;overflow-y:auto;padding:24px;}
-.live-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;background:rgba(18,168,114,0.1);color:var(--green);font-size:12px;font-weight:600;margin-bottom:20px;}
-.live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-.cat-leaderboard{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px;}
-.cat-lb-title{font-size:15px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
-.cat-lb-sub{font-size:12px;color:var(--muted);margin-bottom:16px;}
-.lb-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;}
-.lb-row.top{background:rgba(245,158,11,0.05);border-color:var(--accent);}
-.lb-rank{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;}
-.lb-name{font-size:14px;font-weight:700;flex:1;}
-.lb-bar-wrap{flex:2;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;}
-.lb-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,#f59e0b,#ef4444);transition:width .6s;}
-.lb-count{font-size:11px;color:var(--muted);min-width:40px;text-align:right;}
-.lb-score{font-size:16px;font-weight:800;font-family:var(--mono);color:var(--accent);min-width:60px;text-align:right;}
-table{width:100%;border-collapse:collapse;}
-thead tr{background:var(--surface2);border-bottom:1px solid var(--border);}
-th{padding:10px 16px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:left;}
-tbody tr{border-bottom:1px solid var(--border);cursor:pointer;}
-tbody tr:hover{background:#faf9f7;}
-td{padding:12px 16px;font-size:12px;vertical-align:middle;}
-.nom-pill{display:inline-block;padding:2px 8px;border-radius:10px;background:rgba(245,158,11,0.1);color:#92400e;font-size:11px;margin:2px;}
-.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:150;display:none;}
-.drawer-overlay.open{display:block;}
-.drawer{position:fixed;top:0;right:-580px;width:580px;height:100vh;background:var(--surface);border-left:1px solid var(--border);z-index:160;transition:right .3s;display:flex;flex-direction:column;overflow:hidden;}
-.drawer.open{right:0;}
-.drawer-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.drawer-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;}
-.drawer-body{flex:1;overflow-y:auto;padding:20px 24px;}
-.drawer-cat{margin-bottom:20px;}
-.drawer-cat-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);}
-.drawer-nom{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg);border-radius:8px;margin-bottom:6px;}
-.drawer-nom-rank{width:24px;height:24px;border-radius:6px;background:var(--accent);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.drawer-nom-name{font-size:13px;font-weight:600;flex:1;}
-.drawer-nom-pts{font-size:11px;color:var(--muted);}
-.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;}
-.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);height:100vh;overflow:hidden;}
+nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:fixed;top:0;left:0;right:0;z-index:300;}
+.nav-left{display:flex;align-items:center;gap:10px;}
+.logo{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#1a7a4a,#10b981);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;text-decoration:none;}
+.nav-title{font-weight:700;font-size:14px;color:var(--text);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.nav-right{display:flex;gap:8px;}
+.btn{padding:7px 16px;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;border:none;}
+.btn-ghost{border:1.5px solid var(--border);background:transparent;color:var(--muted);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+.btn-pub{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;}
+.btn-pub:disabled{opacity:0.5;cursor:not-allowed;}
+.layout{position:fixed;top:56px;left:0;right:0;bottom:0;display:flex;}
+.sidebar{width:240px;background:var(--surface);border-right:1.5px solid var(--border);overflow-y:auto;flex-shrink:0;}
+.sb-label{font-size:10px;font-weight:700;color:var(--muted2);letter-spacing:1.2px;text-transform:uppercase;padding:14px 14px 6px;}
+.sb-item{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:9px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:var(--font);font-size:13px;font-weight:600;color:var(--muted);transition:all .15s;margin:2px 8px;width:calc(100% - 16px);}
+.sb-item:hover{background:#e8f7ef;color:var(--text);}
+.sb-item.active{background:#dcfce7;color:var(--accent);}
+.content{flex:1;overflow-y:auto;padding:28px;}
+.panel{display:none;}
+.panel.active{display:block;}
+.panel-title{font-size:18px;font-weight:800;margin-bottom:4px;}
+.panel-sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
+.card{background:var(--surface);border-radius:14px;border:1.5px solid var(--border);padding:22px;margin-bottom:14px;}
+.card-title{font-size:13px;font-weight:700;margin-bottom:14px;color:var(--text);}
+.field{margin-bottom:14px;}
+.field:last-child{margin-bottom:0;}
+.label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;}
+.inp{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;font-family:var(--font);outline:none;transition:border-color .2s;}
+.inp:focus{border-color:var(--accent);}
+.inp::placeholder{color:var(--muted2);}
+.hint{font-size:11px;color:var(--muted2);margin-top:4px;line-height:1.4;}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);}
+.toggle-row:last-child{border-bottom:none;}
+.tgl-name{font-size:13px;font-weight:600;}
+.tgl-desc{font-size:11px;color:var(--muted);margin-top:2px;}
+.tgl{width:36px;height:20px;border-radius:20px;background:var(--border);cursor:pointer;position:relative;transition:background .2s;border:none;flex-shrink:0;}
+.tgl.on{background:var(--accent2);}
+.tgl::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s;}
+.tgl.on::after{transform:translateX(16px);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.faq-item{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;position:relative;}
+.faq-del{position:absolute;top:10px;right:10px;background:none;border:none;cursor:pointer;color:var(--muted2);font-size:14px;}
+.faq-del:hover{color:var(--danger);}
+.add-btn{width:100%;padding:10px;border-radius:10px;border:1.5px dashed var(--accent);background:transparent;color:var(--accent);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;transition:all .2s;margin-top:4px;}
+.add-btn:hover{background:#dcfce7;}
+.media-preview{margin-top:10px;border-radius:12px;overflow:hidden;border:1.5px solid var(--border);display:none;}
+.media-preview img{width:100%;height:180px;object-fit:cover;display:block;}
+.media-preview iframe{width:100%;height:180px;border:none;display:block;}
+.media-label{padding:8px 12px;font-size:11px;color:var(--muted);background:var(--bg);display:flex;justify-content:space-between;}
+.slug-row{display:flex;gap:8px;align-items:center;}
+.slug-pre{font-size:11px;color:var(--muted);white-space:nowrap;}
+.slug-status{font-size:11px;margin-top:4px;}
+.color-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+.color-swatch{width:32px;height:32px;border-radius:8px;cursor:pointer;border:3px solid transparent;transition:border-color .15s;}
+.color-swatch.selected{border-color:var(--text);}
+.milestone-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
+.milestone-inp{flex:1;padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-family:var(--font);font-size:12px;outline:none;}
+.milestone-inp:focus{border-color:var(--accent);}
+.rm-btn{background:none;border:none;color:var(--muted2);cursor:pointer;font-size:16px;padding:4px;}
+.rm-btn:hover{color:var(--danger);}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;display:none;z-index:999;}
+.ls-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:900;}
+.spinner{width:32px;height:32px;border:3px solid rgba(26,122,74,.2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
-.toast{position:fixed;bottom:24px;left:24px;background:var(--text);color:#fff;padding:10px 16px;border-radius:9px;font-size:12px;z-index:400;display:none;}
-::-webkit-scrollbar{width:4px;}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
 </style>
 </head>
 <body>
 
-<div class="loading-screen" id="loading-screen">
-  <div class="spinner"></div>
-  <div style="font-size:13px;color:var(--muted);">Loading results...</div>
-</div>
+<div class="ls-screen" id="ls"><div class="spinner"></div></div>
 
-<div id="main-wrap" style="display:none;">
 <nav>
-  <div class="brand">SwoopForm</div>
-  <div class="nav-sep"></div>
-  <div class="nav-crumb">
-    <a href="/dashboard/">Dashboard</a> ›
-    <span id="nav-title">Award Results</span>
+  <div class="nav-left">
+    <a href="/dashboard/" class="logo">S</a>
+    <a href="/dashboard/" class="btn btn-ghost" style="font-size:12px;padding:5px 10px;">← Dashboard</a>
+    <span class="nav-title" id="nav-title">New Pledge Campaign</span>
   </div>
   <div class="nav-right">
-    <button class="btn btn-ghost" onclick="exportCSV()">⬇ Export</button>
-    <button class="btn btn-accent" onclick="window.open('/award/?id='+AID,'_blank')">🔗 View Award</button>
+    <button class="btn btn-ghost" onclick="saveDraft()">Save Draft</button>
+    <button class="btn btn-pub" id="pub-btn" onclick="publishPledge()">Publish →</button>
   </div>
 </nav>
 
 <div class="layout">
   <div class="sidebar">
-    <div class="sidebar-label">Views</div>
-    <button class="sidebar-item active" id="sbar-lb" onclick="showView('lb',this)"><span>🏆</span> Leaderboards</button>
-    <button class="sidebar-item" id="sbar-resp" onclick="showView('resp',this)"><span>📋</span> All Submissions</button>
-    <div class="sidebar-label" style="margin-top:8px;">Categories</div>
-    <div id="cat-sidebar"></div>
-    <div class="sidebar-label" style="margin-top:8px;">Actions</div>
-    <button class="sidebar-item" onclick="exportCSV()"><span>⬇</span> Export CSV</button>
-    <button class="sidebar-item" onclick="window.location.href='/award/create/?id='+AID"><span>✏️</span> Edit Award</button>
-    <button class="sidebar-item" onclick="toggleAccepting()"><span>🔓</span> Toggle Award</button>
-    <button class="sidebar-item" onclick="window.location.href='/dashboard/'"><span>🏠</span> Dashboard</button>
+    <div class="sb-label">Sections</div>
+    <button class="sb-item active" id="sn-hero" onclick="showPanel('hero')">🌟 Hero</button>
+    <button class="sb-item" id="sn-statement" onclick="showPanel('statement')">🤝 Statement</button>
+    <button class="sb-item" id="sn-impact" onclick="showPanel('impact')">📊 Impact & Goal</button>
+    <button class="sb-item" id="sn-form" onclick="showPanel('form')">📝 Pledge Form</button>
+    <button class="sb-item" id="sn-supporters" onclick="showPanel('supporters')">👥 Supporters Wall</button>
+    <button class="sb-item" id="sn-milestones" onclick="showPanel('milestones')">🏅 Milestones</button>
+    <button class="sb-item" id="sn-faq" onclick="showPanel('faq')">❓ FAQ</button>
+    <button class="sb-item" id="sn-thankyou" onclick="showPanel('thankyou')">🎉 Thank You</button>
+    <button class="sb-item" id="sn-settings" onclick="showPanel('settings')">⚙️ Settings</button>
+    <button class="sb-item" id="sn-seo" onclick="showPanel('seo')">🔍 SEO</button>
   </div>
 
-  <div class="main">
-    <div class="topbar">
-      <div>
-        <div class="topbar-title" id="top-title">Loading...</div>
-        <div class="topbar-meta" id="top-meta"></div>
+  <div class="content">
+
+    <!-- HERO -->
+    <div class="panel active" id="panel-hero">
+      <div class="panel-title">🌟 Hero Section</div>
+      <div class="panel-sub">The first thing people see — make it powerful and compelling.</div>
+      <div class="card">
+        <div class="field">
+          <label class="label">Campaign Title <span style="color:var(--danger)">*</span></label>
+          <input class="inp" id="hero-title" placeholder="e.g. Pledge to Plant 1 Million Trees" maxlength="150" oninput="document.getElementById('nav-title').textContent=this.value||'New Pledge Campaign'">
+        </div>
+        <div class="field">
+          <label class="label">Hero Subtitle</label>
+          <textarea class="inp" id="hero-subtitle" rows="2" placeholder="A compelling one-liner about your campaign..." style="resize:vertical;"></textarea>
+        </div>
+        <div class="grid2">
+          <div class="field">
+            <label class="label">CTA Button Text</label>
+            <input class="inp" id="hero-cta" placeholder="Take the Pledge →" maxlength="50">
+          </div>
+          <div class="field">
+            <label class="label">Accent Color</label>
+            <div class="color-row">
+              <div class="color-swatch selected" style="background:#1a7a4a;" onclick="setColor('#1a7a4a',this)"></div>
+              <div class="color-swatch" style="background:#1d4ed8;" onclick="setColor('#1d4ed8',this)"></div>
+              <div class="color-swatch" style="background:#7c3aed;" onclick="setColor('#7c3aed',this)"></div>
+              <div class="color-swatch" style="background:#dc2626;" onclick="setColor('#dc2626',this)"></div>
+              <div class="color-swatch" style="background:#d97706;" onclick="setColor('#d97706',this)"></div>
+              <div class="color-swatch" style="background:#0ea5e9;" onclick="setColor('#0ea5e9',this)"></div>
+              <input type="color" id="custom-color" onchange="setColor(this.value,null)" style="width:32px;height:32px;border-radius:8px;cursor:pointer;border:1.5px solid var(--border);padding:1px;">
+            </div>
+            <input type="hidden" id="hero-color" value="#1a7a4a">
+          </div>
+        </div>
       </div>
-      <div class="topbar-right"><span id="accepting-status"></span></div>
-    </div>
-
-    <div class="stats-row">
-      <div class="stat-card"><span style="font-size:18px;">📝</span><div><div class="stat-val" id="stat-submissions" style="color:var(--accent);">0</div><div class="stat-label">Submissions</div></div></div>
-      <div class="stat-card"><span style="font-size:18px;">📂</span><div><div class="stat-val" id="stat-categories" style="color:var(--green);">0</div><div class="stat-label">Categories</div></div></div>
-      <div class="stat-card"><span style="font-size:18px;">🏆</span><div><div class="stat-val" id="stat-nominees" style="color:var(--purple);">0</div><div class="stat-label">Total Nominees</div></div></div>
-      <div class="stat-card"><span style="font-size:18px;">📅</span><div><div class="stat-val" id="stat-today" style="color:var(--muted);">0</div><div class="stat-label">Today</div></div></div>
-    </div>
-
-    <!-- LEADERBOARD VIEW -->
-    <div class="content-area" id="lb-view">
-      <div class="live-badge"><span class="live-dot"></span>Live Results</div>
-      <div id="lb-wrap"></div>
-    </div>
-
-    <!-- RESPONSES VIEW -->
-    <div class="content-area" id="resp-view" style="display:none;">
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
-        <table id="resp-table" style="display:none;">
-          <thead><tr><th>#</th><th>Name / Email</th><th>Sample Nominations</th><th>Submitted</th><th></th></tr></thead>
-          <tbody id="resp-body"></tbody>
-        </table>
-        <div id="empty-state" style="display:none;text-align:center;padding:60px;">
-          <div style="font-size:48px;margin-bottom:16px;opacity:0.4;">📭</div>
-          <div style="font-size:16px;font-weight:600;">No submissions yet</div>
+      <div class="card">
+        <div class="card-title">Hero Media</div>
+        <div class="field">
+          <label class="label">Hero Image URL</label>
+          <input class="inp" id="hero-image" placeholder="https://yoursite.com/banner.jpg" oninput="previewImg(this.value)">
+          <div class="hint">Recommended: 1920×600px wide banner</div>
+          <div class="media-preview" id="preview-img">
+            <img id="preview-img-el" alt="Preview">
+            <div class="media-label"><span>Image preview</span><span>1920×600 recommended</span></div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Hero Video URL (YouTube)</label>
+          <input class="inp" id="hero-video" placeholder="https://youtube.com/watch?v=..." oninput="previewVid(this.value)">
+          <div class="hint">Auto-plays muted on loop. Overrides image if both provided.</div>
+          <div class="media-preview" id="preview-vid">
+            <iframe id="preview-vid-frame" allowfullscreen></iframe>
+            <div class="media-label"><span>Video preview</span><span>16:9 ratio</span></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-</div>
 
-<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
-<div class="drawer" id="drawer">
-  <div class="drawer-header">
-    <div><div style="font-size:15px;font-weight:700;" id="d-name"></div><div style="font-size:11px;color:var(--muted);" id="d-email"></div></div>
-    <button class="drawer-close" onclick="closeDrawer()">×</button>
+    <!-- STATEMENT -->
+    <div class="panel" id="panel-statement">
+      <div class="panel-title">🤝 Pledge Statement</div>
+      <div class="panel-sub">The core commitment people are making. Write in first person.</div>
+      <div class="card">
+        <div class="field">
+          <label class="label">Statement Title</label>
+          <input class="inp" id="statement-title" placeholder="e.g. The Pledge" maxlength="80">
+        </div>
+        <div class="field">
+          <label class="label">Pledge Statement <span style="color:var(--danger)">*</span></label>
+          <textarea class="inp" id="pledge-statement" rows="5" placeholder="I pledge to reduce my carbon footprint by..." style="resize:vertical;"></textarea>
+          <div class="hint">People will read and agree to this before signing.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Problem / Why This Matters</div>
+        <div class="field">
+          <label class="label">Section Title</label>
+          <input class="inp" id="problem-title" placeholder="e.g. Why This Matters" maxlength="80">
+        </div>
+        <div class="field">
+          <label class="label">Problem Description</label>
+          <textarea class="inp" id="problem-content" rows="4" placeholder="Explain the problem your campaign addresses..." style="resize:vertical;"></textarea>
+        </div>
+        <div class="field">
+          <label class="label">Problem Image URL <span style="font-weight:400;color:var(--muted2)">(optional)</span></label>
+          <input class="inp" id="problem-image" placeholder="https://...">
+        </div>
+      </div>
+    </div>
+
+    <!-- IMPACT -->
+    <div class="panel" id="panel-impact">
+      <div class="panel-title">📊 Impact & Goal</div>
+      <div class="panel-sub">Show signers the collective impact and progress toward your goal.</div>
+      <div class="card">
+        <div class="toggle-row"><div><div class="tgl-name">🔢 Show live pledge counter</div><div class="tgl-desc">Display total signers prominently on hero</div></div><button class="tgl on" id="tgl-counter" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">📊 Show progress bar</div><div class="tgl-desc">Visual progress toward goal</div></div><button class="tgl on" id="tgl-progress" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row" style="border-bottom:none;">
+          <div><div class="tgl-name">🎯 Goal (target pledges)</div><div class="tgl-desc">Set a target number of signatures</div></div>
+          <input type="number" class="inp" id="pledge-goal" min="0" placeholder="e.g. 10000" style="max-width:120px;padding:7px 10px;">
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Impact Stats</div>
+        <div class="hint" style="margin-bottom:12px;">Show compelling stats about your campaign's impact</div>
+        <div id="stats-container"></div>
+        <button class="add-btn" onclick="addStat()">+ Add Impact Stat</button>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="panel" id="panel-form">
+      <div class="panel-title">📝 Pledge Form</div>
+      <div class="panel-sub">Configure what information you collect from signers.</div>
+      <div class="card">
+        <div class="field"><label class="label">Form Title</label><input class="inp" id="form-title" placeholder="Sign the Pledge" maxlength="80"></div>
+        <div class="field"><label class="label">Form Subtitle</label><input class="inp" id="form-subtitle" placeholder="Join thousands standing up for change" maxlength="150"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Fields to Collect</div>
+        <div class="toggle-row"><div><div class="tgl-name">👤 Full Name</div></div><button class="tgl on" id="field-name" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">📧 Email Address</div></div><button class="tgl on" id="field-email" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">📱 Phone Number</div></div><button class="tgl" id="field-phone" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">📍 City / Location</div></div><button class="tgl" id="field-city" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">🏢 Organisation / Company</div></div><button class="tgl" id="field-org" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">💬 Personal Message</div><div class="tgl-desc">Let signers add a short message</div></div><button class="tgl" id="field-message" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">🐦 Twitter / X Handle</div></div><button class="tgl" id="field-twitter" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">💼 LinkedIn Profile</div></div><button class="tgl" id="field-linkedin" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row" style="border-bottom:none;"><div><div class="tgl-name">✏️ Custom Field</div></div><button class="tgl" id="field-custom" onclick="this.classList.toggle('on');toggleCustom()"></button></div>
+        <div id="custom-wrap" style="display:none;margin-top:10px;">
+          <input class="inp" id="custom-label" placeholder="Custom field label e.g. Designation">
+        </div>
+      </div>
+    </div>
+
+    <!-- SUPPORTERS -->
+    <div class="panel" id="panel-supporters">
+      <div class="panel-title">👥 Supporters Wall</div>
+      <div class="panel-sub">Show who has signed to build social proof.</div>
+      <div class="card">
+        <div class="toggle-row"><div><div class="tgl-name">👥 Show supporters wall</div><div class="tgl-desc">Display names of people who signed</div></div><button class="tgl" id="tgl-names" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">💬 Show supporter messages</div><div class="tgl-desc">Display personal messages from signers</div></div><button class="tgl" id="tgl-messages" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">📍 Show supporter cities</div><div class="tgl-desc">Display location of signers</div></div><button class="tgl" id="tgl-cities" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row" style="border-bottom:none;"><div><div class="tgl-name">🏢 Show organisations</div><div class="tgl-desc">Display org/company of signers</div></div><button class="tgl" id="tgl-orgs" onclick="this.classList.toggle('on')"></button></div>
+      </div>
+    </div>
+
+    <!-- MILESTONES -->
+    <div class="panel" id="panel-milestones">
+      <div class="panel-title">🏅 Milestones</div>
+      <div class="panel-sub">Celebrate when you hit pledge milestones. Shows as a badge on the campaign page.</div>
+      <div class="card">
+        <div class="hint" style="margin-bottom:12px;">Set milestones e.g. 100, 1000, 10000 pledges. When reached, a celebration badge appears.</div>
+        <div id="milestones-container"></div>
+        <button class="add-btn" onclick="addMilestone()">+ Add Milestone</button>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="panel" id="panel-faq">
+      <div class="panel-title">❓ FAQ</div>
+      <div class="panel-sub">Answer common questions about your campaign.</div>
+      <div class="card">
+        <div id="faq-list"></div>
+        <button class="add-btn" onclick="addFAQ()">+ Add FAQ</button>
+      </div>
+    </div>
+
+    <!-- THANK YOU -->
+    <div class="panel" id="panel-thankyou">
+      <div class="panel-title">🎉 Thank You Page</div>
+      <div class="panel-sub">What signers see after submitting.</div>
+      <div class="card">
+        <div class="field"><label class="label">Thank You Heading</label><input class="inp" id="ty-heading" value="Pledge signed! 🎉" placeholder="Thank you!"></div>
+        <div class="field"><label class="label">Thank You Message</label><textarea class="inp" id="ty-message" rows="3" placeholder="Thank you for your commitment..." style="resize:vertical;">Thank you for signing! Your commitment makes a difference. Share this campaign to inspire others.</textarea></div>
+        <div class="field"><label class="label">Share Button Text</label><input class="inp" id="ty-share-text" value="Share this pledge" placeholder="Share this pledge"></div>
+        <div class="field"><label class="label">Next Step Button Text <span style="color:var(--muted2);font-weight:400;">(optional)</span></label><input class="inp" id="ty-next-btn" placeholder="e.g. Learn More, Donate Now"></div>
+        <div class="field"><label class="label">Next Step Button URL</label>
+          <div style="display:flex;align-items:center;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;">
+            <span style="padding:10px 12px;background:var(--bg);color:var(--muted);font-size:12px;border-right:1px solid var(--border);">https://</span>
+            <input style="flex:1;padding:10px 12px;border:none;background:transparent;font-family:var(--font);font-size:13px;outline:none;" id="ty-next-url" placeholder="yoursite.com/donate">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="panel" id="panel-settings">
+      <div class="panel-title">⚙️ Settings</div>
+      <div class="panel-sub">Campaign configuration and visibility.</div>
+      <div class="card">
+        <div class="field"><label class="label">Category</label>
+          <select class="inp" id="pledge-category" style="cursor:pointer;">
+            <option>Community</option><option>Environment</option><option>Health</option>
+            <option>Education</option><option>Human Rights</option><option>Animal Welfare</option>
+            <option>Research</option><option>Corporate</option><option>Other</option>
+          </select>
+        </div>
+        <div class="toggle-row"><div><div class="tgl-name">🌐 Public campaign</div><div class="tgl-desc">Show on SwoopForm Discover</div></div><button class="tgl" id="tgl-public" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">📤 Show share buttons</div><div class="tgl-desc">WhatsApp, Twitter, copy link</div></div><button class="tgl on" id="tgl-share" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">❓ Show problem section</div></div><button class="tgl on" id="tgl-problem" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">🔓 Accepting pledges</div></div><button class="tgl on" id="tgl-accepting" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row" style="border-bottom:none;"><div><div class="tgl-name">✅ Require agreement</div><div class="tgl-desc">Signers must check the agree box</div></div><button class="tgl on" id="tgl-agree" onclick="this.classList.toggle('on')"></button></div>
+      </div>
+    </div>
+
+    <!-- SEO -->
+    <div class="panel" id="panel-seo">
+      <div class="panel-title">🔍 SEO & Sharing</div>
+      <div class="panel-sub">Control how your campaign appears in search and social media.</div>
+      <div class="card">
+        <div class="field">
+          <label class="label">URL Slug</label>
+          <div class="slug-row">
+            <span class="slug-pre">swoopform.com/engage/</span>
+            <input class="inp" id="seo-slug" placeholder="pledge-to-plant-trees" oninput="validateSlug(this)" style="flex:1;">
+            <button onclick="autoSlug()" class="btn btn-ghost" style="flex-shrink:0;padding:8px 12px;font-size:12px;">Auto</button>
+          </div>
+          <div class="hint">Only lowercase letters, numbers and hyphens.</div>
+          <div class="slug-status" id="slug-status"></div>
+        </div>
+        <div class="field"><label class="label">SEO Title</label><input class="inp" id="seo-title" placeholder="Leave blank to use campaign title" maxlength="60"></div>
+        <div class="field"><label class="label">SEO Description</label><textarea class="inp" id="seo-desc" rows="2" maxlength="160" placeholder="Brief description for search engines..." style="resize:vertical;"></textarea></div>
+        <div class="field"><label class="label">OG / Social Share Image URL</label><input class="inp" id="seo-image" placeholder="https://..."></div>
+      </div>
+    </div>
+
   </div>
-  <div class="drawer-body" id="drawer-body"></div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -165,193 +340,204 @@ td{padding:12px 16px;font-size:12px;vertical-align:middle;}
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getFirestore,doc,getDoc,getDocs,updateDoc,collection,onSnapshot,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getFirestore,collection,addDoc,doc,updateDoc,getDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
 const app=initializeApp(FB);
 const auth=getAuth(app);
 const db=getFirestore(app);
 
-const params=new URLSearchParams(window.location.search);
-window.AID=params.get('id');
-let aData=null;
-let allResponses=[];
+let U=null,PID=null,faqs=[],stats=[],milestones=[];
 
 onAuthStateChanged(auth,async function(u){
   if(!u){window.location.href='/login/';return;}
-  if(!AID){showFatal('No award ID.');return;}
-  await loadData();
+  U=u;
+  document.getElementById('ls').style.display='none';
+  const params=new URLSearchParams(window.location.search);
+  PID=params.get('id');
+  if(PID)await loadExisting(PID);
+  else{renderFAQs();renderStats();renderMilestones();}
 });
 
-async function loadData(){
+async function loadExisting(id){
   try{
-    const snap=await getDoc(doc(db,'awards',AID));
-    if(!snap.exists()){showFatal('Award not found.');return;}
-    aData=snap.data();
-    renderHeader(aData);
-    renderCatSidebar(aData.categories||[]);
-    const rSnap=await getDocs(collection(db,'awards',AID,'responses'));
-    allResponses=rSnap.docs.map(function(d){return Object.assign({_id:d.id},d.data());});
-    allResponses.sort(function(a,b){return(b.submittedAt?.seconds||0)-(a.submittedAt?.seconds||0);});
-    document.getElementById('loading-screen').style.display='none';
-    document.getElementById('main-wrap').style.display='block';
-    updateStats(aData);
-    renderLeaderboards(aData.scores||{},aData.categories||[]);
-    renderResponsesTable();
-    onSnapshot(doc(db,'awards',AID),function(snap){
-      if(snap.exists()){aData=snap.data();renderHeader(aData);updateStats(aData);renderLeaderboards(aData.scores||{},aData.categories||[]);}
-    });
-  }catch(e){console.error(e);showFatal('Failed to load.');}
+    const snap=await getDoc(doc(db,'pledges',id));
+    if(!snap.exists())return;
+    const d=snap.data();
+    const set=function(eid,val){const el=document.getElementById(eid);if(el&&val!==undefined&&val!==null)el.value=val;};
+    set('hero-title',d.title);document.getElementById('nav-title').textContent=d.title||'Pledge Campaign';
+    set('hero-subtitle',d.heroSubtitle);set('hero-cta',d.heroCTA);set('hero-color',d.color||'#1a7a4a');
+    set('hero-image',d.heroImage);set('hero-video',d.heroVideo);
+    set('statement-title',d.statementTitle);set('pledge-statement',d.statement);
+    set('problem-title',d.problem?.title);set('problem-content',d.problem?.content);set('problem-image',d.problem?.image);
+    set('form-title',d.formTitle);set('form-subtitle',d.formSubtitle);
+    set('pledge-goal',d.goal);
+    set('ty-heading',d.thankYou?.heading);set('ty-message',d.thankYou?.message);
+    set('ty-share-text',d.thankYou?.shareText);set('ty-next-btn',d.thankYou?.nextBtn);set('ty-next-url',d.thankYou?.nextUrl);
+    set('pledge-category',d.category);
+    set('seo-slug',d.slug);set('seo-title',d.seo?.title);set('seo-desc',d.seo?.description);set('seo-image',d.seo?.image);
+    const tog=function(eid,val){if(val===undefined)return;const el=document.getElementById(eid);if(el){val?el.classList.add('on'):el.classList.remove('on');}};
+    tog('tgl-counter',d.showCounter);tog('tgl-progress',d.showProgress);
+    tog('field-name',d.fields?.name);tog('field-email',d.fields?.email);tog('field-phone',d.fields?.phone);
+    tog('field-city',d.fields?.city);tog('field-org',d.fields?.org);tog('field-message',d.fields?.message);
+    tog('field-twitter',d.fields?.twitter);tog('field-linkedin',d.fields?.linkedin);
+    tog('field-custom',d.fields?.custom);
+    if(d.fields?.custom){document.getElementById('custom-wrap').style.display='block';set('custom-label',d.fields.customLabel);}
+    tog('tgl-names',d.supporters?.showNames);tog('tgl-messages',d.supporters?.showMessages);
+    tog('tgl-cities',d.supporters?.showCities);tog('tgl-orgs',d.supporters?.showOrgs);
+    tog('tgl-public',d.isPublic);tog('tgl-share',d.allowShare);tog('tgl-problem',d.showProblem);
+    tog('tgl-accepting',d.accepting);tog('tgl-agree',d.requireAgree);
+    faqs=d.faqs||[];stats=d.stats||[];milestones=d.milestones||[];
+    renderFAQs();renderStats();renderMilestones();
+    if(d.heroImage)previewImg(d.heroImage);
+    if(d.heroVideo)previewVid(d.heroVideo);
+    toast('Loaded for editing ✏️');
+  }catch(e){console.error(e);}
 }
 
-function renderHeader(d){
-  const t=d.title||'Award';
-  document.getElementById('nav-title').textContent=t;
-  document.getElementById('top-title').textContent=t;
-  document.getElementById('top-meta').textContent=[d.edition,d.organizer,d.deadline?'Closes '+d.deadline:''].filter(Boolean).join(' · ');
-  document.title=t+' — Results';
-  const acc=d.accepting!==false;
-  document.getElementById('accepting-status').innerHTML=acc?'<span style="color:var(--green);font-size:12px;">● Accepting</span>':'<span style="color:var(--red);font-size:12px;">● Closed</span>';
-}
-
-function renderCatSidebar(categories){
-  document.getElementById('cat-sidebar').innerHTML=categories.map(function(cat,i){
-    return '<button class="sidebar-item" onclick="scrollToCat(\'cat_lb_'+cat.id+'\')" style="font-size:11px;"><span>📂</span>'+cat.name.substring(0,18)+'</button>';
-  }).join('');
-}
-
-window.scrollToCat=function(id){
-  const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+window.showPanel=function(p){
+  document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.sb-item').forEach(function(x){x.classList.remove('active');});
+  document.getElementById('panel-'+p).classList.add('active');
+  const btn=document.getElementById('sn-'+p);if(btn)btn.classList.add('active');
 };
 
-function updateStats(d){
-  const cats=d.categories||[];
-  const scores=d.scores||{};
-  let totalNominees=0;
-  cats.forEach(function(cat){totalNominees+=Object.keys(scores[cat.id]||{}).length;});
-  const today=new Date().toDateString();
-  const todayCount=allResponses.filter(function(r){return r.submittedAt?.seconds&&new Date(r.submittedAt.seconds*1000).toDateString()===today;}).length;
-  document.getElementById('stat-submissions').textContent=d.responseCount||allResponses.length;
-  document.getElementById('stat-categories').textContent=cats.length;
-  document.getElementById('stat-nominees').textContent=totalNominees;
-  document.getElementById('stat-today').textContent=todayCount;
-}
+window.setColor=function(color,el){
+  document.getElementById('hero-color').value=color;
+  document.querySelectorAll('.color-swatch').forEach(function(s){s.classList.remove('selected');});
+  if(el)el.classList.add('selected');
+};
 
-function renderLeaderboards(scores,categories){
-  const wrap=document.getElementById('lb-wrap');
-  const rankEmojis=['🥇','🥈','🥉'];
-  const rankColors=['#f59e0b','#9ca3af','#b45309'];
-  wrap.innerHTML=categories.map(function(cat){
-    const catScores=scores[cat.id]||{};
-    const entries=Object.entries(catScores).sort(function(a,b){return b[1]-a[1];});
-    const maxScore=entries.length?entries[0][1]:1;
-    return '<div class="cat-leaderboard" id="cat_lb_'+cat.id+'">'
-      +'<div class="cat-lb-title">📂 '+cat.name+'</div>'
-      +'<div class="cat-lb-sub">'+entries.length+' nominee'+(entries.length!==1?'s':'')+' · '+(cat.ranks||[]).length+' rank slots</div>'
-      +(entries.length===0?'<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">No nominations yet</div>'
-      :entries.map(function(e,i){
-        const pct=Math.round(e[1]/maxScore*100);
-        const nominationCount=allResponses.filter(function(r){return(r.categories||[]).some(function(c){return c.categoryId===cat.id&&c.nominations.some(function(n){return n.nomination===e[0];});});}).length;
-        return '<div class="lb-row'+(i===0?' top':'')+'">'
-          +'<div class="lb-rank" style="background:'+(rankColors[i]||'var(--surface2)')+';color:'+(i<3?'#fff':'var(--muted)')+';">'+(rankEmojis[i]||i+1)+'</div>'
-          +'<div class="lb-name">'+e[0]+'</div>'
-          +'<div class="lb-bar-wrap"><div class="lb-bar" style="width:'+pct+'%"></div></div>'
-          +'<div class="lb-count">'+nominationCount+'x</div>'
-          +'<div class="lb-score">'+e[1]+' pts</div>'
-          +'</div>';
-      }).join(''))
+window.previewImg=function(url){
+  const wrap=document.getElementById('preview-img');
+  const img=document.getElementById('preview-img-el');
+  if(url){wrap.style.display='block';img.src=url;img.onerror=function(){wrap.style.display='none';};}
+  else wrap.style.display='none';
+};
+
+window.previewVid=function(url){
+  const wrap=document.getElementById('preview-vid');
+  const frame=document.getElementById('preview-vid-frame');
+  if(url&&(url.includes('youtube.com')||url.includes('youtu.be'))){
+    const m=url.match(/(?:v=|youtu\.be\/)([^&\s]+)/);
+    if(m){wrap.style.display='block';frame.src='https://www.youtube.com/embed/'+m[1]+'?mute=1';}
+  }else wrap.style.display='none';
+};
+
+window.toggleCustom=function(){
+  const on=document.getElementById('field-custom').classList.contains('on');
+  document.getElementById('custom-wrap').style.display=on?'block':'none';
+};
+
+// FAQ
+function renderFAQs(){
+  const list=document.getElementById('faq-list');
+  if(!faqs.length){list.innerHTML='<div style="text-align:center;padding:16px;color:var(--muted2);font-size:13px;">No FAQs yet. Click below to add one.</div>';return;}
+  list.innerHTML=faqs.map(function(f,i){
+    return '<div class="faq-item"><button class="faq-del" onclick="removeFAQ('+i+')">✕</button>'
+      +'<div class="field"><label class="label">Question</label><input class="inp" value="'+eh(f.question)+'" placeholder="e.g. Is this pledge legally binding?" oninput="faqs['+i+'].question=this.value"></div>'
+      +'<div class="field" style="margin-bottom:0;"><label class="label">Answer</label><textarea class="inp" rows="2" style="resize:vertical;" oninput="faqs['+i+'].answer=this.value">'+eh(f.answer)+'</textarea></div>'
       +'</div>';
   }).join('');
 }
+window.addFAQ=function(){faqs.push({question:'',answer:''});renderFAQs();};
+window.removeFAQ=function(i){faqs.splice(i,1);renderFAQs();};
 
-function renderResponsesTable(){
-  const tbody=document.getElementById('resp-body');
-  const table=document.getElementById('resp-table');
-  const empty=document.getElementById('empty-state');
-  if(allResponses.length===0){table.style.display='none';empty.style.display='block';return;}
-  empty.style.display='none';table.style.display='table';
-  tbody.innerHTML=allResponses.map(function(r,i){
-    const name=r.name||'Anonymous';
-    const date=r.submittedAt?.seconds?new Date(r.submittedAt.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—';
-    const sampleNoms=(r.categories||[]).slice(0,2).map(function(cat){
-      return (cat.nominations||[]).filter(function(n){return n.nomination;}).slice(0,2).map(function(n){return '<span class="nom-pill">'+n.nomination+'</span>';}).join('');
-    }).join('');
-    return '<tr onclick="openDrawer(\''+r._id+'\')">'
-      +'<td style="color:var(--muted);font-family:var(--mono);font-size:11px;">#'+(i+1)+'</td>'
-      +'<td><div style="font-weight:600;">'+name+'</div><div style="font-size:11px;color:var(--muted);">'+(r.email||'')+'</div></td>'
-      +'<td>'+sampleNoms+'</td>'
-      +'<td style="color:var(--muted);font-size:11px;">'+date+'</td>'
-      +'<td><button class="btn btn-ghost" onclick="event.stopPropagation();openDrawer(\''+r._id+'\')">View</button></td>'
-      +'</tr>';
+// Stats
+function renderStats(){
+  const c=document.getElementById('stats-container');
+  c.innerHTML=stats.map(function(s,i){
+    return '<div style="display:flex;gap:8px;margin-bottom:8px;">'
+      +'<input class="inp" style="flex:1;" value="'+eh(s.value)+'" placeholder="e.g. 50,000+" oninput="stats['+i+'].value=this.value">'
+      +'<input class="inp" style="flex:2;" value="'+eh(s.label)+'" placeholder="e.g. trees planted" oninput="stats['+i+'].label=this.value">'
+      +'<button class="rm-btn" onclick="removeStat('+i+')">×</button></div>';
   }).join('');
 }
+window.addStat=function(){stats.push({value:'',label:''});renderStats();};
+window.removeStat=function(i){stats.splice(i,1);renderStats();};
 
-window.openDrawer=function(id){
-  const r=allResponses.find(function(x){return x._id===id;});
-  if(!r)return;
-  document.getElementById('d-name').textContent=r.name||'Anonymous';
-  document.getElementById('d-email').textContent=r.email||'';
-  const rankEmojis={1:'🥇',2:'🥈',3:'🥉'};
-  document.getElementById('drawer-body').innerHTML=
-    '<div style="font-size:12px;color:var(--muted);margin-bottom:20px;">Submitted: '+(r.submittedAt?.seconds?new Date(r.submittedAt.seconds*1000).toLocaleString('en-IN'):'—')+'</div>'
-    +(r.categories||[]).map(function(cat){
-      return '<div class="drawer-cat">'
-        +'<div class="drawer-cat-title">📂 '+cat.categoryName+'</div>'
-        +(cat.nominations||[]).map(function(n){
-          return n.nomination?'<div class="drawer-nom">'
-            +'<div class="drawer-nom-rank">'+(rankEmojis[n.rank]||n.rank)+'</div>'
-            +'<div class="drawer-nom-name">'+n.nomination+'</div>'
-            +'<div class="drawer-nom-pts">'+n.points+' pts</div>'
-            +'</div>':'';
-        }).join('')
-        +'</div>';
-    }).join('');
-  document.getElementById('drawer').classList.add('open');
-  document.getElementById('drawer-overlay').classList.add('open');
+// Milestones
+function renderMilestones(){
+  const c=document.getElementById('milestones-container');
+  c.innerHTML=milestones.map(function(m,i){
+    return '<div class="milestone-row">'
+      +'<input class="milestone-inp" type="number" value="'+m.count+'" placeholder="e.g. 1000" oninput="milestones['+i+'].count=parseInt(this.value)||0" style="width:100px;">'
+      +'<span style="font-size:12px;color:var(--muted);">pledges →</span>'
+      +'<input class="milestone-inp" value="'+eh(m.label)+'" placeholder="e.g. 🎉 1,000 Strong!" oninput="milestones['+i+'].label=this.value" style="flex:1;">'
+      +'<button class="rm-btn" onclick="removeMilestone('+i+')">×</button></div>';
+  }).join('');
+}
+window.addMilestone=function(){milestones.push({count:0,label:''});renderMilestones();};
+window.removeMilestone=function(i){milestones.splice(i,1);renderMilestones();};
+
+window.autoSlug=function(){
+  const t=document.getElementById('hero-title').value.trim();
+  if(!t){toast('Add a campaign title first');return;}
+  const slug=t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50);
+  document.getElementById('seo-slug').value=slug;
+  setSlugStatus('✓ swoopform.com/engage/'+slug,true);
 };
-
-window.closeDrawer=function(){
-  document.getElementById('drawer').classList.remove('open');
-  document.getElementById('drawer-overlay').classList.remove('open');
+window.validateSlug=function(inp){
+  inp.value=inp.value.replace(/[^a-z0-9-]/g,'');
+  if(inp.value.length>3)setSlugStatus('✓ swoopform.com/engage/'+inp.value,true);
+  else if(inp.value.length>0)setSlugStatus('Too short — min 4 characters',false);
+  else setSlugStatus('',null);
 };
+function setSlugStatus(msg,ok){
+  const s=document.getElementById('slug-status');
+  s.textContent=msg;s.style.color=ok===true?'#10b981':ok===false?'#ef4444':'#94a3b8';
+}
 
-window.showView=function(view,el){
-  document.querySelectorAll('.sidebar-item').forEach(function(i){i.classList.remove('active');});
-  if(el)el.classList.add('active');
-  document.getElementById('lb-view').style.display=view==='lb'?'block':'none';
-  document.getElementById('resp-view').style.display=view==='resp'?'block':'none';
-};
+function isTgl(id){return document.getElementById(id)?.classList.contains('on');}
+function gv(id){return document.getElementById(id)?.value.trim()||'';}
 
-window.toggleAccepting=async function(){
-  const current=aData.accepting!==false;
+function getData(status){
+  const title=gv('hero-title');if(!title){toast('Please add a campaign title');return null;}
+  const statement=gv('pledge-statement');if(!statement){toast('Please add a pledge statement');return null;}
+  return{
+    title,status,formType:'pledge',
+    heroSubtitle:gv('hero-subtitle'),heroCTA:gv('hero-cta')||'Take the Pledge →',
+    heroImage:gv('hero-image'),heroVideo:gv('hero-video'),color:gv('hero-color')||'#1a7a4a',
+    statementTitle:gv('statement-title')||'The Pledge',statement,
+    problem:{title:gv('problem-title')||'Why This Matters',content:gv('problem-content'),image:gv('problem-image')},
+    formTitle:gv('form-title')||'Sign the Pledge',formSubtitle:gv('form-subtitle'),
+    fields:{
+      name:isTgl('field-name'),email:isTgl('field-email'),phone:isTgl('field-phone'),
+      city:isTgl('field-city'),org:isTgl('field-org'),message:isTgl('field-message'),
+      twitter:isTgl('field-twitter'),linkedin:isTgl('field-linkedin'),
+      custom:isTgl('field-custom'),customLabel:gv('custom-label')
+    },
+    showCounter:isTgl('tgl-counter'),showProgress:isTgl('tgl-progress'),
+    goal:parseInt(gv('pledge-goal'))||null,
+    stats,milestones,faqs,
+    supporters:{showNames:isTgl('tgl-names'),showMessages:isTgl('tgl-messages'),showCities:isTgl('tgl-cities'),showOrgs:isTgl('tgl-orgs')},
+    thankYou:{heading:gv('ty-heading')||'Pledge signed! 🎉',message:gv('ty-message'),shareText:gv('ty-share-text')||'Share this pledge',nextBtn:gv('ty-next-btn'),nextUrl:gv('ty-next-url')},
+    category:gv('pledge-category')||'Community',
+    isPublic:isTgl('tgl-public'),allowShare:isTgl('tgl-share'),showProblem:isTgl('tgl-problem'),
+    accepting:isTgl('tgl-accepting'),requireAgree:isTgl('tgl-agree'),
+    slug:gv('seo-slug')||null,
+    seo:{title:gv('seo-title'),description:gv('seo-desc'),image:gv('seo-image')},
+    userId:U.uid,updatedAt:serverTimestamp()
+  };
+}
+
+async function save(status){
+  const data=getData(status);if(!data)return null;
   try{
-    await updateDoc(doc(db,'awards',AID),{accepting:!current,updatedAt:serverTimestamp()});
-    toast(current?'Award closed':'Award reopened');
-  }catch(e){toast('Error');}
+    if(PID){await updateDoc(doc(db,'pledges',PID),data);return PID;}
+    else{data.createdAt=serverTimestamp();data.totalPledges=0;const ref=await addDoc(collection(db,'pledges'),data);PID=ref.id;window.history.replaceState({},'','/pledge/create/?id='+PID);return PID;}
+  }catch(e){console.error(e);toast('Error saving. Please try again.');return null;}
+}
+
+window.saveDraft=async function(){const id=await save('draft');if(id)toast('Draft saved!');};
+window.publishPledge=async function(){
+  const btn=document.getElementById('pub-btn');btn.disabled=true;btn.textContent='Publishing...';
+  const id=await save('active');
+  if(id){toast('Campaign published!');setTimeout(function(){window.location.href='/dashboard/';},1500);}
+  else{btn.disabled=false;btn.textContent='Publish →';}
 };
 
-window.exportCSV=function(){
-  const categories=aData.categories||[];
-  const rankHeaders=[];
-  categories.forEach(function(cat){(cat.ranks||[]).forEach(function(r){rankHeaders.push(cat.name+' - '+r.label);});});
-  const headers=['Name','Email','Submitted',...rankHeaders];
-  const rows=[headers];
-  allResponses.forEach(function(r){
-    const date=r.submittedAt?.seconds?new Date(r.submittedAt.seconds*1000).toLocaleDateString():'';
-    const vals=[];
-    categories.forEach(function(cat){
-      const catData=(r.categories||[]).find(function(c){return c.categoryId===cat.id;});
-      (cat.ranks||[]).forEach(function(rank,ri){vals.push((catData?.nominations||[])[ri]?.nomination||'');});
-    });
-    rows.push([r.name||'',r.email||'',date,...vals]);
-  });
-  const csv=rows.map(function(r){return r.map(function(v){return '"'+String(v||'').replace(/"/g,'""')+'"';}).join(',');}).join('\n');
-  const blob=new Blob([csv],{type:'text/csv'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='award-nominations.csv';a.click();
-  toast('CSV downloaded!');
-};
-
-function showFatal(msg){document.getElementById('loading-screen').innerHTML='<div style="text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">😕</div><div style="font-size:16px;font-weight:700;margin-bottom:8px;">'+msg+'</div><a href="/dashboard/" style="display:inline-block;margin-top:16px;padding:10px 20px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-size:13px;">Go to Dashboard</a></div>';}
+function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;');}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
 </script>
 </body>

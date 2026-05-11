@@ -1,100 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pledge & Support — SwoopForm</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'DM Sans',sans-serif;background:#F0FAF5;color:#0F0E1A;min-height:100vh}
-    nav{background:#fff;border-bottom:1.5px solid #D1EDE0;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
-    .logo-mk{width:28px;height:28px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;color:#fff}
-    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;color:#0F0E1A}
-    .pledge-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:100px;background:#DCFCE7;border:1px solid #86EFAC;color:#1A7A4A;font-size:0.75rem;font-weight:700}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pledge & Support — SwoopForm</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#1a7a4a;--accent2:#10b981;--bg:#f0faf5;--white:#fff;--border:#d1ede0;--text:#0f0e1a;--muted:#64748b;--muted2:#94a3b8;--font:'Sora',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;}
+nav{background:var(--white);border-bottom:1.5px solid var(--border);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.logo-mk{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;}
+.logo-nm{font-weight:800;font-size:15px;color:var(--text);}
+.pledge-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:100px;background:#dcfce7;border:1px solid #86efac;color:#1a7a4a;font-size:12px;font-weight:700;}
 
-    /* HERO */
-    .hero{position:relative;min-height:340px;display:flex;align-items:center;justify-content:center;background:#0F2018;overflow:hidden}
-    .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.45}
-    .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.45}
-    .hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(15,32,24,0.3),rgba(15,32,24,0.7))}
-    .hero-content{position:relative;z-index:1;text-align:center;padding:48px 24px;max-width:700px}
-    .hero-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.6rem,4vw,2.6rem);letter-spacing:-0.04em;color:#fff;line-height:1.15;margin-bottom:12px}
-    .hero-subtitle{font-size:1rem;color:rgba(255,255,255,0.7);line-height:1.6;margin-bottom:24px}
-    .hero-cta-btn{display:inline-block;padding:14px 32px;border-radius:12px;background:linear-gradient(135deg,#1A7A4A,#10B981);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;text-decoration:none;cursor:pointer;border:none;transition:all 0.2s}
-    .hero-cta-btn:hover{opacity:0.9;transform:translateY(-2px)}
-    .hero-counter{margin-top:20px;color:rgba(255,255,255,0.6);font-size:0.85rem}
-    .hero-counter strong{color:#fff;font-size:1.3rem;font-family:'Syne',sans-serif;font-weight:800}
+/* HERO */
+.hero{position:relative;min-height:380px;display:flex;align-items:center;justify-content:center;background:#0f2018;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.45;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(15,32,24,0.2),rgba(15,32,24,0.75));}
+.hero-content{position:relative;z-index:1;text-align:center;padding:56px 24px;max-width:720px;}
+.hero-title{font-weight:800;font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:-.04em;color:#fff;line-height:1.15;margin-bottom:14px;}
+.hero-subtitle{font-size:1rem;color:rgba(255,255,255,.75);line-height:1.6;margin-bottom:28px;}
+.hero-cta-btn{display:inline-block;padding:15px 36px;border-radius:14px;color:#fff;font-weight:700;font-size:1rem;text-decoration:none;cursor:pointer;border:none;transition:all .2s;}
+.hero-cta-btn:hover{opacity:.9;transform:translateY(-2px);}
+.hero-counter{margin-top:22px;color:rgba(255,255,255,.6);font-size:14px;}
+.hero-counter strong{color:#fff;font-size:1.4rem;font-weight:800;}
+.hero-progress{margin-top:16px;max-width:400px;margin-left:auto;margin-right:auto;}
+.hero-progress-bar{height:6px;background:rgba(255,255,255,.2);border-radius:6px;overflow:hidden;}
+.hero-progress-fill{height:100%;border-radius:6px;transition:width .6s;}
+.hero-progress-label{font-size:12px;color:rgba(255,255,255,.6);margin-top:6px;}
 
-    /* SECTIONS */
-    .section{padding:56px 20px}
-    .section-inner{max-width:760px;margin:0 auto}
-    .section-label{font-size:0.72rem;font-weight:700;color:#1A7A4A;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
-    .section-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.3rem,3vw,1.8rem);letter-spacing:-0.03em;margin-bottom:16px;line-height:1.2}
-    .section-body{font-size:0.95rem;color:#374151;line-height:1.8}
+/* STATS BAND */
+.stats-band{background:var(--white);border-bottom:1px solid var(--border);padding:24px 20px;}
+.stats-inner{max-width:760px;margin:0 auto;display:flex;justify-content:center;gap:48px;flex-wrap:wrap;}
+.stat-item{text-align:center;}
+.stat-val{font-size:1.8rem;font-weight:800;letter-spacing:-.03em;}
+.stat-label{font-size:12px;color:var(--muted);margin-top:3px;}
 
-    /* STATEMENT */
-    .statement-box{background:#fff;border-radius:20px;border:2px solid #D1EDE0;padding:28px;margin-top:20px;position:relative}
-    .statement-quote{font-size:2.5rem;color:#1A7A4A;line-height:1;margin-bottom:8px}
-    .statement-text{font-size:1.05rem;color:#0F0E1A;line-height:1.7;font-style:italic;margin-bottom:20px}
-    .statement-agree{display:flex;align-items:center;gap:10px;padding:12px 16px;background:#F0FAF5;border-radius:10px;cursor:pointer;user-select:none}
-    .statement-cb{width:20px;height:20px;border-radius:5px;border:2px solid #1A7A4A;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
-    .statement-cb.checked{background:#1A7A4A}
-    .statement-cb.checked::after{content:'✓';color:#fff;font-size:0.75rem;font-weight:700}
-    .statement-agree-text{font-size:0.85rem;color:#374151;font-weight:600;line-height:1.4}
+/* MILESTONE BANNER */
+.milestone-banner{padding:14px 20px;text-align:center;font-weight:700;font-size:14px;display:none;}
 
-    /* FORM */
-    .pledge-form-section{background:#fff;padding:56px 20px;border-top:1px solid #D1EDE0;border-bottom:1px solid #D1EDE0}
-    .pledge-form-inner{max-width:580px;margin:0 auto}
-    .form-card{background:#F0FAF5;border-radius:20px;padding:32px;border:1.5px solid #D1EDE0}
-    .form-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-0.03em;margin-bottom:6px}
-    .form-subtitle{font-size:0.88rem;color:#64748B;margin-bottom:24px;line-height:1.5}
-    .form-field{margin-bottom:14px}
-    .form-label{display:block;font-size:0.7rem;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:5px}
-    .form-input{width:100%;padding:11px 16px;border-radius:10px;border:1.5px solid #D1EDE0;background:#fff;color:#0F0E1A;font-size:0.9rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
-    .form-input:focus{border-color:#1A7A4A}
-    .form-input::placeholder{color:#94A3B8}
-    .form-submit{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,#1A7A4A,#10B981);color:#fff;font-size:0.95rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;margin-top:8px}
-    .form-submit:hover:not(:disabled){opacity:0.9;transform:translateY(-1px)}
-    .form-submit:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+/* SECTIONS */
+.section{padding:56px 20px;}
+.section-inner{max-width:760px;margin:0 auto;}
+.section-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
+.section-title{font-weight:800;font-size:clamp(1.3rem,3vw,1.9rem);letter-spacing:-.03em;margin-bottom:16px;line-height:1.2;}
+.section-body{font-size:15px;color:#374151;line-height:1.8;}
+.problem-image{width:100%;border-radius:16px;margin-top:20px;max-height:400px;object-fit:cover;}
 
-    /* FAQ */
-    .faq-section{padding:56px 20px;background:#fff}
-    .faq-item-wrap{border:1.5px solid #D1EDE0;border-radius:12px;margin-bottom:10px;overflow:hidden}
-    .faq-q{padding:16px 20px;font-weight:700;font-size:0.92rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;background:#F0FAF5;transition:background 0.2s}
-    .faq-q:hover{background:#E8F7EF}
-    .faq-arrow{font-size:0.8rem;color:#1A7A4A;transition:transform 0.2s;flex-shrink:0}
-    .faq-arrow.open{transform:rotate(180deg)}
-    .faq-a{padding:0 20px;max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.2s}
-    .faq-a.open{padding:14px 20px;max-height:300px}
-    .faq-a-text{font-size:0.88rem;color:#374151;line-height:1.7}
+/* STATEMENT */
+.statement-box{background:var(--white);border-radius:20px;border:2px solid var(--border);padding:28px;margin-top:20px;position:relative;}
+.statement-quote{font-size:3rem;line-height:1;margin-bottom:6px;}
+.statement-text{font-size:1.05rem;color:var(--text);line-height:1.75;font-style:italic;margin-bottom:22px;}
+.statement-agree{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--bg);border-radius:12px;cursor:pointer;user-select:none;border:1.5px solid var(--border);transition:all .2s;}
+.statement-agree:hover{border-color:var(--accent);}
+.statement-agree.agreed{border-color:var(--accent);background:#dcfce7;}
+.statement-cb{width:22px;height:22px;border-radius:6px;border:2px solid var(--accent);background:var(--white);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:13px;font-weight:700;color:#fff;}
+.statement-cb.checked{background:var(--accent);}
+.statement-agree-text{font-size:14px;color:#374151;font-weight:500;line-height:1.4;}
 
-    /* PLEDGERS WALL */
-    .pledgers-wall{padding:32px 0 0}
-    .pledger-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:100px;background:#DCFCE7;color:#1A7A4A;font-size:0.78rem;font-weight:600;margin:4px}
+/* FORM */
+.pledge-form-section{background:var(--white);padding:56px 20px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.pledge-form-inner{max-width:580px;margin:0 auto;}
+.form-card{background:var(--bg);border-radius:20px;padding:32px;border:1.5px solid var(--border);}
+.form-title{font-weight:800;font-size:1.35rem;letter-spacing:-.03em;margin-bottom:6px;}
+.form-subtitle{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.5;}
+.form-field{margin-bottom:14px;}
+.form-label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px;}
+.form-input{width:100%;padding:11px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--white);color:var(--text);font-size:14px;font-family:var(--font);outline:none;transition:border-color .2s;}
+.form-input:focus{border-color:var(--accent);}
+.form-input::placeholder{color:var(--muted2);}
+.form-input.error{border-color:#ef4444;}
+.phone-wrap{display:flex;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .2s;}
+.phone-wrap:focus-within{border-color:var(--accent);}
+.phone-code{padding:11px 10px;border:none;background:#e8f7ef;color:var(--accent);font-family:var(--font);font-size:13px;font-weight:600;outline:none;cursor:pointer;border-right:1.5px solid var(--border);}
+.phone-inp{flex:1;padding:11px 14px;border:none;background:transparent;font-family:var(--font);font-size:14px;outline:none;color:var(--text);}
+.form-submit{width:100%;padding:15px;border-radius:12px;border:none;color:#fff;font-size:15px;font-weight:700;font-family:var(--font);cursor:pointer;transition:all .2s;margin-top:10px;}
+.form-submit:hover:not(:disabled){opacity:.9;transform:translateY(-1px);}
+.form-submit:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+.form-error{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;font-size:13px;color:#dc2626;margin-bottom:12px;display:none;}
 
-    /* SUCCESS */
-    .success-card{text-align:center;padding:32px 20px}
-    .success-icon{font-size:3rem;margin-bottom:14px;animation:bounceIn 0.5s ease}
-    @keyframes bounceIn{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
-    .success-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;margin-bottom:8px}
-    .success-sub{font-size:0.88rem;color:#64748B;line-height:1.6;margin-bottom:20px}
-    .share-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px}
-    .share-btn{padding:8px 16px;border-radius:9px;border:1.5px solid #D1EDE0;background:#fff;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;color:#1A7A4A;transition:all 0.2s}
-    .share-btn:hover{background:#DCFCE7;border-color:#1A7A4A}
+/* SUCCESS */
+.success-card{text-align:center;padding:36px 24px;}
+.success-icon{font-size:56px;margin-bottom:16px;animation:bounceIn .5s ease;}
+@keyframes bounceIn{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+.success-title{font-weight:800;font-size:1.35rem;margin-bottom:8px;}
+.success-sub{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:20px;}
+.share-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px;}
+.share-btn{padding:9px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--white);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);color:var(--accent);transition:all .2s;}
+.share-btn:hover{background:#dcfce7;border-color:var(--accent);}
+.next-btn{display:inline-block;padding:12px 24px;border-radius:12px;color:#fff;font-weight:700;font-size:14px;text-decoration:none;margin-top:12px;border:none;cursor:pointer;}
 
-    .sf-brand{display:flex;align-items:center;gap:6px;justify-content:center;padding:20px;opacity:0.4}
-    .sf-brand-logo{width:18px;height:18px;border-radius:4px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.55rem;color:#fff}
-    .sf-brand-text{font-size:0.7rem;color:#94A3B8}
-    .spinner{width:28px;height:28px;border:3px solid rgba(26,122,74,0.2);border-top-color:#1A7A4A;border-radius:50%;animation:spin 0.8s linear infinite;margin:60px auto;display:block}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    @media(max-width:600px){nav{padding:0 14px}.logo-nm{display:none}.hero{min-height:260px}.pledge-form-section{padding:32px 14px}.section{padding:36px 14px}}
-  </style>
+/* SUPPORTERS WALL */
+.supporters-section{padding:56px 20px;background:var(--white);}
+.pledger-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:100px;background:#dcfce7;color:#1a7a4a;font-size:13px;font-weight:600;margin:4px;}
+.pledger-card{background:var(--bg);border:1.5px solid var(--border);border-radius:14px;padding:16px;margin-bottom:10px;}
+.pledger-card-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.pledger-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;flex-shrink:0;}
+.pledger-name{font-weight:700;font-size:14px;}
+.pledger-meta{font-size:12px;color:var(--muted);}
+.pledger-message{font-size:13px;color:#374151;font-style:italic;line-height:1.6;}
+
+/* FAQ */
+.faq-section{padding:56px 20px;}
+.faq-item-wrap{border:1.5px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden;}
+.faq-q{padding:16px 20px;font-weight:700;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;background:var(--bg);transition:background .2s;}
+.faq-q:hover{background:#e8f7ef;}
+.faq-arrow{font-size:13px;color:var(--accent);transition:transform .2s;}
+.faq-arrow.open{transform:rotate(180deg);}
+.faq-a{padding:0 20px;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .2s;}
+.faq-a.open{padding:14px 20px;max-height:400px;}
+.faq-a-text{font-size:14px;color:#374151;line-height:1.7;}
+
+/* MILESTONES */
+.milestones-section{padding:40px 20px;background:var(--bg);}
+.milestone-item{display:flex;align-items:center;gap:14px;padding:14px 20px;background:var(--white);border:1.5px solid var(--border);border-radius:12px;margin-bottom:10px;}
+.milestone-item.reached{border-color:var(--accent);background:#dcfce7;}
+.milestone-icon{font-size:24px;}
+.milestone-text{font-size:14px;font-weight:600;}
+.milestone-count{font-size:13px;color:var(--muted);}
+
+.sf-brand{display:flex;align-items:center;gap:6px;justify-content:center;padding:24px;opacity:.4;}
+.sf-brand-logo{width:18px;height:18px;border-radius:4px;background:linear-gradient(135deg,#1a7a4a,#10b981);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:9px;color:#fff;}
+.sf-brand-text{font-size:11px;color:var(--muted2);}
+.spinner{width:28px;height:28px;border:3px solid rgba(26,122,74,.2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:60px auto;display:block;}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:600px){nav{padding:0 14px;}.logo-nm{display:none;}.hero{min-height:280px;}.pledge-form-section{padding:32px 14px;}.section{padding:36px 14px;}.stats-inner{gap:28px;}}
+</style>
 </head>
 <body>
 <nav>
-  <a href="/" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
+  <a href="/" class="nav-logo"><div class="logo-mk" style="background:linear-gradient(135deg,#1a7a4a,#10b981);">S</div><div class="logo-nm">SwoopForm</div></a>
   <div class="pledge-badge">🤝 Pledge & Support</div>
 </nav>
 <div id="page-wrap"><div class="spinner"></div></div>
@@ -104,7 +141,8 @@ import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app
 import{getFirestore,collection,query,where,getDocs,doc,getDoc,addDoc,updateDoc,increment,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
-const app=initializeApp(FB);const db=getFirestore(app);
+const app=initializeApp(FB);
+const db=getFirestore(app);
 
 const pathParts=window.location.pathname.split('/').filter(Boolean);
 const slugFromPath=pathParts[1];
@@ -117,177 +155,208 @@ async function init(){
     if(slugFromPath&&slugFromPath!=='pledge'){
       const q=query(collection(db,'pledges'),where('slug','==',slugFromPath));
       const snap=await getDocs(q);
-      if(!snap.empty){data={id:snap.docs[0].id,...snap.docs[0].data()};pledgeId=snap.docs[0].id}
+      if(!snap.empty){data={id:snap.docs[0].id,...snap.docs[0].data()};pledgeId=snap.docs[0].id;}
     }
     if(!data&&idFromQuery){
       const byId=await getDoc(doc(db,'pledges',idFromQuery));
-      if(byId.exists()){data={id:byId.id,...byId.data()};pledgeId=byId.id}
+      if(byId.exists()){data={id:byId.id,...byId.data()};pledgeId=byId.id;}
     }
-    if(!data){showError('Campaign not found','This pledge campaign may have been removed.');return}
-    if(data.status==='closed'){showError('Campaign closed','This campaign is no longer accepting pledges.');return}
+    if(!data){showError('Campaign not found','This pledge campaign may have been removed.');return;}
+    if(data.status==='closed'||data.accepting===false){showError('Campaign closed','This campaign is no longer accepting pledges.');return;}
     pledge=data;
+    // Apply accent color
+    const color=pledge.color||'#1a7a4a';
+    document.documentElement.style.setProperty('--accent',color);
+    document.documentElement.style.setProperty('--accent2',color);
     injectSEO(pledge);
     hasSigned=localStorage.getItem('signed_pledge_'+pledgeId)==='1';
     renderPage();
-  }catch(e){console.error(e);showError('Something went wrong','Please try again.')}
+  }catch(e){console.error(e);showError('Something went wrong','Please try again.');}
 }
 
 function injectSEO(p){
   document.title=(p.title||'Pledge & Support')+' — SwoopForm';
   const desc=p.heroSubtitle||p.statement||'Sign the pledge on SwoopForm';
-  const addMeta=(n,c,prop)=>{const el=document.createElement('meta');if(prop)el.setAttribute('property',n);else el.setAttribute('name',n);el.setAttribute('content',c);document.head.appendChild(el)};
-  addMeta('description',desc);addMeta('og:title',p.title||'Pledge',true);addMeta('og:description',desc,true);
-  if(p.heroImage)addMeta('og:image',p.heroImage,true);
+  const addMeta=function(n,c,prop){const el=document.createElement('meta');if(prop)el.setAttribute('property',n);else el.setAttribute('name',n);el.setAttribute('content',c);document.head.appendChild(el);};
+  addMeta('description',desc);
+  addMeta('og:title',p.seo?.title||p.title||'Pledge',true);
+  addMeta('og:description',p.seo?.description||desc,true);
+  const img=p.seo?.image||p.heroImage;
+  if(img)addMeta('og:image',img,true);
   addMeta('twitter:card','summary_large_image');
 }
 
 function renderPage(){
-  const total=pledge.totalPledges||0;
-  const shareUrl='https://swoopform.com'+(pledge.slug?'/engage/'+pledge.slug:'#');
-  const fields=pledge.fields||{name:true,email:true};
+  const p=pledge;
+  const total=p.totalPledges||0;
+  const color=p.color||'#1a7a4a';
+  const shareUrl='https://swoopform.com'+(p.slug?'/engage/'+p.slug:'/pledge/?id='+pledgeId);
+  const fields=p.fields||{name:true,email:true};
 
-  // Build form fields HTML
+  // Form fields
   let formFields='';
-  if(fields.name)formFields+=`<div class="form-field"><label class="form-label">Full name *</label><input class="form-input" id="f-name" placeholder="Your full name" required></div>`;
-  if(fields.email)formFields+=`<div class="form-field"><label class="form-label">Email address *</label><input class="form-input" id="f-email" type="email" placeholder="your@email.com" required></div>`;
-  if(fields.phone)formFields+=`<div class="form-field"><label class="form-label">Phone number</label><input class="form-input" id="f-phone" type="tel" placeholder="+91 98765 43210"></div>`;
-  if(fields.city)formFields+=`<div class="form-field"><label class="form-label">City / Location</label><input class="form-input" id="f-city" placeholder="e.g. Mumbai"></div>`;
-  if(fields.org)formFields+=`<div class="form-field"><label class="form-label">Organisation</label><input class="form-input" id="f-org" placeholder="Your organisation or company"></div>`;
-  if(fields.message)formFields+=`<div class="form-field"><label class="form-label">Your message (optional)</label><textarea class="form-input" id="f-message" rows="2" style="resize:vertical" placeholder="Share why you're signing..."></textarea></div>`;
-  if(fields.custom&&fields.customLabel)formFields+=`<div class="form-field"><label class="form-label">${eh(fields.customLabel)}</label><input class="form-input" id="f-custom" placeholder="${eh(fields.customLabel)}"></div>`;
+  if(fields.name)formFields+='<div class="form-field"><label class="form-label">Full Name *</label><input class="form-input" id="f-name" placeholder="Your full name"></div>';
+  if(fields.email)formFields+='<div class="form-field"><label class="form-label">Email Address *</label><input class="form-input" id="f-email" type="email" placeholder="your@email.com"></div>';
+  if(fields.phone)formFields+='<div class="form-field"><label class="form-label">Phone Number</label><div class="phone-wrap"><select class="phone-code"><option>🇮🇳 +91</option><option>🇺🇸 +1</option><option>🇬🇧 +44</option><option>🇦🇺 +61</option></select><input class="phone-inp" id="f-phone" type="tel" placeholder="98765 43210"></div></div>';
+  if(fields.city)formFields+='<div class="form-field"><label class="form-label">City / Location</label><input class="form-input" id="f-city" placeholder="e.g. Mumbai"></div>';
+  if(fields.org)formFields+='<div class="form-field"><label class="form-label">Organisation / Company</label><input class="form-input" id="f-org" placeholder="Your organisation"></div>';
+  if(fields.twitter)formFields+='<div class="form-field"><label class="form-label">Twitter / X Handle</label><input class="form-input" id="f-twitter" placeholder="@yourhandle"></div>';
+  if(fields.linkedin)formFields+='<div class="form-field"><label class="form-label">LinkedIn Profile URL</label><input class="form-input" id="f-linkedin" placeholder="linkedin.com/in/yourname"></div>';
+  if(fields.message)formFields+='<div class="form-field"><label class="form-label">Your Message <span style="font-weight:400;color:var(--muted2)">(optional)</span></label><textarea class="form-input" id="f-message" rows="2" style="resize:vertical;" placeholder="Share why you\'re signing..."></textarea></div>';
+  if(fields.custom&&fields.customLabel)formFields+='<div class="form-field"><label class="form-label">'+eh(fields.customLabel)+'</label><input class="form-input" id="f-custom" placeholder="'+eh(fields.customLabel)+'"></div>';
 
-  // FAQ HTML
-  let faqHtml='';
-  if(pledge.faqs&&pledge.faqs.length){
-    faqHtml=`<div class="faq-section"><div class="section-inner"><div class="section-label">Questions</div><div class="section-title">Frequently asked questions</div><div id="faq-list">${pledge.faqs.map((f,i)=>`<div class="faq-item-wrap"><div class="faq-q" onclick="toggleFAQ(${i})"><span>${eh(f.question)}</span><span class="faq-arrow" id="faq-arrow-${i}">▼</span></div><div class="faq-a" id="faq-a-${i}"><div class="faq-a-text">${eh(f.answer)}</div></div></div>`).join('')}</div></div></div>`;
-  }
+  // Stats band
+  const statsHtml=p.stats&&p.stats.length?'<div class="stats-band"><div class="stats-inner">'+p.stats.map(function(s){return '<div class="stat-item"><div class="stat-val" style="color:'+color+'">'+eh(s.value)+'</div><div class="stat-label">'+eh(s.label)+'</div></div>';}).join('')+'</div></div>':'';
+
+  // Goal progress
+  const goal=p.goal||0;
+  const progressHtml=p.showProgress&&goal>0?'<div class="hero-progress"><div class="hero-progress-bar"><div class="hero-progress-fill" style="width:'+Math.min(100,Math.round(total/goal*100))+'%;background:'+color+'"></div></div><div class="hero-progress-label">'+total.toLocaleString()+' of '+goal.toLocaleString()+' goal ('+Math.min(100,Math.round(total/goal*100))+'%)</div></div>':'';
+
+  // Milestones
+  const milestoneHtml=p.milestones&&p.milestones.length?'<div class="milestones-section"><div class="section-inner"><div class="section-label" style="color:'+color+'">Milestones</div><div class="section-title">Our Journey</div>'+p.milestones.sort(function(a,b){return a.count-b.count;}).map(function(m){const reached=total>=m.count;return '<div class="milestone-item'+(reached?' reached':'')+'" ><div class="milestone-icon">'+(reached?'🏆':'🎯')+'</div><div><div class="milestone-text">'+eh(m.label)+'</div><div class="milestone-count">'+m.count.toLocaleString()+' pledges'+(reached?' — Achieved! ✅':'')+'</div></div></div>';}).join('')+'</div></div>':'';
+
+  // FAQ
+  const faqHtml=p.faqs&&p.faqs.length?'<div class="faq-section"><div class="section-inner"><div class="section-label" style="color:'+color+'">Questions</div><div class="section-title">Frequently Asked Questions</div>'+p.faqs.map(function(f,i){return '<div class="faq-item-wrap"><div class="faq-q" onclick="toggleFAQ('+i+')"><span>'+eh(f.question)+'</span><span class="faq-arrow" id="faq-arrow-'+i+'">▼</span></div><div class="faq-a" id="faq-a-'+i+'"><div class="faq-a-text">'+eh(f.answer)+'</div></div></div>';}).join('')+'</div></div>':'';
+
+  // Current milestone
+  const currentMilestone=p.milestones?p.milestones.filter(function(m){return total>=m.count;}).sort(function(a,b){return b.count-a.count;})[0]:null;
+  const milestoneBannerHtml=currentMilestone?'<div class="milestone-banner" id="milestone-banner" style="background:'+color+'15;color:'+color+';display:block;">🏆 Milestone reached: '+eh(currentMilestone.label)+'</div>':'';
 
   document.getElementById('page-wrap').innerHTML=`
-    <!-- HERO -->
-    <div class="hero" id="hero-section">
-      ${pledge.heroImage?`<div class="hero-bg" style="background-image:url('${pledge.heroImage}')"></div>`:''}
-      ${pledge.heroVideo&&(pledge.heroVideo.includes('youtube')||pledge.heroVideo.includes('youtu.be'))?`<div style="position:absolute;inset:0;overflow:hidden;opacity:0.45"><iframe src="https://www.youtube.com/embed/${getYTId(pledge.heroVideo)}?autoplay=1&mute=1&loop=1&playlist=${getYTId(pledge.heroVideo)}" style="width:100%;height:100%;border:none;pointer-events:none" allowfullscreen></iframe></div>`:''}
+    <div class="hero" id="hero-section" style="background:${color}22;">
+      ${p.heroImage?'<div class="hero-bg" style="background-image:url(\''+p.heroImage+'\')"></div>':''}
+      ${p.heroVideo&&(p.heroVideo.includes('youtube')||p.heroVideo.includes('youtu.be'))?'<div style="position:absolute;inset:0;overflow:hidden;opacity:0.45"><iframe src="https://www.youtube.com/embed/'+getYTId(p.heroVideo)+'?autoplay=1&mute=1&loop=1&playlist='+getYTId(p.heroVideo)+'" style="width:100%;height:100%;border:none;pointer-events:none" allowfullscreen></iframe></div>':''}
       <div class="hero-overlay"></div>
       <div class="hero-content">
-        <h1 class="hero-title">${pledge.title||'Take the Pledge'}</h1>
-        ${pledge.heroSubtitle?`<p class="hero-subtitle">${pledge.heroSubtitle}</p>`:''}
-        ${hasSigned?`<div style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:12px;background:rgba(255,255,255,0.15);color:#fff;font-weight:700">✅ You've signed this pledge</div>`:
-        `<button class="hero-cta-btn" onclick="scrollToForm()">${pledge.heroCTA||'Take the Pledge →'}</button>`}
-        ${pledge.showCounter?`<div class="hero-counter"><strong>${total.toLocaleString()}</strong> pledge${total!==1?'s':''} and counting</div>`:''}
+        <h1 class="hero-title">${eh(p.title||'Take the Pledge')}</h1>
+        ${p.heroSubtitle?'<p class="hero-subtitle">'+eh(p.heroSubtitle)+'</p>':''}
+        ${hasSigned?'<div style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:12px;background:rgba(255,255,255,.15);color:#fff;font-weight:700;">✅ You\'ve signed this pledge</div>':'<button class="hero-cta-btn" style="background:'+color+';" onclick="scrollToForm()">'+eh(p.heroCTA||'Take the Pledge →')+'</button>'}
+        ${p.showCounter?'<div class="hero-counter"><strong>'+total.toLocaleString()+'</strong> pledge'+(total!==1?'s':'')+' and counting</div>':''}
+        ${progressHtml}
       </div>
     </div>
 
-    <!-- PROBLEM -->
-    ${pledge.showProblem&&pledge.problem?.content?`<div class="section" style="background:#fff"><div class="section-inner"><div class="section-label">The issue</div><div class="section-title">${eh(pledge.problem.title||'Why This Matters')}</div><div class="section-body">${eh(pledge.problem.content)}</div></div></div>`:''}
+    ${milestoneBannerHtml}
+    ${statsHtml}
 
-    <!-- PLEDGE STATEMENT -->
+    ${p.showProblem&&p.problem?.content?'<div class="section" style="background:var(--white)"><div class="section-inner"><div class="section-label" style="color:'+color+'">The Issue</div><div class="section-title">'+eh(p.problem.title||'Why This Matters')+'</div><div class="section-body">'+eh(p.problem.content)+'</div>'+(p.problem.image?'<img src="'+p.problem.image+'" class="problem-image" alt="Problem">':'')+'</div></div>':''}
+
     <div class="section"><div class="section-inner">
-      <div class="section-label">Our commitment</div>
-      <div class="section-title">${eh(pledge.statementTitle||'The Pledge')}</div>
+      <div class="section-label" style="color:${color}">Our Commitment</div>
+      <div class="section-title">${eh(p.statementTitle||'The Pledge')}</div>
       <div class="statement-box">
-        <div class="statement-quote">"</div>
-        <div class="statement-text">${eh(pledge.statement||'')}</div>
-        <div class="statement-agree" onclick="toggleAgree()">
-          <div class="statement-cb" id="agree-cb"></div>
-          <div class="statement-agree-text">I have read and agree to commit to this pledge</div>
-        </div>
+        <div class="statement-quote" style="color:${color}">"</div>
+        <div class="statement-text">${eh(p.statement||'')}</div>
+        ${p.requireAgree!==false?`<div class="statement-agree" id="agree-wrap" onclick="toggleAgree()"><div class="statement-cb" id="agree-cb"></div><div class="statement-agree-text">I have read and agree to commit to this pledge</div></div>`:''}
       </div>
     </div></div>
 
-    <!-- PLEDGE FORM -->
     <div class="pledge-form-section" id="pledge-form-section">
       <div class="pledge-form-inner">
-        ${hasSigned?`<div class="form-card success-card">
-          <div class="success-icon">🎉</div>
-          <div class="success-title">You've signed this pledge!</div>
-          <div class="success-sub">Thank you for your commitment. Share this campaign to inspire others.</div>
-          ${pledge.allowShare?`<div class="share-row">
-            <button class="share-btn" onclick="shareWA()">💬 WhatsApp</button>
-            <button class="share-btn" onclick="copyLink('${shareUrl}')">🔗 Copy link</button>
-          </div>`:''}
-        </div>`:
-        `<div class="form-card" id="form-wrap">
-          <div class="form-title">${eh(pledge.formTitle||'Sign the Pledge')}</div>
-          ${pledge.formSubtitle?`<div class="form-subtitle">${eh(pledge.formSubtitle)}</div>`:''}
-          <div id="form-error" style="background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:10px 14px;font-size:0.82rem;color:#DC2626;margin-bottom:12px;display:none"></div>
+        ${hasSigned?`<div class="form-card success-card"><div class="success-icon">🎉</div><div class="success-title">${eh(p.thankYou?.heading||'Pledge signed!')}</div><div class="success-sub">${eh(p.thankYou?.message||'Thank you for your commitment!')}</div>${p.allowShare?'<div class="share-row"><button class="share-btn" onclick="shareWA()">💬 WhatsApp</button><button class="share-btn" onclick="shareTW()">🐦 Twitter</button><button class="share-btn" onclick="copyLink()">🔗 Copy Link</button></div>':''}</div>`
+        :`<div class="form-card" id="form-wrap">
+          <div class="form-title">${eh(p.formTitle||'Sign the Pledge')}</div>
+          ${p.formSubtitle?'<div class="form-subtitle">'+eh(p.formSubtitle)+'</div>':''}
+          <div class="form-error" id="form-error"></div>
           ${formFields}
-          <button class="form-submit" id="form-submit" onclick="submitPledge()">Sign the Pledge 🤝</button>
-          <div style="font-size:0.7rem;color:#94A3B8;margin-top:10px;text-align:center;line-height:1.4">By signing you agree to the pledge statement above.</div>
+          <button class="form-submit" id="form-submit" onclick="submitPledge()" style="background:linear-gradient(135deg,${color},${color}cc);">Sign the Pledge 🤝</button>
+          <div style="font-size:11px;color:var(--muted2);margin-top:10px;text-align:center;">By signing you agree to the pledge statement above.</div>
         </div>`}
       </div>
     </div>
 
-    ${faqHtml}
+    ${p.supporters?.showNames&&total>0?`<div class="supporters-section"><div class="section-inner"><div class="section-label" style="color:${color}">Our Community</div><div class="section-title">${total.toLocaleString()} Pledge${total!==1?'s':''} Signed</div><div id="supporters-wall"><div class="spinner"></div></div></div></div>`:''}
 
-    ${pledge.showNames&&total>0?`<div class="section"><div class="section-inner"><div class="section-label">Our community</div><div class="section-title">${total.toLocaleString()} pledge${total!==1?'s':''} signed</div><div class="pledgers-wall" id="pledgers-wall"><div class="spinner"></div></div></div></div>`:''}
+    ${milestoneHtml}
+    ${faqHtml}
 
     <div class="sf-brand"><div class="sf-brand-logo">S</div><div class="sf-brand-text">Powered by SwoopForm</div></div>`;
 
-  if(pledge.showNames&&total>0)loadPledgers();
+  if(p.supporters?.showNames&&total>0)loadSupporters();
 }
 
-async function loadPledgers(){
+async function loadSupporters(){
   try{
     const snap=await getDocs(query(collection(db,'pledgeResponses'),where('pledgeId','==',pledgeId)));
-    const names=snap.docs.map(d=>d.data().name||'Anonymous').filter(Boolean).slice(0,50);
-    const wall=document.getElementById('pledgers-wall');
-    if(wall)wall.innerHTML=names.map(n=>`<span class="pledger-chip">🤝 ${eh(n)}</span>`).join('');
-  }catch(e){}
+    const pledgers=snap.docs.map(function(d){return d.data();}).slice(0,50);
+    const wall=document.getElementById('supporters-wall');
+    if(!wall)return;
+    const showMsg=pledge.supporters?.showMessages;
+    const showCity=pledge.supporters?.showCities;
+    const showOrg=pledge.supporters?.showOrgs;
+    const colors=['#1a7a4a','#0ea5e9','#7c3aed','#d97706','#ec4899'];
+
+    if(showMsg||showCity||showOrg){
+      wall.innerHTML=pledgers.map(function(p,i){
+        const color=colors[i%colors.length];
+        const initials=(p.name||'?').split(' ').map(function(n){return n[0];}).join('').substring(0,2).toUpperCase();
+        const meta=[showCity&&p.city,showOrg&&p.org].filter(Boolean).join(' · ');
+        return '<div class="pledger-card"><div class="pledger-card-header"><div class="pledger-avatar" style="background:'+color+'">'+initials+'</div><div><div class="pledger-name">'+eh(p.name||'Anonymous')+'</div>'+(meta?'<div class="pledger-meta">'+eh(meta)+'</div>':'')+'</div></div>'+(showMsg&&p.message?'<div class="pledger-message">"'+eh(p.message)+'"</div>':'')+'</div>';
+      }).join('');
+    }else{
+      wall.innerHTML=pledgers.map(function(p){return '<span class="pledger-chip">🤝 '+eh(p.name||'Anonymous')+'</span>';}).join('');
+    }
+  }catch(e){console.error(e);}
 }
 
 window.toggleAgree=function(){
   agreeChecked=!agreeChecked;
-  const cb=document.getElementById('agree-cb');if(cb)cb.classList.toggle('checked',agreeChecked);
-}
-window.scrollToForm=function(){document.getElementById('pledge-form-section')?.scrollIntoView({behavior:'smooth',block:'start'})}
+  const cb=document.getElementById('agree-cb');
+  const wrap=document.getElementById('agree-wrap');
+  if(cb){cb.classList.toggle('checked',agreeChecked);if(agreeChecked)cb.textContent='✓';else cb.textContent='';}
+  if(wrap)wrap.classList.toggle('agreed',agreeChecked);
+};
+
+window.scrollToForm=function(){document.getElementById('pledge-form-section')?.scrollIntoView({behavior:'smooth',block:'start'});};
 window.toggleFAQ=function(i){
   const a=document.getElementById('faq-a-'+i);const arrow=document.getElementById('faq-arrow-'+i);
   if(!a||!arrow)return;
   const open=a.classList.toggle('open');arrow.classList.toggle('open',open);
-}
+};
 
 window.submitPledge=async function(){
-  const btn=document.getElementById('form-submit');const errEl=document.getElementById('form-error');
+  const btn=document.getElementById('form-submit');
+  const errEl=document.getElementById('form-error');
   if(errEl)errEl.style.display='none';
   const fields=pledge.fields||{name:true,email:true};
   const name=fields.name?document.getElementById('f-name')?.value.trim():'Anonymous';
   const email=fields.email?document.getElementById('f-email')?.value.trim():'';
-  if(fields.name&&!name){showFormError('Please enter your full name');return}
-  if(fields.email&&!email){showFormError('Please enter your email address');return}
-  if(fields.email&&email&&!email.includes('@')){showFormError('Please enter a valid email address');return}
-  if(!agreeChecked){showFormError('Please read and agree to the pledge statement above');scrollToStatement();return}
+  if(fields.name&&!name){showFormError('Please enter your full name.');return;}
+  if(fields.email&&!email){showFormError('Please enter your email address.');return;}
+  if(fields.email&&email&&!email.includes('@')){showFormError('Please enter a valid email address.');return;}
+  if(pledge.requireAgree!==false&&!agreeChecked){showFormError('Please read and agree to the pledge statement above.');document.querySelector('.statement-box')?.scrollIntoView({behavior:'smooth',block:'center'});return;}
   btn.disabled=true;btn.textContent='Signing...';
   try{
     const response={pledgeId,pledgeSlug:slugFromPath||idFromQuery,name,email,submittedAt:serverTimestamp()};
-    if(fields.phone)response.phone=document.getElementById('f-phone')?.value.trim()||'';
+    if(fields.phone){const code=document.querySelector('.phone-code');const inp=document.getElementById('f-phone');response.phone=(code?code.value:'')+' '+(inp?inp.value.trim():'');}
     if(fields.city)response.city=document.getElementById('f-city')?.value.trim()||'';
     if(fields.org)response.org=document.getElementById('f-org')?.value.trim()||'';
+    if(fields.twitter)response.twitter=document.getElementById('f-twitter')?.value.trim()||'';
+    if(fields.linkedin)response.linkedin=document.getElementById('f-linkedin')?.value.trim()||'';
     if(fields.message)response.message=document.getElementById('f-message')?.value.trim()||'';
     if(fields.custom)response.custom=document.getElementById('f-custom')?.value.trim()||'';
     await addDoc(collection(db,'pledgeResponses'),response);
     await updateDoc(doc(db,'pledges',pledgeId),{totalPledges:increment(1),updatedAt:serverTimestamp()});
     localStorage.setItem('signed_pledge_'+pledgeId,'1');
     hasSigned=true;
-    // Show success
+    const shareUrl='https://swoopform.com'+(pledge.slug?'/engage/'+pledge.slug:'/pledge/?id='+pledgeId);
     const wrap=document.getElementById('form-wrap');
-    const shareUrl='https://swoopform.com'+(pledge.slug?'/engage/'+pledge.slug:'#');
-    if(wrap)wrap.innerHTML=`<div class="success-card"><div class="success-icon">🎉</div><div class="success-title">Pledge signed!</div><div class="success-sub">Thank you, ${eh(name)}! Your commitment has been recorded.</div>${pledge.allowShare?`<div class="share-row"><button class="share-btn" onclick="shareWA()">💬 WhatsApp</button><button class="share-btn" onclick="copyLink('${shareUrl}')">🔗 Copy link</button></div>`:''}`;
-    // Update counter
-    const hc=document.querySelector('.hero-counter');if(hc){const newTotal=(pledge.totalPledges||0)+1;hc.innerHTML=`<strong>${newTotal.toLocaleString()}</strong> pledge${newTotal!==1?'s':''} and counting`}
-  }catch(e){console.error(e);btn.disabled=false;btn.textContent='Sign the Pledge 🤝';showFormError('Error submitting. Please try again.')}
-}
+    const ty=pledge.thankYou||{};
+    if(wrap)wrap.innerHTML='<div class="success-card"><div class="success-icon">🎉</div><div class="success-title">'+eh(ty.heading||'Pledge signed!')+'</div><div class="success-sub">'+eh(ty.message||'Thank you, '+name+'! Your commitment has been recorded.')+'</div>'+(pledge.allowShare?'<div class="share-row"><button class="share-btn" onclick="shareWA()">💬 WhatsApp</button><button class="share-btn" onclick="shareTW()">🐦 Twitter</button><button class="share-btn" onclick="copyLink()">🔗 Copy Link</button></div>':'')+(ty.nextBtn&&ty.nextUrl?'<a href="https://'+ty.nextUrl+'" class="next-btn" style="background:var(--accent);display:inline-block;margin-top:16px;">'+eh(ty.nextBtn)+' →</a>':'')+'</div>';
+    const hc=document.querySelector('.hero-counter');
+    if(hc){const newTotal=(pledge.totalPledges||0)+1;hc.innerHTML='<strong>'+newTotal.toLocaleString()+'</strong> pledge'+(newTotal!==1?'s':'')+' and counting';}
+  }catch(e){console.error(e);btn.disabled=false;btn.textContent='Sign the Pledge 🤝';showFormError('Error submitting. Please try again.');}
+};
 
-function showFormError(msg){const el=document.getElementById('form-error');if(el){el.textContent=msg;el.style.display='block'}}
-function scrollToStatement(){document.querySelector('.statement-box')?.scrollIntoView({behavior:'smooth',block:'center'})}
-function getYTId(url){const m=url.match(/(?:v=|youtu\.be\/)([^&\s]+)/);return m?m[1]:''}
-function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}
-window.shareWA=function(){window.open('https://wa.me/?text='+encodeURIComponent('Join this pledge: https://swoopform.com'+(pledge?.slug?'/engage/'+pledge.slug:'')),'_blank')}
-window.copyLink=function(url){navigator.clipboard.writeText(url).then(()=>alert('Link copied!'))}
+function showFormError(msg){const el=document.getElementById('form-error');if(el){el.textContent=msg;el.style.display='block';}}
+function getYTId(url){const m=url.match(/(?:v=|youtu\.be\/)([^&\s]+)/);return m?m[1]:'';}
+function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+const shareUrl=()=>'https://swoopform.com'+(pledge?.slug?'/engage/'+pledge.slug:'/pledge/?id='+pledgeId);
+window.shareWA=function(){window.open('https://wa.me/?text='+encodeURIComponent('Join this pledge: '+shareUrl()),'_blank');};
+window.shareTW=function(){window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent('I just signed this pledge! Join me: '+shareUrl()),'_blank');};
+window.copyLink=function(){navigator.clipboard.writeText(shareUrl()).then(function(){alert('Link copied!');});};
 
-function showError(title,msg){
-  document.getElementById('page-wrap').innerHTML=`<div style="text-align:center;padding:60px 20px"><div style="font-size:2.5rem;margin-bottom:12px">🤝</div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:6px">${title}</div><p style="color:#64748B;font-size:0.85rem">${msg}</p><br><a href="/" style="color:#1A7A4A;font-weight:600;text-decoration:none">← SwoopForm</a></div>`;
-}
-
+function showError(title,msg){document.getElementById('page-wrap').innerHTML='<div style="text-align:center;padding:60px 20px"><div style="font-size:48px;margin-bottom:16px">🤝</div><div style="font-weight:800;font-size:18px;margin-bottom:8px">'+title+'</div><p style="color:var(--muted);font-size:14px">'+msg+'</p><br><a href="/" style="color:var(--accent);font-weight:600;text-decoration:none">← SwoopForm</a></div>';}
 init();
 </script>
 </body>
