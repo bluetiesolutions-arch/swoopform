@@ -277,10 +277,13 @@
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getFirestore,collection,addDoc,doc,updateDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getFirestore,collection,addDoc,doc,updateDoc,getDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
-const app=initializeApp(FB);const auth=getAuth(app);const db=getFirestore(app);
+const app=initializeApp(FB);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
 let U=null,PID=null,faqs=[],stats=[],milestones=[];
 
 onAuthStateChanged(auth,async function(u){
@@ -293,140 +296,179 @@ onAuthStateChanged(auth,async function(u){
   else{renderFAQs();renderStats();renderMilestones();}
 });
 
-window.showPanel=function(p){
-  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.sb-item').forEach(x=>x.classList.remove('active'));
-  document.getElementById('panel-'+p).classList.add('active');
-  document.getElementById('sn-'+p)?.classList.add('active');
-  closeSb();
+async function loadExisting(id){
+  try{
+    const snap=await getDoc(doc(db,'pledges',id));
+    if(!snap.exists())return;
+    const d=snap.data();
+    const set=function(eid,val){const el=document.getElementById(eid);if(el&&val!==undefined&&val!==null)el.value=val;};
+    set('hero-title',d.title);
+    const nt=document.getElementById('nav-t');if(nt)nt.textContent=d.title||'Pledge Campaign';
+    set('hero-subtitle',d.heroSubtitle);set('hero-cta',d.heroCTA);
+    set('hero-image',d.heroImage);set('hero-video',d.heroVideo);
+    set('statement-title',d.statementTitle);set('pledge-statement',d.statement);
+    set('problem-title',d.problem?.title);set('problem-content',d.problem?.content);
+    set('form-title',d.formTitle);set('form-subtitle',d.formSubtitle);
+    set('pledge-goal',d.goal);
+    set('pledge-category',d.category);
+    set('seo-slug',d.slug);set('seo-title',d.seo?.title);set('seo-desc',d.seo?.description);
+    set('ty-heading',d.thankYou?.heading);set('ty-message',d.thankYou?.message);
+    if(d.heroImage)previewMedia('image',d.heroImage);
+    if(d.heroVideo)previewMedia('video',d.heroVideo);
+    const tog=function(eid,val){if(val===undefined||val===null)return;const el=document.getElementById(eid);if(el){val?el.classList.add('on'):el.classList.remove('on');}};
+    tog('field-name',d.fields?.name);tog('field-email',d.fields?.email);tog('field-phone',d.fields?.phone);
+    tog('field-city',d.fields?.city);tog('field-org',d.fields?.org);tog('field-message',d.fields?.message);
+    tog('field-custom',d.fields?.custom);
+    if(d.fields?.custom){
+      const cw=document.getElementById('custom-field-wrap');if(cw)cw.style.display='block';
+      set('custom-field-label',d.fields?.customLabel);
+    }
+    tog('tgl-counter',d.showCounter);tog('tgl-names',d.showNames);tog('tgl-public',d.isPublic);
+    tog('tgl-share',d.allowShare);tog('tgl-problem',d.showProblem);
+    faqs=d.faqs||[];stats=d.stats||[];milestones=d.milestones||[];
+    renderFAQs();renderStats();renderMilestones();
+    toast('Loaded for editing ✏️');
+  }catch(e){console.error(e);}
 }
-window.openSb=()=>{document.getElementById('sidebar').classList.add('open');document.getElementById('sbo').classList.add('open')}
-window.closeSb=()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('sbo').classList.remove('open')}
+
+window.showPanel=function(p){
+  document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.sb-item').forEach(function(x){x.classList.remove('active');});
+  document.getElementById('panel-'+p).classList.add('active');
+  const btn=document.getElementById('sn-'+p);if(btn)btn.classList.add('active');
+  window.closeSb&&window.closeSb();
+};
+
+window.openSb=function(){document.getElementById('sidebar').classList.add('open');document.getElementById('sbo').classList.add('open');};
+window.closeSb=function(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sbo').classList.remove('open');};
 
 window.previewMedia=function(type,url){
   if(type==='image'){
-    const wrap=document.getElementById('preview-image');
-    const img=document.getElementById('preview-image-img');
-    if(url){wrap.style.display='block';img.src=url;img.onerror=()=>wrap.style.display='none'}
-    else wrap.style.display='none';
+    const wrap=document.getElementById('preview-image');const img=document.getElementById('preview-image-img');
+    if(url&&wrap&&img){wrap.style.display='block';img.src=url;img.onerror=function(){wrap.style.display='none';};}
+    else if(wrap)wrap.style.display='none';
   }
   if(type==='video'){
-    const wrap=document.getElementById('preview-video');
-    const frame=document.getElementById('preview-video-frame');
-    if(url&&(url.includes('youtube.com')||url.includes('youtu.be'))){
+    const wrap=document.getElementById('preview-video');const frame=document.getElementById('preview-video-frame');
+    if(url&&(url.includes('youtube.com')||url.includes('youtu.be'))&&wrap&&frame){
       const m=url.match(/(?:v=|youtu\.be\/)([^&\s]+)/);
-      if(m){wrap.style.display='block';frame.src='https://www.youtube.com/embed/'+m[1]+'?mute=1'}
-    } else wrap.style.display='none';
+      if(m){wrap.style.display='block';frame.src='https://www.youtube.com/embed/'+m[1]+'?mute=1';}
+    }else if(wrap)wrap.style.display='none';
   }
-}
+};
 
 window.toggleCustomField=function(){
   const on=document.getElementById('field-custom').classList.contains('on');
-  document.getElementById('custom-field-wrap').style.display=on?'block':'none';
-}
+  const wrap=document.getElementById('custom-field-wrap');
+  if(wrap)wrap.style.display=on?'block':'none';
+};
 
-// FAQ
 function renderFAQs(){
   const list=document.getElementById('faq-list');if(!list)return;
-  if(!faqs.length){list.innerHTML='<div style="text-align:center;padding:16px;color:#94A3B8;font-size:0.82rem">No FAQs yet. Click below to add one.</div>';return}
-  list.innerHTML=faqs.map((f,i)=>`
-    <div class="faq-item">
-      <button class="faq-del" onclick="removeFAQ(${i})">✕</button>
-      <div class="fl"><label class="ll">Question</label><input class="ii" id="faq-q-${i}" value="${eh(f.question)}" placeholder="e.g. Is this pledge legally binding?" oninput="faqs[${i}].question=this.value"></div>
-      <div class="fl" style="margin-bottom:0"><label class="ll">Answer</label><textarea class="ii" id="faq-a-${i}" rows="2" style="resize:vertical" oninput="faqs[${i}].answer=this.value">${eh(f.answer)}</textarea></div>
-    </div>`).join('');
+  if(!faqs.length){list.innerHTML='<div style="text-align:center;padding:16px;color:#94A3B8;font-size:13px;">No FAQs yet.</div>';return;}
+  list.innerHTML=faqs.map(function(f,i){
+    return '<div class="faq-item"><button class="faq-del" onclick="window.removeFAQ('+i+')">✕</button>'
+      +'<div class="fl"><label class="ll">Question</label><input class="ii" value="'+eh(f.question)+'" placeholder="Question..." oninput="faqs['+i+'].question=this.value"></div>'
+      +'<div class="fl" style="margin-bottom:0"><label class="ll">Answer</label><textarea class="ii" rows="2" style="resize:vertical;" oninput="faqs['+i+'].answer=this.value">'+eh(f.answer)+'</textarea></div>'
+      +'</div>';
+  }).join('');
 }
-window.addFAQ=function(){
-  faqs.push({question:'',answer:''});renderFAQs();
-  setTimeout(()=>{const inp=document.getElementById('faq-q-'+(faqs.length-1));if(inp)inp.focus()},60);
+window.addFAQ=function(){faqs.push({question:'',answer:''});renderFAQs();};
+window.removeFAQ=function(i){faqs.splice(i,1);renderFAQs();};
+
+function renderStats(){
+  const c=document.getElementById('stats-list');if(!c)return;
+  c.innerHTML=stats.map(function(s,i){
+    return '<div style="display:flex;gap:8px;margin-bottom:8px;">'
+      +'<input class="ii" style="width:100px;" value="'+eh(s.value)+'" placeholder="50,000+" oninput="stats['+i+'].value=this.value">'
+      +'<input class="ii" style="flex:1;" value="'+eh(s.label)+'" placeholder="trees planted" oninput="stats['+i+'].label=this.value">'
+      +'<button onclick="removeStat('+i+')" style="background:none;border:none;color:#94A3B8;cursor:pointer;font-size:16px;padding:4px;">×</button>'
+      +'</div>';
+  }).join('');
 }
-window.removeFAQ=function(i){faqs.splice(i,1);renderFAQs()}
+window.addStat=function(){stats.push({value:'',label:''});renderStats();};
+window.removeStat=function(i){stats.splice(i,1);renderStats();};
+
+function renderMilestones(){
+  const c=document.getElementById('milestones-list');if(!c)return;
+  c.innerHTML=milestones.map(function(m,i){
+    return '<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">'
+      +'<input class="ii" type="number" value="'+m.count+'" placeholder="1000" style="width:90px;" oninput="milestones['+i+'].count=parseInt(this.value)||0">'
+      +'<span style="font-size:12px;color:#64748B;">pledges →</span>'
+      +'<input class="ii" value="'+eh(m.label)+'" placeholder="🎉 1,000 Strong!" style="flex:1;" oninput="milestones['+i+'].label=this.value">'
+      +'<button onclick="removeMilestone('+i+')" style="background:none;border:none;color:#94A3B8;cursor:pointer;font-size:16px;padding:4px;">×</button>'
+      +'</div>';
+  }).join('');
+}
+window.addMilestone=function(){milestones.push({count:0,label:''});renderMilestones();};
+window.removeMilestone=function(i){milestones.splice(i,1);renderMilestones();};
 
 window.autoSlug=function(){
   const t=document.getElementById('hero-title').value.trim();
-  if(!t){toast('Add a campaign title first');return}
+  if(!t){toast('Add a campaign title first');return;}
   const slug=t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50);
   document.getElementById('seo-slug').value=slug;
   setSlugStatus('✓ swoopform.com/engage/'+slug,true);
-}
+};
 window.validateSlug=function(inp){
   inp.value=inp.value.replace(/[^a-z0-9-]/g,'');
   if(inp.value.length>3)setSlugStatus('✓ swoopform.com/engage/'+inp.value,true);
-  else if(inp.value.length>0)setSlugStatus('Too short — min 4 characters',false);
+  else if(inp.value.length>0)setSlugStatus('Too short',false);
   else setSlugStatus('',null);
-}
+};
 function setSlugStatus(msg,ok){
-  const s=document.getElementById('slug-status');
+  const s=document.getElementById('slug-status');if(!s)return;
   s.textContent=msg;s.style.color=ok===true?'#10B981':ok===false?'#EF4444':'#94A3B8';
 }
 
-function isTgl(id){return document.getElementById(id)?.classList.contains('on')}
+function isTgl(id){return document.getElementById(id)?.classList.contains('on');}
+function gv(id){const el=document.getElementById(id);return el?el.value.trim():'';}
 
 function getData(status){
-  const title=document.getElementById('hero-title').value.trim();
-  if(!title){toast('Please add a campaign title');return null}
-  const statement=document.getElementById('pledge-statement').value.trim();
-  if(!statement){toast('Please add a pledge statement');return null}
-  const slug=document.getElementById('seo-slug').value.trim();
+  const title=gv('hero-title');if(!title){toast('Please add a campaign title');return null;}
+  const statement=gv('pledge-statement');if(!statement){toast('Please add a pledge statement');return null;}
   return{
-    title,
-    heroSubtitle:document.getElementById('hero-subtitle').value.trim(),
-    heroCTA:document.getElementById('hero-cta').value.trim()||'Take the Pledge →',
-    heroImage:document.getElementById('hero-image').value.trim(),
-    heroVideo:document.getElementById('hero-video').value.trim(),
-    statementTitle:document.getElementById('statement-title').value.trim()||'The Pledge',
-    statement,
-    problem:{
-      title:document.getElementById('problem-title').value.trim()||'Why This Matters',
-      content:document.getElementById('problem-content').value.trim()
-    },
-    formTitle:document.getElementById('form-title').value.trim()||'Sign the Pledge',
-    formSubtitle:document.getElementById('form-subtitle').value.trim(),
+    title,status,formType:'pledge',
+    heroSubtitle:gv('hero-subtitle'),heroCTA:gv('hero-cta')||'Take the Pledge →',
+    heroImage:gv('hero-image'),heroVideo:gv('hero-video'),
+    statementTitle:gv('statement-title')||'The Pledge',statement,
+    problem:{title:gv('problem-title')||'Why This Matters',content:gv('problem-content')},
+    formTitle:gv('form-title')||'Sign the Pledge',formSubtitle:gv('form-subtitle'),
     fields:{
-      name:isTgl('field-name'),
-      email:isTgl('field-email'),
-      phone:isTgl('field-phone'),
-      city:isTgl('field-city'),
-      org:isTgl('field-org'),
-      message:isTgl('field-message'),
-      custom:isTgl('field-custom'),
-      customLabel:document.getElementById('custom-field-label')?.value.trim()||''
+      name:isTgl('field-name'),email:isTgl('field-email'),phone:isTgl('field-phone'),
+      city:isTgl('field-city'),org:isTgl('field-org'),message:isTgl('field-message'),
+      custom:isTgl('field-custom'),customLabel:gv('custom-field-label')
     },
-    showCounter:isTgl('tgl-counter'),
-    showNames:isTgl('tgl-names'),
-    goal:parseInt(document.getElementById('pledge-goal').value)||null,
-    faqs,
-    category:document.getElementById('pledge-category').value||'Community',
-    isPublic:isTgl('tgl-public'),
-    allowShare:isTgl('tgl-share'),
-    showProblem:isTgl('tgl-problem'),
-    slug:slug||null,
-    seo:{
-      title:document.getElementById('seo-title').value.trim(),
-      description:document.getElementById('seo-desc').value.trim()
-    },
-    status,userId:U.uid,totalPledges:0,updatedAt:serverTimestamp()
+    showCounter:isTgl('tgl-counter'),showNames:isTgl('tgl-names'),
+    goal:parseInt(gv('pledge-goal'))||null,
+    stats,milestones,faqs,
+    category:gv('pledge-category')||'Community',
+    isPublic:isTgl('tgl-public'),allowShare:isTgl('tgl-share'),showProblem:isTgl('tgl-problem'),
+    accepting:isTgl('tgl-accepting')||true,
+    slug:gv('seo-slug')||null,
+    seo:{title:gv('seo-title'),description:gv('seo-desc')},
+    userId:U.uid,updatedAt:serverTimestamp()
   };
 }
 
 async function save(status){
   const data=getData(status);if(!data)return null;
   try{
-    if(PID){await updateDoc(doc(db,'pledges',PID),data);return PID}
-    else{data.createdAt=serverTimestamp();const ref=await addDoc(collection(db,'pledges'),data);PID=ref.id;return PID}
-  }catch(e){console.error(e);toast('Error saving. Please try again.');return null}
+    if(PID){await updateDoc(doc(db,'pledges',PID),data);return PID;}
+    else{data.createdAt=serverTimestamp();data.totalPledges=0;const ref=await addDoc(collection(db,'pledges'),data);PID=ref.id;window.history.replaceState({},'','/pledge/create/?id='+PID);return PID;}
+  }catch(e){console.error(e);toast('Error saving. Please try again.');return null;}
 }
 
-window.saveDraft=async function(){const id=await save('draft');if(id)toast('Draft saved!')}
+window.saveDraft=async function(){const id=await save('draft');if(id)toast('Draft saved!');};
 window.publishPledge=async function(){
   const btn=document.getElementById('pub-btn');btn.disabled=true;btn.textContent='Publishing...';
   const id=await save('active');
-  if(id){toast('Campaign published!',2000);setTimeout(()=>window.location.href='/dashboard',2200)}
-  else{btn.disabled=false;btn.textContent='Publish →'}
-}
+  if(id){toast('Campaign published!');setTimeout(function(){window.location.href='/dashboard/';},1500);}
+  else{btn.disabled=false;btn.textContent='Publish →';}
+};
 
-function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;')}
-function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
+function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;');}
+function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},d);}
 </script>
 </body>
 </html>
