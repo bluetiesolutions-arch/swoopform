@@ -1,191 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Riddle — SwoopForm</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;background:#F8F5FF;color:#0F0E1A}
-    .topnav{height:56px;background:#fff;border-bottom:1.5px solid #E8E0FF;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:fixed;top:0;left:0;right:0;z-index:300}
-    .topnav-left{display:flex;align-items:center;gap:10px;flex-shrink:1;min-width:0;overflow:hidden}
-    .logo-s{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none;flex-shrink:0}
-    .nav-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#0F0E1A;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .topnav-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
-    .btn-g{padding:7px 14px;border-radius:8px;border:1.5px solid #E8E0FF;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;text-decoration:none;transition:all 0.2s}
-    .btn-g:hover{border-color:#6B3FA0;color:#6B3FA0}
-    .btn-pub{padding:7px 14px;border-radius:8px;border:none;background:linear-gradient(135deg,#6B3FA0,#A855F7);color:#fff;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:opacity 0.2s}
-    .btn-pub:hover{opacity:0.9}
-    .btn-pub:disabled{opacity:0.5;cursor:not-allowed}
-    .hbtn{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px}
-    .hbtn span{display:block;width:20px;height:2px;background:#0F0E1A;border-radius:2px}
-    .layout{position:fixed;top:56px;left:0;right:0;bottom:0;display:flex;overflow:hidden}
-    .sidebar{width:240px;height:100%;background:#fff;border-right:1.5px solid #E8E0FF;display:flex;flex-direction:column;flex-shrink:0;z-index:100;transition:transform 0.3s ease;overflow-y:auto}
-    .sb-grp-hdr{padding:12px 14px 6px;border-bottom:1px solid #E8E0FF}
-    .sb-grp-lbl{font-size:0.68rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase}
-    .sb-badge{font-size:0.62rem;font-weight:700;background:#F3E8FF;color:#6B3FA0;padding:1px 6px;border-radius:100px;margin-left:6px}
-    .sb-nav{padding:8px}
-    .sb-item{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:600;color:#64748B;transition:all 0.2s}
-    .sb-item:hover{background:#F3E8FF;color:#0F0E1A}
-    .sb-item.active{background:#EDE9FF;color:#6B3FA0}
-    .sb-item .ico{width:18px;text-align:center}
-    .sb-q-list{padding:4px 8px 8px}
-    .sb-q-item{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:7px;cursor:pointer;font-size:0.73rem;color:#64748B;transition:all 0.15s}
-    .sb-q-item:hover{background:#F3E8FF;color:#6B3FA0}
-    .sb-q-num{width:18px;height:18px;border-radius:50%;background:#6B3FA0;color:#fff;font-size:0.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-    .sb-q-txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
-    .sb-btm{border-top:1.5px solid #E8E0FF;padding:10px}
-    .btn-add-q{width:100%;padding:9px;border-radius:9px;border:1.5px dashed #6B3FA0;background:#F3E8FF;color:#6B3FA0;font-size:0.8rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
-    .btn-add-q:hover{background:#EDE9FF}
-    .content{flex:1;height:100%;overflow-y:auto;padding:24px}
-    .panel{display:none}
-    .panel.active{display:block}
-    .pt{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-0.02em;margin-bottom:5px}
-    .ps{color:#64748B;font-size:0.83rem;margin-bottom:20px}
-    .card{background:#fff;border-radius:16px;border:1.5px solid #E8E0FF;padding:22px;margin-bottom:14px}
-    .card-t{font-family:'Syne',sans-serif;font-weight:700;font-size:0.92rem;margin-bottom:16px}
-    .fl{margin-bottom:14px}
-    .fl:last-child{margin-bottom:0}
-    .ll{display:block;font-size:0.7rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px}
-    .ii{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #E8E0FF;background:#F8F5FF;color:#0F0E1A;font-size:0.88rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
-    .ii:focus{border-color:#6B3FA0}
-    .ii::placeholder{color:#C4B9D8}
-    .sh{font-size:0.68rem;color:#94A3B8;margin-top:3px;line-height:1.5}
-
-    /* EMOJI PICKER */
-    .emoji-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-    .emoji-grid{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
-    .emoji-opt{width:36px;height:36px;border-radius:8px;border:1.5px solid #E8E0FF;background:#F8F5FF;display:flex;align-items:center;justify-content:center;font-size:1.1rem;cursor:pointer;transition:all 0.2s}
-    .emoji-opt:hover{border-color:#6B3FA0;background:#F3E8FF;transform:scale(1.1)}
-    .emoji-opt.selected{border-color:#6B3FA0;background:#EDE9FF;box-shadow:0 0 0 2px rgba(107,63,160,0.2)}
-    .emoji-custom{flex:1;max-width:80px;padding:8px 10px;border-radius:8px;border:1.5px solid #E8E0FF;background:#F8F5FF;font-size:1rem;font-family:'DM Sans',sans-serif;outline:none;text-align:center}
-    .emoji-custom:focus{border-color:#6B3FA0}
-
-    /* QUESTION CARDS */
-    .q-card{background:#fff;border-radius:14px;border:1.5px solid #E8E0FF;padding:20px;margin-bottom:12px}
-    .q-card-header{display:flex;align-items:center;gap:8px;margin-bottom:14px}
-    .q-num{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#6B3FA0,#A855F7);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.78rem;flex-shrink:0}
-    .q-type-btns{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
-    .q-type-btn{padding:5px 12px;border-radius:7px;border:1.5px solid #E8E0FF;background:#F8F5FF;color:#64748B;font-size:0.73rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
-    .q-type-btn.active{border-color:#6B3FA0;background:#EDE9FF;color:#6B3FA0}
-    .q-del{background:none;border:none;cursor:pointer;color:#C4B9D8;font-size:0.9rem;margin-left:auto;padding:4px;transition:color 0.2s}
-    .q-del:hover{color:#EF4444}
-    .opt-row{display:flex;align-items:center;gap:7px;margin-bottom:8px}
-    .opt-letter{width:22px;height:22px;border-radius:5px;background:#EDE9FF;color:#6B3FA0;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700;flex-shrink:0}
-    .opt-inp{flex:1;padding:8px 12px;border-radius:8px;border:1.5px solid #E8E0FF;background:#F8F5FF;color:#0F0E1A;font-size:0.83rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
-    .opt-inp:focus{border-color:#6B3FA0}
-    .opt-inp::placeholder{color:#C4B9D8}
-    .correct-btn{width:22px;height:22px;border-radius:50%;border:2px solid #E8E0FF;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.65rem;color:transparent;transition:all 0.2s;flex-shrink:0}
-    .correct-btn.marked{background:#10B981;border-color:#10B981;color:#fff}
-    .opt-del-btn{background:none;border:none;cursor:pointer;color:#C4B9D8;font-size:0.8rem;padding:2px;transition:color 0.2s}
-    .opt-del-btn:hover{color:#EF4444}
-    .add-opt-btn{background:none;border:none;cursor:pointer;color:#6B3FA0;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;padding:2px 0;margin-top:4px}
-    .hint-inp{width:100%;padding:8px 12px;border-radius:8px;border:1.5px solid #E8E0FF;background:#F8F5FF;color:#0F0E1A;font-size:0.82rem;font-family:'DM Sans',sans-serif;outline:none;margin-top:8px}
-    .hint-inp:focus{border-color:#6B3FA0}
-    .hint-inp::placeholder{color:#C4B9D8}
-    .slug-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-    .slug-pre{font-size:0.72rem;color:#64748B;white-space:nowrap;flex-shrink:0}
-    .slug-status{font-size:0.72rem;margin-top:4px}
-    .empty-qs{text-align:center;padding:32px 16px;color:#94A3B8;font-size:0.85rem;border:1.5px dashed #E8E0FF;border-radius:14px}
-    .sbo{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:99;display:none}
-    .sbo.open{display:block}
-    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0F0E1A;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;white-space:nowrap}
-    .ls-screen{position:fixed;inset:0;background:#F8F5FF;display:flex;align-items:center;justify-content:center;z-index:900}
-    .spinner{width:32px;height:32px;border:3px solid rgba(107,63,160,0.2);border-top-color:#6B3FA0;border-radius:50%;animation:spin 0.8s linear infinite}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    @media(max-width:768px){.sidebar{position:fixed;top:56px;left:0;bottom:0;transform:translateX(-100%);z-index:200;width:260px}.sidebar.open{transform:translateX(0)}.hbtn{display:flex}.content{padding:16px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riddle Builder — SwoopForm</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f8f5ff;--surface:#fff;--surface2:#f0ebff;--border:#e8e0ff;--accent:#6b3fa0;--accent2:#a855f7;--danger:#ef4444;--green:#10b981;--text:#0f0e1a;--muted:#64748b;--muted2:#94a3b8;--font:'Sora',sans-serif;--mono:'JetBrains Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);height:100vh;overflow:hidden;}
+nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:fixed;top:0;left:0;right:0;z-index:300;}
+.nav-left{display:flex;align-items:center;gap:10px;}
+.logo{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#6b3fa0,#a855f7);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;text-decoration:none;}
+.nav-title{font-weight:700;font-size:14px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.nav-right{display:flex;gap:8px;}
+.btn{padding:7px 16px;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;border:none;}
+.btn-ghost{border:1.5px solid var(--border);background:transparent;color:var(--muted);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+.btn-pub{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;}
+.btn-pub:disabled{opacity:0.5;cursor:not-allowed;}
+.layout{position:fixed;top:56px;left:0;right:0;bottom:0;display:flex;}
+.sidebar{width:260px;background:var(--surface);border-right:1.5px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;}
+.sb-section{padding:12px 14px 6px;border-bottom:1px solid var(--border);}
+.sb-label{font-size:10px;font-weight:700;color:var(--muted2);letter-spacing:1.2px;text-transform:uppercase;}
+.sb-nav{padding:8px;}
+.sb-item{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:var(--font);font-size:13px;font-weight:600;color:var(--muted);transition:all .15s;}
+.sb-item:hover{background:var(--surface2);color:var(--text);}
+.sb-item.active{background:#ede9ff;color:var(--accent);}
+.sb-q-list{padding:4px 8px 8px;}
+.sb-q-item{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:7px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .15s;}
+.sb-q-item:hover{background:var(--surface2);color:var(--accent);}
+.sb-q-num{width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sb-q-txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
+.sb-add-btn{width:calc(100% - 16px);margin:8px;padding:9px;border-radius:9px;border:1.5px dashed var(--accent);background:var(--surface2);color:var(--accent);font-size:13px;font-weight:700;font-family:var(--font);cursor:pointer;transition:all .2s;}
+.sb-add-btn:hover{background:#ede9ff;}
+.content{flex:1;overflow-y:auto;padding:24px;}
+.panel{display:none;}
+.panel.active{display:block;}
+.panel-title{font-size:18px;font-weight:800;margin-bottom:4px;}
+.panel-sub{font-size:13px;color:var(--muted);margin-bottom:20px;}
+.card{background:var(--surface);border-radius:16px;border:1.5px solid var(--border);padding:22px;margin-bottom:14px;}
+.card-title{font-size:13px;font-weight:700;margin-bottom:14px;}
+.field{margin-bottom:14px;}
+.field:last-child{margin-bottom:0;}
+.label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;}
+.inp{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;font-family:var(--font);outline:none;transition:border-color .2s;}
+.inp:focus{border-color:var(--accent);}
+.inp::placeholder{color:var(--muted2);}
+.hint{font-size:11px;color:var(--muted2);margin-top:4px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);}
+.toggle-row:last-child{border-bottom:none;}
+.tgl-name{font-size:13px;font-weight:600;}
+.tgl-desc{font-size:11px;color:var(--muted);margin-top:2px;}
+.tgl{width:36px;height:20px;border-radius:20px;background:var(--border);cursor:pointer;position:relative;transition:background .2s;border:none;flex-shrink:0;}
+.tgl.on{background:var(--green);}
+.tgl::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s;}
+.tgl.on::after{transform:translateX(16px);}
+.q-card{background:var(--bg);border:1.5px solid var(--border);border-radius:14px;padding:20px;margin-bottom:12px;}
+.q-card:hover{border-color:var(--accent);}
+.q-card-header{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+.q-num{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0;}
+.q-type-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
+.q-type-btn{padding:5px 12px;border-radius:7px;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);font-size:12px;font-weight:600;font-family:var(--font);cursor:pointer;transition:all .15s;}
+.q-type-btn.active{border-color:var(--accent);background:#ede9ff;color:var(--accent);}
+.q-del{background:none;border:none;cursor:pointer;color:var(--muted2);font-size:16px;margin-left:auto;padding:4px;border-radius:4px;}
+.q-del:hover{color:var(--danger);}
+.opt-row{display:flex;align-items:center;gap:7px;margin-bottom:8px;}
+.opt-letter{width:22px;height:22px;border-radius:5px;background:#ede9ff;color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;}
+.opt-inp{flex:1;padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;font-family:var(--font);outline:none;}
+.opt-inp:focus{border-color:var(--accent);}
+.correct-btn{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;transition:all .2s;flex-shrink:0;}
+.correct-btn.marked{background:var(--green);border-color:var(--green);color:#fff;}
+.opt-del-btn{background:none;border:none;cursor:pointer;color:var(--muted2);font-size:14px;padding:2px;}
+.opt-del-btn:hover{color:var(--danger);}
+.add-opt-btn{background:none;border:none;cursor:pointer;color:var(--accent);font-size:12px;font-weight:600;font-family:var(--font);padding:2px 0;margin-top:4px;}
+.empty-qs{text-align:center;padding:32px;color:var(--muted2);font-size:13px;border:1.5px dashed var(--border);border-radius:14px;}
+.slug-row{display:flex;gap:8px;align-items:center;}
+.slug-pre{font-size:11px;color:var(--muted);white-space:nowrap;}
+.slug-status{font-size:11px;margin-top:4px;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:200;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:460px;padding:24px;text-align:center;}
+.success-url{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;font-family:var(--mono);font-size:12px;color:var(--accent);margin-bottom:16px;}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;display:none;z-index:999;}
+.ls-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:900;}
+.spinner{width:32px;height:32px;border:3px solid rgba(107,63,160,.2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
 </head>
 <body>
 <div class="ls-screen" id="ls"><div class="spinner"></div></div>
-<div class="sbo" id="sbo" onclick="closeSb()"></div>
-<div class="topnav">
-  <div class="topnav-left">
-    <button class="hbtn" onclick="openSb()"><span></span><span></span><span></span></button>
-    <a href="/dashboard" class="logo-s">S</a>
-    <a href="/dashboard" class="btn-g" style="font-size:0.78rem;padding:5px 10px">← Dashboard</a>
-    <span class="nav-t" id="nav-t">New Riddle</span>
+<nav>
+  <div class="nav-left">
+    <a href="/dashboard/" class="logo">S</a>
+    <a href="/dashboard/" class="btn btn-ghost" style="font-size:12px;padding:5px 10px;">← Dashboard</a>
+    <span class="nav-title" id="nav-title">New Riddle</span>
   </div>
-  <div class="topnav-right">
-    <button class="btn-g" onclick="saveDraft()">Save draft</button>
-    <button class="btn-pub" id="pub-btn" onclick="publishRiddle()">Publish →</button>
+  <div class="nav-right">
+    <button class="btn btn-ghost" onclick="saveDraft()">Save Draft</button>
+    <button class="btn btn-pub" id="pub-btn" onclick="publishRiddle()">Publish →</button>
   </div>
-</div>
+</nav>
 <div class="layout">
-  <div class="sidebar" id="sidebar">
-    <div class="sb-grp-hdr"><span class="sb-grp-lbl">Sections</span></div>
+  <div class="sidebar">
+    <div class="sb-section"><span class="sb-label">Sections</span></div>
     <div class="sb-nav">
-      <button class="sb-item active" id="sn-riddle" onclick="showPanel('riddle')"><span class="ico">🧩</span>Riddle</button>
-      <button class="sb-item" id="sn-questions" onclick="showPanel('questions')"><span class="ico">❓</span>Questions <span class="sb-badge" id="q-badge">0</span></button>
-      <button class="sb-item" id="sn-seo" onclick="showPanel('seo')"><span class="ico">🔍</span>SEO</button>
+      <button class="sb-item active" id="sn-info" onclick="showPanel('info')">🧩 Riddle Info</button>
+      <button class="sb-item" id="sn-questions" onclick="showPanel('questions')">❓ Questions</button>
+      <button class="sb-item" id="sn-settings" onclick="showPanel('settings')">⚙️ Settings</button>
+      <button class="sb-item" id="sn-seo" onclick="showPanel('seo')">🔍 SEO</button>
     </div>
-    <div id="sb-q-list" class="sb-q-list"></div>
-    <div class="sb-btm">
-      <button class="btn-add-q" onclick="addQuestion()">+ Add question</button>
-    </div>
+    <div class="sb-section"><span class="sb-label">Questions <span id="q-count-badge" style="background:#ede9ff;color:var(--accent);padding:1px 6px;border-radius:100px;font-size:10px;margin-left:4px;">0</span></span></div>
+    <div class="sb-q-list" id="sb-q-list"></div>
+    <button class="sb-add-btn" onclick="addQuestion()">+ Add Question</button>
   </div>
   <div class="content">
 
-    <!-- RIDDLE INFO -->
-    <div class="panel active" id="panel-riddle">
-      <div class="pt">🧩 Riddle</div>
-      <p class="ps">Set up your riddle quiz. Each question has a correct answer — respondents are scored.</p>
+    <!-- INFO -->
+    <div class="panel active" id="panel-info">
+      <div class="panel-title">🧩 Riddle Info</div>
+      <div class="panel-sub">Set up your riddle's basic information.</div>
       <div class="card">
-        <div class="fl">
-          <label class="ll">Riddle title *</label>
-          <input class="ii" id="riddle-title" placeholder="e.g. Science Brain Teaser" oninput="document.getElementById('nav-t').textContent=this.value||'New Riddle'" maxlength="120">
-        </div>
-        <div class="fl">
-          <label class="ll">Description (optional)</label>
-          <input class="ii" id="riddle-desc" placeholder="e.g. Test your knowledge with these tricky questions!" maxlength="200">
-        </div>
-        <div class="fl">
-          <label class="ll">Icon</label>
-          <div class="sh" style="margin-bottom:8px">This emoji appears on the welcome screen and represents your riddle set. Pick one or type your own.</div>
-          <div class="emoji-grid" id="emoji-grid"></div>
-          <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
-            <span style="font-size:0.72rem;color:#64748B;font-weight:600">Custom:</span>
-            <input class="emoji-custom" id="emoji-custom" placeholder="🎯" maxlength="4" oninput="selectCustomEmoji(this.value)">
+        <div class="field"><label class="label">Riddle Title <span style="color:var(--danger)">*</span></label><input class="inp" id="r-title" placeholder="e.g. The Ultimate Science Quiz" oninput="document.getElementById('nav-title').textContent=this.value||'New Riddle'"></div>
+        <div class="field"><label class="label">Description</label><textarea class="inp" id="r-desc" rows="2" placeholder="What's this riddle about?" style="resize:vertical;"></textarea></div>
+        <div class="grid2">
+          <div class="field"><label class="label">Emoji / Icon</label><input class="inp" id="r-emoji" placeholder="🧩" style="font-size:20px;text-align:center;" maxlength="4"></div>
+          <div class="field"><label class="label">Category</label>
+            <select class="inp" id="r-category" style="cursor:pointer;">
+              <option>General Knowledge</option><option>Science</option><option>History</option>
+              <option>Math</option><option>Pop Culture</option><option>Sports</option>
+              <option>Technology</option><option>Geography</option><option>Custom</option>
+            </select>
           </div>
         </div>
+        <div class="grid2">
+          <div class="field"><label class="label">Difficulty</label>
+            <select class="inp" id="r-difficulty" style="cursor:pointer;">
+              <option>Easy</option><option>Medium</option><option>Hard</option><option>Expert</option>
+            </select>
+          </div>
+          <div class="field"><label class="label">Time Limit per Question (seconds)</label><input class="inp" id="r-timer" type="number" placeholder="0 = no limit" min="0" max="300"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Result Messages</div>
+        <div class="field"><label class="label">Perfect Score Message</label><input class="inp" id="msg-perfect" value="🎉 Perfect! You're a genius!" placeholder="Shown when score is 100%"></div>
+        <div class="field"><label class="label">Good Score Message (70-99%)</label><input class="inp" id="msg-good" value="🌟 Great job! Almost perfect!" placeholder="Shown for good scores"></div>
+        <div class="field"><label class="label">Average Score Message (40-69%)</label><input class="inp" id="msg-avg" value="👍 Not bad! Keep practising!" placeholder="Shown for average scores"></div>
+        <div class="field"><label class="label">Low Score Message (0-39%)</label><input class="inp" id="msg-low" value="😅 Better luck next time!" placeholder="Shown for low scores"></div>
       </div>
     </div>
 
     <!-- QUESTIONS -->
     <div class="panel" id="panel-questions">
-      <div class="pt">❓ Questions</div>
-      <p class="ps">Add riddles and brain teasers. Mark the correct answer for each.</p>
-      <div id="questions-area"></div>
-      <button style="width:100%;padding:12px;border-radius:12px;border:1.5px dashed #6B3FA0;background:#F3E8FF;color:#6B3FA0;font-size:0.83rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;margin-top:4px" onclick="addQuestion()">+ Add another question</button>
+      <div class="panel-title">❓ Questions</div>
+      <div class="panel-sub">Add questions to your riddle. Mix MCQ, text answers and true/false.</div>
+      <div id="questions-container"><div class="empty-qs">No questions yet. Click "Add Question" in the sidebar.</div></div>
+      <button onclick="addQuestion()" style="width:100%;padding:12px;border-radius:12px;border:2px dashed var(--border);background:none;color:var(--accent);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;margin-top:8px;transition:all .2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">+ Add Question</button>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="panel" id="panel-settings">
+      <div class="panel-title">⚙️ Settings</div>
+      <div class="panel-sub">Configure riddle behaviour.</div>
+      <div class="card">
+        <div class="toggle-row"><div><div class="tgl-name">🔀 Shuffle questions</div><div class="tgl-desc">Randomize question order each play</div></div><button class="tgl" id="tgl-shuffle" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">🔀 Shuffle options</div><div class="tgl-desc">Randomize MCQ options each play</div></div><button class="tgl" id="tgl-shuffle-opts" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">💡 Show hints</div><div class="tgl-desc">Allow players to reveal hints</div></div><button class="tgl on" id="tgl-hints" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">✅ Show correct answer after each question</div><div class="tgl-desc">Immediate feedback</div></div><button class="tgl on" id="tgl-feedback" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">🔢 Show score as percentage</div><div class="tgl-desc">Show % instead of X/Y</div></div><button class="tgl" id="tgl-pct" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">🏆 Show leaderboard</div><div class="tgl-desc">Show top scorers after completing</div></div><button class="tgl on" id="tgl-leaderboard" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">📝 Collect player name</div><div class="tgl-desc">Ask for name before starting</div></div><button class="tgl on" id="tgl-name" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row"><div><div class="tgl-name">📧 Collect player email</div><div class="tgl-desc">Ask for email before starting</div></div><button class="tgl" id="tgl-email" onclick="this.classList.toggle('on')"></button></div>
+        <div class="toggle-row" style="border-bottom:none;"><div><div class="tgl-name">🔓 Accepting responses</div></div><button class="tgl on" id="tgl-accepting" onclick="this.classList.toggle('on')"></button></div>
+      </div>
     </div>
 
     <!-- SEO -->
     <div class="panel" id="panel-seo">
-      <div class="pt">🔍 SEO</div>
-      <p class="ps">Control how your riddle appears online.</p>
+      <div class="panel-title">🔍 SEO</div>
+      <div class="panel-sub">Control how your riddle appears online.</div>
       <div class="card">
-        <div class="fl">
-          <label class="ll">URL Slug</label>
+        <div class="field">
+          <label class="label">URL Slug</label>
           <div class="slug-row">
-            <span class="slug-pre">swoopform.com/engage/</span>
-            <input class="ii" id="seo-slug" placeholder="science-brain-teaser" oninput="validateSlug(this)" style="flex:1">
-            <button onclick="autoSlug()" style="padding:8px 12px;border-radius:8px;border:1.5px solid #E8E0FF;background:#fff;font-size:0.75rem;font-weight:600;cursor:pointer;flex-shrink:0;color:#6B3FA0">Auto</button>
+            <span class="slug-pre">swoopform.com/riddle/</span>
+            <input class="inp" id="seo-slug" placeholder="ultimate-science-quiz" oninput="validateSlug(this)" style="flex:1;">
+            <button onclick="autoSlug()" class="btn btn-ghost" style="flex-shrink:0;padding:8px 12px;font-size:12px;">Auto</button>
           </div>
-          <div class="sh">Only lowercase letters, numbers and hyphens.</div>
           <div class="slug-status" id="slug-status"></div>
         </div>
-        <div class="fl">
-          <label class="ll">SEO Title</label>
-          <input class="ii" id="seo-title" placeholder="Leave blank to use riddle title" maxlength="60">
-        </div>
-        <div class="fl">
-          <label class="ll">SEO Description</label>
-          <textarea class="ii" id="seo-desc" placeholder="Brief description..." rows="2" maxlength="160" style="resize:vertical"></textarea>
-        </div>
+        <div class="field"><label class="label">SEO Title</label><input class="inp" id="seo-title" placeholder="Leave blank to use riddle title" maxlength="60"></div>
+        <div class="field"><label class="label">SEO Description</label><textarea class="inp" id="seo-desc" rows="2" maxlength="160" placeholder="Brief description for search engines..." style="resize:vertical;"></textarea></div>
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="success-modal">
+  <div class="modal">
+    <div style="font-size:48px;margin-bottom:12px;">🧩</div>
+    <div style="font-size:18px;font-weight:700;margin-bottom:8px;">Riddle Published!</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:20px;">Share the link for people to play.</div>
+    <div class="success-url" id="modal-url"></div>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button class="btn btn-ghost" onclick="navigator.clipboard.writeText(document.getElementById('modal-url').textContent).then(function(){toast('Copied!');})">📋 Copy</button>
+      <a id="modal-view-btn" href="#" target="_blank"><button class="btn btn-pub">Play Riddle →</button></a>
+      <button class="btn btn-ghost" onclick="document.getElementById('success-modal').classList.remove('open')">Close</button>
+    </div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -193,216 +218,265 @@
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getFirestore,collection,addDoc,doc,updateDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getFirestore,doc,getDoc,addDoc,updateDoc,collection,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
-const app=initializeApp(FB);const auth=getAuth(app);const db=getFirestore(app);
+const app=initializeApp(FB);
+const auth=getAuth(app);
+const db=getFirestore(app);
+let U=null,RID=null,qCount=0;
 
-const EMOJIS=['🧩','🦊','🔮','🎯','🧠','⚡','🌟','🔬','📚','🎭','🦁','🚀','💡','🎪','🏆','🌈'];
-const LETTERS=['A','B','C','D','E'];
-let U=null,RID=null,questions=[],selectedEmoji='🧩';
-
-onAuthStateChanged(auth,u=>{
-  if(!u){window.location.href='/login';return}
-  U=u;renderEmojiGrid();document.getElementById('ls').style.display='none';
+onAuthStateChanged(auth,async function(u){
+  if(!u){window.location.href='/login/';return;}
+  U=u;
+  document.getElementById('ls').style.display='none';
+  const params=new URLSearchParams(window.location.search);
+  RID=params.get('id');
+  if(RID)await loadExisting(RID);
+  else updateSidebar();
 });
 
-// ── EMOJI ─────────────────────────────────────────────
-function renderEmojiGrid(){
-  document.getElementById('emoji-grid').innerHTML=EMOJIS.map(e=>`<div class="emoji-opt${e===selectedEmoji?' selected':''}" onclick="selectEmoji('${e}')" title="${e}">${e}</div>`).join('');
+async function loadExisting(id){
+  try{
+    const snap=await getDoc(doc(db,'riddles',id));
+    if(!snap.exists())return;
+    const d=snap.data();
+    const set=function(eid,val){const el=document.getElementById(eid);if(el&&val!==undefined&&val!==null)el.value=val;};
+    set('r-title',d.title);document.getElementById('nav-title').textContent=d.title||'Riddle';
+    set('r-desc',d.description);set('r-emoji',d.emoji);set('r-category',d.category);
+    set('r-difficulty',d.difficulty);set('r-timer',d.timerPerQuestion||0);
+    set('msg-perfect',d.messages?.perfect);set('msg-good',d.messages?.good);
+    set('msg-avg',d.messages?.avg);set('msg-low',d.messages?.low);
+    set('seo-slug',d.slug);set('seo-title',d.seo?.title);set('seo-desc',d.seo?.description);
+    const tog=function(eid,val){if(val===undefined)return;const el=document.getElementById(eid);if(el){val?el.classList.add('on'):el.classList.remove('on');}};
+    tog('tgl-shuffle',d.shuffleQuestions);tog('tgl-shuffle-opts',d.shuffleOptions);
+    tog('tgl-hints',d.showHints);tog('tgl-feedback',d.showFeedback);
+    tog('tgl-pct',d.showPct);tog('tgl-leaderboard',d.showLeaderboard);
+    tog('tgl-name',d.collectName);tog('tgl-email',d.collectEmail);tog('tgl-accepting',d.accepting);
+    document.getElementById('questions-container').innerHTML='';
+    qCount=0;
+    if(d.questions)d.questions.forEach(function(q){addQuestion(q);});
+    updateSidebar();
+    toast('Loaded for editing ✏️');
+  }catch(e){console.error(e);}
 }
-window.selectEmoji=function(e){selectedEmoji=e;document.getElementById('emoji-custom').value='';renderEmojiGrid()}
-window.selectCustomEmoji=function(v){if(v.trim()){selectedEmoji=v.trim();renderEmojiGrid()}}
 
-// ── PANELS ────────────────────────────────────────────
 window.showPanel=function(p){
-  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.sb-item').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.sb-item').forEach(function(x){x.classList.remove('active');});
   document.getElementById('panel-'+p).classList.add('active');
-  document.getElementById('sn-'+p)?.classList.add('active');
-  closeSb();
-}
-window.openSb=()=>{document.getElementById('sidebar').classList.add('open');document.getElementById('sbo').classList.add('open')}
-window.closeSb=()=>{document.getElementById('sidebar').classList.remove('open');document.getElementById('sbo').classList.remove('open')}
+  const btn=document.getElementById('sn-'+p);if(btn)btn.classList.add('active');
+};
 
-// ── QUESTIONS ─────────────────────────────────────────
-function mkQ(){return{id:'q'+Date.now()+Math.random().toString(36).slice(2,5),type:'mcq',question:'',options:['','',''],correctIndex:0,answer:'',acceptedAnswers:[],hint:''}}
+window.addQuestion=function(data){
+  qCount++;
+  const id='q_'+qCount;
+  const type=(data&&data.type)||'mcq';
+  const div=document.createElement('div');
+  div.className='q-card';div.id=id;div.dataset.type=type;
 
-window.addQuestion=function(){
-  questions.push(mkQ());renderQuestions();showPanel('questions');
-  setTimeout(()=>{const area=document.getElementById('questions-area');if(area){const last=area.lastElementChild;if(last){last.scrollIntoView({behavior:'smooth',block:'center'});const inp=last.querySelector('.q-inp');if(inp)inp.focus()}}},100);
-}
+  const letters=['A','B','C','D','E'];
+  const opts=(data&&data.options)||['','','',''];
+  const correctIdx=(data&&data.correctIndex!==undefined)?data.correctIndex:0;
+  const optsHtml=type==='mcq'?'<div id="opts_'+id+'">'+opts.map(function(o,i){
+    return '<div class="opt-row" id="opt_'+id+'_'+i+'">'
+      +'<div class="opt-letter">'+letters[i]+'</div>'
+      +'<input class="opt-inp" placeholder="Option '+(i+1)+'" value="'+eh(o)+'" oninput="updateSidebar()">'
+      +'<button class="correct-btn'+(i===correctIdx?' marked':'')+'" title="Mark as correct" onclick="markCorrect(\''+id+'\','+i+')">✓</button>'
+      +'<button class="opt-del-btn" onclick="removeOpt(\''+id+'\','+i+')">×</button>'
+      +'</div>';
+  }).join('')+'<button class="add-opt-btn" onclick="addOpt(\''+id+'\')">+ Add option</button></div>'
+  :type==='truefalse'?'<div style="display:flex;gap:8px;margin-top:8px;">'
+    +'<button class="q-type-btn'+(correctIdx===0?' active':'')+'" onclick="setTF(\''+id+'\',0)">✅ True</button>'
+    +'<button class="q-type-btn'+(correctIdx===1?' active':'')+'" onclick="setTF(\''+id+'\',1)">❌ False</button>'
+    +'</div>'
+  :'<input class="inp" id="ans_'+id+'" placeholder="Correct answer (exact match)" value="'+eh((data&&data.answer)||'')+'" style="margin-top:8px;">';
 
-window.deleteQuestion=function(id){
-  if(!confirm('Delete this question?'))return;
-  questions=questions.filter(q=>q.id!==id);renderQuestions();
-}
+  div.innerHTML='<div class="q-card-header">'
+    +'<div class="q-num">'+qCount+'</div>'
+    +'<div class="q-type-row">'
+    +'<button class="q-type-btn'+(type==='mcq'?' active':'')+'" onclick="changeType(\''+id+'\',\'mcq\')">⚪ MCQ</button>'
+    +'<button class="q-type-btn'+(type==='truefalse'?' active':'')+'" onclick="changeType(\''+id+'\',\'truefalse\')">✅ True/False</button>'
+    +'<button class="q-type-btn'+(type==='text'?' active':'')+'" onclick="changeType(\''+id+'\',\'text\')">📝 Text</button>'
+    +'</div>'
+    +'<button class="q-del" onclick="removeQ(\''+id+'\')">×</button>'
+    +'</div>'
+    +'<div class="field"><label class="label">Question</label>'
+    +'<textarea class="inp" id="qt_'+id+'" rows="2" style="resize:vertical;" placeholder="Enter your question..." oninput="updateSidebar()">'+eh((data&&data.question)||'')+'</textarea></div>'
+    +'<div id="q-content_'+id+'">'+optsHtml+'</div>'
+    +'<div class="field" style="margin-top:10px;"><label class="label">Hint <span style="font-weight:400;color:var(--muted2)">(optional)</span></label>'
+    +'<input class="inp" id="hint_'+id+'" placeholder="Give players a clue..." value="'+eh((data&&data.hint)||'')+'"></div>'
+    +'<div class="field"><label class="label">Explanation <span style="font-weight:400;color:var(--muted2)">(shown after answering)</span></label>'
+    +'<input class="inp" id="exp_'+id+'" placeholder="Explain the correct answer..." value="'+eh((data&&data.explanation)||'')+'"></div>';
 
-window.setQType=function(id,type){
-  const q=questions.find(q=>q.id===id);if(!q)return;
-  // Save current state before changing type
-  syncQuestion(id);
-  q.type=type;
-  renderQuestions();showPanel('questions');
-}
+  const container=document.getElementById('questions-container');
+  if(container.querySelector('.empty-qs'))container.innerHTML='';
+  container.appendChild(div);
+  div.scrollIntoView({behavior:'smooth',block:'nearest'});
+  updateSidebar();
+};
 
-window.markCorrect=function(id,oi){
-  syncQuestion(id);
-  const q=questions.find(q=>q.id===id);
-  if(q){q.correctIndex=q.correctIndex===oi?-1:oi;renderQuestions();showPanel('questions')}
-}
-
-window.addOpt=function(id){
-  syncQuestion(id);
-  const q=questions.find(q=>q.id===id);
-  if(q&&q.options.length<5){q.options.push('');renderQuestions();showPanel('questions');setTimeout(()=>{const opts=document.querySelectorAll('.opt-inp-'+id);if(opts.length)opts[opts.length-1].focus()},60)}
-}
-
-window.removeOpt=function(id,oi){
-  syncQuestion(id);
-  const q=questions.find(q=>q.id===id);
-  if(q&&q.options.length>2){q.options.splice(oi,1);if(q.correctIndex>=q.options.length)q.correctIndex=q.options.length-1;renderQuestions();showPanel('questions')}
-  else toast('Need at least 2 options');
-}
-
-// Sync a single question's DOM back to the questions array
-function syncQuestion(id){
-  const q=questions.find(q=>q.id===id);if(!q)return;
-  const qInp=document.getElementById('qinp-'+id);if(qInp)q.question=qInp.value;
-  const hInp=document.getElementById('hint-'+id);if(hInp)q.hint=hInp.value;
-  if(q.type==='mcq'){
-    const opts=document.querySelectorAll('.opt-inp-'+id);
-    if(opts.length)q.options=Array.from(opts).map(i=>i.value);
-  } else if(q.type==='text'){
-    const aInp=document.getElementById('ans-'+id);if(aInp)q.answer=aInp.value;
-    const varInp=document.getElementById('vars-'+id);if(varInp)q.acceptedAnswers=varInp.value.split(',').map(s=>s.trim()).filter(Boolean);
+window.changeType=function(id,type){
+  const card=document.getElementById(id);if(!card)return;
+  card.dataset.type=type;
+  const letters=['A','B','C','D'];
+  const content=document.getElementById('q-content_'+id);
+  if(type==='mcq'){
+    content.innerHTML='<div id="opts_'+id+'">'
+      +['','','',''].map(function(o,i){return '<div class="opt-row" id="opt_'+id+'_'+i+'">'
+        +'<div class="opt-letter">'+letters[i]+'</div>'
+        +'<input class="opt-inp" placeholder="Option '+(i+1)+'">'
+        +'<button class="correct-btn'+(i===0?' marked':'')+'" onclick="markCorrect(\''+id+'\','+i+')">✓</button>'
+        +'<button class="opt-del-btn" onclick="removeOpt(\''+id+'\','+i+')">×</button>'
+        +'</div>';}).join('')
+      +'<button class="add-opt-btn" onclick="addOpt(\''+id+'\')">+ Add option</button></div>';
+  }else if(type==='truefalse'){
+    content.innerHTML='<div style="display:flex;gap:8px;margin-top:8px;">'
+      +'<button class="q-type-btn active" onclick="setTF(\''+id+'\',0)">✅ True</button>'
+      +'<button class="q-type-btn" onclick="setTF(\''+id+'\',1)">❌ False</button>'
+      +'</div>';
+  }else{
+    content.innerHTML='<input class="inp" id="ans_'+id+'" placeholder="Correct answer (exact match)" style="margin-top:8px;">';
   }
+  card.querySelectorAll('.q-type-btn').forEach(function(b){b.classList.remove('active');});
+  const activeBtn=card.querySelector('.q-type-row .q-type-btn:nth-child('+(type==='mcq'?1:type==='truefalse'?2:3)+')');
+  if(activeBtn)activeBtn.classList.add('active');
+};
+
+window.markCorrect=function(qid,idx){
+  document.querySelectorAll('#opts_'+qid+' .correct-btn').forEach(function(b){b.classList.remove('marked');});
+  const btn=document.querySelector('#opt_'+qid+'_'+idx+' .correct-btn');if(btn)btn.classList.add('marked');
+};
+
+window.setTF=function(qid,idx){
+  const card=document.getElementById(qid);if(!card)return;
+  card.querySelectorAll('.q-card-header ~ div .q-type-btn').forEach(function(b,i){b.classList.toggle('active',i===idx);});
+};
+
+window.addOpt=function(qid){
+  const list=document.getElementById('opts_'+qid);if(!list)return;
+  const rows=list.querySelectorAll('.opt-row');
+  const i=rows.length;const letters=['A','B','C','D','E','F'];
+  const addBtn=list.querySelector('.add-opt-btn');
+  const row=document.createElement('div');
+  row.className='opt-row';row.id='opt_'+qid+'_'+i;
+  row.innerHTML='<div class="opt-letter">'+letters[i]+'</div>'
+    +'<input class="opt-inp" placeholder="Option '+(i+1)+'">'
+    +'<button class="correct-btn" onclick="markCorrect(\''+qid+'\','+i+')">✓</button>'
+    +'<button class="opt-del-btn" onclick="removeOpt(\''+qid+'\','+i+')">×</button>';
+  list.insertBefore(row,addBtn);
+};
+
+window.removeOpt=function(qid,idx){
+  const el=document.getElementById('opt_'+qid+'_'+idx);
+  const list=document.getElementById('opts_'+qid);
+  if(list&&list.querySelectorAll('.opt-row').length<=2){toast('Need at least 2 options!');return;}
+  if(el)el.remove();
+};
+
+window.removeQ=function(id){
+  const el=document.getElementById(id);if(el)el.remove();
+  if(document.querySelectorAll('.q-card').length===0){
+    document.getElementById('questions-container').innerHTML='<div class="empty-qs">No questions yet. Click "Add Question" in the sidebar.</div>';
+  }
+  updateSidebar();
+};
+
+function updateSidebar(){
+  const cards=document.querySelectorAll('.q-card');
+  document.getElementById('q-count-badge').textContent=cards.length;
+  const list=document.getElementById('sb-q-list');
+  list.innerHTML=[...cards].map(function(card,i){
+    const qt=document.getElementById('qt_'+card.id);
+    const text=qt?qt.value.trim().substring(0,28)||'Question '+(i+1):'Question '+(i+1);
+    return '<div class="sb-q-item" onclick="document.getElementById(\''+card.id+'\').scrollIntoView({behavior:\'smooth\',block:\'center\'})">'
+      +'<div class="sb-q-num">'+(i+1)+'</div>'
+      +'<div class="sb-q-txt">'+text+'</div></div>';
+  }).join('');
 }
 
-// Sync all questions
-function syncAll(){questions.forEach(q=>syncQuestion(q.id))}
-
-function renderQuestions(){
-  const area=document.getElementById('questions-area');
-  const badge=document.getElementById('q-badge');
-  if(badge)badge.textContent=questions.length;
-  if(!area)return;
-  if(!questions.length){area.innerHTML=`<div class="empty-qs">🧩<br><br>No questions yet.<br>Click "+ Add question" to start.</div>`;renderSBQList();return}
-  area.innerHTML=questions.map((q,qi)=>`
-    <div class="q-card" id="qcard-${q.id}">
-      <div class="q-card-header">
-        <div class="q-num">${qi+1}</div>
-        <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem">Riddle ${qi+1}</span>
-        <button class="q-del" onclick="deleteQuestion('${q.id}')">✕</button>
-      </div>
-      <div class="q-type-btns">
-        <button class="q-type-btn${q.type==='mcq'?' active':''}" onclick="setQType('${q.id}','mcq')">◉ Multiple choice</button>
-        <button class="q-type-btn${q.type==='text'?' active':''}" onclick="setQType('${q.id}','text')">✏️ Text answer</button>
-      </div>
-      <div class="fl">
-        <label class="ll">Question *</label>
-        <textarea class="ii" id="qinp-${q.id}" rows="2" style="resize:vertical" placeholder="e.g. What has keys but no locks?" oninput="questions.find(x=>x.id==='${q.id}').question=this.value;renderSBQList()">${eh(q.question)}</textarea>
-      </div>
-      ${q.type==='mcq'?`
-        <div class="fl">
-          <label class="ll">Options <span style="font-size:0.62rem;color:#94A3B8;font-weight:500">(click ✓ to mark correct)</span></label>
-          ${q.options.map((o,oi)=>`
-            <div class="opt-row">
-              <div class="opt-letter">${LETTERS[oi]}</div>
-              <input class="opt-inp opt-inp-${q.id}" value="${eh(o)}" placeholder="Option ${LETTERS[oi]}" oninput="questions.find(x=>x.id==='${q.id}').options[${oi}]=this.value">
-              <button class="correct-btn${q.correctIndex===oi?' marked':''}" onclick="markCorrect('${q.id}',${oi})" title="Mark as correct">✓</button>
-              ${q.options.length>2?`<button class="opt-del-btn" onclick="removeOpt('${q.id}',${oi})">✕</button>`:''}
-            </div>`).join('')}
-          <button class="add-opt-btn" onclick="addOpt('${q.id}')">+ Add option</button>
-        </div>`:
-      `<div class="fl">
-          <label class="ll">Correct answer *</label>
-          <input class="ii" id="ans-${q.id}" value="${eh(q.answer)}" placeholder="e.g. A piano" oninput="questions.find(x=>x.id==='${q.id}').answer=this.value">
-        </div>
-        <div class="fl">
-          <label class="ll">Accepted variations</label>
-          <input class="ii" id="vars-${q.id}" value="${(q.acceptedAnswers||[]).join(', ')}" placeholder="piano, keyboard, grand piano (comma separated)" oninput="questions.find(x=>x.id==='${q.id}').acceptedAnswers=this.value.split(',').map(s=>s.trim()).filter(Boolean)">
-          <div class="sh">Other spellings or phrasings that should be accepted as correct</div>
-        </div>`}
-      <div class="fl" style="margin-bottom:0">
-        <label class="ll">Hint (optional)</label>
-        <input class="hint-inp" id="hint-${q.id}" value="${eh(q.hint||'')}" placeholder="A clue shown if the player gets stuck..." oninput="questions.find(x=>x.id==='${q.id}').hint=this.value">
-      </div>
-    </div>`).join('');
-  renderSBQList();
+function collectQuestions(){
+  const qs=[];
+  document.querySelectorAll('.q-card').forEach(function(card){
+    const id=card.id;
+    const type=card.dataset.type||'mcq';
+    const question=document.getElementById('qt_'+id)?document.getElementById('qt_'+id).value.trim():'';
+    const hint=document.getElementById('hint_'+id)?document.getElementById('hint_'+id).value.trim():'';
+    const explanation=document.getElementById('exp_'+id)?document.getElementById('exp_'+id).value.trim():'';
+    let q={type,question,hint,explanation};
+    if(type==='mcq'){
+      const opts=[];let correctIndex=0;
+      card.querySelectorAll('.opt-row').forEach(function(row,i){
+        const inp=row.querySelector('.opt-inp');const cb=row.querySelector('.correct-btn');
+        opts.push(inp?inp.value.trim():'');
+        if(cb&&cb.classList.contains('marked'))correctIndex=i;
+      });
+      q.options=opts;q.correctIndex=correctIndex;
+    }else if(type==='truefalse'){
+      const btns=card.querySelectorAll('.q-card-header ~ div .q-type-btn');
+      let correctIndex=0;
+      btns.forEach(function(b,i){if(b.classList.contains('active'))correctIndex=i;});
+      q.options=['True','False'];q.correctIndex=correctIndex;
+    }else{
+      q.answer=document.getElementById('ans_'+id)?document.getElementById('ans_'+id).value.trim():'';
+    }
+    qs.push(q);
+  });
+  return qs;
 }
 
-function renderSBQList(){
-  const list=document.getElementById('sb-q-list');if(!list)return;
-  list.innerHTML=questions.map((q,i)=>`<div class="sb-q-item" onclick="goToQ('${q.id}')"><div class="sb-q-num">${i+1}</div><div class="sb-q-txt">${eh(q.question)||'Untitled'}</div></div>`).join('');
-}
-window.goToQ=function(id){showPanel('questions');setTimeout(()=>{const el=document.getElementById('qcard-'+id);if(el)el.scrollIntoView({behavior:'smooth',block:'center'})},100);closeSb()}
+function isTgl(id){return document.getElementById(id)?.classList.contains('on');}
+function gv(id){const el=document.getElementById(id);return el?el.value.trim():'';}
 
-// ── SEO ────────────────────────────────────────────────
-window.autoSlug=function(){
-  const t=document.getElementById('riddle-title').value.trim();
-  if(!t){toast('Add a riddle title first');return}
-  const slug=t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50);
-  document.getElementById('seo-slug').value=slug;
-  setSlugStatus('✓ swoopform.com/engage/'+slug,true);
-}
-window.validateSlug=function(inp){
-  inp.value=inp.value.replace(/[^a-z0-9-]/g,'');
-  if(inp.value.length>3)setSlugStatus('✓ swoopform.com/engage/'+inp.value,true);
-  else if(inp.value.length>0)setSlugStatus('Too short — min 4 characters',false);
-  else setSlugStatus('',null);
-}
-function setSlugStatus(msg,ok){const s=document.getElementById('slug-status');s.textContent=msg;s.style.color=ok===true?'#10B981':ok===false?'#EF4444':'#94A3B8'}
-
-// ── SAVE ──────────────────────────────────────────────
-function getData(status){
-  syncAll();
-  const title=document.getElementById('riddle-title').value.trim();
-  if(!title){toast('Please add a riddle title');return null}
-  if(!questions.length){toast('Please add at least one question');return null}
-  // Validate: every question must have a question text
-  const invalid=questions.find(q=>!q.question.trim());
-  if(invalid){toast('All questions need question text');showPanel('questions');document.getElementById('qcard-'+invalid.id)?.scrollIntoView({behavior:'smooth',block:'center'});return null}
-  // Validate MCQ: need at least 2 options with text
-  const badMCQ=questions.find(q=>q.type==='mcq'&&q.options.filter(o=>o.trim()).length<2);
-  if(badMCQ){toast('Each MCQ question needs at least 2 options');showPanel('questions');return null}
-  const slug=document.getElementById('seo-slug').value.trim();
+function buildPayload(status){
+  const title=gv('r-title');if(!title){toast('Please add a title!');return null;}
+  const questions=collectQuestions();if(!questions.length){toast('Add at least one question!');return null;}
   return{
-    title,
-    description:document.getElementById('riddle-desc').value.trim(),
-    emoji:selectedEmoji||'🧩',
-    questions:questions.map(q=>({
-      type:q.type,question:q.question.trim(),
-      options:q.options.filter(o=>o.trim()),
-      correctIndex:q.correctIndex||0,
-      answer:q.answer.trim(),
-      acceptedAnswers:q.acceptedAnswers||[],
-      hint:q.hint.trim()
-    })),
-    slug:slug||null,
-    seo:{title:document.getElementById('seo-title').value.trim(),description:document.getElementById('seo-desc').value.trim()},
-    status,userId:U.uid,updatedAt:serverTimestamp()
+    title,status,formType:'riddle',
+    description:gv('r-desc'),emoji:gv('r-emoji')||'🧩',
+    category:gv('r-category'),difficulty:gv('r-difficulty'),
+    timerPerQuestion:parseInt(gv('r-timer'))||0,
+    messages:{perfect:gv('msg-perfect'),good:gv('msg-good'),avg:gv('msg-avg'),low:gv('msg-low')},
+    shuffleQuestions:isTgl('tgl-shuffle'),shuffleOptions:isTgl('tgl-shuffle-opts'),
+    showHints:isTgl('tgl-hints'),showFeedback:isTgl('tgl-feedback'),
+    showPct:isTgl('tgl-pct'),showLeaderboard:isTgl('tgl-leaderboard'),
+    collectName:isTgl('tgl-name'),collectEmail:isTgl('tgl-email'),accepting:isTgl('tgl-accepting'),
+    questions,questionCount:questions.length,
+    slug:gv('seo-slug')||null,
+    seo:{title:gv('seo-title'),description:gv('seo-desc')},
+    userId:U.uid,updatedAt:serverTimestamp()
   };
 }
 
 async function save(status){
-  const data=getData(status);if(!data)return null;
+  const data=buildPayload(status);if(!data)return null;
   try{
-    if(RID){await updateDoc(doc(db,'riddles',RID),data);return RID}
-    else{data.createdAt=serverTimestamp();const ref=await addDoc(collection(db,'riddles'),data);RID=ref.id;return RID}
-  }catch(e){console.error(e);toast('Error saving. Please try again.');return null}
+    if(RID){await updateDoc(doc(db,'riddles',RID),data);return RID;}
+    else{data.createdAt=serverTimestamp();data.responseCount=0;const ref=await addDoc(collection(db,'riddles'),data);RID=ref.id;window.history.replaceState({},'','/riddle/create/?id='+RID);return RID;}
+  }catch(e){console.error(e);toast('Error: '+e.message);return null;}
 }
 
-window.saveDraft=async function(){const id=await save('draft');if(id)toast('Draft saved!')}
+window.saveDraft=async function(){const id=await save('draft');if(id)toast('Draft saved!');};
 window.publishRiddle=async function(){
   const btn=document.getElementById('pub-btn');btn.disabled=true;btn.textContent='Publishing...';
   const id=await save('active');
-  if(id){toast('Riddle published!',2000);setTimeout(()=>window.location.href='/dashboard',2200)}
-  else{btn.disabled=false;btn.textContent='Publish →'}
-}
+  if(id){
+    document.getElementById('modal-url').textContent='swoopform.com/riddle/?id='+id;
+    document.getElementById('modal-view-btn').href='/riddle/?id='+id;
+    document.getElementById('success-modal').classList.add('open');
+    btn.disabled=false;btn.textContent='Publish →';
+  }else{btn.disabled=false;btn.textContent='Publish →';}
+};
 
-function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;')}
-function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}
+window.autoSlug=function(){
+  const t=gv('r-title');if(!t){toast('Add a title first');return;}
+  const slug=t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50);
+  document.getElementById('seo-slug').value=slug;
+};
+window.validateSlug=function(inp){inp.value=inp.value.replace(/[^a-z0-9-]/g,'');};
+
+function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
 </script>
 </body>
 </html>
