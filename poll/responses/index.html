@@ -6,7 +6,7 @@
 <title>Poll Results — SwoopForm</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f5f4f0;--surface:#ffffff;--surface2:#f0eeea;--border:#e2ddd6;--accent:#4f46e5;--green:#12a872;--yellow:#d97706;--red:#e5484d;--text:#1c1c2e;--muted:#7a7a8c;--muted2:#c5c0b8;--font:'Sora',sans-serif;--mono:'JetBrains Mono',monospace;}
+:root{--bg:#f5f4f0;--surface:#ffffff;--surface2:#f0eeea;--border:#e2ddd6;--accent:#4f46e5;--green:#12a872;--yellow:#d97706;--red:#e5484d;--purple:#7c3aed;--text:#1c1c2e;--muted:#7a7a8c;--muted2:#c5c0b8;--font:'Sora',sans-serif;--mono:'JetBrains Mono',monospace;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;}
 nav{height:54px;background:rgba(245,244,240,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;position:sticky;top:0;z-index:100;gap:16px;}
@@ -19,32 +19,63 @@ nav{height:54px;background:rgba(245,244,240,0.95);backdrop-filter:blur(12px);bor
 .btn-ghost{background:none;border:1px solid var(--border);color:var(--muted);}
 .btn-ghost:hover{border-color:var(--muted2);color:var(--text);}
 .btn-accent{background:var(--accent);color:#fff;font-weight:600;}
-.main{max-width:720px;margin:0 auto;padding:32px 20px;}
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
-.stat-val{font-size:24px;font-weight:800;font-family:var(--mono);margin-bottom:4px;}
-.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;}
-.results-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;}
-.results-title{font-size:18px;font-weight:700;margin-bottom:6px;}
-.results-desc{font-size:13px;color:var(--muted);margin-bottom:20px;}
-.live-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;background:rgba(18,168,114,0.1);color:var(--green);font-size:12px;font-weight:600;margin-bottom:16px;}
+.layout{display:flex;height:calc(100vh - 54px);}
+.sidebar{width:220px;min-width:220px;background:var(--surface);border-right:1px solid var(--border);padding:16px 12px;display:flex;flex-direction:column;gap:4px;overflow-y:auto;}
+.sidebar-label{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);padding:8px 10px 6px;}
+.sidebar-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .15s;border:none;background:none;width:100%;font-family:var(--font);}
+.sidebar-item:hover{background:var(--surface2);color:var(--text);}
+.sidebar-item.active{background:rgba(79,70,229,0.1);color:var(--accent);}
+.main{flex:1;overflow:hidden;display:flex;flex-direction:column;}
+.topbar{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0;background:var(--surface);}
+.topbar-title{font-size:16px;font-weight:700;}
+.topbar-meta{font-size:11px;color:var(--muted);margin-top:2px;}
+.topbar-right{margin-left:auto;display:flex;gap:10px;align-items:center;}
+.stats-row{display:flex;gap:1px;background:var(--border);flex-shrink:0;}
+.stat-card{flex:1;background:var(--surface);padding:14px 20px;display:flex;align-items:center;gap:10px;}
+.stat-val{font-size:20px;font-weight:700;font-family:var(--mono);}
+.stat-label{font-size:11px;color:var(--muted);margin-top:1px;}
+.content-area{flex:1;overflow-y:auto;padding:24px;}
+.live-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;background:rgba(18,168,114,0.1);color:var(--green);font-size:12px;font-weight:600;margin-bottom:20px;}
 .live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-.opt-result{margin-bottom:14px;}
-.opt-result-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
-.opt-result-label{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;}
-.winner-crown{font-size:14px;}
-.opt-result-stats{display:flex;gap:12px;align-items:center;}
-.opt-result-pct{font-size:16px;font-weight:800;font-family:var(--mono);color:var(--accent);}
-.opt-result-count{font-size:12px;color:var(--muted);}
-.bar-bg{height:12px;background:var(--surface2);border-radius:6px;overflow:hidden;}
-.bar-fill{height:100%;border-radius:6px;background:var(--accent);transition:width .6s ease;}
-.bar-fill.winner{background:linear-gradient(90deg,var(--accent),#818cf8);}
-.actions-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+.results-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;}
+.results-question{font-size:18px;font-weight:700;margin-bottom:20px;}
+.opt-result{margin-bottom:16px;}
+.opt-result-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.opt-label{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;}
+.opt-stats{display:flex;gap:12px;align-items:center;}
+.opt-pct{font-size:16px;font-weight:800;font-family:var(--mono);color:var(--accent);}
+.opt-count{font-size:12px;color:var(--muted);}
+.bar-bg{height:14px;background:var(--surface2);border-radius:7px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:7px;transition:width .6s ease;}
+.filter-bar{padding:12px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0;background:var(--surface2);}
+.search-wrap{position:relative;flex:1;max-width:300px;}
+.search-wrap input{width:100%;padding:8px 12px 8px 34px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font);font-size:12px;outline:none;}
+.search-wrap input:focus{border-color:var(--accent);}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted);}
+table{width:100%;border-collapse:collapse;}
+thead tr{background:var(--surface2);border-bottom:1px solid var(--border);position:sticky;top:0;}
+th{padding:10px 16px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:left;}
+tbody tr{border-bottom:1px solid var(--border);}
+tbody tr:hover{background:#faf9f7;}
+td{padding:12px 16px;font-size:12px;}
+.option-pill{display:inline-block;padding:3px 10px;border-radius:20px;background:rgba(79,70,229,0.1);color:var(--accent);font-size:11px;font-weight:500;}
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;}
+.chart-card.full{grid-column:1/-1;}
+.chart-title{font-size:13px;font-weight:600;margin-bottom:16px;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.bar-label{font-size:12px;color:var(--muted);width:120px;flex-shrink:0;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.bar-wrap{flex:1;height:28px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;}
+.bar-fill2{height:100%;border-radius:6px;}
+.bar-val{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:11px;font-family:var(--mono);}
+.empty-state{text-align:center;padding:80px 40px;}
 .loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;}
 .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .toast{position:fixed;bottom:24px;left:24px;background:var(--text);color:#fff;padding:10px 16px;border-radius:9px;font-size:12px;z-index:400;display:none;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
 </style>
 </head>
 <body>
@@ -63,31 +94,75 @@ nav{height:54px;background:rgba(245,244,240,0.95);backdrop-filter:blur(12px);bor
     <span id="nav-title">Poll Results</span>
   </div>
   <div class="nav-right">
-    <button class="btn btn-ghost" onclick="toggleAccepting()">Toggle Poll</button>
+    <button class="btn btn-ghost" onclick="exportCSV()">⬇ Export CSV</button>
     <button class="btn btn-accent" onclick="window.open('/poll/?id='+PID,'_blank')">🔗 View Poll</button>
   </div>
 </nav>
 
-<div class="main">
-  <div class="stats-row">
-    <div class="stat-card"><div class="stat-val" id="stat-votes" style="color:var(--accent);">0</div><div class="stat-label">Total Votes</div></div>
-    <div class="stat-card"><div class="stat-val" id="stat-options" style="color:var(--yellow);">0</div><div class="stat-label">Options</div></div>
-    <div class="stat-card"><div class="stat-val" id="stat-leader" style="color:var(--green);font-size:14px;">—</div><div class="stat-label">Leading</div></div>
-    <div class="stat-card"><div class="stat-val" id="stat-status" style="color:var(--green);font-size:14px;">●</div><div class="stat-label">Status</div></div>
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-label">Views</div>
+    <button class="sidebar-item active" id="sbar-results" onclick="showView('results',this)"><span>📊</span> Live Results</button>
+    <button class="sidebar-item" id="sbar-voters" onclick="showView('voters',this)"><span>👥</span> Voters</button>
+    <button class="sidebar-item" id="sbar-analytics" onclick="showView('analytics',this)"><span>📈</span> Analytics</button>
+    <div class="sidebar-label" style="margin-top:8px;">Actions</div>
+    <button class="sidebar-item" onclick="exportCSV()"><span>⬇</span> Export CSV</button>
+    <button class="sidebar-item" onclick="copyLink()"><span>🔗</span> Copy Link</button>
+    <button class="sidebar-item" onclick="window.location.href='/poll/create/?id='+PID"><span>✏️</span> Edit Poll</button>
+    <button class="sidebar-item" id="toggle-btn" onclick="toggleAccepting()"><span>⏸</span> Pause Poll</button>
+    <button class="sidebar-item" onclick="window.location.href='/dashboard/'"><span>🏠</span> Dashboard</button>
   </div>
 
-  <div class="results-card">
-    <div class="live-badge"><span class="live-dot"></span>Live Results</div>
-    <div class="results-title" id="poll-question">Loading...</div>
-    <div class="results-desc" id="poll-desc"></div>
-    <div id="results-wrap"></div>
-  </div>
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title" id="top-title">Loading...</div>
+        <div class="topbar-meta" id="top-meta"></div>
+      </div>
+      <div class="topbar-right"><span id="accepting-status"></span></div>
+    </div>
 
-  <div class="actions-card">
-    <button class="btn btn-ghost" onclick="window.location.href='/poll/create/?id='+PID">✏️ Edit Poll</button>
-    <button class="btn btn-ghost" onclick="copyLink()">🔗 Copy Link</button>
-    <button class="btn btn-ghost" onclick="toggleAccepting()" id="toggle-btn">⏸ Pause Poll</button>
-    <button class="btn btn-ghost" onclick="window.location.href='/dashboard/'">🏠 Dashboard</button>
+    <div class="stats-row">
+      <div class="stat-card"><span style="font-size:18px;">🗳️</span><div><div class="stat-val" id="stat-votes" style="color:var(--accent);">0</div><div class="stat-label">Total Votes</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">🔢</span><div><div class="stat-val" id="stat-options" style="color:var(--yellow);">0</div><div class="stat-label">Options</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">🏆</span><div><div class="stat-val" id="stat-leader" style="color:var(--green);font-size:13px;">—</div><div class="stat-label">Leading</div></div></div>
+      <div class="stat-card"><span style="font-size:18px;">📅</span><div><div class="stat-val" id="stat-today" style="color:var(--purple);">0</div><div class="stat-label">Today</div></div></div>
+    </div>
+
+    <!-- RESULTS VIEW -->
+    <div class="content-area" id="view-results">
+      <div class="live-badge"><span class="live-dot"></span>Live Results</div>
+      <div class="results-card">
+        <div class="results-question" id="poll-question">Loading...</div>
+        <div id="results-wrap"></div>
+      </div>
+    </div>
+
+    <!-- VOTERS VIEW -->
+    <div id="view-voters" style="display:none;flex-direction:column;flex:1;overflow:hidden;">
+      <div class="filter-bar">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search by option..." oninput="applyFilters()">
+        </div>
+      </div>
+      <div style="flex:1;overflow-y:auto;">
+        <table id="voters-table" style="display:none;">
+          <thead><tr><th>#</th><th>Selected Option</th><th>Voted</th></tr></thead>
+          <tbody id="voters-body"></tbody>
+        </table>
+        <div class="empty-state" id="empty-state" style="display:none;">
+          <div style="font-size:48px;margin-bottom:16px;opacity:0.4;">🗳️</div>
+          <div style="font-size:16px;font-weight:600;">No votes recorded yet</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:8px;">Share your poll to start collecting votes</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANALYTICS VIEW -->
+    <div class="content-area" id="view-analytics" style="display:none;">
+      <div class="analytics-grid" id="analytics-grid"></div>
+    </div>
   </div>
 </div>
 </div>
@@ -97,7 +172,7 @@ nav{height:54px;background:rgba(245,244,240,0.95);backdrop-filter:blur(12px);bor
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getFirestore,doc,getDoc,updateDoc,onSnapshot,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getFirestore,doc,getDoc,getDocs,updateDoc,collection,query,where,onSnapshot,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
 const app=initializeApp(FB);
@@ -107,6 +182,9 @@ const db=getFirestore(app);
 const params=new URLSearchParams(window.location.search);
 window.PID=params.get('id');
 let pData=null;
+let allVoters=[];
+let filtered=[];
+const COLORS=['#4f46e5','#12a872','#d97706','#e5484d','#7c3aed','#0ea5e9'];
 
 onAuthStateChanged(auth,async function(u){
   if(!u){window.location.href='/login/';return;}
@@ -119,52 +197,152 @@ async function loadData(){
     const snap=await getDoc(doc(db,'polls',PID));
     if(!snap.exists()){showFatal('Poll not found.');return;}
     pData=snap.data();
+    renderHeader(pData);
+    try{
+      const vSnap=await getDocs(query(collection(db,'pollResponses'),where('pollId','==',PID)));
+      allVoters=vSnap.docs.map(function(d){return Object.assign({_id:d.id},d.data());});
+      allVoters.sort(function(a,b){return(b.submittedAt&&b.submittedAt.seconds?b.submittedAt.seconds:0)-(a.submittedAt&&a.submittedAt.seconds?a.submittedAt.seconds:0);});
+    }catch(e){console.error('Voters:',e);}
     document.getElementById('loading-screen').style.display='none';
     document.getElementById('main-wrap').style.display='block';
-    renderAll(pData);
-    // Live updates
+    updateStats(pData);
+    renderResults(pData);
+    applyFilters();
+    renderAnalytics(pData);
     onSnapshot(doc(db,'polls',PID),function(snap){
-      if(snap.exists()){pData=snap.data();renderAll(pData);}
+      if(snap.exists()){pData=snap.data();renderHeader(pData);updateStats(pData);renderResults(pData);}
     });
   }catch(e){console.error(e);showFatal('Failed to load.');}
 }
 
-function renderAll(d){
-  document.getElementById('nav-title').textContent=d.question||'Poll Results';
-  document.getElementById('poll-question').textContent=d.question||'';
-  document.getElementById('poll-desc').textContent=d.description||'';
-  document.title=(d.question||'Poll')+' — Results';
+function renderHeader(d){
+  const t=d.question||'Poll Results';
+  document.getElementById('nav-title').textContent=t;
+  document.getElementById('top-title').textContent=t;
+  document.getElementById('top-meta').textContent=[d.category,d.deadline?'Closes '+d.deadline:''].filter(Boolean).join(' · ');
+  document.title=t+' — Results';
+  const acc=d.accepting!==false;
+  document.getElementById('accepting-status').innerHTML=acc
+    ?'<span style="color:var(--green);font-size:12px;">● Accepting</span>'
+    :'<span style="color:var(--red);font-size:12px;">● Closed</span>';
+  document.getElementById('toggle-btn').innerHTML=acc?'<span>⏸</span> Pause Poll':'<span>▶</span> Resume Poll';
+}
 
+function updateStats(d){
+  const votes=d.votes||{};
+  const total=Object.values(votes).reduce(function(s,v){return s+(v||0);},0);
+  const options=d.options||[];
+  const maxVotes=total>0?Math.max.apply(null,Object.values(votes)):0;
+  const winnerIdx=Object.keys(votes).find(function(k){return votes[k]===maxVotes;});
+  const wi=winnerIdx?parseInt(winnerIdx.replace('opt_','')):0;
+  const winner=options[wi]||'—';
+  const today=new Date().toDateString();
+  const todayCount=allVoters.filter(function(v){return v.submittedAt&&v.submittedAt.seconds&&new Date(v.submittedAt.seconds*1000).toDateString()===today;}).length;
+  document.getElementById('stat-votes').textContent=total;
+  document.getElementById('stat-options').textContent=options.length;
+  document.getElementById('stat-leader').textContent=winner.substring(0,14)+(winner.length>14?'...':'');
+  document.getElementById('stat-today').textContent=todayCount;
+}
+
+function renderResults(d){
   const options=d.options||[];
   const votes=d.votes||{};
   const total=Object.values(votes).reduce(function(s,v){return s+(v||0);},0);
-  const maxVotes=Math.max(...Object.values(votes),1);
-  const winnerIdx=Object.keys(votes).reduce(function(a,b){return(votes[a]||0)>(votes[b]||0)?a:b;},'opt_0');
-
-  document.getElementById('stat-votes').textContent=total;
-  document.getElementById('stat-options').textContent=options.length;
-
-  const winnerText=options[parseInt(winnerIdx.replace('opt_',''))]||'—';
-  document.getElementById('stat-leader').textContent=winnerText.substring(0,12)+(winnerText.length>12?'...':'');
-
-  const acc=d.accepting!==false;
-  document.getElementById('stat-status').textContent=acc?'● Live':'● Closed';
-  document.getElementById('stat-status').style.color=acc?'var(--green)':'var(--red)';
-  document.getElementById('toggle-btn').textContent=acc?'⏸ Pause Poll':'▶ Resume Poll';
-
+  const maxVotes=total>0?Math.max.apply(null,Object.values(votes)):1;
+  document.getElementById('poll-question').textContent=d.question||'';
   document.getElementById('results-wrap').innerHTML=options.map(function(opt,i){
     const v=votes['opt_'+i]||0;
     const pct=total?Math.round(v/total*100):0;
-    const isWinner=votes['opt_'+i]===maxVotes&&total>0;
+    const isWinner=v===maxVotes&&total>0;
+    const color=COLORS[i%COLORS.length];
     return '<div class="opt-result">'
       +'<div class="opt-result-header">'
-      +'<div class="opt-result-label">'+(isWinner?'<span class="winner-crown">🏆</span>':'')+opt+'</div>'
-      +'<div class="opt-result-stats"><span class="opt-result-pct">'+pct+'%</span><span class="opt-result-count">'+v+' vote'+(v!==1?'s':'')+'</span></div>'
+      +'<div class="opt-label">'+(isWinner?'🏆 ':'')+opt+'</div>'
+      +'<div class="opt-stats"><span class="opt-pct" style="color:'+color+'">'+pct+'%</span><span class="opt-count">'+v+' vote'+(v!==1?'s':'')+'</span></div>'
       +'</div>'
-      +'<div class="bar-bg"><div class="bar-fill'+(isWinner?' winner':'')+'" style="width:'+pct+'%"></div></div>'
+      +'<div class="bar-bg"><div class="bar-fill" style="width:'+pct+'%;background:'+color+'"></div></div>'
       +'</div>';
   }).join('');
 }
+
+window.applyFilters=function(){
+  const q=(document.getElementById('search-input')?document.getElementById('search-input').value:'').toLowerCase();
+  filtered=allVoters.filter(function(v){return !q||(v.selectedText||'').toLowerCase().includes(q);});
+  renderVotersTable();
+};
+
+function renderVotersTable(){
+  const tbody=document.getElementById('voters-body');
+  const table=document.getElementById('voters-table');
+  const empty=document.getElementById('empty-state');
+  if(filtered.length===0){table.style.display='none';empty.style.display='block';return;}
+  empty.style.display='none';table.style.display='table';
+  tbody.innerHTML=filtered.map(function(v,i){
+    const date=v.submittedAt&&v.submittedAt.seconds?new Date(v.submittedAt.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—';
+    const opt=v.selectedText||'Option '+(v.selectedOption!==undefined?v.selectedOption+1:'?');
+    return '<tr><td style="color:var(--muted);font-family:var(--mono);font-size:11px;">#'+(i+1)+'</td>'
+      +'<td><span class="option-pill">'+opt+'</span></td>'
+      +'<td style="color:var(--muted);font-size:11px;">'+date+'</td></tr>';
+  }).join('');
+}
+
+function renderAnalytics(d){
+  const grid=document.getElementById('analytics-grid');
+  const options=d.options||[];
+  const votes=d.votes||{};
+  const total=Object.values(votes).reduce(function(s,v){return s+(v||0);},0);
+  const maxV=total>0?Math.max.apply(null,Object.values(votes)):1;
+
+  const card1=document.createElement('div');
+  card1.className='chart-card full';
+  let html='<div class="chart-title">📊 Votes per Option</div>';
+  options.forEach(function(opt,i){
+    const v=votes['opt_'+i]||0;
+    const pct=total?Math.round(v/total*100):0;
+    const barW=Math.round(v/maxV*100);
+    html+='<div class="bar-row"><div class="bar-label">'+opt.substring(0,16)+'</div><div class="bar-wrap"><div class="bar-fill2" style="width:'+barW+'%;background:'+COLORS[i%COLORS.length]+'"></div><span class="bar-val">'+v+' ('+pct+'%)</span></div></div>';
+  });
+  card1.innerHTML=html;grid.appendChild(card1);
+
+  const dayCount={};
+  allVoters.forEach(function(v){
+    if(v.submittedAt&&v.submittedAt.seconds){
+      const day=new Date(v.submittedAt.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short'});
+      dayCount[day]=(dayCount[day]||0)+1;
+    }
+  });
+  if(Object.keys(dayCount).length>0){
+    const card2=document.createElement('div');
+    card2.className='chart-card full';
+    const maxDay=Math.max.apply(null,Object.values(dayCount));
+    let html2='<div class="chart-title">📈 Daily Votes</div>';
+    Object.keys(dayCount).forEach(function(k){
+      const pct=Math.round(dayCount[k]/maxDay*100);
+      html2+='<div class="bar-row"><div class="bar-label">'+k+'</div><div class="bar-wrap"><div class="bar-fill2" style="width:'+pct+'%;background:var(--accent)"></div><span class="bar-val">'+dayCount[k]+'</span></div></div>';
+    });
+    card2.innerHTML=html2;grid.appendChild(card2);
+  }
+
+  const card3=document.createElement('div');
+  card3.className='chart-card';
+  card3.innerHTML='<div class="chart-title">📋 Summary</div>'
+    +'<div style="font-size:40px;font-weight:800;font-family:var(--mono);text-align:center;color:var(--accent);margin:8px 0;">'+total+'</div>'
+    +'<div style="text-align:center;font-size:13px;color:var(--muted);margin-bottom:16px;">Total Votes</div>'
+    +'<div style="font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:8px;">'
+    +'<div style="display:flex;justify-content:space-between;"><span>Options</span><strong>'+options.length+'</strong></div>'
+    +'<div style="display:flex;justify-content:space-between;"><span>Category</span><strong>'+(d.category||'General')+'</strong></div>'
+    +'<div style="display:flex;justify-content:space-between;"><span>Multiple choice</span><strong>'+(d.allowMultiple?'Yes':'No')+'</strong></div>'
+    +'</div>';
+  grid.appendChild(card3);
+}
+
+window.showView=function(view,el){
+  document.querySelectorAll('.sidebar-item').forEach(function(i){i.classList.remove('active');});
+  if(el)el.classList.add('active');
+  document.getElementById('view-results').style.display=view==='results'?'block':'none';
+  document.getElementById('view-voters').style.display=view==='voters'?'flex':'none';
+  document.getElementById('view-analytics').style.display=view==='analytics'?'block':'none';
+};
 
 window.toggleAccepting=async function(){
   const current=pData.accepting!==false;
@@ -174,8 +352,23 @@ window.toggleAccepting=async function(){
   }catch(e){toast('Error');}
 };
 
-window.copyLink=function(){
-  navigator.clipboard.writeText('https://swoopform.com/poll/?id='+PID).then(function(){toast('Link copied!');});
+window.copyLink=function(){navigator.clipboard.writeText('https://swoopform.com/poll/?id='+PID).then(function(){toast('Link copied!');});};
+
+window.exportCSV=function(){
+  const options=pData.options||[];
+  const votes=pData.votes||{};
+  const total=Object.values(votes).reduce(function(s,v){return s+(v||0);},0);
+  const rows=[['Option','Votes','Percentage']];
+  options.forEach(function(opt,i){
+    const v=votes['opt_'+i]||0;
+    rows.push([opt,v,total?Math.round(v/total*100)+'%':'0%']);
+  });
+  rows.push(['','','']);
+  rows.push(['Total',total,'100%']);
+  const csv=rows.map(function(r){return r.map(function(v){return '"'+String(v||'').replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='poll-results.csv';a.click();
+  toast('CSV downloaded!');
 };
 
 function showFatal(msg){document.getElementById('loading-screen').innerHTML='<div style="text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">😕</div><div style="font-size:16px;font-weight:700;margin-bottom:8px;">'+msg+'</div><a href="/dashboard/" style="display:inline-block;margin-top:16px;padding:10px 20px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-size:13px;">Go to Dashboard</a></div>';}
