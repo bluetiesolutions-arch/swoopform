@@ -411,9 +411,13 @@ function renderCard(item){
       <div class="item-footer">
         <div class="item-stat">📊 <strong>${rc}</strong> response${rc!==1?'s':''}</div>
         <div class="item-actions">
-          ${viewUrl!=='#'?`<a class="ia-btn" href="${viewUrl}" target="_blank">View</a>`:''}
-          ${respUrl?`<a class="ia-btn" href="${respUrl}">Results</a>`:''}
-          <a class="ia-btn primary" href="${getEditUrl(item)}">Edit</a>
+          <a class="ia-btn primary" href="${getEditUrl(item)}">✏️ Edit</a>
+          ${respUrl?`<a class="ia-btn" href="${respUrl}">📊 Results</a>`:''}
+          <a class="ia-btn primary" href="${getEditUrl(item)}">✏️ Edit</a>
+      ${respUrl?`<a class="ia-btn" href="${respUrl}">📊 Results</a>`:''}
+      <a class="ia-btn primary" href="${getEditUrl(item)}">✏️ Edit</a>
+      ${respUrl?`<a class="ia-btn" href="${respUrl}">📊 Results</a>`:''}
+      <button class="ia-btn" onclick="openCtx(event,'${item.id}','${item._col}')">⋯</button>
         </div>
       </div>
     </div>
@@ -441,6 +445,10 @@ function renderListRow(item){
       ${viewUrl!=='#'?`<a class="ia-btn" href="${viewUrl}" target="_blank">View</a>`:''}
       ${respUrl?`<a class="ia-btn" href="${respUrl}">Results</a>`:''}
       <a class="ia-btn primary" href="${getEditUrl(item)}">Edit</a>
+      <a class="ia-btn primary" href="${getEditUrl(item)}">✏️ Edit</a>
+      ${respUrl?`<a class="ia-btn" href="${respUrl}">📊 Results</a>`:''}
+      <a class="ia-btn primary" href="${getEditUrl(item)}">✏️ Edit</a>
+      ${respUrl?`<a class="ia-btn" href="${respUrl}">📊 Results</a>`:''}
       <button class="ia-btn" onclick="openCtx(event,'${item.id}','${item._col}')">⋯</button>
     </div>
   </div>`;
