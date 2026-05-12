@@ -380,6 +380,7 @@ function getViewUrl(item){
     if(item._col==='employees')return '/employee/?id='+item.id;
     if(item._col==='products')return '/product/?id='+item.id;
     if(item._col==='awards')return '/award/?id='+item.id;
+  if(item._col==='pledges')return '/pledge/?id='+item.id;
   return item.slug?'/engage/'+item.slug:'#';
 }
 function getEditUrl(item){return(TYPE_META[item._col]?.editPath||'#')+item.id}

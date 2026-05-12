@@ -281,11 +281,16 @@ import{getFirestore,collection,addDoc,doc,updateDoc,serverTimestamp}from'https:/
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
 const app=initializeApp(FB);const auth=getAuth(app);const db=getFirestore(app);
-let U=null,PID=null,faqs=[];
+let U=null,PID=null,faqs=[],stats=[],milestones=[];
 
-onAuthStateChanged(auth,u=>{
-  if(!u){window.location.href='/login';return}
-  U=u;document.getElementById('ls').style.display='none';renderFAQs();
+onAuthStateChanged(auth,async function(u){
+  if(!u){window.location.href='/login/';return;}
+  U=u;
+  document.getElementById('ls').style.display='none';
+  const params=new URLSearchParams(window.location.search);
+  PID=params.get('id');
+  if(PID)await loadExisting(PID);
+  else{renderFAQs();renderStats();renderMilestones();}
 });
 
 window.showPanel=function(p){
