@@ -6,7 +6,7 @@
 <title>PulseCheck — Host | SwoopForm</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f5f4f0;--surface:#fff;--surface2:#f0eeea;--border:#e2ddd6;--accent:#0ea5e9;--accent2:#06b6d4;--green:#12a872;--red:#e5484d;--yellow:#d97706;--purple:#7c3aed;--text:#1c1c2e;--muted:#7a7a8c;--muted2:#c5c0b8;--font:'Sora',sans-serif;}
+:root{--bg:#f5f4f0;--surface:#fff;--surface2:#f0eeea;--border:#e2ddd6;--accent:#0ea5e9;--accent2:#06b6d4;--green:#12a872;--red:#e5484d;--text:#1c1c2e;--muted:#7a7a8c;--muted2:#c5c0b8;--font:'Sora',sans-serif;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;}
 nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:100;}
@@ -15,243 +15,241 @@ nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border
 .logo-nm{font-weight:800;font-size:15px;color:var(--text);}
 .nav-badge{font-size:12px;color:var(--muted);padding:4px 12px;border-radius:20px;background:var(--surface2);border:1px solid var(--border);}
 .main{max-width:860px;margin:0 auto;padding:32px 20px;}
-.page-title{font-size:22px;font-weight:800;letter-spacing:-.03em;margin-bottom:4px;}
-.page-sub{font-size:13px;color:var(--muted);margin-bottom:28px;}
 .card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;}
-.card-title{font-size:14px;font-weight:700;margin-bottom:16px;}
-.field{margin-bottom:14px;}
-.field-label{display:block;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;}
-.field-input{width:100%;padding:10px 14px;border-radius:9px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;font-family:var(--font);outline:none;transition:border-color .2s;}
-.field-input:focus{border-color:var(--accent);}
-.field-input::placeholder{color:var(--muted2);}
-.slide-block{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:18px;margin-bottom:10px;}
-.slide-block:hover{border-color:var(--accent);}
-.slide-header{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
-.slide-num{width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
-.slide-type-badge{padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;}
-.type-mcq{background:rgba(14,165,233,.1);color:#0369a1;border:1px solid rgba(14,165,233,.2);}
-.type-wordcloud{background:rgba(124,58,237,.1);color:#6d28d9;border:1px solid rgba(124,58,237,.2);}
-.type-opentext{background:rgba(18,168,114,.1);color:#065f46;border:1px solid rgba(18,168,114,.2);}
-.slide-del{background:none;border:none;cursor:pointer;color:var(--muted2);font-size:16px;margin-left:auto;padding:4px;border-radius:4px;}
-.slide-del:hover{color:var(--red);}
-.opt-row{display:flex;gap:8px;margin-bottom:8px;}
-.opt-input{flex:1;padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;font-family:var(--font);outline:none;transition:border-color .2s;}
-.opt-input:focus{border-color:var(--accent);}
-.opt-input::placeholder{color:var(--muted2);}
-.opt-del{background:none;border:none;cursor:pointer;color:var(--muted2);font-size:14px;padding:4px;}
-.opt-del:hover{color:var(--red);}
-.add-opt-btn{background:none;border:none;cursor:pointer;color:var(--accent);font-size:12px;font-weight:600;font-family:var(--font);padding:2px 0;}
-.add-slide-btns{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
-.add-slide-btn{padding:10px 16px;border-radius:10px;border:2px dashed var(--border);background:transparent;color:var(--muted);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;}
-.add-slide-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(14,165,233,0.04);}
-.btn-primary{padding:12px 24px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:14px;font-weight:700;font-family:var(--font);cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;}
+.btn{padding:10px 22px;border-radius:10px;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:8px;text-decoration:none;}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;}
 .btn-primary:hover{opacity:.9;transform:translateY(-1px);}
 .btn-primary:disabled{opacity:.4;cursor:not-allowed;transform:none;}
-.btn-ghost{padding:10px 20px;border-radius:10px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;}
+.btn-ghost{border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font);font-size:13px;font-weight:600;}
 .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
-.btn-danger{padding:10px 20px;border-radius:10px;border:none;background:var(--red);color:#fff;font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;transition:opacity .2s;}
-.btn-danger:hover{opacity:.85;}
-
+.btn-red{background:var(--red);color:#fff;}
+.btn-red:hover{opacity:.9;}
+.ls{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:900;}
+.spinner{width:36px;height:36px;border:3px solid rgba(14,165,233,.2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.info-card{background:linear-gradient(135deg,rgba(14,165,233,.08),rgba(6,182,212,.04));border:1.5px solid rgba(14,165,233,.2);border-radius:16px;padding:24px;margin-bottom:20px;}
+.info-title{font-size:22px;font-weight:800;margin-bottom:6px;}
+.info-meta{font-size:13px;color:var(--muted);display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;}
+.slide-preview{display:flex;flex-direction:column;gap:6px;}
+.slide-prev-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);padding:6px 10px;background:var(--surface);border-radius:8px;border:1px solid var(--border);}
+.slide-prev-num{width:20px;height:20px;border-radius:5px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;}
+/* LOBBY */
+.lobby{display:none;text-align:center;}
+.pin-big{font-weight:800;font-size:clamp(3.5rem,12vw,7rem);letter-spacing:.15em;color:var(--accent);background:rgba(14,165,233,.06);border-radius:20px;padding:24px 48px;display:inline-block;border:2px solid rgba(14,165,233,.2);margin-bottom:16px;line-height:1;}
+.join-url{font-size:14px;color:var(--muted);margin-bottom:24px;}
+.participant-grid{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;min-height:40px;}
+.p-chip{padding:6px 14px;border-radius:100px;background:rgba(14,165,233,.08);border:1px solid rgba(14,165,233,.2);font-size:13px;font-weight:600;color:var(--accent);animation:popIn .3s ease both;}
+@keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.p-count{font-size:13px;color:var(--muted);margin-bottom:16px;}
 /* LIVE */
 .live-screen{display:none;}
-.live-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:20px;}
-.live-code{font-weight:800;font-size:2rem;letter-spacing:.12em;color:var(--accent);}
-.live-code-label{font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;}
-.live-participants{font-size:13px;color:var(--muted);background:var(--surface2);padding:6px 14px;border-radius:20px;border:1px solid var(--border);}
+.live-header{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:18px 22px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.live-pin{font-weight:800;font-size:1.6rem;letter-spacing:.1em;color:var(--accent);}
+.live-pin-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+.live-participants{font-size:13px;color:var(--muted);background:var(--surface2);padding:6px 14px;border-radius:20px;border:1px solid var(--border);margin-left:auto;}
 .slide-nav{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
-.slide-indicator{font-size:13px;color:var(--muted);flex:1;}
-.current-slide-display{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;}
-.slide-q-text{font-weight:700;font-size:17px;margin-bottom:16px;color:var(--text);}
-.live-results{display:flex;flex-direction:column;gap:8px;}
-.live-bar-row{display:flex;align-items:center;gap:10px;}
-.live-bar-label{font-size:13px;font-weight:600;width:120px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);}
-.live-bar-track{flex:1;height:28px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;}
-.live-bar-fill{height:100%;border-radius:6px;transition:width .5s ease;}
-.live-bar-cnt{font-size:12px;font-weight:700;color:var(--muted);width:40px;text-align:right;flex-shrink:0;}
-.word-cloud{display:flex;gap:8px;flex-wrap:wrap;padding:12px 0;}
-.word-tag{padding:5px 12px;border-radius:100px;font-weight:700;cursor:default;transition:all .3s;animation:popIn .3s ease both;}
-@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
-.open-answers{display:flex;flex-direction:column;gap:6px;max-height:240px;overflow-y:auto;}
-.open-answer{background:var(--surface2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--text);animation:slideIn .3s ease;}
+.slide-ind{font-size:13px;color:var(--muted);flex:1;}
+.slide-display{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;}
+.slide-q-txt{font-size:17px;font-weight:700;margin-bottom:20px;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.bar-label{font-size:13px;font-weight:600;width:130px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.bar-track{flex:1;height:30px;background:var(--surface2);border-radius:8px;overflow:hidden;position:relative;}
+.bar-fill{height:100%;border-radius:8px;transition:width .5s ease;}
+.bar-cnt{font-size:12px;font-weight:700;color:var(--muted);width:36px;text-align:right;flex-shrink:0;}
+.word-cloud{display:flex;gap:8px;flex-wrap:wrap;padding:8px 0;}
+.word-tag{padding:5px 14px;border-radius:100px;font-weight:700;animation:popIn .3s ease both;font-size:14px;}
+.open-stream{display:flex;flex-direction:column;gap:6px;max-height:260px;overflow-y:auto;}
+.open-item{background:var(--surface2);border-radius:8px;padding:10px 14px;font-size:13px;animation:slideIn .3s ease;}
 @keyframes slideIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
-.response-count-live{font-size:12px;color:var(--muted);text-align:center;margin-top:10px;}
-.waiting-msg{color:var(--muted2);font-size:13px;text-align:center;padding:16px;}
+.resp-count{font-size:12px;color:var(--muted);text-align:center;margin-top:10px;}
+.waiting-resp{color:var(--muted2);font-size:13px;text-align:center;padding:20px;}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;display:none;z-index:999;}
-@media(max-width:600px){.main{padding:16px;}.add-slide-btns{flex-direction:column;}nav{padding:0 14px;}.logo-nm{display:none;}}
+@media(max-width:600px){.main{padding:16px;}nav{padding:0 14px;}.logo-nm{display:none;}}
 </style>
 </head>
 <body>
+<div class="ls" id="ls"><div class="spinner"></div><div style="font-size:13px;color:var(--muted);">Loading session...</div></div>
 <nav>
   <a href="/dashboard/" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
   <span class="nav-badge">📡 PulseCheck — Host</span>
 </nav>
 <div class="main">
-
   <!-- SETUP -->
-  <div id="setup-screen">
-    <div class="page-title">📡 Create PulseCheck</div>
-    <div class="page-sub">Build a live interactive session. Audience joins with a 4-digit PIN.</div>
-    <div class="card">
-      <div class="card-title">📋 Session Details</div>
-      <div class="field"><label class="field-label">Session Title *</label><input class="field-input" id="poll-title" placeholder="e.g. Team Retrospective Poll"></div>
+  <div id="setup-screen" style="display:none;">
+    <div class="info-card" id="info-card">
+      <div class="info-title" id="info-title">Loading...</div>
+      <div class="info-meta" id="info-meta"></div>
+      <div class="slide-preview" id="slide-preview"></div>
     </div>
-    <div class="card">
-      <div class="card-title">📑 Slides</div>
-      <div id="slides-list"></div>
-      <div class="add-slide-btns">
-        <button class="add-slide-btn" onclick="addSlide('mcq')">📊 + MCQ Poll</button>
-        <button class="add-slide-btn" onclick="addSlide('wordcloud')">☁️ + Word Cloud</button>
-        <button class="add-slide-btn" onclick="addSlide('opentext')">💬 + Open Text</button>
+    <div class="card" style="text-align:center;padding:32px;">
+      <div style="font-size:48px;margin-bottom:12px;">📡</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:8px;">Ready to go live?</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:24px;">Audience joins with a 4-digit PIN. You control which slide is shown.</div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="launchSession()">📡 Launch Live Session</button>
+        <a href="#" id="edit-link" class="btn btn-ghost">✏️ Edit Session</a>
+        <a href="/dashboard/" class="btn btn-ghost">← Dashboard</a>
       </div>
     </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <button class="btn-primary" onclick="launchPoll()">🚀 Launch Session</button>
-      <a href="/dashboard/" class="btn-ghost">← Dashboard</a>
-    </div>
   </div>
-
+  <!-- LOBBY -->
+  <div class="lobby" id="lobby">
+    <div style="font-size:22px;font-weight:800;margin-bottom:4px;">📡 Session Live</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:20px;">Audience joins at <strong>swoopform.com/livepoll/join</strong></div>
+    <div class="pin-big" id="pin-display">----</div>
+    <div class="join-url">swoopform.com/livepoll/join</div>
+    <div class="p-count" id="p-count">0 participants</div>
+    <div class="participant-grid" id="p-grid"></div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;">
+      <button class="btn btn-primary" onclick="startSession()">▶ Start Session</button>
+      <button class="btn btn-ghost" onclick="openScreen()">📺 Projector Screen</button>
+    </div>
+    <div style="font-size:12px;color:var(--muted2);margin-top:12px;">Audience can join before and after you start</div>
+  </div>
   <!-- LIVE -->
   <div class="live-screen" id="live-screen">
     <div class="live-header">
-      <div>
-        <div class="live-code-label">Join at swoopform.com/livepoll/join · PIN</div>
-        <div class="live-code" id="live-code">----</div>
-      </div>
+      <div><div class="live-pin-label">PIN · swoopform.com/livepoll/join</div><div class="live-pin" id="live-pin">----</div></div>
       <div class="live-participants" id="live-participants">0 participants</div>
-      <button class="btn-ghost" onclick="openPollScreen()">📺 Open Screen</button>
+      <button class="btn btn-ghost" onclick="openScreen()">📺 Screen</button>
     </div>
     <div class="slide-nav">
-      <div class="slide-indicator" id="slide-indicator">Slide 1 of 1</div>
-      <button class="btn-ghost" id="prev-slide-btn" onclick="prevSlide()">← Prev</button>
-      <button class="btn-primary" id="next-slide-btn" onclick="nextSlide()">Next →</button>
-      <button class="btn-danger" onclick="endPoll()">End Session</button>
+      <div class="slide-ind" id="slide-ind">Slide 1 of 1</div>
+      <button class="btn btn-ghost" id="prev-btn" onclick="prevSlide()">← Prev</button>
+      <button class="btn btn-primary" id="next-btn" onclick="nextSlide()">Next →</button>
+      <button class="btn btn-red" onclick="endSession()">⏹ End</button>
     </div>
-    <div class="current-slide-display" id="current-slide-display"></div>
+    <div class="slide-display" id="slide-display"></div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
-
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getDatabase,ref,set,push,onValue,update}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
-
+import{getFirestore,doc,getDoc}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getDatabase,ref,set,push,onValue,update,off}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83",databaseURL:"https://swoopform-default-rtdb.asia-southeast1.firebasedatabase.app/"};
-const app=initializeApp(FB);
-const auth=getAuth(app);
-const db=getDatabase(app);
-
-onAuthStateChanged(auth,function(u){if(!u)window.location.href='/login/';});
-
-let slides=[],sessionId=null,currentSlideIdx=0;
+const app=initializeApp(FB);const auth=getAuth(app);const fsdb=getFirestore(app);const rtdb=getDatabase(app);
 const COLORS=['#0ea5e9','#7c3aed','#10b981','#f59e0b','#ef4444','#ec4899'];
-const WORDCLOUD_SIZES=[2,1.6,1.4,1.2,1,0.9,0.85,0.8];
+const WC_SIZES=[2.2,1.8,1.5,1.3,1.1,1,0.9,0.85];
+let PID=null,sessionData=null,sessionId=null,curSlide=0,respListener=null;
 
-window.addSlide=function(type){
-  slides.push({type,question:'',options:type==='mcq'?['','','']:[]});
-  renderSlides();
-};
+onAuthStateChanged(auth,async function(u){
+  if(!u){window.location.href='/login/';return;}
+  const p=new URLSearchParams(window.location.search);PID=p.get('id');
+  if(!PID){window.location.href='/dashboard/';return;}
+  await loadSession();
+});
 
-function renderSlides(){
-  const list=document.getElementById('slides-list');
-  if(!slides.length){list.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted2);font-size:13px;">No slides yet. Add your first slide above.</div>';return;}
-  list.innerHTML=slides.map(function(s,i){
-    return '<div class="slide-block"><div class="slide-header">'
-      +'<div class="slide-num">'+(i+1)+'</div>'
-      +'<span class="slide-type-badge type-'+s.type+'">'+(s.type==='mcq'?'📊 MCQ':s.type==='wordcloud'?'☁️ Word Cloud':'💬 Open Text')+'</span>'
-      +'<button class="slide-del" onclick="deleteSlide('+i+')">×</button>'
-      +'</div>'
-      +'<input class="field-input" placeholder="'+(s.type==='mcq'?'Ask a question...':s.type==='wordcloud'?'What word comes to mind when you think of...':'Ask for open feedback...')+'" value="'+esc(s.question)+'" oninput="slides['+i+'].question=this.value" style="margin-bottom:'+(s.type==='mcq'?'12px':'0')+'">'
-      +(s.type==='mcq'?'<div id="opts-'+i+'">'+s.options.map(function(o,oi){
-        return '<div class="opt-row"><input class="opt-input" placeholder="Option '+(oi+1)+'" value="'+esc(o)+'" oninput="slides['+i+'].options['+oi+']=this.value"><button class="opt-del" onclick="deleteOpt('+i+','+oi+')">×</button></div>';
-      }).join('')+'</div><button class="add-opt-btn" onclick="addOpt('+i+')">+ Add option</button>':'')
-      +'</div>';
-  }).join('');
+async function loadSession(){
+  try{
+    const snap=await getDoc(doc(fsdb,'livePollSessions',PID));
+    if(!snap.exists()){toast('Session not found');return;}
+    sessionData=snap.data();
+    document.getElementById('ls').style.display='none';
+    document.getElementById('setup-screen').style.display='block';
+    document.getElementById('info-title').textContent=sessionData.title||'PulseCheck';
+    document.getElementById('info-meta').innerHTML=
+      '<span>📚 '+sessionData.category+'</span>'
+      +'<span>👥 '+sessionData.audienceSize+' audience</span>'
+      +'<span>📑 '+sessionData.slideCount+' slides</span>';
+    document.getElementById('slide-preview').innerHTML=(sessionData.slides||[]).map(function(s,i){
+      const icon={mcq:'📊',wordcloud:'☁️',opentext:'💬'}[s.type]||'📑';
+      return '<div class="slide-prev-item"><div class="slide-prev-num">'+(i+1)+'</div><span>'+icon+' '+s.question.substring(0,50)+'</span></div>';
+    }).join('');
+    document.getElementById('edit-link').href='/livepoll/create/?id='+PID;
+  }catch(e){console.error(e);toast('Error loading session');}
 }
 
-window.deleteSlide=function(i){slides.splice(i,1);renderSlides();};
-window.addOpt=function(i){if(slides[i].options.length<6){slides[i].options.push('');renderSlides();}};
-window.deleteOpt=function(i,oi){if(slides[i].options.length>2){slides[i].options.splice(oi,1);renderSlides();}};
-function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
-
-window.launchPoll=async function(){
-  const title=document.getElementById('poll-title').value.trim();
-  if(!title){toast('Please add a session title');return;}
-  if(!slides.length){toast('Please add at least one slide');return;}
-  if(slides.find(function(s){return !s.question.trim();})){toast('Please fill in all slide questions');return;}
+window.launchSession=async function(){
   const code=String(Math.floor(1000+Math.random()*9000));
-  const sRef=push(ref(db,'livePollSessions'));
+  const sRef=push(ref(rtdb,'livePollSessions'));
   sessionId=sRef.key;
-  await set(sRef,{title,code,status:'active',currentSlide:0,
-    slides:slides.map(function(s){return{type:s.type,question:s.question,options:s.options||[]};}),
-    createdAt:Date.now()
+  await set(sRef,{
+    pollId:PID,title:sessionData.title,code,status:'waiting',currentSlide:-1,
+    createdAt:Date.now(),
+    slides:(sessionData.slides||[]).map(function(s){return{type:s.type,question:s.question,options:s.options||[]};})
   });
   document.getElementById('setup-screen').style.display='none';
-  document.getElementById('live-screen').style.display='block';
-  document.getElementById('live-code').textContent=code;
-  onValue(ref(db,'livePollParticipants/'+sessionId),function(snap){
-    const count=snap.exists()?Object.keys(snap.val()).length:0;
-    document.getElementById('live-participants').textContent=count+' participant'+(count!==1?'s':'');
+  document.getElementById('lobby').style.display='block';
+  document.getElementById('pin-display').textContent=code;
+  document.getElementById('live-pin').textContent=code;
+  onValue(ref(rtdb,'livePollParticipants/'+sessionId),function(snap){
+    const names=[];
+    if(snap.exists())snap.forEach(function(c){names.push(c.val().name||'?');});
+    document.getElementById('p-count').textContent=names.length+' participant'+(names.length!==1?'s':'');
+    document.getElementById('p-grid').innerHTML=names.map(function(n){return '<div class="p-chip">'+eh(n)+'</div>';}).join('');
+    document.getElementById('live-participants').textContent=names.length+' participants';
   });
-  showLiveSlide(0);
 };
 
-function showLiveSlide(idx){
-  currentSlideIdx=idx;
+window.openScreen=function(){window.open('/livepoll/screen/?session='+sessionId,'_blank','width=1280,height=720');};
+
+window.startSession=function(){
+  document.getElementById('lobby').style.display='none';
+  document.getElementById('live-screen').style.display='block';
+  showSlide(0);
+};
+
+function showSlide(idx){
+  if(respListener){off(respListener);respListener=null;}
+  curSlide=idx;
+  const slides=sessionData.slides||[];
   const s=slides[idx];
   const total=slides.length;
-  document.getElementById('slide-indicator').textContent='Slide '+(idx+1)+' of '+total;
-  document.getElementById('prev-slide-btn').disabled=idx===0;
-  document.getElementById('next-slide-btn').textContent=idx===total-1?'End →':'Next →';
-  const display=document.getElementById('current-slide-display');
-  display.innerHTML='<div class="slide-q-text">'+esc(s.question||'Untitled slide')+'</div>'
-    +'<div id="live-results-wrap"><div class="waiting-msg">Waiting for responses...</div></div>'
-    +'<div class="response-count-live" id="resp-count-live">0 responses</div>';
-  update(ref(db,'livePollSessions/'+sessionId),{currentSlide:idx});
-  onValue(ref(db,'livePollResponses/'+sessionId+'/'+idx),function(snap){
-    const responses=[];let total2=0;
-    if(snap.exists())snap.forEach(function(c){responses.push(c.val().answer);total2++;});
-    const rc=document.getElementById('resp-count-live');if(rc)rc.textContent=total2+' response'+(total2!==1?'s':'');
-    renderLiveResults(s,responses,total2);
+  document.getElementById('slide-ind').textContent='Slide '+(idx+1)+' of '+total;
+  document.getElementById('prev-btn').disabled=idx===0;
+  document.getElementById('next-btn').textContent=idx===total-1?'End →':'Next →';
+  document.getElementById('slide-display').innerHTML=
+    '<div class="slide-q-txt">'+eh(s.question)+'</div>'
+    +'<div id="resp-wrap"><div class="waiting-resp">Waiting for responses...</div></div>'
+    +'<div class="resp-count" id="resp-count">0 responses</div>';
+  update(ref(rtdb,'livePollSessions/'+sessionId),{currentSlide:idx,status:'active'});
+  const respRef=ref(rtdb,'livePollResponses/'+sessionId+'/'+idx);
+  respListener=respRef;
+  onValue(respRef,function(snap){
+    const resps=[];
+    if(snap.exists())snap.forEach(function(c){resps.push(c.val().answer);});
+    const rc=document.getElementById('resp-count');if(rc)rc.textContent=resps.length+' response'+(resps.length!==1?'s':'');
+    renderResults(s,resps);
   });
 }
 
-function renderLiveResults(s,responses,total){
-  const wrap=document.getElementById('live-results-wrap');if(!wrap)return;
-  if(!responses.length){wrap.innerHTML='<div class="waiting-msg">Waiting for responses...</div>';return;}
+function renderResults(s,resps){
+  const wrap=document.getElementById('resp-wrap');if(!wrap)return;
+  if(!resps.length){wrap.innerHTML='<div class="waiting-resp">Waiting for responses...</div>';return;}
   if(s.type==='mcq'){
-    const counts={};s.options.forEach(function(o){counts[o]=0;});
-    responses.forEach(function(r){if(counts[r]!==undefined)counts[r]++;});
+    const counts={};(s.options||[]).forEach(function(o){counts[o]=0;});
+    resps.forEach(function(r){if(counts[r]!==undefined)counts[r]++;});
     const max=Math.max(...Object.values(counts),1);
-    wrap.innerHTML='<div class="live-results">'+s.options.map(function(o,oi){
-      return '<div class="live-bar-row"><div class="live-bar-label" title="'+esc(o)+'">'+esc(o)+'</div>'
-        +'<div class="live-bar-track"><div class="live-bar-fill" style="background:'+COLORS[oi]+';width:'+(counts[o]/max*100)+'%"></div></div>'
-        +'<div class="live-bar-cnt">'+counts[o]+'</div></div>';
+    wrap.innerHTML='<div>'+( s.options||[]).map(function(o,i){
+      const pct=Math.round((counts[o]||0)/max*100);
+      return '<div class="bar-row"><div class="bar-label" title="'+eh(o)+'">'+eh(o)+'</div>'
+        +'<div class="bar-track"><div class="bar-fill" style="background:'+COLORS[i]+';width:'+pct+'%"></div></div>'
+        +'<div class="bar-cnt">'+(counts[o]||0)+'</div></div>';
     }).join('')+'</div>';
   }else if(s.type==='wordcloud'){
     const freq={};
-    responses.forEach(function(r){const w=r.trim().toLowerCase();if(w)freq[w]=(freq[w]||0)+1;});
+    resps.forEach(function(r){const w=(r||'').trim().toLowerCase();if(w)freq[w]=(freq[w]||0)+1;});
     const sorted=Object.entries(freq).sort(function(a,b){return b[1]-a[1];}).slice(0,30);
-    const max=sorted[0]?sorted[0][1]:1;
     wrap.innerHTML='<div class="word-cloud">'+sorted.map(function(entry,i){
-      const size=WORDCLOUD_SIZES[Math.min(i,WORDCLOUD_SIZES.length-1)];
-      return '<div class="word-tag" style="font-size:'+size+'rem;background:'+COLORS[i%COLORS.length]+'18;border:1px solid '+COLORS[i%COLORS.length]+'33;color:'+COLORS[i%COLORS.length]+';padding:'+(4+Math.floor(size*2))+'px '+(8+Math.floor(size*4))+'px;">'+esc(entry[0])+'</div>';
+      const sz=WC_SIZES[Math.min(i,WC_SIZES.length-1)];
+      return '<div class="word-tag" style="font-size:'+sz+'rem;background:'+COLORS[i%COLORS.length]+'18;border:1px solid '+COLORS[i%COLORS.length]+'33;color:'+COLORS[i%COLORS.length]+';">'+eh(entry[0])+'</div>';
     }).join('')+'</div>';
   }else{
-    wrap.innerHTML='<div class="open-answers">'+responses.slice(-10).reverse().map(function(r){return '<div class="open-answer">'+esc(r)+'</div>';}).join('')+'</div>';
+    wrap.innerHTML='<div class="open-stream">'+resps.slice(-12).reverse().map(function(r){return '<div class="open-item">'+eh(r)+'</div>';}).join('')+'</div>';
   }
 }
 
-window.nextSlide=function(){if(currentSlideIdx<slides.length-1)showLiveSlide(currentSlideIdx+1);else endPoll();};
-window.prevSlide=function(){if(currentSlideIdx>0)showLiveSlide(currentSlideIdx-1);};
-window.endPoll=async function(){
-  await update(ref(db,'livePollSessions/'+sessionId),{status:'ended'});
-  toast('Session ended!');
-  setTimeout(function(){window.location.href='/dashboard/';},2000);
+window.nextSlide=function(){if(curSlide<(sessionData.slides||[]).length-1)showSlide(curSlide+1);else endSession();};
+window.prevSlide=function(){if(curSlide>0)showSlide(curSlide-1);};
+window.endSession=async function(){
+  if(respListener)off(respListener);
+  await update(ref(rtdb,'livePollSessions/'+sessionId),{status:'ended'});
+  toast('Session ended!');setTimeout(function(){window.location.href='/dashboard/';},2000);
 };
-window.openPollScreen=function(){window.open('/livepoll/screen/?session='+sessionId,'_blank','width=1200,height=700');};
+function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
-renderSlides();
 </script>
 </body>
 </html>

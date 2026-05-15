@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PulseCheck Builder — SwoopForm</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f4f0;--surface:#fff;--surface2:#f0eeea;--border:#e2ddd6;--accent:#0ea5e9;--accent2:#06b6d4;--green:#12a872;--red:#e5484d;--text:#1c1c2e;--muted:#7a7a8c;--muted2:#c5c0b8;--font:'Sora',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;}
+nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:100;}
+.nav-left{display:flex;align-items:center;gap:10px;}
+.logo{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#0ea5e9,#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;text-decoration:none;}
+.nav-title{font-weight:700;font-size:14px;color:var(--text);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.nav-right{display:flex;gap:8px;}
+.btn{padding:7px 16px;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;border:none;}
+.btn-ghost{border:1.5px solid var(--border);background:transparent;color:var(--muted);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+.btn-pub{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;}
+.btn-pub:disabled{opacity:.5;cursor:not-allowed;}
+.main{max-width:780px;margin:0 auto;padding:32px 20px;}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:22px;margin-bottom:16px;}
+.card-title{font-size:14px;font-weight:700;margin-bottom:16px;}
+.field{margin-bottom:14px;}
+.field:last-child{margin-bottom:0;}
+.label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;}
+.inp{width:100%;padding:10px 14px;border-radius:9px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;font-family:var(--font);outline:none;transition:border-color .2s;}
+.inp:focus{border-color:var(--accent);}
+.inp::placeholder{color:var(--muted2);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.slide-card{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:18px;margin-bottom:12px;}
+.slide-card:hover{border-color:rgba(14,165,233,.3);}
+.slide-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.slide-num{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0;}
+.slide-type-badge{padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;}
+.badge-mcq{background:rgba(14,165,233,.1);color:#0369a1;border:1px solid rgba(14,165,233,.2);}
+.badge-wordcloud{background:rgba(124,58,237,.1);color:#6d28d9;border:1px solid rgba(124,58,237,.2);}
+.badge-opentext{background:rgba(18,168,114,.1);color:#065f46;border:1px solid rgba(18,168,114,.2);}
+.slide-del{background:none;border:none;cursor:pointer;color:var(--muted2);font-size:18px;margin-left:auto;padding:4px;border-radius:4px;}
+.slide-del:hover{color:var(--red);}
+.opt-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.opt-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.opt-inp{flex:1;padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;font-family:var(--font);outline:none;transition:border-color .2s;}
+.opt-inp:focus{border-color:var(--accent);}
+.opt-inp::placeholder{color:var(--muted2);}
+.opt-del-btn{background:none;border:none;cursor:pointer;color:var(--muted2);font-size:16px;padding:2px;}
+.opt-del-btn:hover{color:var(--red);}
+.add-opt{background:none;border:1px dashed var(--border);border-radius:7px;padding:6px 12px;color:var(--muted);font-family:var(--font);font-size:12px;cursor:pointer;transition:all .15s;margin-top:4px;}
+.add-opt:hover{border-color:var(--accent);color:var(--accent);}
+.type-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.type-btn{padding:11px 16px;border-radius:10px;border:2px solid var(--border);background:var(--surface);color:var(--muted);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;flex:1;min-width:120px;text-align:center;}
+.type-btn:hover{border-color:var(--accent);color:var(--accent);}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:200;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:460px;padding:28px;text-align:center;}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;display:none;z-index:999;}
+.ls{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:900;}
+.spinner{width:32px;height:32px;border:3px solid rgba(14,165,233,.2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:600px){.main{padding:16px;}.grid2{grid-template-columns:1fr;}nav{padding:0 14px;}}
+</style>
+</head>
+<body>
+<div class="ls" id="ls"><div class="spinner"></div></div>
+<nav>
+  <div class="nav-left">
+    <a href="/dashboard/" class="logo">S</a>
+    <a href="/dashboard/" class="btn btn-ghost" style="font-size:12px;padding:5px 10px;">← Dashboard</a>
+    <span class="nav-title" id="nav-title">New PulseCheck</span>
+  </div>
+  <div class="nav-right">
+    <button class="btn btn-ghost" onclick="saveDraft()">Save Draft</button>
+    <button class="btn btn-pub" id="pub-btn" onclick="publish()">Save & Publish →</button>
+  </div>
+</nav>
+<div class="main">
+  <div class="card">
+    <div class="card-title">📡 Session Details</div>
+    <div class="field"><label class="label">Session Title *</label><input class="inp" id="pc-title" placeholder="e.g. Team Retrospective" oninput="document.getElementById('nav-title').textContent=this.value||'New PulseCheck'"></div>
+    <div class="field"><label class="label">Description</label><textarea class="inp" id="pc-desc" rows="2" placeholder="What's this session about?" style="resize:vertical;"></textarea></div>
+    <div class="grid2">
+      <div class="field"><label class="label">Category</label>
+        <select class="inp" id="pc-cat" style="cursor:pointer;">
+          <option>Team Meeting</option><option>Training</option><option>Event</option>
+          <option>Conference</option><option>Classroom</option><option>Workshop</option><option>Other</option>
+        </select>
+      </div>
+      <div class="field"><label class="label">Audience Size (estimate)</label>
+        <select class="inp" id="pc-size" style="cursor:pointer;">
+          <option>1-10</option><option>11-50</option><option>51-200</option><option>200+</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">📑 Slides <span id="slide-count" style="font-size:12px;color:var(--muted);font-weight:400;">0 slides</span></div>
+    <div id="slides-container"></div>
+    <div style="margin-top:8px;">
+      <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Add Slide:</div>
+      <div class="type-btns">
+        <button class="type-btn" onclick="addSlide('mcq')" style="border-color:#0ea5e9;color:#0ea5e9;background:rgba(14,165,233,.04);">📊 MCQ Poll</button>
+        <button class="type-btn" onclick="addSlide('wordcloud')" style="border-color:#7c3aed;color:#7c3aed;background:rgba(124,58,237,.04);">☁️ Word Cloud</button>
+        <button class="type-btn" onclick="addSlide('opentext')" style="border-color:#12a872;color:#12a872;background:rgba(18,168,114,.04);">💬 Open Text</button>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:flex-end;gap:10px;">
+    <button class="btn btn-ghost" onclick="saveDraft()">Save Draft</button>
+    <button class="btn btn-pub" onclick="publish()">Save & Publish →</button>
+  </div>
+</div>
+<div class="modal-overlay" id="success-modal">
+  <div class="modal">
+    <div style="font-size:48px;margin-bottom:12px;">📡</div>
+    <div style="font-size:18px;font-weight:700;margin-bottom:8px;">PulseCheck Saved!</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:20px;">Go to dashboard to launch it live.</div>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <a href="/dashboard/" class="btn btn-pub">Go to Dashboard →</a>
+      <button class="btn btn-ghost" onclick="document.getElementById('success-modal').classList.remove('open')">Keep Editing</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,doc,getDoc,addDoc,updateDoc,collection,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);const auth=getAuth(app);const db=getFirestore(app);
+const COLORS=['#0ea5e9','#7c3aed','#10b981','#f59e0b','#ef4444','#ec4899'];
+let U=null,SID=null,slides=[],sIdC=0;
+onAuthStateChanged(auth,async function(u){
+  if(!u){window.location.href='/login/';return;}
+  U=u;document.getElementById('ls').style.display='none';
+  const p=new URLSearchParams(window.location.search);SID=p.get('id');
+  if(SID)await loadExisting(SID);
+});
+async function loadExisting(id){
+  try{
+    const snap=await getDoc(doc(db,'livePollSessions',id));
+    if(!snap.exists())return;
+    const d=snap.data();
+    const sv=function(eid,val){const el=document.getElementById(eid);if(el&&val!==undefined)el.value=val;};
+    sv('pc-title',d.title);document.getElementById('nav-title').textContent=d.title||'PulseCheck';
+    sv('pc-desc',d.description);sv('pc-cat',d.category);sv('pc-size',d.audienceSize);
+    if(d.slides)d.slides.forEach(function(s){addSlide(s.type,s);});
+    toast('Loaded for editing ✏️');
+  }catch(e){console.error(e);}
+}
+window.addSlide=function(type,data){
+  sIdC++;const id='s'+sIdC;
+  const s={id,type,question:data?.question||'',options:data?.options||(type==='mcq'?['','','']:[])};
+  slides.push(s);buildSlideCard(s);updateCount();
+  setTimeout(function(){const el=document.getElementById('scard_'+id);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});},80);
+};
+function buildSlideCard(s){
+  const container=document.getElementById('slides-container');
+  const existing=document.getElementById('scard_'+s.id);
+  const div=existing||document.createElement('div');
+  div.className='slide-card';div.id='scard_'+s.id;
+  const idx=slides.indexOf(s);
+  const typeLabel={mcq:'📊 MCQ Poll',wordcloud:'☁️ Word Cloud',opentext:'💬 Open Text'}[s.type];
+  const badgeClass={mcq:'badge-mcq',wordcloud:'badge-wordcloud',opentext:'badge-opentext'}[s.type];
+  let bodyHtml='';
+  if(s.type==='mcq'){
+    bodyHtml='<div id="opts_'+s.id+'">'+s.options.map(function(o,i){
+      return '<div class="opt-row" id="orow_'+s.id+'_'+i+'">'
+        +'<div class="opt-dot" style="background:'+COLORS[i]+'"></div>'
+        +'<input class="opt-inp" placeholder="Option '+(i+1)+'" value="'+eh(o)+'" oninput="setOpt(\''+s.id+'\','+i+',this.value)">'
+        +'<button class="opt-del-btn" onclick="delOpt(\''+s.id+'\','+i+')">×</button>'
+        +'</div>';
+    }).join('')+'</div>'
+    +'<button class="add-opt" onclick="addOpt(\''+s.id+'\')">+ Add option</button>';
+  }else if(s.type==='wordcloud'){
+    bodyHtml='<div style="padding:12px;background:rgba(124,58,237,.04);border-radius:8px;border:1px dashed rgba(124,58,237,.2);font-size:12px;color:#6d28d9;margin-top:8px;">☁️ Audience types one word — shown as a live word cloud</div>';
+  }else{
+    bodyHtml='<div style="padding:12px;background:rgba(18,168,114,.04);border-radius:8px;border:1px dashed rgba(18,168,114,.2);font-size:12px;color:#065f46;margin-top:8px;">💬 Audience types free text — shown as a live stream of responses</div>';
+  }
+  div.innerHTML='<div class="slide-header">'
+    +'<div class="slide-num" id="snum_'+s.id+'">'+(idx+1)+'</div>'
+    +'<span class="slide-type-badge '+badgeClass+'">'+typeLabel+'</span>'
+    +'<button class="slide-del" onclick="delSlide(\''+s.id+'\')">×</button>'
+    +'</div>'
+    +'<div class="field"><label class="label">Question / Prompt *</label>'
+    +'<input class="inp" placeholder="'+(s.type==='mcq'?'Ask a question...':s.type==='wordcloud'?'What word describes...':'Share your thoughts on...')+'" value="'+eh(s.question)+'" oninput="setQ(\''+s.id+'\',this.value)"></div>'
+    +bodyHtml;
+  if(!existing)container.appendChild(div);
+}
+window.setQ=function(id,v){getS(id).question=v;};
+window.setOpt=function(id,i,v){getS(id).options[i]=v;};
+window.addOpt=function(id){
+  const s=getS(id);if(!s||s.options.length>=8)return;
+  s.options.push('');
+  const i=s.options.length-1;
+  const wrap=document.getElementById('opts_'+id);if(!wrap)return;
+  const row=document.createElement('div');row.className='opt-row';row.id='orow_'+id+'_'+i;
+  row.innerHTML='<div class="opt-dot" style="background:'+COLORS[i%COLORS.length]+'"></div>'
+    +'<input class="opt-inp" placeholder="Option '+(i+1)+'" oninput="setOpt(\''+id+'\','+i+',this.value)">'
+    +'<button class="opt-del-btn" onclick="delOpt(\''+id+'\','+i+')">×</button>';
+  wrap.appendChild(row);
+};
+window.delOpt=function(id,i){
+  const s=getS(id);if(!s||s.options.length<=2){toast('Need at least 2 options!');return;}
+  s.options.splice(i,1);buildSlideCard(s);
+};
+window.delSlide=function(id){
+  const i=slides.findIndex(function(x){return x.id===id;});if(i===-1)return;
+  slides.splice(i,1);
+  const el=document.getElementById('scard_'+id);if(el)el.remove();
+  slides.forEach(function(s,j){const n=document.getElementById('snum_'+s.id);if(n)n.textContent=j+1;});
+  updateCount();
+};
+function getS(id){return slides.find(function(x){return x.id===id;});}
+function updateCount(){const l=document.getElementById('slide-count');if(l)l.textContent=slides.length+' slide'+(slides.length!==1?'s':'');}
+function gv(id){const el=document.getElementById(id);return el?el.value.trim():'';}
+function buildPayload(status){
+  const title=gv('pc-title');if(!title){toast('Please add a title!');return null;}
+  if(!slides.length){toast('Please add at least one slide!');return null;}
+  const empty=slides.find(function(s){return !s.question.trim();});if(empty){toast('Fill in all slide questions!');return null;}
+  return{title,status,formType:'livepoll',description:gv('pc-desc'),category:gv('pc-cat'),audienceSize:gv('pc-size'),
+    slideCount:slides.length,slides:slides.map(function(s){return{type:s.type,question:s.question,options:s.options||[]};}),
+    userId:U.uid,updatedAt:serverTimestamp()};
+}
+async function save(status){
+  const data=buildPayload(status);if(!data)return null;
+  try{
+    if(SID){await updateDoc(doc(db,'livePollSessions',SID),data);return SID;}
+    else{data.createdAt=serverTimestamp();data.responseCount=0;const r=await addDoc(collection(db,'livePollSessions'),data);SID=r.id;window.history.replaceState({},'','/livepoll/create/?id='+SID);return SID;}
+  }catch(e){console.error(e);toast('Error: '+e.message);return null;}
+}
+window.saveDraft=async function(){const id=await save('draft');if(id)toast('✅ Draft saved!');};
+window.publish=async function(){
+  const btn=document.getElementById('pub-btn');btn.disabled=true;btn.textContent='Saving...';
+  const id=await save('active');
+  if(id)document.getElementById('success-modal').classList.add('open');
+  btn.disabled=false;btn.textContent='Save & Publish →';
+};
+function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+</script>
+</body>
+</html>
