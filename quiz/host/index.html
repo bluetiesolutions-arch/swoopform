@@ -143,7 +143,7 @@ nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border
 <div class="main">
 
   <!-- SETUP -->
-  <div id="setup-screen" style="display:none;">
+  <div id="setup-screen">
     <div class="page-title">⚡ Create Live Quiz</div>
     <div class="page-sub">Build a real-time quiz. Players join with a 4-digit PIN and score points for speed and accuracy.</div>
 
@@ -241,7 +241,6 @@ let qIdCounter=0;
 onAuthStateChanged(auth,function(u){
   if(!u){window.location.href='/login/';return;}
   document.getElementById('ls').style.display='none';
-  document.getElementById('setup-screen').style.display='block';
 });
 
 // ─── ADD QUESTION ───────────────────────────────────

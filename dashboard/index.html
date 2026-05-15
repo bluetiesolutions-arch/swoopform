@@ -264,6 +264,8 @@
 <button class="filter-btn" id="flt-employees" onclick="setFilter('employees',this)">👥 Employee</button>
 <button class="filter-btn" id="flt-products" onclick="setFilter('products',this)">📦 Product Quiz</button>
 <button class="filter-btn" id="flt-awards" onclick="setFilter('awards',this)">🏆 Awards</button>
+<button class="filter-btn" id="flt-quizSessions" onclick="setFilter('quizSessions',this)">⚡ Live Quiz</button>
+<button class="filter-btn" id="flt-livePollSessions" onclick="setFilter('livePollSessions',this)">📡 PulseCheck</button>
       <div class="filters-right">
         <input class="search-inp" id="search-inp" placeholder="🔍 Search..." oninput="renderItems()">
         <div class="view-btns">
@@ -307,7 +309,7 @@ const TYPE_META={
   polls:{label:'Poll',icon:'📊',color:'#4F46E5',bg:'#EEF2FF',editPath:'/poll/create/?id=',viewPath:'/poll/?id=',responsesPath:'/poll/responses/?id='},
   votings:{label:'Voting',icon:'🗳️',color:'#D97706',bg:'#FEF3C7',editPath:'/voting/create/?id=',viewPath:'/voting/?id=',responsesPath:'/voting/responses/?id='},
   pledges:{label:'Pledge & Support',icon:'🤝',color:'#10B981',bg:'#DCFCE7',editPath:'/pledge/create/?id=',viewPath:'/pledge/?id=',responsesPath:'/pledge/responses/?id='},
-  riddles:{label:'Riddle',icon:'🧩',color:'#A855F7',bg:'#F3E8FF',editPath:'/riddle/create/?id=',viewPath:'/riddle/',responsesPath:'/riddle/responses/?id='},
+  riddles:{label:'Riddle',icon:'🧩',color:'#A855F7',bg:'#F3E8FF',editPath:'/riddle/create/?id=',viewPath:'/riddle/?id=',responsesPath:'/riddle/responses/?id='},
   jobapps:{label:'Job Application',icon:'💼',color:'#059669',bg:'#D1FAE5',editPath:'/jobapp/create/?id=',viewPath:'/jobapp/?id=',responsesPath:'/jobapp/responses/?id='},assessments:{label:'Assessment',icon:'📝',color:'#7c3aed',bg:'#ede9fe',editPath:'/assessment/create/?id=',viewPath:'/assessment/?id=',responsesPath:'/assessment/responses/?id='},feedbacks:{label:'Feedback Form',icon:'💬',color:'#0ea5e9',bg:'#f0f9ff',editPath:'/feedback/create/?id=',viewPath:'/feedback/?id=',responsesPath:'/feedback/responses/?id='},leads:{label:'Lead Form',icon:'📥',color:'#e85d26',bg:'#fff4ef',editPath:'/lead/create/?id=',viewPath:'/lead/?id=',responsesPath:'/lead/responses/?id='},registrations:{label:'Registration',icon:'🎟️',color:'#7c3aed',bg:'#f5f3ff',editPath:'/registration/create/?id=',viewPath:'/registration/?id=',responsesPath:'/registration/responses/?id='},employees:{label:'Employee Survey',icon:'👥',color:'#0ea5e9',bg:'#f0f9ff',editPath:'/employee/create/?id=',viewPath:'/employee/?id=',responsesPath:'/employee/responses/?id='},products:{label:'Product Quiz',icon:'📦',color:'#ec4899',bg:'#fdf2f8',editPath:'/product/create/?id=',viewPath:'/product/?id=',responsesPath:'/product/responses/?id='},awards:{label:'Award',icon:'🏆',color:'#f59e0b',bg:'#fffbeb',editPath:'/award/create/?id=',viewPath:'/award/?id=',responsesPath:'/award/responses/?id='},
 };
 
@@ -379,6 +381,8 @@ function getViewUrl(item){
     if(item._col==='products')return '/product/?id='+item.id;
     if(item._col==='awards')return '/award/?id='+item.id;
   if(item._col==='pledges')return '/pledge/?id='+item.id;
+  if(item._col==='quizSessions')return '/quiz/host/';
+  if(item._col==='livePollSessions')return '/livepoll/host/';
   return item.slug?'/engage/'+item.slug:'#';
 }
 function getEditUrl(item){return(TYPE_META[item._col]?.editPath||'#')+item.id}
