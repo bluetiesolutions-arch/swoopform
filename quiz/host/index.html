@@ -185,7 +185,10 @@ nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border
   <!-- LOBBY -->
   <div class="lobby-screen" id="lobby-screen">
     <div class="page-title" style="text-align:center;margin-bottom:4px;">⚡ Waiting for Players</div>
-    <div class="page-sub" style="text-align:center;">Players join at <strong>swoopform.com/quiz/play</strong></div>
+    <div class="page-sub" style="text-align:center;">Players go to <strong>swoopform.com/quiz/play</strong> and enter the PIN above</div>
+    <div style="background:rgba(124,58,237,0.06);border:1.5px solid rgba(124,58,237,0.2);border-radius:12px;padding:14px 20px;margin-bottom:20px;font-size:13px;color:var(--accent);text-align:center;max-width:500px;margin-left:auto;margin-right:auto;">
+      ⏳ <strong>Start button unlocks</strong> once at least 1 player joins. Share the PIN and wait for players to appear below!
+    </div>
     <div class="pin-display" id="pin-display">----</div>
     <div class="join-url">swoopform.com/quiz/play</div>
     <div class="player-count" id="player-count">0 players joined</div>
@@ -229,11 +232,13 @@ nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 import{getDatabase,ref,set,get,push,onValue,update}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import{getFirestore,collection,addDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83",databaseURL:"https://swoopform-default-rtdb.asia-southeast1.firebasedatabase.app/"};
 const app=initializeApp(FB);
 const auth=getAuth(app);
 const db=getDatabase(app);
+const fsdb=getFirestore(app);
 
 const COLORS=['#ef4444','#3b82f6','#10b981','#f59e0b','#8b5cf6','#ec4899'];
 const LETTERS=['A','B','C','D','E','F'];
@@ -418,6 +423,16 @@ window.launchQuiz=async function(){
       };
     })
   });
+
+  // Save to Firestore for dashboard
+  try{
+    await addDoc(collection(fsdb,'quizSessions_meta'),{
+      title,sessionId:sRef.key,code,status:'active',formType:'quiz',
+      userId:auth.currentUser?.uid||'',
+      questionCount:questions.length,
+      createdAt:serverTimestamp()
+    });
+  }catch(e){console.error('Firestore save:',e);}
 
   document.getElementById('setup-screen').style.display='none';
   document.getElementById('lobby-screen').style.display='block';
