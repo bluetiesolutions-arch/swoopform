@@ -143,9 +143,8 @@ nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border
     </div>
     <div class="answers-live" id="answers-live"></div>
     <div class="responses-count" id="responses-count">0 responses</div>
-    <div class="ctrl-btns">
-      <button class="btn-primary" id="next-q-btn" onclick="nextQuestion()">Next Question →</button>
-      <button class="btn-ghost" onclick="showLeaderboard()">🏆 Leaderboard</button>
+    <div class="ctrl-btns" id="ctrl-btns-wrap">
+      <button class="btn-primary" id="next-q-btn" onclick="nextQuestion()">Reveal & Next →</button>
     </div>
   </div>
 
@@ -202,9 +201,47 @@ function renderQuestions(){
   }).join('');
 }
 
-window.deleteQuestion=function(idx){questions.splice(idx,1);renderQuestions();};
-window.addOption=function(qi){if(questions[qi].options.length<6){questions[qi].options.push('');renderQuestions();}};
-window.markCorrect=function(qi,oi){questions[qi].correctIndex=oi;renderQuestions();};
+window.deleteQuestion=function(idx){
+  saveAllInputs();
+  questions.splice(idx,1);
+  renderQuestions();
+};
+window.addOption=function(qi){
+  saveAllInputs();
+  if(questions[qi].options.length<6){questions[qi].options.push('');renderQuestions();}
+};;
+function saveAllInputs(){
+  document.querySelectorAll('.q-block').forEach(function(block,i){
+    if(!questions[i])return;
+    const qt=document.getElementById('q-text-'+i);
+    if(qt)questions[i].text=qt.value;
+    block.querySelectorAll('.opt-input').forEach(function(inp,j){
+      if(questions[i].options[j]!==undefined)questions[i].options[j]=inp.value;
+    });
+    const tInp=block.querySelector('.time-input');
+    if(tInp)questions[i].timeLimit=parseInt(tInp.value)||20;
+  });
+}
+
+window.markCorrect=function(qi,oi){
+  // Save all current input values before updating
+  document.querySelectorAll('.q-block').forEach(function(block,i){
+    const qt=document.getElementById('q-text-'+i);
+    if(qt)questions[i].text=qt.value;
+    questions[i].options.forEach(function(_,j){
+      const oi2=block.querySelectorAll('.opt-input')[j];
+      if(oi2)questions[i].options[j]=oi2.value;
+    });
+  });
+  questions[qi].correctIndex=oi;
+  // Just update button states without full re-render
+  const block=document.querySelectorAll('.q-block')[qi];
+  if(block){
+    block.querySelectorAll('.correct-btn').forEach(function(btn,j){
+      btn.classList.toggle('marked',j===oi);
+    });
+  }
+};
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
 
 window.launchQuiz=async function(){
@@ -290,6 +327,16 @@ function revealAnswers(){
 
 window.nextQuestion=function(){
   clearInterval(timerInterval);
+  revealAnswers();
+  // Show host options after reveal
+  const ctrl=document.getElementById('ctrl-btns-wrap');
+  if(ctrl){
+    ctrl.innerHTML='<button class="btn-primary" onclick="showLeaderboard()">🏆 Show Leaderboard</button>'
+      +(currentQIdx<questions.length-1?'<button class="btn-ghost" onclick="goNextQuestion()">Skip → Next Question</button>':'<button class="btn-ghost" onclick="goNextQuestion()">Finish Quiz</button>');
+  }
+};
+
+window.goNextQuestion=function(){
   if(currentQIdx<questions.length-1){currentQIdx++;showQuestion(currentQIdx);}
   else endQuiz();
 };
@@ -307,7 +354,8 @@ window.showLeaderboard=async function(){
     return '<div class="lb-row"><div class="lb-rank '+(rankClasses[i]||'other')+'">'+(i+1)+'</div><div class="lb-name">'+esc(p.name)+'</div><div class="lb-score">'+(p.score||0)+' pts</div></div>';
   }).join('');
   await update(ref(db,'quizSessions/'+sessionId),{status:'leaderboard',leaderboard:list.slice(0,10).map(function(p){return{name:p.name,score:p.score||0};})});
-  document.getElementById('continue-btn').textContent=currentQIdx>=questions.length-1?'End Quiz':'Continue →';
+  const cb=document.getElementById('continue-btn');
+  if(cb)cb.textContent=currentQIdx>=questions.length-1?'End Quiz ✓':'Continue to Next →';
 };
 
 window.continueQuiz=function(){
