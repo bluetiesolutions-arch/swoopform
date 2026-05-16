@@ -468,7 +468,7 @@ window.openCtx=function(e,id,col){
   const menu=document.getElementById('ctx-menu');
   const viewUrl=getViewUrl(item);
   const viewEl=document.getElementById('ctx-view');
-  if(viewEl){viewEl.href=viewUrl!=='#'?viewUrl:'#';viewEl.style.display=viewUrl!=='#'?'flex':'none';}
+  if(viewEl){viewEl.href=viewUrl!=='#'?viewUrl:'#';viewEl.target='_blank';viewEl.style.display=viewUrl!=='#'?'flex':'none';}
   const rect=e.currentTarget.getBoundingClientRect();
   const menuW=190;let left=rect.right-menuW;if(left<8)left=8;
   if(rect.bottom+200>window.innerHeight){menu.style.top=(rect.top-200)+'px'}
