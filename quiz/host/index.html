@@ -164,7 +164,7 @@ nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getFirestore,doc,getDoc}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getFirestore,doc,getDoc,addDoc,updateDoc,collection,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 import{getDatabase,ref,set,get,push,onValue,update}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83",databaseURL:"https://swoopform-default-rtdb.asia-southeast1.firebasedatabase.app/"};
@@ -363,8 +363,32 @@ window.continueQuiz=function(){
 window.endQuiz=async function(){
   clearInterval(timerInterval);
   await update(ref(rtdb,'quizSessions/'+sessionId),{status:'ended'});
-  toast('Quiz ended! 🎉');
-  setTimeout(function(){window.location.href='/dashboard/';},2500);
+  // Save final results to Firestore
+  try{
+    const snap=await get(ref(rtdb,'quizPlayers/'+sessionId));
+    const players=[];
+    if(snap.exists())snap.forEach(function(c){players.push({name:c.val().name||'',score:c.val().score||0});});
+    players.sort(function(a,b){return b.score-a.score;});
+    await updateDoc(doc(fsdb,'quizzes',QID),{
+      lastSessionId:sessionId,
+      lastPlayedAt:serverTimestamp(),
+      lastPlayerCount:players.length,
+      lastTopScore:players[0]?.score||0,
+    });
+    await addDoc(collection(fsdb,'quizResults'),{
+      quizId:QID,
+      sessionId,
+      title:quizData.title,
+      userId:auth.currentUser?.uid||'',
+      players,
+      playerCount:players.length,
+      topScore:players[0]?.score||0,
+      questionCount:quizData.questions?.length||0,
+      playedAt:serverTimestamp()
+    });
+  }catch(e){console.error('Save results error:',e);}
+  toast('Quiz ended! Results saved 🎉');
+  setTimeout(function(){window.location.href='/quiz/results/?id='+QID;},2000);
 };
 
 function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}

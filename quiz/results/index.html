@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Results — SwoopForm</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f0e8;--surface:#fff;--surface2:#f0eeea;--border:#e2dad0;--accent:#2d1b69;--accent2:#7c3aed;--green:#12a872;--red:#e5484d;--yellow:#d97706;--text:#0f0e1a;--muted:#64748b;--muted2:#94a3b8;--font:'Sora',sans-serif;--mono:'JetBrains Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;}
+nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:100;}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.logo-nm{font-weight:800;font-size:16px;color:var(--text);}
+.btn{padding:8px 16px;border-radius:9px;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;border:none;text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+.btn-ghost{border:1.5px solid var(--border);background:transparent;color:var(--muted);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;}
+.btn-primary:hover{opacity:.9;}
+.main{max-width:900px;margin:0 auto;padding:32px 20px;}
+.page-title{font-size:22px;font-weight:800;letter-spacing:-.03em;margin-bottom:4px;}
+.page-sub{font-size:13px;color:var(--muted);margin-bottom:28px;}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:22px;margin-bottom:16px;}
+.card-title{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.stat-box{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
+.stat-val{font-weight:800;font-size:1.8rem;letter-spacing:-.04em;color:var(--accent);margin-bottom:2px;font-family:var(--mono);}
+.stat-lbl{font-size:11px;color:var(--muted2);font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
+
+/* SESSION SELECTOR */
+.session-select{padding:8px 14px;border-radius:9px;border:1.5px solid var(--border);background:var(--surface);font-family:var(--font);font-size:13px;color:var(--text);outline:none;cursor:pointer;min-width:200px;}
+.session-select:focus{border-color:var(--accent);}
+
+/* LEADERBOARD */
+.lb-row{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:12px;background:var(--surface);border:1.5px solid var(--border);margin-bottom:8px;transition:all .15s;}
+.lb-row:hover{border-color:#c4b5fd;}
+.lb-row.top1{border-color:#f59e0b;background:rgba(245,158,11,.03);}
+.lb-row.top2{border-color:#94a3b8;}
+.lb-row.top3{border-color:#d97706;}
+.lb-rank{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0;}
+.lb-rank.gold{background:linear-gradient(135deg,#f59e0b,#fcd34d);color:#92400e;}
+.lb-rank.silver{background:linear-gradient(135deg,#94a3b8,#cbd5e1);color:#1c1c2e;}
+.lb-rank.bronze{background:linear-gradient(135deg,#d97706,#f59e0b);color:#fff;}
+.lb-rank.other{background:var(--surface2);color:var(--muted);font-size:13px;}
+.lb-name{flex:1;font-weight:700;font-size:15px;}
+.lb-score{font-weight:800;font-size:20px;color:var(--accent);font-family:var(--mono);}
+.lb-pts{font-size:11px;color:var(--muted2);margin-top:1px;font-weight:600;}
+
+/* HISTORY TABLE */
+table{width:100%;border-collapse:collapse;}
+thead tr{background:var(--surface2);}
+th{padding:10px 14px;font-size:10px;font-weight:700;color:var(--muted2);text-align:left;text-transform:uppercase;letter-spacing:.06em;border-bottom:1.5px solid var(--border);}
+td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tbody tr:hover td{background:var(--surface2);}
+.badge{padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;}
+.badge-green{background:rgba(18,168,114,.1);color:#065f46;}
+
+/* EMPTY */
+.empty{text-align:center;padding:60px;color:var(--muted);}
+.empty-icon{font-size:48px;margin-bottom:16px;opacity:.4;}
+
+.spinner{width:28px;height:28px;border:3px solid rgba(45,27,105,.15);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:40px auto;display:block;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;display:none;z-index:999;}
+@media(max-width:600px){.stats-row{grid-template-columns:1fr 1fr;}nav{padding:0 14px;}.logo-nm{display:none;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/dashboard/" class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="sg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#2d1b69"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#sg)"/><rect x="10" y="9" width="20" height="6" rx="3" fill="white"/><rect x="10" y="17" width="20" height="6" rx="3" fill="rgba(255,255,255,0.9)"/><rect x="10" y="25" width="20" height="6" rx="3" fill="white"/><circle cx="31" cy="12" r="3" fill="#d97706"/></svg>
+    <span class="logo-nm">SwoopForm</span>
+  </a>
+  <div style="display:flex;gap:8px;">
+    <button class="btn btn-ghost" onclick="exportCSV()">⬇ Export CSV</button>
+    <a href="/dashboard/" class="btn btn-ghost">← Dashboard</a>
+    <a href="#" id="launch-btn" class="btn btn-primary">🚀 Launch Again</a>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="page-title">⚡ Quiz Results</div>
+  <div class="page-sub" id="page-sub">Loading...</div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-val" id="stat-sessions">—</div><div class="stat-lbl">Sessions Run</div></div>
+    <div class="stat-box"><div class="stat-val" id="stat-players">—</div><div class="stat-lbl">Total Players</div></div>
+    <div class="stat-box"><div class="stat-val" id="stat-topscore">—</div><div class="stat-lbl">Top Score</div></div>
+    <div class="stat-box"><div class="stat-val" id="stat-questions">—</div><div class="stat-lbl">Questions</div></div>
+  </div>
+
+  <!-- LATEST LEADERBOARD -->
+  <div class="card">
+    <div class="card-title">
+      <span>🏆 Leaderboard</span>
+      <select class="session-select" id="session-select" onchange="loadSession()">
+        <option value="">Select session...</option>
+      </select>
+    </div>
+    <div id="lb-wrap"><div class="spinner"></div></div>
+  </div>
+
+  <!-- SESSION HISTORY -->
+  <div class="card">
+    <div class="card-title">📅 Session History</div>
+    <div id="history-wrap"><div class="spinner"></div></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,doc,getDoc,getDocs,collection,query,where,orderBy}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
+const app=initializeApp(FB);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+const params=new URLSearchParams(window.location.search);
+const QID=params.get('id');
+let quizData=null,allSessions=[];
+const RANK_EMOJI=['🥇','🥈','🥉'];
+const RANK_CLASS=['gold','silver','bronze'];
+
+onAuthStateChanged(auth,async function(u){
+  if(!u){window.location.href='/login/';return;}
+  if(!QID){window.location.href='/dashboard/';return;}
+  await load();
+});
+
+async function load(){
+  try{
+    // Load quiz data
+    const snap=await getDoc(doc(db,'quizzes',QID));
+    if(!snap.exists()){toast('Quiz not found');return;}
+    quizData=snap.data();
+    document.getElementById('page-sub').textContent=quizData.title||'Live Quiz';
+    document.title=(quizData.title||'Quiz')+' — Results';
+    document.getElementById('stat-questions').textContent=quizData.questionCount||quizData.questions?.length||0;
+    document.getElementById('launch-btn').href='/quiz/host/?id='+QID;
+
+    // Load all sessions for this quiz
+    const rSnap=await getDocs(query(collection(db,'quizResults'),where('quizId','==',QID),orderBy('playedAt','desc')));
+    allSessions=rSnap.docs.map(function(d){return{id:d.id,...d.data()};});
+
+    // Update stats
+    const totalPlayers=allSessions.reduce(function(s,r){return s+(r.playerCount||0);},0);
+    const topScore=Math.max(...allSessions.map(function(r){return r.topScore||0;}),0);
+    document.getElementById('stat-sessions').textContent=allSessions.length;
+    document.getElementById('stat-players').textContent=totalPlayers;
+    document.getElementById('stat-topscore').textContent=topScore+' pts';
+
+    // Populate session selector
+    const sel=document.getElementById('session-select');
+    allSessions.forEach(function(s,i){
+      const opt=document.createElement('option');
+      opt.value=s.id;
+      const date=s.playedAt?.seconds?new Date(s.playedAt.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'Session '+(i+1);
+      opt.textContent=date+' · '+(s.playerCount||0)+' players';
+      if(i===0)opt.selected=true;
+      sel.appendChild(opt);
+    });
+
+    // Load latest session
+    if(allSessions.length)loadSession();
+    else document.getElementById('lb-wrap').innerHTML='<div class="empty"><div class="empty-icon">🎮</div><div style="font-size:16px;font-weight:700;margin-bottom:8px;">No sessions yet</div><div style="font-size:13px;">Launch the quiz to start collecting results</div></div>';
+
+    renderHistory();
+  }catch(e){console.error(e);toast('Error loading results');}
+}
+
+window.loadSession=function(){
+  const sel=document.getElementById('session-select');
+  const id=sel.value;
+  if(!id)return;
+  const session=allSessions.find(function(s){return s.id===id;});
+  if(!session)return;
+  renderLeaderboard(session.players||[]);
+};
+
+function renderLeaderboard(players){
+  const wrap=document.getElementById('lb-wrap');
+  if(!players.length){
+    wrap.innerHTML='<div class="empty"><div class="empty-icon">🏆</div><div>No players in this session</div></div>';
+    return;
+  }
+  wrap.innerHTML=players.map(function(p,i){
+    const rankClass=RANK_CLASS[i]||'other';
+    const rankLabel=RANK_EMOJI[i]||(i+1);
+    return'<div class="lb-row'+(i===0?' top1':i===1?' top2':i===2?' top3':'')+'">'
+      +'<div class="lb-rank '+rankClass+'">'+rankLabel+'</div>'
+      +'<div class="lb-name">'+eh(p.name||'Player '+(i+1))+'</div>'
+      +'<div style="text-align:right;">'
+      +'<div class="lb-score">'+p.score+'</div>'
+      +'<div class="lb-pts">points</div>'
+      +'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function renderHistory(){
+  const wrap=document.getElementById('history-wrap');
+  if(!allSessions.length){
+    wrap.innerHTML='<div class="empty"><div class="empty-icon">📅</div><div>No session history yet</div></div>';
+    return;
+  }
+  wrap.innerHTML='<table><thead><tr><th>Date & Time</th><th>Players</th><th>Top Score</th><th>Winner</th><th>Action</th></tr></thead><tbody>'
+    +allSessions.map(function(s){
+      const date=s.playedAt?.seconds?new Date(s.playedAt.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
+      const winner=s.players?.[0]?.name||'—';
+      const topScore=s.topScore||0;
+      return'<tr>'
+        +'<td style="font-weight:600;">'+date+'</td>'
+        +'<td style="font-family:var(--mono);">'+( s.playerCount||0)+'</td>'
+        +'<td style="font-family:var(--mono);font-weight:700;color:var(--accent);">'+topScore+' pts</td>'
+        +'<td><span style="display:flex;align-items:center;gap:6px;">🥇 '+eh(winner)+'</span></td>'
+        +'<td><button class="btn btn-ghost" style="padding:5px 10px;font-size:12px;" onclick="viewSession(\''+s.id+'\')">View</button></td>'
+        +'</tr>';
+    }).join('')
+    +'</tbody></table>';
+}
+
+window.viewSession=function(id){
+  document.getElementById('session-select').value=id;
+  loadSession();
+  document.getElementById('lb-wrap').scrollIntoView({behavior:'smooth',block:'start'});
+};
+
+window.exportCSV=function(){
+  if(!allSessions.length){toast('No sessions to export');return;}
+  const sel=document.getElementById('session-select');
+  const id=sel.value;
+  const session=allSessions.find(function(s){return s.id===id;})||allSessions[0];
+  const rows=[['Rank','Name','Score']];
+  (session.players||[]).forEach(function(p,i){rows.push([i+1,p.name||'Player '+(i+1),p.score||0]);});
+  const csv=rows.map(function(r){return r.map(function(v){return'"'+String(v).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='quiz-results.csv';
+  a.click();
+  toast('CSV downloaded!');
+};
+
+function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+</script>
+</body>
+</html>

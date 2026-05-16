@@ -1,303 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings — SwoopForm</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SwoopForm — Settings</title>  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Sora',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
-    nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-    .nav-left{display:flex;align-items:center;gap:12px}
-    .logo-s{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#2d1b69,#7c3aed);display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none}
-    .btn-g{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
-    .btn-g:hover{border-color:#0F0E1A;color:#0F0E1A}
-    .btn-save{padding:7px 16px;border-radius:8px;border:none;background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;font-size:0.82rem;font-weight:700;font-family:'Sora',sans-serif;cursor:pointer;transition:opacity 0.2s}
-    .btn-save:hover{opacity:0.9}
-    .btn-save:disabled{opacity:0.5;cursor:not-allowed}
-    .main{max-width:680px;margin:0 auto;padding:28px 20px}
-    .page-title{font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:-0.02em;margin-bottom:4px}
-    .page-sub{font-size:0.85rem;color:#64748B;margin-bottom:28px}
-    .section{background:#fff;border-radius:16px;border:1.5px solid #E2DAD0;padding:24px;margin-bottom:16px}
-    .section-title{font-family:'Sora',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #E2DAD0}
-    .field{margin-bottom:16px}
-    .field:last-child{margin-bottom:0}
-    .field-label{display:block;font-size:0.72rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px}
-    .field-input{width:100%;padding:10px 14px;border-radius:9px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.88rem;font-family:'Sora',sans-serif;outline:none;transition:border-color 0.2s}
-    .field-input:focus{border-color:#2D1B69}
-    .field-hint{font-size:0.72rem;color:#94A3B8;margin-top:4px;line-height:1.4}
-    .field-row{display:flex;gap:8px}
-    .field-row .field-input{flex:1}
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f0e8;--surface:#fff;--surface2:#f0eeea;--border:#e2dad0;--accent:#2d1b69;--accent2:#7c3aed;--green:#12a872;--red:#e5484d;--yellow:#d97706;--text:#0f0e1a;--muted:#64748b;--muted2:#94a3b8;--font:'Sora',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;}
+nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:100;}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
+.logo-nm{font-weight:800;font-size:16px;color:var(--text);}
+.layout{display:flex;min-height:calc(100vh - 56px);}
+.sidebar{width:220px;background:var(--surface);border-right:1.5px solid var(--border);padding:16px 10px;flex-shrink:0;position:sticky;top:56px;height:calc(100vh - 56px);}
+.sb-label{font-size:10px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:.08em;padding:8px 10px 6px;}
+.sb-item{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:9px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:var(--font);font-size:13px;font-weight:600;color:var(--muted);transition:all .15s;border-left:3px solid transparent;}
+.sb-item:hover{background:var(--bg);color:var(--text);}
+.sb-item.active{background:#ede9ff;color:var(--accent);border-left-color:var(--accent);}
+.sb-divider{height:1px;background:var(--border);margin:6px 0;}
+.content{flex:1;padding:32px 24px;max-width:700px;}
+.sec{display:none;}
+.sec.active{display:block;}
+.sec-title{font-size:20px;font-weight:800;letter-spacing:-.03em;margin-bottom:4px;}
+.sec-sub{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:22px;margin-bottom:16px;}
+.card-title{font-size:14px;font-weight:700;margin-bottom:16px;}
+.field{margin-bottom:16px;}
+.field:last-child{margin-bottom:0;}
+.label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.inp{width:100%;padding:10px 14px;border-radius:9px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;font-family:var(--font);outline:none;transition:border-color .2s;}
+.inp:focus{border-color:var(--accent);}
+.inp::placeholder{color:var(--muted2);}
+.inp:disabled{opacity:.5;cursor:not-allowed;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.btn{padding:9px 20px;border-radius:9px;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:6px;}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;}
+.btn-primary:hover{opacity:.9;}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;}
+.btn-ghost{border:1.5px solid var(--border);background:transparent;color:var(--muted);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+.btn-danger{background:rgba(229,72,77,.08);border:1.5px solid rgba(229,72,77,.2);color:var(--red);}
+.btn-danger:hover{background:rgba(229,72,77,.15);}
 
-    /* AVATAR */
-    .avatar-section{display:flex;align-items:flex-start;gap:20px;margin-bottom:20px}
-    .avatar-preview{flex-shrink:0;position:relative}
-    .avatar-circle{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#2d1b69,#7c3aed);display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;font-size:1.6rem;color:#fff;overflow:hidden;border:3px solid #E2DAD0}
-    .avatar-circle img{width:100%;height:100%;object-fit:cover;display:none}
-    .avatar-info{flex:1}
-    .avatar-label{font-size:0.72rem;font-weight:700;color:#64748B;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:5px}
-    .avatar-url-row{display:flex;gap:6px;margin-bottom:6px}
-    .avatar-url-inp{flex:1;padding:9px 12px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.82rem;font-family:'Sora',sans-serif;outline:none}
-    .avatar-url-inp:focus{border-color:#2D1B69}
-    .fetch-btn{padding:9px 14px;border-radius:8px;border:none;background:#2D1B69;color:#fff;font-size:0.78rem;font-weight:700;font-family:'Sora',sans-serif;cursor:pointer;white-space:nowrap;transition:opacity 0.2s}
-    .fetch-btn:hover{opacity:0.85}
-    .avatar-hint{font-size:0.72rem;color:#94A3B8;line-height:1.5;position:relative;cursor:help;display:inline-block}
-    .avatar-hint-text{display:none;position:absolute;left:0;top:20px;background:#f5f0e8;color:#fff;font-size:0.72rem;padding:8px 12px;border-radius:8px;width:260px;z-index:10;line-height:1.5}
-    .avatar-hint:hover .avatar-hint-text{display:block}
-    .avatar-status{font-size:0.75rem;margin-top:5px;font-weight:600}
-    .avatar-status.ok{color:#10B981}
-    .avatar-status.err{color:#DC2626}
-    .crop-indicator{background:#EDE9FF;border-radius:8px;padding:8px 12px;font-size:0.72rem;color:#2D1B69;margin-top:6px;display:none;line-height:1.5}
+/* AVATAR */
+.avatar-wrap{display:flex;align-items:center;gap:20px;margin-bottom:20px;}
+.avatar-big{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;flex-shrink:0;}
+.avatar-info{flex:1;}
+.avatar-name{font-size:18px;font-weight:800;margin-bottom:2px;}
+.avatar-email{font-size:13px;color:var(--muted);}
 
-    /* ACCOUNT TYPE */
-    .account-types{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:4px}
-    .acc-type-btn{padding:10px 6px;border-radius:10px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.78rem;font-weight:700;font-family:'Sora',sans-serif;cursor:pointer;text-align:center;transition:all 0.2s;color:#64748B}
-    .acc-type-btn:hover{border-color:#2D1B69;color:#2D1B69;background:#EDE9FF}
-    .acc-type-btn.active{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
-    .acc-type-icon{font-size:1.2rem;display:block;margin-bottom:4px}
-    .acc-type-modal{display:none;background:#F5F0E8;border-radius:12px;padding:16px;margin-top:12px;border:1.5px solid #E2DAD0}
-    .acc-type-modal.show{display:block}
-    .acc-type-modal-title{font-family:'Sora',sans-serif;font-weight:700;font-size:0.88rem;margin-bottom:6px}
-    .acc-type-modal-sub{font-size:0.78rem;color:#64748B;line-height:1.6;margin-bottom:12px}
-    .acc-type-qualify{font-size:0.75rem;color:#64748B;margin-bottom:10px}
-    .acc-type-qualify li{margin-left:14px;margin-bottom:3px}
-    .btn-apply{padding:8px 16px;border-radius:8px;border:none;background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;font-size:0.8rem;font-weight:700;font-family:'Sora',sans-serif;cursor:pointer}
+/* PLAN CARD */
+.plan-card{background:linear-gradient(135deg,rgba(45,27,105,.06),rgba(124,58,237,.04));border:1.5px solid rgba(124,58,237,.2);border-radius:14px;padding:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.plan-name{font-size:18px;font-weight:800;color:var(--accent);}
+.plan-desc{font-size:13px;color:var(--muted);margin-top:2px;}
+.plan-badge{padding:4px 12px;border-radius:100px;font-size:12px;font-weight:700;background:rgba(45,27,105,.1);color:var(--accent);}
 
-    /* NOTIFICATION */
-    .notif-options{display:flex;flex-direction:column;gap:8px;margin-top:4px}
-    .notif-option{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:10px;border:1.5px solid #E2DAD0;background:#fff;cursor:pointer;transition:all 0.2s}
-    .notif-option:hover{border-color:#2D1B69;background:#EDE9FF}
-    .notif-option.active{border-color:#2D1B69;background:#EDE9FF}
-    .notif-radio{width:16px;height:16px;border-radius:50%;border:2px solid #E2DAD0;flex-shrink:0;margin-top:2px;transition:all 0.2s;position:relative}
-    .notif-option.active .notif-radio{border-color:#2D1B69;background:#2D1B69}
-    .notif-option.active .notif-radio::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:5px;height:5px;border-radius:50%;background:#fff}
-    .notif-title{font-size:0.85rem;font-weight:700;color:#0F0E1A}
-    .notif-desc{font-size:0.75rem;color:#64748B;margin-top:2px;line-height:1.4}
+/* TOGGLE ROW */
+.tgl-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);}
+.tgl-row:last-child{border-bottom:none;}
+.tgl-name{font-size:14px;font-weight:600;}
+.tgl-desc{font-size:12px;color:var(--muted);margin-top:2px;}
+.tgl{width:36px;height:20px;border-radius:20px;background:var(--border);cursor:pointer;position:relative;transition:background .2s;border:none;flex-shrink:0;}
+.tgl.on{background:var(--green);}
+.tgl::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s;}
+.tgl.on::after{transform:translateX(16px);}
 
-    /* PLAN */
-    .plan-current{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#F5F0E8;border-radius:10px;margin-bottom:14px}
-    .plan-badge{padding:3px 10px;border-radius:100px;font-size:0.72rem;font-weight:700}
-    .plan-free{background:#EDE9FF;color:#2D1B69;border:1px solid #C4B5FD}
-    .plan-student{background:#DCFCE7;color:#166534;border:1px solid #86EFAC}
-    .plan-ngo{background:#FEF3C7;color:#92400E;border:1px solid #FCD34D}
-    .plan-starter{background:#DBEAFE;color:#1E40AF;border:1px solid #93C5FD}
-    .plan-pro{background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;border:none}
-    .plan-name{font-weight:700;font-size:0.88rem}
-    .plan-desc{font-size:0.75rem;color:#64748B;margin-top:1px}
-    .upgrade-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-    .upgrade-card{padding:14px;border-radius:10px;border:1.5px solid #E2DAD0;background:#fff;cursor:pointer;transition:all 0.2s;text-align:center}
-    .upgrade-card:hover{border-color:#2D1B69;transform:translateY(-1px);box-shadow:0 4px 14px rgba(45,27,105,0.1)}
-    .upgrade-plan{font-family:'Sora',sans-serif;font-weight:700;font-size:0.88rem;margin-bottom:4px}
-    .upgrade-price{font-size:0.78rem;color:#64748B;margin-bottom:8px}
-    .upgrade-btn{padding:6px 14px;border-radius:6px;border:none;background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;font-size:0.75rem;font-weight:700;font-family:'Sora',sans-serif;cursor:pointer}
+/* DANGER ZONE */
+.danger-zone{border:1.5px solid rgba(229,72,77,.2);border-radius:14px;padding:20px;}
+.danger-title{font-size:14px;font-weight:700;color:var(--red);margin-bottom:4px;}
+.danger-desc{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;}
 
-    /* DANGER */
-    .danger-section{background:#fff;border-radius:16px;border:1.5px solid #FEE2E2;padding:24px;margin-bottom:16px}
-    .danger-title{font-family:'Sora',sans-serif;font-weight:700;font-size:0.95rem;color:#DC2626;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #FEE2E2}
-    .danger-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #FEE2E2;flex-wrap:wrap}
-    .danger-row:last-child{border-bottom:none;padding-bottom:0}
-    .danger-name{font-size:0.85rem;font-weight:600}
-    .danger-desc{font-size:0.72rem;color:#64748B;margin-top:2px}
-    .btn-danger{padding:7px 14px;border-radius:8px;border:none;background:#FEE2E2;color:#DC2626;font-size:0.8rem;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;white-space:nowrap;transition:all 0.2s}
-    .btn-danger:hover{background:#DC2626;color:#0f0e1a}
+.success-msg{background:rgba(18,168,114,.08);border:1.5px solid rgba(18,168,114,.2);border-radius:9px;padding:10px 14px;font-size:13px;color:#065f46;display:none;margin-top:12px;}
+.error-msg{background:rgba(229,72,77,.08);border:1.5px solid rgba(229,72,77,.2);border-radius:9px;padding:10px 14px;font-size:13px;color:var(--red);display:none;margin-top:12px;}
 
-    /* TOAST */
-    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#f5f0e8;color:#fff;padding:10px 20px;border-radius:10px;font-size:0.82rem;font-weight:600;display:none;z-index:999;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.3)}
-
-    /* LOADING */
-    .ls{position:fixed;inset:0;background:#F5F0E8;display:flex;align-items:center;justify-content:center;z-index:999}
-    .spinner{width:32px;height:32px;border:3px solid rgba(45,27,105,0.2);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite}    @keyframes spin{to{transform:rotate(360deg)}}
-
-    @media(max-width:600px){
-      .account-types{grid-template-columns:repeat(2,1fr)}
-      .upgrade-grid{grid-template-columns:1fr}
-      nav{padding:0 14px}
-      .main{padding:16px 14px}    }
-  </style>
+.spinner{width:28px;height:28px;border:3px solid rgba(45,27,105,.15);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:40px auto;display:block;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ls{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:900;}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;display:none;z-index:999;}
+@media(max-width:768px){.sidebar{display:none;}.content{padding:20px;max-width:100%;}}
+</style>
 </head>
 <body>
 <div class="ls" id="ls"><div class="spinner"></div></div>
 <nav>
-  <div class="nav-left">
-    <a href="/dashboard" class="logo-s">S</a>
-    <a href="/dashboard" class="btn-g">← Dashboard</a>
-  </div>
-  <button class="btn-save" id="save-btn" onclick="saveProfile()">Save changes</button>
+  <a href="/dashboard/" class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="sg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#2d1b69"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#sg)"/><rect x="10" y="9" width="20" height="6" rx="3" fill="white"/><rect x="10" y="17" width="20" height="6" rx="3" fill="rgba(255,255,255,0.9)"/><rect x="10" y="25" width="20" height="6" rx="3" fill="white"/><circle cx="31" cy="12" r="3" fill="#d97706"/></svg>
+    <span class="logo-nm">Settings</span>
+  </a>
+  <a href="/dashboard/" class="btn btn-ghost" style="padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--muted);border:1.5px solid var(--border);text-decoration:none;">← Dashboard</a>
 </nav>
-<div class="main">
-  <div class="page-title">⚙️ Settings</div>
-  <div class="page-sub">Manage your profile, notifications and account preferences</div>
 
-  <!-- PROFILE -->
-  <div class="section">
-    <div class="section-title">👤 Profile</div>
+<div class="layout">
+  <div class="sidebar">
+    <div class="sb-label">Account</div>
+    <button class="sb-item active" id="sn-profile" onclick="show('profile')">👤 Profile</button>
+    <button class="sb-item" id="sn-password" onclick="show('password')">🔒 Password</button>
+    <button class="sb-item" id="sn-plan" onclick="show('plan')">⭐ My Plan</button>
+    <div class="sb-divider"></div>
+    <div class="sb-label">Preferences</div>
+    <button class="sb-item" id="sn-notifications" onclick="show('notifications')">🔔 Notifications</button>
+    <div class="sb-divider"></div>
+    <div class="sb-label">Danger</div>
+    <button class="sb-item" id="sn-danger" onclick="show('danger')" style="color:var(--red);">⚠️ Delete Account</button>
+  </div>
 
-    <!-- AVATAR -->
-    <div class="avatar-section">
-      <div class="avatar-preview">
-        <div class="avatar-circle" id="avatar-circle">
-          <img id="avatar-img" alt="Profile photo">
-          <span id="avatar-initial">U</span>
-        </div>      </div>
-      <div class="avatar-info" style="flex:1">
-        <div class="avatar-label">Profile photo</div>
-        <div class="avatar-url-row">
-          <input class="avatar-url-inp" id="photo-url" type="url" placeholder="Paste image or Google Drive URL">
-          <button class="fetch-btn" onclick="fetchPhoto()">Fetch →</button>
+  <div class="content">
+
+    <!-- PROFILE -->
+    <div class="sec active" id="sec-profile">
+      <div class="sec-title">Profile</div>
+      <div class="sec-sub">Manage your name, email and public profile.</div>
+      <div class="card">
+        <div class="avatar-wrap">
+          <div class="avatar-big" id="avatar-big">?</div>
+          <div class="avatar-info">
+            <div class="avatar-name" id="avatar-name">Loading...</div>
+            <div class="avatar-email" id="avatar-email">...</div>
+          </div>
         </div>
-        <div class="avatar-hint">ℹ️ How to get image URL
-          <div class="avatar-hint-text">
-            <strong>Google Drive:</strong><br>
-            1. Upload image to Drive<br>
-            2. Right click → Share → Anyone with link<br>
-            3. Copy link and paste above<br>
-            4. Click Fetch to preview<br><br>
-            <strong>Direct URL:</strong><br>
-            Any public image URL works (jpg, png, webp)          </div>
-          <div class="field-hint">Used for account recovery and notifications only</div>
+        <div class="field"><label class="label">Display Name</label><input class="inp" id="disp-name" placeholder="Your name"></div>
+        <div class="field"><label class="label">Email</label><input class="inp" id="disp-email" disabled placeholder="your@email.com"><div style="font-size:11px;color:var(--muted2);margin-top:4px;">Email cannot be changed here. Contact support if needed.</div></div>
+        <div class="field"><label class="label">Organisation / Institution</label><input class="inp" id="disp-org" placeholder="e.g. Delhi University, Acme Corp"></div>
+        <div style="display:flex;gap:10px;margin-top:4px;">
+          <button class="btn btn-primary" onclick="saveProfile()" id="save-profile-btn">Save Changes</button>
         </div>
-        <div class="avatar-status" id="avatar-status"></div>
-        <div class="crop-indicator" id="crop-indicator">
-          ✂️ Your image will be cropped to a <strong>circle</strong>. The centre of the image will be visible. Make sure the main subject is centred.
-        </div>      </div>
-    </div>
-
-    <div class="field">
-      <label class="field-label">Full name</label>
-      <input class="field-input" id="inp-name" type="text" placeholder="Your full name">
-    </div>
-    <div class="field">
-      <label class="field-label">Email address</label>
-      <input class="field-input" id="inp-email" type="email" placeholder="you@example.com" disabled style="background:#F5F0E8;color:#94A3B8;cursor:not-allowed">
-      <div class="field-hint">Email cannot be changed here. Contact support to update.</div>
-    </div>
-    <div class="field">
-      <label class="field-label">Mobile number</label>
-      <input class="field-input" id="inp-mobile" type="tel" placeholder="+91 98765 43210">
-      <div class="field-hint">Saved for future mobile login. Not shared publicly.</div>
-    </div>
-  </div>
-
-  <!-- ACCOUNT TYPE -->
-  <div class="section">
-    <div class="section-title">🏷️ Account type</div>
-    <div class="field-hint" style="margin-bottom:12px">Select the type that best describes you. Student/Educator and NGO accounts get unlimited surveys free after verification.</div>
-    <div class="account-types">
-      <button class="acc-type-btn active" id="acc-individual" onclick="selectAccType('individual')">
-        <span class="acc-type-icon">👤</span>Individual
-      </button>
-      <button class="acc-type-btn" id="acc-student" onclick="selectAccType('student')">
-        <span class="acc-type-icon">🎓</span>Student / Educator
-      </button>
-      <button class="acc-type-btn" id="acc-ngo" onclick="selectAccType('ngo')">
-        <span class="acc-type-icon">🤝</span>NGO
-      </button>
-      <button class="acc-type-btn" id="acc-business" onclick="selectAccType('business')">
-        <span class="acc-type-icon">💼</span>Business
-      </button>    </div>
-
-    <!-- Student/Educator verification info -->
-    <div class="acc-type-modal" id="modal-student">
-      <div class="acc-type-modal-title">🎓 Student / Educator — Free Forever</div>
-      <div class="acc-type-modal-sub">Verified students, teachers, professors and academic researchers get unlimited surveys and responses completely free.</div>
-      <div class="acc-type-qualify">
-        <div style="font-size:0.75rem;font-weight:700;color:#64748B;margin-bottom:4px">WHO QUALIFIES:</div>
-        <ul>
-          <li>School, college or university students</li>
-          <li>Teachers and professors</li>
-          <li>Academic researchers</li>
-          <li>Educational institution staff</li>
-        </ul>      </div>
-      <button class="btn-apply" onclick="applyVerification('student')">Apply for verification →</button>
-    </div>
-    <!-- NGO verification info -->
-    <div class="acc-type-modal" id="modal-ngo">
-      <div class="acc-type-modal-title">🤝 NGO — Free Forever</div>
-      <div class="acc-type-modal-sub">Verified non-profit organisations get unlimited surveys and responses completely free.</div>
-      <div class="acc-type-qualify">
-        <div style="font-size:0.75rem;font-weight:700;color:#64748B;margin-bottom:4px">WHO QUALIFIES:</div>
-        <ul>
-          <li>Registered non-profit organisations</li>
-          <li>Charitable trusts and foundations</li>
-          <li>Community welfare organisations</li>
-          <li>Social impact initiatives</li>
-        </ul>
-      </div>
-      <button class="btn-apply" onclick="applyVerification('ngo')">Apply for verification →</button>
-    </div>
-  </div>
-  <!-- NOTIFICATIONS -->
-  <div class="section">
-    <div class="section-title">🔔 Email notifications</div>
-    <div class="notif-options">
-      <div class="notif-option active" id="notif-instant" onclick="selectNotif('instant')">
-        <div class="notif-radio"></div>
-        <div><div class="notif-title">Instant notifications</div><div class="notif-desc">Get an email every time someone responds to your survey</div></div>      </div>
-      <div class="notif-option" id="notif-none" onclick="selectNotif('none')">
-        <div class="notif-radio"></div>
-        <div><div class="notif-title">No notifications</div><div class="notif-desc">Check your responses manually from the dashboard</div></div>
+        <div class="success-msg" id="profile-success">✅ Profile updated successfully!</div>
+        <div class="error-msg" id="profile-error"></div>
       </div>
     </div>
-  </div>
 
-  <!-- CHANGE PASSWORD -->
-  <div class="section" id="password-section">
-    <div class="section-title">🔑 Change password</div>
-    <div class="field">
-      <label class="field-label">New password</label>
-      <input class="field-input" id="inp-new-pass" type="password" placeholder="At least 6 characters">
-    </div>
-    <div class="field">
-      <label class="field-label">Confirm new password</label>
-      <input class="field-input" id="inp-confirm-pass" type="password" placeholder="Repeat new password">
-    </div>
-    <button class="btn-save" onclick="changePassword()" style="margin-top:4px">Update password</button>
-  </div>
-
-  <!-- PLAN -->
-  <div class="section">
-    <div class="section-title">💳 Plan & billing</div>
-    <div class="plan-current">
-      <div>
-        <div class="plan-name" id="plan-name">Free plan</div>
-        <div class="plan-desc" id="plan-desc">3 surveys · 100 responses each</div>
+    <!-- PASSWORD -->
+    <div class="sec" id="sec-password">
+      <div class="sec-title">Password</div>
+      <div class="sec-sub">Change your account password. You'll need your current password to make changes.</div>
+      <div class="card">
+        <div class="field"><label class="label">Current Password</label><input class="inp" id="cur-pass" type="password" placeholder="••••••••"></div>
+        <div class="field"><label class="label">New Password</label><input class="inp" id="new-pass" type="password" placeholder="Min. 6 characters"></div>
+        <div class="field"><label class="label">Confirm New Password</label><input class="inp" id="conf-pass" type="password" placeholder="Repeat new password"></div>
+        <button class="btn btn-primary" onclick="changePassword()" id="save-pass-btn">Update Password</button>
+        <div class="success-msg" id="pass-success">✅ Password updated successfully!</div>
+        <div class="error-msg" id="pass-error"></div>
       </div>
-      <span class="plan-badge plan-free" id="plan-badge">Free</span>
-    </div>
-    <div class="upgrade-grid">
-      <div class="upgrade-card">
-        <div class="upgrade-plan">⚡ Starter</div>
-        <div class="upgrade-price">₹499 / month</div>
-        <button class="upgrade-btn">Upgrade</button>
+      <div class="card">
+        <div class="card-title">Forgot your password?</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">We'll send a reset link to your registered email address.</p>
+        <button class="btn btn-ghost" onclick="sendReset()">Send reset link</button>
+        <div class="success-msg" id="reset-success">✅ Reset link sent! Check your inbox.</div>
       </div>
-      <div class="upgrade-card">
-        <div class="upgrade-plan">🚀 Pro</div>
-        <div class="upgrade-price">₹1,499 / month</div>
-        <button class="upgrade-btn">Upgrade</button>      </div>
     </div>
-    <div style="margin-top:12px;font-size:0.75rem;color:#94A3B8;text-align:center">
-      🎓 Student/Educator or NGO? <a href="#" onclick="selectAccType('student');document.getElementById('modal-student').scrollIntoView({behavior:'smooth'})" style="color:#2D1B69;font-weight:600">Apply for free plan →</a>
+
+    <!-- PLAN -->
+    <div class="sec" id="sec-plan">
+      <div class="sec-title">My Plan</div>
+      <div class="sec-sub">Your current subscription and usage.</div>
+      <div class="card">
+        <div class="card-title">Current Plan</div>
+        <div class="plan-card">
+          <div>
+            <div class="plan-name" id="plan-name">Free</div>
+            <div class="plan-desc" id="plan-desc">3 active surveys · 100 responses/month</div>
+          </div>
+          <span class="plan-badge" id="plan-badge">FREE</span>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="/pricing/" class="btn btn-primary">⭐ Upgrade Plan</a>
+          <a href="/pricing/" class="btn btn-ghost">Compare plans →</a>
+        </div>
+      </div>
+      <div class="card" id="verify-card">
+        <div class="card-title">Free Access — Students, Educators & NGOs</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7;">Are you a student, educator or working with a registered NGO? Apply for free access to SwoopForm. Subject to annual verification.</p>
+        <a href="/contact/" class="btn btn-ghost">Apply for free access →</a>
+      </div>
     </div>
-  </div>
 
-  <!-- DANGER ZONE -->
-  <div class="danger-section">
-    <div class="danger-title">⚠️ Danger zone</div>
-    <div class="danger-row">
-      <div>
-        <div class="danger-name">Delete account</div>
-        <div class="danger-desc">Permanently delete your account and all surveys. Cannot be undone.</div>      </div>
-      <button class="btn-danger" onclick="deleteAccount()">Delete account</button>    </div>
+    <!-- NOTIFICATIONS -->
+    <div class="sec" id="sec-notifications">
+      <div class="sec-title">Notifications</div>
+      <div class="sec-sub">Choose what you want to be notified about.</div>
+      <div class="card">
+        <div class="tgl-row"><div><div class="tgl-name">New responses</div><div class="tgl-desc">Get notified when someone submits your form</div></div><button class="tgl on" id="notif-responses" onclick="this.classList.toggle('on')"></button></div>
+        <div class="tgl-row"><div><div class="tgl-name">Weekly summary</div><div class="tgl-desc">Weekly digest of your form activity</div></div><button class="tgl on" id="notif-weekly" onclick="this.classList.toggle('on')"></button></div>
+        <div class="tgl-row"><div><div class="tgl-name">Product updates</div><div class="tgl-desc">New features and improvements from SwoopForm</div></div><button class="tgl on" id="notif-updates" onclick="this.classList.toggle('on')"></button></div>
+        <div class="tgl-row"><div><div class="tgl-name">Marketing emails</div><div class="tgl-desc">Tips, guides and best practices</div></div><button class="tgl" id="notif-marketing" onclick="this.classList.toggle('on')"></button></div>
+        <div style="margin-top:16px;">
+          <button class="btn btn-primary" onclick="saveNotifications()">Save Preferences</button>
+          <div class="success-msg" id="notif-success" style="display:inline-block;margin-left:12px;margin-top:0;">✅ Saved!</div>
+        </div>
+      </div>
+    </div>
 
-    <!-- ── DANGER ZONE ── -->
-    <div id="sec-danger" style="display:none">
-      <div class="section-title">⚠️ Danger zone</div>
-      <div class="section-sub">Irreversible actions. Proceed with caution.</div>
-      <div class="danger-card">
-        <div class="danger-title">Delete account</div>
-        <div class="danger-sub">Permanently delete your SwoopForm account and all associated data — surveys, responses, settings. This action cannot be undone. All your data will be permanently removed within 30 days.</div>
-        <button class="btn-danger" onclick="confirmDelete()">Delete my account</button>
+    <!-- DANGER -->
+    <div class="sec" id="sec-danger">
+      <div class="sec-title">Danger Zone</div>
+      <div class="sec-sub">These actions are permanent and cannot be undone.</div>
+      <div class="danger-zone">
+        <div class="danger-title">⚠️ Delete Account</div>
+        <div class="danger-desc">Permanently delete your account and all associated data including forms, responses and settings. This action cannot be reversed.</div>
+        <button class="btn btn-danger" onclick="confirmDelete()">Delete my account</button>
       </div>
     </div>
 
@@ -307,177 +209,151 @@
 
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import{getAuth,onAuthStateChanged,updatePassword,reauthenticateWithCredential,EmailAuthProvider,deleteUser,signOut}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getFirestore,doc,getDoc,updateDoc,setDoc,addDoc,collection,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getAuth,onAuthStateChanged,updateProfile,updatePassword,reauthenticateWithCredential,EmailAuthProvider,sendPasswordResetEmail,deleteUser,signOut}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,doc,getDoc,setDoc,updateDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
 const app=initializeApp(FB);
 const auth=getAuth(app);
 const db=getFirestore(app);
+let U=null,userData=null;
 
-let currentUser=null,userProfile=null,selectedAccType='individual',selectedNotif='instant';
-onAuthStateChanged(auth,async u=>{
-  if(!u){window.location.href='/login';return}
-  currentUser=u;
-  await loadProfile();
+const PLAN_INFO={
+  free:{name:'Free Plan',desc:'3 active forms · 100 responses/month',badge:'FREE'},
+  starter:{name:'Starter Plan',desc:'15 active forms · 1,000 responses/month',badge:'STARTER'},
+  pro:{name:'Pro Plan',desc:'Unlimited forms · Unlimited responses',badge:'PRO'},
+  business:{name:'Business Plan',desc:'Team collaboration · Custom branding',badge:'BUSINESS'},
+  student:{name:'Student Plan',desc:'Full access · Verified annually',badge:'STUDENT'},
+  educator:{name:'Educator Plan',desc:'Full access · Verified annually',badge:'EDUCATOR'},
+  ngo:{name:'NGO Plan',desc:'Full access · Verified annually',badge:'NGO'},
+};
+
+onAuthStateChanged(auth,async function(u){
+  if(!u){window.location.href='/login/';return;}
+  U=u;
   document.getElementById('ls').style.display='none';
-  // Hide password section for Google users
-  if(u.providerData[0]?.providerId==='google.com'){
-    document.getElementById('password-section').style.display='none';
-  }
-});
-async function loadProfile(){
+  // Fill avatar
+  const initials=(u.displayName||u.email||'?')[0].toUpperCase();
+  document.getElementById('avatar-big').textContent=initials;
+  document.getElementById('avatar-name').textContent=u.displayName||'No name set';
+  document.getElementById('avatar-email').textContent=u.email||'';
+  document.getElementById('disp-name').value=u.displayName||'';
+  document.getElementById('disp-email').value=u.email||'';
+  // Load Firestore user data
   try{
-    const snap=await getDoc(doc(db,'users',currentUser.uid));
-    userProfile=snap.exists()?snap.data():{};
-    document.getElementById('inp-name').value=userProfile.name||currentUser.displayName||'';
-    document.getElementById('inp-email').value=currentUser.email||'';
-    document.getElementById('inp-mobile').value=userProfile.mobile||'';
-    document.getElementById('photo-url').value=userProfile.photoURL||currentUser.photoURL||'';
-    // Set avatar
-    const initial=(userProfile.name||currentUser.displayName||'U')[0].toUpperCase();
-    document.getElementById('avatar-initial').textContent=initial;
-    if(userProfile.photoURL||currentUser.photoURL){
-      loadPhoto(userProfile.photoURL||currentUser.photoURL,false);
+    const snap=await getDoc(doc(db,'users',u.uid));
+    if(snap.exists()){
+      userData=snap.data();
+      document.getElementById('disp-org').value=userData.organisation||'';
+      const plan=userData.plan||'free';
+      const info=PLAN_INFO[plan]||PLAN_INFO.free;
+      document.getElementById('plan-name').textContent=info.name;
+      document.getElementById('plan-desc').textContent=info.desc;
+      document.getElementById('plan-badge').textContent=info.badge;
+      // Notifications
+      const notifs=userData.notifications||{};
+      if(notifs.responses===false)document.getElementById('notif-responses').classList.remove('on');
+      if(notifs.weekly===false)document.getElementById('notif-weekly').classList.remove('on');
+      if(notifs.updates===false)document.getElementById('notif-updates').classList.remove('on');
+      if(notifs.marketing)document.getElementById('notif-marketing').classList.add('on');
     }
-    // Account type
-    const plan=userProfile.plan||'free';
-    const accType=plan==='student'||plan==='educator'?'student':plan==='ngo'?'ngo':plan==='business'||plan==='starter'||plan==='pro'?'business':'individual';
-    selectAccType(accType,true);
-    // Notification pref
-    selectNotif(userProfile.notificationPref||'instant',true);
-    // Plan badge
-    updatePlanDisplay(plan);
-  }catch(e){console.error(e)}
-}
-function updatePlanDisplay(plan){
-  const names={free:'Free plan',student:'Student/Educator plan',ngo:'NGO plan',starter:'Starter plan',pro:'Pro plan',business:'Business plan'};
-  const descs={free:'3 surveys · 100 responses each',student:'Unlimited surveys · Unlimited responses',ngo:'Unlimited surveys · Unlimited responses',starter:'10 surveys · Unlimited responses',pro:'Unlimited surveys · Unlimited responses',business:'Unlimited surveys · Team features'};
-  document.getElementById('plan-name').textContent=names[plan]||'Free plan';
-  document.getElementById('plan-desc').textContent=descs[plan]||'';
-  const badge=document.getElementById('plan-badge');
-  badge.textContent=plan.charAt(0).toUpperCase()+plan.slice(1);
-  badge.className='plan-badge plan-'+(plan||'free');
-}
-// PHOTO FETCH
-window.fetchPhoto=function(){
-  let url=document.getElementById('photo-url').value.trim();
-  if(!url){toast('Please paste an image URL first');return}
-  url=fixGDriveUrl(url);
-  document.getElementById('photo-url').value=url;
-  loadPhoto(url,true);
-}
-function fixGDriveUrl(url){
-  // Convert Google Drive share URL to direct image URL
-  const m=url.match(/drive\.google\.com\/file\/d\/([^/]+)/)||url.match(/drive\.google\.com\/open\?id=([^&]+)/)||url.match(/id=([^&]+)/);
-  if(m&&m[1])return'https://drive.google.com/uc?export=view&id='+m[1];
-  return url;
-}
-function loadPhoto(url,showStatus){
-  const img=document.getElementById('avatar-img');
-  const initial=document.getElementById('avatar-initial');
-  const status=document.getElementById('avatar-status');
-  const crop=document.getElementById('crop-indicator');
-  img.onload=function(){
-    img.style.display='block';
-    initial.style.display='none';
-    if(showStatus){status.textContent='✓ Image loaded successfully';status.className='avatar-status ok';crop.style.display='block'}
-  };
-  img.onerror=function(){
-    img.style.display='none';
-    initial.style.display='flex';
-    if(showStatus){status.textContent='✕ Could not load image. Check the URL or sharing settings.';status.className='avatar-status err';crop.style.display='none'}
-  };
-  img.src=url;
-}
-// ACCOUNT TYPE
-window.selectAccType=function(type,silent){
-  selectedAccType=type;
-  document.querySelectorAll('.acc-type-btn').forEach(b=>b.classList.remove('active'));
-  const btn=document.getElementById('acc-'+type);
-  if(btn)btn.classList.add('active');
-  document.querySelectorAll('.acc-type-modal').forEach(m=>m.classList.remove('show'));
-  if((type==='student'||type==='ngo')&&!silent){
-    document.getElementById('modal-'+type).classList.add('show');
-  }
-}
-// APPLY VERIFICATION
-window.applyVerification=async function(type){
-  if(!currentUser)return;
-  const name=document.getElementById('inp-name').value.trim();
-  try{
-    await addDoc(collection(db,'verificationRequests'),{
-      userId:currentUser.uid,
-      name:name||currentUser.displayName||'',
-      email:currentUser.email,
-      type,
-      status:'pending',
-      submittedAt:serverTimestamp()
-    });
-    toast('✅ Verification request submitted! Admin will review within 24 hours.');
-  }catch(e){toast('Error submitting request. Please try again.')}
-}
-// NOTIFICATIONS
-window.selectNotif=function(pref,silent){
-  selectedNotif=pref;
-  document.querySelectorAll('.notif-option').forEach(o=>o.classList.remove('active'));
-  document.getElementById('notif-'+pref).classList.add('active');
-}
-// SAVE PROFILE
+  }catch(e){console.error(e);}
+});
+
+window.show=function(s){
+  document.querySelectorAll('.sec').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.sb-item').forEach(function(x){x.classList.remove('active');});
+  document.getElementById('sec-'+s).classList.add('active');
+  document.getElementById('sn-'+s).classList.add('active');
+};
+
 window.saveProfile=async function(){
-  if(!currentUser)return;
-  const btn=document.getElementById('save-btn');
+  const name=document.getElementById('disp-name').value.trim();
+  const org=document.getElementById('disp-org').value.trim();
+  const btn=document.getElementById('save-profile-btn');
   btn.disabled=true;btn.textContent='Saving...';
   try{
-    const name=document.getElementById('inp-name').value.trim();
-    const mobile=document.getElementById('inp-mobile').value.trim();
-    const photoURL=document.getElementById('photo-url').value.trim();
-    const fixedURL=photoURL?fixGDriveUrl(photoURL):'';
-    await updateDoc(doc(db,'users',currentUser.uid),{
-      name,mobile,
-      photoURL:fixedURL,
-      notificationPref:selectedNotif,
-      updatedAt:serverTimestamp()
-    });
-    toast('✅ Profile saved!');
-    // Update avatar initial
-    if(name)document.getElementById('avatar-initial').textContent=name[0].toUpperCase();
-  }catch(e){
-    console.error(e);
-    toast('Error saving. Please try again.');  }
-  btn.disabled=false;btn.textContent='Save changes';
-}
-// CHANGE PASSWORD
-window.changePassword=async function(){
-  const newPass=document.getElementById('inp-new-pass').value;
-  const confirmPass=document.getElementById('inp-confirm-pass').value;
-  if(!newPass||newPass.length<6){toast('Password must be at least 6 characters');return}
-  if(newPass!==confirmPass){toast('Passwords do not match');return}
-  try{
-    await updatePassword(currentUser,newPass);
-    document.getElementById('inp-new-pass').value='';
-    document.getElementById('inp-confirm-pass').value='';
-    toast('✅ Password updated!');
-  }catch(e){
-    if(e.code==='auth/requires-recent-login'){
-      toast('Please sign out and sign back in before changing your password.');
-    } else {
-      toast('Error: '+e.message);
-    }
-  }
-}
-// DELETE ACCOUNT
-window.deleteAccount=async function(){
-  if(!confirm('Are you sure you want to delete your account?\n\nAll your surveys and data will be permanently deleted.\nThis cannot be undone.'))return;
-  if(!confirm('Last warning — this will permanently delete EVERYTHING. Continue?'))return;  try{
-    await deleteUser(currentUser);
-    window.location.href='/';  }catch(e){
-    if(e.code==='auth/requires-recent-login'){
-      toast('Please sign out and sign back in first, then try deleting again.');
-    } else {
-      toast('Error: '+e.message);
-    }  }
-}
+    await updateProfile(U,{displayName:name});
+    await setDoc(doc(db,'users',U.uid),{
+      name,email:U.email,organisation:org,updatedAt:serverTimestamp()
+    },{merge:true});
+    document.getElementById('avatar-name').textContent=name||'No name set';
+    document.getElementById('avatar-big').textContent=(name||U.email||'?')[0].toUpperCase();
+    showMsg('profile-success','profile-error','');
+  }catch(e){showErr('profile-error','profile-success',e.message);}
+  btn.disabled=false;btn.textContent='Save Changes';
+};
 
-function toast(msg,d=2800){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',d)}</script>
+window.changePassword=async function(){
+  const cur=document.getElementById('cur-pass').value;
+  const nw=document.getElementById('new-pass').value;
+  const conf=document.getElementById('conf-pass').value;
+  if(!cur||!nw){showErr('pass-error','pass-success','Please fill in all fields.');return;}
+  if(nw!==conf){showErr('pass-error','pass-success','New passwords do not match.');return;}
+  if(nw.length<6){showErr('pass-error','pass-success','Password must be at least 6 characters.');return;}
+  const btn=document.getElementById('save-pass-btn');btn.disabled=true;btn.textContent='Updating...';
+  try{
+    const cred=EmailAuthProvider.credential(U.email,cur);
+    await reauthenticateWithCredential(U,cred);
+    await updatePassword(U,nw);
+    document.getElementById('cur-pass').value='';
+    document.getElementById('new-pass').value='';
+    document.getElementById('conf-pass').value='';
+    showMsg('pass-success','pass-error','');
+  }catch(e){
+    const msg=e.code==='auth/wrong-password'?'Current password is incorrect.':e.message;
+    showErr('pass-error','pass-success',msg);
+  }
+  btn.disabled=false;btn.textContent='Update Password';
+};
+
+window.sendReset=async function(){
+  try{
+    await sendPasswordResetEmail(auth,U.email);
+    document.getElementById('reset-success').style.display='block';
+  }catch(e){toast('Error sending reset email');}
+};
+
+window.saveNotifications=async function(){
+  try{
+    await setDoc(doc(db,'users',U.uid),{
+      notifications:{
+        responses:document.getElementById('notif-responses').classList.contains('on'),
+        weekly:document.getElementById('notif-weekly').classList.contains('on'),
+        updates:document.getElementById('notif-updates').classList.contains('on'),
+        marketing:document.getElementById('notif-marketing').classList.contains('on'),
+      },updatedAt:serverTimestamp()
+    },{merge:true});
+    const s=document.getElementById('notif-success');s.style.display='inline-block';
+    setTimeout(function(){s.style.display='none';},2500);
+  }catch(e){toast('Error saving');}
+};
+
+window.confirmDelete=async function(){
+  if(!confirm('Are you absolutely sure? This will permanently delete your account and ALL your forms and data. This cannot be undone.'))return;
+  const pass=prompt('Enter your password to confirm:');
+  if(!pass)return;
+  try{
+    const cred=EmailAuthProvider.credential(U.email,pass);
+    await reauthenticateWithCredential(U,cred);
+    await deleteUser(U);
+    window.location.href='/';
+  }catch(e){
+    const msg=e.code==='auth/wrong-password'?'Incorrect password.':e.message;
+    toast('Error: '+msg);
+  }
+};
+
+function showMsg(succId,errId){
+  document.getElementById(succId).style.display='block';
+  document.getElementById(errId).style.display='none';
+  setTimeout(function(){document.getElementById(succId).style.display='none';},3000);
+}
+function showErr(errId,succId,msg){
+  const el=document.getElementById(errId);el.textContent='❌ '+msg;el.style.display='block';
+  document.getElementById(succId).style.display='none';
+}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+</script>
 </body>
 </html>
