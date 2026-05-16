@@ -95,9 +95,9 @@ nav{background:var(--surface);border-bottom:1.5px solid var(--border);height:56p
 .items-list{display:flex;flex-direction:column;gap:10px;}
 
 /* CARD */
-.item-card{background:var(--surface);border-radius:16px;border:1.5px solid var(--border);overflow:hidden;transition:all .2s;display:flex;flex-direction:column;}
+.item-card{background:var(--surface);border-radius:16px;border:1.5px solid var(--border);transition:all .2s;display:flex;flex-direction:column;}
 .item-card:hover{box-shadow:0 8px 28px rgba(45,27,105,.1);transform:translateY(-3px);border-color:#c4b5fd;}
-.item-card-top{height:5px;flex-shrink:0;}
+.item-card-top{height:5px;flex-shrink:0;border-radius:16px 16px 0 0;}
 .item-card-body{padding:16px 18px;flex:1;display:flex;flex-direction:column;}
 .item-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
 .type-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;}
@@ -109,11 +109,11 @@ nav{background:var(--surface);border-bottom:1.5px solid var(--border);height:56p
 .status-active{background:#dcfce7;color:#166534;}
 .status-draft{background:#f1f5f9;color:#64748b;}
 .status-closed{background:#fee2e2;color:#dc2626;}
-.item-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--bg);margin-top:auto;}
+.item-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--bg);margin-top:auto;gap:8px;flex-wrap:wrap;}
 .item-stat{font-size:11px;color:var(--muted2);display:flex;align-items:center;gap:4px;}
 .item-stat strong{color:var(--muted);font-weight:700;}
 .item-actions{display:flex;gap:5px;}
-.ia-btn{padding:5px 10px;border-radius:7px;border:1.5px solid var(--border);background:transparent;font-size:11px;font-weight:600;font-family:var(--font);cursor:pointer;color:var(--muted);transition:all .2s;text-decoration:none;white-space:nowrap;}
+.ia-btn{padding:5px 8px;border-radius:7px;border:1.5px solid var(--border);background:transparent;font-size:11px;font-weight:600;font-family:var(--font);cursor:pointer;color:var(--muted);transition:all .2s;text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;gap:3px;}
 .ia-btn:hover{border-color:var(--accent);color:var(--accent);}
 .ia-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
 .ia-btn.primary:hover{opacity:.85;}
@@ -191,13 +191,11 @@ nav{background:var(--surface);border-bottom:1.5px solid var(--border);height:56p
 <div class="app-layout">
   <div class="sidebar" id="sidebar">
     <a class="sb-item active" href="/dashboard/"><span class="sb-ico">🏠</span>Overview</a>
-
     <button class="sb-create-btn" onclick="toggleCreatePanel()">
       <div class="sb-create-icon">+</div>
       Create new
       <span class="sb-arrow open" id="create-arrow">▼</span>
     </button>
-
     <div class="create-panel open" id="create-panel">
       <div class="create-panel-scroll">
         <div class="cp-section-label">Surveys & Forms</div>
@@ -208,7 +206,7 @@ nav{background:var(--surface);border-bottom:1.5px solid var(--border);height:56p
         <a href="/registration/create/" class="cp-item"><div class="cp-icon" style="background:#F5F3FF">🎟️</div><div><div class="cp-label">Registration</div><div class="cp-desc">Event or course signup</div></div></a>
         <a href="/employee/create/" class="cp-item"><div class="cp-icon" style="background:#F0F9FF">👥</div><div><div class="cp-label">Employee Survey</div><div class="cp-desc">Internal team pulse</div></div></a>
         <a href="/product/create/" class="cp-item"><div class="cp-icon" style="background:#FDF2F8">📦</div><div><div class="cp-label">Product Quiz</div><div class="cp-desc">Quiz-style product finder</div></div></a>
-        <a href="/award/create/" class="cp-item"><div class="cp-icon" style="background:#FFFBEB">🏆</div><div><div class="cp-label">Award & Nomination</div><div class="cp-desc">Ranked nominations with points</div></div></a>
+        <a href="/award/create/" class="cp-item"><div class="cp-icon" style="background:#FFFBEB">🏆</div><div><div class="cp-label">Award & Nomination</div><div class="cp-desc">Ranked nominations</div></div></a>
         <a href="/jobapp/create/" class="cp-item"><div class="cp-icon" style="background:#F0FDF4">💼</div><div><div class="cp-label">Job Application</div><div class="cp-desc">Split-view with job description</div></div></a>
         <div class="cp-divider"></div>
         <div class="cp-section-label">Engagement</div>
@@ -253,25 +251,34 @@ nav{background:var(--surface);border-bottom:1.5px solid var(--border);height:56p
         <button class="view-btn" id="vb-list" onclick="setView('list')" title="List">☰</button>
       </div>
     </div>
-
-    <div class="filters-row">
-      <button class="filter-btn active" id="flt-all" onclick="setFilter('all',this)">All</button>
-      <button class="filter-btn" id="flt-surveys" onclick="setFilter('surveys',this)">📋 Surveys</button>
-      <button class="filter-btn" id="flt-polls" onclick="setFilter('polls',this)">📊 Polls</button>
-      <button class="filter-btn" id="flt-votings" onclick="setFilter('votings',this)">🗳️ Voting</button>
-      <button class="filter-btn" id="flt-pledges" onclick="setFilter('pledges',this)">🤝 Pledges</button>
-      <button class="filter-btn" id="flt-riddles" onclick="setFilter('riddles',this)">🧩 Riddles</button>
-      <button class="filter-btn" id="flt-jobapps" onclick="setFilter('jobapps',this)">💼 Job Apps</button>
-      <button class="filter-btn" id="flt-assessments" onclick="setFilter('assessments',this)">📝 Assessments</button>
-      <button class="filter-btn" id="flt-feedbacks" onclick="setFilter('feedbacks',this)">💬 Feedback</button>
-      <button class="filter-btn" id="flt-leads" onclick="setFilter('leads',this)">📥 Leads</button>
-      <button class="filter-btn" id="flt-registrations" onclick="setFilter('registrations',this)">🎟️ Events</button>
-      <button class="filter-btn" id="flt-employees" onclick="setFilter('employees',this)">👥 Employee</button>
-      <button class="filter-btn" id="flt-products" onclick="setFilter('products',this)">📦 Product Quiz</button>
-      <button class="filter-btn" id="flt-awards" onclick="setFilter('awards',this)">🏆 Awards</button>
-      <button class="filter-btn" id="flt-quizzes" onclick="setFilter('quizzes',this)">⚡ Live Quiz</button>
-      <button class="filter-btn" id="flt-livePollSessions" onclick="setFilter('livePollSessions',this)">📡 PulseCheck</button>
+    <div class="filter-dropdowns" style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+      <select class="filter-select" id="cat-select" onchange="renderItems()" style="padding:8px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-family:var(--font);outline:none;color:var(--text);cursor:pointer;min-width:160px;">
+        <option value="all">All Categories</option>
+        <option value="surveys">📋 Surveys</option>
+        <option value="assessments">📝 Assessments</option>
+        <option value="feedbacks">💬 Feedback</option>
+        <option value="leads">📥 Lead Forms</option>
+        <option value="registrations">🎟️ Registration</option>
+        <option value="employees">👥 Employee Survey</option>
+        <option value="products">📦 Product Quiz</option>
+        <option value="awards">🏆 Awards</option>
+        <option value="jobapps">💼 Job Applications</option>
+        <option value="polls">📊 Polls</option>
+        <option value="votings">🗳️ Voting</option>
+        <option value="pledges">🤝 Pledges</option>
+        <option value="riddles">🧩 Riddles</option>
+        <option value="quizzes">⚡ Live Quiz</option>
+        <option value="livePollSessions">📡 PulseCheck</option>
+      </select>
+      <select class="filter-select" id="status-select" onchange="renderItems()" style="padding:8px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-family:var(--font);outline:none;color:var(--text);cursor:pointer;min-width:140px;">
+        <option value="all">All Status</option>
+        <option value="active">✅ Active</option>
+        <option value="draft">✏️ Draft</option>
+        <option value="closed">🔒 Closed</option>
+      </select>
     </div>
+
+
 
     <div id="items-wrap" class="items-grid">
       <div class="loading-wrap"><div class="spinner"></div>Loading your content...</div>
@@ -369,10 +376,13 @@ function updateStats(){
 function renderItems(){
   sortItems();
   const search=(document.getElementById('search-inp')?.value||'').toLowerCase();
+  const cat=document.getElementById('cat-select')?.value||'all';
+  const status=document.getElementById('status-select')?.value||'all';
   const filtered=allItems.filter(function(i){
-    const matchFilter=activeFilter==='all'||i._col===activeFilter;
+    const matchCat=cat==='all'||i._col===cat;
+    const matchStatus=status==='all'||i.status===status;
     const matchSearch=!search||(getTitle(i)||'').toLowerCase().includes(search);
-    return matchFilter&&matchSearch;
+    return matchCat&&matchStatus&&matchSearch;
   });
   const wrap=document.getElementById('items-wrap');
   wrap.className=viewMode==='grid'?'items-grid':'items-list';
@@ -392,10 +402,9 @@ function renderItems(){
 }
 
 window.clearFilters=function(){
-  activeFilter='all';
-  document.getElementById('search-inp').value='';
-  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
-  document.getElementById('flt-all').classList.add('active');
+  const cat=document.getElementById('cat-select');if(cat)cat.value='all';
+  const status=document.getElementById('status-select');if(status)status.value='all';
+  const search=document.getElementById('search-inp');if(search)search.value='';
   renderItems();
 };
 
@@ -489,9 +498,7 @@ function renderListRow(item){
 }
 
 window.setFilter=function(f,el){
-  activeFilter=f;
-  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
-  if(el)el.classList.add('active');
+  const cat=document.getElementById('cat-select');if(cat)cat.value=f;
   renderItems();
 };
 
