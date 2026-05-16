@@ -565,16 +565,21 @@ window.deleteItem=async function(){
 };
 
 window.toggleSub=function(id,arrId){
-  const el=document.getElementById(id);
-  const arr=document.getElementById(arrId);
-  if(!el)return;
-  if(el.style.maxHeight&&el.style.maxHeight!=='0px'){
-    el.style.maxHeight='0px';
-    if(arr)arr.style.transform='rotate(-90deg)';
-  }else{
-    el.style.maxHeight=el.scrollHeight+'px';
-    if(arr)arr.style.transform='';
-  }
+  const sections=[{id:'sub-forms',arr:'arr-forms'},{id:'sub-engage',arr:'arr-engage'},{id:'sub-live',arr:'arr-live'}];
+  sections.forEach(function(s){
+    const el=document.getElementById(s.id);
+    const ar=document.getElementById(s.arr);
+    if(s.id===id){
+      // Toggle clicked one
+      const isOpen=el&&el.style.maxHeight&&el.style.maxHeight!=='0px';
+      if(el)el.style.maxHeight=isOpen?'0px':'600px';
+      if(ar)ar.style.transform=isOpen?'rotate(-90deg)':'';
+    }else{
+      // Collapse all others
+      if(el)el.style.maxHeight='0px';
+      if(ar)ar.style.transform='rotate(-90deg)';
+    }
+  });
 };
 // Open all subsections by default
 document.addEventListener('DOMContentLoaded',function(){
