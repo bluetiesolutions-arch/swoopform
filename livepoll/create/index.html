@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PulseCheck Builder — SwoopForm</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f5f4f0;--surface:#fff;--surface2:#f0eeea;--border:#e2ddd6;--accent:#0ea5e9;--accent2:#06b6d4;--green:#12a872;--red:#e5484d;--text:#1c1c2e;--muted:#7a7a8c;--muted2:#c5c0b8;--font:'Sora',sans-serif;}
@@ -239,6 +240,73 @@ window.publish=async function(){
 };
 function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+</script>
+
+<!-- SHARE MODAL -->
+<div id="share-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:600;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#fff;border:1.5px solid #e2dad0;border-radius:20px;width:100%;max-width:480px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.2);">
+    <div style="padding:20px 24px;border-bottom:1px solid #e2dad0;display:flex;align-items:center;justify-content:space-between;">
+      <div style="font-size:16px;font-weight:800;">Share & QR Code</div>
+      <button onclick="document.getElementById('share-modal').style.display='none'" style="background:none;border:none;cursor:pointer;font-size:22px;color:#64748b;padding:4px;line-height:1;">×</button>
+    </div>
+    <div style="padding:24px;">
+      <div style="display:flex;justify-content:center;margin-bottom:20px;">
+        <div style="background:white;padding:16px;border-radius:14px;border:1.5px solid #e2dad0;">
+          <div id="share-qr"></div>
+        </div>
+      </div>
+      <div style="margin-bottom:14px;">
+        <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Share Link</div>
+        <div style="display:flex;gap:8px;">
+          <input id="share-link-inp" readonly style="flex:1;padding:9px 12px;border-radius:8px;border:1.5px solid #e2dad0;background:#f5f0e8;font-size:12px;font-family:monospace;color:#0f0e1a;outline:none;">
+          <button onclick="copyShareLink()" id="copy-btn" style="padding:9px 16px;border-radius:8px;border:none;background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;">📋 Copy</button>
+        </div>
+      </div>
+      <div style="margin-bottom:20px;">
+        <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Embed Code</div>
+        <div style="position:relative;">
+          <textarea id="embed-inp" readonly rows="3" style="width:100%;padding:9px 12px;border-radius:8px;border:1.5px solid #e2dad0;background:#f5f0e8;font-size:11px;font-family:monospace;color:#0f0e1a;outline:none;resize:none;line-height:1.5;"></textarea>
+          <button onclick="copyEmbed()" style="position:absolute;top:6px;right:6px;padding:4px 10px;border-radius:6px;border:none;background:#f0eeea;color:#64748b;font-size:11px;font-weight:600;cursor:pointer;">Copy</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button onclick="downloadShareQR()" style="flex:1;padding:10px;border-radius:9px;border:1.5px solid #e2dad0;background:transparent;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;color:#64748b;">⬇ Download QR</button>
+        <button onclick="nativeShareBtn()" style="flex:1;padding:10px;border-radius:9px;border:1.5px solid #e2dad0;background:transparent;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;color:#64748b;">📤 Share</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var _shareUrl='';
+function openShare(url){
+  _shareUrl=url;
+  document.getElementById('share-link-inp').value=url;
+  document.getElementById('embed-inp').value='<iframe src="'+url+'" width="100%" height="600" frameborder="0" style="border:none;border-radius:12px;"></iframe>';
+  var qrDiv=document.getElementById('share-qr');
+  qrDiv.innerHTML='';
+  new QRCode(qrDiv,{text:url,width:160,height:160,colorDark:'#2d1b69',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});
+  document.getElementById('share-modal').style.display='flex';
+}
+function copyShareLink(){
+  navigator.clipboard.writeText(document.getElementById('share-link-inp').value).then(function(){
+    var btn=document.getElementById('copy-btn');btn.textContent='✅ Copied!';
+    setTimeout(function(){btn.textContent='📋 Copy';},2000);
+  });
+}
+function copyEmbed(){
+  navigator.clipboard.writeText(document.getElementById('embed-inp').value).then(function(){alert('Embed code copied!');});
+}
+function downloadShareQR(){
+  var canvas=document.querySelector('#share-qr canvas');
+  if(!canvas)return;
+  var a=document.createElement('a');a.download='qr-code.png';a.href=canvas.toDataURL();a.click();
+}
+function nativeShareBtn(){
+  if(navigator.share)navigator.share({url:_shareUrl}).catch(function(){});
+  else{navigator.clipboard.writeText(_shareUrl);}
+}
+document.getElementById('share-modal').addEventListener('click',function(e){if(e.target===this)this.style.display='none';});
 </script>
 </body>
 </html>
