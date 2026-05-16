@@ -194,9 +194,9 @@ nav{background:var(--surface);border-bottom:1.5px solid var(--border);height:56p
     <button class="sb-create-btn" onclick="toggleCreatePanel()">
       <div class="sb-create-icon">+</div>
       Create new
-      <span class="sb-arrow open" id="create-arrow">▼</span>
+      <span class="sb-arrow" id="create-arrow">▼</span>
     </button>
-    <div class="create-panel open" id="create-panel">
+    <div class="create-panel" id="create-panel">
       <div class="create-panel-scroll">
         <div class="cp-section-label">Surveys & Forms</div>
         <a href="/create/" class="cp-item"><div class="cp-icon" style="background:#EDE9FF">📋</div><div><div class="cp-label">Survey</div><div class="cp-desc">General survey with logic</div></div></a>
@@ -380,7 +380,7 @@ function renderItems(){
   const status=document.getElementById('status-select')?.value||'all';
   const filtered=allItems.filter(function(i){
     const matchCat=cat==='all'||i._col===cat;
-    const matchStatus=status==='all'||i.status===status;
+    const matchStatus=status==='all'||(i.status||'draft')===status;
     const matchSearch=!search||(getTitle(i)||'').toLowerCase().includes(search);
     return matchCat&&matchStatus&&matchSearch;
   });
