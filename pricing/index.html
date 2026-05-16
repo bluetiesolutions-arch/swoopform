@@ -15,12 +15,12 @@
     body{font-family:'Sora',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
     nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
     .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
-    .logo-mk{width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;font-size:0.85rem;color:#0f0e1a}
+    .logo-mk{width:30px;height:30px;background:linear-gradient(135deg,#2d1b69,#7c3aed);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;font-size:0.85rem;color:#0f0e1a}
     .logo-nm{font-family:'Sora',sans-serif;font-weight:800;font-size:1rem;color:#0F0E1A}
     .nav-right{display:flex;gap:8px}
     .nav-btn{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
     .nav-btn:hover{border-color:#2D1B69;color:#2D1B69}
-    .nav-btn.primary{background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;border:none}
+    .nav-btn.primary{background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;border:none}
 
     .hero{text-align:center;padding:64px 20px 48px}
     .hero-label{font-size:0.72rem;font-weight:700;color:#D97706;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
@@ -39,7 +39,7 @@
     .plan-card{background:#fff;border-radius:20px;border:1.5px solid #E2DAD0;padding:28px 24px;position:relative;transition:all 0.2s;display:flex;flex-direction:column}
     .plan-card:hover{box-shadow:0 8px 32px rgba(15,14,26,0.1);transform:translateY(-3px)}
     .plan-card.featured{border-color:#2D1B69;box-shadow:0 0 0 3px rgba(45,27,105,0.1)}
-    .popular-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.68rem;font-weight:700;padding:4px 14px;border-radius:100px;white-space:nowrap}
+    .popular-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;font-size:0.68rem;font-weight:700;padding:4px 14px;border-radius:100px;white-space:nowrap}
     .plan-icon{font-size:1.8rem;margin-bottom:10px}
     .plan-name{font-family:'Sora',sans-serif;font-weight:800;font-size:1rem;margin-bottom:4px}
     .plan-desc{font-size:0.78rem;color:#64748B;margin-bottom:16px;line-height:1.4;min-height:36px}
@@ -48,8 +48,8 @@
     .plan-per{font-size:0.72rem;color:#94A3B8;margin-bottom:20px}
     .plan-btn{width:100%;padding:11px;border-radius:10px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.85rem;font-weight:700;font-family:'Sora',sans-serif;cursor:pointer;transition:all 0.2s;text-decoration:none;display:block;text-align:center;color:#0F0E1A;margin-bottom:20px}
     .plan-btn:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
-    .plan-btn.filled{background:linear-gradient(135deg,#2D1B69,#D97706);border:none;color:#0f0e1a}
-    .plan-btn.filled:hover{opacity:0.9;background:linear-gradient(135deg,#2D1B69,#D97706)}
+    .plan-btn.filled{background:linear-gradient(135deg,#2d1b69,#7c3aed);border:none;color:#fff;}
+    .plan-btn.filled:hover{opacity:0.9;background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;}
     .plan-divider{height:1px;background:#E2DAD0;margin-bottom:16px}
     .plan-features{display:flex;flex-direction:column;gap:8px;flex:1}
     .plan-feat{display:flex;align-items:flex-start;gap:8px;font-size:0.78rem;color:#374151;line-height:1.4}
@@ -102,7 +102,7 @@
     .cta-sub{font-size:0.92rem;color:#64748b;margin-bottom:24px}
     .cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
     .cta-btn{padding:12px 24px;border-radius:11px;font-size:0.9rem;font-weight:700;font-family:'Sora',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
-    .cta-btn.primary{background:linear-gradient(135deg,#D97706,#F59E0B);color:#fff;border:none}
+    .cta-btn.primary{background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;border:none}
     .cta-btn.secondary{background:transparent;border:1.5px solid rgba(255,255,255,0.3);color:#0f0e1a}
     .cta-btn:hover{opacity:0.9;transform:translateY(-1px)}
 
@@ -128,7 +128,7 @@
 <div class="hero">
   <div class="hero-label">Pricing</div>
   <h1 class="hero-title">Simple, honest pricing</h1>
-  <p class="hero-sub">Start free. Upgrade when you need more. Students, Educators and NGOs get full plans for free — forever.</p>
+  <p class="hero-sub">Start free. Upgrade when you need more. Students, Educators and NGOs get full access — subject to annual verification.</p>
   <div class="billing-toggle">
     <button class="billing-btn active" id="btn-monthly" onclick="setBilling('monthly')">Monthly</button>
     <button class="billing-btn" id="btn-annual" onclick="setBilling('annual')">Annual</button>
@@ -146,7 +146,7 @@
       <div class="plan-name">Free</div>
       <div class="plan-desc">Everything you need to get started</div>
       <div class="plan-price">₹0</div>
-      <div class="plan-per">forever</div>
+      <div class="plan-per">always free</div>
       <a href="/login" class="plan-btn">Start free →</a>
       <div class="plan-divider"></div>
       <div class="plan-features">
@@ -226,7 +226,7 @@
     <div class="verified-card">
       <div class="verified-icon">🎓</div>
       <div class="verified-name">Student</div>
-      <div class="verified-price">Free forever</div>
+      <div class="verified-price">Free always free</div>
       <div class="verified-desc">For students with a valid institution ID or enrollment proof.</div>
       <div class="verified-features">
         <div class="verified-feat">Pro plan features</div>
@@ -239,7 +239,7 @@
     <div class="verified-card">
       <div class="verified-icon">📚</div>
       <div class="verified-name">Educator</div>
-      <div class="verified-price">Free forever</div>
+      <div class="verified-price">Free always free</div>
       <div class="verified-desc">For teachers, professors and trainers with faculty ID.</div>
       <div class="verified-features">
         <div class="verified-feat">Pro plan features</div>
@@ -252,7 +252,7 @@
     <div class="verified-card">
       <div class="verified-icon">🤝</div>
       <div class="verified-name">NGO</div>
-      <div class="verified-price">Free forever</div>
+      <div class="verified-price">Free always free</div>
       <div class="verified-desc">For registered non-profit organisations with valid registration.</div>
       <div class="verified-features">
         <div class="verified-feat">Business plan features</div>
