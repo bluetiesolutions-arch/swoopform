@@ -479,6 +479,12 @@ function formatDate(item){
   return new Date(ts.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
 }
 
+function getShareUrl(item){
+  // For live sessions, share the participant join URL not the host URL
+  if(item._col==='quizzes')return 'https://swoopform.com/quiz/play/';
+  if(item._col==='livePollSessions')return 'https://swoopform.com/livepoll/join/';
+  return 'https://swoopform.com'+getViewUrl(item);
+}
 function getViewUrl(item){
   const m=TYPE_META[item._col];if(!m)return'#';
   if(item._col==='surveys')return item.slug?'/survey/'+item.slug:'/s/?id='+item.id;
@@ -600,7 +606,7 @@ window.copyLink=function(){
 
 window.shareItem=function(){
   if(!ctxItem)return;
-  openShareModal(getTitle(ctxItem),'https://swoopform.com'+getViewUrl(ctxItem));
+  openShareModal(getTitle(ctxItem),getShareUrl(ctxItem));
   closeCtx();
 };
 

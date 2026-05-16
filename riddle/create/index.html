@@ -212,7 +212,7 @@ nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border
       <button class="btn btn-ghost" onclick="navigator.clipboard.writeText(document.getElementById('modal-url').textContent).then(function(){toast('Copied!');})">📋 Copy</button>
       <a id="modal-view-btn" href="#" target="_blank"><button class="btn btn-pub">Play Riddle →</button></a>
       <button class="btn btn-ghost" onclick="document.getElementById('success-modal').classList.remove('open')">Close</button>
-      <button class="btn btn-ghost" onclick="openShare('https://swoopform.com/riddle/?id='+ RID)">📤 Share & QR</button>
+      <button class="btn btn-ghost" onclick="openShare('https://swoopform.com/riddle/?id='+ (typeof RID!=='undefined'?RID:''))">📤 Share & QR</button>
     </div>
   </div>
 </div>
