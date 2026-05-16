@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Riddle — SwoopForm</title>
@@ -89,7 +90,7 @@ nav{background:var(--white);border-bottom:1.5px solid var(--border);padding:0 20
 </head>
 <body>
 <nav>
-  <a href="/" class="nav-logo"><div class="logo-mk">S</div><div class="logo-nm">SwoopForm</div></a>
+  <a href="/" class="nav-logo"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#2d1b69"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#sg)"/><rect x="10" y="9" width="20" height="6" rx="3" fill="white"/><rect x="10" y="17" width="20" height="6" rx="3" fill="rgba(255,255,255,0.9)"/><rect x="10" y="25" width="20" height="6" rx="3" fill="white"/><circle cx="31" cy="12" r="3" fill="#d97706"/></svg><div class="logo-nm">SwoopForm</div></a>
   <div class="riddle-badge">🧩 Riddle</div>
 </nav>
 <div class="stage" id="stage"><div class="spinner"></div></div>
@@ -155,7 +156,7 @@ function showWelcome(){
     +'</div>'
     +(playerFields?'<div class="player-form">'+playerFields+'</div>':'')
     +'<button class="start-btn" onclick="startRiddle()">Start Riddle 🚀</button>'
-    +'<div class="sf-brand"><div class="sf-logo">S</div><span style="font-size:11px;color:var(--muted2);">Powered by SwoopForm</span></div>');
+    +'<div class="sf-brand"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#2d1b69"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#sg)"/><rect x="10" y="9" width="20" height="6" rx="3" fill="white"/><rect x="10" y="17" width="20" height="6" rx="3" fill="rgba(255,255,255,0.9)"/><rect x="10" y="25" width="20" height="6" rx="3" fill="white"/><circle cx="31" cy="12" r="3" fill="#d97706"/></svg><span style="font-size:11px;color:var(--muted2);">Powered by SwoopForm</span></div>');
 }
 
 window.startRiddle=function(){
@@ -339,7 +340,7 @@ async function showResults(){
       +'</div>';}).join('')+'</div>'
     +lbHtml
     +'<button class="play-again-btn" onclick="window.location.reload()">🔄 Play Again</button>'
-    +'<div class="sf-brand"><div class="sf-logo">S</div><span style="font-size:11px;color:var(--muted2);">Powered by SwoopForm</span></div>');
+    +'<div class="sf-brand"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#2d1b69"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#sg)"/><rect x="10" y="9" width="20" height="6" rx="3" fill="white"/><rect x="10" y="17" width="20" height="6" rx="3" fill="rgba(255,255,255,0.9)"/><rect x="10" y="25" width="20" height="6" rx="3" fill="white"/><circle cx="31" cy="12" r="3" fill="#d97706"/></svg><span style="font-size:11px;color:var(--muted2);">Powered by SwoopForm</span></div>');
 }
 
 function render(html){document.getElementById('stage').innerHTML='<div class="riddle-card">'+html+'</div>';}
