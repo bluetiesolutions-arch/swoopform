@@ -191,34 +191,46 @@ nav{background:var(--surface);border-bottom:1.5px solid var(--border);height:56p
 <div class="app-layout">
   <div class="sidebar" id="sidebar">
     <a class="sb-item active" href="/dashboard/"><span class="sb-ico">🏠</span>Overview</a>
-    <button class="sb-create-btn" style="cursor:default;" onclick="">
-      <div class="sb-create-icon">+</div>
-      Create new
-      
+
+    <div style="padding:10px 14px 6px;font-size:11px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;">+ Create New</div>
+
+    <!-- Surveys & Forms -->
+    <button onclick="toggleSub('sub-forms','arr-forms')" style="display:flex;align-items:center;width:100%;padding:8px 14px;background:none;border:none;cursor:pointer;font-family:var(--font);font-size:12px;font-weight:700;color:var(--muted);text-align:left;">
+      <span style="margin-right:6px;">📋</span> Surveys & Forms
+      <span id="arr-forms" style="margin-left:auto;font-size:10px;transition:transform .2s;">▼</span>
     </button>
-    <div class="create-panel open" id="create-panel">
-      <div class="create-panel-scroll">
-        <div class="cp-section-label">Surveys & Forms</div>
-        <a href="/create/" class="cp-item"><div class="cp-icon" style="background:#EDE9FF">📋</div><div><div class="cp-label">Survey</div><div class="cp-desc">General survey with logic</div></div></a>
-        <a href="/assessment/create/" class="cp-item"><div class="cp-icon" style="background:#EDE9FF">📝</div><div><div class="cp-label">MCQ Assessment</div><div class="cp-desc">Scored test with correct answers</div></div></a>
-        <a href="/feedback/create/" class="cp-item"><div class="cp-icon" style="background:#F0F9FF">💬</div><div><div class="cp-label">Feedback Form</div><div class="cp-desc">Ratings and comments</div></div></a>
-        <a href="/lead/create/" class="cp-item"><div class="cp-icon" style="background:#FFF4EF">📥</div><div><div class="cp-label">Lead Generation</div><div class="cp-desc">Capture names and emails</div></div></a>
-        <a href="/registration/create/" class="cp-item"><div class="cp-icon" style="background:#F5F3FF">🎟️</div><div><div class="cp-label">Registration</div><div class="cp-desc">Event or course signup</div></div></a>
-        <a href="/employee/create/" class="cp-item"><div class="cp-icon" style="background:#F0F9FF">👥</div><div><div class="cp-label">Employee Survey</div><div class="cp-desc">Internal team pulse</div></div></a>
-        <a href="/product/create/" class="cp-item"><div class="cp-icon" style="background:#FDF2F8">📦</div><div><div class="cp-label">Product Quiz</div><div class="cp-desc">Quiz-style product finder</div></div></a>
-        <a href="/award/create/" class="cp-item"><div class="cp-icon" style="background:#FFFBEB">🏆</div><div><div class="cp-label">Award & Nomination</div><div class="cp-desc">Ranked nominations</div></div></a>
-        <a href="/jobapp/create/" class="cp-item"><div class="cp-icon" style="background:#F0FDF4">💼</div><div><div class="cp-label">Job Application</div><div class="cp-desc">Split-view with job description</div></div></a>
-        <div class="cp-divider"></div>
-        <div class="cp-section-label">Engagement</div>
-        <a href="/poll/create/" class="cp-item"><div class="cp-icon" style="background:#EEF2FF">📊</div><div><div class="cp-label">Poll</div><div class="cp-desc">Quick single or multi choice</div></div></a>
-        <a href="/voting/create/" class="cp-item"><div class="cp-icon" style="background:#FEF3C7">🗳️</div><div><div class="cp-label">Voting</div><div class="cp-desc">Option-based voting</div></div></a>
-        <a href="/pledge/create/" class="cp-item"><div class="cp-icon" style="background:#DCFCE7">🤝</div><div><div class="cp-label">Pledge & Support</div><div class="cp-desc">Campaign & commitment</div></div></a>
-        <a href="/riddle/create/" class="cp-item"><div class="cp-icon" style="background:#F3E8FF">🧩</div><div><div class="cp-label">Riddle</div><div class="cp-desc">Fun quiz with scoring</div></div></a>
-        <div class="cp-divider"></div>
-        <div class="cp-section-label">Live Sessions</div>
-        <a href="/quiz/create/" class="cp-item"><div class="cp-icon" style="background:linear-gradient(135deg,#7c3aed,#a855f7);font-size:16px;">⚡</div><div><div class="cp-label">Live Quiz</div><div class="cp-desc">Real-time quiz with PIN join</div></div></a>
-        <a href="/livepoll/create/" class="cp-item"><div class="cp-icon" style="background:linear-gradient(135deg,#0ea5e9,#06b6d4);font-size:16px;">📡</div><div><div class="cp-label">PulseCheck</div><div class="cp-desc">Live polls & word clouds</div></div></a>
-      </div>
+    <div id="sub-forms" style="overflow:hidden;">
+      <a href="/create/" class="cp-item"><div class="cp-icon" style="background:#EDE9FF">📋</div><div><div class="cp-label">Survey</div></div></a>
+      <a href="/assessment/create/" class="cp-item"><div class="cp-icon" style="background:#EDE9FF">📝</div><div><div class="cp-label">MCQ Assessment</div></div></a>
+      <a href="/feedback/create/" class="cp-item"><div class="cp-icon" style="background:#F0F9FF">💬</div><div><div class="cp-label">Feedback Form</div></div></a>
+      <a href="/lead/create/" class="cp-item"><div class="cp-icon" style="background:#FFF4EF">📥</div><div><div class="cp-label">Lead Generation</div></div></a>
+      <a href="/registration/create/" class="cp-item"><div class="cp-icon" style="background:#F5F3FF">🎟️</div><div><div class="cp-label">Registration</div></div></a>
+      <a href="/employee/create/" class="cp-item"><div class="cp-icon" style="background:#F0F9FF">👥</div><div><div class="cp-label">Employee Survey</div></div></a>
+      <a href="/product/create/" class="cp-item"><div class="cp-icon" style="background:#FDF2F8">📦</div><div><div class="cp-label">Product Quiz</div></div></a>
+      <a href="/award/create/" class="cp-item"><div class="cp-icon" style="background:#FFFBEB">🏆</div><div><div class="cp-label">Award & Nomination</div></div></a>
+      <a href="/jobapp/create/" class="cp-item"><div class="cp-icon" style="background:#F0FDF4">💼</div><div><div class="cp-label">Job Application</div></div></a>
+    </div>
+
+    <!-- Engagement -->
+    <button onclick="toggleSub('sub-engage','arr-engage')" style="display:flex;align-items:center;width:100%;padding:8px 14px;background:none;border:none;cursor:pointer;font-family:var(--font);font-size:12px;font-weight:700;color:var(--muted);text-align:left;">
+      <span style="margin-right:6px;">🎯</span> Engagement
+      <span id="arr-engage" style="margin-left:auto;font-size:10px;transition:transform .2s;">▼</span>
+    </button>
+    <div id="sub-engage" style="overflow:hidden;">
+      <a href="/poll/create/" class="cp-item"><div class="cp-icon" style="background:#EEF2FF">📊</div><div><div class="cp-label">Poll</div></div></a>
+      <a href="/voting/create/" class="cp-item"><div class="cp-icon" style="background:#FEF3C7">🗳️</div><div><div class="cp-label">Voting</div></div></a>
+      <a href="/pledge/create/" class="cp-item"><div class="cp-icon" style="background:#DCFCE7">🤝</div><div><div class="cp-label">Pledge & Support</div></div></a>
+      <a href="/riddle/create/" class="cp-item"><div class="cp-icon" style="background:#F3E8FF">🧩</div><div><div class="cp-label">Riddle</div></div></a>
+    </div>
+
+    <!-- Live Sessions -->
+    <button onclick="toggleSub('sub-live','arr-live')" style="display:flex;align-items:center;width:100%;padding:8px 14px;background:none;border:none;cursor:pointer;font-family:var(--font);font-size:12px;font-weight:700;color:var(--muted);text-align:left;">
+      <span style="margin-right:6px;">⚡</span> Live Sessions
+      <span id="arr-live" style="margin-left:auto;font-size:10px;transition:transform .2s;">▼</span>
+    </button>
+    <div id="sub-live" style="overflow:hidden;">
+      <a href="/quiz/create/" class="cp-item"><div class="cp-icon" style="background:linear-gradient(135deg,#7c3aed,#a855f7);">⚡</div><div><div class="cp-label">Live Quiz</div></div></a>
+      <a href="/livepoll/create/" class="cp-item"><div class="cp-icon" style="background:linear-gradient(135deg,#0ea5e9,#06b6d4);">📡</div><div><div class="cp-label">PulseCheck</div></div></a>
     </div>
   </div>
 
@@ -355,7 +367,7 @@ async function loadAll(){
   }
 }
 
-function sortItems(){
+window.sortItems=function(){
   const s=document.getElementById('sort-select')?.value||'newest';
   if(s==='oldest')allItems.sort(function(a,b){return(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0);});
   else if(s==='responses')allItems.sort(function(a,b){return(b.responseCount||0)-(a.responseCount||0);});
@@ -373,8 +385,8 @@ function updateStats(){
   document.getElementById('stat-drafts').textContent=drafts;
 }
 
-function renderItems(){
-  sortItems();
+window.renderItems=function(){
+  window.sortItems();
   const search=(document.getElementById('search-inp')?.value||'').toLowerCase();
   const cat=document.getElementById('cat-select')?.value||'all';
   const status=document.getElementById('status-select')?.value||'all';
@@ -552,6 +564,25 @@ window.deleteItem=async function(){
   }catch(e){toast('Error deleting');console.error(e);}
 };
 
+window.toggleSub=function(id,arrId){
+  const el=document.getElementById(id);
+  const arr=document.getElementById(arrId);
+  if(!el)return;
+  if(el.style.maxHeight&&el.style.maxHeight!=='0px'){
+    el.style.maxHeight='0px';
+    if(arr)arr.style.transform='rotate(-90deg)';
+  }else{
+    el.style.maxHeight=el.scrollHeight+'px';
+    if(arr)arr.style.transform='';
+  }
+};
+// Open all subsections by default
+document.addEventListener('DOMContentLoaded',function(){
+  ['sub-forms','sub-engage','sub-live'].forEach(function(id){
+    const el=document.getElementById(id);
+    if(el)el.style.maxHeight=el.scrollHeight+'px';
+  });
+});
 window.toggleSidebar=function(){
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('sb-overlay').classList.toggle('open');
