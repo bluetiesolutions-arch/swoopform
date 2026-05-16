@@ -190,9 +190,9 @@ nav{background:var(--surface);border-bottom:1.5px solid var(--border);height:56p
 
 <div class="app-layout">
   <div class="sidebar" id="sidebar">
-    <a class="sb-item active" href="/dashboard/"><span class="sb-ico">🏠</span>Overview</a>
+    <a class="sb-item active" href="/dashboard/" style="border-bottom:1px solid var(--border);margin-bottom:8px;"><span class="sb-ico">🏠</span>Overview</a>
 
-    <div style="padding:10px 14px 6px;font-size:11px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;">+ Create New</div>
+    <div style="padding:8px 14px 6px;font-size:11px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;">+ Create New</div>
 
     <!-- Surveys & Forms -->
     <button onclick="toggleSub('sub-forms','arr-forms')" style="display:flex;align-items:center;width:100%;padding:8px 14px;background:none;border:none;cursor:pointer;font-family:var(--font);font-size:12px;font-weight:700;color:var(--muted);text-align:left;">
@@ -580,7 +580,7 @@ window.toggleSub=function(id,arrId){
 document.addEventListener('DOMContentLoaded',function(){
   ['sub-forms','sub-engage','sub-live'].forEach(function(id){
     const el=document.getElementById(id);
-    if(el)el.style.maxHeight='600px';
+    if(el)el.style.maxHeight='0px';
   });
 });
 window.toggleSidebar=function(){
