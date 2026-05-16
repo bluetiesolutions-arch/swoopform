@@ -182,7 +182,14 @@ nav{background:var(--surface);border-bottom:1.5px solid var(--border);height:56p
     <a href="/discover/" class="nav-link">🔍 Discover</a>
     <a href="/blog/" class="nav-link">📝 Blog</a>
     <button class="nav-upgrade" onclick="window.location.href='/pricing/'">⚡ Upgrade</button>
-    <div class="nav-avatar" id="nav-avatar" onclick="window.location.href='/settings/'">?</div>
+    <div style="position:relative;">
+    <div class="nav-avatar" id="nav-avatar" onclick="toggleAvatarMenu()" style="cursor:pointer;">?</div>
+    <div id="avatar-menu" style="display:none;position:absolute;right:0;top:42px;background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:6px;min-width:160px;box-shadow:0 8px 32px rgba(15,14,26,.15);z-index:500;">
+      <a href="/settings/" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:7px;font-size:13px;font-weight:600;color:var(--text);text-decoration:none;transition:background .15s;" onmouseover="this.style.background='#f5f0e8'" onmouseout="this.style.background=''">⚙️ Settings</a>
+      <div style="height:1px;background:var(--border);margin:4px 0;"></div>
+      <button onclick="logOut()" style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:7px;font-size:13px;font-weight:600;color:#dc2626;background:none;border:none;cursor:pointer;width:100%;font-family:var(--font);" onmouseover="this.style.background='#fee2e2'" onmouseout="this.style.background=''">🚪 Sign out</button>
+    </div>
+  </div>
   </div>
 </nav>
 
@@ -588,6 +595,16 @@ document.addEventListener('DOMContentLoaded',function(){
     if(el)el.style.maxHeight='0px';
   });
 });
+window.toggleAvatarMenu=function(){
+  const menu=document.getElementById('avatar-menu');
+  menu.style.display=menu.style.display==='none'?'block':'none';
+  if(menu.style.display==='block'){
+    setTimeout(function(){document.addEventListener('click',function closeMenu(){menu.style.display='none';document.removeEventListener('click',closeMenu);},{once:true});},10);
+  }
+};
+window.logOut=async function(){
+  try{await signOut(auth);window.location.href='/login/';}catch(e){console.error(e);}
+};
 window.toggleSidebar=function(){
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('sb-overlay').classList.toggle('open');
