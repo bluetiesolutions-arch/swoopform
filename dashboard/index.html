@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard — SwoopForm</title>
   <meta name="robots" content="noindex">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
+    body{font-family:'Sora',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
     nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
     .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
-    .logo-mk{width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff}
-    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#0F0E1A}
+    .logo-mk{width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;font-size:0.85rem;color:#fff}
+    .logo-nm{font-family:'Sora',sans-serif;font-weight:800;font-size:1rem;color:#0F0E1A}
     .nav-right{display:flex;align-items:center;gap:8px}
-    .nav-btn{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
+    .nav-btn{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
     .nav-btn:hover{border-color:#2D1B69;color:#2D1B69}
     .nav-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:#fff;cursor:pointer;flex-shrink:0}
 
@@ -23,14 +23,14 @@
 
     /* SIDEBAR */
     .sidebar{width:220px;background:#fff;border-right:1.5px solid #E2DAD0;display:flex;flex-direction:column;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;flex-shrink:0;z-index:50}
-    .sb-item{display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:600;color:#64748B;transition:all 0.2s;text-decoration:none;border-left:3px solid transparent}
+    .sb-item{display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'Sora',sans-serif;font-size:0.84rem;font-weight:600;color:#64748B;transition:all 0.2s;text-decoration:none;border-left:3px solid transparent}
     .sb-item:hover{background:#F5F0E8;color:#0F0E1A}
     .sb-item.active{background:#EDE9FF;color:#2D1B69;border-left-color:#2D1B69}
     .sb-item .sb-ico{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
     .sb-divider{height:1px;background:#E2DAD0;margin:6px 14px}
 
     /* CREATE NEW BUTTON IN SIDEBAR */
-    .sb-create-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:700;color:#2D1B69;transition:all 0.2s;position:relative}
+    .sb-create-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;font-family:'Sora',sans-serif;font-size:0.84rem;font-weight:700;color:#2D1B69;transition:all 0.2s;position:relative}
     .sb-create-btn:hover{background:#EDE9FF}
     .sb-create-icon{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,#2D1B69,#D97706);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.9rem;flex-shrink:0}
     .sb-create-arrow{margin-left:auto;font-size:0.7rem;color:#94A3B8;transition:transform 0.2s}
@@ -41,7 +41,7 @@
     .create-panel.open{max-height:600px}
     .create-panel-scroll{overflow-y:auto;max-height:400px;padding:6px 0}
     .cp-section-label{font-size:0.62rem;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase;padding:8px 14px 4px}
-    .cp-item{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;text-decoration:none;color:#0F0E1A;transition:background 0.15s;border:none;background:transparent;width:100%;font-family:'DM Sans',sans-serif}
+    .cp-item{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;text-decoration:none;color:#0F0E1A;transition:background 0.15s;border:none;background:transparent;width:100%;font-family:'Sora',sans-serif}
     .cp-item:hover{background:#EDE9FF}
     .cp-icon{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0}
     .cp-label{font-size:0.8rem;font-weight:600;line-height:1.2}
@@ -50,7 +50,7 @@
 
     .sb-bottom{margin-top:auto;padding:12px}
     .sb-upgrade{width:100%;padding:12px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:12px;cursor:pointer;border:none;text-align:left}
-    .sb-upgrade-title{font-family:'Syne',sans-serif;font-weight:800;font-size:0.82rem;color:#fff;margin-bottom:2px}
+    .sb-upgrade-title{font-family:'Sora',sans-serif;font-weight:800;font-size:0.82rem;color:#fff;margin-bottom:2px}
     .sb-upgrade-sub{font-size:0.68rem;color:rgba(255,255,255,0.6)}
 
     /* MAIN */
@@ -58,22 +58,22 @@
 
     /* HEADER */
     .dash-header{margin-bottom:20px}
-    .dash-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-0.03em;margin-bottom:2px}
+    .dash-title{font-family:'Sora',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-0.03em;margin-bottom:2px}
     .dash-sub{font-size:0.82rem;color:#64748B}
 
     /* STATS */
     .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
     .stat-card{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;padding:16px 18px}
-    .stat-val{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;letter-spacing:-0.03em;margin-bottom:2px;color:#0F0E1A}
+    .stat-val{font-family:'Sora',sans-serif;font-weight:800;font-size:1.8rem;letter-spacing:-0.03em;margin-bottom:2px;color:#0F0E1A}
     .stat-lbl{font-size:0.72rem;color:#64748B;font-weight:600}
 
     /* FILTERS */
     .filters-row{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-    .filter-btn{padding:6px 14px;border-radius:100px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.75rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;color:#64748B;white-space:nowrap}
+    .filter-btn{padding:6px 14px;border-radius:100px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.75rem;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;transition:all 0.2s;color:#64748B;white-space:nowrap}
     .filter-btn:hover{border-color:#2D1B69;color:#2D1B69}
     .filter-btn.active{background:#2D1B69;border-color:#2D1B69;color:#fff}
     .filters-right{display:flex;align-items:center;gap:8px;margin-left:auto}
-    .search-inp{padding:7px 14px;border-radius:100px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.82rem;font-family:'DM Sans',sans-serif;outline:none;color:#0F0E1A;width:180px}
+    .search-inp{padding:7px 14px;border-radius:100px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.82rem;font-family:'Sora',sans-serif;outline:none;color:#0F0E1A;width:180px}
     .search-inp:focus{border-color:#2D1B69}
     .view-btns{display:flex;gap:4px}
     .view-btn{width:32px;height:32px;border-radius:7px;border:1.5px solid #E2DAD0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.85rem;transition:all 0.2s;color:#64748B}
@@ -92,7 +92,7 @@
     .type-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:0.68rem;font-weight:700}
     .item-menu-btn{background:none;border:none;cursor:pointer;color:#C4B9AA;font-size:1rem;padding:2px 6px;border-radius:6px;transition:all 0.2s;flex-shrink:0}
     .item-menu-btn:hover{background:#F5F0E8;color:#64748B}
-    .item-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.92rem;margin-bottom:6px;line-height:1.3;flex:1;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+    .item-title{font-family:'Sora',sans-serif;font-weight:700;font-size:0.92rem;margin-bottom:6px;line-height:1.3;flex:1;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
     .item-meta{display:flex;align-items:center;gap:6px;font-size:0.7rem;color:#94A3B8;flex-wrap:wrap;margin-bottom:14px}
     .item-status{display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:0.63rem;font-weight:700}
     .status-active{background:#DCFCE7;color:#166534}
@@ -102,7 +102,7 @@
     .item-stat{font-size:0.72rem;color:#94A3B8;display:flex;align-items:center;gap:4px}
     .item-stat strong{color:#64748B;font-weight:700}
     .item-actions{display:flex;gap:5px}
-    .ia-btn{padding:5px 10px;border-radius:7px;border:1.5px solid #E2DAD0;background:transparent;font-size:0.7rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;color:#64748B;transition:all 0.2s;text-decoration:none;white-space:nowrap}
+    .ia-btn{padding:5px 10px;border-radius:7px;border:1.5px solid #E2DAD0;background:transparent;font-size:0.7rem;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;color:#64748B;transition:all 0.2s;text-decoration:none;white-space:nowrap}
     .ia-btn:hover{border-color:#2D1B69;color:#2D1B69}
     .ia-btn.primary{background:#2D1B69;border-color:#2D1B69;color:#fff}
     .ia-btn.primary:hover{opacity:0.85}
@@ -119,14 +119,14 @@
     /* EMPTY */
     .empty-state{text-align:center;padding:60px 20px;grid-column:1/-1}
     .empty-icon{font-size:3rem;margin-bottom:12px}
-    .empty-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:6px}
+    .empty-title{font-family:'Sora',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:6px}
     .empty-sub{font-size:0.85rem;color:#64748B;margin-bottom:20px;line-height:1.6}
-    .empty-cta{display:inline-block;padding:10px 20px;border-radius:10px;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.88rem;font-weight:700;text-decoration:none;cursor:pointer;border:none;font-family:'DM Sans',sans-serif}
+    .empty-cta{display:inline-block;padding:10px 20px;border-radius:10px;background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;font-size:0.88rem;font-weight:700;text-decoration:none;cursor:pointer;border:none;font-family:'Sora',sans-serif}
 
     /* CONTEXT MENU */
     .ctx-menu{position:fixed;background:#fff;border:1.5px solid #E2DAD0;border-radius:12px;padding:6px;min-width:180px;box-shadow:0 8px 32px rgba(15,14,26,0.15);z-index:500;display:none}
     .ctx-menu.open{display:block}
-    .ctx-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:7px;cursor:pointer;font-size:0.82rem;font-weight:600;color:#0F0E1A;transition:background 0.15s;text-decoration:none;border:none;background:none;width:100%;font-family:'DM Sans',sans-serif}
+    .ctx-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:7px;cursor:pointer;font-size:0.82rem;font-weight:600;color:#0F0E1A;transition:background 0.15s;text-decoration:none;border:none;background:none;width:100%;font-family:'Sora',sans-serif}
     .ctx-item:hover{background:#F5F0E8}
     .ctx-item.danger{color:#DC2626}
     .ctx-item.danger:hover{background:#FEE2E2}
@@ -235,43 +235,57 @@
 
   <!-- MAIN CONTENT -->
   <div class="main-content">
-    <div class="dash-header">
-      <div class="dash-title" id="dash-title">My Dashboard</div>
-      <div class="dash-sub">Manage all your surveys and engagement content</div>
+    <div class="dash-header" style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;">
+      <div>
+        <div class="dash-title" id="dash-title">My Dashboard</div>
+        <div class="dash-sub">Manage all your forms and live sessions</div>
+      </div>
+      <button onclick="toggleCreatePanel();document.getElementById('sidebar').classList.add('open');document.getElementById('sb-overlay').classList.add('open');" style="display:none;" id="create-fab"></button>
     </div>
 
     <!-- STATS -->
     <div class="stats-row">
-      <div class="stat-card"><div class="stat-val" id="stat-total">—</div><div class="stat-lbl">Total items</div></div>
-      <div class="stat-card"><div class="stat-val" id="stat-active">—</div><div class="stat-lbl">Active</div></div>
-      <div class="stat-card"><div class="stat-val" id="stat-responses">—</div><div class="stat-lbl">Total responses</div></div>
-      <div class="stat-card"><div class="stat-val" id="stat-drafts">—</div><div class="stat-lbl">Drafts</div></div>
+      <div class="stat-card"><div class="stat-accent" style="background:#2D1B69;"></div><div class="stat-card-icon">📋</div><div class="stat-val" id="stat-total">—</div><div class="stat-lbl">Total Forms</div></div>
+      <div class="stat-card"><div class="stat-accent" style="background:#10B981;"></div><div class="stat-card-icon">✅</div><div class="stat-val" id="stat-active">—</div><div class="stat-lbl">Active</div></div>
+      <div class="stat-card"><div class="stat-accent" style="background:#0EA5E9;"></div><div class="stat-card-icon">📊</div><div class="stat-val" id="stat-responses">—</div><div class="stat-lbl">Total Responses</div></div>
+      <div class="stat-card"><div class="stat-accent" style="background:#F59E0B;"></div><div class="stat-card-icon">✏️</div><div class="stat-val" id="stat-drafts">—</div><div class="stat-lbl">Drafts</div></div>
     </div>
 
     <!-- FILTERS -->
-    <div class="filters-row">
-      <button class="filter-btn active" id="flt-all" onclick="setFilter('all',this)">All</button>
-      <button class="filter-btn" id="flt-surveys" onclick="setFilter('surveys',this)">📋 Surveys</button>
-      <button class="filter-btn" id="flt-polls" onclick="setFilter('polls',this)">📊 Polls</button>
-      <button class="filter-btn" id="flt-votings" onclick="setFilter('votings',this)">🗳️ Voting</button>
-      <button class="filter-btn" id="flt-pledges" onclick="setFilter('pledges',this)">🤝 Pledges</button>
-      <button class="filter-btn" id="flt-riddles" onclick="setFilter('riddles',this)">🧩 Riddles</button>
-<button class="filter-btn" id="flt-jobapps" onclick="setFilter('jobapps',this)">💼 Job Apps</button>
-<button class="filter-btn" id="flt-assessments" onclick="setFilter('assessments',this)">📝 Assessments</button>
-<button class="filter-btn" id="flt-feedbacks" onclick="setFilter('feedbacks',this)">💬 Feedback</button>
-<button class="filter-btn" id="flt-leads" onclick="setFilter('leads',this)">📥 Leads</button>
-<button class="filter-btn" id="flt-registrations" onclick="setFilter('registrations',this)">🎟️ Events</button>
-<button class="filter-btn" id="flt-employees" onclick="setFilter('employees',this)">👥 Employee</button>
-<button class="filter-btn" id="flt-products" onclick="setFilter('products',this)">📦 Product Quiz</button>
-<button class="filter-btn" id="flt-awards" onclick="setFilter('awards',this)">🏆 Awards</button>
-<button class="filter-btn" id="flt-quizzes" onclick="setFilter('quizzes',this)">⚡ Live Quiz</button>
-<button class="filter-btn" id="flt-livePollSessions" onclick="setFilter('livePollSessions',this)">📡 PulseCheck</button>
-      <div class="filters-right">
-        <input class="search-inp" id="search-inp" placeholder="🔍 Search..." oninput="renderItems()">
+    <div class="filters-wrap">
+      <div class="filters-top">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input class="search-inp" id="search-inp" placeholder="Search forms..." oninput="renderItems()">
+        </div>
+        <select class="sort-select" id="sort-select" onchange="renderItems()">
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+          <option value="responses">Most responses</option>
+          <option value="alpha">A → Z</option>
+        </select>
         <div class="view-btns">
           <button class="view-btn active" id="vb-grid" onclick="setView('grid')" title="Grid">⊞</button>
           <button class="view-btn" id="vb-list" onclick="setView('list')" title="List">☰</button>
         </div>
+      </div>
+      <div class="filters-row">
+        <button class="filter-btn active" id="flt-all" onclick="setFilter('all',this)">All</button>
+        <button class="filter-btn" id="flt-surveys" onclick="setFilter('surveys',this)">📋 Surveys</button>
+        <button class="filter-btn" id="flt-polls" onclick="setFilter('polls',this)">📊 Polls</button>
+        <button class="filter-btn" id="flt-votings" onclick="setFilter('votings',this)">🗳️ Voting</button>
+        <button class="filter-btn" id="flt-pledges" onclick="setFilter('pledges',this)">🤝 Pledges</button>
+        <button class="filter-btn" id="flt-riddles" onclick="setFilter('riddles',this)">🧩 Riddles</button>
+        <button class="filter-btn" id="flt-jobapps" onclick="setFilter('jobapps',this)">💼 Job Apps</button>
+        <button class="filter-btn" id="flt-assessments" onclick="setFilter('assessments',this)">📝 Assessments</button>
+        <button class="filter-btn" id="flt-feedbacks" onclick="setFilter('feedbacks',this)">💬 Feedback</button>
+        <button class="filter-btn" id="flt-leads" onclick="setFilter('leads',this)">📥 Leads</button>
+        <button class="filter-btn" id="flt-registrations" onclick="setFilter('registrations',this)">🎟️ Events</button>
+        <button class="filter-btn" id="flt-employees" onclick="setFilter('employees',this)">👥 Employee</button>
+        <button class="filter-btn" id="flt-products" onclick="setFilter('products',this)">📦 Product Quiz</button>
+        <button class="filter-btn" id="flt-awards" onclick="setFilter('awards',this)">🏆 Awards</button>
+        <button class="filter-btn" id="flt-quizzes" onclick="setFilter('quizzes',this)">⚡ Live Quiz</button>
+        <button class="filter-btn" id="flt-livePollSessions" onclick="setFilter('livePollSessions',this)">📡 PulseCheck</button>
       </div>
     </div>
 
@@ -351,6 +365,13 @@ function updateStats(){
 
 window.renderItems=function(){
   const search=(document.getElementById('search-inp')?.value||'').toLowerCase();
+  // Sort
+  const sortVal=document.getElementById('sort-select')?.value||'newest';
+  if(sortVal==='oldest')allItems.sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0));
+  else if(sortVal==='responses')allItems.sort((a,b)=>(b.responseCount||0)-(a.responseCount||0));
+  else if(sortVal==='alpha')allItems.sort((a,b)=>(getTitle(a)||'').localeCompare(getTitle(b)||''));
+  else allItems.sort((a,b)=>(b.createdAt?.seconds||b.updatedAt?.seconds||0)-(a.createdAt?.seconds||a.updatedAt?.seconds||0));
+
   let filtered=allItems.filter(i=>{
     const matchFilter=activeFilter==='all'||i._col===activeFilter;
     const matchSearch=!search||(getTitle(i)||'').toLowerCase().includes(search);
@@ -359,7 +380,8 @@ window.renderItems=function(){
   const wrap=document.getElementById('items-wrap');
   wrap.className=viewMode==='grid'?'items-grid':'items-list';
   if(!filtered.length){
-    wrap.innerHTML=`<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-title">No content yet</div><div class="empty-sub">Click "Create new" in the sidebar to get started.</div></div>`;
+    const isFiltered=activeFilter!=='all'||document.getElementById('search-inp')?.value;
+    wrap.innerHTML=`<div class="empty-state"><div class="empty-icon">${isFiltered?'🔍':'✨'}</div><div class="empty-title">${isFiltered?'No results found':'Nothing here yet'}</div><div class="empty-sub">${isFiltered?'Try a different search or filter.':'Create your first form or live session to get started.'}</div>${isFiltered?'<button class="empty-cta" onclick="setFilter('all',document.getElementById('flt-all'));document.getElementById('search-inp').value='';renderItems();">Clear filters</button>':'<a href="/create/" class="empty-cta">+ Create your first form</a>'}</div>`;
     return;
   }
   wrap.innerHTML=filtered.map(item=>viewMode==='grid'?renderCard(item):renderListRow(item)).join('');
