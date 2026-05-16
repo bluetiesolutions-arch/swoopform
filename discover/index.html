@@ -1,150 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discover — SwoopForm</title>
+<meta name="description" content="Explore public surveys, polls, quizzes and more created by the SwoopForm community.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Discover — SwoopForm</title>
-  <meta name="description" content="Discover surveys, polls, pledges and riddles on SwoopForm.">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
-    nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-    .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
-    .logo-mk{width:30px;height:30px;background:linear-gradient(135deg,#2D1B69,#D97706);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff}
-    .logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#0F0E1A}
-    .nav-right{display:flex;gap:8px;align-items:center}
-    .nav-btn{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s}
-    .nav-btn:hover{border-color:#2D1B69;color:#2D1B69}
-    .nav-btn.primary{background:linear-gradient(135deg,#2D1B69,#D97706);color:#fff;border:none}
-    .nav-btn.primary:hover{opacity:0.9}
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f0e8;--surface:#fff;--border:#e2dad0;--accent:#2d1b69;--accent2:#7c3aed;--amber:#d97706;--text:#0f0e1a;--muted:#64748b;--muted2:#94a3b8;--font:'Sora',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;}
+nav{background:rgba(245,240,232,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;position:sticky;top:0;z-index:100;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-nm{font-weight:800;font-size:18px;color:var(--text);}
+.nav-link{padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;transition:all .15s;}
+.nav-link:hover{color:var(--text);}
+.btn-primary{padding:9px 20px;border-radius:9px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:13px;font-weight:700;font-family:var(--font);cursor:pointer;text-decoration:none;}
 
-    /* HERO */
-    .hero{padding:60px 20px 40px;text-align:center;background:linear-gradient(180deg,#EDE9FF 0%,#F5F0E8 100%)}
-    .hero-label{font-size:0.72rem;font-weight:700;color:#D97706;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
-    .hero-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,5vw,3rem);letter-spacing:-0.04em;margin-bottom:12px}
-    .hero-sub{font-size:0.95rem;color:#64748B;max-width:480px;margin:0 auto 28px;line-height:1.7}
-    .search-bar{display:flex;gap:8px;max-width:500px;margin:0 auto}
-    .search-inp{flex:1;padding:12px 18px;border-radius:12px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.92rem;font-family:'DM Sans',sans-serif;outline:none;color:#0F0E1A;transition:border-color 0.2s}
-    .search-inp:focus{border-color:#2D1B69}
-    .search-btn{padding:12px 20px;border-radius:12px;border:none;background:#2D1B69;color:#fff;font-size:0.88rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;flex-shrink:0}
+/* HERO */
+.hero{padding:60px 40px 40px;text-align:center;}
+.hero-title{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.04em;margin-bottom:12px;}
+.hero-title span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:16px;color:var(--muted);margin-bottom:32px;line-height:1.7;}
 
-    /* MAIN */
-    .main{max-width:1100px;margin:0 auto;padding:32px 20px}
+/* SEARCH */
+.search-bar{max-width:640px;margin:0 auto 40px;display:flex;gap:10px;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:8px 8px 8px 20px;box-shadow:0 4px 20px rgba(45,27,105,.06);}
+.search-inp{flex:1;border:none;background:transparent;font-size:15px;font-family:var(--font);outline:none;color:var(--text);}
+.search-inp::placeholder{color:var(--muted2);}
+.search-btn{padding:10px 20px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:13px;font-weight:700;font-family:var(--font);cursor:pointer;}
 
-    /* FEATURED */
-    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-    .section-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px}
-    .featured-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:40px}
+/* FILTERS */
+.filter-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:48px;}
+.filter-btn{padding:7px 16px;border-radius:100px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;color:var(--muted);transition:all .15s;}
+.filter-btn:hover{border-color:var(--accent);color:var(--accent);}
+.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
 
-    /* FILTERS */
-    .filters-row{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
-    .filter-btn{padding:6px 14px;border-radius:100px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;color:#64748B}
-    .filter-btn:hover{border-color:#2D1B69;color:#2D1B69}
-    .filter-btn.active{background:#2D1B69;border-color:#2D1B69;color:#fff}
-    .sort-sel{padding:6px 12px;border-radius:100px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;outline:none;color:#64748B;margin-left:auto}
+/* FEATURED */
+.featured-section{max-width:1200px;margin:0 auto;padding:0 40px 48px;}
+.section-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted2);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.featured-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
 
-    /* CARDS */
-    .items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-    .item-card{background:#fff;border-radius:16px;border:1.5px solid #E2DAD0;overflow:hidden;transition:all 0.2s;cursor:pointer;text-decoration:none;color:#0F0E1A;display:block}
-    .item-card:hover{box-shadow:0 8px 32px rgba(15,14,26,0.1);transform:translateY(-3px);border-color:#D4CAF8}
-    .item-card-top{height:8px}
-    .item-card-body{padding:20px}
-    .item-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-    .type-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:0.68rem;font-weight:700}
-    .featured-star{color:#D97706;font-size:0.82rem}
-    .item-card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:8px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-    .item-card-desc{font-size:0.8rem;color:#64748B;line-height:1.5;margin-bottom:12px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-    .item-card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid #F5F0E8}
-    .item-card-meta{font-size:0.72rem;color:#94A3B8;display:flex;align-items:center;gap:6px}
-    .take-btn{padding:6px 14px;border-radius:8px;font-size:0.75rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border:none;transition:all 0.2s;color:#fff}
-    .take-btn:hover{opacity:0.85}
+/* CARDS */
+.disc-card{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;cursor:pointer;text-decoration:none;display:block;color:var(--text);}
+.disc-card:hover{box-shadow:0 8px 28px rgba(45,27,105,.1);transform:translateY(-3px);border-color:#c4b5fd;}
+.disc-card.featured{border-color:rgba(217,119,6,.3);background:linear-gradient(145deg,#fffbeb,#fff);}
+.disc-card-top{height:4px;}
+.disc-card-body{padding:16px 18px;}
+.disc-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.disc-type-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;}
+.disc-featured-star{font-size:14px;}
+.disc-card-title{font-size:15px;font-weight:700;margin-bottom:6px;line-height:1.35;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.disc-card-meta{font-size:11px;color:var(--muted2);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.disc-card-footer{padding:12px 18px;border-top:1px solid var(--bg);display:flex;align-items:center;justify-content:space-between;}
+.disc-responses{font-size:12px;color:var(--muted2);}
+.disc-play-btn{padding:5px 14px;border-radius:7px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:12px;font-weight:700;font-family:var(--font);cursor:pointer;text-decoration:none;}
 
-    /* EMPTY */
-    .empty{text-align:center;padding:60px 20px;grid-column:1/-1}
-    .empty-icon{font-size:3rem;margin-bottom:16px}
-    .empty-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;margin-bottom:8px}
-    .empty-sub{font-size:0.85rem;color:#64748B}
+/* MAIN GRID */
+.main-content{max-width:1200px;margin:0 auto;padding:0 40px 80px;}
+.items-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
 
-    /* CATEGORIES */
-    .cats-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
-    .cat-chip{padding:6px 14px;border-radius:100px;border:1.5px solid #E2DAD0;background:#fff;font-size:0.78rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;color:#64748B}
-    .cat-chip:hover{border-color:#2D1B69;background:#EDE9FF;color:#2D1B69}
-    .cat-chip.active{background:#EDE9FF;border-color:#2D1B69;color:#2D1B69}
+/* EMPTY */
+.empty{text-align:center;padding:80px 20px;color:var(--muted);}
+.empty-icon{font-size:48px;margin-bottom:16px;opacity:.4;}
 
-    .spinner{width:28px;height:28px;border:3px solid rgba(45,27,105,0.15);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .loading-wrap{text-align:center;padding:60px 20px;grid-column:1/-1}
-    footer{background:#0F0E1A;padding:32px 20px;text-align:center;margin-top:60px}
-    .footer-links{display:flex;gap:20px;justify-content:center;margin-bottom:10px;flex-wrap:wrap}
-    .footer-link{font-size:0.78rem;color:rgba(255,255,255,0.35);text-decoration:none}
-    .footer-link:hover{color:#fff}
-    .footer-copy{font-size:0.72rem;color:rgba(255,255,255,0.2)}
-    @media(max-width:600px){nav{padding:0 14px}.logo-nm{display:none}.main{padding:20px 14px}.hero{padding:40px 14px 28px}.search-bar{flex-direction:column}}
-  </style>
+/* SPINNER */
+.spinner{width:28px;height:28px;border:3px solid rgba(45,27,105,.15);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:40px auto;display:block;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+footer-strip{display:block;text-align:center;padding:24px;font-size:13px;color:var(--muted2);border-top:1px solid var(--border);}
+
+@media(max-width:768px){
+  nav{padding:0 20px;}.hero{padding:40px 20px 24px;}.search-bar{margin:0 20px 24px;}.filter-row{padding:0 20px;}.featured-section{padding:0 20px 32px;}.main-content{padding:0 20px 48px;}.featured-grid,.items-grid{grid-template-columns:1fr;}
+}
+</style>
 </head>
 <body>
 <nav>
-  <a href="/" class="nav-logo"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="sg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#2d1b69"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#sg)"/><rect x="10" y="9" width="20" height="6" rx="3" fill="white"/><rect x="10" y="17" width="20" height="6" rx="3" fill="rgba(255,255,255,0.9)"/><rect x="10" y="25" width="20" height="6" rx="3" fill="white"/><circle cx="31" cy="12" r="3" fill="#d97706"/></svg><div class="logo-nm">SwoopForm</div></a>
-  <div class="nav-right">
-    <a href="/dashboard" class="nav-btn">Dashboard</a>
-    <a href="/login" class="nav-btn primary">Create free →</a>
+  <a href="/" class="nav-logo">
+    <svg width="30" height="30" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="sg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#2d1b69"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#sg)"/><rect x="10" y="9" width="20" height="6" rx="3" fill="white"/><rect x="10" y="17" width="20" height="6" rx="3" fill="rgba(255,255,255,0.9)"/><rect x="10" y="25" width="20" height="6" rx="3" fill="white"/><circle cx="31" cy="12" r="3" fill="#d97706"/></svg>
+    <span class="logo-nm">SwoopForm</span>
+  </a>
+  <div style="display:flex;align-items:center;gap:4px;">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/pricing/" class="nav-link">Pricing</a>
   </div>
+  <a href="/login/" class="btn-primary">Get started →</a>
 </nav>
 
 <div class="hero">
-  <div class="hero-label">✦ Discover</div>
-  <h1 class="hero-title">Explore public content</h1>
-  <p class="hero-sub">Surveys, polls, pledges and riddles created by the SwoopForm community.</p>
-  <div class="search-bar">
-    <input class="search-inp" id="search-inp" placeholder="Search surveys, polls, riddles..." oninput="filterItems()">
-    <button class="search-btn" onclick="filterItems()">Search</button>
+  <h1 class="hero-title">Discover <span>public forms</span></h1>
+  <p class="hero-sub">Explore surveys, quizzes, polls and more created by the SwoopForm community. Take part or get inspired.</p>
+</div>
+
+<div class="search-bar">
+  <input class="search-inp" id="search-inp" placeholder="Search forms, quizzes, polls..." onkeydown="if(event.key==='Enter')applyFilters()">
+  <button class="search-btn" onclick="applyFilters()">Search</button>
+</div>
+
+<div class="filter-row">
+  <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+  <button class="filter-btn" onclick="setFilter('surveys',this)">📋 Surveys</button>
+  <button class="filter-btn" onclick="setFilter('polls',this)">📊 Polls</button>
+  <button class="filter-btn" onclick="setFilter('votings',this)">🗳️ Voting</button>
+  <button class="filter-btn" onclick="setFilter('pledges',this)">🤝 Pledges</button>
+  <button class="filter-btn" onclick="setFilter('riddles',this)">🧩 Riddles</button>
+</div>
+
+<div class="featured-section" id="featured-section">
+  <div class="section-label">⭐ Featured</div>
+  <div class="featured-grid" id="featured-grid">
+    <div class="spinner"></div>
   </div>
 </div>
 
-<div class="main">
-
-  <!-- FEATURED -->
-  <div id="featured-section" style="display:none">
-    <div class="section-header"><div class="section-title">⭐ Featured</div></div>
-    <div class="featured-grid" id="featured-grid"></div>
-  </div>
-
-  <!-- FILTERS -->
-  <div class="filters-row">
-    <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
-    <button class="filter-btn" onclick="setFilter('surveys',this)">📋 Surveys</button>
-    <button class="filter-btn" onclick="setFilter('polls',this)">📊 Polls</button>
-    <button class="filter-btn" onclick="setFilter('votings',this)">🗳️ Voting</button>
-    <button class="filter-btn" onclick="setFilter('pledges',this)">🤝 Pledges</button>
-    <button class="filter-btn" onclick="setFilter('riddles',this)">🧩 Riddles</button>
-    <select class="sort-sel" id="sort-sel" onchange="filterItems()">
-      <option value="newest">Newest first</option>
-      <option value="popular">Most popular</option>
-    </select>
-  </div>
-
-  <!-- CATEGORIES -->
-  <div class="cats-row" id="cats-row"></div>
-
-  <!-- ITEMS -->
+<div class="main-content">
+  <div class="section-label">🌍 All public forms</div>
   <div class="items-grid" id="items-grid">
-    <div class="loading-wrap"><div class="spinner"></div><div style="font-size:0.85rem;color:#94A3B8">Loading content...</div></div>
+    <div class="spinner"></div>
   </div>
 </div>
 
-<footer>
-  <div class="footer-links">
-    <a href="/" class="footer-link">Home</a>
-    <a href="/about" class="footer-link">About</a>
-    <a href="/pricing" class="footer-link">Pricing</a>
-    <a href="/contact" class="footer-link">Contact</a>
-    <a href="/privacy" class="footer-link">Privacy</a>
-    <a href="/terms" class="footer-link">Terms</a>
-  </div>
-  <div class="footer-copy">© 2024 SwoopForm. All rights reserved.</div>
-</footer>
+<div style="text-align:center;padding:24px;font-size:13px;color:var(--muted2);border-top:1px solid var(--border);">
+  <a href="/" style="color:var(--accent);text-decoration:none;font-weight:600;">← Back to SwoopForm</a>
+  &nbsp;·&nbsp; Want to share your form? <a href="/login/" style="color:var(--accent);text-decoration:none;font-weight:600;">Create one free →</a>
+</div>
 
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
@@ -154,120 +135,88 @@ const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform
 const app=initializeApp(FB);
 const db=getFirestore(app);
 
-const TYPE_META={
-  surveys:{label:'Survey',icon:'📋',color:'#2D1B69',bg:'#EDE9FF',viewPath:'/survey/',btnColor:'#2D1B69',btnLabel:'Take survey'},
-  polls:{label:'Poll',icon:'📊',color:'#4F46E5',bg:'#EEF2FF',viewPath:'/poll/',btnColor:'#4F46E5',btnLabel:'Vote now'},
-  votings:{label:'Voting',icon:'🗳️',color:'#D97706',bg:'#FEF3C7',viewPath:'/voting/',btnColor:'#D97706',btnLabel:'Cast vote'},
-  pledges:{label:'Pledge',icon:'🤝',color:'#10B981',bg:'#DCFCE7',viewPath:'/pledge/',btnColor:'#10B981',btnLabel:'Take pledge'},
-  riddles:{label:'Riddle',icon:'🧩',color:'#A855F7',bg:'#F3E8FF',viewPath:'/riddle/',btnColor:'#A855F7',btnLabel:'Play riddle'},
-};
+const COLS=['surveys','polls','votings','pledges','riddles'];
+const ICONS={surveys:'📋',polls:'📊',votings:'🗳️',pledges:'🤝',riddles:'🧩'};
+const COLORS={surveys:'#7c3aed',polls:'#4f46e5',votings:'#d97706',pledges:'#10b981',riddles:'#a855f7'};
+const LABELS={surveys:'Survey',polls:'Poll',votings:'Voting',pledges:'Pledge',riddles:'Riddle'};
+const VIEW_URLS={surveys:'/s/?id=',polls:'/poll/?id=',votings:'/voting/?id=',pledges:'/pledge/?id=',riddles:'/riddle/?id='};
 
-let allItems=[],activeFilter='all',activeCategory='';
+let allItems=[],activeFilter='all';
 
-async function init(){
-  // Load all public content from all collections
-  const results=await Promise.all(Object.keys(TYPE_META).map(async col=>{
-    try{
-      const q=query(collection(db,col),where('isPublic','==',true),where('status','==','active'));
-      const snap=await getDocs(q);
-      return snap.docs.map(d=>({id:d.id,_col:col,...d.data()}));
-    }catch(e){return[]}
-  }));
-  allItems=results.flat().sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
-
-  // Categories from Firestore
+async function loadAll(){
   try{
-    const catSnap=await getDocs(query(collection(db,'categories'),orderBy('order')));
-    const cats=[];
-    catSnap.forEach(d=>cats.push(d.data()));
-    renderCategories(cats);
-  }catch(e){}
-
-  renderFeatured();
-  filterItems();
-}
-
-function renderCategories(cats){
-  const row=document.getElementById('cats-row');
-  if(!cats.length){row.style.display='none';return}
-  row.innerHTML=cats.map(c=>`<button class="cat-chip" onclick="setCategory('${c.name}',this)">${c.emoji||''} ${c.name}</button>`).join('');
+    const results=await Promise.all(COLS.map(async function(col){
+      try{
+        const q=query(collection(db,col),where('isPublic','==',true),where('status','==','active'));
+        const snap=await getDocs(q);
+        return snap.docs.map(function(d){return{id:d.id,_col:col,...d.data()};});
+      }catch(e){return[];}
+    }));
+    allItems=results.flat().sort(function(a,b){return(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0);});
+    renderFeatured();
+    renderItems();
+  }catch(e){console.error(e);}
 }
 
 function renderFeatured(){
-  const featured=allItems.filter(i=>i.featured===true);
-  const section=document.getElementById('featured-section');
+  const featured=allItems.filter(function(i){return i.featured;}).slice(0,3);
   const grid=document.getElementById('featured-grid');
-  if(!featured.length){section.style.display='none';return}
-  section.style.display='block';
-  grid.innerHTML=featured.map(item=>renderCard(item,true)).join('');
+  if(!featured.length){document.getElementById('featured-section').style.display='none';return;}
+  grid.innerHTML=featured.map(function(i){return renderCard(i,true);}).join('');
 }
 
-window.filterItems=function(){
+function renderItems(){
   const search=(document.getElementById('search-inp')?.value||'').toLowerCase();
-  const sort=document.getElementById('sort-sel')?.value||'newest';
-  let filtered=allItems.filter(i=>{
-    const matchFilter=activeFilter==='all'||i._col===activeFilter;
-    const matchCat=!activeCategory||(i.category||'')=== activeCategory;
-    const title=getTitle(i).toLowerCase();
-    const matchSearch=!search||title.includes(search)||(i.description||'').toLowerCase().includes(search);
-    return matchFilter&&matchCat&&matchSearch;
+  const filtered=allItems.filter(function(i){
+    const matchCat=activeFilter==='all'||i._col===activeFilter;
+    const matchSearch=!search||(i.title||i.question||'').toLowerCase().includes(search);
+    return matchCat&&matchSearch;
   });
-  if(sort==='popular'){filtered.sort((a,b)=>getScore(b)-getScore(a))}
   const grid=document.getElementById('items-grid');
   if(!filtered.length){
-    grid.innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><div class="empty-title">Nothing found</div><div class="empty-sub">Try a different search or filter.</div></div>`;
+    grid.innerHTML='<div class="empty" style="grid-column:1/-1;"><div class="empty-icon">🔍</div><div style="font-size:16px;font-weight:700;margin-bottom:8px;">No forms found</div><div style="font-size:13px;">Try a different search or filter</div></div>';
     return;
   }
-  grid.innerHTML=filtered.map(item=>renderCard(item,false)).join('');
+  grid.innerHTML=filtered.map(function(i){return renderCard(i,false);}).join('');
+}
+
+function renderCard(i,featured){
+  const color=COLORS[i._col]||'#64748b';
+  const icon=ICONS[i._col]||'📄';
+  const label=LABELS[i._col]||i._col;
+  const url=(VIEW_URLS[i._col]||'#')+i.id;
+  const rc=i.responseCount||i.totalVotes||i.totalPledges||0;
+  return'<a href="'+url+'" class="disc-card'+(featured?' featured':'')+'">'
+    +'<div class="disc-card-top" style="background:'+color+';"></div>'
+    +'<div class="disc-card-body">'
+    +'<div class="disc-card-header">'
+    +'<span class="disc-type-badge" style="background:'+color+'18;color:'+color+';">'+icon+' '+label+'</span>'
+    +(featured?'<span class="disc-featured-star">⭐</span>':'')
+    +'</div>'
+    +'<div class="disc-card-title">'+eh(i.title||i.question||'Untitled')+'</div>'
+    +'<div class="disc-card-meta">'
+    +(i.category?'<span>'+i.category+'</span>':'')
+    +'</div>'
+    +'</div>'
+    +'<div class="disc-card-footer">'
+    +'<span class="disc-responses">📊 '+rc+' response'+(rc!==1?'s':'')+'</span>'
+    +'<span class="disc-play-btn">Open →</span>'
+    +'</div>'
+    +'</a>';
 }
 
 window.setFilter=function(f,el){
   activeFilter=f;
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-  filterItems();
-}
-window.setCategory=function(cat,el){
-  if(activeCategory===cat){activeCategory='';document.querySelectorAll('.cat-chip').forEach(b=>b.classList.remove('active'))}
-  else{activeCategory=cat;document.querySelectorAll('.cat-chip').forEach(b=>b.classList.remove('active'));el.classList.add('active')}
-  filterItems();
-}
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+  if(el)el.classList.add('active');
+  renderItems();
+};
 
-function getTitle(item){return item.title||item.question||'Untitled'}
-function getScore(item){return item.responseCount||item.totalVotes||item.totalPledges||0}
-function getViewUrl(item){
-  const m=TYPE_META[item._col];if(!m)return '#';
-  return item.slug?'/engage/'+item.slug:(m.viewPath+item.id);
-}
-function getDesc(item){return item.description||item.heroSubtitle||item.subtitle||''}
+window.applyFilters=function(){renderItems();};
 
-function renderCard(item,isFeatured){
-  const m=TYPE_META[item._col]||{label:'Item',icon:'📄',color:'#64748B',bg:'#F5F0E8',btnColor:'#64748B',btnLabel:'View'};
-  const score=getScore(item);
-  const url=getViewUrl(item);
-  const desc=getDesc(item);
-  return`<a class="item-card" href="${url}" target="_blank">
-    <div class="item-card-top" style="background:${m.color}"></div>
-    <div class="item-card-body">
-      <div class="item-card-header">
-        <div class="type-badge" style="background:${m.bg};color:${m.color}">${m.icon} ${m.label}</div>
-        ${isFeatured?'<span class="featured-star">⭐ Featured</span>':''}
-        ${item.category?`<span style="font-size:0.68rem;color:#94A3B8">${item.category}</span>`:''}
-      </div>
-      <div class="item-card-title">${eh(getTitle(item))}</div>
-      ${desc?`<div class="item-card-desc">${eh(desc)}</div>`:''}
-      <div class="item-card-footer">
-        <div class="item-card-meta">
-          ${score?`👥 ${score} ${m.label==='Poll'?'vote':m.label==='Pledge'?'pledge':'response'}${score!==1?'s':''}`:m.icon+' '+m.label}
-        </div>
-        <button class="take-btn" style="background:${m.btnColor}">${m.btnLabel} →</button>
-      </div>
-    </div>
-  </a>`;
-}
+function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 
-function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}
-init();
+loadAll();
 </script>
 </body>
 </html>
