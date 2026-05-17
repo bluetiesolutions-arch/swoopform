@@ -340,20 +340,20 @@ nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border
         <div class="fl"><label class="ll">Read time (min)</label><input class="ii" id="bf-time" type="number" min="1" placeholder="3"></div>
       </div>
       <div class="fl"><label class="ll">Cover image URL</label><input class="ii" id="bf-cover" placeholder="https://..." oninput="previewCover()"></div>
-      <div class="fl"><label class="ll">Image focal point</label>
-        <select class="ii" id="bf-cover-pos" onchange="previewCover()">
-          <option value="center">Center</option>
-          <option value="top">Top</option>
-          <option value="bottom">Bottom</option>
-          <option value="left">Left</option>
-          <option value="right">Right</option>
-          <option value="top center">Top Center</option>
-          <option value="bottom center">Bottom Center</option>
-        </select>
-      </div>
       <div id="cover-preview-wrap" style="display:none;">
-        <label class="ll">Preview</label>
-        <div id="cover-preview" style="height:140px;border-radius:10px;border:1.5px solid var(--border);background-size:cover;background-repeat:no-repeat;"></div>
+        <label class="ll">Image — drag to reposition focal point</label>
+        <div id="cover-preview" style="height:180px;border-radius:10px;border:1.5px solid var(--border);background-size:cover;background-repeat:no-repeat;position:relative;cursor:crosshair;overflow:hidden;user-select:none;">
+          <!-- Crosshair -->
+          <div id="focal-crosshair" style="position:absolute;width:28px;height:28px;transform:translate(-50%,-50%);pointer-events:none;top:50%;left:50%;">
+            <div style="position:absolute;top:50%;left:0;right:0;height:2px;background:rgba(255,255,255,.9);transform:translateY(-50%);box-shadow:0 0 4px rgba(0,0,0,.5);"></div>
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:2px;background:rgba(255,255,255,.9);transform:translateX(-50%);box-shadow:0 0 4px rgba(0,0,0,.5);"></div>
+            <div style="position:absolute;top:50%;left:50%;width:8px;height:8px;background:#fff;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 6px rgba(0,0,0,.6);border:2px solid rgba(45,27,105,.8);"></div>
+          </div>
+          <!-- Drag hint -->
+          <div id="focal-hint" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.5);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px;white-space:nowrap;font-family:var(--font);">Drag to set focal point</div>
+        </div>
+        <input type="hidden" id="bf-cover-pos" value="50% 50%">
+        <div style="font-size:11px;color:var(--muted2);margin-top:4px;" id="focal-coords">Position: center</div>
       </div>
       <div class="fl"><label class="ll">Emoji (if no cover)</label><input class="ii" id="bf-emoji" placeholder="📝" style="max-width:80px;"></div>
       <div class="fl"><label class="ll">Tags (comma separated)</label><input class="ii" id="bf-tags" placeholder="Surveys, Tips"></div>
@@ -588,18 +588,62 @@ function clearBlogForm(){
 }
 window.previewCover=function(){
   const url=document.getElementById('bf-cover')?.value.trim();
-  const pos=document.getElementById('bf-cover-pos')?.value||'center';
   const wrap=document.getElementById('cover-preview-wrap');
   const preview=document.getElementById('cover-preview');
   if(!wrap||!preview)return;
   if(url){
     wrap.style.display='block';
     preview.style.backgroundImage='url('+url+')';
+    const pos=document.getElementById('bf-cover-pos')?.value||'50% 50%';
     preview.style.backgroundPosition=pos;
+    // Set crosshair position
+    const parts=pos.split(' ');
+    const px=parseFloat(parts[0])||50;
+    const py=parseFloat(parts[1])||50;
+    const ch=document.getElementById('focal-crosshair');
+    if(ch){ch.style.left=px+'%';ch.style.top=py+'%';}
+    initFocalDrag();
   }else{
     wrap.style.display='none';
   }
 };
+
+let focalDragInit=false;
+function initFocalDrag(){
+  if(focalDragInit)return;
+  focalDragInit=true;
+  const preview=document.getElementById('cover-preview');
+  const ch=document.getElementById('focal-crosshair');
+  const posInput=document.getElementById('bf-cover-pos');
+  const coords=document.getElementById('focal-coords');
+  const hint=document.getElementById('focal-hint');
+  let dragging=false;
+
+  function setFocal(e){
+    const rect=preview.getBoundingClientRect();
+    const clientX=e.touches?e.touches[0].clientX:e.clientX;
+    const clientY=e.touches?e.touches[0].clientY:e.clientY;
+    let x=((clientX-rect.left)/rect.width)*100;
+    let y=((clientY-rect.top)/rect.height)*100;
+    x=Math.max(0,Math.min(100,Math.round(x)));
+    y=Math.max(0,Math.min(100,Math.round(y)));
+    ch.style.left=x+'%';
+    ch.style.top=y+'%';
+    const posStr=x+'% '+y+'%';
+    posInput.value=posStr;
+    preview.style.backgroundPosition=posStr;
+    coords.textContent='Position: '+x+'% from left, '+y+'% from top';
+    if(hint)hint.style.display='none';
+  }
+
+  preview.addEventListener('mousedown',function(e){dragging=true;setFocal(e);e.preventDefault();});
+  preview.addEventListener('mousemove',function(e){if(dragging)setFocal(e);});
+  preview.addEventListener('mouseup',function(){dragging=false;});
+  preview.addEventListener('mouseleave',function(){dragging=false;});
+  preview.addEventListener('touchstart',function(e){dragging=true;setFocal(e);e.preventDefault();},{passive:false});
+  preview.addEventListener('touchmove',function(e){if(dragging)setFocal(e);e.preventDefault();},{passive:false});
+  preview.addEventListener('touchend',function(){dragging=false;});
+}
 window.saveBlogPost=async function(status){
   const title=document.getElementById('bf-title').value.trim();
   const content=document.getElementById('bf-content').value.trim();
