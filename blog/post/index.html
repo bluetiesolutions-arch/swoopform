@@ -200,9 +200,12 @@ async function load(){
     // Cover
     const cover=document.getElementById('cover');
     if(p.coverImage){
-      cover.style.background='url('+p.coverImage+') center/cover';
-      cover.textContent='';
+      cover.style.background='url('+p.coverImage+') center/cover no-repeat';
+      cover.style.backgroundSize='cover';
+      cover.style.backgroundPosition='center';
+      cover.innerHTML='';
     }else{
+      cover.style.background='linear-gradient(135deg,#2d1b69,#7c3aed)';
       cover.textContent=p.emoji||'📝';
     }
     // Article
