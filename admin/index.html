@@ -427,7 +427,7 @@ import{getFirestore,collection,query,where,getDocs,doc,getDoc,addDoc,updateDoc,d
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
 const ADMIN_UID='7WPJK6ZuaEb3lgevyUbbU87umuH3';
-const app=initializeApp(FB);const auth=getAuth(app);const db=getFirestore(app);
+const app=initializeApp(FB);const auth=getAuth(app);const db=getFirestore(app);window._auth=auth;window._db=db;
 const COLS=['surveys','polls','votings','pledges','riddles'];
 const ICONS={surveys:'📋',polls:'📊',votings:'🗳️',pledges:'🤝',riddles:'🧩'};
 const PLAN_BADGE={free:'badge-free',starter:'badge-blue',pro:'badge-yellow',business:'badge-purple',student:'badge-green',educator:'badge-green',ngo:'badge-green'};
@@ -710,11 +710,11 @@ async function debugBlog(){
   panel.style.display='block';
   output.textContent='';
   const log=function(msg){output.textContent+=msg+'\n';};
+  const auth=window._auth;const db=window._db;
   try{
-    log('User UID: '+(auth.currentUser?.uid||'NOT LOGGED IN'));
-    log('User email: '+(auth.currentUser?.email||'none'));
-    log('Admin UID: '+ADMIN_UID);
-    log('Match: '+(auth.currentUser?.uid===ADMIN_UID?'YES ✅':'NO ❌'));
+    log('User UID: '+(auth?.currentUser?.uid||'NOT LOGGED IN'));
+    log('User email: '+(auth?.currentUser?.email||'none'));
+    log('Match: '+(auth?.currentUser?.uid==='7WPJK6ZuaEb3lgevyUbbU87umuH3'?'YES ✅':'NO ❌'));
     log('');
     log('Testing blogPosts write...');
     const testRef=doc(db,'blogPosts','debug-test-'+Date.now());
@@ -742,11 +742,11 @@ async function debugBlog(){
   panel.style.display='block';
   output.textContent='';
   const log=function(msg){output.textContent+=msg+'\n';};
+  const auth=window._auth;const db=window._db;
   try{
-    log('User UID: '+(auth.currentUser?.uid||'NOT LOGGED IN'));
-    log('User email: '+(auth.currentUser?.email||'none'));
-    log('Admin UID: '+ADMIN_UID);
-    log('Match: '+(auth.currentUser?.uid===ADMIN_UID?'YES ✅':'NO ❌'));
+    log('User UID: '+(auth?.currentUser?.uid||'NOT LOGGED IN'));
+    log('User email: '+(auth?.currentUser?.email||'none'));
+    log('Match: '+(auth?.currentUser?.uid==='7WPJK6ZuaEb3lgevyUbbU87umuH3'?'YES ✅':'NO ❌'));
     log('');
     log('Testing blogPosts write...');
     const testRef=doc(db,'blogPosts','debug-test-'+Date.now());
