@@ -190,19 +190,52 @@ body{font-family:'Sora',sans-serif;background:#f5f0e8;min-height:100vh;display:f
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,sendPasswordResetEmail,GoogleAuthProvider,signInWithPopup,updateProfile,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getFirestore,doc,setDoc,getDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
 const app=initializeApp(FB);
 const auth=getAuth(app);
+const db=getFirestore(app);
 const provider=new GoogleAuthProvider();
 
 onAuthStateChanged(auth,function(u){if(u)window.location.href='/dashboard/';});
+
+async function saveUserToFirestore(user, extraData){
+  try{
+    const userRef=doc(db,'users',user.uid);
+    const snap=await getDoc(userRef);
+    if(!snap.exists()){
+      // New user - create full record
+      await setDoc(userRef,{
+        uid:user.uid,
+        name:user.displayName||extraData?.name||'',
+        email:user.email||'',
+        plan:'free',
+        verified:false,
+        createdAt:serverTimestamp(),
+        updatedAt:serverTimestamp(),
+        lastLoginAt:serverTimestamp(),
+        provider:extraData?.provider||'email',
+        features:{},
+      });
+    }else{
+      // Existing user - just update last login
+      await setDoc(userRef,{
+        lastLoginAt:serverTimestamp(),
+        updatedAt:serverTimestamp(),
+        name:user.displayName||snap.data().name||'',
+        email:user.email||snap.data().email||'',
+      },{merge:true});
+    }
+  }catch(e){console.error('saveUserToFirestore error:',e);}
+}
 
 window.signInWithGoogle=async function(){
   const btn=document.getElementById('btn-google');
   btn.disabled=true;btn.textContent='Connecting...';
   try{
-    await signInWithPopup(auth,provider);
+    const result=await signInWithPopup(auth,provider);
+    await saveUserToFirestore(result.user,{provider:'google'});
     window.location.href='/dashboard/';
   }catch(e){
     showError(friendlyError(e.code));
@@ -222,7 +255,8 @@ window.submitLogin=async function(){
   const btn=document.getElementById('btn-login');
   btn.disabled=true;btn.innerHTML='<span class="spinner"></span>Signing in...';
   try{
-    await signInWithEmailAndPassword(auth,email,pass);
+    const signInResult=await signInWithEmailAndPassword(auth,email,pass);
+    await saveUserToFirestore(signInResult.user,{provider:'email'});
     window.location.href='/dashboard/';
   }catch(e){
     showError(friendlyError(e.code));
@@ -245,6 +279,7 @@ window.submitSignup=async function(){
   try{
     const cred=await createUserWithEmailAndPassword(auth,email,pass);
     await updateProfile(cred.user,{displayName:name});
+    await saveUserToFirestore(cred.user,{provider:'email',name});
     window.location.href='/dashboard/';
   }catch(e){
     showError(friendlyError(e.code));

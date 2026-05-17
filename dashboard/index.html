@@ -368,7 +368,7 @@ nav{background:var(--surface);border-bottom:1.5px solid var(--border);height:56p
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getAuth,onAuthStateChanged,signOut}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getFirestore,collection,query,where,getDocs,doc,deleteDoc}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getFirestore,setDoc,collection,query,where,getDocs,doc,deleteDoc}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
 const app=initializeApp(FB);
@@ -402,6 +402,16 @@ onAuthStateChanged(auth,async function(u){
   if(av)av.textContent=(u.displayName||u.email||'?')[0].toUpperCase();
   const title=document.getElementById('dash-title');
   if(title&&u.displayName)title.textContent='Welcome, '+u.displayName.split(' ')[0]+'!';
+  // Track login & ensure user exists in Firestore
+  try{
+    await setDoc(doc(db,'users',u.uid),{
+      uid:u.uid,
+      name:u.displayName||'',
+      email:u.email||'',
+      lastLoginAt:serverTimestamp(),
+      updatedAt:serverTimestamp(),
+    },{merge:true});
+  }catch(e){console.warn('User tracking error:',e);}
   // Load gate data
   if(window.Gate)await window.Gate.load(auth,db);
   await loadAll();

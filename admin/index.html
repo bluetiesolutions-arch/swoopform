@@ -410,7 +410,7 @@ window.show=function(s){
 // ── OVERVIEW ─────────────────────────────────────────
 async function loadOverview(){
   try{
-    const uSnap=await getDocs(query(collection(db,'users'),orderBy('createdAt','desc')));
+    const uSnap=await getDocs(collection(db,'users'));
     allUsers=uSnap.docs.map(function(d){return{id:d.id,...d.data()};});
     const paid=allUsers.filter(function(u){return u.plan&&u.plan!=='free';}).length;
     const cCounts=await Promise.all(COLS.map(async function(c){const s=await getDocs(collection(db,c));return s.size;}));
@@ -432,7 +432,7 @@ function renderRecentUsers(users){
 
 // ── HOSTS ────────────────────────────────────────────
 async function loadHosts(){
-  if(!allUsers.length){const s=await getDocs(query(collection(db,'users'),orderBy('createdAt','desc')));allUsers=s.docs.map(function(d){return{id:d.id,...d.data()};});}
+  if(!allUsers.length){const s=await getDocs(collection(db,'users'));allUsers=s.docs.map(function(d){return{id:d.id,...d.data()};}).sort(function(a,b){return(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0);});}
   filterHosts();
 }
 window.filterHosts=function(){
