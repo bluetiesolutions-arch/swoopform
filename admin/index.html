@@ -289,37 +289,113 @@ nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border
 </div>
 
 <!-- HOST MODAL -->
-<div class="modal-overlay" id="host-modal">
-  <div class="modal-box">
+<div class="modal-overlay" id="host-modal" style="align-items:flex-start;padding:20px;overflow-y:auto;">
+  <div class="modal-box" style="max-width:600px;margin:auto;">
     <div class="modal-header">
-      <div>
-        <div class="modal-title" id="m-name">Host Name</div>
-        <div style="font-size:13px;color:var(--muted);" id="m-email">email</div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div id="m-avatar" style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#2d1b69,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;flex-shrink:0;">?</div>
+        <div>
+          <div class="modal-title" id="m-name">Host Name</div>
+          <div style="font-size:12px;color:var(--muted);" id="m-email">email</div>
+          <div style="font-size:11px;color:var(--muted2);margin-top:2px;" id="m-meta">—</div>
+        </div>
       </div>
       <button class="modal-close" onclick="closeModal()">×</button>
     </div>
-    <div class="fl"><label class="ll">Plan</label>
-      <select class="ii" id="m-plan">
-        <option value="free">Free</option>
-        <option value="starter">Starter</option>
-        <option value="pro">Pro</option>
-        <option value="business">Business</option>
-        <option value="student">Student</option>
-        <option value="educator">Educator</option>
-        <option value="ngo">NGO</option>
-      </select>
+
+    <!-- TABS -->
+    <div style="display:flex;gap:4px;background:var(--surface2);border-radius:10px;padding:4px;margin-bottom:20px;">
+      <button onclick="switchTab('plan')" id="tab-plan" style="flex:1;padding:7px;border-radius:7px;border:none;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;background:var(--surface);color:var(--accent);">📋 Plan</button>
+      <button onclick="switchTab('features')" id="tab-features" style="flex:1;padding:7px;border-radius:7px;border:none;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);">⚙️ Features</button>
+      <button onclick="switchTab('access')" id="tab-access" style="flex:1;padding:7px;border-radius:7px;border:none;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;background:transparent;color:var(--muted);">🔐 Access</button>
+      <button onclick="switchTab('danger')" id="tab-danger" style="flex:1;padding:7px;border-radius:7px;border:none;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;background:transparent;color:var(--red);">⚠️ Danger</button>
     </div>
-    <div class="fl"><label class="ll">Plan Expiry</label><input class="ii" id="m-expiry" type="date"></div>
-    <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Feature Overrides</div>
-    <div class="feat-row"><div class="feat-name">⚡ Live Quiz</div><button class="tgl" id="f-liveQuiz" onclick="this.classList.toggle('on')"></button></div>
-    <div class="feat-row"><div class="feat-name">📡 PulseCheck</div><button class="tgl" id="f-pulseCheck" onclick="this.classList.toggle('on')"></button></div>
-    <div class="feat-row"><div class="feat-name">🚫 No Branding</div><button class="tgl" id="f-noBranding" onclick="this.classList.toggle('on')"></button></div>
-    <div class="feat-row"><div class="feat-name">🔗 Custom Redirect</div><button class="tgl" id="f-customRedirect" onclick="this.classList.toggle('on')"></button></div>
-    <div class="feat-row"><div class="feat-name">🔌 API Access</div><button class="tgl" id="f-apiAccess" onclick="this.classList.toggle('on')"></button></div>
-    <div class="feat-row"><div class="feat-name">∞ Unlimited Responses</div><button class="tgl" id="f-unlimitedResponses" onclick="this.classList.toggle('on')"></button></div>
-    <div class="feat-row"><div class="feat-name">📥 Bulk CSV Export</div><button class="tgl" id="f-bulkCsv" onclick="this.classList.toggle('on')"></button></div>
+
+    <!-- TAB: PLAN -->
+    <div id="tab-content-plan">
+      <div class="fl">
+        <label class="ll">Plan Tier</label>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:4px;">
+          <button onclick="selectPlan('free')" class="plan-pick" data-plan="free" style="padding:10px 6px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;text-align:center;">🆓<br>Free</button>
+          <button onclick="selectPlan('starter')" class="plan-pick" data-plan="starter" style="padding:10px 6px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;text-align:center;">🚀<br>Starter</button>
+          <button onclick="selectPlan('pro')" class="plan-pick" data-plan="pro" style="padding:10px 6px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;text-align:center;">💎<br>Pro</button>
+          <button onclick="selectPlan('business')" class="plan-pick" data-plan="business" style="padding:10px 6px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;text-align:center;">🏢<br>Business</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+          <button onclick="selectPlan('student')" class="plan-pick" data-plan="student" style="padding:10px 6px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;text-align:center;">🎓<br>Student</button>
+          <button onclick="selectPlan('educator')" class="plan-pick" data-plan="educator" style="padding:10px 6px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;text-align:center;">👩‍🏫<br>Educator</button>
+          <button onclick="selectPlan('ngo')" class="plan-pick" data-plan="ngo" style="padding:10px 6px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;text-align:center;">🤝<br>NGO</button>
+        </div>
+        <input type="hidden" id="m-plan" value="free">
+      </div>
+      <div class="fl"><label class="ll">Plan Expiry (optional)</label><input class="ii" id="m-expiry" type="date" placeholder="Leave blank for no expiry"></div>
+      <div class="fl"><label class="ll">Internal Note</label><input class="ii" id="m-note" placeholder="e.g. Paid via bank transfer, expires Dec 2026"></div>
+    </div>
+
+    <!-- TAB: FEATURES -->
+    <div id="tab-content-features" style="display:none;">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.6;">Override individual features regardless of plan. These take priority over plan limits.</div>
+      <div class="feat-row"><div><div class="feat-name">⚡ Live Quiz</div><div style="font-size:11px;color:var(--muted2);">Run live quiz sessions</div></div><button class="tgl" id="f-liveQuiz" onclick="this.classList.toggle('on')"></button></div>
+      <div class="feat-row"><div><div class="feat-name">📡 PulseCheck</div><div style="font-size:11px;color:var(--muted2);">Live polls & word clouds</div></div><button class="tgl" id="f-pulseCheck" onclick="this.classList.toggle('on')"></button></div>
+      <div class="feat-row"><div><div class="feat-name">🚫 Remove Branding</div><div style="font-size:11px;color:var(--muted2);">Hide SwoopForm branding</div></div><button class="tgl" id="f-noBranding" onclick="this.classList.toggle('on')"></button></div>
+      <div class="feat-row"><div><div class="feat-name">🔗 Custom Redirect</div><div style="font-size:11px;color:var(--muted2);">Redirect after submission</div></div><button class="tgl" id="f-customRedirect" onclick="this.classList.toggle('on')"></button></div>
+      <div class="feat-row"><div><div class="feat-name">🔌 API Access</div><div style="font-size:11px;color:var(--muted2);">SwoopForm API</div></div><button class="tgl" id="f-apiAccess" onclick="this.classList.toggle('on')"></button></div>
+      <div class="feat-row"><div><div class="feat-name">∞ Unlimited Responses</div><div style="font-size:11px;color:var(--muted2);">No monthly response cap</div></div><button class="tgl" id="f-unlimitedResponses" onclick="this.classList.toggle('on')"></button></div>
+      <div class="feat-row"><div><div class="feat-name">📥 Bulk CSV Export</div><div style="font-size:11px;color:var(--muted2);">Export all responses</div></div><button class="tgl" id="f-bulkCsv" onclick="this.classList.toggle('on')"></button></div>
+    </div>
+
+    <!-- TAB: ACCESS -->
+    <div id="tab-content-access" style="display:none;">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.6;">Control admin and sub-admin access levels for this user.</div>
+      <div class="feat-row">
+        <div>
+          <div class="feat-name">🔐 Admin Access</div>
+          <div style="font-size:11px;color:var(--muted2);">Full access to this admin panel</div>
+        </div>
+        <button class="tgl" id="f-isAdmin" onclick="this.classList.toggle('on')"></button>
+      </div>
+      <div class="feat-row">
+        <div>
+          <div class="feat-name">✍️ Blog Manager</div>
+          <div style="font-size:11px;color:var(--muted2);">Can create and edit blog posts</div>
+        </div>
+        <button class="tgl" id="f-blogManager" onclick="this.classList.toggle('on')"></button>
+      </div>
+      <div class="feat-row">
+        <div>
+          <div class="feat-name">👥 Host Manager</div>
+          <div style="font-size:11px;color:var(--muted2);">Can manage other users plans</div>
+        </div>
+        <button class="tgl" id="f-hostManager" onclick="this.classList.toggle('on')"></button>
+      </div>
+      <div class="feat-row">
+        <div>
+          <div class="feat-name">✅ Verifications Manager</div>
+          <div style="font-size:11px;color:var(--muted2);">Can approve/reject verifications</div>
+        </div>
+        <button class="tgl" id="f-verifyManager" onclick="this.classList.toggle('on')"></button>
+      </div>
+      <div style="background:#ede9ff;border-radius:10px;padding:12px;margin-top:16px;font-size:12px;color:var(--accent);line-height:1.6;">
+        💡 Sub-admins can access the admin panel but only see sections they have permission for. Full admin access grants everything.
+      </div>
+    </div>
+
+    <!-- TAB: DANGER -->
+    <div id="tab-content-danger" style="display:none;">
+      <div style="background:rgba(229,72,77,.05);border:1.5px solid rgba(229,72,77,.2);border-radius:12px;padding:16px;margin-bottom:12px;">
+        <div style="font-size:14px;font-weight:700;color:var(--red);margin-bottom:6px;">⚠️ Suspend Account</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">Suspending will prevent this user from logging in. Their data is preserved.</div>
+        <button class="btn btn-danger" onclick="suspendUser()">Suspend Account</button>
+      </div>
+      <div style="background:rgba(229,72,77,.05);border:1.5px solid rgba(229,72,77,.2);border-radius:12px;padding:16px;">
+        <div style="font-size:14px;font-weight:700;color:var(--red);margin-bottom:6px;">🗑️ Delete Account</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">Permanently delete this user and all their data. Cannot be undone.</div>
+        <button class="btn btn-danger" onclick="deleteUser()">Delete Account</button>
+      </div>
+    </div>
+
     <div style="display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
-      <button class="btn btn-primary" onclick="saveHost()" style="flex:1;">Save Changes</button>
+      <button class="btn btn-primary" onclick="saveHost()" style="flex:1;">💾 Save Changes</button>
       <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
     </div>
   </div>
@@ -392,7 +468,31 @@ const FEATS=['liveQuiz','pulseCheck','noBranding','customRedirect','apiAccess','
 let allUsers=[],allContent=[],allPosts=[],editingPostId=null,currentHostId=null;
 
 onAuthStateChanged(auth,async function(u){
-  if(!u||u.uid!==ADMIN_UID){window.location.href='/login/';return;}
+  if(!u){window.location.href='/login/';return;}
+  // Allow full admin or sub-admins
+  if(u.uid!==ADMIN_UID){
+    // Check if sub-admin
+    try{
+      const userSnap=await getDoc(doc(db,'users',u.uid));
+      const userData=userSnap.exists()?userSnap.data():{};
+      if(!userData.isAdmin&&!userData.access?.isAdmin&&!userData.access?.blogManager&&!userData.access?.hostManager&&!userData.access?.verifyManager){
+        window.location.href='/dashboard/';return;
+      }
+      // Hide sections sub-admin can't access
+      if(!userData.isAdmin&&!userData.access?.isAdmin){
+        const allowed=[];
+        if(userData.access?.blogManager)allowed.push('blog');
+        if(userData.access?.hostManager)allowed.push('hosts','overview');
+        if(userData.access?.verifyManager)allowed.push('verify');
+        document.querySelectorAll('.sb-item').forEach(function(btn){
+          const sec=btn.id.replace('sn-','');
+          if(!allowed.includes(sec))btn.style.display='none';
+        });
+        // Show first allowed section
+        if(allowed.length)show(allowed[0]);
+      }
+    }catch(e){window.location.href='/dashboard/';return;}
+  }
   document.getElementById('ls').style.display='none';
   loadOverview();
 });
@@ -450,29 +550,109 @@ window.filterHosts=function(){
 };
 
 // ── HOST MODAL ───────────────────────────────────────
+window.switchTab=function(tab){
+  ['plan','features','access','danger'].forEach(function(t){
+    const content=document.getElementById('tab-content-'+t);
+    const btn=document.getElementById('tab-'+t);
+    if(content)content.style.display=t===tab?'block':'none';
+    if(btn){
+      btn.style.background=t===tab?'var(--surface)':'transparent';
+      btn.style.color=t===tab?(t==='danger'?'var(--red)':'var(--accent)'):'var(--muted)';
+      if(t==='danger')btn.style.color=t===tab?'var(--red)':'var(--muted)';
+    }
+  });
+};
+
+window.selectPlan=function(plan){
+  document.getElementById('m-plan').value=plan;
+  document.querySelectorAll('.plan-pick').forEach(function(btn){
+    const isSelected=btn.dataset.plan===plan;
+    btn.style.background=isSelected?'#ede9ff':'var(--surface)';
+    btn.style.borderColor=isSelected?'var(--accent2)':'var(--border)';
+    btn.style.color=isSelected?'var(--accent)':'var(--text)';
+  });
+};
+
 window.openModal=function(uid){
   const u=allUsers.find(function(u){return u.id===uid;});if(!u)return;
   currentHostId=uid;
-  document.getElementById('m-name').textContent=u.name||u.displayName||'Unknown';
+  const name=u.name||u.displayName||'Unknown';
+  document.getElementById('m-name').textContent=name;
   document.getElementById('m-email').textContent=u.email||'No email';
-  document.getElementById('m-plan').value=u.plan||'free';
+  document.getElementById('m-avatar').textContent=name[0].toUpperCase();
+  // Meta info
+  const joined=u.createdAt?.seconds?new Date(u.createdAt.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'Unknown';
+  const lastLogin=u.lastLoginAt?.seconds?new Date(u.lastLoginAt.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'Never';
+  document.getElementById('m-meta').textContent='Joined: '+joined+' · Last login: '+lastLogin+' · Provider: '+(u.provider||'email');
+  // Plan
+  selectPlan(u.plan||'free');
   document.getElementById('m-expiry').value=u.planExpiry||'';
+  document.getElementById('m-note').value=u.adminNote||'';
+  // Features
   const feats=u.features||{};
   FEATS.forEach(function(f){const el=document.getElementById('f-'+f);if(el){if(feats[f])el.classList.add('on');else el.classList.remove('on');}});
+  // Access
+  const access=u.access||{};
+  ['isAdmin','blogManager','hostManager','verifyManager'].forEach(function(a){
+    const el=document.getElementById('f-'+a);
+    if(el){if(access[a]||u.isAdmin)el.classList.add('on');else el.classList.remove('on');}
+  });
+  // Show plan tab by default
+  switchTab('plan');
   document.getElementById('host-modal').classList.add('open');
 };
+
 window.closeModal=function(){document.getElementById('host-modal').classList.remove('open');currentHostId=null;};
+
 window.saveHost=async function(){
   if(!currentHostId)return;
   const plan=document.getElementById('m-plan').value;
   const expiry=document.getElementById('m-expiry').value;
+  const note=document.getElementById('m-note').value.trim();
   const features={};
   FEATS.forEach(function(f){features[f]=document.getElementById('f-'+f)?.classList.contains('on')||false;});
+  const access={
+    isAdmin:document.getElementById('f-isAdmin')?.classList.contains('on')||false,
+    blogManager:document.getElementById('f-blogManager')?.classList.contains('on')||false,
+    hostManager:document.getElementById('f-hostManager')?.classList.contains('on')||false,
+    verifyManager:document.getElementById('f-verifyManager')?.classList.contains('on')||false,
+  };
   try{
-    await updateDoc(doc(db,'users',currentHostId),{plan,planExpiry:expiry||null,features,updatedAt:serverTimestamp()});
+    await updateDoc(doc(db,'users',currentHostId),{
+      plan,
+      planExpiry:expiry||null,
+      features,
+      access,
+      isAdmin:access.isAdmin,
+      adminNote:note||null,
+      updatedAt:serverTimestamp(),
+      planUpdatedAt:serverTimestamp(),
+      planUpdatedBy:auth.currentUser?.uid||'admin',
+    });
     const u=allUsers.find(function(u){return u.id===currentHostId;});
-    if(u){u.plan=plan;u.features=features;}
-    closeModal();toast('✅ Host updated!');filterHosts();
+    if(u){u.plan=plan;u.features=features;u.access=access;}
+    closeModal();
+    toast('✅ User updated!');
+    filterHosts();
+  }catch(e){toast('Error: '+e.message);}
+};
+
+window.suspendUser=async function(){
+  if(!currentHostId)return;
+  if(!confirm('Suspend this account? The user will not be able to log in.'))return;
+  try{
+    await updateDoc(doc(db,'users',currentHostId),{suspended:true,suspendedAt:serverTimestamp(),suspendedBy:auth.currentUser?.uid});
+    toast('Account suspended');closeModal();filterHosts();
+  }catch(e){toast('Error: '+e.message);}
+};
+
+window.deleteUser=async function(){
+  if(!currentHostId)return;
+  if(!confirm('PERMANENTLY delete this account and all data? This cannot be undone.'))return;
+  if(!confirm('Are you absolutely sure?'))return;
+  try{
+    await updateDoc(doc(db,'users',currentHostId),{deleted:true,deletedAt:serverTimestamp(),deletedBy:auth.currentUser?.uid});
+    toast('Account marked for deletion');closeModal();filterHosts();
   }catch(e){toast('Error: '+e.message);}
 };
 
