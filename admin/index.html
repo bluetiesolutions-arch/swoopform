@@ -588,7 +588,7 @@ window.saveBlogPost=async function(status){
     if(editingPostId){await updateDoc(doc(db,'blogPosts',editingPostId),data);toast('Post updated!');}
     else{data.createdAt=serverTimestamp();data.publishedAt=status==='published'?serverTimestamp():null;await addDoc(collection(db,'blogPosts'),data);toast(status==='published'?'Published!':'Draft saved!');}
     cancelBlogForm();loadBlog();
-  }catch(e){toast('Error saving');}
+  }catch(e){console.error('Blog save error:',e);toast('Error: '+e.message);}
 };
 
 window.deletePost=async function(id){
