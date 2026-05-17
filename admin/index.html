@@ -736,38 +736,7 @@ async function debugBlog(){
     log('Fatal error: '+e.message);
   }
 }
-async function debugBlog(){
-  const panel=document.getElementById('debug-panel');
-  const output=document.getElementById('debug-output');
-  panel.style.display='block';
-  output.textContent='';
-  const log=function(msg){output.textContent+=msg+'\n';};
-  const auth=window._auth;const db=window._db;
-  try{
-    log('User UID: '+(auth?.currentUser?.uid||'NOT LOGGED IN'));
-    log('User email: '+(auth?.currentUser?.email||'none'));
-    log('Match: '+(auth?.currentUser?.uid==='7WPJK6ZuaEb3lgevyUbbU87umuH3'?'YES ✅':'NO ❌'));
-    log('');
-    log('Testing blogPosts write...');
-    const testRef=doc(db,'blogPosts','debug-test-'+Date.now());
-    await updateDoc(testRef,{test:true}).catch(async function(e){
-      log('updateDoc error: '+e.code+' - '+e.message);
-      log('');
-      log('Trying addDoc...');
-      try{
-        const {addDoc,collection,deleteDoc}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
-        const r=await addDoc(collection(db,'blogPosts'),{test:true,title:'debug'});
-        log('addDoc SUCCESS! id='+r.id);
-        await deleteDoc(doc(db,'blogPosts',r.id));
-        log('Cleanup done');
-      }catch(e2){
-        log('addDoc error: '+e2.code+' - '+e2.message);
-      }
-    });
-  }catch(e){
-    log('Fatal error: '+e.message);
-  }
-}
+
 function fmtDate(ts){if(!ts?.seconds)return'—';return new Date(ts.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
 function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
