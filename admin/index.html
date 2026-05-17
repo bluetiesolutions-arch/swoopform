@@ -121,7 +121,7 @@ nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border
   <div class="sidebar">
     <div class="sb-lbl">Overview</div>
     <button class="sb-item active" id="sn-overview" onclick="show('overview')">📊 Overview</button>
-    <button class="sb-item" id="sn-hosts" onclick="show('hosts')">👥 Hosts</button>
+    <button class="sb-item" id="sn-hosts" onclick="show('hosts')">👥 Users</button>
     <button class="sb-item" id="sn-content" onclick="show('content')">📋 All Content</button>
     <div class="sb-divider"></div>
     <div class="sb-lbl">Features</div>
@@ -155,8 +155,8 @@ nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border
 
     <!-- HOSTS -->
     <div class="sec" id="sec-hosts">
-      <div class="sec-title">👥 Hosts</div>
-      <div class="sec-sub">Manage all registered users</div>
+      <div class="sec-title">👥 Users</div>
+      <div class="sec-sub">All registered users — change plans, access and features</div>
       <div class="card">
         <div class="card-t">
           <span id="hosts-count">All hosts</span>
@@ -541,7 +541,7 @@ window.filterHosts=function(){
   let f=allUsers;
   if(plan)f=f.filter(function(u){return(u.plan||'free')===plan;});
   if(q)f=f.filter(function(u){return(u.name||u.displayName||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q);});
-  document.getElementById('hosts-count').textContent=f.length+' host'+(f.length!==1?'s':'');
+  document.getElementById('hosts-count').textContent=f.length+' user'+(f.length!==1?'s':'');
   document.getElementById('hosts-wrap').innerHTML=f.length
     ?'<div style="overflow-x:auto;"><table class="table"><thead><tr><th>Name</th><th>Email</th><th>Plan</th><th>Joined</th><th>Action</th></tr></thead><tbody>'
       +f.map(function(u){return'<tr><td style="font-weight:600;">'+eh(u.name||u.displayName||'—')+'</td><td style="color:var(--muted);font-size:12px;">'+eh(u.email||'—')+'</td><td><span class="badge '+(PLAN_BADGE[u.plan||'free']||'badge-free')+'">'+(u.plan||'free')+'</span></td><td style="color:var(--muted2);font-size:12px;">'+fmtDate(u.createdAt)+'</td><td><button class="btn btn-primary btn-sm" onclick="openModal(\''+u.id+'\')">Manage</button></td></tr>';}).join('')
