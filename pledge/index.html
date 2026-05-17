@@ -344,6 +344,24 @@ window.submitPledge=async function(){
       if(!rl.allowed){showResponseLimitError(rl.count,rl.limit);return;}
     }
     await addDoc(collection(db,'pledgeResponses'),response);
+
+    // Email notification to host
+    try{
+      if(typeof SF_EMAIL!=='undefined'){
+        const od=pledgeData;
+        if(od&&od.ownerEmail){
+          SF_EMAIL.notifyNewResponse(
+            od.ownerEmail,
+            od.ownerName||od.hostName||'',
+            od.title||'Pledge',
+            'Pledge',
+            (od.responseCount||od.totalVotes||od.totalPledges||0)+1,
+            'https://swoopform.com/pledge/responses/?id='+PLID
+          );
+        }
+      }
+    }catch(ne){console.warn('Email notify:',ne);}
+
     await updateDoc(doc(db,'pledges',pledgeId),{totalPledges:increment(1),updatedAt:serverTimestamp()});
     localStorage.setItem('signed_pledge_'+pledgeId,'1');
     hasSigned=true;

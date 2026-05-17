@@ -309,6 +309,24 @@ window.submitRegistration=async function(){
       formId:RID,eventName:rData.eventName,regId,
       data,status:'confirmed',submittedAt:serverTimestamp()
     });
+
+    // Email notification to host
+    try{
+      if(typeof SF_EMAIL!=='undefined'){
+        const od=formData;
+        if(od&&od.ownerEmail){
+          SF_EMAIL.notifyNewResponse(
+            od.ownerEmail,
+            od.ownerName||od.hostName||'',
+            od.title||'Registration',
+            'Registration',
+            (od.responseCount||od.totalVotes||od.totalPledges||0)+1,
+            'https://swoopform.com/registration/responses/?id='+RID
+          );
+        }
+      }
+    }catch(ne){console.warn('Email notify:',ne);}
+
     try{await updateDoc(doc(db,'registrations',RID),{responseCount:increment(1)});}catch(e){}
     document.getElementById('reg-id-val').textContent=regId;
     document.getElementById('form-body').style.display='none';

@@ -576,6 +576,24 @@ async function showThankyou(){
       answers,submittedAt:serverTimestamp(),
       quizScore:quizTotal>0?quizScore:null,quizTotal:quizTotal>0?quizTotal:null
     });
+
+    // Email notification to host
+    try{
+      if(typeof SF_EMAIL!=='undefined'){
+        const od=surveyData;
+        if(od&&od.ownerEmail){
+          SF_EMAIL.notifyNewResponse(
+            od.ownerEmail,
+            od.ownerName||od.hostName||'',
+            od.title||'Survey',
+            'Survey',
+            (od.responseCount||od.totalVotes||od.totalPledges||0)+1,
+            'https://swoopform.com/responses/?id='+SID
+          );
+        }
+      }
+    }catch(ne){console.warn('Email notify:',ne);}
+
   }catch(e){
     console.error('Save response error:',e);
     // Show error on page

@@ -441,6 +441,24 @@ window.submitAssessment=async function(){
       earned,totalMarks,pct,passed,grade:grade.grade,
       correct,wrong,skipped,submittedAt:serverTimestamp()
     });
+
+    // Email notification to host
+    try{
+      if(typeof SF_EMAIL!=='undefined'){
+        const od=assessment;
+        if(od&&od.ownerEmail){
+          SF_EMAIL.notifyNewResponse(
+            od.ownerEmail,
+            od.ownerName||od.hostName||'',
+            od.title||'Assessment',
+            'Assessment',
+            (od.responseCount||od.totalVotes||od.totalPledges||0)+1,
+            'https://swoopform.com/assessment/responses/?id='+AID
+          );
+        }
+      }
+    }catch(ne){console.warn('Email notify:',ne);}
+
   try{await updateDoc(doc(db,'assessments',AID),{responseCount:increment(1)});}catch(e){}
   }catch(e){console.error('Save error:',e);}
 

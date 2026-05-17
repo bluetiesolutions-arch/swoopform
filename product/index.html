@@ -302,6 +302,24 @@ window.showResults=async function(){
         topProduct:scored[0]?scored[0].name:'',
         submittedAt:serverTimestamp()
       });
+
+    // Email notification to host
+    try{
+      if(typeof SF_EMAIL!=='undefined'){
+        const od=formData;
+        if(od&&od.ownerEmail){
+          SF_EMAIL.notifyNewResponse(
+            od.ownerEmail,
+            od.ownerName||od.hostName||'',
+            od.title||'Product Quiz',
+            'Product Quiz',
+            (od.responseCount||od.totalVotes||od.totalPledges||0)+1,
+            'https://swoopform.com/product/responses/?id='+PRID
+          );
+        }
+      }
+    }catch(ne){console.warn('Email notify:',ne);}
+
       await updateDoc(doc(db,'products',PID),{responseCount:increment(1)});
     }catch(saveErr){console.error('Save error:',saveErr);}
 

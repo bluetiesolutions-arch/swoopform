@@ -312,6 +312,24 @@ async function showResults(){
       riddleId,riddleTitle:riddle.title,playerName,playerEmail,
       score,total,pct,answers,submittedAt:serverTimestamp()
     });
+
+    // Email notification to host
+    try{
+      if(typeof SF_EMAIL!=='undefined'){
+        const od=riddleData;
+        if(od&&od.ownerEmail){
+          SF_EMAIL.notifyNewResponse(
+            od.ownerEmail,
+            od.ownerName||od.hostName||'',
+            od.title||'Riddle',
+            'Riddle',
+            (od.responseCount||od.totalVotes||od.totalPledges||0)+1,
+            'https://swoopform.com/riddle/responses/?id='+RID
+          );
+        }
+      }
+    }catch(ne){console.warn('Email notify:',ne);}
+
     await updateDoc(doc(db,'riddles',riddleId),{responseCount:increment(1)});
   }catch(e){console.error(e);}
 

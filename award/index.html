@@ -266,6 +266,24 @@ window.submitNominations=async function(){
       submittedAt:serverTimestamp()
     });
 
+    // Email notification to host
+    try{
+      if(typeof SF_EMAIL!=='undefined'){
+        const od=formData;
+        if(od&&od.ownerEmail){
+          SF_EMAIL.notifyNewResponse(
+            od.ownerEmail,
+            od.ownerName||od.hostName||'',
+            od.title||'Award',
+            'Award',
+            (od.responseCount||od.totalVotes||od.totalPledges||0)+1,
+            'https://swoopform.com/award/responses/?id='+AID
+          );
+        }
+      }
+    }catch(ne){console.warn('Email notify:',ne);}
+
+
     document.getElementById('award-body').style.display='none';
     document.getElementById('thankyou').style.display='block';
     renderLeaderboard(aData.scores||{},'ty-lb-wrap');

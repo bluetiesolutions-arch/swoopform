@@ -284,6 +284,24 @@ window.submitForm=async function(){
       formId:LID,formTitle:lData.title,
       data,submittedAt:serverTimestamp()
     });
+
+    // Email notification to host
+    try{
+      if(typeof SF_EMAIL!=='undefined'){
+        const od=formData;
+        if(od&&od.ownerEmail){
+          SF_EMAIL.notifyNewResponse(
+            od.ownerEmail,
+            od.ownerName||od.hostName||'',
+            od.title||'Lead Form',
+            'Lead Form',
+            (od.responseCount||od.totalVotes||od.totalPledges||0)+1,
+            'https://swoopform.com/lead/responses/?id='+LID
+          );
+        }
+      }
+    }catch(ne){console.warn('Email notify:',ne);}
+
     try{await updateDoc(doc(db,'leads',LID),{responseCount:increment(1)});}catch(e){}
     document.getElementById('form-body').style.display='none';
     document.getElementById('offer-section').style.display='none';

@@ -423,6 +423,24 @@ window.submitFeedback=async function(){
       submittedAt:serverTimestamp()
     });
 
+    // Email notification to host
+    try{
+      if(typeof SF_EMAIL!=='undefined'){
+        const od=formData;
+        if(od&&od.ownerEmail){
+          SF_EMAIL.notifyNewResponse(
+            od.ownerEmail,
+            od.ownerName||od.hostName||'',
+            od.title||'Feedback Form',
+            'Feedback Form',
+            (od.responseCount||od.totalVotes||od.totalPledges||0)+1,
+            'https://swoopform.com/feedback/responses/?id='+FID
+          );
+        }
+      }
+    }catch(ne){console.warn('Email notify:',ne);}
+
+
     try{await updateDoc(doc(db,'feedbacks',FID),{responseCount:increment(1)});}catch(e){}
     document.getElementById('form-body').style.display='none';
     document.getElementById('thankyou').style.display='block';

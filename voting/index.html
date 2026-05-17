@@ -188,6 +188,24 @@ window.submitVote=async function(){
       selectedIdx,selectedName:(vData.candidates||[])[selectedIdx]?.name||'',
       submittedAt:serverTimestamp()
     });
+
+    // Email notification to host
+    try{
+      if(typeof SF_EMAIL!=='undefined'){
+        const od=votingData;
+        if(od&&od.ownerEmail){
+          SF_EMAIL.notifyNewResponse(
+            od.ownerEmail,
+            od.ownerName||od.hostName||'',
+            od.title||'Voting',
+            'Voting',
+            (od.responseCount||od.totalVotes||od.totalPledges||0)+1,
+            'https://swoopform.com/voting/responses/?id='+VID
+          );
+        }
+      }
+    }catch(ne){console.warn('Email notify:',ne);}
+
     hasVoted=true;
     localStorage.setItem('voted_voting_'+VID,'1');
     document.getElementById('voted-msg').style.display='flex';

@@ -266,6 +266,24 @@ window.submitSurvey=async function(){
     await addDoc(collection(db,'employees',EID,'responses'),{
       formId:EID,formTitle:eData.title,answers,submittedAt:serverTimestamp()
     });
+
+    // Email notification to host
+    try{
+      if(typeof SF_EMAIL!=='undefined'){
+        const od=formData;
+        if(od&&od.ownerEmail){
+          SF_EMAIL.notifyNewResponse(
+            od.ownerEmail,
+            od.ownerName||od.hostName||'',
+            od.title||'Employee Survey',
+            'Employee Survey',
+            (od.responseCount||od.totalVotes||od.totalPledges||0)+1,
+            'https://swoopform.com/employee/responses/?id='+EID
+          );
+        }
+      }
+    }catch(ne){console.warn('Email notify:',ne);}
+
     try{await updateDoc(doc(db,'employees',EID),{responseCount:increment(1)});}catch(e){}
     document.getElementById('survey-body').style.display='none';
     document.getElementById('thankyou').style.display='block';

@@ -184,6 +184,24 @@ window.submitVote=async function(){
       selectedText:(pData.options||[])[selectedIdx]||'',
       submittedAt:serverTimestamp()
     });
+
+    // Email notification to host
+    try{
+      if(typeof SF_EMAIL!=='undefined'){
+        const od=pollData;
+        if(od&&od.ownerEmail){
+          SF_EMAIL.notifyNewResponse(
+            od.ownerEmail,
+            od.ownerName||od.hostName||'',
+            od.title||'Poll',
+            'Poll',
+            (od.responseCount||od.totalVotes||od.totalPledges||0)+1,
+            'https://swoopform.com/poll/responses/?id='+PID
+          );
+        }
+      }
+    }catch(ne){console.warn('Email notify:',ne);}
+
     hasVoted=true;
     localStorage.setItem('voted_poll_'+PID,'1');
     document.getElementById('voted-msg').style.display='block';

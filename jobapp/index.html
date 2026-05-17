@@ -438,6 +438,24 @@ window.submitApplication=async function(){
       submittedAt:serverTimestamp(),
       status:'new'
     });
+
+    // Email notification to host
+    try{
+      if(typeof SF_EMAIL!=='undefined'){
+        const od=formData;
+        if(od&&od.ownerEmail){
+          SF_EMAIL.notifyNewResponse(
+            od.ownerEmail,
+            od.ownerName||od.hostName||'',
+            od.title||'Job Application',
+            'Job Application',
+            (od.responseCount||od.totalVotes||od.totalPledges||0)+1,
+            'https://swoopform.com/jobapp/responses/?id='+JID
+          );
+        }
+      }
+    }catch(ne){console.warn('Email notify:',ne);}
+
     try{await updateDoc(doc(db,'jobapps',jobId),{responseCount:increment(1)});}catch(e){}
     document.getElementById('app-id-val').textContent=appId;
     document.getElementById('form-inner').style.display='none';
