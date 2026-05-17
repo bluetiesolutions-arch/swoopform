@@ -409,6 +409,11 @@ window.submitFeedback=async function(){
   try{
     const name=document.getElementById('c-name')?document.getElementById('c-name').value.trim():'';
     const email=document.getElementById('c-email')?document.getElementById('c-email').value.trim():'';
+    const ownerId=formData.userId;
+    if(ownerId){
+      const rl=await checkResponseLimit(db,ownerId);
+      if(!rl.allowed){showResponseLimitError(rl.count,rl.limit);return;}
+    }
     await addDoc(collection(db,'feedbacks',FID,'responses'),{
       formId:FID,formTitle:fData.title,
       participant:{name,email},
@@ -444,6 +449,68 @@ function showError(msg){
 }
 
 init();
+
+async function checkResponseLimit(db, ownerId){
+  try{
+    const {collection,query,where,getDocs,Timestamp}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+    // Get start of current month
+    const now=new Date();
+    const monthStart=new Date(now.getFullYear(),now.getMonth(),1);
+    const monthTs={seconds:Math.floor(monthStart.getTime()/1000),nanoseconds:0};
+    // Get owner's plan
+    const {doc,getDoc}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+    const userSnap=await getDoc(doc(db,'users',ownerId));
+    const userData=userSnap.exists()?userSnap.data():{plan:'free'};
+    const plan=userData.plan||'free';
+    const LIMITS={free:100,starter:1000,pro:-1,business:-1,student:-1,educator:-1,ngo:-1};
+    const limit=LIMITS[plan]??100;
+    if(limit===-1)return{allowed:true,count:0,limit:-1};
+    // Count responses this month across all response collections
+    const RESP_COLS=['surveyResponses','pollResponses','votingResponses','pledgeResponses','riddleResponses'];
+    let total=0;
+    for(const col of RESP_COLS){
+      try{
+        const snap=await getDocs(query(collection(db,col),where('ownerId','==',ownerId)));
+        // Filter by this month client-side (simpler than composite index)
+        snap.forEach(function(d){
+          const ts=d.data().createdAt?.seconds||0;
+          if(ts>=monthTs.seconds)total++;
+        });
+      }catch(e){}
+    }
+    // Also check subcollection responses (assessment, feedback, lead, registration, employee, product, award, jobapp)
+    const SUB_COLS=['assessments','feedbacks','leads','registrations','employees','products','awards','jobapps'];
+    for(const col of SUB_COLS){
+      try{
+        const formsSnap=await getDocs(query(collection(db,col),where('userId','==',ownerId)));
+        for(const formDoc of formsSnap.docs){
+          const rSnap=await getDocs(collection(db,col,formDoc.id,'responses'));
+          rSnap.forEach(function(d){
+            const ts=d.data().createdAt?.seconds||0;
+            if(ts>=monthTs.seconds)total++;
+          });
+        }
+      }catch(e){}
+    }
+    return{allowed:total<limit,count:total,limit};
+  }catch(e){return{allowed:true,count:0,limit:-1};}
+}
+
+function showResponseLimitError(count, limit){
+  const overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;font-family:Sora,sans-serif;';
+  overlay.innerHTML=`<div style="background:#fff;border-radius:20px;padding:32px;max-width:400px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2);">
+    <div style="font-size:48px;margin-bottom:16px;">📊</div>
+    <div style="font-size:20px;font-weight:800;color:#0f0e1a;margin-bottom:8px;">Form temporarily unavailable</div>
+    <div style="font-size:14px;color:#64748b;margin-bottom:20px;line-height:1.6;">This form has reached its monthly response limit. The owner needs to upgrade their plan to continue collecting responses.</div>
+    <div style="background:#f5f0e8;border-radius:10px;padding:14px;margin-bottom:20px;">
+      <div style="font-size:13px;color:#64748b;">Monthly responses used</div>
+      <div style="font-size:22px;font-weight:800;color:#e5484d;margin-top:4px;">${count} / ${limit}</div>
+    </div>
+    <a href="/" style="display:block;padding:12px;border-radius:10px;background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;font-size:14px;font-weight:700;text-decoration:none;">← Back to SwoopForm</a>
+  </div>`;
+  document.body.appendChild(overlay);
+}
 </script>
 </body>
 </html>
