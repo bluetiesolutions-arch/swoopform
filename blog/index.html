@@ -128,7 +128,7 @@ async function load(){
       document.getElementById('featured-wrap').innerHTML=
         '<div class="section-label">✨ Featured</div>'
         +'<a href="/blog/post/?id='+f.id+'" class="featured-card">'
-        +(f.coverImage?'<div class="featured-img" style="background:url('+f.coverImage+') center/cover no-repeat;"></div>':'<div class="featured-img" style="background:linear-gradient(135deg,#2d1b69,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:5rem;">'+( f.emoji||'📝')+'</div>')
+        +(f.coverImage?'<div class="featured-img" style="background:url('+f.coverImage+') '+(f.coverPosition||'center')+'/cover no-repeat;"></div>':'<div class="featured-img" style="background:linear-gradient(135deg,#2d1b69,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:5rem;">'+( f.emoji||'📝')+'</div>')
         +'<div class="featured-body">'
         +(f.tags?.length?'<span class="post-cat">'+f.tags[0]+'</span>':'')
         +'<div class="featured-title">'+eh(f.title)+'</div>'
@@ -145,7 +145,7 @@ async function load(){
     document.getElementById('posts-grid').innerHTML=allPosts.map(function(p){
       const grad=gradForTag(p.tags?.[0]);
       return'<a href="/blog/post/?id='+p.id+'" class="post-card">'
-        +(p.coverImage?'<div class="post-cover" style="background:url('+p.coverImage+') center/cover no-repeat;"></div>':'<div class="post-cover" style="background:'+grad+';display:flex;align-items:center;justify-content:center;font-size:3rem;">'+( p.emoji||'📝')+'</div>')
+        +(p.coverImage?'<div class="post-cover" style="background:url('+p.coverImage+') '+(p.coverPosition||'center')+'/cover no-repeat;"></div>':'<div class="post-cover" style="background:'+grad+';display:flex;align-items:center;justify-content:center;font-size:3rem;">'+( p.emoji||'📝')+'</div>')
         +'<div class="post-body">'
         +(p.tags?.length?'<span class="post-cat" style="font-size:10px;margin-bottom:8px;">'+p.tags[0]+'</span>':'')
         +'<div class="post-title">'+eh(p.title)+'</div>'

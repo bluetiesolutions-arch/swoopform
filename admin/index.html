@@ -263,6 +263,20 @@ nav{background:var(--surface);border-bottom:1.5px solid var(--border);padding:0 
             <div class="fl"><label class="ll">Read time (min)</label><input class="ii" id="bf-time" type="number" min="1" placeholder="3"></div>
           </div>
           <div class="fl"><label class="ll">Cover image URL</label><input class="ii" id="bf-cover" placeholder="https://..."></div>
+          <div class="fl"><label class="ll">Image focal point</label>
+          <select class="ii" id="bf-cover-pos">
+            <option value="center">Center (default)</option>
+            <option value="top">Top</option>
+            <option value="bottom">Bottom</option>
+            <option value="left">Left</option>
+            <option value="right">Right</option>
+            <option value="top center">Top Center</option>
+            <option value="bottom center">Bottom Center</option>
+            <option value="20% 20%">Upper Left</option>
+            <option value="80% 20%">Upper Right</option>
+            <option value="20% 80%">Lower Left</option>
+            <option value="80% 80%">Lower Right</option>
+          </select></div>
           <div class="fl"><label class="ll">Emoji (if no cover)</label><input class="ii" id="bf-emoji" placeholder="📝" style="max-width:80px;"></div>
           <div class="fl"><label class="ll">Tags (comma separated)</label><input class="ii" id="bf-tags" placeholder="Surveys, Tips, Research"></div>
           <div class="fl"><label class="ll">Content (Markdown) *</label><textarea class="ii" id="bf-content" rows="12" style="resize:vertical;font-family:monospace;font-size:12px;" placeholder="# Heading&#10;&#10;Write your post..."></textarea></div>
@@ -549,7 +563,7 @@ window.editPost=function(id){
   document.getElementById('bf-excerpt').value=p.excerpt||'';
   document.getElementById('bf-author').value=p.author||'';
   document.getElementById('bf-time').value=p.readTime||'';
-  document.getElementById('bf-cover').value=p.coverImage||'';
+  document.getElementById('bf-cover').value=p.coverImage||'';if(document.getElementById('bf-cover-pos'))document.getElementById('bf-cover-pos').value=p.coverPosition||'center';
   document.getElementById('bf-emoji').value=p.emoji||'';
   document.getElementById('bf-tags').value=(p.tags||[]).join(', ');
   document.getElementById('bf-content').value=p.content||'';
@@ -563,7 +577,7 @@ window.saveBlogPost=async function(status){
   const content=document.getElementById('bf-content').value.trim();
   if(!title||!content){toast('Please add title and content');return;}
   const tags=document.getElementById('bf-tags').value.split(',').map(function(t){return t.trim();}).filter(Boolean);
-  const data={title,excerpt:document.getElementById('bf-excerpt').value.trim(),author:document.getElementById('bf-author').value.trim()||'SwoopForm Team',readTime:parseInt(document.getElementById('bf-time').value)||3,coverImage:document.getElementById('bf-cover').value.trim(),emoji:document.getElementById('bf-emoji').value.trim()||'📝',tags,content,status,featured:document.getElementById('bf-featured').classList.contains('on'),updatedAt:serverTimestamp()};
+  const data={title,excerpt:document.getElementById('bf-excerpt').value.trim(),author:document.getElementById('bf-author').value.trim()||'SwoopForm Team',readTime:parseInt(document.getElementById('bf-time').value)||3,coverImage:document.getElementById('bf-cover').value.trim(),coverPosition:document.getElementById('bf-cover-pos')?.value||'center',emoji:document.getElementById('bf-emoji').value.trim()||'📝',tags,content,status,featured:document.getElementById('bf-featured').classList.contains('on'),updatedAt:serverTimestamp()};
   try{
     if(editingPostId){await updateDoc(doc(db,'blogPosts',editingPostId),data);toast('Post updated!');}
     else{data.createdAt=serverTimestamp();data.publishedAt=status==='published'?serverTimestamp():null;await addDoc(collection(db,'blogPosts'),data);toast(status==='published'?'Published!':'Draft saved!');}
