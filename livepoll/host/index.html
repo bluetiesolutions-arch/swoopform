@@ -128,7 +128,8 @@ nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 import{getFirestore,doc,getDoc}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-import{getDatabase,ref,set,push,onValue,update,off}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import{getDatabase,ref,set,push,onValue,update,off,get}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+import{addDoc,collection,updateDoc,doc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83",databaseURL:"https://swoopform-default-rtdb.asia-southeast1.firebasedatabase.app/"};
 const app=initializeApp(FB);const auth=getAuth(app);const fsdb=getFirestore(app);const rtdb=getDatabase(app);
 const COLORS=['#0ea5e9','#7c3aed','#10b981','#f59e0b','#ef4444','#ec4899'];
@@ -251,7 +252,48 @@ window.prevSlide=function(){if(curSlide>0)showSlide(curSlide-1);};
 window.endSession=async function(){
   if(respListener)off(respListener);
   await update(ref(rtdb,'livePollSessions/'+sessionId),{status:'ended'});
-  toast('Session ended!');setTimeout(function(){window.location.href='/dashboard/';},2000);
+  // Save results to Firestore
+  try{
+    const slides=sessionData.slides||[];
+    const slideResults=[];
+    for(let i=0;i<slides.length;i++){
+      const s=slides[i];
+      const respSnap=await get(ref(rtdb,'livePollResponses/'+sessionId+'/'+i));
+      const resps=[];
+      if(respSnap.exists())respSnap.forEach(function(c){resps.push(c.val());});
+      slideResults.push({
+        type:s.type,
+        question:s.question,
+        options:s.options||[],
+        responses:resps,
+        responseCount:resps.length,
+      });
+    }
+    const partSnap=await get(ref(rtdb,'livePollParticipants/'+sessionId));
+    let participantCount=0;
+    if(partSnap.exists())partSnap.forEach(function(){participantCount++;});
+    await addDoc(collection(fsdb,'pulseResults'),{
+      pollId:PID,
+      sessionId,
+      title:sessionData.title||'PulseCheck',
+      userId:auth.currentUser?.uid||'',
+      slideResults,
+      slideCount:slides.length,
+      participantCount,
+      playedAt:serverTimestamp(),
+    });
+    await updateDoc(doc(fsdb,'livePollSessions',PID),{
+      lastSessionId:sessionId,
+      lastPlayedAt:serverTimestamp(),
+      lastParticipantCount:participantCount,
+    });
+    toast('Session ended! Results saved 🎉');
+    setTimeout(function(){window.location.href='/livepoll/results/?id='+PID;},2000);
+  }catch(e){
+    console.error('Save results error:',e);
+    toast('Session ended!');
+    setTimeout(function(){window.location.href='/dashboard/';},2000);
+  }
 };
 function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
