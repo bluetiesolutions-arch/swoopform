@@ -454,7 +454,9 @@ function buildPayload(status){
     questions,questionCount:questions.length,
     slug:gv('seo-slug')||null,
     seo:{title:gv('seo-title'),description:gv('seo-desc')},
-    userId:U.uid,updatedAt:serverTimestamp()
+    userId:U.uid,
+        ownerEmail:auth.currentUser?.email||U?.email||'',
+        ownerName:auth.currentUser?.displayName||U?.displayName||'',updatedAt:serverTimestamp()
   };
 }
 

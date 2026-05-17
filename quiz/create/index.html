@@ -354,7 +354,9 @@ function buildPayload(status){
       points:q.points,
       timeBonus:q.timeBonus
     };}),
-    userId:U.uid,updatedAt:serverTimestamp()
+    userId:U.uid,
+        ownerEmail:auth.currentUser?.email||U?.email||'',
+        ownerName:auth.currentUser?.displayName||U?.displayName||'',updatedAt:serverTimestamp()
   };
 }
 

@@ -230,7 +230,9 @@ function buildPayload(status){
   const empty=slides.find(function(s){return !s.question.trim();});if(empty){toast('Fill in all slide questions!');return null;}
   return{title,status,formType:'livepoll',description:gv('pc-desc'),category:gv('pc-cat'),audienceSize:gv('pc-size'),
     slideCount:slides.length,slides:slides.map(function(s){return{type:s.type,question:s.question,options:s.options||[]};}),
-    userId:U.uid,updatedAt:serverTimestamp()};
+    userId:U.uid,
+        ownerEmail:auth.currentUser?.email||U?.email||'',
+        ownerName:auth.currentUser?.displayName||U?.displayName||'',updatedAt:serverTimestamp()};
 }
 async function save(status){
   const data=buildPayload(status);if(!data)return null;
