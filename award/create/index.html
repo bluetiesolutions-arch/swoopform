@@ -19,7 +19,7 @@ nav{height:56px;background:var(--surface);border-bottom:1px solid var(--border);
 .btn-ghost{background:none;border:1px solid var(--border);color:var(--muted);padding:7px 14px;}
 .btn-ghost:hover{border-color:var(--muted2);color:var(--text);}
 .btn-primary{background:var(--accent);color:#fff;}
-.btn-primary:hover{background:#d97706;}
+.btn-primary:hover{opacity:.9;}
 .main{max-width:780px;margin:0 auto;padding:36px 20px;}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:20px;overflow:hidden;}
 .card-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
@@ -314,7 +314,9 @@ function buildPayload(status){
 window.saveDraft=async function(){
   const data=buildPayload('draft');if(!data)return;
   try{
-    const p=Object.assign({},data,{userId:currentUser.uid,userEmail:currentUser.email,updatedAt:serverTimestamp()});
+    const p=Object.assign({},data,{userId:currentUser.uid,
+        ownerEmail:auth.currentUser?.email||'',
+        ownerName:auth.currentUser?.displayName||'',userEmail:currentUser.email,updatedAt:serverTimestamp()});
     if(AID){await updateDoc(doc(db,'awards',AID),p);toast('✅ Draft updated!');}
     else{
       const ok=await gateCheck(db,auth.currentUser?.uid||'');if(!ok)return;

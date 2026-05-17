@@ -499,7 +499,9 @@ window.saveDraft=async function(){
   const data=buildData('draft');if(!data)return;
   if(!currentUser){window.toast('Please log in first');return;}
   try{
-    const p={...data,userId:currentUser.uid,userEmail:currentUser.email,updatedAt:serverTimestamp()};
+    const p={...data,userId:currentUser.uid,
+        ownerEmail:auth.currentUser?.email||'',
+        ownerName:auth.currentUser?.displayName||'',userEmail:currentUser.email,updatedAt:serverTimestamp()};
     if(existingJobId){
       await updateDoc(doc(db,'jobapps',existingJobId),p);
       window.toast('✅ Draft updated! Custom fields: '+(p.customFields?p.customFields.length:0));

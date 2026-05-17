@@ -5,28 +5,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Survey — SwoopForm</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#F5F0E8;--card:#fff;--border:#E2DAD0;--accent:#2D1B69;--accent2:#D97706;--text:#0F0E1A;--muted:#64748B}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+:root{--bg:#F5F0E8;--card:#fff;--border:#E2DAD0;--accent:#2D1B69;--accent2:#7c3aed;--text:#0F0E1A;--muted:#64748B}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
 .progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(0,0,0,0.08);z-index:200}
-.progress-fill{height:100%;background:linear-gradient(90deg,#2D1B69,#D97706);transition:width 0.5s ease}
+.progress-fill{height:100%;background:linear-gradient(90deg,#2d1b69,#7c3aed);transition:width 0.5s ease}
 .top-nav{position:fixed;top:3px;left:0;right:0;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;z-index:99}
 .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;opacity:0.5;transition:opacity 0.2s}
 .nav-logo:hover{opacity:1}
-.logo-mk{width:26px;height:26px;background:linear-gradient(135deg,#2d1b69,#7c3aed);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.75rem;color:#fff}
-.logo-nm{font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:var(--text)}
+.logo-mk{width:26px;height:26px;background:linear-gradient(135deg,#2d1b69,#7c3aed);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;font-size:0.75rem;color:#fff}
+.logo-nm{font-family:'Sora',sans-serif;font-weight:800;font-size:0.9rem;color:var(--text)}
 .progress-txt{font-size:0.72rem;color:var(--muted);font-weight:600}
 .stage{flex:1;display:flex;align-items:center;justify-content:center;padding:80px 20px 100px;min-height:100vh}
 .q-wrap{width:100%;max-width:640px;animation:fadeUp 0.3s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .q-num{font-size:0.72rem;font-weight:700;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
 .q-num-badge{width:22px;height:22px;border-radius:5px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:800}
-.q-text{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.2rem,3vw,1.8rem);letter-spacing:-0.03em;line-height:1.3;margin-bottom:24px;color:var(--text)}
+.q-text{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(1.2rem,3vw,1.8rem);letter-spacing:-0.03em;line-height:1.3;margin-bottom:24px;color:var(--text)}
 .q-text .req{color:#EF4444;margin-left:4px}
 .choice-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-.choice-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;transition:all 0.15s;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.92rem;font-weight:500;color:var(--text);width:100%}
+.choice-btn{display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;transition:all 0.15s;text-align:left;font-family:'Sora',sans-serif;font-size:0.92rem;font-weight:500;color:var(--text);width:100%}
 .choice-btn:hover{border-color:var(--accent);background:#EDE9FF}
 .choice-btn.selected{border-color:var(--accent);background:#EDE9FF;color:var(--accent);font-weight:700}
 .choice-key{width:26px;height:26px;border-radius:6px;border:1.5px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700;flex-shrink:0;transition:all 0.15s}
@@ -35,19 +35,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .choice-cb.selected{background:var(--accent);border-color:var(--accent)}
 .choice-cb.selected::after{content:'✓';color:#fff;font-size:0.65rem;font-weight:700}
 .yesno-group{display:flex;gap:12px;margin-bottom:20px}
-.yesno-btn{flex:1;padding:18px;border-radius:12px;border:2px solid var(--border);background:var(--card);font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;transition:all 0.2s;color:var(--text)}
+.yesno-btn{flex:1;padding:18px;border-radius:12px;border:2px solid var(--border);background:var(--card);font-family:'Sora',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;transition:all 0.2s;color:var(--text)}
 .yesno-btn:hover{border-color:var(--accent);background:#EDE9FF}
 .yesno-btn.selected{border-color:var(--accent);background:#EDE9FF;color:var(--accent)}
 .eo-group{display:flex;gap:12px;margin-bottom:20px;width:100%}
-.eo-btn{flex:1;padding:20px 16px;border-radius:12px;border:2px solid var(--border);background:var(--card);font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:all 0.2s;color:var(--text);text-align:center}
+.eo-btn{flex:1;padding:20px 16px;border-radius:12px;border:2px solid var(--border);background:var(--card);font-family:'Sora',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:all 0.2s;color:var(--text);text-align:center}
 .eo-btn:hover{border-color:var(--accent);background:#EDE9FF}
 .eo-btn.selected{border-color:var(--accent);background:#EDE9FF;color:var(--accent)}
 .eo-label{font-size:0.62rem;font-weight:700;color:var(--muted);letter-spacing:0.08em;margin-bottom:6px}
 .eo-or{display:flex;align-items:center;font-size:0.75rem;font-weight:700;color:var(--muted);flex-shrink:0;padding:0 4px}
-.text-ans{width:100%;padding:14px 16px;border-radius:10px;border:2px solid var(--border);background:var(--card);font-size:1rem;font-family:'DM Sans',sans-serif;color:var(--text);outline:none;transition:border-color 0.2s;margin-bottom:16px}
+.text-ans{width:100%;padding:14px 16px;border-radius:10px;border:2px solid var(--border);background:var(--card);font-size:1rem;font-family:'Sora',sans-serif;color:var(--text);outline:none;transition:border-color 0.2s;margin-bottom:16px}
 .text-ans:focus{border-color:var(--accent)}
 .text-ans::placeholder{color:#C4B9AA}
-.textarea-ans{width:100%;padding:14px 16px;border-radius:10px;border:2px solid var(--border);background:var(--card);font-size:1rem;font-family:'DM Sans',sans-serif;color:var(--text);outline:none;transition:border-color 0.2s;margin-bottom:16px;resize:vertical;min-height:120px}
+.textarea-ans{width:100%;padding:14px 16px;border-radius:10px;border:2px solid var(--border);background:var(--card);font-size:1rem;font-family:'Sora',sans-serif;color:var(--text);outline:none;transition:border-color 0.2s;margin-bottom:16px;resize:vertical;min-height:120px}
 .textarea-ans:focus{border-color:var(--accent)}
 .scale-group{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
 .scale-btn{width:48px;height:48px;border-radius:9px;border:1.5px solid var(--border);background:var(--card);font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.15s;color:var(--text)}
@@ -57,7 +57,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .rating-btn{flex:1;height:52px;border-radius:9px;border:1.5px solid var(--border);background:var(--card);font-size:1.1rem;cursor:pointer;transition:all 0.2s}
 .rating-btn:hover{border-color:var(--accent);background:#EDE9FF}
 .rating-btn.selected{background:var(--accent);border-color:var(--accent);color:#fff}
-.next-btn{display:inline-flex;align-items:center;gap:10px;padding:13px 26px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-size:0.95rem;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s}
+.next-btn{display:inline-flex;align-items:center;gap:10px;padding:13px 26px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-size:0.95rem;font-weight:700;font-family:'Sora',sans-serif;cursor:pointer;transition:all 0.2s}
 .next-btn:hover{opacity:0.88;transform:translateY(-1px)}
 .next-hint{font-size:0.72rem;color:var(--muted);margin-left:8px}
 .media-wrap{margin-bottom:20px;border-radius:12px;overflow:hidden;border:1.5px solid var(--border)}
@@ -69,24 +69,24 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .nav-up:disabled,.nav-dn:disabled{opacity:0.3;cursor:not-allowed}
 .welcome-screen{text-align:center;max-width:560px;padding:20px}
 .welcome-icon{font-size:3rem;margin-bottom:16px}
-.welcome-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:-0.04em;margin-bottom:12px;line-height:1.2}
+.welcome-title{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:-0.04em;margin-bottom:12px;line-height:1.2}
 .welcome-desc{font-size:0.95rem;color:var(--muted);margin-bottom:28px;line-height:1.7}
-.start-btn{padding:15px 36px;border-radius:12px;border:none;background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:all 0.2s}
+.start-btn{padding:15px 36px;border-radius:12px;border:none;background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;font-family:'Sora',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;transition:all 0.2s}
 .start-btn:hover{opacity:0.9;transform:translateY(-2px)}
 .thankyou-screen{text-align:center;max-width:480px;padding:20px}
 .ty-icon{font-size:3.5rem;margin-bottom:16px;animation:pop 0.5s ease}
 @keyframes pop{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
-.ty-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.4rem,3vw,2rem);letter-spacing:-0.03em;margin-bottom:10px}
+.ty-title{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(1.4rem,3vw,2rem);letter-spacing:-0.03em;margin-bottom:10px}
 .ty-msg{font-size:0.92rem;color:var(--muted);margin-bottom:24px;line-height:1.6}
 .share-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
-.share-btn{padding:8px 16px;border-radius:8px;border:1.5px solid var(--border);background:#fff;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--text);text-decoration:none;transition:all 0.2s}
+.share-btn{padding:8px 16px;border-radius:8px;border:1.5px solid var(--border);background:#fff;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'Sora',sans-serif;color:var(--text);text-decoration:none;transition:all 0.2s}
 .share-btn:hover{border-color:var(--accent);color:var(--accent)}
 .sf-brand{display:flex;align-items:center;gap:6px;justify-content:center;margin-top:24px;opacity:0.35}
-.sf-brand-logo{width:18px;height:18px;border-radius:4px;background:linear-gradient(135deg,#2d1b69,#7c3aed);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.55rem;color:#fff}
+.sf-brand-logo{width:18px;height:18px;border-radius:4px;background:linear-gradient(135deg,#2d1b69,#7c3aed);display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;font-size:0.55rem;color:#fff}
 .sf-brand-text{font-size:0.7rem;color:var(--muted)}
 .error-screen{text-align:center;padding:40px 20px;max-width:400px}
 .section-intro{text-align:center;max-width:480px;padding:20px}
-.section-intro-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:-0.03em;margin-bottom:8px}
+.section-intro-title{font-family:'Sora',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:-0.03em;margin-bottom:8px}
 .section-intro-sub{font-size:0.92rem;color:var(--muted);margin-bottom:20px}
 .ls{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:900;flex-direction:column;gap:12px}
 .sp{width:30px;height:30px;border:3px solid rgba(45,27,105,0.15);border-top-color:#2D1B69;border-radius:50%;animation:spin 0.8s linear infinite}
@@ -505,7 +505,7 @@ function showQuestion(q,section){
 function showAllPage(section,secQs){
   let html=`<div class="q-wrap">
     <div style="border-bottom:2px solid ${section?.color||'var(--accent)'};padding-bottom:8px;margin-bottom:20px">
-      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:${section?.color||'var(--accent)'}">${eh(section?.title||'')}</div>
+      <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.1rem;color:${section?.color||'var(--accent)'}">${eh(section?.title||'')}</div>
     </div>`;
   secQs.forEach((q,qi)=>{
     const ans=answers[q.id];
@@ -523,9 +523,9 @@ function showAllPage(section,secQs){
         <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="radio" name="q${q.id}" value="No" ${ans==='No'?'checked':''} onchange="answers['${q.id}']='No'"> No</label>
       </div>`;
     }else if(q.type==='textarea'){
-      html+=`<textarea style="width:100%;padding:10px;border-radius:8px;border:1.5px solid var(--border);font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none;resize:vertical;min-height:80px" oninput="answers['${q.id}']=this.value">${ans||''}</textarea>`;
+      html+=`<textarea style="width:100%;padding:10px;border-radius:8px;border:1.5px solid var(--border);font-family:'Sora',sans-serif;font-size:0.88rem;outline:none;resize:vertical;min-height:80px" oninput="answers['${q.id}']=this.value">${ans||''}</textarea>`;
     }else{
-      html+=`<input style="width:100%;padding:10px;border-radius:8px;border:1.5px solid var(--border);font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none" value="${ans||''}" oninput="answers['${q.id}']=this.value">`;
+      html+=`<input style="width:100%;padding:10px;border-radius:8px;border:1.5px solid var(--border);font-family:'Sora',sans-serif;font-size:0.88rem;outline:none" value="${ans||''}" oninput="answers['${q.id}']=this.value">`;
     }
     html+=`</div>`;
   });
@@ -550,7 +550,7 @@ async function showThankyou(){
       <div class="ty-icon">🎉</div>
       <div class="ty-title">${eh(ty.headline||'Thank you!')}</div>
       <div class="ty-msg">${eh(ty.message||'Your response has been recorded.')}</div>
-      ${quizTotal>0?`<div style="background:#EDE9FF;border-radius:12px;padding:16px;margin-bottom:16px"><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:var(--accent)">${quizScore}/${quizTotal}</div><div style="font-size:0.82rem;color:var(--muted)">Quiz score</div></div>`:''}
+      ${quizTotal>0?`<div style="background:#EDE9FF;border-radius:12px;padding:16px;margin-bottom:16px"><div style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:var(--accent)">${quizScore}/${quizTotal}</div><div style="font-size:0.82rem;color:var(--muted)">Quiz score</div></div>`:''}
       ${showShare?`<div class="share-row">
         <a class="share-btn" href="https://wa.me/?text=${encodeURIComponent('Take this survey: '+shareUrl)}" target="_blank">📱 Share on WhatsApp</a>
         <button class="share-btn" onclick="navigator.clipboard.writeText('${shareUrl}').then(()=>{this.textContent='✓ Copied!'})">🔗 Copy link</button>
@@ -658,7 +658,7 @@ function isLastQuestion(){
 function showError(title,msg){
   document.getElementById('ls').style.display='none';
   document.getElementById('bottom-nav').style.display='none';
-  document.getElementById('stage').innerHTML=`<div class="error-screen"><div style="font-size:3rem">😕</div><h2 style="font-family:'Syne',sans-serif;font-weight:800;margin-bottom:8px">${title}</h2><p style="color:var(--muted);margin-bottom:20px">${msg}</p><a href="/" style="color:var(--accent);font-weight:600">← SwoopForm</a></div>`;
+  document.getElementById('stage').innerHTML=`<div class="error-screen"><div style="font-size:3rem">😕</div><h2 style="font-family:'Sora',sans-serif;font-weight:800;margin-bottom:8px">${title}</h2><p style="color:var(--muted);margin-bottom:20px">${msg}</p><a href="/" style="color:var(--accent);font-weight:600">← SwoopForm</a></div>`;
 }
 function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function esc(s){return(s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;')}
@@ -683,7 +683,7 @@ function startTimer(qid,seconds){
   if(!wrap)return;
   const timerEl=document.createElement('div');
   timerEl.id='q-timer';
-  timerEl.style.cssText='position:fixed;top:60px;right:20px;background:var(--accent);color:#fff;padding:6px 14px;border-radius:100px;font-family:"Syne",sans-serif;font-weight:800;font-size:0.9rem;z-index:200;transition:background 0.3s';
+  timerEl.style.cssText='position:fixed;top:60px;right:20px;background:var(--accent);color:#fff;padding:6px 14px;border-radius:100px;font-family:"Sora",sans-serif;font-weight:800;font-size:0.9rem;z-index:200;transition:background 0.3s';
   document.body.appendChild(timerEl);
   let left=seconds;
   function tick(){

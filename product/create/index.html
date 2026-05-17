@@ -536,7 +536,9 @@ window.saveDraft=async function(){
   const data=buildPayload('draft');if(!data)return;
   if(!currentUser){toast('Please log in');return;}
   try{
-    const p=Object.assign({},data,{userId:currentUser.uid,userEmail:currentUser.email,updatedAt:serverTimestamp()});
+    const p=Object.assign({},data,{userId:currentUser.uid,
+        ownerEmail:auth.currentUser?.email||'',
+        ownerName:auth.currentUser?.displayName||'',userEmail:currentUser.email,updatedAt:serverTimestamp()});
     if(PID){await updateDoc(doc(db,'products',PID),p);toast('✅ Draft updated!');}
     else{
       const ok=await gateCheck(db,auth.currentUser?.uid||'');if(!ok)return;

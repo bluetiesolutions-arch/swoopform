@@ -81,8 +81,9 @@ nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border
 
 <nav>
   <div class="nav-left">
-    <a href="/dashboard/" class="logo">S</a>
+    <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="sg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#2d1b69"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#sg)"/><rect x="10" y="9" width="20" height="6" rx="3" fill="white"/><rect x="10" y="17" width="20" height="6" rx="3" fill="rgba(255,255,255,0.9)"/><rect x="10" y="25" width="20" height="6" rx="3" fill="white"/><circle cx="31" cy="12" r="3" fill="#d97706"/></svg>
     <a href="/dashboard/" class="btn btn-ghost" style="font-size:12px;padding:5px 10px;">← Dashboard</a>
+    <button onclick="exportCSV()" class="btn btn-ghost" style="font-size:12px;padding:5px 10px;">⬇ Export CSV</button>
     <span class="nav-title" id="nav-title">New Pledge Campaign</span>
   </div>
   <div class="nav-right">
@@ -540,6 +541,25 @@ window.publishPledge=async function(){
 
 function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;');}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+
+window.exportCSV=function(){
+  if(!allResponses||!allResponses.length){alert('No responses to export');return;}
+  const headers=Object.keys(allResponses[0]).filter(function(k){return k!=='id'&&k!=='_id';});
+  const rows=[headers];
+  allResponses.forEach(function(r){
+    rows.push(headers.map(function(h){
+      const v=r[h];
+      if(v&&v.seconds)return new Date(v.seconds*1000).toLocaleString('en-IN');
+      if(typeof v==='object')return JSON.stringify(v);
+      return String(v||'');
+    }));
+  });
+  const csv=rows.map(function(r){return r.map(function(v){return'"'+String(v).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download='award-responses.csv';
+  a.click();
+};
 </script>
 </body>
 </html>

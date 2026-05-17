@@ -5,32 +5,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SwoopForm — Responses</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'DM Sans',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
+    body{font-family:'Sora',sans-serif;background:#F5F0E8;color:#0F0E1A;min-height:100vh}
     nav{background:#fff;border-bottom:1.5px solid #E2DAD0;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
     .nav-left{display:flex;align-items:center;gap:12px}
-    .logo-s{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#2d1b69,#7c3aed);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none;flex-shrink:0}
-    .nav-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#0F0E1A;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .logo-s{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#2d1b69,#7c3aed);display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none;flex-shrink:0}
+    .nav-title{font-family:'Sora',sans-serif;font-weight:700;font-size:0.95rem;color:#0F0E1A;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .nav-right{display:flex;gap:8px;align-items:center}
-    .btn-g{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;text-decoration:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+    .btn-g{padding:7px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:transparent;color:#64748B;font-size:0.82rem;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;white-space:nowrap;text-decoration:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
     .btn-g:hover{border-color:#0F0E1A;color:#0F0E1A}
-    .btn-pub{padding:7px 14px;border-radius:8px;border:none;background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;font-size:0.82rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:inline-flex;align-items:center;gap:6px}
+    .btn-pub{padding:7px 14px;border-radius:8px;border:none;background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;font-size:0.82rem;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;display:inline-flex;align-items:center;gap:6px}
     .btn-pub:hover{opacity:0.9}
     .main{max-width:960px;margin:0 auto;padding:24px 20px}
 
     /* STATS */
     .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
     .stat-card{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;padding:16px 20px}
-    .stat-value{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:-0.03em;color:#0F0E1A;margin-bottom:4px}
+    .stat-value{font-family:'Sora',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:-0.03em;color:#0F0E1A;margin-bottom:4px}
     .stat-label{font-size:0.75rem;color:#64748B;font-weight:500}
     .stat-sub{font-size:0.7rem;color:#94A3B8;margin-top:2px}
 
     /* TABS */
     .tabs-wrap{background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;overflow:hidden}
     .tabs-header{display:flex;border-bottom:1.5px solid #E2DAD0;background:#FAFAF7}
-    .tab-btn{padding:12px 20px;font-size:0.85rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:#64748B;font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;transition:all 0.2s}
+    .tab-btn{padding:12px 20px;font-size:0.85rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:#64748B;font-family:'Sora',sans-serif;border-bottom:2px solid transparent;transition:all 0.2s}
     .tab-btn.active{color:#2D1B69;border-bottom-color:#2D1B69;background:#fff}
     .tab-content{display:none;padding:24px}
     .tab-content.active{display:block}
@@ -39,11 +39,11 @@
     .q-block{margin-bottom:32px;padding-bottom:32px;border-bottom:1.5px solid #E2DAD0}
     .q-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
     .q-block-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:12px;flex-wrap:wrap}
-    .q-block-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:#0F0E1A;flex:1}
+    .q-block-title{font-family:'Sora',sans-serif;font-weight:700;font-size:1rem;color:#0F0E1A;flex:1}
     .q-block-type{font-size:0.72rem;font-weight:700;color:#94A3B8;background:#F5F0E8;padding:3px 8px;border-radius:100px;flex-shrink:0;margin-top:3px}
     .q-block-count{font-size:0.78rem;color:#64748B;margin-top:4px}
     .chart-toggle{display:flex;gap:4px;flex-shrink:0}
-    .chart-toggle-btn{padding:4px 10px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;color:#64748B;font-size:0.72rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+    .chart-toggle-btn{padding:4px 10px;border-radius:6px;border:1.5px solid #E2DAD0;background:#fff;color:#64748B;font-size:0.72rem;font-weight:600;cursor:pointer;font-family:'Sora',sans-serif;transition:all 0.2s}
     .chart-toggle-btn.active{background:#2D1B69;border-color:#2D1B69;color:#fff}
 
     /* BAR CHART */
@@ -59,7 +59,7 @@
     .donut-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
     .donut-canvas-wrap{position:relative;width:160px;height:160px;flex-shrink:0}
     .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
-    .donut-center-val{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:#0F0E1A}
+    .donut-center-val{font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:#0F0E1A}
     .donut-center-lbl{font-size:0.68rem;color:#64748B;margin-top:2px}
     .donut-legend{display:flex;flex-direction:column;gap:8px;flex:1}
     .donut-legend-item{display:flex;align-items:center;gap:8px;font-size:0.82rem}
@@ -69,7 +69,7 @@
 
     /* RATING DISPLAY */
     .rating-display{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-    .rating-avg{font-family:'Syne',sans-serif;font-weight:800;font-size:2.5rem;color:#0F0E1A}
+    .rating-avg{font-family:'Sora',sans-serif;font-weight:800;font-size:2.5rem;color:#0F0E1A}
     .rating-stars{display:flex;gap:4px;font-size:1.4rem}
     .rating-max{font-size:0.82rem;color:#64748B;margin-top:4px}
     .rating-breakdown{flex:1;display:flex;flex-direction:column;gap:6px;min-width:200px}
@@ -88,7 +88,7 @@
     .yesno-display{display:flex;gap:16px;flex-wrap:wrap}
     .yesno-card{flex:1;min-width:120px;background:#F5F0E8;border-radius:10px;padding:16px;text-align:center}
     .yesno-emoji{font-size:1.8rem;margin-bottom:8px}
-    .yesno-count{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:#0F0E1A}
+    .yesno-count{font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;color:#0F0E1A}
     .yesno-pct{font-size:0.78rem;color:#64748B;margin-top:2px}
     .yesno-label{font-size:0.82rem;font-weight:600;color:#64748B;margin-top:4px}
 
@@ -101,12 +101,12 @@
     .responses-table tr:last-child td{border-bottom:none}
     .no-responses{text-align:center;padding:48px 20px;color:#94A3B8}
     .no-responses-icon{font-size:2.5rem;margin-bottom:12px}
-    .no-responses-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:#64748B;margin-bottom:6px}
+    .no-responses-title{font-family:'Sora',sans-serif;font-weight:700;font-size:1rem;color:#64748B;margin-bottom:6px}
     .no-responses-sub{font-size:0.82rem}
 
     /* SEARCH */
     .table-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-    .search-input{flex:1;padding:8px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.85rem;font-family:'DM Sans',sans-serif;outline:none;min-width:200px}
+    .search-input{flex:1;padding:8px 14px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#0F0E1A;font-size:0.85rem;font-family:'Sora',sans-serif;outline:none;min-width:200px}
     .search-input:focus{border-color:#2D1B69}
     .search-input::placeholder{color:#C4B9AA}
     .response-count-badge{font-size:0.78rem;font-weight:600;color:#64748B;white-space:nowrap}
@@ -136,8 +136,8 @@
 <div id="app" style="display:none">
   <nav>
     <div class="nav-left">
-      <a href="/dashboard" class="logo-s">S</a>
-      <a href="/dashboard" class="btn-g" style="font-size:0.78rem;padding:5px 10px">← Dashboard</a>
+      <a href="/dashboard/"><svg width="28" height="28" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="sg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#2d1b69"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#sg)"/><rect x="10" y="9" width="20" height="6" rx="3" fill="white"/><rect x="10" y="17" width="20" height="6" rx="3" fill="rgba(255,255,255,0.9)"/><rect x="10" y="25" width="20" height="6" rx="3" fill="white"/><circle cx="31" cy="12" r="3" fill="#d97706"/></svg></a>
+      <a href="/dashboard/" class="btn-g" style="font-size:0.78rem;padding:5px 10px">← Dashboard</a>
       <div class="nav-title" id="nav-title">Responses</div>
     </div>
     <div class="nav-right">
@@ -283,27 +283,27 @@ function renderSummary(){
 
   let html=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px">
     <div style="background:#EDE9FF;border-radius:12px;padding:16px;text-align:center">
-      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:#2D1B69">${fullPct}%</div>
+      <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.8rem;color:#2D1B69">${fullPct}%</div>
       <div style="font-size:0.75rem;color:#64748B;margin-top:4px">Completion rate</div>
       <div style="font-size:0.68rem;color:#94A3B8;margin-top:2px">${fullCompletes} of ${totalResp} fully completed</div>
     </div>
     <div style="background:#F0FDF4;border-radius:12px;padding:16px;text-align:center">
-      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:#10B981">${avgCompletion.toFixed(1)}</div>
+      <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.8rem;color:#10B981">${avgCompletion.toFixed(1)}</div>
       <div style="font-size:0.75rem;color:#64748B;margin-top:4px">Avg questions answered</div>
       <div style="font-size:0.68rem;color:#94A3B8;margin-top:2px">out of ${questions.length}</div>
     </div>
     <div style="background:#FEF3C7;border-radius:12px;padding:16px;text-align:center">
-      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:#D97706">${totalResp}</div>
+      <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.8rem;color:#D97706">${totalResp}</div>
       <div style="font-size:0.75rem;color:#64748B;margin-top:4px">Total responses</div>
       <div style="font-size:0.68rem;color:#94A3B8;margin-top:2px">${dayCounts[6]} today</div>
     </div>
   </div>
   <div style="background:#fff;border-radius:12px;border:1.5px solid #E2DAD0;padding:16px;margin-bottom:24px">
-    <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;margin-bottom:12px">📈 Responses — Last 7 days</div>
+    <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:0.88rem;margin-bottom:12px">📈 Responses — Last 7 days</div>
     <div style="display:flex;align-items:flex-end;gap:6px;height:80px">
       ${dayCounts.map((c,i)=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
         <div style="font-size:0.65rem;color:#64748B;font-weight:600">${c||''}</div>
-        <div style="width:100%;background:${c>0?'linear-gradient(180deg,#2D1B69,#D97706)':'#E2DAD0'};border-radius:4px 4px 0 0;height:${Math.max((c/maxDay)*56,c>0?4:2)}px;transition:height 0.5s ease"></div>
+        <div style="width:100%;background:${c>0?'linear-gradient(180deg,#2d1b69,#7c3aed)':'#E2DAD0'};border-radius:4px 4px 0 0;height:${Math.max((c/maxDay)*56,c>0?4:2)}px;transition:height 0.5s ease"></div>
         <div style="font-size:0.6rem;color:#94A3B8;white-space:nowrap">${dayLabels[i]}</div>
       </div>`).join('')}
     </div>
