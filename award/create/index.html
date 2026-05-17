@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Award Builder — SwoopForm</title>
+<script src="/gate.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f5f4f0;--surface:#ffffff;--surface2:#f0eeea;--border:#e2ddd6;--accent:#f59e0b;--accent2:#12a872;--danger:#e5484d;--text:#1c1c2e;--muted:#7a7a8c;--muted2:#c5c0b8;--font:'Sora',sans-serif;--mono:'JetBrains Mono',monospace;}
@@ -76,6 +77,10 @@ select.field-input{cursor:pointer;}
 </style>
 </head>
 <body>
+<div id="plan-banner" style="display:none;background:#fff3e0;border-bottom:1.5px solid #fbbf24;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+  <div style="font-size:13px;font-weight:600;color:#92400e;">⚠️ <span id="plan-banner-text">You are approaching your plan limit.</span></div>
+  <a href="/pricing/" style="padding:6px 14px;border-radius:7px;background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;font-size:12px;font-weight:700;text-decoration:none;">Upgrade →</a>
+</div>
 
 <nav>
   <a href="/dashboard/" style="text-decoration:none;"><div class="brand">SwoopForm</div></a>
@@ -180,6 +185,8 @@ let catCount=0;
 
 onAuthStateChanged(auth,async function(u){
   if(!u){window.location.href='/login/';return;}
+  if(window.Gate)await window.Gate.load(auth,db);
+  checkPlanBanner(db,u.uid);
   currentUser=u;
   const params=new URLSearchParams(window.location.search);
   AID=params.get('id');
@@ -309,7 +316,9 @@ window.saveDraft=async function(){
   try{
     const p=Object.assign({},data,{userId:currentUser.uid,userEmail:currentUser.email,updatedAt:serverTimestamp()});
     if(AID){await updateDoc(doc(db,'awards',AID),p);toast('✅ Draft updated!');}
-    else{p.createdAt=serverTimestamp();p.responseCount=0;const ref=await addDoc(collection(db,'awards'),p);AID=ref.id;window.history.replaceState({},'','/award/create/?id='+AID);toast('✅ Draft saved!');}
+    else{
+      const ok=await gateCheck(db,auth.currentUser?.uid||'');if(!ok)return;
+      p.createdAt=serverTimestamp();p.responseCount=0;const ref=await addDoc(collection(db,'awards'),p);AID=ref.id;window.history.replaceState({},'','/award/create/?id='+AID);toast('✅ Draft saved!');}
   }catch(e){console.error(e);toast('Error: '+e.message);}
 };
 
@@ -319,7 +328,9 @@ window.publish=async function(){
     const p=Object.assign({},data,{userId:currentUser.uid,userEmail:currentUser.email,status:'active',updatedAt:serverTimestamp()});
     let id;
     if(AID){await updateDoc(doc(db,'awards',AID),p);id=AID;}
-    else{p.createdAt=serverTimestamp();p.responseCount=0;const ref=await addDoc(collection(db,'awards'),p);id=ref.id;AID=id;window.history.replaceState({},'','/award/create/?id='+id);}
+    else{
+      const ok=await gateCheck(db,auth.currentUser?.uid||'');if(!ok)return;
+      p.createdAt=serverTimestamp();p.responseCount=0;const ref=await addDoc(collection(db,'awards'),p);id=ref.id;AID=id;window.history.replaceState({},'','/award/create/?id='+id);}
     document.getElementById('modal-url').textContent='swoopform.com/award/?id='+id;
     document.getElementById('modal-view-btn').href='/award/?id='+id;
     document.getElementById('success-modal').classList.add('open');
@@ -328,6 +339,52 @@ window.publish=async function(){
 
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
 updateCatCount();
+
+// Gate check - runs before saving new form
+async function gateCheck(db, userId){
+  if(!window.Gate)return true;
+  try{
+    const {collection,query,where,getDocs}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+    const cols=['surveys','assessments','awards','employees','feedbacks','jobapps','leads','livePollSessions','pledges','polls','products','quizzes','registrations','riddles','votings'];
+    let activeCount=0;
+    for(const col of cols){
+      const snap=await getDocs(query(collection(db,col),where('userId','==',userId),where('status','==','active')));
+      activeCount+=snap.size;
+    }
+    const limit=window.Gate.getLimit('activeForms');
+    if(limit!==-1&&activeCount>=limit){
+      window.Gate.showLimitModal('activeForms',activeCount,limit);
+      return false;
+    }
+    return true;
+  }catch(e){return true;}
+}
+
+// Show plan limit banner
+async function checkPlanBanner(db, userId){
+  if(!window.Gate)return;
+  try{
+    const {collection,query,where,getDocs}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+    const cols=['surveys','assessments','awards','employees','feedbacks','jobapps','leads','livePollSessions','pledges','polls','products','quizzes','registrations','riddles','votings'];
+    let activeCount=0;
+    for(const col of cols){
+      const snap=await getDocs(query(collection(db,col),where('userId','==',userId),where('status','==','active')));
+      activeCount+=snap.size;
+    }
+    const limit=window.Gate.getLimit('activeForms');
+    if(limit===-1)return;
+    const pct=activeCount/limit;
+    const banner=document.getElementById('plan-banner');
+    const text=document.getElementById('plan-banner-text');
+    if(banner&&pct>=0.8){
+      banner.style.display='flex';
+      if(text){
+        if(pct>=1)text.textContent='You have reached your '+limit+' active form limit on the '+window.Gate.getPlan()+' plan.';
+        else text.textContent='You are using '+activeCount+' of '+limit+' active forms on your '+window.Gate.getPlan()+' plan.';
+      }
+    }
+  }catch(e){}
+}
 </script>
 </body>
 </html>

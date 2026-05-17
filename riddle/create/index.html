@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Riddle Builder — SwoopForm</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="/gate.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f8f5ff;--surface:#fff;--surface2:#f0ebff;--border:#e8e0ff;--accent:#6b3fa0;--accent2:#a855f7;--danger:#ef4444;--green:#10b981;--text:#0f0e1a;--muted:#64748b;--muted2:#94a3b8;--font:'Sora',sans-serif;--mono:'JetBrains Mono',monospace;}
@@ -92,6 +93,10 @@ nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border
 </style>
 </head>
 <body>
+<div id="plan-banner" style="display:none;background:#fff3e0;border-bottom:1.5px solid #fbbf24;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+  <div style="font-size:13px;font-weight:600;color:#92400e;">⚠️ <span id="plan-banner-text">You are approaching your plan limit.</span></div>
+  <a href="/pricing/" style="padding:6px 14px;border-radius:7px;background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;font-size:12px;font-weight:700;text-decoration:none;">Upgrade →</a>
+</div>
 <div class="ls-screen" id="ls"><div class="spinner"></div></div>
 <nav>
   <div class="nav-left">
@@ -231,6 +236,8 @@ let U=null,RID=null,qCount=0;
 
 onAuthStateChanged(auth,async function(u){
   if(!u){window.location.href='/login/';return;}
+  if(window.Gate)await window.Gate.load(auth,db);
+  checkPlanBanner(db,u.uid);
   U=u;
   document.getElementById('ls').style.display='none';
   const params=new URLSearchParams(window.location.search);
@@ -547,6 +554,52 @@ function nativeShareBtn(){
   else{navigator.clipboard.writeText(_shareUrl);}
 }
 document.getElementById('share-modal').addEventListener('click',function(e){if(e.target===this)this.style.display='none';});
+
+// Gate check - runs before saving new form
+async function gateCheck(db, userId){
+  if(!window.Gate)return true;
+  try{
+    const {collection,query,where,getDocs}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+    const cols=['surveys','assessments','awards','employees','feedbacks','jobapps','leads','livePollSessions','pledges','polls','products','quizzes','registrations','riddles','votings'];
+    let activeCount=0;
+    for(const col of cols){
+      const snap=await getDocs(query(collection(db,col),where('userId','==',userId),where('status','==','active')));
+      activeCount+=snap.size;
+    }
+    const limit=window.Gate.getLimit('activeForms');
+    if(limit!==-1&&activeCount>=limit){
+      window.Gate.showLimitModal('activeForms',activeCount,limit);
+      return false;
+    }
+    return true;
+  }catch(e){return true;}
+}
+
+// Show plan limit banner
+async function checkPlanBanner(db, userId){
+  if(!window.Gate)return;
+  try{
+    const {collection,query,where,getDocs}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+    const cols=['surveys','assessments','awards','employees','feedbacks','jobapps','leads','livePollSessions','pledges','polls','products','quizzes','registrations','riddles','votings'];
+    let activeCount=0;
+    for(const col of cols){
+      const snap=await getDocs(query(collection(db,col),where('userId','==',userId),where('status','==','active')));
+      activeCount+=snap.size;
+    }
+    const limit=window.Gate.getLimit('activeForms');
+    if(limit===-1)return;
+    const pct=activeCount/limit;
+    const banner=document.getElementById('plan-banner');
+    const text=document.getElementById('plan-banner-text');
+    if(banner&&pct>=0.8){
+      banner.style.display='flex';
+      if(text){
+        if(pct>=1)text.textContent='You have reached your '+limit+' active form limit on the '+window.Gate.getPlan()+' plan.';
+        else text.textContent='You are using '+activeCount+' of '+limit+' active forms on your '+window.Gate.getPlan()+' plan.';
+      }
+    }
+  }catch(e){}
+}
 </script>
 </body>
 </html>

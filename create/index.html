@@ -6,6 +6,7 @@ cat > /home/claude/create-index.html << 'HTMLEOF'
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Create Survey — SwoopForm</title>
+<script src="/gate.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -267,6 +268,10 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 </style>
 </head>
 <body>
+<div id="plan-banner" style="display:none;background:#fff3e0;border-bottom:1.5px solid #fbbf24;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+  <div style="font-size:13px;font-weight:600;color:#92400e;">⚠️ <span id="plan-banner-text">You are approaching your plan limit.</span></div>
+  <a href="/pricing/" style="padding:6px 14px;border-radius:7px;background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;font-size:12px;font-weight:700;text-decoration:none;">Upgrade →</a>
+</div>
 <div class="ls" id="ls"><div class="sp"></div></div>
 <div class="sbo" id="sbo" onclick="closeSb()"></div>
 
@@ -1049,7 +1054,9 @@ window.saveDraft=async function(){
   const data=buildData('draft');if(!data)return;
   try{
     if(SID){await updateDoc(doc(db,'surveys',SID),{...data,updatedAt:serverTimestamp()})}
-    else{const ref=await addDoc(collection(db,'surveys'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});SID=ref.id}
+    else{
+    const ok=await gateCheck(db,auth.currentUser?.uid||'');if(!ok)return;
+    const ref=await addDoc(collection(db,'surveys'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});SID=ref.id}
     toast2('Draft saved!');
   }catch(e){console.error(e);toast2('Error saving')}
 };
@@ -1059,7 +1066,9 @@ window.publishSurvey=async function(){
   const btn=document.getElementById('pub-btn');btn.disabled=true;btn.textContent='Publishing...';
   try{
     if(SID){await updateDoc(doc(db,'surveys',SID),{...data,updatedAt:serverTimestamp()})}
-    else{const ref=await addDoc(collection(db,'surveys'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});SID=ref.id}
+    else{
+    const ok=await gateCheck(db,auth.currentUser?.uid||'');if(!ok)return;
+    const ref=await addDoc(collection(db,'surveys'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});SID=ref.id}
     const slug=document.getElementById('seo-slug')?.value.trim();
     document.getElementById('modal-url').textContent='swoopform.com/'+(slug?'survey/'+slug:'survey/?id='+SID);
     document.getElementById('modal-view-btn').href=slug?'/s/'+slug:'/s/?id='+SID;
