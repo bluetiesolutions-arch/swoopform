@@ -145,6 +145,10 @@ body{font-family:'Sora',sans-serif;background:#f5f0e8;min-height:100vh;display:f
         <input class="field-input" id="login-pass" type="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')submitLogin()">
         <div class="field-error" id="login-pass-err">Please enter your password</div>
       </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+        <input type="checkbox" id="remember-me" checked style="width:15px;height:15px;border-radius:4px;accent-color:#2d1b69;cursor:pointer;">
+        <label for="remember-me" style="font-size:13px;color:#64748b;cursor:pointer;user-select:none;">Remember me</label>
+      </div>
       <button class="btn-submit" id="btn-login" onclick="submitLogin()">Sign In →</button>
       <div class="toggle-row">No account? <button class="toggle-btn" onclick="showSignup()">Create one free</button></div>
     </div>
@@ -189,7 +193,7 @@ body{font-family:'Sora',sans-serif;background:#f5f0e8;min-height:100vh;display:f
 
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import{getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,sendPasswordResetEmail,GoogleAuthProvider,signInWithPopup,updateProfile,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,sendPasswordResetEmail,GoogleAuthProvider,signInWithPopup,updateProfile,onAuthStateChanged,browserLocalPersistence,browserSessionPersistence,setPersistence}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 import{getFirestore,doc,setDoc,getDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
@@ -234,6 +238,7 @@ window.signInWithGoogle=async function(){
   const btn=document.getElementById('btn-google');
   btn.disabled=true;btn.textContent='Connecting...';
   try{
+    await setPersistence(auth,browserLocalPersistence);
     const result=await signInWithPopup(auth,provider);
     await saveUserToFirestore(result.user,{provider:'google'});
     window.location.href='/dashboard/';
