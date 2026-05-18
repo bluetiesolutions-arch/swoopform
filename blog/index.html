@@ -164,7 +164,7 @@ async function load(){
 }
 
 function gradForTag(tag){
-  const grads=['linear-gradient(135deg,#2d1b69,#7c3aed)','linear-gradient(135deg,#0ea5e9,#06b6d4)','linear-gradient(135deg,#10b981,#059669)','linear-gradient(135deg,#f59e0b,#d97706)','linear-gradient(135deg,#ec4899,#db2777)'];
+  const grads=['linear-gradient(135deg,#2d1b69,#7c3aed)','linear-gradient(135deg,#0ea5e9,#06b6d4)','linear-gradient(135deg,#10b981,#059669)','linear-gradient(135deg,#7c3aed,#a855f7)','linear-gradient(135deg,#ec4899,#db2777)'];
   if(!tag)return grads[0];
   return grads[tag.length%grads.length];
 }
