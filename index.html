@@ -143,11 +143,36 @@ footer{background:var(--text);color:#fff;padding:60px 40px 32px;}
 
 @media(max-width:1024px){.form-types-grid{grid-template-columns:repeat(2,1fr);}.dept-grid{grid-template-columns:repeat(2,1fr);}.footer-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:768px){
-  nav{padding:0 20px;}.nav-links{display:none;}
-  .hero{padding:60px 20px 40px;}.stats-bar{gap:32px;padding:20px;}.section{padding:60px 20px;}
-  .form-types-grid{grid-template-columns:1fr;}.dept-grid{grid-template-columns:1fr;}.free-grid{grid-template-columns:1fr;}
-  .steps{grid-template-columns:1fr;}.steps::before{display:none;}.live-section{padding:60px 20px;}.live-cards{flex-direction:column;align-items:center;}
-  .pricing-teaser{margin:0 20px;padding:40px 24px;}.footer-grid{grid-template-columns:1fr;}.footer-bottom{flex-direction:column;text-align:center;}
+  nav{padding:0 16px;}
+  .nav-links{display:none;}
+  .nav-cta{gap:6px;}
+  .btn-ghost{padding:7px 12px;font-size:12px;}
+  .btn-primary{padding:7px 12px;font-size:12px;}
+  .logo-nm{font-size:15px;}
+  .hero{padding:48px 20px 32px;}
+  .hero-title{font-size:clamp(2.2rem,8vw,3rem);}
+  .hero-btns{flex-direction:column;align-items:center;}
+  .btn-hero{width:100%;max-width:320px;justify-content:center;}
+  .stats-bar{gap:24px;padding:16px 20px;}
+  .section{padding:48px 20px;}
+  .form-types-grid{grid-template-columns:1fr;}
+  .dept-grid{grid-template-columns:1fr;}
+  .free-grid{grid-template-columns:1fr;}
+  .steps{grid-template-columns:1fr;}
+  .steps::before{display:none;}
+  .live-section{padding:48px 20px;}
+  .live-cards{flex-direction:column;align-items:center;}
+  .live-card{width:100%;max-width:400px;}
+  .pricing-teaser{margin:0 16px;padding:32px 20px;}
+  .pricing-teaser-btns{flex-direction:column;align-items:center;}
+  .btn-white,.btn-outline-white{width:100%;max-width:280px;text-align:center;}
+  .footer-grid{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;text-align:center;}
+  .stats-bar .stat-item{min-width:80px;}
+}
+@media(max-width:400px){
+  .hero-title{font-size:2rem;}
+  .btn-ghost{display:none;}
 }
 </style>
 </head>
