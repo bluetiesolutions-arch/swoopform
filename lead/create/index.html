@@ -111,10 +111,27 @@ select.field-input{cursor:pointer;}
   .btn-ghost{padding:6px 10px;font-size:11px;}
   .btn-primary{padding:6px 10px;font-size:11px;}
 }
+
+@media(max-width:768px){
+  /* Stack builder panels vertically */
+  .builder,.editor-wrap,.form-editor{flex-direction:column !important;}
+  .left-col,.right-col,.builder-left,.builder-right{width:100% !important;max-width:100% !important;}
+  
+  /* Make question cards full width */
+  .q-card,.question-item{width:100% !important;}
+  
+  /* Fix floating add button */
+  .add-q-btn,.add-question{position:fixed !important;bottom:20px !important;right:20px !important;z-index:200 !important;border-radius:100px !important;padding:12px 20px !important;}
+  
+  /* Settings panel */
+  .settings-panel,.right-settings{position:fixed !important;bottom:0 !important;left:0 !important;right:0 !important;top:auto !important;height:60vh !important;overflow-y:auto !important;border-radius:20px 20px 0 0 !important;border:1.5px solid #e2dad0 !important;z-index:300 !important;transform:translateY(100%) !important;transition:transform .3s ease !important;}
+  .settings-panel.open{transform:translateY(0) !important;}
+}
 </style>
+<link rel="stylesheet" href="/mobile.css">
 </head>
 <body>
-<div id="plan-banner" style="display:none;background:#fff3e0;border-bottom:1.5px solid #fbbf24;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+<div id="plan-banner" style="display:none;background:#fff3e0;border-bottom:1.5px solid #fbbf24;padding:10px 20px;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
   <div style="font-size:13px;font-weight:600;color:#92400e;">⚠️ <span id="plan-banner-text">You are approaching your plan limit.</span></div>
   <a href="/pricing/" style="padding:6px 14px;border-radius:7px;background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;font-size:12px;font-weight:700;text-decoration:none;">Upgrade →</a>
 </div>
