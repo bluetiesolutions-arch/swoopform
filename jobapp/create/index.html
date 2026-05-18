@@ -109,6 +109,21 @@ select.field-input{cursor:pointer;}
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--muted2);border-radius:2px;}
+
+@media(max-width:768px){
+  nav{padding:0 14px;}
+  .logo-nm{display:none;}
+  .nav-actions{gap:6px;}
+  .btn-sm{padding:6px 10px;font-size:11px;}
+}
+
+@media(max-width:600px){
+  nav{padding:0 12px;}
+  nav span[style*="font-size:16px"]{display:none;}
+  .nav-right{gap:6px;}
+  .btn-ghost{padding:6px 10px;font-size:11px;}
+  .btn-primary{padding:6px 10px;font-size:11px;}
+}
 </style>
 </head>
 <body>

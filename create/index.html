@@ -13,7 +13,7 @@ cat > /home/claude/create-index.html << 'HTMLEOF'
 html,body{height:100%;overflow:hidden;font-family:'Sora',sans-serif;background:#F5F0E8;color:#0F0E1A}
 .nav{height:56px;background:#fff;border-bottom:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:fixed;top:0;left:0;right:0;z-index:300;gap:10px}
 .nav-l{display:flex;align-items:center;gap:8px;min-width:0;flex-shrink:1}
-.logo{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#2d1b69,#7c3aed);display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;font-size:0.85rem;color:#fff;text-decoration:none;flex-shrink:0}
+.logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0;}
 .nav-back{padding:6px 11px;border-radius:8px;border:1.5px solid #E2DAD0;background:#fff;color:#64748B;font-size:0.78rem;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;white-space:nowrap;text-decoration:none}
 .nav-back:hover{border-color:#2D1B69;color:#2D1B69}
 .nav-title{font-family:'Sora',sans-serif;font-weight:700;font-size:0.92rem;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -265,6 +265,21 @@ html,body{height:100%;overflow:hidden;font-family:'Sora',sans-serif;background:#
 .pf-submit{width:100%;padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;font-size:0.9rem;font-weight:700;font-family:'Sora',sans-serif;cursor:pointer;margin-top:8px}
 .mob-frame{width:260px;margin:0 auto;background:#fff;border-radius:22px;overflow:hidden;border:7px solid #0F0E1A;box-shadow:0 6px 24px rgba(0,0,0,0.15)}
 .mob-inner{background:#F5F0E8;min-height:420px;overflow-y:auto}
+
+@media(max-width:768px){
+  nav{padding:0 14px;}
+  .logo-nm{display:none;}
+  .nav-actions{gap:6px;}
+  .btn-sm{padding:6px 10px;font-size:11px;}
+}
+
+@media(max-width:600px){
+  nav{padding:0 12px;}
+  nav span[style*="font-size:16px"]{display:none;}
+  .nav-right{gap:6px;}
+  .btn-ghost{padding:6px 10px;font-size:11px;}
+  .btn-primary{padding:6px 10px;font-size:11px;}
+}
 </style>
 </head>
 <body>
