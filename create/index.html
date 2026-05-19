@@ -554,9 +554,11 @@ let welcomeOn=false;
 let redirectOn=false;
 
 // ── AUTH ──────────────────────────────────────────────
-onAuthStateChanged(auth,u=>{
-  if(!u){window.location.href='/login';return}
+onAuthStateChanged(auth,async function(u){
+  if(!u){window.location.href='/login/';return;}
   U=u;
+  if(window.Gate)await window.Gate.load(auth,db);
+  checkPlanBanner(db,u.uid);
   if(userPlan==='free'){
     document.getElementById('welcome-upgrade-nudge').style.display='block';
     document.getElementById('tgl-welcome').disabled=true;
