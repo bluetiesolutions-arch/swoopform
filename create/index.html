@@ -557,16 +557,17 @@ let redirectOn=false;
 onAuthStateChanged(auth,async function(u){
   if(!u){window.location.href='/login/';return;}
   U=u;
-  if(window.Gate)await window.Gate.load(auth,db);
-  checkPlanBanner(db,u.uid).catch(function(){});
-  if(userPlan==='free'){
-    document.getElementById('welcome-upgrade-nudge').style.display='block';
-    document.getElementById('tgl-welcome').disabled=true;
-    document.getElementById('tgl-welcome').style.opacity='0.4';
-    document.getElementById('tgl-welcome').style.cursor='not-allowed';
-  }
-  items.push(mkQ('multiple'));
-  renderAll();
+  try{if(window.Gate)await window.Gate.load(auth,db);}catch(e){}
+  try{checkPlanBanner(db,u.uid);}catch(e){}
+  try{
+    if(userPlan==='free'){
+      const wun=document.getElementById('welcome-upgrade-nudge');
+      const tw=document.getElementById('tgl-welcome');
+      if(wun)wun.style.display='block';
+      if(tw){tw.disabled=true;tw.style.opacity='0.4';tw.style.cursor='not-allowed';}
+    }
+  }catch(e){}
+  try{items.push(mkQ('multiple'));renderAll();}catch(e){console.error('renderAll error:',e);}
   document.getElementById('ls').style.display='none';
 });
 
