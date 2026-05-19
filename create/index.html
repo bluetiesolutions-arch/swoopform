@@ -520,7 +520,6 @@ const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform
 const app=initializeApp(FB);
 const auth=getAuth(app);
 const db=getFirestore(app);
-setTimeout(function(){const ls=document.getElementById('ls');if(ls)ls.style.display='none';},8000);
 
 const COLORS=['#2D1B69','#D97706','#0D9B8A','#DC2626','#2563EB','#7C3AED','#047857','#B45309'];
 const LETTERS=['A','B','C','D','E','F','G','H'];
@@ -546,7 +545,8 @@ onAuthStateChanged(auth,u=>{
     document.getElementById('tgl-welcome').style.opacity='0.4';
     document.getElementById('tgl-welcome').style.cursor='not-allowed';
   }
-  try{items.push(mkQ('multiple'));renderAll();}catch(e){console.error('Init error:',e);}
+  items.push(mkQ('multiple'));
+  renderAll();
   document.getElementById('ls').style.display='none';
 });
 
@@ -1125,5 +1125,3 @@ window.toast2=function(msg){const t=document.getElementById('toast');t.textConte
 </div>
 </body>
 </html>
-HTMLEOF
-echo "Done - $(wc -c < /home/claude/create-index.html) bytes"
