@@ -532,7 +532,7 @@ html,body{height:100%;overflow:hidden;font-family:'Sora',sans-serif;background:#
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getFirestore,collection,addDoc,doc,updateDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getFirestore,collection,addDoc,doc,updateDoc,serverTimestamp,query,where,getDocs}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
 const app=initializeApp(FB);
@@ -558,7 +558,7 @@ onAuthStateChanged(auth,async function(u){
   if(!u){window.location.href='/login/';return;}
   U=u;
   if(window.Gate)await window.Gate.load(auth,db);
-  checkPlanBanner(db,u.uid);
+  checkPlanBanner(db,u.uid).catch(function(){});
   if(userPlan==='free'){
     document.getElementById('welcome-upgrade-nudge').style.display='block';
     document.getElementById('tgl-welcome').disabled=true;
@@ -1132,10 +1132,14 @@ window.toast2=function(msg){const t=document.getElementById('toast');t.textConte
 async function gateCheck(db, userId){
   if(!window.Gate)return true;
   try{
-    const {collection,query,where,getDocs}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
     const cols=['surveys','assessments','awards','employees','feedbacks','jobapps','leads','livePollSessions','pledges','polls','products','quizzes','registrations','riddles','votings'];
     let activeCount=0;
-    for(const col of cols){try{const snap=await getDocs(query(collection(db,col),where('userId','==',userId),where('status','==','active')));activeCount+=snap.size;}catch(e){}}
+    for(const col of cols){
+      try{
+        const snap=await getDocs(query(collection(db,col),where('userId','==',userId),where('status','==','active')));
+        activeCount+=snap.size;
+      }catch(e){}
+    }
     const limit=window.Gate.getLimit('activeForms');
     if(limit!==-1&&activeCount>=limit){window.Gate.showLimitModal('activeForms',activeCount,limit);return false;}
     return true;
@@ -1145,10 +1149,14 @@ async function gateCheck(db, userId){
 async function checkPlanBanner(db, userId){
   if(!window.Gate)return;
   try{
-    const {collection,query,where,getDocs}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
     const cols=['surveys','assessments','awards','employees','feedbacks','jobapps','leads','livePollSessions','pledges','polls','products','quizzes','registrations','riddles','votings'];
     let activeCount=0;
-    for(const col of cols){try{const snap=await getDocs(query(collection(db,col),where('userId','==',userId),where('status','==','active')));activeCount+=snap.size;}catch(e){}}
+    for(const col of cols){
+      try{
+        const snap=await getDocs(query(collection(db,col),where('userId','==',userId),where('status','==','active')));
+        activeCount+=snap.size;
+      }catch(e){}
+    }
     const limit=window.Gate.getLimit('activeForms');
     if(limit===-1||activeCount===0)return;
     const pct=activeCount/limit;
