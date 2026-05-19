@@ -1,99 +1,36 @@
 /* SwoopForm Universal Mobile CSS */
-/* Applied to all form builder and public pages */
 
 @media(max-width:768px){
 
-  /* NAV */
+  /* NAV - only hide wordmark on very small screens */
   nav{padding:0 12px !important;gap:6px !important;}
   .nav-title{display:none !important;}
   .nav-sep{display:none !important;}
-  .nav-right{gap:6px !important;}
-  .logo-nm{display:none !important;}
-  nav span[style*="font-weight:800;font-size:16px"]{display:none !important;}
-
-  /* BUTTONS */
-  .btn{padding:8px 12px !important;font-size:12px !important;}
-  .btn-ghost{padding:7px 10px !important;font-size:12px !important;}
-  .btn-primary{padding:8px 14px !important;font-size:12px !important;}
-  .btn-sm{padding:5px 8px !important;font-size:11px !important;}
 
   /* PLAN BANNER */
   #plan-banner{flex-direction:column !important;align-items:flex-start !important;gap:6px !important;padding:10px 14px !important;}
   #plan-banner a{width:100% !important;text-align:center !important;display:block !important;}
 
-  /* FORM BUILDER LAYOUT */
-  .builder-layout{flex-direction:column !important;}
-  .sidebar,.left-panel,.panel-left{width:100% !important;height:auto !important;position:static !important;border-right:none !important;border-bottom:1.5px solid #e2dad0;}
-  .main-panel,.right-panel,.panel-right{width:100% !important;}
+  /* GRIDS - stack on mobile */
+  .grid2{grid-template-columns:1fr !important;}
 
-  /* GRIDS */
-  .grid2,.form-grid,.two-col{grid-template-columns:1fr !important;}
-  .stats-grid{grid-template-columns:1fr 1fr !important;}
-
-  /* INPUTS */
-  input,textarea,select{font-size:16px !important;} /* Prevents zoom on iOS */
-
-  /* MODALS */
-  .modal-box,.modal{width:95vw !important;max-width:none !important;margin:10px auto !important;padding:20px 16px !important;}
-  .modal-overlay{padding:10px !important;}
-
-  /* CARDS */
-  .card{padding:14px !important;}
-
-  /* FORM QUESTION CARDS */
-  .q-card,.question-card{padding:14px !important;}
-  .q-actions,.question-actions{flex-wrap:wrap !important;gap:6px !important;}
-
-  /* TABS */
-  .tab-bar,.tabs{overflow-x:auto !important;flex-wrap:nowrap !important;}
-  .tab{white-space:nowrap !important;padding:8px 12px !important;font-size:12px !important;}
-
-  /* CONTENT */
-  .content-area,.main-content{padding:16px !important;}
-
-  /* TOOLBAR */
-  .toolbar{flex-wrap:wrap !important;gap:8px !important;}
-
-  /* FLOATING BUTTONS */
-  .float-btns,.fab-group{bottom:16px !important;right:16px !important;}
-  .float-btn{padding:10px 14px !important;font-size:12px !important;}
-
-  /* PREVIEW */
-  .preview-wrap,.form-preview{padding:16px !important;}
-
-  /* RESPONSE PAGES */
-  .resp-header{flex-direction:column !important;gap:12px !important;}
-  .resp-actions{width:100% !important;justify-content:flex-start !important;}
-
-  /* TABLES */
-  .table-wrap{overflow-x:auto !important;}
-  table{min-width:500px;}
-
-  /* LIVE SESSION */
-  .host-layout{flex-direction:column !important;}
-  .slide-controls{flex-wrap:wrap !important;gap:8px !important;}
-}
-
-@media(max-width:480px){
-  .hero-btns{flex-direction:column !important;align-items:stretch !important;}
-  .btn-hero{width:100% !important;justify-content:center !important;}
-  .pricing-teaser-btns{flex-direction:column !important;align-items:stretch !important;}
-  .plan-card{padding:16px !important;}
-  .stats-grid{grid-template-columns:1fr 1fr !important;}
-  
-  /* Hide non-essential nav elements */
-  .nav-links{display:none !important;}
-  
-  /* Full width CTAs */
-  .hero-btns a,.hero-btns button{width:100% !important;justify-content:center !important;}
-}
-
-/* iOS Safari fixes */
-@supports(-webkit-touch-callout:none){
+  /* INPUTS - prevent zoom on iOS */
   input[type="text"],
   input[type="email"],
   input[type="password"],
   input[type="number"],
-  textarea,
-  select{font-size:16px !important;}
+  input[type="search"],
+  textarea,select{font-size:16px !important;}
+
+  /* MODALS */
+  .modal-box{width:95vw !important;max-width:none !important;padding:20px 16px !important;}
+  .modal-overlay{padding:10px !important;}
+
+  /* TABLES scroll horizontally */
+  .table-wrap{overflow-x:auto !important;}
+}
+
+@media(max-width:480px){
+  /* Hide nav links on very small screens */
+  .nav-links{display:none !important;}
 }
