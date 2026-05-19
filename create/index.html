@@ -285,27 +285,10 @@ html,body{height:100%;overflow:hidden;font-family:'Sora',sans-serif;background:#
   .btn-ghost{padding:6px 10px;font-size:11px;}
   .btn-primary{padding:6px 10px;font-size:11px;}
 }
-
-@media(max-width:768px){
-  /* Stack builder panels vertically */
-  .builder,.editor-wrap,.form-editor{flex-direction:column !important;}
-  .left-col,.right-col,.builder-left,.builder-right{width:100% !important;max-width:100% !important;}
-  
-  /* Make question cards full width */
-  .q-card,.question-item{width:100% !important;}
-  
-  /* Fix floating add button */
-  .add-q-btn,.add-question{position:fixed !important;bottom:20px !important;right:20px !important;z-index:200 !important;border-radius:100px !important;padding:12px 20px !important;}
-  
-  /* Settings panel */
-  .settings-panel,.right-settings{position:fixed !important;bottom:0 !important;left:0 !important;right:0 !important;top:auto !important;height:60vh !important;overflow-y:auto !important;border-radius:20px 20px 0 0 !important;border:1.5px solid #e2dad0 !important;z-index:300 !important;transform:translateY(100%) !important;transition:transform .3s ease !important;}
-  .settings-panel.open{transform:translateY(0) !important;}
-}
 </style>
-<link rel="stylesheet" href="/mobile.css">
 </head>
 <body>
-<div id="plan-banner" style="display:none;background:#fff3e0;border-bottom:1.5px solid #fbbf24;padding:10px 20px;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+<div id="plan-banner" style="display:none;background:#fff3e0;border-bottom:1.5px solid #fbbf24;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
   <div style="font-size:13px;font-weight:600;color:#92400e;">⚠️ <span id="plan-banner-text">You are approaching your plan limit.</span></div>
   <a href="/pricing/" style="padding:6px 14px;border-radius:7px;background:linear-gradient(135deg,#2d1b69,#7c3aed);color:#fff;font-size:12px;font-weight:700;text-decoration:none;">Upgrade →</a>
 </div>
@@ -532,12 +515,13 @@ html,body{height:100%;overflow:hidden;font-family:'Sora',sans-serif;background:#
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getFirestore,collection,addDoc,doc,updateDoc,serverTimestamp,query,where,getDocs}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getFirestore,collection,addDoc,doc,updateDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
 const app=initializeApp(FB);
 const auth=getAuth(app);
 const db=getFirestore(app);
+setTimeout(function(){const ls=document.getElementById('ls');if(ls)ls.style.display='none';},8000);
 
 const COLORS=['#2D1B69','#D97706','#0D9B8A','#DC2626','#2563EB','#7C3AED','#047857','#B45309'];
 const LETTERS=['A','B','C','D','E','F','G','H'];
@@ -554,20 +538,16 @@ let welcomeOn=false;
 let redirectOn=false;
 
 // ── AUTH ──────────────────────────────────────────────
-onAuthStateChanged(auth,async function(u){
-  if(!u){window.location.href='/login/';return;}
+onAuthStateChanged(auth,u=>{
+  if(!u){window.location.href='/login/';return}
   U=u;
-  try{if(window.Gate)await window.Gate.load(auth,db);}catch(e){}
-  try{checkPlanBanner(db,u.uid);}catch(e){}
-  try{
-    if(userPlan==='free'){
-      const wun=document.getElementById('welcome-upgrade-nudge');
-      const tw=document.getElementById('tgl-welcome');
-      if(wun)wun.style.display='block';
-      if(tw){tw.disabled=true;tw.style.opacity='0.4';tw.style.cursor='not-allowed';}
-    }
-  }catch(e){}
-  try{items.push(mkQ('multiple'));renderAll();}catch(e){console.error('renderAll error:',e);}
+  if(userPlan==='free'){
+    document.getElementById('welcome-upgrade-nudge').style.display='block';
+    document.getElementById('tgl-welcome').disabled=true;
+    document.getElementById('tgl-welcome').style.opacity='0.4';
+    document.getElementById('tgl-welcome').style.cursor='not-allowed';
+  }
+  try{items.push(mkQ('multiple'));renderAll();}catch(e){console.error('Init error:',e);}
   document.getElementById('ls').style.display='none';
 });
 
@@ -1129,46 +1109,6 @@ function parseCSV(file){const r=new FileReader();r.onload=e=>{const lines=e.targ
 // ── UTILS ─────────────────────────────────────────────
 function eh(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
 window.toast2=function(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2500)};
-
-async function gateCheck(db, userId){
-  if(!window.Gate)return true;
-  try{
-    const cols=['surveys','assessments','awards','employees','feedbacks','jobapps','leads','livePollSessions','pledges','polls','products','quizzes','registrations','riddles','votings'];
-    let activeCount=0;
-    for(const col of cols){
-      try{
-        const snap=await getDocs(query(collection(db,col),where('userId','==',userId),where('status','==','active')));
-        activeCount+=snap.size;
-      }catch(e){}
-    }
-    const limit=window.Gate.getLimit('activeForms');
-    if(limit!==-1&&activeCount>=limit){window.Gate.showLimitModal('activeForms',activeCount,limit);return false;}
-    return true;
-  }catch(e){return true;}
-}
-
-async function checkPlanBanner(db, userId){
-  if(!window.Gate)return;
-  try{
-    const cols=['surveys','assessments','awards','employees','feedbacks','jobapps','leads','livePollSessions','pledges','polls','products','quizzes','registrations','riddles','votings'];
-    let activeCount=0;
-    for(const col of cols){
-      try{
-        const snap=await getDocs(query(collection(db,col),where('userId','==',userId),where('status','==','active')));
-        activeCount+=snap.size;
-      }catch(e){}
-    }
-    const limit=window.Gate.getLimit('activeForms');
-    if(limit===-1||activeCount===0)return;
-    const pct=activeCount/limit;
-    const banner=document.getElementById('plan-banner');
-    if(banner&&pct>=0.8){
-      banner.style.display='flex';
-      const text=document.getElementById('plan-banner-text');
-      if(text)text.textContent='You are using '+activeCount+' of '+limit+' active forms on your plan.';
-    }
-  }catch(e){}
-}
 </script>
 
 <!-- PREVIEW OVERLAY -->
