@@ -1042,9 +1042,9 @@ function buildData(status){
 
 
 // PREVIEW
-let prevOpen=false,
-        ownerEmail:auth.currentUser?.email||'',
-        ownerName:auth.currentUser?.displayName||'',prevMode='desktop';
+let prevOpen=false,prevMode='desktop';
+const ownerEmail=auth.currentUser?.email||'';
+const ownerName=auth.currentUser?.displayName||'';
 
 window.closePreview=function(){};
 window.setPM=function(m){};
