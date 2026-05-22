@@ -546,10 +546,15 @@ onAuthStateChanged(auth,async function(u){
     if(userSnap.exists()){
       const ud=userSnap.data();
       userPlan=ud.plan||'free';
-      // Apply feature overrides
-      if(ud.features?.unlimitedForms)userPlan='pro';
+      console.log('Plan loaded:',userPlan,'for uid:',u.uid);
+    }else{
+      console.log('No user doc found for uid:',u.uid);
+      userPlan='free';
     }
-  }catch(e){userPlan='free';}
+  }catch(e){
+    console.error('Plan load error:',e);
+    userPlan='free';
+  }
 
   // Apply plan restrictions
   const freePlan=userPlan==='free';
