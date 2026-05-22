@@ -542,23 +542,21 @@ onAuthStateChanged(auth,async function(u){
   U=u;
   // Load user plan from Firestore
   try{
+    // Try by UID first
     const userSnap=await getDoc(doc(db,'users',u.uid));
     if(userSnap.exists()){
-      const ud=userSnap.data();
-      userPlan=ud.plan||'free';
-      console.log('Plan loaded:',userPlan,'for uid:',u.uid);
+      userPlan=userSnap.data().plan||'free';
     }else{
-      console.log('No user doc found for uid:',u.uid);
-      userPlan='free';
+      // Try by email
+      const emailSnap=await getDocs(query(collection(db,'users'),where('email','==',u.email)));
+      if(!emailSnap.empty){
+        userPlan=emailSnap.docs[0].data().plan||'free';
+      }
     }
-  }catch(e){
-    console.error('Plan load error:',e);
-    userPlan='free';
-  }
+  }catch(e){userPlan='free';}
 
   // Apply plan restrictions
   const freePlan=userPlan==='free';
-  const starterPlus=['starter','pro','business','student','educator','ngo'].includes(userPlan);
 
   try{
     // Welcome page — starter+
@@ -569,6 +567,14 @@ onAuthStateChanged(auth,async function(u){
       tw.disabled=freePlan;
       tw.style.opacity=freePlan?'0.4':'1';
       tw.style.cursor=freePlan?'not-allowed':'pointer';
+    }
+    // Show plan badge in nav if not free
+    if(!freePlan){
+      const badge=document.createElement('span');
+      badge.textContent=userPlan.toUpperCase();
+      badge.style.cssText='font-size:10px;font-weight:700;background:#ede9ff;color:#2d1b69;padding:2px 8px;border-radius:100px;margin-left:4px;';
+      const navTitle=document.getElementById('nav-title');
+      if(navTitle)navTitle.appendChild(badge);
     }
   }catch(e){}
 
