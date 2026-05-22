@@ -709,26 +709,40 @@ window.deleteItem=async function(){
 
 window.toggleSub=function(id,arrId){
   const sections=[{id:'sub-forms',arr:'arr-forms'},{id:'sub-engage',arr:'arr-engage'},{id:'sub-live',arr:'arr-live'}];
+  // Check if this is the only open section
+  const openSections=sections.filter(function(s){
+    const el=document.getElementById(s.id);
+    return el&&el.style.maxHeight&&el.style.maxHeight!=='0px';
+  });
+  const clickedEl=document.getElementById(id);
+  const isOpen=clickedEl&&clickedEl.style.maxHeight&&clickedEl.style.maxHeight!=='0px';
+  // Don't close if it's the only open one
+  if(isOpen&&openSections.length<=1)return;
   sections.forEach(function(s){
     const el=document.getElementById(s.id);
     const ar=document.getElementById(s.arr);
     if(s.id===id){
-      // Toggle clicked one
-      const isOpen=el&&el.style.maxHeight&&el.style.maxHeight!=='0px';
       if(el)el.style.maxHeight=isOpen?'0px':'600px';
       if(ar)ar.style.transform=isOpen?'rotate(-90deg)':'';
     }else{
-      // Collapse all others
       if(el)el.style.maxHeight='0px';
       if(ar)ar.style.transform='rotate(-90deg)';
     }
   });
 };
-// Open all subsections by default
+// Open first subsection by default
 document.addEventListener('DOMContentLoaded',function(){
-  ['sub-forms','sub-engage','sub-live'].forEach(function(id){
+  const formsEl=document.getElementById('sub-forms');
+  const formsArr=document.getElementById('arr-forms');
+  if(formsEl)formsEl.style.maxHeight='600px';
+  if(formsArr)formsArr.style.transform='';
+  ['sub-engage','sub-live'].forEach(function(id){
     const el=document.getElementById(id);
     if(el)el.style.maxHeight='0px';
+  });
+  ['arr-engage','arr-live'].forEach(function(id){
+    const el=document.getElementById(id);
+    if(el)el.style.transform='rotate(-90deg)';
   });
 });
 window.toggleAvatarMenu=function(){
