@@ -541,19 +541,19 @@ onAuthStateChanged(auth,async function(u){
   if(!u){window.location.href='/login/';return;}
   U=u;
   // Load user plan from Firestore
-  try{
-    // Try by UID first
-    const userSnap=await getDoc(doc(db,'users',u.uid));
-    if(userSnap.exists()){
-      userPlan=userSnap.data().plan||'free';
-    }else{
-      // Try by email
-      const emailSnap=await getDocs(query(collection(db,'users'),where('email','==',u.email)));
-      if(!emailSnap.empty){
-        userPlan=emailSnap.docs[0].data().plan||'free';
+  // Admin always gets business plan
+  if(u.uid==='7WPJK6ZuaEb3lgevyUbbU87umuH3'){userPlan='business';}
+  else{
+    try{
+      const userSnap=await getDoc(doc(db,'users',u.uid));
+      if(userSnap.exists()){
+        userPlan=userSnap.data().plan||'free';
+      }else{
+        const emailSnap=await getDocs(query(collection(db,'users'),where('email','==',u.email)));
+        if(!emailSnap.empty){userPlan=emailSnap.docs[0].data().plan||'free';}
       }
-    }
-  }catch(e){userPlan='free';}
+    }catch(e){userPlan='free';}
+  }
 
   // Apply plan restrictions
   const freePlan=userPlan==='free';
