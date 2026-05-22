@@ -514,7 +514,7 @@ html,body{height:100%;overflow:hidden;font-family:'Sora',sans-serif;background:#
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-import{getFirestore,collection,addDoc,doc,updateDoc,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import{getFirestore,collection,addDoc,doc,updateDoc,getDoc,serverTimestamp,query,where,getDocs}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 const FB={apiKey:"AIzaSyADVtdlHM72xbfOGaTlqohusO3cS8bbeS4",authDomain:"swoopform.firebaseapp.com",projectId:"swoopform",storageBucket:"swoopform.firebasestorage.app",messagingSenderId:"378850092986",appId:"1:378850092986:web:4fed92128136e048fa5f83"};
 const app=initializeApp(FB);
@@ -537,17 +537,36 @@ let welcomeOn=false;
 let redirectOn=false;
 
 // ── AUTH ──────────────────────────────────────────────
-onAuthStateChanged(auth,function(u){
+onAuthStateChanged(auth,async function(u){
   if(!u){window.location.href='/login/';return;}
   U=u;
+  // Load user plan from Firestore
   try{
-    if(userPlan==='free'){
-      const wun=document.getElementById('welcome-upgrade-nudge');
-      const tw=document.getElementById('tgl-welcome');
-      if(wun)wun.style.display='block';
-      if(tw){tw.disabled=true;tw.style.opacity='0.4';tw.style.cursor='not-allowed';}
+    const userSnap=await getDoc(doc(db,'users',u.uid));
+    if(userSnap.exists()){
+      const ud=userSnap.data();
+      userPlan=ud.plan||'free';
+      // Apply feature overrides
+      if(ud.features?.unlimitedForms)userPlan='pro';
+    }
+  }catch(e){userPlan='free';}
+
+  // Apply plan restrictions
+  const freePlan=userPlan==='free';
+  const starterPlus=['starter','pro','business','student','educator','ngo'].includes(userPlan);
+
+  try{
+    // Welcome page — starter+
+    const wun=document.getElementById('welcome-upgrade-nudge');
+    const tw=document.getElementById('tgl-welcome');
+    if(wun)wun.style.display=freePlan?'block':'none';
+    if(tw){
+      tw.disabled=freePlan;
+      tw.style.opacity=freePlan?'0.4':'1';
+      tw.style.cursor=freePlan?'not-allowed':'pointer';
     }
   }catch(e){}
+
   try{items.push(mkQ('multiple'));}catch(e){}
   try{renderAll();}catch(e){console.error('renderAll:',e);}
   document.getElementById('ls').style.display='none';
