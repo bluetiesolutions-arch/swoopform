@@ -105,7 +105,25 @@ footer a{color:rgba(255,255,255,.4);text-decoration:none;margin:0 10px;}
 footer a:hover{color:#fff;}
 
 @media(max-width:1024px){.plans-grid{grid-template-columns:repeat(2,1fr);}.free-tier-grid{grid-template-columns:1fr;}.compare-wrap{overflow-x:auto;}}
-@media(max-width:768px){nav{padding:0 20px;}.hero{padding:48px 20px 32px;}.plans-wrap{padding:0 20px 32px;}.plans-grid{grid-template-columns:1fr;}.free-tier-section{margin:0 20px 32px;padding:28px 20px;}.compare-wrap{padding:0 20px 48px;}.faq-wrap{padding:0 20px 48px;}}
+@media(max-width:768px){
+  nav{padding:0 16px;}
+  .nav-links{display:none;}
+  .nav-cta{gap:6px;}
+  .hero{padding:40px 16px 24px;}
+  .hero-title{font-size:1.8rem;}
+  .plans-wrap{padding:0 16px 24px;}
+  .plans-grid{grid-template-columns:1fr;}
+  .plan-card{padding:20px 16px;}
+  .free-tier-section{margin:0 16px 24px;padding:24px 16px;}
+  .free-tier-grid{grid-template-columns:1fr;}
+  .compare-wrap{padding:0 16px 32px;overflow-x:auto;}
+  .compare-table{min-width:500px;}
+  .faq-wrap{padding:0 16px 32px;}
+  .billing-toggle{flex-wrap:wrap;gap:8px;}
+  .plan-price{font-size:2rem;}
+  .section-title{font-size:1.4rem;}
+  .hero-sub{font-size:0.95rem;}
+}
 </style>
 <link rel="stylesheet" href="/mobile.css">
 </head>
