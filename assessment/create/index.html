@@ -952,8 +952,8 @@ window.mobSaveDraft = async function(){
       const ref=await addDoc(collection(db,'assessments'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
       window.AID=ref.id;
     }
-    alert('Draft saved!');
-  }catch(e){alert('Error: '+e.message);}
+    console.log('Draft auto-saved');
+  }catch(e){console.warn('Auto-save failed:',e.message);}
 };
 
 window.buildMobData = function(status){
@@ -973,6 +973,24 @@ window.buildMobData = function(status){
   };
 };
 
+
+window.mobPublish = async function(){
+  const title=document.getElementById('mob-title')?.value.trim();
+  if(!title){alert('Please add an assessment title');return;}
+  if(!mobItems.length){alert('Please add at least one question');return;}
+  const data=window.buildMobData('active');
+  if(!data)return;
+  try{
+    if(window.AID){
+      await updateDoc(doc(db,'assessments',window.AID),{...data,updatedAt:serverTimestamp()});
+    }else{
+      const ref=await addDoc(collection(db,'assessments'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
+      window.AID=ref.id;
+    }
+    alert('Assessment published! ✅');
+    window.location.href='/dashboard/';
+  }catch(e){alert('Error: '+e.message);}
+};
 </script>
 
 <!-- MOBILE ASSESSMENT BUILDER -->
@@ -1019,7 +1037,7 @@ window.buildMobData = function(status){
         <div style="font-size:13px;color:#64748b;" id="mob-pub-count">0 questions</div>
       </div>
       <button onclick="window.mobSaveDraft()" style="width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:15px;font-weight:700;color:var(--accent);cursor:pointer;margin-bottom:10px;">💾 Save Draft</button>
-      <button onclick="window.publish()" style="width:100%;padding:14px;border-radius:12px;border:none;background:var(--accent);font-family:var(--font);font-size:15px;font-weight:700;color:#fff;cursor:pointer;">🚀 Publish Assessment</button>
+      <button onclick="window.mobPublish()" style="width:100%;padding:14px;border-radius:12px;border:none;background:var(--accent);font-family:var(--font);font-size:15px;font-weight:700;color:#fff;cursor:pointer;">🚀 Publish Assessment</button>
     </div>
 
   </div>
