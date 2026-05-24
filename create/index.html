@@ -346,8 +346,8 @@ html,body{height:100%;font-family:'Sora',sans-serif;background:#F5F0E8;color:#0F
   
   /* Mobile content area */
   .mob-content{
-    padding:16px 16px 80px;
-    min-height:calc(100vh - 56px);
+    padding:80px 16px 90px;
+    min-height:100vh;
   }
   
   /* Step panels */
@@ -1380,7 +1380,7 @@ window.toast2=function(msg){const t=document.getElementById('toast');t.textConte
 // ── MOBILE BUILDER ───────────────────────────────
 const IS_MOBILE = window.innerWidth < 768;
 
-function mobGoStep(step){
+window.mobGoStep=function(step){
   document.querySelectorAll('.mob-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.mob-step-btn').forEach(b=>b.classList.remove('active'));
   const panel = document.getElementById('mob-panel-'+step);
@@ -1392,7 +1392,7 @@ function mobGoStep(step){
   window.scrollTo(0,0);
 }
 
-function mobRenderQList(){
+window.mobRenderQList=function(){
   const wrap = document.getElementById('mob-q-list');
   if(!wrap) return;
   const qs = items.filter(i=>i.kind==='q');
@@ -1413,7 +1413,7 @@ function mobRenderQList(){
     </div>`).join('');
 }
 
-function mobUpdatePublish(){
+window.mobUpdatePublish=function(){
   const t = document.getElementById('mob-s-title')?.value || document.getElementById('s-title')?.value || 'Your Survey';
   const count = items.filter(i=>i.kind==='q').length;
   const titleEl = document.getElementById('mob-pub-title');
@@ -1422,23 +1422,23 @@ function mobUpdatePublish(){
   if(countEl) countEl.textContent = count + ' question' + (count!==1?'s':'');
 }
 
-function mobShowTypeSheet(){
+window.mobShowTypeSheet=function(){
   document.getElementById('mob-type-sheet').classList.add('open');
   document.getElementById('mob-type-bg').classList.add('open');
 }
-function mobHideTypeSheet(){
+window.mobHideTypeSheet=function(){
   document.getElementById('mob-type-sheet').classList.remove('open');
   document.getElementById('mob-type-bg').classList.remove('open');
 }
 
-function mobAddQ(type){
+window.mobAddQ=function(type){
   mobHideTypeSheet();
   const q = mkQ(type);
   items.push(q);
   mobEditQ(q.id);
 }
 
-function mobEditQ(id){
+window.mobEditQ=function(id){
   const q = items.find(i=>i.id===id);
   if(!q) return;
   document.getElementById('mob-editing-id').value = id;
@@ -1452,7 +1452,7 @@ function mobEditQ(id){
   window.scrollTo(0,0);
 }
 
-function mobRenderEditorOptions(){
+window.mobRenderEditorOptions=function(){
   const type = document.getElementById('mob-q-type').value;
   const id = document.getElementById('mob-editing-id').value;
   const q = items.find(i=>i.id===id);
@@ -1477,7 +1477,7 @@ function mobRenderEditorOptions(){
   }
 }
 
-function mobAddOpt(){
+window.mobAddOpt=function(){
   const id = document.getElementById('mob-editing-id').value;
   const q = items.find(i=>i.id===id);
   if(!q) return;
@@ -1486,7 +1486,7 @@ function mobAddOpt(){
   if(q.options.length < 8){ q.options.push(''); mobRenderEditorOptions(); }
 }
 
-function mobDelOpt(idx){
+window.mobDelOpt=function(idx){
   const id = document.getElementById('mob-editing-id').value;
   const q = items.find(i=>i.id===id);
   if(!q || q.options.length <= 2) return;
@@ -1495,7 +1495,7 @@ function mobDelOpt(idx){
   mobRenderEditorOptions();
 }
 
-function mobSaveCurrentOpts(){
+window.mobSaveCurrentOpts=function(){
   const id = document.getElementById('mob-editing-id').value;
   const q = items.find(i=>i.id===id);
   if(!q) return;
@@ -1503,7 +1503,7 @@ function mobSaveCurrentOpts(){
   if(inputs.length) q.options = Array.from(inputs).map(i=>i.value);
 }
 
-function mobSaveQ(){
+window.mobSaveQ=function(){
   const id = document.getElementById('mob-editing-id').value;
   const q = items.find(i=>i.id===id);
   if(!q) return;
@@ -1518,7 +1518,7 @@ function mobSaveQ(){
   toast2('Question saved!');
 }
 
-function mobDeleteQ(){
+window.mobDeleteQ=function(){
   const id = document.getElementById('mob-editing-id').value;
   const qs = items.filter(i=>i.kind==='q');
   if(qs.length <= 1){ toast2('Need at least 1 question'); return; }
@@ -1529,13 +1529,13 @@ function mobDeleteQ(){
   mobRenderQList();
 }
 
-function mobCloseEditor(){
+window.mobCloseEditor=function(){
   document.getElementById('mob-q-editor').classList.remove('open');
 }
 
 // Init mobile on load
 // Mobile init - runs after auth loads
-function initMobileBuilder(){
+window.initMobileBuilder=function(){
   if(!IS_MOBILE) return;
   // Sync title inputs  
   const titleInp = document.getElementById('mob-s-title');
