@@ -1355,7 +1355,7 @@ window.saveDraft=async function(){
     const ok=await gateCheck(db,auth.currentUser?.uid||'');if(!ok)return;
     const ref=await addDoc(collection(db,'surveys'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});SID=ref.id}
     toast2('Draft saved!');
-  }catch(e){console.error(e);toast2('Error saving')}
+  }catch(e){console.error('SAVE ERROR:',e);toast2('Error: '+e.message);}
 };
 
 window.publishSurvey=async function(){
@@ -1371,7 +1371,7 @@ window.publishSurvey=async function(){
     document.getElementById('modal-view-btn').href=slug?'/s/'+slug:'/s/?id='+SID;
     document.getElementById('success-modal').classList.add('open');
     btn.disabled=false;btn.textContent='Publish →';
-  }catch(e){console.error(e);toast2('Error publishing');btn.disabled=false;btn.textContent='Publish →'}
+  }catch(e){console.error('PUBLISH ERROR:',e);toast2('Error: '+e.message);btn.disabled=false;btn.textContent='Publish →';}
 };
 window.closeSuccessModal=function(){document.getElementById('success-modal').classList.remove('open')};
 
