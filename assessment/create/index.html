@@ -174,6 +174,65 @@ select.field-input{cursor:pointer;}
   .field-row,.two-col{flex-direction:column !important;}
   .preview-panel,.right-preview,.live-preview-panel{display:none !important;}
 }
+
+/* ── MOBILE ASSESSMENT BUILDER ─────────────────── */
+.mob-builder{display:none;}
+@media(max-width:768px){
+  .layout,.sidebar,.canvas{display:none !important;}
+  body,html{overflow-y:auto !important;height:auto !important;}
+  .mob-builder{display:block;padding-top:56px;}
+  .mob-content{padding:16px 16px 90px;}
+  .mob-steps{
+    position:fixed;bottom:0;left:0;right:0;
+    background:#fff;border-top:1.5px solid var(--border);
+    display:flex;z-index:400;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .mob-step-btn{
+    flex:1;padding:10px 4px;border:none;background:transparent;
+    font-family:var(--font);font-size:10px;font-weight:600;
+    color:#94A3B8;cursor:pointer;display:flex;flex-direction:column;
+    align-items:center;gap:3px;
+  }
+  .mob-step-btn.active{color:var(--accent);}
+  .mob-step-btn .step-icon{font-size:18px;}
+  .mob-panel{display:none;}
+  .mob-panel.active{display:block;}
+  .mob-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px;}
+  .mob-label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+  .mob-input{width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:16px;color:var(--text);outline:none;margin-bottom:12px;}
+  .mob-input:focus{border-color:var(--accent);}
+  .mob-textarea{width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:16px;color:var(--text);outline:none;resize:none;min-height:80px;margin-bottom:12px;}
+  .mob-select{width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:16px;color:var(--text);outline:none;margin-bottom:12px;}
+  .mob-q-item{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:10px;cursor:pointer;}
+  .mob-q-num{width:28px;height:28px;border-radius:7px;background:var(--accent);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .mob-q-text{flex:1;font-size:13px;font-weight:600;color:var(--text);}
+  .mob-q-type{font-size:10px;color:#94A3B8;flex-shrink:0;}
+  .mob-add-q{width:100%;padding:14px;border-radius:12px;border:2px dashed var(--border);background:transparent;font-family:var(--font);font-size:14px;font-weight:700;color:var(--accent);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;}
+  .mob-q-editor{position:fixed;inset:0;background:#f5f4f0;z-index:600;overflow-y:auto;transform:translateX(100%);transition:transform .25s ease;}
+  .mob-q-editor.open{transform:translateX(0);}
+  .mob-q-editor-nav{height:56px;background:#fff;border-bottom:1.5px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;position:sticky;top:0;z-index:10;}
+  .mob-q-editor-back{background:none;border:none;font-size:20px;cursor:pointer;padding:4px;color:var(--text);}
+  .mob-q-editor-title{font-weight:800;font-size:15px;flex:1;}
+  .mob-q-editor-del{background:none;border:none;font-size:14px;color:#e5484d;cursor:pointer;font-family:var(--font);font-weight:600;padding:6px 10px;}
+  .mob-q-editor-body{padding:16px;}
+  .mob-opt-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .mob-opt-inp{flex:1;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:16px;color:var(--text);outline:none;}
+  .mob-opt-del{width:32px;height:32px;border-radius:8px;border:1.5px solid #fecaca;background:#fef2f2;color:#ef4444;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .mob-correct-btn{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border);background:#fff;color:transparent;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .mob-correct-btn.ok{background:#10b981;border-color:#10b981;color:#fff;}
+  .mob-add-opt{width:100%;padding:10px;border-radius:10px;border:2px dashed var(--border);background:transparent;font-family:var(--font);font-size:13px;font-weight:600;color:var(--accent);cursor:pointer;margin-top:4px;}
+  .mob-save-q{width:100%;padding:14px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;margin-top:20px;}
+  .mob-type-sheet{position:fixed;bottom:0;left:0;right:0;background:#fff;border-radius:20px 20px 0 0;border-top:1.5px solid var(--border);z-index:700;padding:16px;transform:translateY(100%);transition:transform .25s ease;max-height:60vh;overflow-y:auto;}
+  .mob-type-sheet.open{transform:translateY(0);}
+  .mob-type-sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:699;display:none;}
+  .mob-type-sheet-bg.open{display:block;}
+  .mob-type-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .mob-type-btn{padding:12px 8px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:13px;font-weight:600;color:var(--text);cursor:pointer;text-align:center;}
+  .mob-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);}
+  .mob-toggle-label{font-size:14px;font-weight:600;}
+}
+
 </style>
 <link rel="stylesheet" href="/mobile.css">
 </head>
@@ -701,6 +760,326 @@ async function checkPlanBanner(db, userId){
     }
   }catch(e){}
 }
+
+
+// ── MOBILE ASSESSMENT BUILDER ────────────────────
+const IS_MOBILE = window.innerWidth < 768;
+let mobItems = [];
+
+window.mobGoStep = function(step){
+  document.querySelectorAll('.mob-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.mob-step-btn').forEach(b=>b.classList.remove('active'));
+  const panel=document.getElementById('mob-panel-'+step);
+  const btn=document.getElementById('mob-nav-'+step);
+  if(panel)panel.classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(step==='questions')window.mobRenderQList();
+  if(step==='publish')window.mobUpdatePublish();
+  window.scrollTo(0,0);
+};
+
+window.mobRenderQList = function(){
+  const wrap=document.getElementById('mob-q-list');
+  if(!wrap)return;
+  if(!mobItems.length){
+    wrap.innerHTML='<div style="text-align:center;padding:32px;color:#94a3b8;font-size:14px;">No questions yet.<br>Tap + Add Question below.</div>';
+    return;
+  }
+  const TYPES={mcq:'MCQ',multi:'Multi Select',truefalse:'True/False',short:'Short Answer',long:'Long Answer',number:'Number',fitb:'Fill Blank'};
+  wrap.innerHTML=mobItems.map((q,i)=>`
+    <div class="mob-q-item" onclick="window.mobEditQ('${q.id}')">
+      <div class="mob-q-num">${i+1}</div>
+      <div class="mob-q-text">${q.text||'Untitled question'}</div>
+      <div class="mob-q-type">${TYPES[q.type]||q.type} · ${q.marks||1}pt</div>
+      <div style="color:#c4b9aa;font-size:18px;">›</div>
+    </div>`).join('');
+};
+
+window.mobUpdatePublish = function(){
+  const t=document.getElementById('mob-title')?.value||'Your Assessment';
+  const el=document.getElementById('mob-pub-title');
+  const cel=document.getElementById('mob-pub-count');
+  if(el)el.textContent=t;
+  if(cel)cel.textContent=mobItems.length+' question'+(mobItems.length!==1?'s':'')+' · '+mobItems.reduce((s,q)=>s+(q.marks||1),0)+' total marks';
+};
+
+window.mobShowTypeSheet = function(){
+  document.getElementById('mob-type-sheet').classList.add('open');
+  document.getElementById('mob-type-bg').classList.add('open');
+};
+window.mobHideTypeSheet = function(){
+  document.getElementById('mob-type-sheet').classList.remove('open');
+  document.getElementById('mob-type-bg').classList.remove('open');
+};
+
+window.mobAddQ = function(type){
+  window.mobHideTypeSheet();
+  const q={id:'q'+Date.now(),type,text:'',options:['','','',''],correct:0,marks:1,required:true};
+  mobItems.push(q);
+  window.mobEditQ(q.id);
+};
+
+window.mobEditQ = function(id){
+  const q=mobItems.find(i=>i.id===id);
+  if(!q)return;
+  document.getElementById('mob-editing-id').value=id;
+  document.getElementById('mob-q-type').value=q.type;
+  document.getElementById('mob-q-text').value=q.text||'';
+  document.getElementById('mob-q-marks').value=q.marks||1;
+  const req=document.getElementById('mob-q-required');
+  if(req)req.classList.toggle('on',q.required!==false);
+  window.mobRenderEditorOptions();
+  document.getElementById('mob-q-editor').classList.add('open');
+  history.pushState({editor:true},'','');
+  window.scrollTo(0,0);
+};
+
+window.mobRenderEditorOptions = function(){
+  const type=document.getElementById('mob-q-type').value;
+  const id=document.getElementById('mob-editing-id').value;
+  const q=mobItems.find(i=>i.id===id);
+  const wrap=document.getElementById('mob-editor-options');
+  if(!wrap)return;
+  const hasOpts=['mcq','multi'].includes(type);
+  if(type==='truefalse'){
+    wrap.innerHTML=`<div><label class="mob-label">Correct Answer</label>
+      <div style="display:flex;gap:8px;margin-bottom:12px;">
+        <button onclick="mobSetTF(true,this)" style="flex:1;padding:12px;border-radius:10px;border:1.5px solid var(--border);background:${q?.correct===true?'#10b981':'#fff'};color:${q?.correct===true?'#fff':'var(--text)'};font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;">✓ True</button>
+        <button onclick="mobSetTF(false,this)" style="flex:1;padding:12px;border-radius:10px;border:1.5px solid var(--border);background:${q?.correct===false?'#e5484d':'#fff'};color:${q?.correct===false?'#fff':'var(--text)'};font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;">✗ False</button>
+      </div></div>`;
+  } else if(hasOpts){
+    const opts=q?.options||['','','',''];
+    wrap.innerHTML=`<label class="mob-label">Options (tap ✓ to mark correct)</label>
+      <div id="mob-opts-list">
+        ${opts.map((o,i)=>`<div class="mob-opt-row">
+          <button class="mob-correct-btn${q?.correct===i?' ok':''}" onclick="window.mobSetCorrect(${i})">✓</button>
+          <input class="mob-opt-inp mob-opt" data-idx="${i}" value="${o}" placeholder="Option ${i+1}">
+          ${opts.length>2?`<button class="mob-opt-del" onclick="window.mobDelOpt(${i})">✕</button>`:''}
+        </div>`).join('')}
+      </div>
+      <button class="mob-add-opt" onclick="window.mobAddOpt()">+ Add option</button>`;
+  } else {
+    wrap.innerHTML='';
+  }
+};
+
+window.mobSetTF = function(val, btn){
+  const id=document.getElementById('mob-editing-id').value;
+  const q=mobItems.find(i=>i.id===id);
+  if(q)q.correct=val;
+  window.mobRenderEditorOptions();
+};
+
+window.mobSetCorrect = function(idx){
+  const id=document.getElementById('mob-editing-id').value;
+  const q=mobItems.find(i=>i.id===id);
+  if(q)q.correct=idx;
+  document.querySelectorAll('.mob-correct-btn').forEach((b,i)=>b.classList.toggle('ok',i===idx));
+};
+
+window.mobAddOpt = function(){
+  const id=document.getElementById('mob-editing-id').value;
+  const q=mobItems.find(i=>i.id===id);
+  if(!q||q.options.length>=6)return;
+  window.mobSaveCurrentOpts();
+  q.options.push('');
+  window.mobRenderEditorOptions();
+};
+
+window.mobDelOpt = function(idx){
+  const id=document.getElementById('mob-editing-id').value;
+  const q=mobItems.find(i=>i.id===id);
+  if(!q||q.options.length<=2)return;
+  window.mobSaveCurrentOpts();
+  q.options.splice(idx,1);
+  if(q.correct>=q.options.length)q.correct=0;
+  window.mobRenderEditorOptions();
+};
+
+window.mobSaveCurrentOpts = function(){
+  const id=document.getElementById('mob-editing-id').value;
+  const q=mobItems.find(i=>i.id===id);
+  if(!q)return;
+  const inputs=document.querySelectorAll('.mob-opt');
+  if(inputs.length)q.options=Array.from(inputs).map(i=>i.value);
+};
+
+window.mobSaveQ = function(){
+  const id=document.getElementById('mob-editing-id').value;
+  const q=mobItems.find(i=>i.id===id);
+  if(!q)return;
+  q.type=document.getElementById('mob-q-type').value;
+  q.text=document.getElementById('mob-q-text').value.trim();
+  q.marks=parseInt(document.getElementById('mob-q-marks').value)||1;
+  q.required=document.getElementById('mob-q-required')?.classList.contains('on')!==false;
+  window.mobSaveCurrentOpts();
+  if(!q.text){alert('Please enter a question');return;}
+  window.mobCloseEditor();
+  window.mobRenderQList();
+  // Auto save
+  window.mobSaveDraft();
+};
+
+window.mobDeleteQ = function(){
+  const id=document.getElementById('mob-editing-id').value;
+  if(mobItems.length<=1){alert('Need at least 1 question');return;}
+  if(!confirm('Delete this question?'))return;
+  mobItems=mobItems.filter(i=>i.id!==id);
+  window.mobCloseEditor();
+  window.mobRenderQList();
+};
+
+window.mobCloseEditor = function(){
+  document.getElementById('mob-q-editor').classList.remove('open');
+};
+
+window.addEventListener('popstate',function(){
+  const editor=document.getElementById('mob-q-editor');
+  if(editor&&editor.classList.contains('open'))window.mobCloseEditor();
+});
+
+window.mobSaveDraft = async function(){
+  const title=document.getElementById('mob-title')?.value.trim();
+  if(!title){alert('Please add a title first');return;}
+  if(!mobItems.length){alert('Please add at least one question');return;}
+  // Sync to desktop fields
+  const data=window.buildMobData('draft');
+  if(!data)return;
+  try{
+    if(window.AID){
+      await updateDoc(doc(db,'assessments',window.AID),{...data,updatedAt:serverTimestamp()});
+    }else{
+      const ref=await addDoc(collection(db,'assessments'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
+      window.AID=ref.id;
+    }
+    alert('Draft saved!');
+  }catch(e){alert('Error: '+e.message);}
+};
+
+window.buildMobData = function(status){
+  return{
+    title:document.getElementById('mob-title')?.value.trim()||'',
+    description:document.getElementById('mob-desc')?.value.trim()||'',
+    subject:document.getElementById('mob-subject')?.value.trim()||'',
+    timeLimit:parseInt(document.getElementById('mob-time')?.value)||null,
+    questions:mobItems,
+    passMark:parseInt(document.getElementById('mob-passmark')?.value)||60,
+    showScore:document.getElementById('mob-show-score')?.classList.contains('on')!==false,
+    status,
+    userId:typeof U!=='undefined'?U?.uid:(auth.currentUser?.uid||''),
+    ownerEmail:typeof U!=='undefined'?U?.email:(auth.currentUser?.email||''),
+    ownerName:typeof U!=='undefined'?U?.displayName:(auth.currentUser?.displayName||''),
+    formType:'assessment',
+  };
+};
+
 </script>
+
+<!-- MOBILE ASSESSMENT BUILDER -->
+<div class="mob-builder">
+  <div class="mob-content">
+
+    <!-- STEP 1: INFO -->
+    <div class="mob-panel active" id="mob-panel-info">
+      <div class="mob-card">
+        <label class="mob-label">Assessment Title *</label>
+        <input class="mob-input" id="mob-title" placeholder="e.g. English Grammar Test">
+        <label class="mob-label">Description</label>
+        <textarea class="mob-textarea" id="mob-desc" placeholder="What is this assessment about?"></textarea>
+        <label class="mob-label">Subject / Topic</label>
+        <input class="mob-input" id="mob-subject" placeholder="e.g. Grammar, Mathematics">
+        <label class="mob-label">Time Limit (minutes)</label>
+        <input class="mob-input" id="mob-time" type="number" placeholder="e.g. 30 (leave blank for no limit)">
+      </div>
+    </div>
+
+    <!-- STEP 2: QUESTIONS -->
+    <div class="mob-panel" id="mob-panel-questions">
+      <div id="mob-q-list"></div>
+      <button class="mob-add-q" onclick="window.mobShowTypeSheet()">＋ Add Question</button>
+    </div>
+
+    <!-- STEP 3: SCORING -->
+    <div class="mob-panel" id="mob-panel-scoring">
+      <div class="mob-card">
+        <label class="mob-label">Pass Mark (%)</label>
+        <input class="mob-input" id="mob-passmark" type="number" placeholder="e.g. 60">
+        <label class="mob-label">Show score to participant</label>
+        <div class="mob-toggle-row" style="border:none;">
+          <span class="mob-toggle-label">Show score after submission</span>
+          <button class="tgl on" id="mob-show-score" onclick="this.classList.toggle('on')"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: PUBLISH -->
+    <div class="mob-panel" id="mob-panel-publish">
+      <div class="mob-card">
+        <div style="font-size:16px;font-weight:800;margin-bottom:4px;" id="mob-pub-title">Your Assessment</div>
+        <div style="font-size:13px;color:#64748b;" id="mob-pub-count">0 questions</div>
+      </div>
+      <button onclick="window.mobSaveDraft()" style="width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:15px;font-weight:700;color:var(--accent);cursor:pointer;margin-bottom:10px;">💾 Save Draft</button>
+      <button onclick="window.publish()" style="width:100%;padding:14px;border-radius:12px;border:none;background:var(--accent);font-family:var(--font);font-size:15px;font-weight:700;color:#fff;cursor:pointer;">🚀 Publish Assessment</button>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="mob-steps">
+    <button class="mob-step-btn active" id="mob-nav-info" onclick="window.mobGoStep('info')"><span class="step-icon">📋</span>Info</button>
+    <button class="mob-step-btn" id="mob-nav-questions" onclick="window.mobGoStep('questions')"><span class="step-icon">❓</span>Questions</button>
+    <button class="mob-step-btn" id="mob-nav-scoring" onclick="window.mobGoStep('scoring')"><span class="step-icon">🏆</span>Scoring</button>
+    <button class="mob-step-btn" id="mob-nav-publish" onclick="window.mobGoStep('publish')"><span class="step-icon">🚀</span>Publish</button>
+  </div>
+</div>
+
+<!-- FULL SCREEN QUESTION EDITOR -->
+<div class="mob-q-editor" id="mob-q-editor">
+  <div class="mob-q-editor-nav">
+    <button class="mob-q-editor-back" onclick="window.mobCloseEditor()">←</button>
+    <div class="mob-q-editor-title">Edit Question</div>
+    <button class="mob-q-editor-del" onclick="window.mobDeleteQ()">Delete</button>
+  </div>
+  <div class="mob-q-editor-body">
+    <input type="hidden" id="mob-editing-id">
+    <div>
+      <label class="mob-label">Question Type</label>
+      <select class="mob-select" id="mob-q-type" onchange="window.mobRenderEditorOptions()">
+        <option value="mcq">MCQ — Single Answer</option>
+        <option value="multi">Multi Select</option>
+        <option value="truefalse">True / False</option>
+        <option value="short">Short Answer</option>
+        <option value="long">Long Answer</option>
+        <option value="number">Number</option>
+        <option value="fitb">Fill in the Blank</option>
+      </select>
+      <label class="mob-label">Question Text *</label>
+      <textarea class="mob-textarea" id="mob-q-text" placeholder="Type your question..."></textarea>
+      <label class="mob-label">Marks</label>
+      <input class="mob-input" id="mob-q-marks" type="number" placeholder="e.g. 1" value="1">
+    </div>
+    <div id="mob-editor-options"></div>
+    <div class="mob-toggle-row">
+      <span class="mob-toggle-label">Required</span>
+      <button class="tgl on" id="mob-q-required" onclick="this.classList.toggle('on')"></button>
+    </div>
+    <button class="mob-save-q" onclick="window.mobSaveQ()">✓ Save Question</button>
+  </div>
+</div>
+
+<!-- TYPE PICKER -->
+<div class="mob-type-sheet-bg" id="mob-type-bg" onclick="window.mobHideTypeSheet()"></div>
+<div class="mob-type-sheet" id="mob-type-sheet">
+  <div style="font-weight:800;font-size:16px;margin-bottom:14px;text-align:center;">Question Type</div>
+  <div class="mob-type-grid">
+    <button class="mob-type-btn" onclick="window.mobAddQ('mcq')">⭕ MCQ Single</button>
+    <button class="mob-type-btn" onclick="window.mobAddQ('multi')">☑️ Multi Select</button>
+    <button class="mob-type-btn" onclick="window.mobAddQ('truefalse')">✅ True / False</button>
+    <button class="mob-type-btn" onclick="window.mobAddQ('short')">✏️ Short Answer</button>
+    <button class="mob-type-btn" onclick="window.mobAddQ('long')">📄 Long Answer</button>
+    <button class="mob-type-btn" onclick="window.mobAddQ('fitb')">___ Fill Blank</button>
+  </div>
+</div>
+
 </body>
 </html>
