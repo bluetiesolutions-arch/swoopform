@@ -1308,15 +1308,16 @@ function buildData(status){
     welcome:{enabled:welcomeOn,logo:document.getElementById('w-logo')?.value.trim()||'',headline:document.getElementById('w-head')?.value.trim()||'',btnText:document.getElementById('w-btn')?.value.trim()||'',bgColor:document.getElementById('w-bgc')?.value.trim()||'',bgImage:document.getElementById('w-bgi')?.value.trim()||'',bgVideo:document.getElementById('w-bgv')?.value.trim()||''},
     thankyou:{headline:document.getElementById('ty-h')?.value.trim()||'',message:document.getElementById('ty-m')?.value.trim()||'',redirect:redirectOn?document.getElementById('ty-r')?.value.trim()||'':'',showShare:document.getElementById('tgl-share')?.classList.contains('on')||false},
     prize:{enabled:document.getElementById('tgl-prize')?.classList.contains('on')||false,description:document.getElementById('p-desc')?.value.trim()||'',winners:parseInt(document.getElementById('p-win')?.value)||1,selection:document.getElementById('p-sel')?.value||'random',leaderboard:document.getElementById('p-lb')?.value||'none',disclaimerAccepted:document.getElementById('disc-row')?.classList.contains('checked')||false},
-    formType:'survey',status,userId:U.uid
+    formType:'survey',status,userId:U.uid,
+    ownerEmail:U?.email||auth.currentUser?.email||'',
+    ownerName:U?.displayName||auth.currentUser?.displayName||''
   };
 }
 
 
 // PREVIEW
 let prevOpen=false,prevMode='desktop';
-const ownerEmail=auth.currentUser?.email||'';
-const ownerName=auth.currentUser?.displayName||'';
+// ownerEmail/ownerName read dynamically in buildData
 
 window.closePreview=function(){};
 window.setPM=function(m){};
