@@ -1347,6 +1347,20 @@ window.upPrev=function(){
   body.innerHTML=prevMode==='mobile'?`<div class="mob-frame"><div class="mob-inner">${html}</div></div>`:html;
 };
 
+async function gateCheck(db, userId){
+  if(!window.Gate)return true;
+  try{
+    const cols=['surveys','assessments','awards','employees','feedbacks','jobapps','leads','livePollSessions','pledges','polls','products','quizzes','registrations','riddles','votings'];
+    let activeCount=0;
+    for(const col of cols){
+      try{const snap=await getDocs(query(collection(db,col),where('userId','==',userId),where('status','==','active')));activeCount+=snap.size;}catch(e){}
+    }
+    const limit=window.Gate.getLimit('activeForms');
+    if(limit!==-1&&activeCount>=limit){window.Gate.showLimitModal('activeForms',activeCount,limit);return false;}
+    return true;
+  }catch(e){return true;}
+}
+
 window.saveDraft=async function(){
   const data=buildData('draft');if(!data)return;
   try{
