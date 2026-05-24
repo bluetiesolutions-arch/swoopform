@@ -345,9 +345,10 @@ html,body{height:100%;font-family:'Sora',sans-serif;background:#F5F0E8;color:#0F
   .mob-step-btn .step-icon{font-size:18px;}
   
   /* Mobile content area */
+  .mob-builder{padding-top:56px;}
   .mob-content{
-    padding:80px 16px 90px;
-    min-height:100vh;
+    padding:16px 16px 90px;
+    min-height:calc(100vh - 56px);
   }
   
   /* Step panels */
@@ -1449,6 +1450,9 @@ window.mobEditQ=function(id){
   if(req) req.classList.toggle('on', q.required);
   mobRenderEditorOptions();
   document.getElementById('mob-q-editor').classList.add('open');
+  // Push history state so back button closes editor not page
+  window._editorHistoryPushed=true;
+  history.pushState({editor:true},'','');
   window.scrollTo(0,0);
 }
 
@@ -1515,7 +1519,14 @@ window.mobSaveQ=function(){
   renderAll();
   mobCloseEditor();
   mobRenderQList();
-  toast2('Question saved!');
+  // Auto-save draft silently
+  const title=document.getElementById('s-title')?.value?.trim();
+  if(title){
+    saveDraft().catch(function(){});
+    toast2('Question saved & draft updated!');
+  }else{
+    toast2('Question saved! Add a title to auto-save.');
+  }
 }
 
 window.mobDeleteQ=function(){
@@ -1531,7 +1542,19 @@ window.mobDeleteQ=function(){
 
 window.mobCloseEditor=function(){
   document.getElementById('mob-q-editor').classList.remove('open');
+  // Remove the history state we pushed
+  if(window._editorHistoryPushed){
+    window._editorHistoryPushed=false;
+  }
 }
+
+// Intercept browser back button
+window.addEventListener('popstate',function(e){
+  const editor=document.getElementById('mob-q-editor');
+  if(editor&&editor.classList.contains('open')){
+    mobCloseEditor();
+  }
+});
 
 // Init mobile on load
 // Mobile init - runs after auth loads
