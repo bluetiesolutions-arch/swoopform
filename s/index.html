@@ -567,12 +567,12 @@ async function showThankyou(){
   // Save response
   try{
     console.log('Saving answers:', JSON.stringify(answers), 'surveyId:', surveyId);
-    const ownerId=surveyData.userId;
+    const ownerId=survey?.userId;
     if(ownerId){
       const rl=await checkResponseLimit(db,ownerId);
       if(!rl.allowed){showResponseLimitError(rl.count,rl.limit);return;}
     }
-    await addDoc(collection(db,'surveyResponses'),{ownerId:typeof ownerId!=='undefined'?ownerId:(formData?.userId||pollData?.userId||votingData?.userId||pledgeData?.userId||riddleData?.userId||surveyData?.userId||''),
+    await addDoc(collection(db,'surveyResponses'),{ownerId:typeof ownerId!=='undefined'?ownerId:(formData?.userId||pollData?.userId||votingData?.userId||pledgeData?.userId||riddleData?.userId||survey?.userId||''),
       surveyId,surveySlug:survey.slug||null,
       answers,submittedAt:serverTimestamp(),
       quizScore:quizTotal>0?quizScore:null,quizTotal:quizTotal>0?quizTotal:null
@@ -581,7 +581,7 @@ async function showThankyou(){
     // Email notification to host
     try{
       if(typeof SF_EMAIL!=='undefined'){
-        const od=surveyData;
+        const od=survey;
         if(od&&od.ownerEmail){
           SF_EMAIL.notifyNewResponse(
             od.ownerEmail,
