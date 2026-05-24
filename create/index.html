@@ -1285,9 +1285,16 @@ window.valSlug=function(inp){inp.value=inp.value.replace(/[^a-z0-9-]/g,'');const
 // ── SAVE / PUBLISH ────────────────────────────────────
 function buildData(status){
   syncAll();
+  // Sync mobile inputs to desktop hidden inputs first
+  const mobTitle=document.getElementById('mob-s-title');
+  const mobDesc=document.getElementById('mob-s-desc');
+  const desktopTitle=document.getElementById('s-title');
+  const desktopDesc=document.getElementById('s-desc');
+  if(mobTitle&&mobTitle.value&&desktopTitle)desktopTitle.value=mobTitle.value;
+  if(mobDesc&&mobDesc.value&&desktopDesc)desktopDesc.value=mobDesc.value;
   const title=document.getElementById('s-title').value.trim();
-  if(!title){toast2('Please add a survey title');sp('builder');return null}
-  if(!items.some(i=>i.kind==='q')){toast2('Please add at least one question');return null}
+  if(!title){toast2('Please add a survey title first!');return null;}
+  if(!items.some(i=>i.kind==='q')){toast2('Please add at least one question!');return null;}
   return{
     title,
     description:document.getElementById('s-desc')?.value.trim()||'',
