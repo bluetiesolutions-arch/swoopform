@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%;overflow:hidden;font-family:'Sora',sans-serif;background:#F5F0E8;color:#0F0E1A}
+html,body{height:100%;font-family:'Sora',sans-serif;background:#F5F0E8;color:#0F0E1A}@media(max-width:768px){html,body{height:auto;overflow-y:auto;}}
 .nav{height:56px;background:#fff;border-bottom:1.5px solid #E2DAD0;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:fixed;top:0;left:0;right:0;z-index:300;gap:10px}
 .nav-l{display:flex;align-items:center;gap:8px;min-width:0;flex-shrink:1}
 .logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0;}
@@ -1534,14 +1534,18 @@ function mobCloseEditor(){
 }
 
 // Init mobile on load
+// Mobile init - runs after auth loads
+function initMobileBuilder(){
+  if(!IS_MOBILE) return;
+  // Sync title inputs  
+  const titleInp = document.getElementById('mob-s-title');
+  const descInp = document.getElementById('mob-s-desc');
+  if(titleInp) titleInp.value = document.getElementById('s-title')?.value||'';
+  if(descInp) descInp.value = document.getElementById('s-desc')?.value||'';
+  mobRenderQList();
+}
 if(IS_MOBILE){
-  document.addEventListener('DOMContentLoaded', function(){
-    // Sync title inputs
-    const titleInp = document.getElementById('mob-s-title');
-    const descInp = document.getElementById('mob-s-desc');
-    if(titleInp) titleInp.value = document.getElementById('s-title')?.value||'';
-    if(descInp) descInp.value = document.getElementById('s-desc')?.value||'';
-  });
+  document.addEventListener('DOMContentLoaded', initMobileBuilder);
 }
 
 </script>
