@@ -195,7 +195,13 @@ nav{height:56px;background:var(--surface);border-bottom:1.5px solid var(--border
               <option value="pledges">Pledges</option>
               <option value="riddles">Riddles</option>
             </select>
-            <input class="ii" id="content-search" placeholder="Search..." style="max-width:180px;" oninput="filterContent()">
+            <select class="ii" id="content-status" onchange="filterContent()" style="max-width:120px;">
+              <option value="">All Status</option>
+              <option value="active">Active</option>
+              <option value="draft">Draft</option>
+              <option value="closed">Closed</option>
+            </select>
+            <input class="ii" id="content-search" placeholder="Search title or user..." style="max-width:180px;" oninput="filterContent()">
           </div>
         </div>
         <div id="content-wrap"><div class="loading-wrap"><div class="spinner"></div>Loading...</div></div>
@@ -659,6 +665,10 @@ window.deleteUser=async function(){
 
 // ── ALL CONTENT ──────────────────────────────────────
 async function loadContent(){
+  // Load users first so we can show names
+  if(!allUsers.length){
+    try{const s=await getDocs(collection(db,'users'));allUsers=s.docs.map(function(d){return{id:d.id,...d.data()};});}catch(e){}
+  }
   if(!allContent.length){
     const results=await Promise.all(COLS.map(async function(c){try{const s=await getDocs(collection(db,c));return s.docs.map(function(d){return{id:d.id,_col:c,...d.data()};});}catch(e){return[];}}));
     allContent=results.flat().sort(function(a,b){return(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0);});
