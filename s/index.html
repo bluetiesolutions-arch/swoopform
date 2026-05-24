@@ -589,7 +589,7 @@ async function showThankyou(){
             od.title||'Survey',
             'Survey',
             (od.responseCount||od.totalVotes||od.totalPledges||0)+1,
-            'https://swoopform.com/responses/?id='+SID
+            'https://swoopform.com/responses/?id='+surveyId
           );
         }
       }
@@ -738,13 +738,7 @@ init();
 
 async function checkResponseLimit(db, ownerId){
   try{
-    const {collection,query,where,getDocs,Timestamp}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
-    // Get start of current month
-    const now=new Date();
-    const monthStart=new Date(now.getFullYear(),now.getMonth(),1);
-    const monthTs={seconds:Math.floor(monthStart.getTime()/1000),nanoseconds:0};
     // Get owner's plan
-    const {doc,getDoc}=await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
     const userSnap=await getDoc(doc(db,'users',ownerId));
     const userData=userSnap.exists()?userSnap.data():{plan:'free'};
     const plan=userData.plan||'free';
