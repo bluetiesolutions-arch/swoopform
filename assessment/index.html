@@ -406,8 +406,22 @@ window.submitAssessment=async function(){
     let isCorrect=false;let isSkipped=false;
     if(ans===undefined||ans===''||(Array.isArray(ans)&&ans.length===0)){isSkipped=true;skipped++;}
     else if(q.type==='mcq'||q.type==='truefalse'){
-      const correctOpt=q.type==='truefalse'?q.correctAnswer:(q.options||[]).find(function(o){return o.correct;});
-      const correctText=q.type==='truefalse'?correctOpt:(correctOpt?correctOpt.text:'');
+      let correctText='';
+      if(q.type==='truefalse'){
+        // Handle both boolean and string correct answers
+        if(q.correctAnswer==='True'||q.correctAnswer===true||q.correct===true)correctText='True';
+        else if(q.correctAnswer==='False'||q.correctAnswer===false||q.correct===false)correctText='False';
+        else correctText=q.correctAnswer||'';
+      }else{
+        // MCQ - handle both object array and index-based correct
+        if(typeof q.correct==='number'){
+          correctText=(q.options||[])[q.correct]||(q.options||[])[q.correct]?.text||'';
+          if(typeof correctText==='object')correctText=correctText.text||'';
+        }else{
+          const correctOpt=(q.options||[]).find(function(o){return o.correct;});
+          correctText=correctOpt?correctOpt.text:'';
+        }
+      }
       isCorrect=ans===correctText;
     }else if(q.type==='multi'){
       const correctOpts=(q.options||[]).filter(function(o){return o.correct;}).map(function(o){return o.text;}).sort();

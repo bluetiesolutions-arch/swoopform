@@ -934,11 +934,21 @@ window.mobSaveQ = function(){
   q.text=document.getElementById('mob-q-text').value.trim();
   q.marks=parseInt(document.getElementById('mob-q-marks').value)||1;
   q.required=document.getElementById('mob-q-required')?.classList.contains('on')!==false;
-  window.mobSaveCurrentOpts();
+  // For true/false - save correctAnswer as string 'True' or 'False'
+  if(q.type==='truefalse'){
+    q.correctAnswer=q.correct===true?'True':'False';
+  }
+  // For MCQ - save options in correct format for public page
+  if(q.type==='mcq'||q.type==='multi'){
+    window.mobSaveCurrentOpts();
+    // Convert to format expected by public page
+    q.options=(q.options||[]).map(function(o,i){
+      return{text:typeof o==='string'?o:o.text||'',correct:i===q.correct};
+    });
+  }
   if(!q.text){alert('Please enter a question');return;}
   window.mobCloseEditor();
   window.mobRenderQList();
-  // Auto save
   window.mobSaveDraft();
 };
 
