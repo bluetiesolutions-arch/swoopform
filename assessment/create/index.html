@@ -864,24 +864,38 @@ window.mobRenderEditorOptions = function(){
   if(!wrap)return;
   const hasOpts=['mcq','multi'].includes(type);
   if(type==='truefalse'){
-    wrap.innerHTML=`<div><label class="mob-label">Correct Answer</label>
-      <div style="display:flex;gap:8px;margin-bottom:12px;">
-        <button onclick="mobSetTF(true,this)" style="flex:1;padding:12px;border-radius:10px;border:1.5px solid var(--border);background:${q?.correct===true?'#10b981':'#fff'};color:${q?.correct===true?'#fff':'var(--text)'};font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;">✓ True</button>
-        <button onclick="mobSetTF(false,this)" style="flex:1;padding:12px;border-radius:10px;border:1.5px solid var(--border);background:${q?.correct===false?'#e5484d':'#fff'};color:${q?.correct===false?'#fff':'var(--text)'};font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;">✗ False</button>
-      </div></div>`;
+    const isTr=q?.correctAnswer==='True'||q?.correct===true;
+    const isFa=q?.correctAnswer==='False'||q?.correct===false;
+    wrap.innerHTML='<div><label class="mob-label">Correct Answer</label>'
+      +'<div style="display:flex;gap:8px;margin-bottom:12px;">'
+      +'<button onclick="window.mobSetTF(true,this)" style="flex:1;padding:12px;border-radius:10px;border:1.5px solid var(--border);background:'+(isTr?'#10b981':'#fff')+';color:'+(isTr?'#fff':'var(--text)')+';font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;">✓ True</button>'
+      +'<button onclick="window.mobSetTF(false,this)" style="flex:1;padding:12px;border-radius:10px;border:1.5px solid var(--border);background:'+(isFa?'#e5484d':'#fff')+';color:'+(isFa?'#fff':'var(--text)')+';font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;">✗ False</button>'
+      +'</div></div>';
+  } else if(type==='number'){
+    wrap.innerHTML='<div class="mob-field"><label class="mob-label">Correct Answer (number)</label>'
+      +'<input class="mob-input" id="mob-correct-num" type="number" placeholder="e.g. 42" value="'+(q?.correctAnswer||'')+'">'
+      +'</div>';
+  } else if(type==='fillblank'){
+    wrap.innerHTML='<div class="mob-field"><label class="mob-label">Correct Answer(s)</label>'
+      +'<input class="mob-input" id="mob-correct-fill" placeholder="e.g. photosynthesis (comma separate multiple)" value="'+(q?.correctAnswer||'')+'">'
+      +'<div style="font-size:11px;color:#94a3b8;margin-top:4px;">Separate multiple valid answers with commas</div>'
+      +'</div>';
   } else if(hasOpts){
     const opts=q?.options||['','','',''];
-    wrap.innerHTML=`<label class="mob-label">Options (tap ✓ to mark correct)</label>
-      <div id="mob-opts-list">
-        ${opts.map((o,i)=>`<div class="mob-opt-row">
-          <button class="mob-correct-btn${q?.correct===i?' ok':''}" onclick="window.mobSetCorrect(${i})">✓</button>
-          <input class="mob-opt-inp mob-opt" data-idx="${i}" value="${o}" placeholder="Option ${i+1}">
-          ${opts.length>2?`<button class="mob-opt-del" onclick="window.mobDelOpt(${i})">✕</button>`:''}
-        </div>`).join('')}
-      </div>
-      <button class="mob-add-opt" onclick="window.mobAddOpt()">+ Add option</button>`;
+    const optTexts=opts.map(function(o){return typeof o==='object'?o.text||'':o;});
+    const correctIdx=typeof q?.correct==='number'?q.correct:opts.findIndex(function(o){return typeof o==='object'&&o.correct;});
+    var html='<label class="mob-label">Options (tap ✓ to mark correct)</label><div id="mob-opts-list">';
+    optTexts.forEach(function(o,i){
+      html+='<div class="mob-opt-row">'
+        +'<button class="mob-correct-btn'+(correctIdx===i?' ok':'')+'" onclick="window.mobSetCorrect('+i+')">✓</button>'
+        +'<input class="mob-opt-inp mob-opt" data-idx="'+i+'" value="'+o+'" placeholder="Option '+(i+1)+'">'
+        +(optTexts.length>2?'<button class="mob-opt-del" onclick="window.mobDelOpt('+i+')">✕</button>':'')
+        +'</div>';
+    });
+    html+='</div><button class="mob-add-opt" onclick="window.mobAddOpt()">+ Add option</button>';
+    wrap.innerHTML=html;
   } else {
-    wrap.innerHTML='';
+    wrap.innerHTML='<div style="padding:10px 0;font-size:13px;color:#94a3b8;">Respondents will type their answer. No correct answer needed for this type.</div>';
   }
 };
 
@@ -934,18 +948,26 @@ window.mobSaveQ = function(){
   q.text=document.getElementById('mob-q-text').value.trim();
   q.marks=parseInt(document.getElementById('mob-q-marks').value)||1;
   q.required=document.getElementById('mob-q-required')?.classList.contains('on')!==false;
-  // For true/false - save correctAnswer as string 'True' or 'False'
+
   if(q.type==='truefalse'){
+    // Save as string for public page compatibility
     q.correctAnswer=q.correct===true?'True':'False';
-  }
-  // For MCQ - save options in correct format for public page
-  if(q.type==='mcq'||q.type==='multi'){
+  } else if(q.type==='number'){
+    const numEl=document.getElementById('mob-correct-num');
+    q.correctAnswer=numEl?numEl.value:'';
+  } else if(q.type==='fillblank'){
+    const fillEl=document.getElementById('mob-correct-fill');
+    q.correctAnswer=fillEl?fillEl.value:'';
+  } else if(q.type==='mcq'||q.type==='multi'){
     window.mobSaveCurrentOpts();
-    // Convert to format expected by public page
-    q.options=(q.options||[]).map(function(o,i){
-      return{text:typeof o==='string'?o:o.text||'',correct:i===q.correct};
+    // Convert to {text, correct} format expected by public page
+    const rawOpts=q.options||[];
+    q.options=rawOpts.map(function(o,i){
+      const text=typeof o==='object'?o.text||'':o;
+      return{text:text,correct:i===q.correct};
     });
   }
+
   if(!q.text){alert('Please enter a question');return;}
   window.mobCloseEditor();
   window.mobRenderQList();
@@ -1105,7 +1127,7 @@ window.mobPublish = async function(){
         <option value="short">Short Answer</option>
         <option value="long">Long Answer</option>
         <option value="number">Number</option>
-        <option value="fitb">Fill in the Blank</option>
+        <option value="fillblank">Fill in the Blank</option>
       </select>
       <label class="mob-label">Question Text *</label>
       <textarea class="mob-textarea" id="mob-q-text" placeholder="Type your question..."></textarea>
@@ -1131,7 +1153,7 @@ window.mobPublish = async function(){
     <button class="mob-type-btn" onclick="window.mobAddQ('truefalse')">✅ True / False</button>
     <button class="mob-type-btn" onclick="window.mobAddQ('short')">✏️ Short Answer</button>
     <button class="mob-type-btn" onclick="window.mobAddQ('long')">📄 Long Answer</button>
-    <button class="mob-type-btn" onclick="window.mobAddQ('fitb')">___ Fill Blank</button>
+    <button class="mob-type-btn" onclick="window.mobAddQ('fillblank')">___ Fill Blank</button>
   </div>
 </div>
 
