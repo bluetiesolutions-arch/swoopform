@@ -484,7 +484,29 @@ async function loadExisting(id){
     if(d.negativeMarking)document.getElementById('negative-wrap').style.display='block';
     if(d.questions&&d.questions.length){
       d.questions.forEach(function(q){addQuestion(q.type,q);});
+      // Also populate mobile items
+      mobItems=d.questions.map(function(q){
+        return{
+          id:q.id||'q'+Date.now()+Math.random().toString(36).slice(2,5),
+          type:q.type||'mcq',
+          text:q.text||q.question||'',
+          options:q.options||['','','',''],
+          correct:q.correct!==undefined?q.correct:0,
+          marks:q.marks||q.points||1,
+          required:q.required!==false,
+        };
+      });
     }
+    // Populate mobile info fields
+    const mobTitle=document.getElementById('mob-title');
+    const mobDesc=document.getElementById('mob-desc');
+    const mobSubject=document.getElementById('mob-subject');
+    const mobTime=document.getElementById('mob-time');
+    if(mobTitle)mobTitle.value=d.title||'';
+    if(mobDesc)mobDesc.value=d.description||'';
+    if(mobSubject)mobSubject.value=d.subject||'';
+    if(mobTime)mobTime.value=d.timeLimit||'';
+    window.mobRenderQList();
     toast('Loaded for editing ✏️');
   }catch(e){console.error(e);}
 }
@@ -939,18 +961,18 @@ window.addEventListener('popstate',function(){
 });
 
 window.mobSaveDraft = async function(){
-  const title=document.getElementById('mob-title')?.value.trim();
+  const title=document.getElementById('mob-title')?.value.trim()||document.getElementById('a-title')?.value.trim();
   if(!title){alert('Please add a title first');return;}
   if(!mobItems.length){alert('Please add at least one question');return;}
-  // Sync to desktop fields
   const data=window.buildMobData('draft');
   if(!data)return;
   try{
-    if(window.AID){
-      await updateDoc(doc(db,'assessments',window.AID),{...data,updatedAt:serverTimestamp()});
+    if(AID){
+      await updateDoc(doc(db,'assessments',AID),{...data,updatedAt:serverTimestamp()});
     }else{
       const ref=await addDoc(collection(db,'assessments'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
-      window.AID=ref.id;
+      AID=ref.id;
+      window.history.replaceState({},'','/assessment/create/?id='+AID);
     }
     console.log('Draft auto-saved');
   }catch(e){console.warn('Auto-save failed:',e.message);}
@@ -958,37 +980,41 @@ window.mobSaveDraft = async function(){
 
 window.buildMobData = function(status){
   return{
-    title:document.getElementById('mob-title')?.value.trim()||'',
+    title:document.getElementById('mob-title')?.value.trim()||document.getElementById('a-title')?.value.trim()||'',
     description:document.getElementById('mob-desc')?.value.trim()||'',
     subject:document.getElementById('mob-subject')?.value.trim()||'',
     timeLimit:parseInt(document.getElementById('mob-time')?.value)||null,
     questions:mobItems,
     passMark:parseInt(document.getElementById('mob-passmark')?.value)||60,
+    passPct:parseInt(document.getElementById('mob-passmark')?.value)||60,
     showScore:document.getElementById('mob-show-score')?.classList.contains('on')!==false,
     status,
     userId:typeof U!=='undefined'?U?.uid:(auth.currentUser?.uid||''),
     ownerEmail:typeof U!=='undefined'?U?.email:(auth.currentUser?.email||''),
     ownerName:typeof U!=='undefined'?U?.displayName:(auth.currentUser?.displayName||''),
     formType:'assessment',
+    accepting:true,
+    responseCount:0,
   };
 };
 
 
 window.mobPublish = async function(){
-  const title=document.getElementById('mob-title')?.value.trim();
+  const title=document.getElementById('mob-title')?.value.trim()||document.getElementById('a-title')?.value.trim();
   if(!title){alert('Please add an assessment title');return;}
   if(!mobItems.length){alert('Please add at least one question');return;}
   const data=window.buildMobData('active');
   if(!data)return;
   try{
-    if(window.AID){
-      await updateDoc(doc(db,'assessments',window.AID),{...data,updatedAt:serverTimestamp()});
+    if(AID){
+      await updateDoc(doc(db,'assessments',AID),{...data,updatedAt:serverTimestamp()});
     }else{
       const ref=await addDoc(collection(db,'assessments'),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
-      window.AID=ref.id;
+      AID=ref.id;
+      window.history.replaceState({},'','/assessment/create/?id='+AID);
     }
-    alert('Assessment published! ✅');
-    window.location.href='/dashboard/';
+    toast('Assessment published! ✅');
+    setTimeout(function(){window.location.href='/dashboard/';},1500);
   }catch(e){alert('Error: '+e.message);}
 };
 </script>
