@@ -858,6 +858,34 @@ window.sendAnnouncement=async function(){
     loadAnnounce();toast('Sent!');
   }catch(e){toast('Error');}
 };
+
+window.changeOwner=async function(id,col,currentOwner){
+  // Show user picker
+  var userList=allUsers.map(function(u){return(u.name||u.email||'Unknown')+' ('+u.email+')';}).join('\n');
+  var email=prompt('Enter new owner email:\n\nCurrent users:\n'+allUsers.map(function(u){return u.email;}).join(', '));
+  if(!email)return;
+  var newOwner=allUsers.find(function(u){return u.email.toLowerCase()===email.toLowerCase();});
+  if(!newOwner){toast('User not found: '+email);return;}
+  try{
+    await updateDoc(doc(db,col,id),{userId:newOwner.id,ownerEmail:newOwner.email||'',ownerName:newOwner.name||newOwner.displayName||''});
+    // Update local cache
+    var item=allContent.find(function(i){return i.id===id;});
+    if(item){item.userId=newOwner.id;item.ownerEmail=newOwner.email;}
+    toast('Owner changed to '+newOwner.email);
+    filterContent();
+  }catch(e){toast('Error: '+e.message);}
+};
+
+window.deleteContent=async function(id,col){
+  if(!confirm('Delete this content permanently? This cannot be undone.'))return;
+  if(!confirm('Are you absolutely sure?'))return;
+  try{
+    await deleteDoc(doc(db,col,id));
+    allContent=allContent.filter(function(i){return!(i.id===id&&i._col===col);});
+    toast('Deleted!');
+    filterContent();
+  }catch(e){toast('Error: '+e.message);}
+};
 </script>
 </body>
 </html>
