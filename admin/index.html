@@ -677,37 +677,13 @@ async function loadContent(){
 }
 window.filterContent=function(){
   const type=document.getElementById('content-type')?.value||'';
-  const status=document.getElementById('content-status')?.value||'';
   const q=(document.getElementById('content-search')?.value||'').toLowerCase();
   let f=type?allContent.filter(function(i){return i._col===type;}):allContent;
-  if(status)f=f.filter(function(i){return(i.status||'draft')===status;});
-  if(q)f=f.filter(function(i){
-    const title=(i.title||i.question||'').toLowerCase();
-    const u=allUsers.find(function(u){return u.id===i.userId;});
-    const uname=((u?.name||'')+(u?.email||'')).toLowerCase();
-    return title.includes(q)||uname.includes(q);
-  });
+  if(q)f=f.filter(function(i){return(i.title||i.question||'').toLowerCase().includes(q);});
   document.getElementById('content-wrap').innerHTML=f.length
-    ?'<div style="overflow-x:auto;"><table class="table"><thead><tr><th>Type</th><th>Title</th><th>User</th><th>Status</th><th>Created</th><th>Responses</th><th>Actions</th></tr></thead><tbody>'
-      +f.map(function(i){
-        const u=allUsers.find(function(u){return u.id===i.userId;});
-        const uName=u?eh(u.name||u.email||'Unknown'):'<span style="color:var(--muted2)">—</span>';
-        const uEmail=u?'<div style="font-size:11px;color:var(--muted2)">'+eh(u.email||'')+'</div>':'';
-        const created=i.createdAt?.seconds?new Date(i.createdAt.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—';
-        const resp=i.responseCount||i.totalVotes||i.totalPledges||0;
-        return'<tr>'
-          +'<td><span class="badge badge-purple">'+(ICONS[i._col]||'📄')+' '+(i._col||'').replace(/s$/,'')+'</span></td>'
-          +'<td style="font-weight:600;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+eh(i.title||i.question||'Untitled')+'</td>'
-          +'<td>'+uName+uEmail+'</td>'
-          +'<td><span class="badge '+(i.status==='active'?'badge-green':i.status==='closed'?'badge-red':'badge-yellow')+'">'+(i.status||'draft')+'</span></td>'
-          +'<td style="font-size:12px;color:var(--muted2)">'+created+'</td>'
-          +'<td style="font-weight:700;color:var(--accent)">'+resp+'</td>'
-          +'<td style="display:flex;gap:4px;">'
-          +'<button class="btn btn-sm btn-success" onclick="toggleFeat(''+i.id+'',''+i._col+'','+(!i.featured)+',this)">'+(i.featured?'★ Unfeature':'⭐ Feature')+'</button>'
-          
-          +'</td>'
-          +'</tr>';
-      }).join('')+'</tbody></table></div>'
+    ?'<div style="overflow-x:auto;"><table class="table"><thead><tr><th>Type</th><th>Title</th><th>Status</th><th>Featured</th><th>Actions</th></tr></thead><tbody>'
+      +f.map(function(i){return'<tr><td><span class="badge badge-purple">'+( ICONS[i._col]||'📄')+' '+i._col+'</span></td><td style="font-weight:600;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+eh(i.title||i.question||'Untitled')+'</td><td><span class="badge '+(i.status==='active'?'badge-green':i.status==='closed'?'badge-red':'badge-yellow')+'">'+(i.status||'draft')+'</span></td><td>'+(i.featured?'⭐':'—')+'</td><td><button class="btn btn-sm '+(i.featured?'btn-danger':'btn-success')+'" onclick="toggleFeat(\''+i.id+'\',\''+i._col+'\','+!i.featured+',this)">'+(i.featured?'Unfeature':'⭐ Feature')+'</button></td></tr>';}).join('')
+      +'</tbody></table></div>'
     :'<div class="empty-state">No content found</div>';
 };
 
