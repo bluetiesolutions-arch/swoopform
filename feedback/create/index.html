@@ -185,6 +185,54 @@ select.field-input{cursor:pointer;}
   .field-row,.two-col{flex-direction:column !important;}
   .preview-panel,.right-preview,.live-preview-panel{display:none !important;}
 }
+
+/* ── MOBILE FEEDBACK BUILDER ─────────────────── */
+.mob-builder{display:none;}
+@media(max-width:768px){
+  html,body{overflow-y:auto !important;height:auto !important;}
+  .layout,.sidebar,.canvas{display:none !important;}
+  .mob-builder{display:block;padding-top:56px;}
+  .mob-content{padding:16px 16px 90px;}
+  .mob-steps{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1.5px solid var(--border);display:flex;z-index:400;padding-bottom:env(safe-area-inset-bottom);}
+  .mob-step-btn{flex:1;padding:10px 4px;border:none;background:transparent;font-family:var(--font);font-size:10px;font-weight:600;color:#94A3B8;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;}
+  .mob-step-btn.active{color:var(--accent);}
+  .mob-step-btn .step-icon{font-size:18px;}
+  .mob-panel{display:none;}
+  .mob-panel.active{display:block;}
+  .mob-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px;}
+  .mob-label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+  .mob-input{width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:16px;color:var(--text);outline:none;margin-bottom:12px;}
+  .mob-input:focus{border-color:var(--accent);}
+  .mob-textarea{width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:16px;color:var(--text);outline:none;resize:none;min-height:80px;margin-bottom:12px;}
+  .mob-select{width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:16px;color:var(--text);outline:none;margin-bottom:12px;}
+  .mob-q-item{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:10px;cursor:pointer;}
+  .mob-q-num{width:28px;height:28px;border-radius:7px;background:var(--accent);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .mob-q-text{flex:1;font-size:13px;font-weight:600;color:var(--text);}
+  .mob-q-type{font-size:10px;color:#94A3B8;flex-shrink:0;}
+  .mob-add-q{width:100%;padding:14px;border-radius:12px;border:2px dashed var(--border);background:transparent;font-family:var(--font);font-size:14px;font-weight:700;color:var(--accent);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;}
+  .mob-q-editor{position:fixed;inset:0;background:#f5f4f0;z-index:600;overflow-y:auto;transform:translateX(100%);transition:transform .25s ease;}
+  .mob-q-editor.open{transform:translateX(0);}
+  .mob-q-editor-nav{height:56px;background:#fff;border-bottom:1.5px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;position:sticky;top:0;z-index:10;}
+  .mob-q-editor-back{background:none;border:none;font-size:20px;cursor:pointer;padding:4px;color:var(--text);}
+  .mob-q-editor-title{font-weight:800;font-size:15px;flex:1;}
+  .mob-q-editor-del{background:none;border:none;font-size:14px;color:#e5484d;cursor:pointer;font-family:var(--font);font-weight:600;padding:6px 10px;}
+  .mob-q-editor-body{padding:16px;}
+  .mob-opt-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .mob-opt-inp{flex:1;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:16px;color:var(--text);outline:none;}
+  .mob-opt-del{width:32px;height:32px;border-radius:8px;border:1.5px solid #fecaca;background:#fef2f2;color:#ef4444;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .mob-add-opt{width:100%;padding:10px;border-radius:10px;border:2px dashed var(--border);background:transparent;font-family:var(--font);font-size:13px;font-weight:600;color:var(--accent);cursor:pointer;margin-top:4px;}
+  .mob-save-q{width:100%;padding:14px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;margin-top:20px;}
+  .mob-type-sheet{position:fixed;bottom:0;left:0;right:0;background:#fff;border-radius:20px 20px 0 0;border-top:1.5px solid var(--border);z-index:700;padding:16px;transform:translateY(100%);transition:transform .25s ease;max-height:70vh;overflow-y:auto;}
+  .mob-type-sheet.open{transform:translateY(0);}
+  .mob-type-sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:699;display:none;}
+  .mob-type-sheet-bg.open{display:block;}
+  .mob-type-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .mob-type-btn{padding:12px 8px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:13px;font-weight:600;color:var(--text);cursor:pointer;text-align:center;}
+  .mob-type-btn:active{background:#EDE9FF;border-color:var(--accent);color:var(--accent);}
+  .mob-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);}
+  .mob-toggle-label{font-size:14px;font-weight:600;}
+}
+
 </style>
 <link rel="stylesheet" href="/mobile.css">
 </head>
@@ -745,6 +793,402 @@ async function checkPlanBanner(db, userId){
     }
   }catch(e){}
 }
+
+
+// ── MOBILE FEEDBACK BUILDER ───────────────────────
+const IS_MOBILE = window.innerWidth < 768;
+let mobFeedbackItems = [];
+
+window.mobGoStep = function(step){
+  document.querySelectorAll('.mob-panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.mob-step-btn').forEach(function(b){b.classList.remove('active');});
+  var panel=document.getElementById('mob-panel-'+step);
+  var btn=document.getElementById('mob-nav-'+step);
+  if(panel)panel.classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(step==='questions')window.mobRenderQList();
+  if(step==='publish')window.mobUpdatePublish();
+  window.scrollTo(0,0);
+};
+
+window.mobRenderQList = function(){
+  var wrap=document.getElementById('mob-q-list');
+  if(!wrap)return;
+  if(!mobFeedbackItems.length){
+    wrap.innerHTML='<div style="text-align:center;padding:32px;color:#94a3b8;font-size:14px;">No questions yet.<br>Tap + Add Question below.</div>';
+    return;
+  }
+  var TYPES={rating_stars:'⭐ Star Rating',rating_emoji:'😊 Emoji',rating_nps:'📊 NPS',rating_scale:'📏 Scale',mcq:'Multiple Choice',checkbox:'Checkboxes',short_text:'Short Text',long_text:'Long Text',yesno:'Yes/No',dropdown:'Dropdown'};
+  wrap.innerHTML=mobFeedbackItems.map(function(q,i){
+    return '<div class="mob-q-item" onclick="window.mobEditQ(''+q.id+'')"><div class="mob-q-num">'+(i+1)+'</div><div class="mob-q-text">'+(q.text||'Untitled question')+'</div><div class="mob-q-type">'+(TYPES[q.type]||q.type)+'</div><div style="color:#c4b9aa;font-size:18px;">›</div></div>';
+  }).join('');
+};
+
+window.mobUpdatePublish = function(){
+  var t=document.getElementById('mob-f-title')?.value||'Your Form';
+  var el=document.getElementById('mob-pub-title');
+  var cel=document.getElementById('mob-pub-count');
+  if(el)el.textContent=t;
+  if(cel)cel.textContent=mobFeedbackItems.length+' question'+(mobFeedbackItems.length!==1?'s':'');
+};
+
+window.mobShowTypeSheet = function(){
+  document.getElementById('mob-type-sheet').classList.add('open');
+  document.getElementById('mob-type-bg').classList.add('open');
+};
+window.mobHideTypeSheet = function(){
+  document.getElementById('mob-type-sheet').classList.remove('open');
+  document.getElementById('mob-type-bg').classList.remove('open');
+};
+
+window.mobAddQ = function(type){
+  window.mobHideTypeSheet();
+  var q={id:'q'+Date.now(),type:type,text:'',options:['','',''],required:false};
+  mobFeedbackItems.push(q);
+  window.mobEditQ(q.id);
+};
+
+window.mobEditQ = function(id){
+  var q=mobFeedbackItems.find(function(i){return i.id===id;});
+  if(!q)return;
+  document.getElementById('mob-editing-id').value=id;
+  document.getElementById('mob-q-type').value=q.type;
+  document.getElementById('mob-q-text').value=q.text||'';
+  var req=document.getElementById('mob-q-required');
+  if(req)req.classList.toggle('on',!!q.required);
+  window.mobRenderEditorOptions();
+  document.getElementById('mob-q-editor').classList.add('open');
+  history.pushState({editor:true},'','');
+  window.scrollTo(0,0);
+};
+
+window.mobRenderEditorOptions = function(){
+  var type=document.getElementById('mob-q-type').value;
+  var id=document.getElementById('mob-editing-id').value;
+  var q=mobFeedbackItems.find(function(i){return i.id===id;});
+  var wrap=document.getElementById('mob-editor-options');
+  if(!wrap)return;
+
+  var hasOpts=['mcq','checkbox','dropdown'].includes(type);
+
+  if(type==='rating_stars'){
+    wrap.innerHTML='<div style="padding:10px 0;font-size:13px;color:#64748b;">Respondents select 1-5 stars. No options needed.</div>';
+  } else if(type==='rating_emoji'){
+    wrap.innerHTML='<div style="padding:10px 0;font-size:13px;color:#64748b;">Shows 😞😐😊😄😍 mood emojis automatically.</div>';
+  } else if(type==='rating_nps'){
+    wrap.innerHTML='<div style="padding:10px 0;font-size:13px;color:#64748b;">Shows 0-10 scale (Net Promoter Score). No options needed.</div>';
+  } else if(type==='rating_scale'){
+    wrap.innerHTML='<div style="padding:10px 0;font-size:13px;color:#64748b;">Shows 1-10 scale. No options needed.</div>';
+  } else if(type==='yesno'){
+    wrap.innerHTML='<div style="padding:10px 0;font-size:13px;color:#64748b;">Shows Yes / No buttons automatically.</div>';
+  } else if(hasOpts){
+    var opts=q?q.options||['','','']:['','',''];
+    var html='<label class="mob-label">Options</label><div id="mob-opts-list">';
+    opts.forEach(function(o,i){
+      html+='<div class="mob-opt-row"><input class="mob-opt-inp mob-opt" data-idx="'+i+'" value="'+(o||'')+'" placeholder="Option '+(i+1)+'">'+(opts.length>2?'<button class="mob-opt-del" onclick="window.mobDelOpt('+i+')">✕</button>':'')+'</div>';
+    });
+    html+='</div><button class="mob-add-opt" onclick="window.mobAddOpt()">+ Add option</button>';
+    wrap.innerHTML=html;
+  } else {
+    wrap.innerHTML='<div style="padding:10px 0;font-size:13px;color:#94a3b8;">Respondents will type their answer.</div>';
+  }
+};
+
+window.mobAddOpt = function(){
+  var id=document.getElementById('mob-editing-id').value;
+  var q=mobFeedbackItems.find(function(i){return i.id===id;});
+  if(!q)return;
+  window.mobSaveCurrentOpts();
+  q.options.push('');
+  window.mobRenderEditorOptions();
+};
+
+window.mobDelOpt = function(idx){
+  var id=document.getElementById('mob-editing-id').value;
+  var q=mobFeedbackItems.find(function(i){return i.id===id;});
+  if(!q||q.options.length<=2)return;
+  window.mobSaveCurrentOpts();
+  q.options.splice(idx,1);
+  window.mobRenderEditorOptions();
+};
+
+window.mobSaveCurrentOpts = function(){
+  var id=document.getElementById('mob-editing-id').value;
+  var q=mobFeedbackItems.find(function(i){return i.id===id;});
+  if(!q)return;
+  var inputs=document.querySelectorAll('.mob-opt');
+  if(inputs.length)q.options=Array.from(inputs).map(function(i){return i.value;});
+};
+
+window.mobSaveQ = function(){
+  var id=document.getElementById('mob-editing-id').value;
+  var q=mobFeedbackItems.find(function(i){return i.id===id;});
+  if(!q)return;
+  q.type=document.getElementById('mob-q-type').value;
+  q.text=document.getElementById('mob-q-text').value.trim();
+  q.required=!!document.getElementById('mob-q-required')?.classList.contains('on');
+  // Save options for mcq/checkbox/dropdown
+  if(['mcq','checkbox','dropdown'].includes(q.type)){
+    window.mobSaveCurrentOpts();
+  }
+  if(!q.text){alert('Please enter a question');return;}
+  window.mobCloseEditor();
+  window.mobRenderQList();
+  // Auto save draft silently
+  window.mobAutoSave();
+};
+
+window.mobDeleteQ = function(){
+  var id=document.getElementById('mob-editing-id').value;
+  if(mobFeedbackItems.length<=1){alert('Need at least 1 question');return;}
+  if(!confirm('Delete this question?'))return;
+  mobFeedbackItems=mobFeedbackItems.filter(function(i){return i.id!==id;});
+  window.mobCloseEditor();
+  window.mobRenderQList();
+};
+
+window.mobCloseEditor = function(){
+  document.getElementById('mob-q-editor').classList.remove('open');
+};
+
+window.addEventListener('popstate',function(){
+  var editor=document.getElementById('mob-q-editor');
+  if(editor&&editor.classList.contains('open'))window.mobCloseEditor();
+});
+
+window.mobAutoSave = async function(){
+  var title=document.getElementById('mob-f-title')?.value.trim();
+  if(!title||!mobFeedbackItems.length)return;
+  try{
+    var data=window.mobBuildData('draft');
+    if(FID){
+      await updateDoc(doc(db,'feedbacks',FID),Object.assign({},data,{updatedAt:serverTimestamp()}));
+    }else{
+      var ref=await addDoc(collection(db,'feedbacks'),Object.assign({},data,{createdAt:serverTimestamp(),updatedAt:serverTimestamp(),responseCount:0}));
+      FID=ref.id;
+      window.history.replaceState({},'','/feedback/create/?id='+FID);
+    }
+  }catch(e){console.warn('Auto-save:',e.message);}
+};
+
+window.mobSaveDraft = async function(){
+  var title=document.getElementById('mob-f-title')?.value.trim();
+  if(!title){alert('Please add a form title');return;}
+  if(!mobFeedbackItems.length){alert('Please add at least one question');return;}
+  try{
+    var data=window.mobBuildData('draft');
+    if(FID){
+      await updateDoc(doc(db,'feedbacks',FID),Object.assign({},data,{updatedAt:serverTimestamp()}));
+    }else{
+      var ref=await addDoc(collection(db,'feedbacks'),Object.assign({},data,{createdAt:serverTimestamp(),updatedAt:serverTimestamp(),responseCount:0}));
+      FID=ref.id;
+      window.history.replaceState({},'','/feedback/create/?id='+FID);
+    }
+    alert('Draft saved!');
+  }catch(e){alert('Error: '+e.message);}
+};
+
+window.mobPublish = async function(){
+  var title=document.getElementById('mob-f-title')?.value.trim();
+  if(!title){alert('Please add a form title');return;}
+  if(!mobFeedbackItems.length){alert('Please add at least one question');return;}
+  try{
+    var data=window.mobBuildData('active');
+    if(FID){
+      await updateDoc(doc(db,'feedbacks',FID),Object.assign({},data,{updatedAt:serverTimestamp()}));
+    }else{
+      var ref=await addDoc(collection(db,'feedbacks'),Object.assign({},data,{createdAt:serverTimestamp(),updatedAt:serverTimestamp(),responseCount:0}));
+      FID=ref.id;
+    }
+    alert('Form published! ✅');
+    window.location.href='/dashboard/';
+  }catch(e){alert('Error: '+e.message);}
+};
+
+window.mobBuildData = function(status){
+  var u=typeof currentUser!=='undefined'?currentUser:auth.currentUser;
+  return{
+    title:document.getElementById('mob-f-title')?.value.trim()||'',
+    description:document.getElementById('mob-f-desc')?.value.trim()||'',
+    category:document.getElementById('mob-f-category')?.value||'general',
+    thankYouMessage:document.getElementById('mob-f-thanks')?.value.trim()||'Thank you for your feedback!',
+    questions:mobFeedbackItems,
+    anonymous:!!document.getElementById('mob-tgl-anon')?.classList.contains('on'),
+    showProgress:!!document.getElementById('mob-tgl-progress')?.classList.contains('on'),
+    shuffleQuestions:!!document.getElementById('mob-tgl-shuffle')?.classList.contains('on'),
+    status:status,
+    formType:'feedback',
+    userId:u?u.uid:'',
+    ownerEmail:u?u.email||'':'',
+    ownerName:u?u.displayName||'':'',
+  };
+};
+
+// Load existing data into mobile on edit
+if(IS_MOBILE){
+  var _origLoadExisting=window.loadExisting||null;
+  // Hook into loadExisting to also populate mobile fields
+  var origLoadEx=loadExisting;
+  window._mobLoadExisting=async function(id){
+    try{
+      var snap=await getDoc(doc(db,'feedbacks',id));
+      if(!snap.exists())return;
+      var d=snap.data();
+      var mt=document.getElementById('mob-f-title');
+      var md=document.getElementById('mob-f-desc');
+      var mcat=document.getElementById('mob-f-category');
+      var mth=document.getElementById('mob-f-thanks');
+      if(mt)mt.value=d.title||'';
+      if(md)md.value=d.description||'';
+      if(mcat&&d.category)mcat.value=d.category;
+      if(mth)mth.value=d.thankYouMessage||'';
+      // Load questions into mobile items
+      if(d.questions&&d.questions.length){
+        mobFeedbackItems=d.questions.map(function(q){
+          return{
+            id:q.id||'q'+Date.now()+Math.random().toString(36).slice(2,5),
+            type:q.type||'short_text',
+            text:q.text||q.question||'',
+            options:q.options||['','',''],
+            required:q.required||false,
+          };
+        });
+        window.mobRenderQList();
+      }
+    }catch(e){console.warn('Mobile load error:',e);}
+  };
+  // Call after page loads
+  document.addEventListener('DOMContentLoaded',function(){
+    var params=new URLSearchParams(window.location.search);
+    var id=params.get('id');
+    if(id)window._mobLoadExisting(id);
+  });
+}
+
 </script>
+
+<!-- MOBILE FEEDBACK BUILDER -->
+<div class="mob-builder">
+  <div class="mob-content">
+
+    <!-- STEP 1: FORM INFO -->
+    <div class="mob-panel active" id="mob-panel-info">
+      <div class="mob-card">
+        <label class="mob-label">Form Title *</label>
+        <input class="mob-input" id="mob-f-title" placeholder="e.g. Customer Feedback Form">
+        <label class="mob-label">Description</label>
+        <textarea class="mob-textarea" id="mob-f-desc" placeholder="What is this feedback form about?"></textarea>
+        <label class="mob-label">Category</label>
+        <select class="mob-select" id="mob-f-category">
+          <option value="general">General</option>
+          <option value="product">Product</option>
+          <option value="service">Service</option>
+          <option value="event">Event</option>
+          <option value="employee">Employee</option>
+          <option value="customer">Customer</option>
+        </select>
+        <label class="mob-label">Thank You Message</label>
+        <input class="mob-input" id="mob-f-thanks" placeholder="Thank you for your feedback!">
+      </div>
+    </div>
+
+    <!-- STEP 2: QUESTIONS -->
+    <div class="mob-panel" id="mob-panel-questions">
+      <div id="mob-q-list"></div>
+      <button class="mob-add-q" onclick="window.mobShowTypeSheet()">＋ Add Question</button>
+    </div>
+
+    <!-- STEP 3: SETTINGS -->
+    <div class="mob-panel" id="mob-panel-settings">
+      <div class="mob-card">
+        <div class="mob-toggle-row">
+          <span class="mob-toggle-label">Anonymous responses</span>
+          <button class="tgl" id="mob-tgl-anon" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div class="mob-toggle-row">
+          <span class="mob-toggle-label">Show progress bar</span>
+          <button class="tgl on" id="mob-tgl-progress" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div class="mob-toggle-row" style="border:none;">
+          <span class="mob-toggle-label">Shuffle questions</span>
+          <button class="tgl" id="mob-tgl-shuffle" onclick="this.classList.toggle('on')"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: PUBLISH -->
+    <div class="mob-panel" id="mob-panel-publish">
+      <div class="mob-card">
+        <div style="font-size:16px;font-weight:800;margin-bottom:4px;" id="mob-pub-title">Your Form</div>
+        <div style="font-size:13px;color:#64748b;" id="mob-pub-count">0 questions</div>
+      </div>
+      <button onclick="window.mobSaveDraft()" style="width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:15px;font-weight:700;color:var(--accent);cursor:pointer;margin-bottom:10px;">💾 Save Draft</button>
+      <button onclick="window.mobPublish()" style="width:100%;padding:14px;border-radius:12px;border:none;background:var(--accent);font-family:var(--font);font-size:15px;font-weight:700;color:#fff;cursor:pointer;">🚀 Publish Form</button>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="mob-steps">
+    <button class="mob-step-btn active" id="mob-nav-info" onclick="window.mobGoStep('info')"><span class="step-icon">📋</span>Info</button>
+    <button class="mob-step-btn" id="mob-nav-questions" onclick="window.mobGoStep('questions')"><span class="step-icon">💬</span>Questions</button>
+    <button class="mob-step-btn" id="mob-nav-settings" onclick="window.mobGoStep('settings')"><span class="step-icon">⚙️</span>Settings</button>
+    <button class="mob-step-btn" id="mob-nav-publish" onclick="window.mobGoStep('publish')"><span class="step-icon">🚀</span>Publish</button>
+  </div>
+</div>
+
+<!-- FULL SCREEN QUESTION EDITOR -->
+<div class="mob-q-editor" id="mob-q-editor">
+  <div class="mob-q-editor-nav">
+    <button class="mob-q-editor-back" onclick="window.mobCloseEditor()">←</button>
+    <div class="mob-q-editor-title">Edit Question</div>
+    <button class="mob-q-editor-del" onclick="window.mobDeleteQ()">Delete</button>
+  </div>
+  <div class="mob-q-editor-body">
+    <input type="hidden" id="mob-editing-id">
+    <div>
+      <label class="mob-label">Question Type</label>
+      <select class="mob-select" id="mob-q-type" onchange="window.mobRenderEditorOptions()">
+        <option value="rating_stars">⭐ Star Rating (1-5)</option>
+        <option value="rating_emoji">😊 Emoji Rating (mood)</option>
+        <option value="rating_nps">📊 NPS Score (0-10)</option>
+        <option value="rating_scale">📏 Scale (1-10)</option>
+        <option value="mcq">⚪ Multiple Choice</option>
+        <option value="checkbox">☑️ Checkboxes</option>
+        <option value="short_text">📝 Short Text</option>
+        <option value="long_text">📄 Long Text</option>
+        <option value="yesno">✅ Yes / No</option>
+        <option value="dropdown">🔽 Dropdown</option>
+      </select>
+      <label class="mob-label">Question Text *</label>
+      <textarea class="mob-textarea" id="mob-q-text" placeholder="Type your question..."></textarea>
+    </div>
+    <div id="mob-editor-options"></div>
+    <div class="mob-toggle-row">
+      <span class="mob-toggle-label">Required</span>
+      <button class="tgl" id="mob-q-required" onclick="this.classList.toggle('on')"></button>
+    </div>
+    <button class="mob-save-q" onclick="window.mobSaveQ()">✓ Save Question</button>
+  </div>
+</div>
+
+<!-- TYPE PICKER SHEET -->
+<div class="mob-type-sheet-bg" id="mob-type-bg" onclick="window.mobHideTypeSheet()"></div>
+<div class="mob-type-sheet" id="mob-type-sheet">
+  <div style="font-weight:800;font-size:16px;margin-bottom:14px;text-align:center;">Choose Question Type</div>
+  <div class="mob-type-grid">
+    <button class="mob-type-btn" onclick="window.mobAddQ('rating_stars')">⭐ Star Rating</button>
+    <button class="mob-type-btn" onclick="window.mobAddQ('rating_emoji')">😊 Emoji Rating</button>
+    <button class="mob-type-btn" onclick="window.mobAddQ('rating_nps')">📊 NPS Score</button>
+    <button class="mob-type-btn" onclick="window.mobAddQ('rating_scale')">📏 Scale 1-10</button>
+    <button class="mob-type-btn" onclick="window.mobAddQ('mcq')">⚪ Multiple Choice</button>
+    <button class="mob-type-btn" onclick="window.mobAddQ('checkbox')">☑️ Checkboxes</button>
+    <button class="mob-type-btn" onclick="window.mobAddQ('short_text')">📝 Short Text</button>
+    <button class="mob-type-btn" onclick="window.mobAddQ('long_text')">📄 Long Text</button>
+    <button class="mob-type-btn" onclick="window.mobAddQ('yesno')">✅ Yes / No</button>
+    <button class="mob-type-btn" onclick="window.mobAddQ('dropdown')">🔽 Dropdown</button>
+  </div>
+</div>
+
 </body>
 </html>
