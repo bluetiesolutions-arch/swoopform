@@ -704,7 +704,7 @@ window.filterContent=function(){
           +'<td style="font-weight:700;color:var(--accent)">'+resp+'</td>'
           +'<td style="display:flex;gap:4px;">'
           +'<button class="btn btn-sm '+(i.featured?'btn-danger':'btn-success')+'" onclick="toggleFeat(''+i.id+'',''+i._col+'','+!i.featured+',this)">'+(i.featured?'Unfeature':'⭐ Feature')+'</button>'
-          +'<button class="btn btn-sm btn-ghost" onclick="window.open('/'+(i._col==='surveys'?'responses/?id=':i._col.replace(/s$/,'')+'/responses/?id=')+i.id+'','_blank')">Responses</button>'
+          
           +'</td>'
           +'</tr>';
       }).join('')+'</tbody></table></div>'
