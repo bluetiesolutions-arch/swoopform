@@ -1191,5 +1191,22 @@ if(IS_MOBILE){
   </div>
 </div>
 
+
+<script>
+function mobGoStep(step){if(window.mobGoStep)window.mobGoStep(step);else setTimeout(function(){mobGoStep(step);},100);}
+function mobShowTypeSheet(){if(window.mobShowTypeSheet)window.mobShowTypeSheet();}
+function mobHideTypeSheet(){if(window.mobHideTypeSheet)window.mobHideTypeSheet();}
+function mobAddQ(t){if(window.mobAddQ)window.mobAddQ(t);}
+function mobEditQ(id){if(window.mobEditQ)window.mobEditQ(id);}
+function mobCloseEditor(){if(window.mobCloseEditor)window.mobCloseEditor();}
+function mobDeleteQ(){if(window.mobDeleteQ)window.mobDeleteQ();}
+function mobSaveQ(){if(window.mobSaveQ)window.mobSaveQ();}
+function mobSaveDraft(){if(window.mobSaveDraft)window.mobSaveDraft();}
+function mobPublish(){if(window.mobPublish)window.mobPublish();}
+function mobRenderEditorOptions(){if(window.mobRenderEditorOptions)window.mobRenderEditorOptions();}
+function mobAddOpt(){if(window.mobAddOpt)window.mobAddOpt();}
+function mobDelOpt(i){if(window.mobDelOpt)window.mobDelOpt(i);}
+</script>
+
 </body>
 </html>
