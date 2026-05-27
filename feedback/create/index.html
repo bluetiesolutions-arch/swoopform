@@ -799,7 +799,7 @@ async function checkPlanBanner(db, userId){
 const IS_MOBILE = window.innerWidth < 768;
 let mobFeedbackItems = [];
 
-window.mobGoStep = function(step){
+window.mobGoStep=mobGoStep;function mobGoStep(step){
   document.querySelectorAll('.mob-panel').forEach(function(p){p.classList.remove('active');});
   document.querySelectorAll('.mob-step-btn').forEach(function(b){b.classList.remove('active');});
   var panel=document.getElementById('mob-panel-'+step);
@@ -811,7 +811,7 @@ window.mobGoStep = function(step){
   window.scrollTo(0,0);
 };
 
-window.mobRenderQList = function(){
+window.mobRenderQList=mobRenderQList;function mobRenderQList(){
   var wrap=document.getElementById('mob-q-list');
   if(!wrap)return;
   if(!mobFeedbackItems.length){
@@ -820,11 +820,11 @@ window.mobRenderQList = function(){
   }
   var TYPES={rating_stars:'⭐ Star Rating',rating_emoji:'😊 Emoji',rating_nps:'📊 NPS',rating_scale:'📏 Scale',mcq:'Multiple Choice',checkbox:'Checkboxes',short_text:'Short Text',long_text:'Long Text',yesno:'Yes/No',dropdown:'Dropdown'};
   wrap.innerHTML=mobFeedbackItems.map(function(q,i){
-    return '<div class="mob-q-item" onclick="window.mobEditQ(''+q.id+'')"><div class="mob-q-num">'+(i+1)+'</div><div class="mob-q-text">'+(q.text||'Untitled question')+'</div><div class="mob-q-type">'+(TYPES[q.type]||q.type)+'</div><div style="color:#c4b9aa;font-size:18px;">›</div></div>';
+    return '<div class="mob-q-item" onclick="mobEditQ(''+q.id+'')"><div class="mob-q-num">'+(i+1)+'</div><div class="mob-q-text">'+(q.text||'Untitled question')+'</div><div class="mob-q-type">'+(TYPES[q.type]||q.type)+'</div><div style="color:#c4b9aa;font-size:18px;">›</div></div>';
   }).join('');
 };
 
-window.mobUpdatePublish = function(){
+function mobUpdatePublish(){
   var t=document.getElementById('mob-f-title')?.value||'Your Form';
   var el=document.getElementById('mob-pub-title');
   var cel=document.getElementById('mob-pub-count');
@@ -832,23 +832,23 @@ window.mobUpdatePublish = function(){
   if(cel)cel.textContent=mobFeedbackItems.length+' question'+(mobFeedbackItems.length!==1?'s':'');
 };
 
-window.mobShowTypeSheet = function(){
+window.mobShowTypeSheet=mobShowTypeSheet;function mobShowTypeSheet(){
   document.getElementById('mob-type-sheet').classList.add('open');
   document.getElementById('mob-type-bg').classList.add('open');
 };
-window.mobHideTypeSheet = function(){
+window.mobHideTypeSheet=mobHideTypeSheet;function mobHideTypeSheet(){
   document.getElementById('mob-type-sheet').classList.remove('open');
   document.getElementById('mob-type-bg').classList.remove('open');
 };
 
-window.mobAddQ = function(type){
+window.mobAddQ=mobAddQ;function mobAddQ(type){
   window.mobHideTypeSheet();
   var q={id:'q'+Date.now(),type:type,text:'',options:['','',''],required:false};
   mobFeedbackItems.push(q);
   window.mobEditQ(q.id);
 };
 
-window.mobEditQ = function(id){
+window.mobEditQ=mobEditQ;function mobEditQ(id){
   var q=mobFeedbackItems.find(function(i){return i.id===id;});
   if(!q)return;
   document.getElementById('mob-editing-id').value=id;
@@ -862,7 +862,7 @@ window.mobEditQ = function(id){
   window.scrollTo(0,0);
 };
 
-window.mobRenderEditorOptions = function(){
+window.mobRenderEditorOptions=mobRenderEditorOptions;function mobRenderEditorOptions(){
   var type=document.getElementById('mob-q-type').value;
   var id=document.getElementById('mob-editing-id').value;
   var q=mobFeedbackItems.find(function(i){return i.id===id;});
@@ -885,16 +885,16 @@ window.mobRenderEditorOptions = function(){
     var opts=q?q.options||['','','']:['','',''];
     var html='<label class="mob-label">Options</label><div id="mob-opts-list">';
     opts.forEach(function(o,i){
-      html+='<div class="mob-opt-row"><input class="mob-opt-inp mob-opt" data-idx="'+i+'" value="'+(o||'')+'" placeholder="Option '+(i+1)+'">'+(opts.length>2?'<button class="mob-opt-del" onclick="window.mobDelOpt('+i+')">✕</button>':'')+'</div>';
+      html+='<div class="mob-opt-row"><input class="mob-opt-inp mob-opt" data-idx="'+i+'" value="'+(o||'')+'" placeholder="Option '+(i+1)+'">'+(opts.length>2?'<button class="mob-opt-del" onclick="mobDelOpt('+i+')">✕</button>':'')+'</div>';
     });
-    html+='</div><button class="mob-add-opt" onclick="window.mobAddOpt()">+ Add option</button>';
+    html+='</div><button class="mob-add-opt" onclick="mobAddOpt()">+ Add option</button>';
     wrap.innerHTML=html;
   } else {
     wrap.innerHTML='<div style="padding:10px 0;font-size:13px;color:#94a3b8;">Respondents will type their answer.</div>';
   }
 };
 
-window.mobAddOpt = function(){
+window.mobAddOpt=mobAddOpt;function mobAddOpt(){
   var id=document.getElementById('mob-editing-id').value;
   var q=mobFeedbackItems.find(function(i){return i.id===id;});
   if(!q)return;
@@ -903,7 +903,7 @@ window.mobAddOpt = function(){
   window.mobRenderEditorOptions();
 };
 
-window.mobDelOpt = function(idx){
+window.mobDelOpt=mobDelOpt;function mobDelOpt(idx){
   var id=document.getElementById('mob-editing-id').value;
   var q=mobFeedbackItems.find(function(i){return i.id===id;});
   if(!q||q.options.length<=2)return;
@@ -912,7 +912,7 @@ window.mobDelOpt = function(idx){
   window.mobRenderEditorOptions();
 };
 
-window.mobSaveCurrentOpts = function(){
+function mobSaveCurrentOpts(){
   var id=document.getElementById('mob-editing-id').value;
   var q=mobFeedbackItems.find(function(i){return i.id===id;});
   if(!q)return;
@@ -920,7 +920,7 @@ window.mobSaveCurrentOpts = function(){
   if(inputs.length)q.options=Array.from(inputs).map(function(i){return i.value;});
 };
 
-window.mobSaveQ = function(){
+window.mobSaveQ=mobSaveQ;function mobSaveQ(){
   var id=document.getElementById('mob-editing-id').value;
   var q=mobFeedbackItems.find(function(i){return i.id===id;});
   if(!q)return;
@@ -938,7 +938,7 @@ window.mobSaveQ = function(){
   window.mobAutoSave();
 };
 
-window.mobDeleteQ = function(){
+window.mobDeleteQ=mobDeleteQ;function mobDeleteQ(){
   var id=document.getElementById('mob-editing-id').value;
   if(mobFeedbackItems.length<=1){alert('Need at least 1 question');return;}
   if(!confirm('Delete this question?'))return;
@@ -947,7 +947,7 @@ window.mobDeleteQ = function(){
   window.mobRenderQList();
 };
 
-window.mobCloseEditor = function(){
+window.mobCloseEditor=mobCloseEditor;function mobCloseEditor(){
   document.getElementById('mob-q-editor').classList.remove('open');
 };
 
@@ -956,7 +956,7 @@ window.addEventListener('popstate',function(){
   if(editor&&editor.classList.contains('open'))window.mobCloseEditor();
 });
 
-window.mobAutoSave = async function(){
+async function mobAutoSave(){
   var title=document.getElementById('mob-f-title')?.value.trim();
   if(!title||!mobFeedbackItems.length)return;
   try{
@@ -971,7 +971,7 @@ window.mobAutoSave = async function(){
   }catch(e){console.warn('Auto-save:',e.message);}
 };
 
-window.mobSaveDraft = async function(){
+window.mobSaveDraft=mobSaveDraft;async function mobSaveDraft(){
   var title=document.getElementById('mob-f-title')?.value.trim();
   if(!title){alert('Please add a form title');return;}
   if(!mobFeedbackItems.length){alert('Please add at least one question');return;}
@@ -988,7 +988,7 @@ window.mobSaveDraft = async function(){
   }catch(e){alert('Error: '+e.message);}
 };
 
-window.mobPublish = async function(){
+window.mobPublish=mobPublish;async function mobPublish(){
   var title=document.getElementById('mob-f-title')?.value.trim();
   if(!title){alert('Please add a form title');return;}
   if(!mobFeedbackItems.length){alert('Please add at least one question');return;}
@@ -1005,7 +1005,7 @@ window.mobPublish = async function(){
   }catch(e){alert('Error: '+e.message);}
 };
 
-window.mobBuildData = function(status){
+function mobBuildData(status){
   var u=typeof currentUser!=='undefined'?currentUser:auth.currentUser;
   return{
     title:document.getElementById('mob-f-title')?.value.trim()||'',
@@ -1029,7 +1029,7 @@ if(IS_MOBILE){
   var _origLoadExisting=window.loadExisting||null;
   // Hook into loadExisting to also populate mobile fields
   var origLoadEx=loadExisting;
-  window._mobLoadExisting=async function(id){
+  async function _mobLoadExisting=async function(id){
     try{
       var snap=await getDoc(doc(db,'feedbacks',id));
       if(!snap.exists())return;
@@ -1061,7 +1061,7 @@ if(IS_MOBILE){
   document.addEventListener('DOMContentLoaded',function(){
     var params=new URLSearchParams(window.location.search);
     var id=params.get('id');
-    if(id)window._mobLoadExisting(id);
+    if(id)async function _mobLoadExisting(id);
   });
 }
 
@@ -1096,7 +1096,7 @@ if(IS_MOBILE){
     <!-- STEP 2: QUESTIONS -->
     <div class="mob-panel" id="mob-panel-questions">
       <div id="mob-q-list"></div>
-      <button class="mob-add-q" onclick="window.mobShowTypeSheet()">＋ Add Question</button>
+      <button class="mob-add-q" onclick="mobShowTypeSheet()">＋ Add Question</button>
     </div>
 
     <!-- STEP 3: SETTINGS -->
@@ -1123,27 +1123,27 @@ if(IS_MOBILE){
         <div style="font-size:16px;font-weight:800;margin-bottom:4px;" id="mob-pub-title">Your Form</div>
         <div style="font-size:13px;color:#64748b;" id="mob-pub-count">0 questions</div>
       </div>
-      <button onclick="window.mobSaveDraft()" style="width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:15px;font-weight:700;color:var(--accent);cursor:pointer;margin-bottom:10px;">💾 Save Draft</button>
-      <button onclick="window.mobPublish()" style="width:100%;padding:14px;border-radius:12px;border:none;background:var(--accent);font-family:var(--font);font-size:15px;font-weight:700;color:#fff;cursor:pointer;">🚀 Publish Form</button>
+      <button onclick="mobSaveDraft()" style="width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:15px;font-weight:700;color:var(--accent);cursor:pointer;margin-bottom:10px;">💾 Save Draft</button>
+      <button onclick="mobPublish()" style="width:100%;padding:14px;border-radius:12px;border:none;background:var(--accent);font-family:var(--font);font-size:15px;font-weight:700;color:#fff;cursor:pointer;">🚀 Publish Form</button>
     </div>
 
   </div>
 
   <!-- BOTTOM NAV -->
   <div class="mob-steps">
-    <button class="mob-step-btn active" id="mob-nav-info" onclick="window.mobGoStep('info')"><span class="step-icon">📋</span>Info</button>
-    <button class="mob-step-btn" id="mob-nav-questions" onclick="window.mobGoStep('questions')"><span class="step-icon">💬</span>Questions</button>
-    <button class="mob-step-btn" id="mob-nav-settings" onclick="window.mobGoStep('settings')"><span class="step-icon">⚙️</span>Settings</button>
-    <button class="mob-step-btn" id="mob-nav-publish" onclick="window.mobGoStep('publish')"><span class="step-icon">🚀</span>Publish</button>
+    <button class="mob-step-btn active" id="mob-nav-info" onclick="mobGoStep('info')"><span class="step-icon">📋</span>Info</button>
+    <button class="mob-step-btn" id="mob-nav-questions" onclick="mobGoStep('questions')"><span class="step-icon">💬</span>Questions</button>
+    <button class="mob-step-btn" id="mob-nav-settings" onclick="mobGoStep('settings')"><span class="step-icon">⚙️</span>Settings</button>
+    <button class="mob-step-btn" id="mob-nav-publish" onclick="mobGoStep('publish')"><span class="step-icon">🚀</span>Publish</button>
   </div>
 </div>
 
 <!-- FULL SCREEN QUESTION EDITOR -->
 <div class="mob-q-editor" id="mob-q-editor">
   <div class="mob-q-editor-nav">
-    <button class="mob-q-editor-back" onclick="window.mobCloseEditor()">←</button>
+    <button class="mob-q-editor-back" onclick="mobCloseEditor()">←</button>
     <div class="mob-q-editor-title">Edit Question</div>
-    <button class="mob-q-editor-del" onclick="window.mobDeleteQ()">Delete</button>
+    <button class="mob-q-editor-del" onclick="mobDeleteQ()">Delete</button>
   </div>
   <div class="mob-q-editor-body">
     <input type="hidden" id="mob-editing-id">
@@ -1169,25 +1169,25 @@ if(IS_MOBILE){
       <span class="mob-toggle-label">Required</span>
       <button class="tgl" id="mob-q-required" onclick="this.classList.toggle('on')"></button>
     </div>
-    <button class="mob-save-q" onclick="window.mobSaveQ()">✓ Save Question</button>
+    <button class="mob-save-q" onclick="mobSaveQ()">✓ Save Question</button>
   </div>
 </div>
 
 <!-- TYPE PICKER SHEET -->
-<div class="mob-type-sheet-bg" id="mob-type-bg" onclick="window.mobHideTypeSheet()"></div>
+<div class="mob-type-sheet-bg" id="mob-type-bg" onclick="mobHideTypeSheet()"></div>
 <div class="mob-type-sheet" id="mob-type-sheet">
   <div style="font-weight:800;font-size:16px;margin-bottom:14px;text-align:center;">Choose Question Type</div>
   <div class="mob-type-grid">
-    <button class="mob-type-btn" onclick="window.mobAddQ('rating_stars')">⭐ Star Rating</button>
-    <button class="mob-type-btn" onclick="window.mobAddQ('rating_emoji')">😊 Emoji Rating</button>
-    <button class="mob-type-btn" onclick="window.mobAddQ('rating_nps')">📊 NPS Score</button>
-    <button class="mob-type-btn" onclick="window.mobAddQ('rating_scale')">📏 Scale 1-10</button>
-    <button class="mob-type-btn" onclick="window.mobAddQ('mcq')">⚪ Multiple Choice</button>
-    <button class="mob-type-btn" onclick="window.mobAddQ('checkbox')">☑️ Checkboxes</button>
-    <button class="mob-type-btn" onclick="window.mobAddQ('short_text')">📝 Short Text</button>
-    <button class="mob-type-btn" onclick="window.mobAddQ('long_text')">📄 Long Text</button>
-    <button class="mob-type-btn" onclick="window.mobAddQ('yesno')">✅ Yes / No</button>
-    <button class="mob-type-btn" onclick="window.mobAddQ('dropdown')">🔽 Dropdown</button>
+    <button class="mob-type-btn" onclick="mobAddQ('rating_stars')">⭐ Star Rating</button>
+    <button class="mob-type-btn" onclick="mobAddQ('rating_emoji')">😊 Emoji Rating</button>
+    <button class="mob-type-btn" onclick="mobAddQ('rating_nps')">📊 NPS Score</button>
+    <button class="mob-type-btn" onclick="mobAddQ('rating_scale')">📏 Scale 1-10</button>
+    <button class="mob-type-btn" onclick="mobAddQ('mcq')">⚪ Multiple Choice</button>
+    <button class="mob-type-btn" onclick="mobAddQ('checkbox')">☑️ Checkboxes</button>
+    <button class="mob-type-btn" onclick="mobAddQ('short_text')">📝 Short Text</button>
+    <button class="mob-type-btn" onclick="mobAddQ('long_text')">📄 Long Text</button>
+    <button class="mob-type-btn" onclick="mobAddQ('yesno')">✅ Yes / No</button>
+    <button class="mob-type-btn" onclick="mobAddQ('dropdown')">🔽 Dropdown</button>
   </div>
 </div>
 
