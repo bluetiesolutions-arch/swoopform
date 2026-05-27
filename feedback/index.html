@@ -420,7 +420,7 @@ window.submitFeedback=async function(){
   try{
     const name=document.getElementById('c-name')?document.getElementById('c-name').value.trim():'';
     const email=document.getElementById('c-email')?document.getElementById('c-email').value.trim():'';
-    const ownerId=formData.userId;
+    const ownerId=fData?.userId;
     if(ownerId){
       const rl=await checkResponseLimit(db,ownerId);
       if(!rl.allowed){showResponseLimitError(rl.count,rl.limit);return;}
@@ -435,7 +435,7 @@ window.submitFeedback=async function(){
     // Email notification to host
     try{
       if(typeof SF_EMAIL!=='undefined'){
-        const od=formData;
+        const od=fData;
         if(od&&od.ownerEmail){
           SF_EMAIL.notifyNewResponse(
             od.ownerEmail,
