@@ -565,7 +565,10 @@ window.goSection=function(id){
   const el=document.getElementById(id);
   if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
   document.querySelectorAll('.sidebar-item').forEach(function(i){i.classList.remove('active');});
-  event.currentTarget.classList.add('active');
+  // Find the sidebar item that triggered this
+  document.querySelectorAll('.sidebar-item').forEach(function(i){
+    if(i.getAttribute('onclick')&&i.getAttribute('onclick').includes(id))i.classList.add('active');
+  });
 };
 
 window.openFieldModal=function(){document.getElementById('field-modal').classList.add('open');};
