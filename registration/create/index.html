@@ -520,7 +520,7 @@ window.addField=function(type,data){
     +'<div class="field-card-body">'
     +'<span class="field-card-type">'+type+'</span>'
     +'<div class="field-grid" style="margin-bottom:8px;">'
-    +'<div><div class="field-label">Label</div><input class="field-input" id="fl_'+id+'" value="'+label+'" style="font-size:12px;padding:8px 10px;"></div>'
+    +'<div><div class="field-label">Label</div><input class="field-input" id="fl_'+id+'" value="'+label+'" data-default="'+label+'" onfocus="if(this.value.trim()===this.dataset.default){this.value=\'\';}" onblur="if(!this.value.trim()){this.value=this.dataset.default;}" style="font-size:12px;padding:8px 10px;"></div>'
     +'<div><div class="field-label">Placeholder</div><input class="field-input" id="fp_'+id+'" value="'+placeholder+'" style="font-size:12px;padding:8px 10px;" '+(type==='checkbox'||type==='date'?'disabled style="opacity:0.5;font-size:12px;padding:8px 10px;"':'')+'></div>'
     +'</div>'
     +(hasOptions?'<div class="field-row"><div class="field-label">Options (one per line)</div><textarea class="field-input" id="fo_'+id+'" rows="3" style="font-size:12px;padding:8px;min-height:60px;">'+options+'</textarea></div>':'')
