@@ -160,6 +160,48 @@ select.field-input{cursor:pointer;}
   .field-row,.two-col{flex-direction:column !important;}
   .preview-panel,.right-preview,.live-preview-panel{display:none !important;}
 }
+
+@media(min-width:769px){.mob-builder,.mob-editor,.sheet,.sheet-bg{display:none!important;}}
+@media(max-width:768px){
+  .layout{display:none!important;}
+  #plan-banner{display:none!important;}
+  body,html{overflow-y:auto!important;height:auto!important;}
+  .mob-builder{display:block;padding-top:56px;}
+  .mob-content{padding:16px 16px 90px;}
+  .mob-steps{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1.5px solid var(--border);display:flex;z-index:400;}
+  .mob-step-btn{flex:1;padding:10px 4px;border:none;background:transparent;font-family:var(--font);font-size:10px;font-weight:600;color:#94a3b8;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;}
+  .mob-step-btn.active{color:var(--accent);}
+  .mob-step-icon{font-size:18px;}
+  .mob-panel{display:none;}
+  .mob-panel.active{display:block;}
+  .mob-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px;}
+  .mob-lbl{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;margin-top:12px;}
+  .mob-lbl:first-child{margin-top:0;}
+  .mob-inp{width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:16px;color:var(--text);outline:none;display:block;margin-bottom:4px;}
+  .mob-inp:focus{border-color:var(--accent);}
+  .mob-ta{width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:16px;color:var(--text);outline:none;resize:none;min-height:80px;display:block;}
+  .mob-sel{width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:16px;color:var(--text);outline:none;display:block;margin-bottom:4px;}
+  .mob-field-item{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+  .mob-field-icon{width:36px;height:36px;border-radius:9px;background:#ede9ff;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+  .mob-field-info{flex:1;}
+  .mob-field-name{font-size:13px;font-weight:700;}
+  .mob-field-type{font-size:11px;color:#94a3b8;}
+  .mob-field-del{background:none;border:none;font-size:18px;color:#ef4444;cursor:pointer;padding:4px;}
+  .mob-add-field{width:100%;padding:14px;border-radius:12px;border:2px dashed var(--border);background:transparent;font-family:var(--font);font-size:14px;font-weight:700;color:var(--accent);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;}
+  .mob-tgl-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);}
+  .mob-tgl-row:last-child{border-bottom:none;}
+  .mob-tgl-lbl{font-size:14px;font-weight:600;}
+  .mob-publish-btn{width:100%;padding:14px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;}
+  .mob-draft-btn{width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:15px;font-weight:700;color:var(--accent);cursor:pointer;margin-bottom:10px;}
+  .sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:699;display:none;}
+  .sheet-bg.open{display:block;}
+  .sheet{position:fixed;bottom:0;left:0;right:0;background:#fff;border-radius:20px 20px 0 0;border-top:1.5px solid var(--border);z-index:700;padding:16px;transform:translateY(100%);transition:transform .25s ease;max-height:75vh;overflow-y:auto;}
+  .sheet.open{transform:translateY(0);}
+  .sheet-title{font-weight:800;font-size:16px;margin-bottom:14px;text-align:center;}
+  .sheet-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .sheet-btn{padding:12px 8px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;text-align:center;}
+}
+
 </style>
 <link rel="stylesheet" href="/mobile.css">
 </head>
@@ -429,7 +471,7 @@ onAuthStateChanged(auth,async function(u){
   currentUser=u;
   const params=new URLSearchParams(window.location.search);
   RID=params.get('id');
-  if(RID)await loadExisting(RID);
+  if(RID){await loadExisting(RID);await mobLoadRegExisting(RID);}
   else{window.addField('name');window.addField('email');window.addField('phone');}
 });
 
@@ -668,6 +710,215 @@ async function checkPlanBanner(db, userId){
     }
   }catch(e){}
 }
+
+
+// ── MOBILE REGISTRATION BUILDER ──────────────────
+var mobRegFields = [];
+const REG_FIELD_ICONS = {name:'👤',email:'📧',phone:'📱',organization:'🏢',jobtitle:'💼',city:'📍',dietary:'🍽️',tshirt:'👕',dropdown:'🔽',message:'💬',date:'📅',text:'📝'};
+const REG_FIELD_LABELS = {name:'Full Name',email:'Email',phone:'Phone',organization:'Organization',jobtitle:'Job Title',city:'City',dietary:'Dietary Requirements',tshirt:'T-Shirt Size',dropdown:'Dropdown',message:'Message',date:'Date',text:'Custom Field'};
+
+window.mobGoStep=function(step){
+  document.querySelectorAll('.mob-panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.mob-step-btn').forEach(function(b){b.classList.remove('active');});
+  var panel=document.getElementById('mob-panel-'+step);
+  var btn=document.getElementById('mob-nav-'+step);
+  if(panel)panel.classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(step==='fields')mobRenderRegFields();
+  if(step==='publish'){
+    var t=document.getElementById('mob-r-title')?.value||'Your Registration';
+    var el=document.getElementById('mob-pub-title');
+    var cel=document.getElementById('mob-pub-count');
+    if(el)el.textContent=t;
+    if(cel)cel.textContent=mobRegFields.length+' field'+(mobRegFields.length!==1?'s':'');
+  }
+  window.scrollTo(0,0);
+};
+
+function mobRenderRegFields(){
+  var wrap=document.getElementById('mob-reg-fields-list');
+  if(!wrap)return;
+  if(!mobRegFields.length){
+    wrap.innerHTML='<div style="text-align:center;padding:32px;color:#94a3b8;font-size:14px;">No fields yet.<br>Tap + Add Field below.</div>';
+    return;
+  }
+  wrap.innerHTML=mobRegFields.map(function(f,i){
+    return'<div class="mob-field-item">'
+      +'<div class="mob-field-icon">'+(REG_FIELD_ICONS[f.type]||'📝')+'</div>'
+      +'<div class="mob-field-info"><div class="mob-field-name">'+(f.label||REG_FIELD_LABELS[f.type]||f.type)+'</div><div class="mob-field-type">'+(f.required?'Required':'Optional')+'</div></div>'
+      +'<button class="mob-field-del" onclick="mobRemoveRegField('+i+')">✕</button>'
+      +'</div>';
+  }).join('');
+}
+
+window.mobShowSheet=function(){
+  document.getElementById('type-sheet').classList.add('open');
+  document.getElementById('sheet-bg').classList.add('open');
+};
+window.mobHideSheet=function(){
+  document.getElementById('type-sheet').classList.remove('open');
+  document.getElementById('sheet-bg').classList.remove('open');
+};
+
+window.mobAddField=function(type){
+  window.mobHideSheet();
+  mobRegFields.push({type:type,fieldType:type,label:REG_FIELD_LABELS[type]||type,placeholder:'',required:type==='email'||type==='name',options:''});
+  mobRenderRegFields();
+};
+
+window.mobRemoveRegField=function(idx){
+  mobRegFields.splice(idx,1);
+  mobRenderRegFields();
+};
+
+function buildMobRegPayload(status){
+  var title=document.getElementById('mob-r-title')?.value.trim()||'';
+  if(!title){alert('Please add a title');return null;}
+  if(!mobRegFields.length){alert('Please add at least one field');return null;}
+  return{
+    title,status,
+    description:document.getElementById('mob-r-desc')?.value.trim()||'',
+    eventDate:document.getElementById('mob-r-date')?.value||'',
+    location:document.getElementById('mob-r-location')?.value.trim()||'',
+    buttonText:document.getElementById('mob-r-btn')?.value.trim()||'Register Now',
+    fields:mobRegFields,
+    limitSeats:!!document.getElementById('mob-r-limit')?.classList.contains('on'),
+    maxSeats:parseInt(document.getElementById('mob-r-seats')?.value)||0,
+    requireApproval:!!document.getElementById('mob-r-approval')?.classList.contains('on'),
+    sendConfirmation:document.getElementById('mob-r-confirm')?.classList.contains('on')!==false,
+    formType:'registration',
+    userId:currentUser?currentUser.uid:'',
+    ownerEmail:currentUser?currentUser.email||'':'',
+    ownerName:currentUser?currentUser.displayName||'':'',
+    responseCount:0,
+  };
+}
+
+window.mobSaveDraft=async function(){
+  var data=buildMobRegPayload('draft');
+  if(!data)return;
+  try{
+    if(RID){await updateDoc(doc(db,'registrations',RID),Object.assign({},data,{updatedAt:serverTimestamp()}));}
+    else{
+      var ok=await gateCheck(db,auth.currentUser?.uid||'');if(!ok)return;
+      var ref=await addDoc(collection(db,'registrations'),Object.assign({},data,{createdAt:serverTimestamp(),updatedAt:serverTimestamp()}));
+      RID=ref.id;window.history.replaceState({},'','/registration/create/?id='+RID);
+    }
+    toast('Draft saved!');
+  }catch(e){alert('Error: '+e.message);}
+};
+
+window.mobPublishForm=async function(){
+  var data=buildMobRegPayload('active');
+  if(!data)return;
+  try{
+    var id;
+    if(RID){await updateDoc(doc(db,'registrations',RID),Object.assign({},data,{updatedAt:serverTimestamp()}));id=RID;}
+    else{
+      var ok=await gateCheck(db,auth.currentUser?.uid||'');if(!ok)return;
+      var ref=await addDoc(collection(db,'registrations'),Object.assign({},data,{createdAt:serverTimestamp(),updatedAt:serverTimestamp()}));
+      RID=ref.id;id=RID;
+    }
+    toast('Published! ✅');
+    setTimeout(function(){window.location.href='/dashboard/';},1500);
+  }catch(e){alert('Error: '+e.message);}
+};
+
+// Load existing into mobile
+async function mobLoadRegExisting(id){
+  try{
+    var snap=await getDoc(doc(db,'registrations',id));
+    if(!snap.exists())return;
+    var d=snap.data();
+    var s=function(eid,val){var el=document.getElementById(eid);if(el&&val!==undefined)el.value=val||'';};
+    s('mob-r-title',d.title);s('mob-r-desc',d.description);
+    s('mob-r-date',d.eventDate);s('mob-r-location',d.location);
+    s('mob-r-btn',d.buttonText||'Register Now');
+    if(d.fields){
+      mobRegFields=d.fields.map(function(f){return{type:f.fieldType||f.type,fieldType:f.fieldType||f.type,label:f.label||REG_FIELD_LABELS[f.fieldType]||f.fieldType,placeholder:f.placeholder||'',required:!!f.required,options:f.options||''};});
+      mobRenderRegFields();
+    }
+  }catch(e){console.warn('Mobile load:',e);}
+}
+
+// Hook into auth callback - load mobile data after auth
+var _origRegAuth=onAuthStateChanged;
+
 </script>
+
+<!-- MOBILE REGISTRATION BUILDER -->
+<div class="mob-builder">
+  <div class="mob-content">
+
+    <div class="mob-panel active" id="mob-panel-info">
+      <div class="mob-card">
+        <label class="mob-lbl">Event/Form Title *</label>
+        <input class="mob-inp" id="mob-r-title" placeholder="e.g. Tech Conference 2026">
+        <label class="mob-lbl">Description</label>
+        <textarea class="mob-ta" id="mob-r-desc" placeholder="Tell registrants about this event..."></textarea>
+        <label class="mob-lbl">Event Date</label>
+        <input class="mob-inp" id="mob-r-date" type="date">
+        <label class="mob-lbl">Location / Venue</label>
+        <input class="mob-inp" id="mob-r-location" placeholder="e.g. New Delhi or Online">
+        <label class="mob-lbl">Submit Button Text</label>
+        <input class="mob-inp" id="mob-r-btn" placeholder="Register Now" value="Register Now">
+      </div>
+    </div>
+
+    <div class="mob-panel" id="mob-panel-fields">
+      <div id="mob-reg-fields-list"></div>
+      <button class="mob-add-field" onclick="mobShowSheet()">＋ Add Field</button>
+    </div>
+
+    <div class="mob-panel" id="mob-panel-settings">
+      <div class="mob-card">
+        <div class="mob-tgl-row"><span class="mob-tgl-lbl">Limit seats</span><button class="tgl" id="mob-r-limit" onclick="this.classList.toggle('on');document.getElementById('mob-r-seats-row').style.display=this.classList.contains('on')?'block':'none'"></button></div>
+        <div id="mob-r-seats-row" style="display:none;padding:8px 0;">
+          <label class="mob-lbl">Max seats</label>
+          <input class="mob-inp" id="mob-r-seats" type="number" placeholder="e.g. 100">
+        </div>
+        <div class="mob-tgl-row"><span class="mob-tgl-lbl">Require approval</span><button class="tgl" id="mob-r-approval" onclick="this.classList.toggle('on')"></button></div>
+        <div class="mob-tgl-row" style="border:none;"><span class="mob-tgl-lbl">Send confirmation email</span><button class="tgl on" id="mob-r-confirm" onclick="this.classList.toggle('on')"></button></div>
+      </div>
+    </div>
+
+    <div class="mob-panel" id="mob-panel-publish">
+      <div class="mob-card">
+        <div style="font-size:16px;font-weight:800;margin-bottom:4px;" id="mob-pub-title">Your Registration</div>
+        <div style="font-size:13px;color:#64748b;" id="mob-pub-count">0 fields</div>
+      </div>
+      <button class="mob-draft-btn" onclick="mobSaveDraft()">💾 Save Draft</button>
+      <button class="mob-publish-btn" onclick="mobPublishForm()">🚀 Publish Registration</button>
+    </div>
+
+  </div>
+  <div class="mob-steps">
+    <button class="mob-step-btn active" id="mob-nav-info" onclick="mobGoStep('info')"><span class="mob-step-icon">📋</span>Info</button>
+    <button class="mob-step-btn" id="mob-nav-fields" onclick="mobGoStep('fields')"><span class="mob-step-icon">📝</span>Fields</button>
+    <button class="mob-step-btn" id="mob-nav-settings" onclick="mobGoStep('settings')"><span class="mob-step-icon">⚙️</span>Settings</button>
+    <button class="mob-step-btn" id="mob-nav-publish" onclick="mobGoStep('publish')"><span class="mob-step-icon">🚀</span>Publish</button>
+  </div>
+</div>
+
+<!-- FIELD TYPE SHEET -->
+<div class="sheet-bg" id="sheet-bg" onclick="mobHideSheet()"></div>
+<div class="sheet" id="type-sheet">
+  <div class="sheet-title">Add Field</div>
+  <div class="sheet-grid">
+    <button class="sheet-btn" onclick="mobAddField('name')">👤 Full Name</button>
+    <button class="sheet-btn" onclick="mobAddField('email')">📧 Email</button>
+    <button class="sheet-btn" onclick="mobAddField('phone')">📱 Phone</button>
+    <button class="sheet-btn" onclick="mobAddField('organization')">🏢 Organization</button>
+    <button class="sheet-btn" onclick="mobAddField('jobtitle')">💼 Job Title</button>
+    <button class="sheet-btn" onclick="mobAddField('city')">📍 City</button>
+    <button class="sheet-btn" onclick="mobAddField('dietary')">🍽️ Dietary</button>
+    <button class="sheet-btn" onclick="mobAddField('tshirt')">👕 T-Shirt Size</button>
+    <button class="sheet-btn" onclick="mobAddField('dropdown')">🔽 Dropdown</button>
+    <button class="sheet-btn" onclick="mobAddField('message')">💬 Message</button>
+    <button class="sheet-btn" onclick="mobAddField('date')">📅 Date</button>
+    <button class="sheet-btn" onclick="mobAddField('text')">📝 Custom</button>
+  </div>
+</div>
+
 </body>
 </html>
