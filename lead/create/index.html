@@ -446,7 +446,7 @@ onAuthStateChanged(auth,async function(u){
   currentUser=u;
   const params=new URLSearchParams(window.location.search);
   LID=params.get('id');
-  if(LID)await loadExisting(LID);
+  if(LID){await loadExisting(LID);await mobLoadExisting(LID);}
   else{
     // Add default fields
     window.addField('name');
@@ -802,9 +802,8 @@ window.mobPublishForm=async function(){
 };
 
 // Load existing into mobile
-var _origLoadEx=loadExisting;
-async function loadExisting(id){
-  await _origLoadEx(id);
+// Mobile load - called after loadExisting
+async function mobLoadExisting(id){
   try{
     var snap=await getDoc(doc(db,'leads',id));
     if(!snap.exists())return;
