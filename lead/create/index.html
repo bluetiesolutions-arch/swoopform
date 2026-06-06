@@ -65,7 +65,7 @@ select.field-input{cursor:pointer;}
 .field-card-remove:hover{color:var(--danger);}
 .add-field-btn{width:100%;padding:11px;background:none;border:2px dashed var(--border);border-radius:10px;color:var(--muted);font-family:var(--font);font-size:13px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
 .add-field-btn:hover{border-color:var(--accent);color:var(--accent);}
-.right-panel{width:300px;min-width:300px;background:var(--surface);border-left:1px solid var(--border);overflow-y:auto;}
+.right-panel{display:none !important;width:300px;min-width:300px;background:var(--surface);border-left:1px solid var(--border);overflow-y:auto;}
 .panel-header{padding:16px 20px;border-bottom:1px solid var(--border);font-size:13px;font-weight:600;}
 .panel-body{padding:16px;}
 .preview-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px;}
@@ -366,21 +366,7 @@ select.field-input{cursor:pointer;}
     </div>
   </div>
 
-  <div class="right-panel">
-    <div class="panel-header">👁 Live Preview</div>
-    <div class="panel-body">
-      <div class="preview-card" id="preview-card">
-        <div style="font-size:28px;margin-bottom:10px;" id="prev-icon">📥</div>
-        <div class="preview-title" id="prev-title">Form Title</div>
-        <div class="preview-desc" id="prev-desc">Your description here</div>
-        <div id="prev-fields">
-          <div class="preview-field"><div class="preview-field-label">Full Name</div><div class="preview-field-input"></div></div>
-          <div class="preview-field"><div class="preview-field-label">Email</div><div class="preview-field-input"></div></div>
-        </div>
-        <div style="padding:10px;border-radius:8px;text-align:center;font-size:12px;font-weight:700;color:#fff;margin-top:10px;" id="prev-btn" style="background:var(--accent);">Get Started →</div>
-      </div>
-    </div>
-  </div>
+
 </div>
 
 <!-- FIELD MODAL -->
