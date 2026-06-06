@@ -304,7 +304,7 @@ window.submitRegistration=async function(){
 
   try{
     const regId='REG-'+Date.now().toString(36).toUpperCase();
-    const ownerId=formData.userId;
+    const ownerId=rData?.userId;
     if(ownerId){const rl=await checkResponseLimit(db,ownerId);if(!rl.allowed){showResponseLimitError(rl.count,rl.limit);return;}}
     await addDoc(collection(db,'registrations',RID,'responses'),{
       formId:RID,eventName:rData.eventName,regId,
@@ -314,7 +314,7 @@ window.submitRegistration=async function(){
     // Email notification to host
     try{
       if(typeof SF_EMAIL!=='undefined'){
-        const od=formData;
+        const od=rData;
         if(od&&od.ownerEmail){
           SF_EMAIL.notifyNewResponse(
             od.ownerEmail,
