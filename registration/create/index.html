@@ -535,15 +535,17 @@ window.removeField=function(id){const el=document.getElementById(id);if(el)el.re
 function updateFieldCount(){const count=document.querySelectorAll('.field-card').length;document.getElementById('field-count-label').textContent=count+' field'+(count!==1?'s':'');}
 
 window.updatePreview=function(){
-  const name=document.getElementById('e-name').value||'Event Name';
-  const type=document.getElementById('e-type').value||'Conference';
-  const date=document.getElementById('e-date').value;
-  const time=document.getElementById('e-time').value;
-  const venue=document.getElementById('e-venue').value;
-  document.getElementById('prev-name').textContent=name;
-  document.getElementById('prev-type').textContent=type;
-  const meta=[date,time,venue].filter(Boolean).join(' · ');
-  document.getElementById('prev-meta').textContent=meta||'Date · Time · Venue';
+  try{
+    const name=document.getElementById('e-name')?.value||'Event Name';
+    const type=document.getElementById('e-type')?.value||'Conference';
+    const date=document.getElementById('e-date')?.value||'';
+    const time=document.getElementById('e-time')?.value||'';
+    const venue=document.getElementById('e-venue')?.value||'';
+    const pn=document.getElementById('prev-name');if(pn)pn.textContent=name;
+    const pt=document.getElementById('prev-type');if(pt)pt.textContent=type;
+    const pm=document.getElementById('prev-meta');
+    if(pm){const meta=[date,time,venue].filter(Boolean).join(' · ');pm.textContent=meta||'Date · Time · Venue';}
+  }catch(e){}
 };
 
 window.toggleTickets=function(){const on=document.getElementById('tgl-tickets').classList.contains('on');document.getElementById('tickets-wrap').style.display=on?'block':'none';};
