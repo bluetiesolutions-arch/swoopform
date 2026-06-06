@@ -283,22 +283,30 @@ select.field-input{cursor:pointer;}
           </div>
           <div class="field-grid">
             <div class="field-row"><div class="field-label">Event Date</div><input class="field-input" id="e-date" type="date" oninput="window.updatePreview()"></div>
-            <div class="field-row"><div class="field-label">Event Time</div><div style="display:flex;gap:8px;align-items:center;">
-  <input class="field-input" id="e-time" placeholder="e.g. 10:30" style="flex:1;" oninput="window.updatePreview()">
-  <div style="display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;flex-shrink:0;">
-    <button type="button" id="e-time-am" onclick="setAMPM('e-time','AM')" style="padding:8px 12px;border:none;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;background:#2d1b69;color:#fff;">AM</button>
-    <button type="button" id="e-time-pm" onclick="setAMPM('e-time','PM')" style="padding:8px 12px;border:none;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;background:#fff;color:var(--muted);">PM</button>
+            <div class="field-row"><div class="field-label">Event Time</div><div style="display:flex;align-items:center;gap:6px;">
+  <input id="e-time-h" type="number" min="1" max="12" placeholder="HH" style="width:56px;padding:9px 8px;border:1px solid var(--border);border-radius:8px;font-family:var(--font);font-size:14px;font-weight:600;text-align:center;outline:none;" oninput="syncTime('e-time')">
+  <span style="font-size:18px;font-weight:700;color:var(--muted);">:</span>
+  <input id="e-time-m" type="number" min="0" max="59" placeholder="MM" style="width:56px;padding:9px 8px;border:1px solid var(--border);border-radius:8px;font-family:var(--font);font-size:14px;font-weight:600;text-align:center;outline:none;" oninput="syncTime('e-time')">
+  <div style="display:flex;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;margin-left:4px;">
+    <button type="button" id="e-time-am" onclick="toggleAMPM('e-time','AM')" style="padding:8px 11px;border:none;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;background:#2d1b69;color:#fff;transition:all .15s;">AM</button>
+    <button type="button" id="e-time-pm" onclick="toggleAMPM('e-time','PM')" style="padding:8px 11px;border:none;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;background:#fff;color:#94a3b8;transition:all .15s;">PM</button>
   </div>
+  <input type="hidden" id="e-time-ampm" value="AM">
+  <input type="hidden" id="e-time">
 </div></div>
           </div>
           <div class="field-grid">
             <div class="field-row"><div class="field-label">End Date</div><input class="field-input" id="e-end-date" type="date"></div>
-            <div class="field-row"><div class="field-label">End Time</div><div style="display:flex;gap:8px;align-items:center;">
-  <input class="field-input" id="e-end-time" placeholder="e.g. 5:30" style="flex:1;">
-  <div style="display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;flex-shrink:0;">
-    <button type="button" id="e-end-time-am" onclick="setAMPM('e-end-time','AM')" style="padding:8px 12px;border:none;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;background:#fff;color:var(--muted);">AM</button>
-    <button type="button" id="e-end-time-pm" onclick="setAMPM('e-end-time','PM')" style="padding:8px 12px;border:none;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;background:#fff;color:var(--muted);">PM</button>
+            <div class="field-row"><div class="field-label">End Time</div><div style="display:flex;align-items:center;gap:6px;">
+  <input id="e-end-time-h" type="number" min="1" max="12" placeholder="HH" style="width:56px;padding:9px 8px;border:1px solid var(--border);border-radius:8px;font-family:var(--font);font-size:14px;font-weight:600;text-align:center;outline:none;" oninput="syncTime('e-end-time')">
+  <span style="font-size:18px;font-weight:700;color:var(--muted);">:</span>
+  <input id="e-end-time-m" type="number" min="0" max="59" placeholder="MM" style="width:56px;padding:9px 8px;border:1px solid var(--border);border-radius:8px;font-family:var(--font);font-size:14px;font-weight:600;text-align:center;outline:none;" oninput="syncTime('e-end-time')">
+  <div style="display:flex;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;margin-left:4px;">
+    <button type="button" id="e-end-time-am" onclick="toggleAMPM('e-end-time','AM')" style="padding:8px 11px;border:none;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;background:#2d1b69;color:#fff;transition:all .15s;">AM</button>
+    <button type="button" id="e-end-time-pm" onclick="toggleAMPM('e-end-time','PM')" style="padding:8px 11px;border:none;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;background:#fff;color:#94a3b8;transition:all .15s;">PM</button>
   </div>
+  <input type="hidden" id="e-end-time-ampm" value="AM">
+  <input type="hidden" id="e-end-time">
 </div></div>
           </div>
           <div class="field-row"><div class="field-label">Venue / Platform</div><input class="field-input" id="e-venue" placeholder="e.g. Taj Hotel, Bangalore or Zoom"></div>
@@ -839,27 +847,6 @@ async function mobLoadRegExisting(id){
 // Hook into auth callback - load mobile data after auth
 var _origRegAuth=onAuthStateChanged;
 
-
-window.setAMPM=function(fieldId,val){
-  var am=document.getElementById(fieldId+'-am');
-  var pm=document.getElementById(fieldId+'-pm');
-  if(!am||!pm)return;
-  if(val==='AM'){
-    am.style.background='#2d1b69';am.style.color='#fff';
-    pm.style.background='#fff';pm.style.color='var(--muted)';
-  }else{
-    pm.style.background='#2d1b69';pm.style.color='#fff';
-    am.style.background='#fff';am.style.color='var(--muted)';
-  }
-  // Store AM/PM in hidden input
-  var hidden=document.getElementById(fieldId+'-ampm');
-  if(!hidden){
-    hidden=document.createElement('input');
-    hidden.type='hidden';hidden.id=fieldId+'-ampm';
-    document.getElementById(fieldId).parentElement.appendChild(hidden);
-  }
-  hidden.value=val;
-};
 </script>
 
 <!-- MOBILE REGISTRATION BUILDER -->
@@ -935,6 +922,36 @@ window.setAMPM=function(fieldId,val){
     <button class="sheet-btn" onclick="mobAddField('text')">📝 Custom</button>
   </div>
 </div>
+
+
+<script>
+function toggleAMPM(prefix, val){
+  var am = document.getElementById(prefix+'-am');
+  var pm = document.getElementById(prefix+'-pm');
+  var hidden = document.getElementById(prefix+'-ampm');
+  if(!am||!pm)return;
+  if(val==='AM'){
+    am.style.background='#2d1b69'; am.style.color='#fff';
+    pm.style.background='#fff'; pm.style.color='#94a3b8';
+  } else {
+    pm.style.background='#2d1b69'; pm.style.color='#fff';
+    am.style.background='#fff'; am.style.color='#94a3b8';
+  }
+  if(hidden) hidden.value=val;
+  syncTime(prefix);
+}
+function syncTime(prefix){
+  var h = document.getElementById(prefix+'-h');
+  var m = document.getElementById(prefix+'-m');
+  var ampm = document.getElementById(prefix+'-ampm');
+  var out = document.getElementById(prefix);
+  if(!h||!m||!out)return;
+  var hv = h.value.padStart(2,'0');
+  var mv = (m.value||'00').padStart(2,'0');
+  var ap = ampm?ampm.value:'AM';
+  out.value = hv+':'+mv+' '+ap;
+}
+</script>
 
 </body>
 </html>
