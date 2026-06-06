@@ -284,9 +284,9 @@ select.field-input{cursor:pointer;}
           <div class="field-grid">
             <div class="field-row"><div class="field-label">Event Date</div><input class="field-input" id="e-date" type="date" oninput="window.updatePreview()"></div>
             <div class="field-row"><div class="field-label">Event Time</div><div style="display:flex;align-items:center;gap:6px;">
-  <input id="e-time-h" type="number" min="1" max="12" placeholder="HH" style="width:56px;padding:9px 8px;border:1px solid var(--border);border-radius:8px;font-family:var(--font);font-size:14px;font-weight:600;text-align:center;outline:none;" oninput="syncTime('e-time')">
+  <input id="e-time-h" type="number" min="1" max="12" placeholder="HH" style="width:56px;padding:9px 8px;border:1px solid var(--border);border-radius:8px;font-family:var(--font);font-size:14px;font-weight:600;text-align:center;outline:none;" oninput="if(this.value>12)this.value=12;if(this.value<1&&this.value!=='')this.value=1;syncTime('e-time')">
   <span style="font-size:18px;font-weight:700;color:var(--muted);">:</span>
-  <input id="e-time-m" type="number" min="0" max="59" placeholder="MM" style="width:56px;padding:9px 8px;border:1px solid var(--border);border-radius:8px;font-family:var(--font);font-size:14px;font-weight:600;text-align:center;outline:none;" oninput="syncTime('e-time')">
+  <input id="e-time-m" type="number" min="0" max="59" placeholder="MM" style="width:56px;padding:9px 8px;border:1px solid var(--border);border-radius:8px;font-family:var(--font);font-size:14px;font-weight:600;text-align:center;outline:none;" oninput="if(this.value>59)this.value=59;if(this.value<0)this.value=0;syncTime('e-time')">
   <div style="display:flex;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;margin-left:4px;">
     <button type="button" id="e-time-am" onclick="toggleAMPM('e-time','AM')" style="padding:8px 11px;border:none;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;background:#2d1b69;color:#fff;transition:all .15s;">AM</button>
     <button type="button" id="e-time-pm" onclick="toggleAMPM('e-time','PM')" style="padding:8px 11px;border:none;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;background:#fff;color:#94a3b8;transition:all .15s;">PM</button>
@@ -298,9 +298,9 @@ select.field-input{cursor:pointer;}
           <div class="field-grid">
             <div class="field-row"><div class="field-label">End Date</div><input class="field-input" id="e-end-date" type="date"></div>
             <div class="field-row"><div class="field-label">End Time</div><div style="display:flex;align-items:center;gap:6px;">
-  <input id="e-end-time-h" type="number" min="1" max="12" placeholder="HH" style="width:56px;padding:9px 8px;border:1px solid var(--border);border-radius:8px;font-family:var(--font);font-size:14px;font-weight:600;text-align:center;outline:none;" oninput="syncTime('e-end-time')">
+  <input id="e-end-time-h" type="number" min="1" max="12" placeholder="HH" style="width:56px;padding:9px 8px;border:1px solid var(--border);border-radius:8px;font-family:var(--font);font-size:14px;font-weight:600;text-align:center;outline:none;" oninput="if(this.value>12)this.value=12;if(this.value<1&&this.value!=='')this.value=1;syncTime('e-end-time')">
   <span style="font-size:18px;font-weight:700;color:var(--muted);">:</span>
-  <input id="e-end-time-m" type="number" min="0" max="59" placeholder="MM" style="width:56px;padding:9px 8px;border:1px solid var(--border);border-radius:8px;font-family:var(--font);font-size:14px;font-weight:600;text-align:center;outline:none;" oninput="syncTime('e-end-time')">
+  <input id="e-end-time-m" type="number" min="0" max="59" placeholder="MM" style="width:56px;padding:9px 8px;border:1px solid var(--border);border-radius:8px;font-family:var(--font);font-size:14px;font-weight:600;text-align:center;outline:none;" oninput="if(this.value>59)this.value=59;if(this.value<0)this.value=0;syncTime('e-end-time')">
   <div style="display:flex;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;margin-left:4px;">
     <button type="button" id="e-end-time-am" onclick="toggleAMPM('e-end-time','AM')" style="padding:8px 11px;border:none;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;background:#2d1b69;color:#fff;transition:all .15s;">AM</button>
     <button type="button" id="e-end-time-pm" onclick="toggleAMPM('e-end-time','PM')" style="padding:8px 11px;border:none;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;background:#fff;color:#94a3b8;transition:all .15s;">PM</button>
